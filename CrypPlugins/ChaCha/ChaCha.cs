@@ -45,7 +45,7 @@ namespace Cryptool.Plugins.ChaCha
         private byte[] inputKey;
         private byte[] inputIV;
 
-        private int rounds;
+        private int rounds = 20;
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
         // bits of counter
