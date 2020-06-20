@@ -266,7 +266,8 @@ namespace Cryptool.Plugins.ChaCha
             }
             for (uint i = 0; i < keystreamBlocksNeeded; i++)
             {
-                addToKeystream(generateKeyStreamBlock(i));
+                byte[] keyblock = generateKeyStreamBlock(i+1);
+                addToKeystream(keyblock);
             }
             // flatten two dimension array of bytes into one dimensional array of bytes
             byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
