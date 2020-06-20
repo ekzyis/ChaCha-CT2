@@ -253,7 +253,7 @@ namespace Cryptool.Plugins.ChaCha
         public byte[] Xcrypt(byte[] src)
         {
             byte[] dst = new byte[src.Length];
-            int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length / BLOCKSIZE));
+            int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length / (BLOCKSIZE / 8)));
             byte[,] keystreamBlocks = new byte[keystreamBlocksNeeded, BLOCKSIZE / 8];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.
