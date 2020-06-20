@@ -179,7 +179,7 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             int stateOffset = 0;
-            // Convenience method to not abstract away state offset.
+            // Convenience method to abstract away state offset.
             void addToState(uint value)
             {
                 state[stateOffset] = value;
