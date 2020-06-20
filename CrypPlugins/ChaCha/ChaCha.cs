@@ -48,6 +48,11 @@ namespace Cryptool.Plugins.ChaCha
         public static byte[] sigma = Encoding.ASCII.GetBytes("expand 32-byte k");
         public static byte[] tau = Encoding.ASCII.GetBytes("expand 16-byte k");
 
+        public ChaCha()
+        {
+            this.settings = new ChaChaSettings();
+        }
+
         #endregion
 
         #region Data Properties
