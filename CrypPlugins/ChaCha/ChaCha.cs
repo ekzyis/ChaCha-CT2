@@ -370,7 +370,7 @@ namespace Cryptool.Plugins.ChaCha
          */ 
         public uint rotateLeft(uint x, int shift)
         {
-            return (x << shift) | (x >> shift);
+            return (x << shift) | (x >> -shift);
         }
 
         /// <summary>
