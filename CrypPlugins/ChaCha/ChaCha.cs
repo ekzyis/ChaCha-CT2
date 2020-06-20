@@ -151,7 +151,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
-            initStateMatrix();
+            InitStateMatrix();
 
             OutputData = Xcrypt(InputData);
 
@@ -171,7 +171,7 @@ namespace Cryptool.Plugins.ChaCha
          * The input is not the text but the IV and counter which comes first.
          * Everything is in little-endian except the counter.
          */
-        public void initStateMatrix()
+        public void InitStateMatrix()
         {
             byte[] constants;
             if (inputKey.Length == 32) // 32 byte key
