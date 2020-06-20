@@ -247,7 +247,11 @@ namespace Cryptool.Plugins.ChaCha
         }
         public uint To4ByteLE(uint x)
         {
-            return To4ByteLE(BitConverter.GetBytes(x), 0);
+            uint b1 = x >> 24;
+            uint b2 = (x >> 16) & 0xFF;
+            uint b3 = (x >> 8) & 0xFF;
+            uint b4 = x & 0xFF;
+            return b4 << 24 | b3 << 16 | b2 << 8 | b1;
         }
 
         /* XOR the input with the keystream which results in en- or decryption.*/
