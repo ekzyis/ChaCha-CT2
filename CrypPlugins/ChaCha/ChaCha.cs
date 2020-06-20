@@ -13,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System.Text;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
@@ -31,8 +32,21 @@ namespace Cryptool.Plugins.ChaCha
     {
         #region Private Variables
 
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
-        private readonly ChaChaSettings settings = new ChaChaSettings();
+        private readonly ChaChaSettings settings;
+
+        private byte[] inputData;
+        private byte[] outputData;
+        private byte[] inputKey;
+        private byte[] inputIV;
+
+        private int rounds;
+
+        #endregion
+
+        #region Public Variables
+
+        public static byte[] sigma = Encoding.ASCII.GetBytes("expand 32-byte k");
+        public static byte[] tau = Encoding.ASCII.GetBytes("expand 16-byte k");
 
         #endregion
 
@@ -42,22 +56,47 @@ namespace Cryptool.Plugins.ChaCha
         /// HOWTO: Input interface to read the input data. 
         /// You can add more input properties of other type if needed.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "Input name", "Input tooltip description")]
-        public int SomeInput
+        [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
+        public byte[] InputData
         {
-            get;
-            set;
+            get { return this.inputData; }
+            set { 
+                this.inputData = value;
+                OnPropertyChanged("InputData");
+            }
         }
 
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
-        public int SomeOutput
+        [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
+        public byte[] InputKey
         {
-            get;
-            set;
+            get { return this.inputKey; }
+            set
+            {
+                this.inputKey = value;
+                OnPropertyChanged("InputKey");
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
+        public byte[] InputIV
+        {
+            get { return this.inputIV; }
+            set
+            {
+                this.inputIV = value;
+                OnPropertyChanged("InputIV");
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "OutputDataCaption", "OutputDataTooltip", true)]
+        public byte[] OutputData
+        {
+            get { return this.outputData; }
+            set
+            {
+                this.outputData = value;
+                OnPropertyChanged("OutputData");
+            }
         }
 
         #endregion
@@ -95,16 +134,6 @@ namespace Cryptool.Plugins.ChaCha
             // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
-            // HOWTO: After you have changed an output property, make sure you announce the name of the changed property to the CT2 core.
-            SomeOutput = SomeInput - settings.SomeParameter;
-            OnPropertyChanged("SomeOutput");
-
-            // HOWTO: You can pass error, warning, info or debug messages to the CT2 main window.
-            if (settings.SomeParameter < 0)
-            {
-                GuiLogMessage("SomeParameter is negative", NotificationLevel.Debug);
-            }
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
         }
 

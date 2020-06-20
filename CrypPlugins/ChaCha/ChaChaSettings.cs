@@ -23,37 +23,18 @@ namespace Cryptool.Plugins.ChaCha
     // HOWTO: rename class (click name, press F2)
     public class ChaChaSettings : ISettings
     {
-        #region Private Variables
 
-        private int someParameter = 0;
-
-        #endregion
-
-        #region TaskPane Settings
-
-        /// <summary>
-        /// HOWTO: This is an example for a setting entity shown in the settings pane on the right of the CT2 main window.
-        /// This example setting uses a number field input, but there are many more input types available, see ControlType enumeration.
-        /// </summary>
-        [TaskPane("SomeParameter", "This is a parameter tooltip", null, 1, false, ControlType.NumericUpDown, ValidationType.RangeInteger, 0, Int32.MaxValue)]
-        public int SomeParameter
+        public int rounds = 20;
+        [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
+        public int Rounds
         {
-            get
-            {
-                return someParameter;
-            }
+            get { return rounds; }
             set
             {
-                if (someParameter != value)
-                {
-                    someParameter = value;
-                    // HOWTO: MUST be called every time a property value changes with correct parameter name
-                    OnPropertyChanged("SomeParameter");
-                }
+                rounds = value;
+                OnPropertyChanged("Rounds");
             }
         }
-
-        #endregion
 
         #region Events
 
