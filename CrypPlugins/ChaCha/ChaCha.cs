@@ -151,12 +151,38 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
-            InitStateMatrix();
+            if(validateInput())
+            {
+                InitStateMatrix();
 
-            OutputData = Xcrypt(InputData);
+                OutputData = Xcrypt(InputData);
+            }
 
             ProgressChanged(1, 1);
         }
+
+        /*
+         * Validates the given inputs.
+         */ 
+        public bool validateInput()
+        {
+            string message = null;
+            if (inputKey.Length != 32 && inputKey.Length != 16)
+            {
+                message = "Key must be 32 or 16-byte.";
+            }
+            else if (inputIV.Length != IVSIZE / 8)
+            {
+                message = "IV must be 12-byte";
+            }
+            if(message != null)
+            {
+                GuiLogMessage(message, NotificationLevel.Error);
+                return false;
+            }
+            return true;
+        }
+
         /* 
          * Initialize the state of ChaCha which can be represented as a matrix.
          * 
@@ -178,13 +204,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 constants = sigma;
             }
-            else if(inputKey.Length == 16) // 16 byte key
+            else // 16-byte key
             {
                 constants = tau;
-            }
-            else
-            {
-                throw new ArgumentException("Key must be 32 or 16-byte.");
             }
 
             int stateOffset = 0;
