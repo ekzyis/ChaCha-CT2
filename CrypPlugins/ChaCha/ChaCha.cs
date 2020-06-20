@@ -32,7 +32,7 @@ namespace Cryptool.Plugins.ChaCha
     // You can (and should) provide a user documentation as XML file and an own icon.
     [PluginInfo("ChaCha", "Stream cipher based on Salsa20", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
-    [ComponentCategory(ComponentCategory.ToolsMisc)]
+    [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class ChaCha : ICrypComponent
     {
         #region Private Variables
