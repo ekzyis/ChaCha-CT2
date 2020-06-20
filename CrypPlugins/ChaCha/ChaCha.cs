@@ -294,7 +294,7 @@ namespace Cryptool.Plugins.ChaCha
             uint[] state = (uint[])(initial_state.Clone());
             byte[] counter = BitConverter.GetBytes(n);
             // set counter value to state
-            state[8] = To4ByteLE(counter, 0);
+            state[12] = To4ByteLE(counter, 0);
 
             // hash state block
             uint[] hash = chachaHash(state);
