@@ -297,17 +297,15 @@ namespace Cryptool.Plugins.ChaCha
 
             // hash state block
             uint[] hash = chachaHash(state);
-
             // convert the hashed uint state array into an array of bytes
             byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
-            for (int i = 0; i < keystreamBlock.Length; )
+            for (int i = 0; i < hash.Length; ++i)
             {
                 byte[] stateEntryBytes = BitConverter.GetBytes(hash[i]);
-                foreach (byte b in stateEntryBytes)
-                {
-                    keystreamBlock[i] = b;
-                    i++;
-                }
+                keystreamBlock[i] = stateEntryBytes[0];
+                keystreamBlock[i+1] = stateEntryBytes[1];
+                keystreamBlock[i+2] = stateEntryBytes[2];
+                keystreamBlock[i+3] = stateEntryBytes[3];
             }
             return keystreamBlock;
         }
