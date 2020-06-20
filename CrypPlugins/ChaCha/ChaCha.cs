@@ -15,10 +15,14 @@
 */
 using System;
 using System.Text;
+using System.Linq;
 using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Windows.Documents;
+using System.Diagnostics;
+using System.Security.Policy;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -41,11 +45,14 @@ namespace Cryptool.Plugins.ChaCha
         private byte[] inputIV;
 
         private int rounds;
-
+        // one block has 512 bits
+        private static int BLOCKSIZE = 512;
+        // bits of counter
+        private static int COUNTERSIZE = 32;
+        // bits of IV
+        private static int IVSIZE = 96;
         // ChaCha state consists of 16 32-bit integers
-        private uint[] state = new uint[16]; 
-        // a keystream block consists of 64 bytes (one mutated state)
-        private byte[] keyStreamBlock = new byte[64]; 
+        private uint[] initial_state = new uint[16]; 
 
         #endregion
 
@@ -146,6 +153,8 @@ namespace Cryptool.Plugins.ChaCha
 
             initStateMatrix();
 
+            OutputData = Xcrypt(InputData);
+
             ProgressChanged(1, 1);
         }
         /* 
@@ -182,7 +191,7 @@ namespace Cryptool.Plugins.ChaCha
             // Convenience method to abstract away state offset.
             void addToState(uint value)
             {
-                state[stateOffset] = value;
+                initial_state[stateOffset] = value;
                 stateOffset++;
             }
             void add4ByteChunksToStateAsLittleEndian(byte[] toAdd)
@@ -196,8 +205,8 @@ namespace Cryptool.Plugins.ChaCha
             add4ByteChunksToStateAsLittleEndian(constants);
             add4ByteChunksToStateAsLittleEndian(inputKey);
             if(inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(inputKey);
-            uint startCounter = 0;
-            addToState(startCounter);
+            byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE / 8).ToArray();
+            add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
         }
 
@@ -210,6 +219,135 @@ namespace Cryptool.Plugins.ChaCha
             byte b4 = x[offset + 3];
 
             return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
+        }
+        public uint To4ByteLE(uint x)
+        {
+            return To4ByteLE(BitConverter.GetBytes(x), 0);
+        }
+
+        /* XOR the input with the keystream which results in en- or decryption.*/
+        public byte[] Xcrypt(byte[] src)
+        {
+            byte[] dst = new byte[src.Length];
+            int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length / BLOCKSIZE));
+            byte[,] keystreamBlocks = new byte[keystreamBlocksNeeded, BLOCKSIZE / 8];
+            int keystreamBlocksOffset = 0;
+            // Convenience method to abstract away keystream offset.
+            void addToKeystream(byte[] block)
+            {
+                for (int i = 0; i < block.Length; ++i)
+                    keystreamBlocks[keystreamBlocksOffset, i] = block[i];
+                keystreamBlocksOffset++;
+            }
+            for (uint i = 0; i < keystreamBlocksNeeded; i++)
+            {
+                addToKeystream(generateKeyStreamBlock(i));
+            }
+            // flatten two dimension array of bytes into one dimensional array of bytes
+            byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE / 8];
+            int keystreamOffset = 0;
+            foreach (byte b in keystreamBlocks)
+            {
+                keystream[keystreamOffset] = b;
+                keystreamOffset++;
+            }
+            // XOR the input with the keystream
+            for (int i = 0; i < src.Length; ++i)
+            {
+                dst[i] = (byte)(src[i] ^ keystream[i]);
+            }
+            return dst;
+        }
+
+        /* Generate the n-th keystream block.
+         * 
+         * Uses the initial state matrix to insert the counter n and then calculate the keystream block.
+         */
+        public byte[] generateKeyStreamBlock(uint n)
+        {
+            uint[] state = (uint[])(initial_state.Clone());
+            byte[] counter = BitConverter.GetBytes(n);
+            // set counter value to state
+            state[8] = To4ByteLE(counter, 0);
+            state[9] = To4ByteLE(counter, 4);
+
+            // hash state block
+            uint[] hash = chachaHash(state);
+
+            // convert the hashed uint state array into an array of bytes
+            byte[] keystreamBlock = new byte[BLOCKSIZE/8];
+            for (int i = 0; i < keystreamBlock.Length; )
+            {
+                byte[] stateEntryBytes = BitConverter.GetBytes(hash[i]);
+                foreach (byte b in stateEntryBytes)
+                {
+                    keystreamBlock[i] = b;
+                    i++;
+                }
+            }
+            return keystreamBlock;
+        }
+
+        /* Generates the hash out of the input state block.*/
+        public uint[] chachaHash(uint[] state)
+        {
+            uint[] originalState = (uint[])(state.Clone());
+            for (int i = 0; i < rounds / 2; ++i)
+            {
+                // column round
+                state = quarterroundState(state, 0, 4, 8, 12);
+                state = quarterroundState(state, 1, 5, 9, 13);
+                state = quarterroundState(state, 2, 6, 10, 14);
+                state = quarterroundState(state, 3, 7, 11, 15);
+                // diagonal round
+                state = quarterroundState(state, 0, 5, 10, 15);
+                state = quarterroundState(state, 1, 6, 11, 12);
+                state = quarterroundState(state, 2, 7, 8, 13);
+                state = quarterroundState(state, 3, 4, 0, 14);
+            }
+            // add the original state and write each entry as little-endian
+            for (int i = 0; i < state.Length; ++i)
+            {
+                state[i] += originalState[i];
+                state[i] = To4ByteLE(state[i]);
+            }
+            return state;
+        }
+
+        /**
+         * Calculate the quarterround value of the state using the given indices.
+         */ 
+        public  uint[] quarterroundState(uint[] state, int i, int j, int k, int l)
+        {
+            (state[i], state[j], state[k], state[l]) = quarterround(state[i], state[j], state[k], state[l]);
+            return state;
+        }
+
+        /**
+         * Calculate the quarterround value of the inputs.
+         */
+        public (uint, uint, uint, uint) quarterround(uint a, uint b, uint c, uint d)
+        {
+            (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
+            {
+                x1 += x2;
+                x3 ^= x1;
+                x3 = rotateLeft(x3, shift);
+                return (x1, x2, x3);
+            }
+            (a, b, d) = quarterroundStep(a, b, d, 16);
+            (c, d, b) = quarterroundStep(c, d, b, 12);
+            (a, b, d) = quarterroundStep(a, b, d, 8);
+            (c, d, b) = quarterroundStep(c, d, b, 7);
+            return (a, b, c, d);
+        }
+
+        /**
+         * Circular shift to the left.
+         */ 
+        public uint rotateLeft(uint x, int shift)
+        {
+            return (x << shift) | (x >> shift);
         }
 
         /// <summary>
