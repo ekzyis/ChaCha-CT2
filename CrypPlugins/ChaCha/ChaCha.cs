@@ -151,7 +151,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
-            if(validateInput())
+            GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
+
+            if (validateInput())
             {
                 InitStateMatrix();
 
