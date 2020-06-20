@@ -13,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+using System;
 using System.Text;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -41,13 +42,18 @@ namespace Cryptool.Plugins.ChaCha
 
         private int rounds;
 
+        // ChaCha state consists of 16 32-bit integers
+        private uint[] state = new uint[16]; 
+        // a keystream block consists of 64 bytes (one mutated state)
+        private byte[] keyStreamBlock = new byte[64]; 
+
         #endregion
 
         #region Public Variables
 
         public static byte[] sigma = Encoding.ASCII.GetBytes("expand 32-byte k");
         public static byte[] tau = Encoding.ASCII.GetBytes("expand 16-byte k");
-
+        
         public ChaCha()
         {
             this.settings = new ChaChaSettings();
@@ -136,10 +142,74 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public void Execute()
         {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
+            initStateMatrix();
+
             ProgressChanged(1, 1);
+        }
+        /* 
+         * Initialize the state of ChaCha which can be represented as a matrix.
+         * 
+         * The state matrix consists of 16 4-byte entries which makes the state 64 byte large in total.
+         * The state is constructed as following:
+         *  
+         *      CONSTANT  CONSTANT  CONSTANT  CONSTANT
+         *      KEY       KEY       KEY       KEY
+         *      KEY       KEY       KEY       KEY
+         *      INPUT     INPUT     INPUT     INPUT
+         *      
+         * The input is not the text but the IV and counter which comes first.
+         * Everything is in little-endian except the counter.
+         */
+        public void initStateMatrix()
+        {
+            byte[] constants;
+            if (inputKey.Length == 32) // 32 byte key
+            {
+                constants = sigma;
+            }
+            else if(inputKey.Length == 16) // 16 byte key
+            {
+                constants = tau;
+            }
+            else
+            {
+                throw new ArgumentException("Key must be 32 or 16-byte.");
+            }
+
+            int stateOffset = 0;
+            // Convenience method to not abstract away state offset.
+            void addToState(uint value)
+            {
+                state[stateOffset] = value;
+                stateOffset++;
+            }
+            void add4ByteChunksToStateAsLittleEndian(byte[] toAdd)
+            {
+                for (int i = 0; 4 * i < toAdd.Length; ++i)
+                {
+                    addToState(To4ByteLE(toAdd, 0 + 4 * i));
+                }
+            }
+
+            add4ByteChunksToStateAsLittleEndian(constants);
+            add4ByteChunksToStateAsLittleEndian(inputKey);
+            if(inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(inputKey);
+            uint startCounter = 0;
+            addToState(startCounter);
+            add4ByteChunksToStateAsLittleEndian(InputIV);
+        }
+
+        /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
+        public uint To4ByteLE(byte[] x, int offset)
+        {
+            byte b1 = x[offset];
+            byte b2 = x[offset + 1];
+            byte b3 = x[offset + 2];
+            byte b4 = x[offset + 3];
+
+            return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
         }
 
         /// <summary>
