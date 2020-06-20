@@ -21,7 +21,7 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.ChaCha
 {
     // HOWTO: rename class (click name, press F2)
-    public class ExamplePluginCT2Settings : ISettings
+    public class ChaChaSettings : ISettings
     {
         #region Private Variables
 

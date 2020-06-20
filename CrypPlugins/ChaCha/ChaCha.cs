@@ -21,10 +21,10 @@ using Cryptool.PluginBase.Miscellaneous;
 namespace Cryptool.Plugins.ChaCha
 {
     // HOWTO: Change author name, email address, organization and URL.
-    [Author("Anonymous", "coredevs@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
+    [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("Example Plugin", "Subtract one number from another", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("ChaCha", "Stream cipher based on Salsa20", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.ToolsMisc)]
     public class ChaCha : ICrypComponent
@@ -32,7 +32,7 @@ namespace Cryptool.Plugins.ChaCha
         #region Private Variables
 
         // HOWTO: You need to adapt the settings class as well, see the corresponding file.
-        private readonly ExamplePluginCT2Settings settings = new ExamplePluginCT2Settings();
+        private readonly ChaChaSettings settings = new ChaChaSettings();
 
         #endregion
 

@@ -76,8 +76,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExamplePluginCT2.cs" />
-    <Compile Include="ExamplePluginCT2Settings.cs" />
+    <Compile Include="ChaCha.cs" />
+    <Compile Include="ChaChaSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
