@@ -23,6 +23,7 @@ using Cryptool.PluginBase.Miscellaneous;
 using System.Windows.Documents;
 using System.Diagnostics;
 using System.Security.Policy;
+using System.IO.Ports;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -46,7 +47,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private int rounds;
         // one block has 512 bits
-        private static int BLOCKSIZE = 512;
+        private readonly static int BLOCKSIZE_BYTES = 64;
         // bits of counter
         private static int COUNTERSIZE = 32;
         // bits of IV
@@ -253,8 +254,8 @@ namespace Cryptool.Plugins.ChaCha
         public byte[] Xcrypt(byte[] src)
         {
             byte[] dst = new byte[src.Length];
-            int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length / (BLOCKSIZE / 8)));
-            byte[,] keystreamBlocks = new byte[keystreamBlocksNeeded, BLOCKSIZE / 8];
+            int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length / BLOCKSIZE_BYTES));
+            byte[,] keystreamBlocks = new byte[keystreamBlocksNeeded, BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.
             void addToKeystream(byte[] block)
@@ -268,7 +269,7 @@ namespace Cryptool.Plugins.ChaCha
                 addToKeystream(generateKeyStreamBlock(i));
             }
             // flatten two dimension array of bytes into one dimensional array of bytes
-            byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE / 8];
+            byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamOffset = 0;
             foreach (byte b in keystreamBlocks)
             {
@@ -299,7 +300,7 @@ namespace Cryptool.Plugins.ChaCha
             uint[] hash = chachaHash(state);
 
             // convert the hashed uint state array into an array of bytes
-            byte[] keystreamBlock = new byte[BLOCKSIZE/8];
+            byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
             for (int i = 0; i < keystreamBlock.Length; )
             {
                 byte[] stateEntryBytes = BitConverter.GetBytes(hash[i]);
