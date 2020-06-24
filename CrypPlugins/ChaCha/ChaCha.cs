@@ -332,11 +332,10 @@ namespace Cryptool.Plugins.ChaCha
                 state = quarterroundState(state, 2, 7, 8, 13);
                 state = quarterroundState(state, 3, 4, 9, 14);
             }
-            // add the original state and write each entry as little-endian
+            // add the original state
             for (int i = 0; i < state.Length; ++i)
             {
                 state[i] += originalState[i];
-                state[i] = To4ByteLE(state[i]);
             }
             return state;
         }
