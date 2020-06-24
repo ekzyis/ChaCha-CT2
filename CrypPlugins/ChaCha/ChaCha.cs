@@ -302,10 +302,10 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < hash.Length; ++i)
             {
                 byte[] stateEntryBytes = BitConverter.GetBytes(hash[i]);
-                keystreamBlock[i] = stateEntryBytes[0];
-                keystreamBlock[i+1] = stateEntryBytes[1];
-                keystreamBlock[i+2] = stateEntryBytes[2];
-                keystreamBlock[i+3] = stateEntryBytes[3];
+                keystreamBlock[4*i] = stateEntryBytes[0];
+                keystreamBlock[4*i+1] = stateEntryBytes[1];
+                keystreamBlock[4*i+2] = stateEntryBytes[2];
+                keystreamBlock[4*i+3] = stateEntryBytes[3];
             }
             return keystreamBlock;
         }
