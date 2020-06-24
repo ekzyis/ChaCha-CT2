@@ -259,27 +259,22 @@ namespace Cryptool.Plugins.ChaCha
         {
             byte[] dst = new byte[src.Length];
             int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
-            byte[,] keystreamBlocks = new byte[keystreamBlocksNeeded, BLOCKSIZE_BYTES];
+            byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.
             void addToKeystream(byte[] block)
             {
                 for (int i = 0; i < block.Length; ++i)
-                    keystreamBlocks[keystreamBlocksOffset, i] = block[i];
-                keystreamBlocksOffset++;
+                {
+                    keystream[keystreamBlocksOffset] = block[i];
+                    keystreamBlocksOffset++;
+                }
             }
             for (uint i = 0; i < keystreamBlocksNeeded; i++)
             {
                 byte[] keyblock = generateKeyStreamBlock(i+1);
+                // add each byte of keyblock to keystream
                 addToKeystream(keyblock);
-            }
-            // flatten two dimension array of bytes into one dimensional array of bytes
-            byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
-            int keystreamOffset = 0;
-            foreach (byte b in keystreamBlocks)
-            {
-                keystream[keystreamOffset] = b;
-                keystreamOffset++;
             }
             // XOR the input with the keystream
             for (int i = 0; i < src.Length; ++i)
