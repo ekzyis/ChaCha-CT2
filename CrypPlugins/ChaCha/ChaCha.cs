@@ -54,9 +54,19 @@ namespace Cryptool.Plugins.ChaCha
         // ChaCha state consists of 16 32-bit integers
         private uint[] initial_state = new uint[16]; 
 
-        public enum Version
+        public sealed class Version
         {
-            IETF, DJB
+            public static readonly Version IETF = new Version("IETF", 32, 96);
+            public static readonly Version DJB = new Version("DJB", 64, 64);
+            public string Name { get; private set; }
+            public int BitsCounter { get; private set; }
+            public int BitsIV { get; private set; }
+            private Version(string name, int bitsCounter, int bitsIV)
+            {
+                Name = name;
+                BitsCounter = bitsCounter;
+                BitsIV = bitsIV;
+            }
         }
 
         #endregion
@@ -159,7 +169,7 @@ namespace Cryptool.Plugins.ChaCha
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
             GuiLogMessage(String.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
-            GuiLogMessage(String.Format("Version: {0}", settings.Version), NotificationLevel.Info);
+            GuiLogMessage(String.Format("Version: {0}", settings.Version.Name), NotificationLevel.Info);
 
             if (validateInput())
             {
