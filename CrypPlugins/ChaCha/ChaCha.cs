@@ -49,9 +49,9 @@ namespace Cryptool.Plugins.ChaCha
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
         // bits of counter
-        private static int COUNTERSIZE = 32;
+        private static int COUNTERSIZE_BITS = 32;
         // bits of IV
-        private static int IVSIZE = 96;
+        private static int IVSIZE_BITS = 96;
         // ChaCha state consists of 16 32-bit integers
         private uint[] initial_state = new uint[16]; 
 
@@ -174,7 +174,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 message = "Key must be 32 or 16-byte.";
             }
-            else if (inputIV.Length != IVSIZE / 8)
+            else if (inputIV.Length != IVSIZE_BITS / 8)
             {
                 message = "IV must be 12-byte";
             }
@@ -230,7 +230,7 @@ namespace Cryptool.Plugins.ChaCha
             add4ByteChunksToStateAsLittleEndian(constants);
             add4ByteChunksToStateAsLittleEndian(inputKey);
             if(inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(inputKey);
-            byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE / 8).ToArray();
+            byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE_BITS / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
         }
