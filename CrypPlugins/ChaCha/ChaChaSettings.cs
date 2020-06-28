@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.ChaCha
     public class ChaChaSettings : ISettings
     {
 
-        public int rounds = 20;
+        private int rounds = 20;
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
         public int Rounds
         {
