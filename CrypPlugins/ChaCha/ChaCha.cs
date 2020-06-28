@@ -153,6 +153,8 @@ namespace Cryptool.Plugins.ChaCha
 
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
+            GuiLogMessage(String.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
+
             if (validateInput())
             {
                 InitStateMatrix();
