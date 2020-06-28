@@ -31,7 +31,18 @@ namespace Cryptool.Plugins.ChaCha
             get { return rounds; }
             set
             {
-                rounds = value;
+                switch(value)
+                {
+                    case 0:
+                        rounds = 8;
+                        break;
+                    case 1:
+                        rounds = 12;
+                        break;
+                    case 2:
+                        rounds = 20;
+                        break;
+                }
                 OnPropertyChanged("Rounds");
             }
         }
