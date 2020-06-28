@@ -291,7 +291,9 @@ namespace Cryptool.Plugins.ChaCha
         public byte[] generateKeyStreamBlock(uint n)
         {
             uint[] state = (uint[])(initial_state.Clone());
-            byte[] counter = BitConverter.GetBytes(n);
+            byte[] counter = getBytes(n);
+            // counter as little-endian
+            Array.Reverse(counter);
             // set counter value to state
             state[12] = To4ByteLE(counter, 0);
 
@@ -301,13 +303,44 @@ namespace Cryptool.Plugins.ChaCha
             byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
             for (int i = 0; i < hash.Length; ++i)
             {
-                byte[] stateEntryBytes = BitConverter.GetBytes(hash[i]);
+                byte[] stateEntryBytes = getBytes(hash[i]);
                 keystreamBlock[4*i] = stateEntryBytes[0];
                 keystreamBlock[4*i+1] = stateEntryBytes[1];
                 keystreamBlock[4*i+2] = stateEntryBytes[2];
                 keystreamBlock[4*i+3] = stateEntryBytes[3];
             }
             return keystreamBlock;
+        }
+
+        /**
+         * Return a bytes array of the given number with the highest significant byte always coming first (big-endian), independent of system architecture.
+         * For example: getBytes(0x01020304) -> byte[4] { 1, 2, 3, 4 }
+         */
+        public byte[] getBytes(uint n)
+        {
+            byte[] b = BitConverter.GetBytes(n);
+            // if system architecture is little-endian,
+            // BitConverter.GetBytes returned bytes in little-endian order thus we reverse the order
+            // to always get the highest significant byte first (big-endian)
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(b);
+            }
+            return b;
+        }
+
+        /**
+         * Return a uint of the given bytes array interpreted as big-endian, independent of system architecture.
+         * For example: ToUInt32(new byte[] { 0x01, 0x02, 0x03, 0x04 }) -> 0x01020304
+         */
+        public uint ToUInt32(byte[] b, int startIndex)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(b);
+                return BitConverter.ToUInt32(b, startIndex);
+            }
+            return BitConverter.ToUInt32(b, startIndex);
         }
 
         /* Generates the hash out of the input state block.*/
@@ -331,6 +364,13 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < state.Length; ++i)
             {
                 state[i] += originalState[i];
+            }
+            // each 4 byte chunk as little-endian
+            for (int i = 0; i < state.Length; ++i)
+            {
+                byte[] b = getBytes(state[i]);
+                Array.Reverse(b);
+                state[i] = ToUInt32(b, 0);
             }
             return state;
         }
