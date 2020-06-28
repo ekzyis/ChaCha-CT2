@@ -45,7 +45,6 @@ namespace Cryptool.Plugins.ChaCha
         private byte[] inputKey;
         private byte[] inputIV;
 
-        private int rounds = 20;
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
         // bits of counter
@@ -347,7 +346,7 @@ namespace Cryptool.Plugins.ChaCha
         public uint[] chachaHash(uint[] state)
         {
             uint[] originalState = (uint[])(state.Clone());
-            for (int i = 0; i < rounds / 2; ++i)
+            for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
                 state = quarterroundState(state, 0, 4, 8, 12);
