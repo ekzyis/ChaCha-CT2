@@ -54,6 +54,11 @@ namespace Cryptool.Plugins.ChaCha
         // ChaCha state consists of 16 32-bit integers
         private uint[] initial_state = new uint[16]; 
 
+        public enum Version
+        {
+            IETF, DJB
+        }
+
         #endregion
 
         #region Public Variables
@@ -154,6 +159,7 @@ namespace Cryptool.Plugins.ChaCha
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
             GuiLogMessage(String.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
+            GuiLogMessage(String.Format("Version: {0}", settings.Version), NotificationLevel.Info);
 
             if (validateInput())
             {
