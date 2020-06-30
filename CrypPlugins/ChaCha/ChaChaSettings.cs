@@ -23,8 +23,11 @@ namespace Cryptool.Plugins.ChaCha
     // HOWTO: rename class (click name, press F2)
     public class ChaChaSettings : ISettings
     {
-
         private int rounds = 20;
+        private int _version = 0;
+        private int initialCounter = 0;
+        private ChaCha.Version version = ChaCha.Version.IETF;
+
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
         public int Rounds
         {
@@ -45,6 +48,32 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 OnPropertyChanged("Rounds");
             }
+        }
+
+        [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "IETF", "DJB" })]
+        public int _Version
+        {
+            get { return _version; }
+            set
+            {
+                _version = value;
+                switch(value)
+                {
+                    case 0:
+                        version = ChaCha.Version.IETF;
+                        break;
+                    case 1:
+                        version = ChaCha.Version.DJB;
+                        break;
+
+                }
+                OnPropertyChanged("Version");
+            }
+        }
+
+        public ChaCha.Version Version
+        {
+            get { return version;  }
         }
 
         #region Events

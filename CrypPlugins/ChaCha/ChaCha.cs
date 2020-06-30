@@ -47,12 +47,31 @@ namespace Cryptool.Plugins.ChaCha
 
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
-        // bits of counter
-        private static int COUNTERSIZE_BITS = 32;
-        // bits of IV
-        private static int IVSIZE_BITS = 96;
+        // counter size (depends on version)
+        private int COUNTERSIZE_BITS;
+        // IV size (depends on version)
+        private int IVSIZE_BITS;
+        // initial counter value (for keystream blocks)
+        private uint INITIAL_COUNTER;
         // ChaCha state consists of 16 32-bit integers
         private uint[] initial_state = new uint[16]; 
+
+        public sealed class Version
+        {
+            public static readonly Version IETF = new Version("IETF", 32, 96, 1);
+            public static readonly Version DJB = new Version("DJB", 64, 64, 0);
+            public string Name { get; private set; }
+            public int BitsCounter { get; private set; }
+            public int BitsIV { get; private set; }
+            public uint InitialCounter { get; private set; }
+            private Version(string name, int bitsCounter, int bitsIV, uint initialCounter)
+            {
+                Name = name;
+                BitsCounter = bitsCounter;
+                BitsIV = bitsIV;
+                InitialCounter = initialCounter;
+            }
+        }
 
         #endregion
 
@@ -154,6 +173,11 @@ namespace Cryptool.Plugins.ChaCha
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
             GuiLogMessage(String.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
+            GuiLogMessage(String.Format("Version: {0}", settings.Version.Name), NotificationLevel.Info);
+
+            COUNTERSIZE_BITS = settings.Version.BitsCounter;
+            IVSIZE_BITS = settings.Version.BitsIV;
+            INITIAL_COUNTER = settings.Version.InitialCounter;
 
             if (validateInput())
             {
@@ -177,7 +201,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             else if (inputIV.Length != IVSIZE_BITS / 8)
             {
-                message = "IV must be 12-byte";
+                message = String.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
             }
             if(message != null)
             {
@@ -199,7 +223,7 @@ namespace Cryptool.Plugins.ChaCha
          *      INPUT     INPUT     INPUT     INPUT
          *      
          * The input is not the text but the IV and counter which comes first.
-         * Everything is in little-endian except the counter.
+         * Every entry is in little-endian.
          */
         public void InitStateMatrix()
         {
@@ -271,9 +295,9 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            for (uint i = 0; i < keystreamBlocksNeeded; i++)
+            for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
-                byte[] keyblock = generateKeyStreamBlock(i+1);
+                byte[] keyblock = generateKeyStreamBlock(i);
                 // add each byte of keyblock to keystream
                 addToKeystream(keyblock);
             }
