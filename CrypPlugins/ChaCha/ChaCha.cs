@@ -223,7 +223,7 @@ namespace Cryptool.Plugins.ChaCha
          *      INPUT     INPUT     INPUT     INPUT
          *      
          * The input is not the text but the IV and counter which comes first.
-         * Everything is in little-endian except the counter.
+         * Every entry is in little-endian.
          */
         public void InitStateMatrix()
         {
