@@ -295,7 +295,7 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded; i++)
+            for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
                 byte[] keyblock = generateKeyStreamBlock(i);
                 // add each byte of keyblock to keystream
