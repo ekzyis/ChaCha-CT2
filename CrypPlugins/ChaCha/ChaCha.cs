@@ -51,21 +51,25 @@ namespace Cryptool.Plugins.ChaCha
         private int COUNTERSIZE_BITS;
         // IV size (depends on version)
         private int IVSIZE_BITS;
+        // initial counter value (for keystream blocks)
+        private uint INITIAL_COUNTER;
         // ChaCha state consists of 16 32-bit integers
         private uint[] initial_state = new uint[16]; 
 
         public sealed class Version
         {
-            public static readonly Version IETF = new Version("IETF", 32, 96);
-            public static readonly Version DJB = new Version("DJB", 64, 64);
+            public static readonly Version IETF = new Version("IETF", 32, 96, 1);
+            public static readonly Version DJB = new Version("DJB", 64, 64, 0);
             public string Name { get; private set; }
             public int BitsCounter { get; private set; }
             public int BitsIV { get; private set; }
-            private Version(string name, int bitsCounter, int bitsIV)
+            public uint InitialCounter { get; private set; }
+            private Version(string name, int bitsCounter, int bitsIV, uint initialCounter)
             {
                 Name = name;
                 BitsCounter = bitsCounter;
                 BitsIV = bitsIV;
+                InitialCounter = initialCounter;
             }
         }
 
@@ -173,6 +177,7 @@ namespace Cryptool.Plugins.ChaCha
 
             COUNTERSIZE_BITS = settings.Version.BitsCounter;
             IVSIZE_BITS = settings.Version.BitsIV;
+            INITIAL_COUNTER = settings.Version.InitialCounter;
 
             if (validateInput())
             {
@@ -290,9 +295,9 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            for (uint i = 0; i < keystreamBlocksNeeded; i++)
+            for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded; i++)
             {
-                byte[] keyblock = generateKeyStreamBlock(i+1);
+                byte[] keyblock = generateKeyStreamBlock(i);
                 // add each byte of keyblock to keystream
                 addToKeystream(keyblock);
             }

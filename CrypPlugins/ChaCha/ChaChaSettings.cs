@@ -25,6 +25,7 @@ namespace Cryptool.Plugins.ChaCha
     {
         private int rounds = 20;
         private int _version = 0;
+        private int initialCounter = 0;
         private ChaCha.Version version = ChaCha.Version.IETF;
 
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
