@@ -37,12 +37,15 @@ namespace Cryptool.Plugins.ChaCha
                 switch(value)
                 {
                     case 0:
+                    case 8:
                         rounds = 8;
                         break;
                     case 1:
+                    case 12:
                         rounds = 12;
                         break;
                     case 2:
+                    case 20:
                         rounds = 20;
                         break;
                 }
