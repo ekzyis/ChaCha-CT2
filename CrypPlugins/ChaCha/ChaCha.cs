@@ -47,10 +47,10 @@ namespace Cryptool.Plugins.ChaCha
 
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
-        // bits of counter
-        private static int COUNTERSIZE_BITS = 32;
-        // bits of IV
-        private static int IVSIZE_BITS = 96;
+        // counter size (depends on version)
+        private int COUNTERSIZE_BITS;
+        // IV size (depends on version)
+        private int IVSIZE_BITS;
         // ChaCha state consists of 16 32-bit integers
         private uint[] initial_state = new uint[16]; 
 
@@ -170,6 +170,9 @@ namespace Cryptool.Plugins.ChaCha
 
             GuiLogMessage(String.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
             GuiLogMessage(String.Format("Version: {0}", settings.Version.Name), NotificationLevel.Info);
+
+            COUNTERSIZE_BITS = settings.Version.BitsCounter;
+            IVSIZE_BITS = settings.Version.BitsIV;
 
             if (validateInput())
             {
