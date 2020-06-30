@@ -201,7 +201,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             else if (inputIV.Length != IVSIZE_BITS / 8)
             {
-                message = "IV must be 12-byte";
+                message = String.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
             }
             if(message != null)
             {
