@@ -24,6 +24,9 @@ using System.Windows.Documents;
 using System.Diagnostics;
 using System.Security.Policy;
 using System.IO.Ports;
+using System.Windows.Threading;
+using System.Threading;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -39,6 +42,7 @@ namespace Cryptool.Plugins.ChaCha
         #region Private Variables
 
         private readonly ChaChaSettings settings;
+        private ChaChaPresentation _presentation = new ChaChaPresentation();
 
         private byte[] inputData;
         private byte[] outputData;
@@ -153,7 +157,18 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public UserControl Presentation
         {
-            get { return null; }
+            get { return _presentation; }
+        }
+
+        /* print a hex presentation of the byte array*/
+        public string hexString(byte[] bytes, int offset, int length)
+        {
+            StringBuilder sb = new StringBuilder();
+            for(int i=offset; i < offset + length; ++i)
+            {
+                sb.Append(bytes[i].ToString("X2"));
+            }
+            return sb.ToString();
         }
 
         /// <summary>
@@ -258,6 +273,26 @@ namespace Cryptool.Plugins.ChaCha
             byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE_BITS / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
+
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                _presentation.C0.Content = hexString(constants, 0, 4);
+                _presentation.C1.Content = hexString(constants, 4, 4);
+                _presentation.C2.Content = hexString(constants, 8, 4);
+                _presentation.C3.Content = hexString(constants, 12, 4);
+                _presentation.K0.Content = hexString(InputKey, 0, 4);
+                _presentation.K1.Content = hexString(InputKey, 4, 4);
+                _presentation.K2.Content = hexString(InputKey, 8, 4);
+                _presentation.K3.Content = hexString(InputKey, 12, 4);
+                _presentation.K4.Content = hexString(InputKey, 16, 4);
+                _presentation.K5.Content = hexString(InputKey, 20, 4);
+                _presentation.K6.Content = hexString(InputKey, 24, 4);
+                _presentation.K7.Content = hexString(InputKey, 28, 4);
+                _presentation.Co0.Content = hexString(counter, 0, 4);
+                _presentation.Co1.Content = hexString(counter, 4, 4);
+                _presentation.IV0.Content = hexString(InputIV, 0, 4);
+                _presentation.IV1.Content = hexString(InputIV, 4, 4);
+            }, null);
         }
 
         /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
