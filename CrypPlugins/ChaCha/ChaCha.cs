@@ -51,6 +51,8 @@ namespace Cryptool.Plugins.ChaCha
 
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
+        // each block entry has 32 bits
+        private readonly static int BLOCKENTRY_BYTES = 4;
         // counter size (depends on version)
         private int COUNTERSIZE_BITS;
         // IV size (depends on version)
@@ -276,22 +278,27 @@ namespace Cryptool.Plugins.ChaCha
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                _presentation.C0.Content = hexString(constants, 0, 4);
-                _presentation.C1.Content = hexString(constants, 4, 4);
-                _presentation.C2.Content = hexString(constants, 8, 4);
-                _presentation.C3.Content = hexString(constants, 12, 4);
-                _presentation.K0.Content = hexString(InputKey, 0, 4);
-                _presentation.K1.Content = hexString(InputKey, 4, 4);
-                _presentation.K2.Content = hexString(InputKey, 8, 4);
-                _presentation.K3.Content = hexString(InputKey, 12, 4);
-                _presentation.K4.Content = hexString(InputKey, 16, 4);
-                _presentation.K5.Content = hexString(InputKey, 20, 4);
-                _presentation.K6.Content = hexString(InputKey, 24, 4);
-                _presentation.K7.Content = hexString(InputKey, 28, 4);
-                _presentation.Co0.Content = hexString(counter, 0, 4);
-                _presentation.Co1.Content = hexString(counter, 4, 4);
-                _presentation.IV0.Content = hexString(InputIV, 0, 4);
-                _presentation.IV1.Content = hexString(InputIV, 4, 4);
+                for (int i = 0; i < initial_state.Length; i++)
+                {
+                    String labelName = "";
+                    // first 4 entries consist of the constants
+                    if (0 <= i && i < 4)
+                    {
+                        labelName = String.Format("C{0}", i);
+                    }
+                    // next 8 entries consist of the key
+                    else if (4 <= i && i < 12)
+                    {
+                        labelName = String.Format("K{0}", i - 4);
+                    }
+                    // last 4 entries are the attacker-controlled input (counter and IV)
+                    else
+                    {
+                        labelName = String.Format("Input{0}", i - 12);
+                    }
+                    Label label = (Label)_presentation.FindName(labelName);
+                    label.Content = initial_state[i].ToString("X8");
+                }
             }, null);
         }
 

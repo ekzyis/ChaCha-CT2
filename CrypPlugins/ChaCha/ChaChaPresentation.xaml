@@ -30,9 +30,9 @@
     <Label Name="K5" Grid.Row="2" Grid.Column="1"/>
     <Label Name="K6" Grid.Row="2" Grid.Column="2"/>
     <Label Name="K7" Grid.Row="2" Grid.Column="3"/>
-    <Label Name="Co0" Grid.Row="3" Grid.Column="0"/>
-    <Label Name="Co1" Grid.Row="3" Grid.Column="1"/>
-    <Label Name="IV0" Grid.Row="3" Grid.Column="2"/>
-    <Label Name="IV1" Grid.Row="3" Grid.Column="3"/>
+    <Label Name="Input0" Grid.Row="3" Grid.Column="0"/>
+    <Label Name="Input1" Grid.Row="3" Grid.Column="1"/>
+    <Label Name="Input2" Grid.Row="3" Grid.Column="2"/>
+    <Label Name="Input3" Grid.Row="3" Grid.Column="3"/>
   </Grid>
 </UserControl>
