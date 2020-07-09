@@ -50,7 +50,7 @@
               <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                   <RowDefinition></RowDefinition>
-                  <RowDefinition></RowDefinition>
+                  <RowDefinition Height="6*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <!-- Description -->
                 <StackPanel Grid.Row="0">
@@ -69,16 +69,16 @@
                   <StackPanel Grid.Row="0">
                     <TextBlock TextWrapping="Wrap">This leads us to following steps:</TextBlock>
                   </StackPanel>
-                  <StackPanel Margin="30,0,0,0" Grid.Row="0">
+                  <StackPanel Margin="30,0,0,0" Grid.Row="1">
                     <TextBlock TextWrapping="Wrap">1. Determine how many keystream blocks we will need.</TextBlock>
                   </StackPanel>
-                  <StackPanel Margin="30,0,0,0" Grid.Row="1">
+                  <StackPanel Margin="30,0,0,0" Grid.Row="2">
                     <TextBlock TextWrapping="Wrap">2. Generate keystream blocks</TextBlock>
                   </StackPanel>
-                  <StackPanel Margin="30,0,0,0"  Grid.Row="2">
+                  <StackPanel Margin="30,0,0,0"  Grid.Row="3">
                     <TextBlock TextWrapping="Wrap">3. Chain keystream blocks</TextBlock>
                   </StackPanel>
-                  <StackPanel Margin="30,0,0,0" Grid.Row="3">
+                  <StackPanel Margin="30,0,0,0" Grid.Row="4">
                     <TextBlock TextWrapping="Wrap">4. XOR input with keystream</TextBlock>
                   </StackPanel>
                 </Grid>
