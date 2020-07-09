@@ -9,8 +9,8 @@
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <Grid Margin="5">
     <Grid.RowDefinitions>
-      <RowDefinition Height="95*"></RowDefinition>
-      <RowDefinition Height="3*"></RowDefinition>
+      <RowDefinition Height="95*"></RowDefinition> <!-- Content row -->
+      <RowDefinition Height="3*"></RowDefinition> <!-- Navigation bar row -->
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
     <Grid Name="Navbar" Grid.Row="1">
@@ -43,8 +43,8 @@
             <!-- Grid for content -->
             <Grid Grid.Row="1">
               <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="4*"/> <!-- Steps + description column -->
+                <ColumnDefinition Width="3*"/> <!-- Input params column -->
               </Grid.ColumnDefinitions>
               <!-- Steps + description -->
               <Grid Grid.Column="0">
