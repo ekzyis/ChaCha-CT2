@@ -4,35 +4,62 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="25*" />
-      <ColumnDefinition Width="25*" />
-      <ColumnDefinition Width="25*" />
-      <ColumnDefinition Width="25*" />
-    </Grid.ColumnDefinitions>
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
+  <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
+  <Grid Margin="5,5,5,5">
     <Grid.RowDefinitions>
-      <RowDefinition Height="25*" />
-      <RowDefinition Height="25*" />
-      <RowDefinition Height="25*" />
-      <RowDefinition Height="25*" />
+      <RowDefinition Height="95*"></RowDefinition>
+      <RowDefinition Height="5*"></RowDefinition>
     </Grid.RowDefinitions>
-    <Label Name="C0" Grid.Row="0" Grid.Column="0"/>
-    <Label Name="C1" Grid.Row="0" Grid.Column="1"/>
-    <Label Name="C2" Grid.Row="0" Grid.Column="2"/>
-    <Label Name="C3" Grid.Row="0" Grid.Column="3"/>
-    <Label Name="K0" Grid.Row="1" Grid.Column="0"/>
-    <Label Name="K1" Grid.Row="1" Grid.Column="1"/>
-    <Label Name="K2" Grid.Row="1" Grid.Column="2"/>
-    <Label Name="K3" Grid.Row="1" Grid.Column="3"/>
-    <Label Name="K4" Grid.Row="2" Grid.Column="0"/>
-    <Label Name="K5" Grid.Row="2" Grid.Column="1"/>
-    <Label Name="K6" Grid.Row="2" Grid.Column="2"/>
-    <Label Name="K7" Grid.Row="2" Grid.Column="3"/>
-    <Label Name="Input0" Grid.Row="3" Grid.Column="0"/>
-    <Label Name="Input1" Grid.Row="3" Grid.Column="1"/>
-    <Label Name="Input2" Grid.Row="3" Grid.Column="2"/>
-    <Label Name="Input3" Grid.Row="3" Grid.Column="3"/>
+    <!-- Navigation bar -->
+    <Grid Name="Navbar" Grid.Row="1">
+        <TextBlock>NEXT</TextBlock>
+    </Grid>
+    <!-- Main grid for content pane -->
+    <Grid Name="Contentpane">
+      <!-- Landing page -->
+      <Grid Name="Landingpage">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+          <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
+            ChaCha Visualization
+          </TextBlock>
+          <TextBlock HorizontalAlignment="Center">
+            A stream cipher used in TLS by Daniel J. Bernstein
+          </TextBlock>
+        </StackPanel>
+      </Grid>
+      <!-- Grid for state matrix -->
+      <Grid Name="State">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="25*" />
+          <ColumnDefinition Width="25*" />
+          <ColumnDefinition Width="25*" />
+          <ColumnDefinition Width="25*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+          <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Name="C0" Grid.Row="0" Grid.Column="0"/>
+        <Label Name="C1" Grid.Row="0" Grid.Column="1"/>
+        <Label Name="C2" Grid.Row="0" Grid.Column="2"/>
+        <Label Name="C3" Grid.Row="0" Grid.Column="3"/>
+        <Label Name="K0" Grid.Row="1" Grid.Column="0"/>
+        <Label Name="K1" Grid.Row="1" Grid.Column="1"/>
+        <Label Name="K2" Grid.Row="1" Grid.Column="2"/>
+        <Label Name="K3" Grid.Row="1" Grid.Column="3"/>
+        <Label Name="K4" Grid.Row="2" Grid.Column="0"/>
+        <Label Name="K5" Grid.Row="2" Grid.Column="1"/>
+        <Label Name="K6" Grid.Row="2" Grid.Column="2"/>
+        <Label Name="K7" Grid.Row="2" Grid.Column="3"/>
+        <Label Name="Input0" Grid.Row="3" Grid.Column="0"/>
+        <Label Name="Input1" Grid.Row="3" Grid.Column="1"/>
+        <Label Name="Input2" Grid.Row="3" Grid.Column="2"/>
+        <Label Name="Input3" Grid.Row="3" Grid.Column="3"/>
+      </Grid>
   </Grid>
+</Grid>
 </UserControl>
