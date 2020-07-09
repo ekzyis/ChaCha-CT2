@@ -278,6 +278,15 @@ namespace Cryptool.Plugins.ChaCha
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
+                // set input params
+                Label inputParamsKey = (Label)_presentation.FindName("inputParamsKey");
+                inputParamsKey.Content = ByteArrayToString(inputKey);
+                Label inputParamsIV = (Label)_presentation.FindName("inputParamsIV");
+                inputParamsIV.Content = ByteArrayToString(inputIV);
+                Label inputsParamsInput = (Label)_presentation.FindName("inputParamsInput");
+                inputsParamsInput.Content = ByteArrayToString(inputData);
+
+                // initialize state matrix
                 for (int i = 0; i < initial_state.Length; i++)
                 {
                     String labelName = "";
@@ -300,6 +309,14 @@ namespace Cryptool.Plugins.ChaCha
                     label.Content = initial_state[i].ToString("X8");
                 }
             }, null);
+        }
+        /** Return a hex representation of the byte array.*/
+        public static string ByteArrayToString(byte[] ba)
+        {
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2} ", b);
+            return hex.ToString();
         }
 
         /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
