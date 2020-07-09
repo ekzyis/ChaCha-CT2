@@ -30,7 +30,7 @@
         </StackPanel>
       </Grid>
       <!-- ChaCha workflow page -->
-      <Grid Name="Workflowpage">
+      <Grid Name="Workflowpage" Visibility="Collapsed">
         <Grid Margin="20">
           <!-- Grid for title and content -->
           <Grid>
