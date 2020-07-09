@@ -14,7 +14,7 @@
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
     <Grid Name="Navbar" Grid.Row="1">
-        <TextBlock>NEXT</TextBlock>
+        <Button Name="Next" Click="Next_Click">NEXT</Button>
     </Grid>
     <!-- Main grid for content pane -->
     <Grid Name="Contentpane">

@@ -25,5 +25,19 @@ namespace Cryptool.Plugins.ChaCha
         {
             InitializeComponent();
         }
+
+        private bool On(UIElement page)
+        {
+            return page.Visibility == Visibility.Visible;
+        }
+
+        private void Next_Click(object sender, RoutedEventArgs e)
+        {
+            if (On(Landingpage))
+            {
+                Landingpage.Visibility = Visibility.Collapsed;
+                Workflowpage.Visibility = Visibility.Visible;
+            }
+        }
     }
 }
