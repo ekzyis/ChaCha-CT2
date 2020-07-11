@@ -30,7 +30,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             InitializeComponent();
             DataContext = this;
-            pageRouting = new UIElement[] { UILandingpage, UIWorkflowpage, UIStatematrixpage };
+            pageRouting = new UIElement[] { UILandingPage, UIWorkflowPage, UIStateMatrixPage };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

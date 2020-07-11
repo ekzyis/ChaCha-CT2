@@ -21,9 +21,9 @@
       </StackPanel>
     </Grid>
     <!-- Main grid for content pane -->
-    <Grid Name="UIContentpane">
+    <Grid Name="UIContentPane">
       <!-- Landing page -->
-      <Grid Name="UILandingpage" Visibility="Visible">
+      <Grid Name="UILandingPage" Visibility="Visible">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -34,7 +34,7 @@
         </StackPanel>
       </Grid>
       <!-- ChaCha workflow page -->
-      <Grid Margin="20" Name="UIWorkflowpage" Visibility="Collapsed">
+      <Grid Margin="20" Name="UIWorkflowPage" Visibility="Collapsed">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
@@ -84,7 +84,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha State matrix page -->
-      <Grid Margin="20" Name="UIStatematrixpage" Visibility="Collapsed">
+      <Grid Margin="20" Name="UIStateMatrixPage" Visibility="Collapsed">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
