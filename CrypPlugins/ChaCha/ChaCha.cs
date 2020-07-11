@@ -280,10 +280,10 @@ namespace Cryptool.Plugins.ChaCha
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
                 // set state params
-                _presentation.Constants = ByteArrayToString(constants);
-                _presentation.InputKey = ByteArrayToString(_inputKey);
-                _presentation.InputIV = ByteArrayToString(_inputIV);
-                _presentation.InputData = ByteArrayToString(_inputData);
+                _presentation.Constants = constants;
+                _presentation.InputKey = _inputKey;
+                _presentation.InputIV = _inputIV;
+                _presentation.InputData = _inputData;
 
                 // initialize state matrix
                 _presentation.State0 = initial_state[0].ToString("X8");
@@ -303,14 +303,6 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.State14 = initial_state[14].ToString("X8");
                 _presentation.State15 = initial_state[15].ToString("X8");
             }, null);
-        }
-        /** Return a hex representation of the byte array.*/
-        public static string ByteArrayToString(byte[] ba)
-        {
-            StringBuilder hex = new StringBuilder(ba.Length * 2);
-            foreach (byte b in ba)
-                hex.AppendFormat("{0:x2} ", b);
-            return hex.ToString();
         }
 
         /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/

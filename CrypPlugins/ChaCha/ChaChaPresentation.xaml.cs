@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,12 +43,12 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region Input
-        private String _constants;
-        private String _inputKey;
-        private String _inputIV;
-        private String _inputData;
+        private byte[] _constants;
+        private byte[] _inputKey;
+        private byte[] _inputIV;
+        private byte[] _inputData;
 
-        public String Constants
+        public byte[] Constants
         {
             get
             {
@@ -60,7 +61,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public String InputKey
+        public byte[] InputKey
         {
             get
             {
@@ -73,7 +74,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public String InputIV
+        public byte[] InputIV
         {
             get
             {
@@ -86,7 +87,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public String InputData
+        public byte[] InputData
         {
             get
             {
@@ -397,6 +398,39 @@ namespace Cryptool.Plugins.ChaCha
         {
             PrevPageIsEnabled = currentPageIndex != 0;
             NextPageIsEnabled = currentPageIndex != pageRouting.Length - 1;
+        }
+    }
+
+    [ValueConversion(typeof(DateTime), typeof(String))]
+    public class ByteToHexStringConverter : IValueConverter
+    {
+        /** Return a hex representation of the byte array.*/
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null)
+            {
+                return "";
+            }
+            byte[] bytes = (byte[])value;
+            StringBuilder hex = new StringBuilder(bytes.Length * 2);
+            foreach (byte b in bytes)
+                hex.AppendFormat("{0:x2} ", b);
+            return hex.ToString();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            String hexString = (String)value;
+            byte[] Bytes = new byte[hexString.Length / 2];
+            int[] HexValue = new int[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F };
+
+            for (int x = 0, i = 0; i < hexString.Length; i += 2, x += 1)
+            {
+                Bytes[x] = (byte)(HexValue[Char.ToUpper(hexString[i + 0]) - '0'] << 4 |
+                                  HexValue[Char.ToUpper(hexString[i + 1]) - '0']);
+            }
+
+            return Bytes;
         }
     }
 }

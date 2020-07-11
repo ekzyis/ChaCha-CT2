@@ -3,9 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Cryptool.Plugins.ChaCha"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
+  <UserControl.Resources>
+    <local:ByteToHexStringConverter x:Key="byteToHexStringConverter"/>
+  </UserControl.Resources>
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <Grid>
     <Grid.RowDefinitions>
@@ -214,19 +218,19 @@
             <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Constant:</Label>
-              <Label Content="{ Binding Constants }" Name="UIConstant"/>
+              <Label Content="{ Binding Constants, Converter={StaticResource byteToHexStringConverter} }" Name="UIConstant"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Key:</Label>
-              <Label Content="{ Binding InputKey }" Name="UIInputKey"/>
+              <Label Content="{ Binding InputKey, Converter={StaticResource byteToHexStringConverter} }" Name="UIInputKey"/>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
-              <Label Content="{ Binding InputIV }" Name="UIInputIV"/>
+              <Label Content="{ Binding InputIV, Converter={StaticResource byteToHexStringConverter} }" Name="UIInputIV"/>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Input message:</Label>
-              <Label Content="{ Binding InputData }" Name="UIInputData"/>
+              <Label Content="{ Binding InputData, Converter={StaticResource byteToHexStringConverter} }" Name="UIInputData"/>
             </StackPanel>
           </Grid>
         </Grid>
