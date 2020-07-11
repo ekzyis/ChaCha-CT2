@@ -278,10 +278,11 @@ namespace Cryptool.Plugins.ChaCha
 
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
             {
-                // set input params
-                _presentation.inputParamsKey.Content = ByteArrayToString(inputKey);
-                _presentation.inputParamsIV.Content = ByteArrayToString(inputIV);
-                _presentation.inputParamsInput.Content = ByteArrayToString(inputData);
+                // set state params
+                _presentation.stateParamsConstant.Content = ByteArrayToString(constants);
+                _presentation.stateParamsKey.Content = ByteArrayToString(inputKey);
+                _presentation.stateParamsIV.Content = ByteArrayToString(inputIV);
+                _presentation.stateParamsInput.Content = ByteArrayToString(inputData);
 
                 // initialize state matrix
                 for (int i = 0; i < initial_state.Length; i++)

@@ -19,7 +19,7 @@
     <!-- Main grid for content pane -->
     <Grid Name="Contentpane">
       <!-- Landing page -->
-      <Grid Name="Landingpage" Visibility="Visible">
+      <Grid Name="Landingpage" Visibility="Collapsed">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -30,7 +30,7 @@
         </StackPanel>
       </Grid>
       <!-- ChaCha workflow page -->
-      <Grid Margin="20" Name="Workflowpage" Visibility="Visible">
+      <Grid Margin="20" Name="Workflowpage" Visibility="Collapsed">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
@@ -85,18 +85,21 @@
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" HorizontalAlignment="Center">Input parameters</Label>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+              <Label>Constants:</Label>
+              <Label Name="stateParamsConstant"></Label>
+            </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Key:</Label>
-              <Label Name="inputParamsKey"></Label>
+              <Label Name="stateParamsKey"></Label>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Label>Initialization vector (IV):</Label>
-              <Label Name="inputParamsIV"></Label>
+              <Label Name="stateParamsIV"></Label>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Input message:</Label>
-              <Label Name="inputParamsInput"></Label>
+              <Label Name="stateParamsInput"></Label>
             </StackPanel>
           </Grid>
         </Grid>
@@ -228,18 +231,22 @@
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" HorizontalAlignment="Center">Input parameters</Label>
+            <Label Grid.Row="0" HorizontalAlignment="Center">Parameters</Label>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+              <Label>Constants:</Label>
+              <Label Content="{ Binding Path=Content, ElementName=stateParamsConstant}"/>
+            </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Key:</Label>
-              <Label Content="{ Binding Path=Content, ElementName=inputParamsKey}"/>
+              <Label Content="{ Binding Path=Content, ElementName=stateParamsKey}"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
-              <Label Content="{ Binding Path=Content, ElementName=inputParamsIV}"/>
+              <Label Content="{ Binding Path=Content, ElementName=stateParamsIV}"/>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Input message:</Label>
-              <Label Content="{ Binding Path=Content, ElementName=inputParamsInput}"/>
+              <Label Content="{ Binding Path=Content, ElementName=stateParamsInput}"/>
             </StackPanel>
           </Grid>
         </Grid>
