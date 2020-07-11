@@ -86,7 +86,7 @@
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-              <Label>Constants:</Label>
+              <Label>Constant:</Label>
               <Label Name="stateParamsConstant"></Label>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -233,7 +233,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0" HorizontalAlignment="Center">Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-              <Label>Constants:</Label>
+              <Label>Constant:</Label>
               <Label Content="{ Binding Path=Content, ElementName=stateParamsConstant}"/>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
