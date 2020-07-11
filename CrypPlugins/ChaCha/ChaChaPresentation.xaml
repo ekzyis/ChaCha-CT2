@@ -80,24 +80,26 @@
           <!-- Input parameter -->
           <Grid Margin="100,0,0,0" Grid.Column="1">
             <Grid.RowDefinitions>
-              <RowDefinition Height="1*"></RowDefinition>
+              <RowDefinition Height="2*"></RowDefinition>
+              <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Constant:</Label>
               <Label Name="stateParamsConstant"></Label>
             </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Key:</Label>
               <Label Name="stateParamsKey"></Label>
             </StackPanel>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Label>Initialization vector (IV):</Label>
               <Label Name="stateParamsIV"></Label>
             </StackPanel>
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Input message:</Label>
               <Label Name="stateParamsInput"></Label>
             </StackPanel>
@@ -226,25 +228,26 @@
           <!-- Input parameter -->
           <Grid Margin="100,0,0,0" Grid.Column="1">
             <Grid.RowDefinitions>
-              <RowDefinition Height="1*"></RowDefinition>
+              <RowDefinition Height="2*"></RowDefinition>
+              <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" HorizontalAlignment="Center">Parameters</Label>
+            <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Constant:</Label>
               <Label Content="{ Binding Path=Content, ElementName=stateParamsConstant}"/>
             </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Key:</Label>
               <Label Content="{ Binding Path=Content, ElementName=stateParamsKey}"/>
             </StackPanel>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
               <Label Content="{ Binding Path=Content, ElementName=stateParamsIV}"/>
             </StackPanel>
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Input message:</Label>
               <Label Content="{ Binding Path=Content, ElementName=stateParamsInput}"/>
             </StackPanel>
