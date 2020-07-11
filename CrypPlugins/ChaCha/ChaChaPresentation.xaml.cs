@@ -41,61 +41,61 @@ namespace Cryptool.Plugins.ChaCha
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
 
-        #region StateParams
-        private String _stateParamsConstant;
-        private String _stateParamsKey;
-        private String _stateParamsIV;
-        private String _stateParamsInput;
+        #region Input
+        private String _constants;
+        private String _inputKey;
+        private String _inputIV;
+        private String _inputData;
 
-        public String StateParamsConstant
+        public String Constants
         {
             get
             {
-                return _stateParamsConstant;
+                return _constants;
             }
             set
             {
-                _stateParamsConstant = value;
-                OnPropertyChanged("StateParamsConstant");
+                _constants = value;
+                OnPropertyChanged("Constants");
             }
         }
 
-        public String StateParamsKey
+        public String InputKey
         {
             get
             {
-                return _stateParamsKey;
+                return _inputKey;
             }
             set
             {
-                _stateParamsKey = value;
-                OnPropertyChanged("StateParamsKey");
+                _inputKey = value;
+                OnPropertyChanged("InputKey");
             }
         }
 
-        public String StateParamsIV
+        public String InputIV
         {
             get
             {
-                return _stateParamsIV;
+                return _inputIV;
             }
             set
             {
-                _stateParamsIV = value;
-                OnPropertyChanged("StateParamsIV");
+                _inputIV = value;
+                OnPropertyChanged("InputIV");
             }
         }
 
-        public String StateParamsInput
+        public String InputData
         {
             get
             {
-                return _stateParamsInput;
+                return _inputData;
             }
             set
             {
-                _stateParamsInput = value;
-                OnPropertyChanged("StateParamsInput");
+                _inputData = value;
+                OnPropertyChanged("InputData");
             }
         }
         #endregion

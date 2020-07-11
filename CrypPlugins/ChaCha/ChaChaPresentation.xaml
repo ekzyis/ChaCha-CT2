@@ -214,19 +214,19 @@
             <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Constant:</Label>
-              <Label Content="{ Binding StateParamsConstant }" Name="UIStateParamsConstant"/>
+              <Label Content="{ Binding Constants }" Name="UIConstant"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Key:</Label>
-              <Label Content="{ Binding StateParamsKey }" Name="UIStateParamsKey"/>
+              <Label Content="{ Binding InputKey }" Name="UIInputKey"/>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
-              <Label Content="{ Binding StateParamsIV }" Name="UIStateParamsIV"/>
+              <Label Content="{ Binding InputIV }" Name="UIInputIV"/>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Input message:</Label>
-              <Label Content="{ Binding StateParamsInput }" Name="UIStateParamsInput"/>
+              <Label Content="{ Binding InputData }" Name="UIInputData"/>
             </StackPanel>
           </Grid>
         </Grid>
