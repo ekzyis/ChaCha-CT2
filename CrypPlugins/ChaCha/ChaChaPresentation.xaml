@@ -210,19 +210,19 @@
             <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Constant:</Label>
-              <Label Content="{ Binding Path=Content, ElementName=stateParamsConstant}"/>
+              <Label Content="{ Binding StateParamsConstant }"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Key:</Label>
-              <Label Content="{ Binding Path=Content, ElementName=stateParamsKey}"/>
+              <Label Content="{ Binding StateParamsKey }"/>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
-              <Label Content="{ Binding Path=Content, ElementName=stateParamsIV}"/>
+              <Label Content="{ Binding StateParamsIV }"/>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Input message:</Label>
-              <Label Content="{ Binding Path=Content, ElementName=stateParamsInput}"/>
+              <Label Content="{ Binding StateParamsInput }"/>
             </StackPanel>
           </Grid>
         </Grid>
