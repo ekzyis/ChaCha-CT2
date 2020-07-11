@@ -13,17 +13,17 @@
       <RowDefinition Height="5*"></RowDefinition> <!-- Navigation bar row -->
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
-    <Grid Name="Navbar" Grid.Row="1">
+    <Grid Name="UINavbar" Grid.Row="1">
       <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        <Button Name="PrevPage" Click="PrevPage_Click" IsEnabled="{ Binding PrevPageIsEnabled }" Content="&lt;"/>
+        <Button Name="UIPrevPage" Click="PrevPage_Click" IsEnabled="{ Binding PrevPageIsEnabled }" Content="&lt;"/>
         <Label Content="PAGE"/>
-        <Button Name="NextPage" Click="NextPage_Click" IsEnabled="{ Binding NextPageIsEnabled }" Content="&gt;"/>
+        <Button Name="UINextPage" Click="NextPage_Click" IsEnabled="{ Binding NextPageIsEnabled }" Content="&gt;"/>
       </StackPanel>
     </Grid>
     <!-- Main grid for content pane -->
-    <Grid Name="Contentpane">
+    <Grid Name="UIContentpane">
       <!-- Landing page -->
-      <Grid Name="Landingpage" Visibility="Visible">
+      <Grid Name="UILandingpage" Visibility="Visible">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -34,7 +34,7 @@
         </StackPanel>
       </Grid>
       <!-- ChaCha workflow page -->
-      <Grid Margin="20" Name="Workflowpage" Visibility="Collapsed">
+      <Grid Margin="20" Name="UIWorkflowpage" Visibility="Collapsed">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
@@ -84,7 +84,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha State matrix page -->
-      <Grid Margin="20" Name="Statematrixpage" Visibility="Collapsed">
+      <Grid Margin="20" Name="UIStatematrixpage" Visibility="Collapsed">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
@@ -123,55 +123,55 @@
                     </Grid.RowDefinitions>
                     <!-- Row 0 -->
                     <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateC0 }"/>
+                      <Label Content="{ Binding StateC0 }" Name="UIStateC0"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateC1 }"/>
+                      <Label Content="{ Binding StateC1 }" Name="UIStateC1"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateC2 }"/>
+                      <Label Content="{ Binding StateC2 }" Name="UIStateC2"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateC3 }"/>
+                      <Label Content="{ Binding StateC3 }" Name="UIStateC3"/>
                     </Border>
                     <!-- Row 1 -->
                     <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK0 }"/>
+                      <Label Content="{ Binding StateK0 }" Name="UIStateK0"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK1 }"/>
+                      <Label Content="{ Binding StateK1 }" Name="UIStateK1"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK2 }"/>
+                      <Label Content="{ Binding StateK2 }" Name="UIStateK2"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK3 }"/>
+                      <Label Content="{ Binding StateK3 }" Name="UIStateK3"/>
                     </Border>
                     <!-- Row 2 -->
                     <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK4 }"/>
+                      <Label Content="{ Binding StateK4 }" Name="UIStateK4"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK5 }"/>
+                      <Label Content="{ Binding StateK5 }" Name="UIStateK5"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK6 }"/>
+                      <Label Content="{ Binding StateK6 }" Name="UIStateK6"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateK7 }"/>
+                      <Label Content="{ Binding StateK7 }" Name="UIStateK7"/>
                     </Border>
                     <!-- Row 3 -->
                     <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateInput0 }"/>
+                      <Label Content="{ Binding StateInput0 }" Name="UIStateInput0"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateInput1 }"/>
+                      <Label Content="{ Binding StateInput1 }" Name="UIStateInput1"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateInput2 }"/>
+                      <Label Content="{ Binding StateInput2 }" Name="UIStateInput2"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateInput3 }"/>
+                      <Label Content="{ Binding StateInput3 }" Name="UIStateInput3"/>
                     </Border>
                   </Grid>
                 </Border>
@@ -190,15 +190,15 @@
                 <TextBlock Grid.Row="0" Grid.Column="0">
                   Input:
                 </TextBlock>
-                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformInput }"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformInput }" Name="UITransformInput"/>
                 <TextBlock Grid.Row="1" Grid.Column="0">
                   Split into 4 byte chunks:
                 </TextBlock>
-                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformChunks }"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformChunks }" Name="UITransformChunks"/>
                 <TextBlock Grid.Row="2" Grid.Column="0">
                   Transform each chunk into <LineBreak/> little-endian:
                 </TextBlock>
-                <Label Grid.Row="2" Grid.Column="1" Content="{ Binding TransformLittleEndian }"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{ Binding TransformLittleEndian }" Name="UITransformLittleEndian"/>
               </Grid>
             </Grid>
           </Grid>
@@ -214,19 +214,19 @@
             <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
               <Label>Constant:</Label>
-              <Label Content="{ Binding StateParamsConstant }"/>
+              <Label Content="{ Binding StateParamsConstant }" Name="UIStateParamsConstant"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Key:</Label>
-              <Label Content="{ Binding StateParamsKey }"/>
+              <Label Content="{ Binding StateParamsKey }" Name="UIStateParamsKey"/>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
-              <Label Content="{ Binding StateParamsIV }"/>
+              <Label Content="{ Binding StateParamsIV }" Name="UIStateParamsIV"/>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Input message:</Label>
-              <Label Content="{ Binding StateParamsInput }"/>
+              <Label Content="{ Binding StateParamsInput }" Name="UIStateParamsInput"/>
             </StackPanel>
           </Grid>
         </Grid>
