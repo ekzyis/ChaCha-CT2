@@ -366,16 +366,37 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("NextPageIsEnabled");
             }
         }
-
+        private bool prevPageIsEnabled = false;
+        public bool PrevPageIsEnabled
+        {
+            get
+            {
+                return prevPageIsEnabled;
+            }
+            set
+            {
+                prevPageIsEnabled = value;
+                OnPropertyChanged("PrevPageIsEnabled");
+            }
+        }
+        private void PrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            pageRouting[currentPageIndex].Visibility = Visibility.Collapsed;
+            currentPageIndex--;
+            pageRouting[currentPageIndex].Visibility = Visibility.Visible;
+            updatePageNavigation();
+        }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
             pageRouting[currentPageIndex].Visibility = Visibility.Collapsed;
             currentPageIndex++;
             pageRouting[currentPageIndex].Visibility = Visibility.Visible;
-            if(currentPageIndex == pageRouting.Length - 1)
-            {
-                NextPageIsEnabled = false;
-            }
+            updatePageNavigation();
+        }
+        private void updatePageNavigation()
+        {
+            PrevPageIsEnabled = currentPageIndex != 0;
+            NextPageIsEnabled = currentPageIndex != pageRouting.Length - 1;
         }
     }
 }
