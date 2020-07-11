@@ -21,23 +21,20 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl
     {
+        // List which indicates page order to implement page navigation
+        private UIElement[] pageRouting;
+        private int currentPageIndex = 0;
         public ChaChaPresentation()
         {
             InitializeComponent();
+            pageRouting = new UIElement[] { Landingpage, Workflowpage, Statematrixpage };
         }
 
-        private bool On(UIElement page)
+        private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            return page.Visibility == Visibility.Visible;
-        }
-
-        private void Next_Click(object sender, RoutedEventArgs e)
-        {
-            if (On(Landingpage))
-            {
-                Landingpage.Visibility = Visibility.Collapsed;
-                Workflowpage.Visibility = Visibility.Visible;
-            }
+            pageRouting[currentPageIndex].Visibility = Visibility.Collapsed;
+            currentPageIndex++;
+            pageRouting[currentPageIndex].Visibility = Visibility.Visible;
         }
     }
 }
