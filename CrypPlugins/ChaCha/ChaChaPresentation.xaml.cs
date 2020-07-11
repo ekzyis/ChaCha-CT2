@@ -353,11 +353,29 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
+        private bool nextPageIsEnabled = false;
+        public bool NextPageIsEnabled
+        {
+            get
+            {
+                return nextPageIsEnabled;
+            }
+            set
+            {
+                nextPageIsEnabled = value;
+                OnPropertyChanged("NextPageIsEnabled");
+            }
+        }
+
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
             pageRouting[currentPageIndex].Visibility = Visibility.Collapsed;
             currentPageIndex++;
             pageRouting[currentPageIndex].Visibility = Visibility.Visible;
+            if(currentPageIndex == pageRouting.Length - 1)
+            {
+                NextPageIsEnabled = false;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
     <Grid Name="Navbar" Grid.Row="1">
-        <Button Name="NextPage" Click="NextPage_Click">NEXT PAGE</Button>
+        <Button Name="NextPage" Click="NextPage_Click" IsEnabled="{ Binding NextPageIsEnabled }">NEXT PAGE</Button>
     </Grid>
     <!-- Main grid for content pane -->
     <Grid Name="Contentpane">
