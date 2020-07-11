@@ -101,212 +101,212 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region State
-        private String _stateC0;
-        private String _stateC1;
-        private String _stateC2;
-        private String _stateC3;
-        private String _stateK0;
-        private String _stateK1;
-        private String _stateK2;
-        private String _stateK3;
-        private String _stateK4;
-        private String _stateK5;
-        private String _stateK6;
-        private String _stateK7;
-        private String _stateInput0;
-        private String _stateInput1;
-        private String _stateInput2;
-        private String _stateInput3;
-        public String StateC0
+        private String _state0;
+        private String _state1;
+        private String _state2;
+        private String _state3;
+        private String _state4;
+        private String _state5;
+        private String _state6;
+        private String _state7;
+        private String _state8;
+        private String _state9;
+        private String _state10;
+        private String _state11;
+        private String _state12;
+        private String _state13;
+        private String _state14;
+        private String _state15;
+        public String State0
         {
             get
             {
-                return _stateC0;
+                return _state0;
             }
             set
             {
-                _stateC0 = value;
-                OnPropertyChanged("StateC0");
+                _state0 = value;
+                OnPropertyChanged("State0");
             }
         }
-        public String StateC1
+        public String State1
         {
             get
             {
-                return _stateC1;
+                return _state1;
             }
             set
             {
-                _stateC1 = value;
-                OnPropertyChanged("StateC1");
+                _state1 = value;
+                OnPropertyChanged("State1");
             }
         }
-        public String StateC2
+        public String State2
         {
             get
             {
-                return _stateC2;
+                return _state2;
             }
             set
             {
-                _stateC2 = value;
-                OnPropertyChanged("StateC2");
+                _state2 = value;
+                OnPropertyChanged("State2");
             }
         }
-        public String StateC3
+        public String State3
         {
             get
             {
-                return _stateC3;
+                return _state3;
             }
             set
             {
-                _stateC3 = value;
-                OnPropertyChanged("StateC3");
+                _state3 = value;
+                OnPropertyChanged("State3");
             }
         }
-        public String StateK0
+        public String State4
         {
             get
             {
-                return _stateK0;
+                return _state4;
             }
             set
             {
-                _stateK0 = value;
-                OnPropertyChanged("StateK0");
+                _state4 = value;
+                OnPropertyChanged("State4");
             }
         }
-        public String StateK1
+        public String State5
         {
             get
             {
-                return _stateK1;
+                return _state5;
             }
             set
             {
-                _stateK1 = value;
-                OnPropertyChanged("StateK1");
+                _state5 = value;
+                OnPropertyChanged("State5");
             }
         }
-        public String StateK2
+        public String State6
         {
             get
             {
-                return _stateK2;
+                return _state6;
             }
             set
             {
-                _stateK2 = value;
-                OnPropertyChanged("StateK2");
+                _state6 = value;
+                OnPropertyChanged("State6");
             }
         }
-        public String StateK3
+        public String State7
         {
             get
             {
-                return _stateK3;
+                return _state7;
             }
             set
             {
-                _stateK3 = value;
-                OnPropertyChanged("StateK3");
+                _state7 = value;
+                OnPropertyChanged("State7");
             }
         }
-        public String StateK4
+        public String State8
         {
             get
             {
-                return _stateK4;
+                return _state8;
             }
             set
             {
-                _stateK4 = value;
-                OnPropertyChanged("StateK4");
+                _state8 = value;
+                OnPropertyChanged("State8");
             }
         }
-        public String StateK5
+        public String State9
         {
             get
             {
-                return _stateK5;
+                return _state9;
             }
             set
             {
-                _stateK5 = value;
-                OnPropertyChanged("StateK5");
+                _state9 = value;
+                OnPropertyChanged("State9");
             }
         }
-        public String StateK6
+        public String State10
         {
             get
             {
-                return _stateK6;
+                return _state10;
             }
             set
             {
-                _stateK6 = value;
-                OnPropertyChanged("StateK6");
+                _state10 = value;
+                OnPropertyChanged("State10");
             }
         }
-        public String StateK7
+        public String State11
         {
             get
             {
-                return _stateK7;
+                return _state11;
             }
             set
             {
-                _stateK7 = value;
-                OnPropertyChanged("StateK7");
+                _state11 = value;
+                OnPropertyChanged("State11");
             }
         }
-        public String StateInput0
+        public String State12
         {
             get
             {
-                return _stateInput0;
+                return _state12;
             }
             set
             {
-                _stateInput0 = value;
-                OnPropertyChanged("StateInput0");
+                _state12 = value;
+                OnPropertyChanged("State12");
             }
         }
-        public String StateInput1
+        public String State13
         {
             get
             {
-                return _stateInput1;
+                return _state13;
             }
             set
             {
-                _stateInput1 = value;
-                OnPropertyChanged("StateInput1");
+                _state13 = value;
+                OnPropertyChanged("State13");
             }
         }
-        public String StateInput2
+        public String State14
         {
             get
             {
-                return _stateInput2;
+                return _state14;
             }
             set
             {
-                _stateInput2 = value;
-                OnPropertyChanged("StateInput2");
+                _state14 = value;
+                OnPropertyChanged("State14");
             }
         }
-        public String StateInput3
+        public String State15
         {
             get
             {
-                return _stateInput3;
+                return _state15;
             }
             set
             {
-                _stateInput3 = value;
-                OnPropertyChanged("StateInput3");
+                _state15 = value;
+                OnPropertyChanged("State15");
             }
         }
         #endregion

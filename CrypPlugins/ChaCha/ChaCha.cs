@@ -286,22 +286,22 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.InputData = ByteArrayToString(_inputData);
 
                 // initialize state matrix
-                _presentation.StateC0 = initial_state[0].ToString("X8");
-                _presentation.StateC1 = initial_state[1].ToString("X8");
-                _presentation.StateC2 = initial_state[2].ToString("X8");
-                _presentation.StateC3 = initial_state[3].ToString("X8");
-                _presentation.StateK0 = initial_state[4].ToString("X8");
-                _presentation.StateK1 = initial_state[5].ToString("X8");
-                _presentation.StateK2 = initial_state[6].ToString("X8");
-                _presentation.StateK3 = initial_state[7].ToString("X8");
-                _presentation.StateK4 = initial_state[8].ToString("X8");
-                _presentation.StateK5 = initial_state[9].ToString("X8");
-                _presentation.StateK6 = initial_state[10].ToString("X8");
-                _presentation.StateK7 = initial_state[11].ToString("X8");
-                _presentation.StateInput0 = initial_state[12].ToString("X8");
-                _presentation.StateInput1 = initial_state[13].ToString("X8");
-                _presentation.StateInput2 = initial_state[14].ToString("X8");
-                _presentation.StateInput3 = initial_state[15].ToString("X8");
+                _presentation.State0 = initial_state[0].ToString("X8");
+                _presentation.State1 = initial_state[1].ToString("X8");
+                _presentation.State2 = initial_state[2].ToString("X8");
+                _presentation.State3 = initial_state[3].ToString("X8");
+                _presentation.State4 = initial_state[4].ToString("X8");
+                _presentation.State5 = initial_state[5].ToString("X8");
+                _presentation.State6 = initial_state[6].ToString("X8");
+                _presentation.State7 = initial_state[7].ToString("X8");
+                _presentation.State8 = initial_state[8].ToString("X8");
+                _presentation.State9 = initial_state[9].ToString("X8");
+                _presentation.State10 = initial_state[10].ToString("X8");
+                _presentation.State11 = initial_state[11].ToString("X8");
+                _presentation.State12 = initial_state[12].ToString("X8");
+                _presentation.State13 = initial_state[13].ToString("X8");
+                _presentation.State14 = initial_state[14].ToString("X8");
+                _presentation.State15 = initial_state[15].ToString("X8");
             }, null);
         }
         /** Return a hex representation of the byte array.*/
