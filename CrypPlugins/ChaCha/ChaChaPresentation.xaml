@@ -80,7 +80,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha State matrix page -->
-      <Grid Margin="20" Name="Statematrixpage">
+      <Grid Margin="20" Name="Statematrixpage" Visibility="Visible">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
