@@ -19,7 +19,7 @@
     <!-- Main grid for content pane -->
     <Grid Name="Contentpane">
       <!-- Landing page -->
-      <Grid Name="Landingpage" Visibility="Collapsed">
+      <Grid Name="Landingpage" Visibility="Visible">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -80,7 +80,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha State matrix page -->
-      <Grid Margin="20" Name="Statematrixpage" Visibility="Visible">
+      <Grid Margin="20" Name="Statematrixpage" Visibility="Collapsed">
         <!-- Grid for title and content -->
         <Grid.RowDefinitions>
           <RowDefinition Height="50" /> <!-- Title row -->
