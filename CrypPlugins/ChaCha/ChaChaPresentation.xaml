@@ -7,10 +7,10 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
-  <Grid Margin="5">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="95*"></RowDefinition> <!-- Content row -->
-      <RowDefinition Height="3*"></RowDefinition> <!-- Navigation bar row -->
+      <RowDefinition Height="5*"></RowDefinition> <!-- Navigation bar row -->
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
     <Grid Name="Navbar" Grid.Row="1">
