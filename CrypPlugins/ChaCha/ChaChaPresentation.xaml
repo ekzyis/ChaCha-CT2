@@ -251,21 +251,6 @@
           </Grid>
         </Grid>
       </Grid>
-      <!-- Grid for state matrix -->
-      <Grid Name="State" Visibility="Collapsed">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="25*" />
-          <ColumnDefinition Width="25*" />
-          <ColumnDefinition Width="25*" />
-          <ColumnDefinition Width="25*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-          <RowDefinition />
-          <RowDefinition />
-          <RowDefinition />
-          <RowDefinition />
-        </Grid.RowDefinitions>
-      </Grid>
+    </Grid>
   </Grid>
-</Grid>
 </UserControl>
