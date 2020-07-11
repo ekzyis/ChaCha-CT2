@@ -158,16 +158,16 @@
                     </Border>
                     <!-- Row 3 -->
                     <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateCounter0 }"/>
+                      <Label Content="{ Binding StateInput0 }"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateCounter1 }"/>
+                      <Label Content="{ Binding StateInput1 }"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateIV0 }"/>
+                      <Label Content="{ Binding StateInput2 }"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding StateIV1 }"/>
+                      <Label Content="{ Binding StateInput3 }"/>
                     </Border>
                   </Grid>
                 </Border>

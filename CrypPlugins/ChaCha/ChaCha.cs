@@ -297,10 +297,10 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.StateK5 = initial_state[9].ToString("X8");
                 _presentation.StateK6 = initial_state[10].ToString("X8");
                 _presentation.StateK7 = initial_state[11].ToString("X8");
-                _presentation.StateCounter0 = initial_state[12].ToString("X8");
-                _presentation.StateCounter1 = initial_state[13].ToString("X8");
-                _presentation.StateIV0 = initial_state[14].ToString("X8");
-                _presentation.StateIV1 = initial_state[15].ToString("X8");
+                _presentation.StateInput0 = initial_state[12].ToString("X8");
+                _presentation.StateInput1 = initial_state[13].ToString("X8");
+                _presentation.StateInput2 = initial_state[14].ToString("X8");
+                _presentation.StateInput3 = initial_state[15].ToString("X8");
             }, null);
         }
         /** Return a hex representation of the byte array.*/

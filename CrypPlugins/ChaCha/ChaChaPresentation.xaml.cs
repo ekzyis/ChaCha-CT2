@@ -113,10 +113,10 @@ namespace Cryptool.Plugins.ChaCha
         private String stateK5;
         private String stateK6;
         private String stateK7;
-        private String stateCounter0;
-        private String stateCounter1;
-        private String stateIV0;
-        private String stateIV1;
+        private String stateInput0;
+        private String stateInput1;
+        private String stateInput2;
+        private String stateInput3;
         public String StateC0
         {
             get
@@ -261,52 +261,52 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("StateK7");
             }
         }
-        public String StateCounter0
+        public String StateInput0
         {
             get
             {
-                return stateCounter0;
+                return stateInput0;
             }
             set
             {
-                stateCounter0 = value;
-                OnPropertyChanged("StateCounter0");
+                stateInput0 = value;
+                OnPropertyChanged("StateInput0");
             }
         }
-        public String StateCounter1
+        public String StateInput1
         {
             get
             {
-                return stateCounter1;
+                return stateInput1;
             }
             set
             {
-                stateCounter1 = value;
-                OnPropertyChanged("StateCounter1");
+                stateInput1 = value;
+                OnPropertyChanged("StateInput1");
             }
         }
-        public String StateIV0
+        public String StateInput2
         {
             get
             {
-                return stateIV0;
+                return stateInput2;
             }
             set
             {
-                stateIV0 = value;
-                OnPropertyChanged("StateIV0");
+                stateInput2 = value;
+                OnPropertyChanged("StateInput2");
             }
         }
-        public String StateIV1
+        public String StateInput3
         {
             get
             {
-                return stateIV1;
+                return stateInput3;
             }
             set
             {
-                stateIV1 = value;
-                OnPropertyChanged("StateIV1");
+                stateInput3 = value;
+                OnPropertyChanged("StateInput3");
             }
         }
         #endregion
