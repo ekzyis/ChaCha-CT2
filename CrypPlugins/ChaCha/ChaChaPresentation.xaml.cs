@@ -42,20 +42,20 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region StateParams
-        private String stateParamsConstant;
-        private String stateParamsKey;
-        private String stateParamsIV;
-        private String stateParamsInput;
+        private String _stateParamsConstant;
+        private String _stateParamsKey;
+        private String _stateParamsIV;
+        private String _stateParamsInput;
 
         public String StateParamsConstant
         {
             get
             {
-                return stateParamsConstant;
+                return _stateParamsConstant;
             }
             set
             {
-                stateParamsConstant = value;
+                _stateParamsConstant = value;
                 OnPropertyChanged("StateParamsConstant");
             }
         }
@@ -64,11 +64,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateParamsKey;
+                return _stateParamsKey;
             }
             set
             {
-                stateParamsKey = value;
+                _stateParamsKey = value;
                 OnPropertyChanged("StateParamsKey");
             }
         }
@@ -77,11 +77,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateParamsIV;
+                return _stateParamsIV;
             }
             set
             {
-                stateParamsIV = value;
+                _stateParamsIV = value;
                 OnPropertyChanged("StateParamsIV");
             }
         }
@@ -90,42 +90,42 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateParamsInput;
+                return _stateParamsInput;
             }
             set
             {
-                stateParamsInput = value;
+                _stateParamsInput = value;
                 OnPropertyChanged("StateParamsInput");
             }
         }
         #endregion
 
         #region State
-        private String stateC0;
-        private String stateC1;
-        private String stateC2;
-        private String stateC3;
-        private String stateK0;
-        private String stateK1;
-        private String stateK2;
-        private String stateK3;
-        private String stateK4;
-        private String stateK5;
-        private String stateK6;
-        private String stateK7;
-        private String stateInput0;
-        private String stateInput1;
-        private String stateInput2;
-        private String stateInput3;
+        private String _stateC0;
+        private String _stateC1;
+        private String _stateC2;
+        private String _stateC3;
+        private String _stateK0;
+        private String _stateK1;
+        private String _stateK2;
+        private String _stateK3;
+        private String _stateK4;
+        private String _stateK5;
+        private String _stateK6;
+        private String _stateK7;
+        private String _stateInput0;
+        private String _stateInput1;
+        private String _stateInput2;
+        private String _stateInput3;
         public String StateC0
         {
             get
             {
-                return stateC0;
+                return _stateC0;
             }
             set
             {
-                stateC0 = value;
+                _stateC0 = value;
                 OnPropertyChanged("StateC0");
             }
         }
@@ -133,11 +133,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateC1;
+                return _stateC1;
             }
             set
             {
-                stateC1 = value;
+                _stateC1 = value;
                 OnPropertyChanged("StateC1");
             }
         }
@@ -145,11 +145,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateC2;
+                return _stateC2;
             }
             set
             {
-                stateC2 = value;
+                _stateC2 = value;
                 OnPropertyChanged("StateC2");
             }
         }
@@ -157,11 +157,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateC3;
+                return _stateC3;
             }
             set
             {
-                stateC3 = value;
+                _stateC3 = value;
                 OnPropertyChanged("StateC3");
             }
         }
@@ -169,11 +169,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK0;
+                return _stateK0;
             }
             set
             {
-                stateK0 = value;
+                _stateK0 = value;
                 OnPropertyChanged("StateK0");
             }
         }
@@ -181,11 +181,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK1;
+                return _stateK1;
             }
             set
             {
-                stateK1 = value;
+                _stateK1 = value;
                 OnPropertyChanged("StateK1");
             }
         }
@@ -193,11 +193,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK2;
+                return _stateK2;
             }
             set
             {
-                stateK2 = value;
+                _stateK2 = value;
                 OnPropertyChanged("StateK2");
             }
         }
@@ -205,11 +205,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK3;
+                return _stateK3;
             }
             set
             {
-                stateK3 = value;
+                _stateK3 = value;
                 OnPropertyChanged("StateK3");
             }
         }
@@ -217,11 +217,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK4;
+                return _stateK4;
             }
             set
             {
-                stateK4 = value;
+                _stateK4 = value;
                 OnPropertyChanged("StateK4");
             }
         }
@@ -229,11 +229,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK5;
+                return _stateK5;
             }
             set
             {
-                stateK5 = value;
+                _stateK5 = value;
                 OnPropertyChanged("StateK5");
             }
         }
@@ -241,11 +241,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK6;
+                return _stateK6;
             }
             set
             {
-                stateK6 = value;
+                _stateK6 = value;
                 OnPropertyChanged("StateK6");
             }
         }
@@ -253,11 +253,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateK7;
+                return _stateK7;
             }
             set
             {
-                stateK7 = value;
+                _stateK7 = value;
                 OnPropertyChanged("StateK7");
             }
         }
@@ -265,11 +265,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateInput0;
+                return _stateInput0;
             }
             set
             {
-                stateInput0 = value;
+                _stateInput0 = value;
                 OnPropertyChanged("StateInput0");
             }
         }
@@ -277,11 +277,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateInput1;
+                return _stateInput1;
             }
             set
             {
-                stateInput1 = value;
+                _stateInput1 = value;
                 OnPropertyChanged("StateInput1");
             }
         }
@@ -289,11 +289,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateInput2;
+                return _stateInput2;
             }
             set
             {
-                stateInput2 = value;
+                _stateInput2 = value;
                 OnPropertyChanged("StateInput2");
             }
         }
@@ -301,11 +301,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return stateInput3;
+                return _stateInput3;
             }
             set
             {
-                stateInput3 = value;
+                _stateInput3 = value;
                 OnPropertyChanged("StateInput3");
             }
         }
@@ -353,29 +353,29 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        private bool nextPageIsEnabled = false;
+        private bool _nextPageIsEnabled = false;
         public bool NextPageIsEnabled
         {
             get
             {
-                return nextPageIsEnabled;
+                return _nextPageIsEnabled;
             }
             set
             {
-                nextPageIsEnabled = value;
+                _nextPageIsEnabled = value;
                 OnPropertyChanged("NextPageIsEnabled");
             }
         }
-        private bool prevPageIsEnabled = false;
+        private bool _prevPageIsEnabled = false;
         public bool PrevPageIsEnabled
         {
             get
             {
-                return prevPageIsEnabled;
+                return _prevPageIsEnabled;
             }
             set
             {
-                prevPageIsEnabled = value;
+                _prevPageIsEnabled = value;
                 OnPropertyChanged("PrevPageIsEnabled");
             }
         }
