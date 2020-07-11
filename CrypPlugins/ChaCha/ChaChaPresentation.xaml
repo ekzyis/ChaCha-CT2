@@ -19,7 +19,7 @@
     <!-- Main grid for content pane -->
     <Grid Name="Contentpane">
       <!-- Landing page -->
-      <Grid Name="Landingpage">
+      <Grid Name="Landingpage" Visibility="Visible">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
