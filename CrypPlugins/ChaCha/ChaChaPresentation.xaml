@@ -101,6 +101,149 @@
           </Grid>
         </Grid>
       </Grid>
+      <!-- ChaCha State matrix page -->
+      <Grid Margin="20" Name="Statematrixpage">
+        <!-- Grid for title and content -->
+        <Grid.RowDefinitions>
+          <RowDefinition Height="50" /> <!-- Title row -->
+          <RowDefinition /> <!-- Content row -->
+        </Grid.RowDefinitions>
+        <!-- Title -->
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">State matrix</TextBlock>
+        <!-- Grid for content -->
+        <Grid Grid.Row="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/> <!-- state matrix + transformation steps column -->
+            <ColumnDefinition Width="3*"/> <!-- Input params column -->
+          </Grid.ColumnDefinitions>
+          <!-- state matrix + transformation steps -->
+          <Grid Grid.Column="0">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition> <!-- state matrix row -->
+                <RowDefinition></RowDefinition> <!-- little-endian transformation step row -->
+              </Grid.RowDefinitions>
+              <!-- State matrix -->
+              <Grid Grid.Row="0">
+                <Border BorderBrush="Black" BorderThickness="0,1,1,0">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition></ColumnDefinition>
+                      <ColumnDefinition></ColumnDefinition>
+                      <ColumnDefinition></ColumnDefinition>
+                      <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition></RowDefinition>
+                      <RowDefinition></RowDefinition>
+                      <RowDefinition></RowDefinition>
+                      <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!-- Row 0 -->
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="C0"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="C1"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="C2"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="C3"/>
+                    </Border>
+                    <!-- Row 1 -->
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K0"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K1"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K2"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K3"/>
+                    </Border>
+                    <!-- Row 2 -->
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K4"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K5"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K6"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="K7"/>
+                    </Border>
+                    <!-- Row 3 -->
+                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="Input0"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="Input1"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="Input2"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <Label Name="Input3"/>
+                    </Border>
+                  </Grid>
+                </Border>
+              </Grid>
+              <!-- little-endian transformation -->
+              <Grid Margin="10" Grid.Row="1">
+                <Grid.RowDefinitions>
+                  <RowDefinition></RowDefinition>
+                  <RowDefinition></RowDefinition>
+                  <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition></ColumnDefinition>
+                  <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0">
+                  Input:
+                </TextBlock>
+                <Label Grid.Row="1" Grid.Column="1" Name="TransformInput"/>
+                <TextBlock Grid.Row="1" Grid.Column="0">
+                  Split into 4 byte chunks:
+                </TextBlock>
+                <Label Grid.Row="1" Grid.Column="1" Name="TransformChunks"/>
+                <TextBlock Grid.Row="2" Grid.Column="0">
+                  Transform each chunk into <LineBreak/> little-endian:
+                </TextBlock>
+                <Label Grid.Row="2" Grid.Column="1" Name="TransformLittleEndian"/>
+              </Grid>
+            </Grid>
+          </Grid>
+          <!-- Input parameter -->
+          <Grid Margin="100,0,0,0" Grid.Column="1">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="1*"></RowDefinition>
+              <RowDefinition Height="4*"></RowDefinition>
+              <RowDefinition Height="4*"></RowDefinition>
+              <RowDefinition Height="4*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" HorizontalAlignment="Center">Input parameters</Label>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+              <Label>Key:</Label>
+              <Label Content="{ Binding Path=Content, ElementName=inputParamsKey}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+              <Label>Initialization vector (IV):</Label>
+              <Label Content="{ Binding Path=Content, ElementName=inputParamsIV}"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+              <Label>Input message:</Label>
+              <Label Content="{ Binding Path=Content, ElementName=inputParamsInput}"/>
+            </StackPanel>
+          </Grid>
+        </Grid>
+      </Grid>
       <!-- Grid for state matrix -->
       <Grid Name="State" Visibility="Collapsed">
         <Grid.ColumnDefinitions>
@@ -115,22 +258,6 @@
           <RowDefinition />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Name="C0" Grid.Row="0" Grid.Column="0"/>
-        <Label Name="C1" Grid.Row="0" Grid.Column="1"/>
-        <Label Name="C2" Grid.Row="0" Grid.Column="2"/>
-        <Label Name="C3" Grid.Row="0" Grid.Column="3"/>
-        <Label Name="K0" Grid.Row="1" Grid.Column="0"/>
-        <Label Name="K1" Grid.Row="1" Grid.Column="1"/>
-        <Label Name="K2" Grid.Row="1" Grid.Column="2"/>
-        <Label Name="K3" Grid.Row="1" Grid.Column="3"/>
-        <Label Name="K4" Grid.Row="2" Grid.Column="0"/>
-        <Label Name="K5" Grid.Row="2" Grid.Column="1"/>
-        <Label Name="K6" Grid.Row="2" Grid.Column="2"/>
-        <Label Name="K7" Grid.Row="2" Grid.Column="3"/>
-        <Label Name="Input0" Grid.Row="3" Grid.Column="0"/>
-        <Label Name="Input1" Grid.Row="3" Grid.Column="1"/>
-        <Label Name="Input2" Grid.Row="3" Grid.Column="2"/>
-        <Label Name="Input3" Grid.Row="3" Grid.Column="3"/>
       </Grid>
   </Grid>
 </Grid>
