@@ -285,27 +285,22 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.StateParamsInput = ByteArrayToString(inputData);
 
                 // initialize state matrix
-                for (int i = 0; i < initial_state.Length; i++)
-                {
-                    String labelName = "";
-                    // first 4 entries consist of the constants
-                    if (0 <= i && i < 4)
-                    {
-                        labelName = String.Format("C{0}", i);
-                    }
-                    // next 8 entries consist of the key
-                    else if (4 <= i && i < 12)
-                    {
-                        labelName = String.Format("K{0}", i - 4);
-                    }
-                    // last 4 entries are the attacker-controlled input (counter and IV)
-                    else
-                    {
-                        labelName = String.Format("Input{0}", i - 12);
-                    }
-                    Label label = (Label)_presentation.FindName(labelName);
-                    label.Content = initial_state[i].ToString("X8");
-                }
+                _presentation.StateC0 = initial_state[0].ToString("X8");
+                _presentation.StateC1 = initial_state[1].ToString("X8");
+                _presentation.StateC2 = initial_state[2].ToString("X8");
+                _presentation.StateC3 = initial_state[3].ToString("X8");
+                _presentation.StateK0 = initial_state[4].ToString("X8");
+                _presentation.StateK1 = initial_state[5].ToString("X8");
+                _presentation.StateK2 = initial_state[6].ToString("X8");
+                _presentation.StateK3 = initial_state[7].ToString("X8");
+                _presentation.StateK4 = initial_state[8].ToString("X8");
+                _presentation.StateK5 = initial_state[9].ToString("X8");
+                _presentation.StateK6 = initial_state[10].ToString("X8");
+                _presentation.StateK7 = initial_state[11].ToString("X8");
+                _presentation.StateCounter0 = initial_state[12].ToString("X8");
+                _presentation.StateCounter1 = initial_state[13].ToString("X8");
+                _presentation.StateIV0 = initial_state[14].ToString("X8");
+                _presentation.StateIV1 = initial_state[15].ToString("X8");
             }, null);
         }
         /** Return a hex representation of the byte array.*/

@@ -119,55 +119,55 @@
                     </Grid.RowDefinitions>
                     <!-- Row 0 -->
                     <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="C0"/>
+                      <Label Content="{ Binding StateC0 }"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="C1"/>
+                      <Label Content="{ Binding StateC1 }"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="C2"/>
+                      <Label Content="{ Binding StateC2 }"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="C3"/>
+                      <Label Content="{ Binding StateC3 }"/>
                     </Border>
                     <!-- Row 1 -->
                     <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K0"/>
+                      <Label Content="{ Binding StateK0 }"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K1"/>
+                      <Label Content="{ Binding StateK1 }"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K2"/>
+                      <Label Content="{ Binding StateK2 }"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K3"/>
+                      <Label Content="{ Binding StateK3 }"/>
                     </Border>
                     <!-- Row 2 -->
                     <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K4"/>
+                      <Label Content="{ Binding StateK4 }"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K5"/>
+                      <Label Content="{ Binding StateK5 }"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K6"/>
+                      <Label Content="{ Binding StateK6 }"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="K7"/>
+                      <Label Content="{ Binding StateK7 }"/>
                     </Border>
                     <!-- Row 3 -->
                     <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="Input0"/>
+                      <Label Content="{ Binding StateCounter0 }"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="Input1"/>
+                      <Label Content="{ Binding StateCounter1 }"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="Input2"/>
+                      <Label Content="{ Binding StateIV0 }"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Name="Input3"/>
+                      <Label Content="{ Binding StateIV1 }"/>
                     </Border>
                   </Grid>
                 </Border>
@@ -186,15 +186,15 @@
                 <TextBlock Grid.Row="0" Grid.Column="0">
                   Input:
                 </TextBlock>
-                <Label Grid.Row="1" Grid.Column="1" Name="TransformInput"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformInput }"/>
                 <TextBlock Grid.Row="1" Grid.Column="0">
                   Split into 4 byte chunks:
                 </TextBlock>
-                <Label Grid.Row="1" Grid.Column="1" Name="TransformChunks"/>
+                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformChunks }"/>
                 <TextBlock Grid.Row="2" Grid.Column="0">
                   Transform each chunk into <LineBreak/> little-endian:
                 </TextBlock>
-                <Label Grid.Row="2" Grid.Column="1" Name="TransformLittleEndian"/>
+                <Label Grid.Row="2" Grid.Column="1" Content="{ Binding TransformLittleEndian }"/>
               </Grid>
             </Grid>
           </Grid>
