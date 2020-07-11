@@ -44,10 +44,10 @@ namespace Cryptool.Plugins.ChaCha
         private readonly ChaChaSettings settings;
         private ChaChaPresentation _presentation = new ChaChaPresentation();
 
-        private byte[] inputData;
-        private byte[] outputData;
-        private byte[] inputKey;
-        private byte[] inputIV;
+        private byte[] _inputData;
+        private byte[] _outputData;
+        private byte[] _inputKey;
+        private byte[] _inputIV;
 
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
@@ -102,9 +102,9 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
         public byte[] InputData
         {
-            get { return this.inputData; }
+            get { return this._inputData; }
             set { 
-                this.inputData = value;
+                this._inputData = value;
                 OnPropertyChanged("InputData");
             }
         }
@@ -112,10 +112,10 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
         {
-            get { return this.inputKey; }
+            get { return this._inputKey; }
             set
             {
-                this.inputKey = value;
+                this._inputKey = value;
                 OnPropertyChanged("InputKey");
             }
         }
@@ -123,10 +123,10 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
         {
-            get { return this.inputIV; }
+            get { return this._inputIV; }
             set
             {
-                this.inputIV = value;
+                this._inputIV = value;
                 OnPropertyChanged("InputIV");
             }
         }
@@ -134,10 +134,10 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.OutputData, "OutputDataCaption", "OutputDataTooltip", true)]
         public byte[] OutputData
         {
-            get { return this.outputData; }
+            get { return this._outputData; }
             set
             {
-                this.outputData = value;
+                this._outputData = value;
                 OnPropertyChanged("OutputData");
             }
         }
@@ -213,11 +213,11 @@ namespace Cryptool.Plugins.ChaCha
         public bool validateInput()
         {
             string message = null;
-            if (inputKey.Length != 32 && inputKey.Length != 16)
+            if (_inputKey.Length != 32 && _inputKey.Length != 16)
             {
                 message = "Key must be 32 or 16-byte.";
             }
-            else if (inputIV.Length != IVSIZE_BITS / 8)
+            else if (_inputIV.Length != IVSIZE_BITS / 8)
             {
                 message = String.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
             }
@@ -246,7 +246,7 @@ namespace Cryptool.Plugins.ChaCha
         public void InitStateMatrix()
         {
             byte[] constants;
-            if (inputKey.Length == 32) // 32 byte key
+            if (_inputKey.Length == 32) // 32 byte key
             {
                 constants = sigma;
             }
@@ -271,8 +271,8 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             add4ByteChunksToStateAsLittleEndian(constants);
-            add4ByteChunksToStateAsLittleEndian(inputKey);
-            if(inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(inputKey);
+            add4ByteChunksToStateAsLittleEndian(_inputKey);
+            if(_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_inputKey);
             byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE_BITS / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
@@ -281,9 +281,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 // set state params
                 _presentation.Constants = ByteArrayToString(constants);
-                _presentation.InputKey = ByteArrayToString(inputKey);
-                _presentation.InputIV = ByteArrayToString(inputIV);
-                _presentation.InputData = ByteArrayToString(inputData);
+                _presentation.InputKey = ByteArrayToString(_inputKey);
+                _presentation.InputIV = ByteArrayToString(_inputIV);
+                _presentation.InputData = ByteArrayToString(_inputData);
 
                 // initialize state matrix
                 _presentation.StateC0 = initial_state[0].ToString("X8");
