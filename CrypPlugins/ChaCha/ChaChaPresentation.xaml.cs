@@ -57,6 +57,7 @@ namespace Cryptool.Plugins.ChaCha
             DataContext = this;
             PageAction[] UIStateMatrixPageActions = new PageAction[]
             {
+                #region Write Constants into State Matrix
                 new PageAction() {
                     elementActions = new UIElementAction[] {
                         new UIElementAction() { element = UITransformInput, content = () => HexConstants },
@@ -85,6 +86,64 @@ namespace Cryptool.Plugins.ChaCha
                         new UIElementAction() { element = UIState3, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(24, 8) },
                     }
                 },
+                #endregion
+                #region Write Key into State Matrix
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformInput, content = () => HexInputKey },
+                        new UIElementAction() { element = UITransformChunks, content = () => "" },
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformChunks, content = () => KeyChunks }
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => KeyLittleEndian }
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = (UIElementAction[]) new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                        new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                        new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                        new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                    }
+                    // FIXME Using Concat here throws
+                    //   System.NullReferenceException: 'Der Objektverweis wurde nicht auf eine Objektinstanz festgelegt.'
+                    //   WorkspaceManager.Model.PluginModel.Plugin.get returned null.
+                    .Concat(
+                        // TODO Add user information that if key is 16-byte, it is concatenated with itself to gain a 32-byte key.
+                        InputKey.Length == 16 ?
+                        new UIElementAction[] {
+                            new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                            new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                            new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                            new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                        }
+                        :
+                        new UIElementAction[] {
+                            new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
+                            new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
+                            new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
+                            new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
+                        }
+                    )
+                }
+
+                #endregion
+
             };
             pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
@@ -159,12 +218,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < 16; i+=4)
-                {
-                    sb.Append(hexString(ChaCha.To4ByteLE(_constants, i)));
-                }
-                return chunkify(sb.ToString(), 8);
+                return chunkify(hexStringLittleEndian(_constants), 8);
             }
         }
 
@@ -179,6 +233,8 @@ namespace Cryptool.Plugins.ChaCha
                 _inputKey = value;
                 OnPropertyChanged("InputKey");
                 OnPropertyChanged("HexInputKey");
+                OnPropertyChanged("KeyChunks");
+                OnPropertyChanged("KeyLittleEndian");
             }
         }
         public String HexInputKey
@@ -188,7 +244,20 @@ namespace Cryptool.Plugins.ChaCha
                 return hexString(_inputKey);
             }
         }
-
+        public String KeyChunks
+        {
+            get
+            {
+                return chunkify(hexString(_inputKey), 8);
+            }
+        }
+        public String KeyLittleEndian
+        {
+            get
+            {
+                return chunkify(hexStringLittleEndian(_inputKey), 8);
+            }
+        }
         public byte[] InputIV
         {
             get
@@ -571,7 +640,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             return hexString(ChaCha.getBytes(u));
         }
-
+        /* Write bytes as hex string with each 4 byte written in little-endian */
+        public String hexStringLittleEndian(byte[] bytes)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i += 4)
+            {
+                sb.Append(hexString(ChaCha.To4ByteLE(bytes, i)));
+            }
+            return sb.ToString();
+        }
         #endregion
     }
 }
