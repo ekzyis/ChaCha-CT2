@@ -401,7 +401,7 @@ namespace Cryptool.Plugins.ChaCha
         }
     }
 
-    [ValueConversion(typeof(DateTime), typeof(String))]
+    [ValueConversion(typeof(byte[]), typeof(String))]
     public class ByteToHexStringConverter : IValueConverter
     {
         /** Return a hex representation of the byte array.*/
