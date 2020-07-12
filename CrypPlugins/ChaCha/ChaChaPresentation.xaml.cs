@@ -487,8 +487,6 @@ namespace Cryptool.Plugins.ChaCha
             UIElementAction[] actions = pageRouting[currentPageIndex].actions[currentActionIndex].elementActions;
             for (int i = 0; i < actions.Length; i++)
             {
-                Console.WriteLine(actions[i].element);
-                Console.WriteLine(actions[i].content());
                 actions[i].element.Content = actions[i].content();
             }
             currentActionIndex++;
