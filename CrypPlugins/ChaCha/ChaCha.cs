@@ -408,7 +408,6 @@ namespace Cryptool.Plugins.ChaCha
             if (BitConverter.IsLittleEndian)
             {
                 Array.Reverse(b);
-                return BitConverter.ToUInt32(b, startIndex);
             }
             return BitConverter.ToUInt32(b, startIndex);
         }
