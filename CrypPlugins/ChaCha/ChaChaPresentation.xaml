@@ -127,55 +127,55 @@
                     </Grid.RowDefinitions>
                     <!-- Row 0 -->
                     <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State0 }" Name="UIState0"/>
+                      <Label Name="UIState0"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State1 }" Name="UIState1"/>
+                      <Label Name="UIState1"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State2 }" Name="UIState2"/>
+                      <Label Name="UIState2"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State3 }" Name="UIState3"/>
+                      <Label Name="UIState3"/>
                     </Border>
                     <!-- Row 1 -->
                     <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State4 }" Name="UIState4"/>
+                      <Label Name="UIState4"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State5 }" Name="UIState5"/>
+                      <Label Name="UIState5"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State6 }" Name="UIState6"/>
+                      <Label Name="UIState6"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State7 }" Name="UIState7"/>
+                      <Label Name="UIState7"/>
                     </Border>
                     <!-- Row 2 -->
                     <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State8 }" Name="UIState8"/>
+                      <Label Name="UIState8"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State9 }" Name="UIState9"/>
+                      <Label Name="UIState9"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State10 }" Name="UIState10"/>
+                      <Label Name="UIState10"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State11 }" Name="UIState11"/>
+                      <Label Name="UIState11"/>
                     </Border>
                     <!-- Row 3 -->
                     <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State12 }" Name="UIState12"/>
+                      <Label Name="UIState12"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State13}" Name="UIState13"/>
+                      <Label Name="UIState13"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State14 }" Name="UIState14"/>
+                      <Label Name="UIState14"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <Label Content="{ Binding State15 }" Name="UIState15"/>
+                      <Label Name="UIState15"/>
                     </Border>
                   </Grid>
                 </Border>

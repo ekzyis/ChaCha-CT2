@@ -74,7 +74,17 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         new UIElementAction() { element = UITransformLittleEndian, content = () => ConstantsLittleEndian }
                     }
-                }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIState0, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(0, 8) },
+                        new UIElementAction() { element = UIState1, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(8, 8) },
+                        new UIElementAction() { element = UIState2, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(16, 8) },
+                        new UIElementAction() { element = UIState3, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(24, 8) },
+                    }
+                },
             };
             pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
