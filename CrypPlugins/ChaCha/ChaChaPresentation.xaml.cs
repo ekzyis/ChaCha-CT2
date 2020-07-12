@@ -83,6 +83,22 @@ namespace Cryptool.Plugins.ChaCha
             };
         }
 
+        private Page currentPage
+        {
+            get
+            {
+                return pageRouting[currentPageIndex];
+            }
+        }
+
+        private UIElementAction[] currentActions
+        {
+            get
+            {
+                return currentPage.actions[currentActionIndex].elementActions;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string property)
@@ -482,11 +498,19 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
+            // decrease action index first to get the last executed action list
+            currentActionIndex--;
+            UIElementAction[] lastActions = currentActions;
+            for (int i = 0; i < lastActions.Length; i++)
+            {
+                lastActions[i].element.Content = "";
+            }
+            updatePageNavigation();
 
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
-            UIElementAction[] actions = pageRouting[currentPageIndex].actions[currentActionIndex].elementActions;
+            UIElementAction[] actions = currentActions;
             for (int i = 0; i < actions.Length; i++)
             {
                 actions[i].element.Content = actions[i].content();
@@ -498,8 +522,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             PrevPageIsEnabled = currentPageIndex != 0;
             NextPageIsEnabled = currentPageIndex != pageRouting.Length - 1;
-            PrevActionIsEnabled = pageRouting[currentPageIndex].actionFrames > 0 && currentActionIndex != 0;
-            NextActionIsEnabled = pageRouting[currentPageIndex].actionFrames > 0 && currentActionIndex != pageRouting[currentPageIndex].actionFrames;
+            PrevActionIsEnabled = currentPage.actionFrames > 0 && currentActionIndex != 0;
+            // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
+            // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
+            // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
+            NextActionIsEnabled = currentPage.actionFrames > 0 && currentActionIndex != currentPage.actionFrames;
         }
 
         #endregion
