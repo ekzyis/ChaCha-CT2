@@ -119,6 +119,7 @@ namespace Cryptool.Plugins.ChaCha
                 return hexString(_constants);
             }
         }
+        /* Constants splitted into 4 byte chunks */
         public String ConstantsChunks
         {
             get
@@ -127,6 +128,7 @@ namespace Cryptool.Plugins.ChaCha
                 return chunkify(hexString(_constants), 8);
             }
         }
+        /* Constants with each 4 byte in little endian format*/
         public String ConstantsLittleEndian
         {
             get
