@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -28,7 +29,6 @@ namespace Cryptool.Plugins.ChaCha
         private Page[] pageRouting;
         private int currentPageIndex = 0;
         private int currentActionIndex = 0;
-        private ByteToHexStringConverter byteHexStringConverter = new ByteToHexStringConverter();
 
         struct UIElementAction
         {
@@ -59,7 +59,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 new PageAction() {
                     elementActions = new UIElementAction[] {
-                        new UIElementAction() { element = UITransformInput, content = () => byteHexStringConverter.Convert(Constants, Type.GetType("String"), null, null) },
+                        new UIElementAction() { element = UITransformInput, content = () => HexConstants },
                     },
                 },
                 new PageAction()
@@ -92,10 +92,10 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region Input
-        private byte[] _constants;
-        private byte[] _inputKey;
-        private byte[] _inputIV;
-        private byte[] _inputData;
+        private byte[] _constants = new byte[0];
+        private byte[] _inputKey = new byte[0];
+        private byte[] _inputIV = new byte[0];
+        private byte[] _inputData = new byte[0];
 
         public byte[] Constants
         {
@@ -107,14 +107,24 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _constants = value;
                 OnPropertyChanged("Constants");
+                OnPropertyChanged("HexConstants");
+                OnPropertyChanged("ConstantsChunks");
+                OnPropertyChanged("ConstantsLittleEndian");
+            }
+        }
+        public String HexConstants
+        {
+            get
+            {
+                return hexString(_constants);
             }
         }
         public String ConstantsChunks
         {
             get
             {
-
-                return FourByteChunks(_constants);
+                // insert space after every 8 characters
+                return chunkify(hexString(_constants), 8);
             }
         }
         public String ConstantsLittleEndian
@@ -124,9 +134,9 @@ namespace Cryptool.Plugins.ChaCha
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < 16; i+=4)
                 {
-                    sb.Append(FourByteChunks(ChaCha.getBytes(ChaCha.To4ByteLE(_constants, i))));
+                    sb.Append(hexString(ChaCha.To4ByteLE(_constants, i)));
                 }
-                return sb.ToString();
+                return chunkify(sb.ToString(), 8);
             }
         }
 
@@ -140,6 +150,14 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _inputKey = value;
                 OnPropertyChanged("InputKey");
+                OnPropertyChanged("HexInputKey");
+            }
+        }
+        public String HexInputKey
+        {
+            get
+            {
+                return hexString(_inputKey);
             }
         }
 
@@ -153,6 +171,14 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _inputIV = value;
                 OnPropertyChanged("InputIV");
+                OnPropertyChanged("HexInputIV");
+            }
+        }
+        public String HexInputIV
+        {
+            get
+            {
+                return hexString(_inputIV);
             }
         }
 
@@ -480,52 +506,35 @@ namespace Cryptool.Plugins.ChaCha
 
         #region ValueConversion
 
-        private String FourByteChunks(byte[] b)
-        {
-            if (b == null)
-                return "";
-            StringBuilder chunk = new StringBuilder();
-            for (int i = 0; i < b.Length; i += 4)
-            {
-                chunk.AppendFormat("{0:x2}{1:x2}{2:x2}{3:x2} ", b[i], b[i + 1], b[i + 2], b[i + 3]);
-            }
-            return chunk.ToString();
 
+        /* insert a space after every n characters */
+        private String chunkify(string text, int n)
+        {
+            string pattern = String.Format(".{{{0}}}", n);
+            return Regex.Replace(text, pattern, "$0 ");
+        }
+
+        /* print a hex presentation of the byte array*/
+        public string hexString(byte[] bytes, int offset, int length)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = offset; i < offset + length; ++i)
+            {
+                sb.Append(bytes[i].ToString("X2"));
+            }
+            return sb.ToString();
+        }
+
+        public string hexString(byte[] bytes)
+        {
+            return hexString(bytes, 0, bytes.Length);
+        }
+
+        public string hexString(uint u)
+        {
+            return hexString(ChaCha.getBytes(u));
         }
 
         #endregion
-    }
-
-    [ValueConversion(typeof(byte[]), typeof(String))]
-    public class ByteToHexStringConverter : IValueConverter
-    {
-        /** Return a hex representation of the byte array.*/
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null)
-            {
-                return "";
-            }
-            byte[] bytes = (byte[])value;
-            StringBuilder hex = new StringBuilder(bytes.Length * 2);
-            foreach (byte b in bytes)
-                hex.AppendFormat("{0:x2} ", b);
-            return hex.ToString();
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            String hexString = (String)value;
-            byte[] Bytes = new byte[hexString.Length / 2];
-            int[] HexValue = new int[] { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F };
-
-            for (int x = 0, i = 0; i < hexString.Length; i += 2, x += 1)
-            {
-                Bytes[x] = (byte)(HexValue[Char.ToUpper(hexString[i + 0]) - '0'] << 4 |
-                                  HexValue[Char.ToUpper(hexString[i + 1]) - '0']);
-            }
-
-            return Bytes;
-        }
     }
 }

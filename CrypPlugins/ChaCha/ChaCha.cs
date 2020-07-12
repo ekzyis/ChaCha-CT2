@@ -162,17 +162,6 @@ namespace Cryptool.Plugins.ChaCha
             get { return _presentation; }
         }
 
-        /* print a hex presentation of the byte array*/
-        public string hexString(byte[] bytes, int offset, int length)
-        {
-            StringBuilder sb = new StringBuilder();
-            for(int i=offset; i < offset + length; ++i)
-            {
-                sb.Append(bytes[i].ToString("X2"));
-            }
-            return sb.ToString();
-        }
-
         /// <summary>
         /// Called once when workflow execution starts.
         /// </summary>
