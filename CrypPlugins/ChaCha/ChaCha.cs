@@ -306,7 +306,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
-        public uint To4ByteLE(byte[] x, int offset)
+        public static uint To4ByteLE(byte[] x, int offset)
         {
             byte b1 = x[offset];
             byte b2 = x[offset + 1];
@@ -315,7 +315,7 @@ namespace Cryptool.Plugins.ChaCha
 
             return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
         }
-        public uint To4ByteLE(uint x)
+        public static uint To4ByteLE(uint x)
         {
             uint b1 = x >> 24;
             uint b2 = (x >> 16) & 0xFF;
@@ -386,7 +386,7 @@ namespace Cryptool.Plugins.ChaCha
          * Return a bytes array of the given number with the highest significant byte always coming first (big-endian), independent of system architecture.
          * For example: getBytes(0x01020304) -> byte[4] { 1, 2, 3, 4 }
          */
-        public byte[] getBytes(uint n)
+        public static byte[] getBytes(uint n)
         {
             byte[] b = BitConverter.GetBytes(n);
             // if system architecture is little-endian,
@@ -403,7 +403,7 @@ namespace Cryptool.Plugins.ChaCha
          * Return a uint of the given bytes array interpreted as big-endian, independent of system architecture.
          * For example: ToUInt32(new byte[] { 0x01, 0x02, 0x03, 0x04 }) -> 0x01020304
          */
-        public uint ToUInt32(byte[] b, int startIndex)
+        public static uint ToUInt32(byte[] b, int startIndex)
         {
             if (BitConverter.IsLittleEndian)
             {

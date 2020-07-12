@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cryptool.PluginBase.Miscellaneous;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -23,15 +24,63 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
-        // List which indicates page order to implement page navigation
-        private UIElement[] pageRouting;
+        // List with pages in particular order to implement page navigation + their page actions
+        private Page[] pageRouting;
         private int currentPageIndex = 0;
+        private int currentActionIndex = 0;
+        private ByteToHexStringConverter byteHexStringConverter = new ByteToHexStringConverter();
+
+        struct UIElementAction
+        {
+            public ContentControl element; 
+            public Func<object> content; // the content this UI element should be assigned
+        }
+        struct PageAction
+        {
+            public UIElementAction[] elementActions; // list of UIelement with the content they should be assigned
+        }
+
+        struct Page {
+            public UIElement page;
+            public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
+            public int actionFrames {
+                get
+                {
+                    return actions.Length;
+                }
+            }
+        }
 
         public ChaChaPresentation()
         {
             InitializeComponent();
             DataContext = this;
-            pageRouting = new UIElement[] { UILandingPage, UIWorkflowPage, UIStateMatrixPage };
+            PageAction[] UIStateMatrixPageActions = new PageAction[]
+            {
+                new PageAction() {
+                    elementActions = new UIElementAction[] {
+                        new UIElementAction() { element = UITransformInput, content = () => byteHexStringConverter.Convert(Constants, Type.GetType("String"), null, null) },
+                    },
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[] {
+                        new UIElementAction() { element = UITransformChunks, content = () => ConstantsChunks },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => ConstantsLittleEndian }
+                    }
+                }
+            };
+            pageRouting = new Page[] {
+                new Page() { page = UILandingPage, actions = new PageAction[0] },
+                new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
+                new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -58,6 +107,26 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _constants = value;
                 OnPropertyChanged("Constants");
+            }
+        }
+        public String ConstantsChunks
+        {
+            get
+            {
+
+                return FourByteChunks(_constants);
+            }
+        }
+        public String ConstantsLittleEndian
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < 16; i+=4)
+                {
+                    sb.Append(FourByteChunks(ChaCha.getBytes(ChaCha.To4ByteLE(_constants, i))));
+                }
+                return sb.ToString();
             }
         }
 
@@ -312,48 +381,6 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region Transform
-        private String transformInput;
-        private String transformChunks;
-        private String transformLittleEndian;
-        public String TransformInput
-        {
-            get
-            {
-                return transformInput;
-            }
-            set
-            {
-                transformInput = value;
-                OnPropertyChanged("TransformInput");
-            }
-        }
-        public String TransformChunks
-        {
-            get
-            {
-                return transformChunks;
-            }
-            set
-            {
-                transformChunks = value;
-                OnPropertyChanged("TransformChunks");
-            }
-        }
-        public String TransformLittleEndian
-        {
-            get
-            {
-                return transformLittleEndian;
-            }
-            set
-            {
-                transformLittleEndian = value;
-                OnPropertyChanged("TransformLittleEndian");
-            }
-        }
-        #endregion
-
         #region Navigation
 
         private bool _nextPageIsEnabled = false;
@@ -384,22 +411,86 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
-            pageRouting[currentPageIndex].Visibility = Visibility.Collapsed;
+            pageRouting[currentPageIndex].page.Visibility = Visibility.Collapsed;
             currentPageIndex--;
-            pageRouting[currentPageIndex].Visibility = Visibility.Visible;
+            pageRouting[currentPageIndex].page.Visibility = Visibility.Visible;
+            currentActionIndex = 0;
             updatePageNavigation();
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            pageRouting[currentPageIndex].Visibility = Visibility.Collapsed;
+            pageRouting[currentPageIndex].page.Visibility = Visibility.Collapsed;
             currentPageIndex++;
-            pageRouting[currentPageIndex].Visibility = Visibility.Visible;
+            pageRouting[currentPageIndex].page.Visibility = Visibility.Visible;
+            currentActionIndex = 0;
+            updatePageNavigation();
+        }
+        private bool _prevActionIsEnabled = false;
+        public bool PrevActionIsEnabled
+        {
+            get
+            {
+                return _prevActionIsEnabled;
+            }
+            set
+            {
+                _prevActionIsEnabled = value;
+                OnPropertyChanged("PrevActionIsEnabled");
+            }
+        }
+
+        private bool _nextActionIsEnabled = false;
+        public bool NextActionIsEnabled
+        {
+            get
+            {
+                return _nextActionIsEnabled;
+            }
+            set
+            {
+                _nextActionIsEnabled = value;
+                OnPropertyChanged("NextActionIsEnabled");
+            }
+        }
+        private void PrevAction_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void NextAction_Click(object sender, RoutedEventArgs e)
+        {
+            UIElementAction[] actions = pageRouting[currentPageIndex].actions[currentActionIndex].elementActions;
+            for (int i = 0; i < actions.Length; i++)
+            {
+                Console.WriteLine(actions[i].element);
+                Console.WriteLine(actions[i].content());
+                actions[i].element.Content = actions[i].content();
+            }
+            currentActionIndex++;
             updatePageNavigation();
         }
         private void updatePageNavigation()
         {
             PrevPageIsEnabled = currentPageIndex != 0;
             NextPageIsEnabled = currentPageIndex != pageRouting.Length - 1;
+            PrevActionIsEnabled = pageRouting[currentPageIndex].actionFrames > 0 && currentActionIndex != 0;
+            NextActionIsEnabled = pageRouting[currentPageIndex].actionFrames > 0 && currentActionIndex != pageRouting[currentPageIndex].actionFrames;
+        }
+
+        #endregion
+
+        #region ValueConversion
+
+        private String FourByteChunks(byte[] b)
+        {
+            if (b == null)
+                return "";
+            StringBuilder chunk = new StringBuilder();
+            for (int i = 0; i < b.Length; i += 4)
+            {
+                chunk.AppendFormat("{0:x2}{1:x2}{2:x2}{3:x2} ", b[i], b[i + 1], b[i + 2], b[i + 3]);
+            }
+            return chunk.ToString();
+
         }
 
         #endregion

@@ -22,6 +22,9 @@
         <Button Name="UIPrevPage" Click="PrevPage_Click" IsEnabled="{ Binding PrevPageIsEnabled }" Content="&lt;"/>
         <Label Content="PAGE"/>
         <Button Name="UINextPage" Click="NextPage_Click" IsEnabled="{ Binding NextPageIsEnabled }" Content="&gt;"/>
+        <Button Name="UIPrevAction" Click="PrevAction_Click" IsEnabled="{ Binding PrevActionIsEnabled }" Content="&lt;"/>
+        <Label Content="ACTION"/>
+        <Button Name="UINextAction" Click="NextAction_Click" IsEnabled="{ Binding NextActionIsEnabled }" Content="&gt;"/>
       </StackPanel>
     </Grid>
     <!-- Main grid for content pane -->
@@ -194,15 +197,15 @@
                 <TextBlock Grid.Row="0" Grid.Column="0">
                   Input:
                 </TextBlock>
-                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformInput }" Name="UITransformInput"/>
+                <Label Grid.Row="0" Grid.Column="1" Name="UITransformInput"/>
                 <TextBlock Grid.Row="1" Grid.Column="0">
                   Split into 4 byte chunks:
                 </TextBlock>
-                <Label Grid.Row="1" Grid.Column="1" Content="{ Binding TransformChunks }" Name="UITransformChunks"/>
+                <Label Grid.Row="1" Grid.Column="1" Name="UITransformChunks"/>
                 <TextBlock Grid.Row="2" Grid.Column="0">
                   Transform each chunk into <LineBreak/> little-endian:
                 </TextBlock>
-                <Label Grid.Row="2" Grid.Column="1" Content="{ Binding TransformLittleEndian }" Name="UITransformLittleEndian"/>
+                <Label Grid.Row="2" Grid.Column="1" Name="UITransformLittleEndian"/>
               </Grid>
             </Grid>
           </Grid>
