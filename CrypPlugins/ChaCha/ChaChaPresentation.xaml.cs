@@ -354,6 +354,8 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
+        #region Navigation
+
         private bool _nextPageIsEnabled = false;
         public bool NextPageIsEnabled
         {
@@ -399,6 +401,8 @@ namespace Cryptool.Plugins.ChaCha
             PrevPageIsEnabled = currentPageIndex != 0;
             NextPageIsEnabled = currentPageIndex != pageRouting.Length - 1;
         }
+
+        #endregion
     }
 
     [ValueConversion(typeof(byte[]), typeof(String))]
