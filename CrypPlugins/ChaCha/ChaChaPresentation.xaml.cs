@@ -26,9 +26,9 @@ namespace Cryptool.Plugins.ChaCha
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
         // List with pages in particular order to implement page navigation + their page actions
-        private Page[] pageRouting;
-        private int currentPageIndex = 0;
-        private int currentActionIndex = 0;
+        private Page[] _pageRouting;
+        private int _currentPageIndex = 0;
+        private int _currentActionIndex = 0;
 
         struct UIElementAction
         {
@@ -185,26 +185,26 @@ namespace Cryptool.Plugins.ChaCha
                 InputIV.Length == 8 ? UIStateMatrixPageIV8Action : UIStateMatrixPageIV12Action,
                 #endregion
             };
-            pageRouting = new Page[] {
+            _pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
                 new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
                 new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
             };
         }
 
-        private Page currentPage
+        private Page CurrentPage
         {
             get
             {
-                return pageRouting[currentPageIndex];
+                return _pageRouting[_currentPageIndex];
             }
         }
 
-        private UIElementAction[] currentActions
+        private UIElementAction[] CurrentActions
         {
             get
             {
-                return currentPage.actions[currentActionIndex].elementActions;
+                return CurrentPage.actions[_currentActionIndex].elementActions;
             }
         }
 
@@ -589,18 +589,18 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
-            pageRouting[currentPageIndex].page.Visibility = Visibility.Collapsed;
-            currentPageIndex--;
-            pageRouting[currentPageIndex].page.Visibility = Visibility.Visible;
-            currentActionIndex = 0;
+            _pageRouting[_currentPageIndex].page.Visibility = Visibility.Collapsed;
+            _currentPageIndex--;
+            _pageRouting[_currentPageIndex].page.Visibility = Visibility.Visible;
+            _currentActionIndex = 0;
             updatePageNavigation();
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            pageRouting[currentPageIndex].page.Visibility = Visibility.Collapsed;
-            currentPageIndex++;
-            pageRouting[currentPageIndex].page.Visibility = Visibility.Visible;
-            currentActionIndex = 0;
+            _pageRouting[_currentPageIndex].page.Visibility = Visibility.Collapsed;
+            _currentPageIndex++;
+            _pageRouting[_currentPageIndex].page.Visibility = Visibility.Visible;
+            _currentActionIndex = 0;
             updatePageNavigation();
         }
         private bool _prevActionIsEnabled = false;
@@ -633,8 +633,8 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             // decrease action index first to get the last executed action list
-            currentActionIndex--;
-            UIElementAction[] lastActions = currentActions;
+            _currentActionIndex--;
+            UIElementAction[] lastActions = CurrentActions;
             for (int i = 0; i < lastActions.Length; i++)
             {
                 lastActions[i].element.Content = "";
@@ -644,23 +644,23 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
-            UIElementAction[] actions = currentActions;
+            UIElementAction[] actions = CurrentActions;
             for (int i = 0; i < actions.Length; i++)
             {
                 actions[i].element.Content = actions[i].content();
             }
-            currentActionIndex++;
+            _currentActionIndex++;
             updatePageNavigation();
         }
         private void updatePageNavigation()
         {
-            PrevPageIsEnabled = currentPageIndex != 0;
-            NextPageIsEnabled = currentPageIndex != pageRouting.Length - 1;
-            PrevActionIsEnabled = currentPage.actionFrames > 0 && currentActionIndex != 0;
+            PrevPageIsEnabled = _currentPageIndex != 0;
+            NextPageIsEnabled = _currentPageIndex != _pageRouting.Length - 1;
+            PrevActionIsEnabled = CurrentPage.actionFrames > 0 && _currentActionIndex != 0;
             // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
             // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
             // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
-            NextActionIsEnabled = currentPage.actionFrames > 0 && currentActionIndex != currentPage.actionFrames;
+            NextActionIsEnabled = CurrentPage.actionFrames > 0 && _currentActionIndex != CurrentPage.actionFrames;
         }
 
         #endregion
