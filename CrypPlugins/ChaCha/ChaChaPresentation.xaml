@@ -7,6 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
+  <UserControl.Resources>
+    <!-- Template for label with content wrapping -->
+    <ControlTemplate x:Key="wrapLabel" TargetType="Label">
+      <TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}"/>
+    </ControlTemplate>
+  </UserControl.Resources>
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <Grid>
     <Grid.RowDefinitions>
@@ -206,24 +212,26 @@
               </Grid>
             </Grid>
           </Grid>
-          <!-- Input parameter -->
+          <!-- Step description + Input parameter -->
           <Grid Margin="100,0,0,0" Grid.Column="1">
             <Grid.RowDefinitions>
+              <RowDefinition Height="14*"></RowDefinition>
               <RowDefinition Height="2*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" HorizontalAlignment="Center">State Parameters</Label>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label Template="{StaticResource wrapLabel}" Name="UIStateMatrixStepDescription"/>
+            <Label Grid.Row="1" HorizontalAlignment="Center">State Parameters</Label>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Constant:</Label>
               <Label Content="{ Binding HexConstants }" Name="UIConstant"/>
             </StackPanel>
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
               <Label>Key:</Label>
               <Label Content="{ Binding HexInputKey }" Name="UIInputKey"/>
             </StackPanel>
-            <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <StackPanel Grid.Row="4" Orientation="Horizontal">
               <Label>Initialization vector (IV):</Label>
               <Label Content="{ Binding HexInputIV }" Name="UIInputIV"/>
             </StackPanel>
