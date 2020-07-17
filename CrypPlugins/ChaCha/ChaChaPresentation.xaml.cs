@@ -675,7 +675,16 @@ namespace Cryptool.Plugins.ChaCha
             UIElementAction[] lastActions = CurrentActions;
             for (int i = 0; i < lastActions.Length; i++)
             {
-                lastActions[i].element.Content = "";
+                UIElementAction a = lastActions[i];
+                if (a.action == UIElementAction.Action.REPLACE)
+                    a.element.Content = "";
+                else if (a.action == UIElementAction.Action.ADD)
+                {
+                    // Remove the added string to undo action
+                    String addedString = (string)a.content();
+                    int endIndex = a.element.Content.ToString().Length - addedString.Length;
+                    a.element.Content = (string)a.element.Content.ToString().Substring(0, endIndex);
+                }
             }
 
         }
