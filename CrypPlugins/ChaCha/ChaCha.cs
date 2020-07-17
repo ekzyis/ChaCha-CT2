@@ -273,6 +273,7 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.InputKey = _inputKey;
                 _presentation.InputIV = _inputIV;
                 _presentation.InputData = _inputData;
+                _presentation.InitialCounter = counter;
 
                 // initialize state matrix
                 _presentation.State0 = initial_state[0].ToString("X8");

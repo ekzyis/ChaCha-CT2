@@ -210,6 +210,50 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 InputIV.Length == 8 ? UIStateMatrixPageIV8Action : UIStateMatrixPageIV12Action,
                 #endregion
+                #region Write Counter into State Matrix
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0.", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UITransformInput, content = () => "" },
+                        new UIElementAction() { element = UITransformChunks, content = () => "" },
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformInput, content = () => HexInitialCounter },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformChunks, content = () => InitialCounterChunks }
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => InitialCounterLittleEndian }
+                    }
+                },
+                InputIV.Length == 8 ? new PageAction() {
+                    elementActions = new UIElementAction[] {
+                        new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
+                        new UIElementAction() { element = UIState13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) },
+                    }
+                }: new PageAction() {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
+                    }
+                }
+                #endregion
             };
             _pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
@@ -281,6 +325,7 @@ namespace Cryptool.Plugins.ChaCha
         private byte[] _constants = new byte[0];
         private byte[] _inputKey = new byte[0];
         private byte[] _inputIV = new byte[0];
+        private byte[] _initialCounter = new byte[0];
         private byte[] _inputData = new byte[0];
 
         public byte[] Constants
@@ -405,6 +450,42 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _inputData = value;
                 OnPropertyChanged("InputData");
+            }
+        }
+        public byte[] InitialCounter
+        {
+            get
+            {
+                return _initialCounter;
+            }
+            set
+            {
+                _initialCounter = value;
+                OnPropertyChanged("InitialCounter");
+                OnPropertyChanged("HexInitialCounter");
+                OnPropertyChanged("InitialCounterChunks");
+                OnPropertyChanged("InitialCounterLittleEndian");
+            }
+        }
+        public String HexInitialCounter
+        {
+            get
+            {
+                return hexString(_initialCounter);
+            }
+        }
+        public String InitialCounterChunks
+        {
+            get
+            {
+                return chunkify(hexString(_initialCounter), 8);
+            }
+        }
+        public String InitialCounterLittleEndian
+        {
+            get
+            {
+                return chunkify(hexStringLittleEndian(_initialCounter), 8);
             }
         }
         #endregion
