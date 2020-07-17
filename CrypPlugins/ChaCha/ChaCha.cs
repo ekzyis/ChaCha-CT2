@@ -167,7 +167,6 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public void PreExecution()
         {
-            _presentation.NextPageIsEnabled = true;
         }
 
         /// <summary>
