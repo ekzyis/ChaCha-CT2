@@ -83,6 +83,23 @@ namespace Cryptool.Plugins.ChaCha
                         new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
                     }
             };
+            PageAction UIStateMatrixPageIV8Action = new PageAction()
+            {
+                elementActions = new UIElementAction[]
+                {
+                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
+                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) }
+                }
+            };
+            PageAction UIStateMatrixPageIV12Action = new PageAction()
+            {
+                elementActions = new UIElementAction[]
+                {
+                    new UIElementAction() { element = UIState13, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
+                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) },
+                    new UIElementAction() { element = UIState15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) }
+                }
+            };
             PageAction[] UIStateMatrixPageActions = new PageAction[]
             {
                 #region Write Constants into State Matrix
@@ -141,7 +158,32 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 InputKey.Length == 16 ? UIStateMatrixPageKey16Action : UIStateMatrixPageKey32Action,
                 #endregion
-
+                #region Write IV into State Matrix
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformInput, content = () => HexInputIV },
+                        new UIElementAction() { element = UITransformChunks, content = () => "" },
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformChunks, content = () => IVChunks }
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformLittleEndian, content = () => IVLittleEndian }
+                    }
+                },
+                InputIV.Length == 8 ? UIStateMatrixPageIV8Action : UIStateMatrixPageIV12Action,
+                #endregion
             };
             pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
@@ -267,6 +309,8 @@ namespace Cryptool.Plugins.ChaCha
                 _inputIV = value;
                 OnPropertyChanged("InputIV");
                 OnPropertyChanged("HexInputIV");
+                OnPropertyChanged("IVChunks");
+                OnPropertyChanged("IVLittleEndian");
             }
         }
         public String HexInputIV
@@ -276,7 +320,20 @@ namespace Cryptool.Plugins.ChaCha
                 return hexString(_inputIV);
             }
         }
-
+        public String IVChunks
+        {
+            get
+            {
+                return chunkify(hexString(_inputIV), 8);
+            }
+        }
+        public String IVLittleEndian
+        {
+            get
+            {
+                return chunkify(hexStringLittleEndian(_inputIV), 8);
+            }
+        }
         public byte[] InputData
         {
             get
