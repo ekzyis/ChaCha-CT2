@@ -55,6 +55,34 @@ namespace Cryptool.Plugins.ChaCha
         {
             InitializeComponent();
             DataContext = this;
+            PageAction UIStateMatrixPageKey16Action = new PageAction()
+            {
+                elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                        new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                        new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                        new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                        new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                        new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                        new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                        new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                    }
+            };
+            PageAction UIStateMatrixPageKey32Action = new PageAction()
+            {
+                elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                        new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                        new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                        new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                        new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
+                        new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
+                        new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
+                        new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
+                    }
+            };
             PageAction[] UIStateMatrixPageActions = new PageAction[]
             {
                 #region Write Constants into State Matrix
@@ -111,37 +139,7 @@ namespace Cryptool.Plugins.ChaCha
                         new UIElementAction() { element = UITransformLittleEndian, content = () => KeyLittleEndian }
                     }
                 },
-                new PageAction()
-                {
-                    elementActions = (UIElementAction[]) new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                        new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                        new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                        new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
-                    }
-                    // FIXME Using Concat here throws
-                    //   System.NullReferenceException: 'Der Objektverweis wurde nicht auf eine Objektinstanz festgelegt.'
-                    //   WorkspaceManager.Model.PluginModel.Plugin.get returned null.
-                    .Concat(
-                        // TODO Add user information that if key is 16-byte, it is concatenated with itself to gain a 32-byte key.
-                        InputKey.Length == 16 ?
-                        new UIElementAction[] {
-                            new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                            new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                            new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                            new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
-                        }
-                        :
-                        new UIElementAction[] {
-                            new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
-                            new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
-                            new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
-                            new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
-                        }
-                    )
-                }
-
+                InputKey.Length == 16 ? UIStateMatrixPageKey16Action : UIStateMatrixPageKey32Action,
                 #endregion
 
             };
