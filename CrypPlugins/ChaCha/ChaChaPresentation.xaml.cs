@@ -29,6 +29,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             public ContentControl element; 
             public Func<object> content; // the content this UI element should be assigned
+            public Action action;
+            public enum Action {
+                REPLACE,
+                ADD
+            }
         }
         struct PageAction
         {
@@ -98,6 +103,14 @@ namespace Cryptool.Plugins.ChaCha
             PageAction[] UIStateMatrixPageActions = new PageAction[]
             {
                 #region Write Constants into State Matrix
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. " 
+                        + " The first 16 bytes consist of the constants. " }
+                    }
+                },
                 new PageAction() {
                     elementActions = new UIElementAction[] {
                         new UIElementAction() { element = UITransformInput, content = () => HexConstants },
@@ -132,9 +145,17 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UITransformInput, content = () => HexInputKey },
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformInput, content = () => HexInputKey },
                     }
                 },
                 new PageAction()
@@ -158,9 +179,19 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UITransformInput, content = () => HexInputIV },
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () =>
+                        String.Format("The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length)
+                        + "First, we add the IV to the state. ", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UITransformInput, content = () => HexInputIV },
                     }
                 },
                 new PageAction()
@@ -653,7 +684,11 @@ namespace Cryptool.Plugins.ChaCha
             UIElementAction[] actions = CurrentActions;
             for (int i = 0; i < actions.Length; i++)
             {
-                actions[i].element.Content = actions[i].content();
+                UIElementAction a = actions[i];
+                if (a.action == UIElementAction.Action.REPLACE)
+                    a.element.Content = a.content();
+                else if (a.action == UIElementAction.Action.ADD)
+                    a.element.Content = (string) a.element.Content + a.content();
             }
             CurrentActionIndex++;
         }
