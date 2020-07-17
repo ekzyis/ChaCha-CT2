@@ -167,6 +167,7 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public void PreExecution()
         {
+            // TODO disable page navigation until execution is started
         }
 
         /// <summary>
