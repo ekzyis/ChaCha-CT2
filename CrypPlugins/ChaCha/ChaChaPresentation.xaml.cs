@@ -290,11 +290,15 @@ namespace Cryptool.Plugins.ChaCha
             }
             set
             {
-                _currentPageIndex = value;
-                OnPropertyChanged("CurrentPageIndex");
-                OnPropertyChanged("CurrentPage");
-                OnPropertyChanged("NextPageIsEnabled");
-                OnPropertyChanged("PrevPageIsEnabled");
+                if(value != _currentPageIndex)
+                {
+                    _currentPageIndex = value;
+                    CurrentActionIndex = 0;
+                    OnPropertyChanged("CurrentPageIndex");
+                    OnPropertyChanged("CurrentPage");
+                    OnPropertyChanged("NextPageIsEnabled");
+                    OnPropertyChanged("PrevPageIsEnabled");
+                }
             }
         }
         private int CurrentActionIndex
@@ -378,14 +382,12 @@ namespace Cryptool.Plugins.ChaCha
             CurrentPage.page.Visibility = Visibility.Collapsed;
             CurrentPageIndex--;
             CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.page.Visibility = Visibility.Collapsed;
             CurrentPageIndex++;
             CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
