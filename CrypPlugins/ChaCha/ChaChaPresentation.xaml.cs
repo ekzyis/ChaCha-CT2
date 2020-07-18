@@ -416,7 +416,7 @@ namespace Cryptool.Plugins.ChaCha
                 else if (lastAction.action == UIElementAction.Action.ADD)
                 {
                     // Remove the last inline element that was added to undo action
-                    lastAction.element.Inlines.Remove(lastAction.element.Inlines.LastInline);
+                    removeLast(lastAction.element.Inlines);
                 }
             }
 
@@ -440,6 +440,11 @@ namespace Cryptool.Plugins.ChaCha
         private Run createRunFromAction(UIElementAction a)
         {
             return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD ? FontWeights.Bold : FontWeights.Normal };
+        }
+
+        private void removeLast(InlineCollection list)
+        {
+            list.Remove(list.LastInline);
         }
 
         #endregion
