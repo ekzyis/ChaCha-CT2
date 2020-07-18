@@ -389,15 +389,11 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
-            // decrease action index first to get the last executed action list
-            CurrentActionIndex--;
-            UIElementAction[] lastActions = CurrentActions;
-            for (int i = 0; i < lastActions.Length; i++)
+            foreach (UIElementAction prevAction in PreviousActions)
             {
-                UIElementAction lastAction = lastActions[i];
-                if (lastAction.action == UIElementAction.Action.REPLACE)
+                if (prevAction.action == UIElementAction.Action.REPLACE)
                 {
-                    lastAction.element.Inlines.Clear();
+                    prevAction.element.Inlines.Clear();
                     if (CurrentActionIndex == 0)
                     {
                         // if the last action was the first action, we don't have to add specific inline content
@@ -409,14 +405,14 @@ namespace Cryptool.Plugins.ChaCha
                         // get the inline content what the element has had before the last action was applied.
                         // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
                         // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
-                        for (int j = CurrentActionIndex - 1; j >= 0; --j)
+                        for (int j = CurrentActionIndex - 2; j >= 0; --j)
                         {
-                            foreach (UIElementAction previousAction in CurrentPage.actions[j].elementActions)
+                            foreach (UIElementAction prevAction_ in CurrentPage.actions[j].elementActions)
                             {
-                                if (previousAction.element.Name == lastAction.element.Name)
+                                if (prevAction_.element.Name == prevAction.element.Name)
                                 {
-                                    Run r = createRunFromAction(previousAction);
-                                    lastAction.element.Inlines.Add(r);
+                                    Run r = createRunFromAction(prevAction_);
+                                    prevAction_.element.Inlines.Add(r);
                                     goto End; // goto to break out of double for-loop
                                 }
                             }
@@ -424,13 +420,13 @@ namespace Cryptool.Plugins.ChaCha
                     End:;
                     }
                 }
-                else if (lastAction.action == UIElementAction.Action.ADD)
+                else if (prevAction.action == UIElementAction.Action.ADD)
                 {
                     // Remove the last inline element that was added to undo action
-                    removeLast(lastAction.element.Inlines);
+                    removeLast(prevAction.element.Inlines);
                 }
             }
-
+            CurrentActionIndex--;
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
