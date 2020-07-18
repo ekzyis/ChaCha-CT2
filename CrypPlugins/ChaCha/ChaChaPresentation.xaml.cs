@@ -434,19 +434,17 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
-            UIElementAction[] actions = CurrentActions;
             // unhighlight element added in previous action
-            UIElementAction[] previousActions = PreviousActions;
-            if(previousActions != null)
+            if(PreviousActions != null)
             {
-                foreach (UIElementAction uie in previousActions)
+                foreach (UIElementAction uie in PreviousActions)
                 {
                     Run r = createRunFromAction(uie, false);
                     removeLast(uie.element.Inlines);
                     uie.element.Inlines.Add(r);
                 }
             }
-            foreach (UIElementAction uie in actions)
+            foreach (UIElementAction uie in CurrentActions)
             {
                 Run r = createRunFromAction(uie);
                 if (uie.action == UIElementAction.Action.REPLACE)
