@@ -446,15 +446,14 @@ namespace Cryptool.Plugins.ChaCha
                     uie.element.Inlines.Add(r);
                 }
             }
-            for (int i = 0; i < actions.Length; i++)
+            foreach (UIElementAction uie in actions)
             {
-                UIElementAction a = actions[i];
-                Run r = createRunFromAction(a);
-                if (a.action == UIElementAction.Action.REPLACE)
+                Run r = createRunFromAction(uie);
+                if (uie.action == UIElementAction.Action.REPLACE)
                 {
-                    a.element.Inlines.Clear();
+                    uie.element.Inlines.Clear();
                 }
-                a.element.Inlines.Add(r);
+                uie.element.Inlines.Add(r);
             }
             CurrentActionIndex++;
         }
