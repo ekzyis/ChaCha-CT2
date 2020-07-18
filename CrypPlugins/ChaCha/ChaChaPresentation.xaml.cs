@@ -406,9 +406,9 @@ namespace Cryptool.Plugins.ChaCha
                 else if (lastAction.action == UIElementAction.Action.ADD)
                 {
                     // Remove the added string to undo action
-                    String addedString = (string)lastAction.content();
+                    String addedString = lastAction.content();
                     int endIndex = lastAction.element.Text.Length - addedString.Length;
-                    lastAction.element.Text = (string)lastAction.element.Text.Substring(0, endIndex);
+                    lastAction.element.Text = lastAction.element.Text.Substring(0, endIndex);
                 }
             }
 
@@ -422,7 +422,7 @@ namespace Cryptool.Plugins.ChaCha
                 if (a.action == UIElementAction.Action.REPLACE)
                     a.element.Text = a.content();
                 else if (a.action == UIElementAction.Action.ADD)
-                    a.element.Text = (string)a.element.Text + a.content();
+                    a.element.Text = a.element.Text + a.content();
             }
             CurrentActionIndex++;
         }
