@@ -756,13 +756,13 @@ namespace Cryptool.Plugins.ChaCha
             UIElementAction[] lastActions = CurrentActions;
             for (int i = 0; i < lastActions.Length; i++)
             {
-                UIElementAction a = lastActions[i];
-                if (a.action == UIElementAction.Action.REPLACE)
+                UIElementAction lastAction = lastActions[i];
+                if (lastAction.action == UIElementAction.Action.REPLACE)
                 {
                     if(CurrentActionIndex == 0)
                         // if the last action was the first action, we can just reset the element content to the empty string
                         // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
-                        a.element.Content = "";
+                        lastAction.element.Content = "";
                     else
                     {
                         // get the content what the element has had before the last action was applied.
@@ -771,24 +771,24 @@ namespace Cryptool.Plugins.ChaCha
                         for (int j = CurrentActionIndex - 1; j >= 0 ; --j)
                         {
                             foreach(UIElementAction previousAction in CurrentPage.actions[j].elementActions) {
-                                if(previousAction.element.Name == a.element.Name)
+                                if(previousAction.element.Name == lastAction.element.Name)
                                 {
-                                    a.element.Content = previousAction.content();
+                                    lastAction.element.Content = previousAction.content();
                                     goto End; // goto to break out of double for-loop
                                 }
                             }
                         }
                         // No previous action associated with same UIElement was found. Set content to empty string
-                        a.element.Content = "";
+                        lastAction.element.Content = "";
                     End:;
                     }
                 }
-                else if (a.action == UIElementAction.Action.ADD)
+                else if (lastAction.action == UIElementAction.Action.ADD)
                 {
                     // Remove the added string to undo action
-                    String addedString = (string)a.content();
-                    int endIndex = a.element.Content.ToString().Length - addedString.Length;
-                    a.element.Content = (string)a.element.Content.ToString().Substring(0, endIndex);
+                    String addedString = (string)lastAction.content();
+                    int endIndex = lastAction.element.Content.ToString().Length - addedString.Length;
+                    lastAction.element.Content = (string)lastAction.element.Content.ToString().Substring(0, endIndex);
                 }
             }
 
