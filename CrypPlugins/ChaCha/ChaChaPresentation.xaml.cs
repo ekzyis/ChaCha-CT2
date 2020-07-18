@@ -25,31 +25,6 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
-        struct UIElementAction
-        {
-            public ContentControl element; 
-            public Func<object> content; // the content this UI element should be assigned
-            public Action action;
-            public enum Action {
-                REPLACE,
-                ADD
-            }
-        }
-        struct PageAction
-        {
-            public UIElementAction[] elementActions; // list of UIelement with the content they should be assigned
-        }
-
-        struct Page {
-            public UIElement page;
-            public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
-            public int actionFrames {
-                get
-                {
-                    return actions.Length;
-                }
-            }
-        }
 
         public ChaChaPresentation()
         {
@@ -145,7 +120,8 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ",
+                            action = UIElementAction.Action.ADD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
@@ -215,7 +191,8 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0.", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0.",
+                            action = UIElementAction.Action.ADD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
@@ -260,6 +237,44 @@ namespace Cryptool.Plugins.ChaCha
                 new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
                 new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
             };
+        }
+
+        #region Navigation
+
+        #region properties
+        struct UIElementAction
+        {
+            public TextBlock element;
+            public Func<string> content; // the content this UI element should be assigned
+            public Action action;
+            public Highlight highlight; // highlight the UI element for this action (will be unhighlighted next action)
+            public enum Action
+            {
+                REPLACE,
+                ADD
+            }
+            public enum Highlight
+            {
+                BOLD,
+                NONE,
+            }
+        }
+        struct PageAction
+        {
+            public UIElementAction[] elementActions; // list of UIelement with the content they should be assigned
+        }
+
+        struct Page
+        {
+            public UIElement page;
+            public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
+            public int actionFrames
+            {
+                get
+                {
+                    return actions.Length;
+                }
+            }
         }
 
         // List with pages in particular order to implement page navigation + their page actions
@@ -312,7 +327,151 @@ namespace Cryptool.Plugins.ChaCha
                 return CurrentPage.actions[_currentActionIndex].elementActions;
             }
         }
+        private UIElementAction[] PreviousActions
+        {
+            get
+            {
+                if(_currentActionIndex == 0)
+                {
+                    return new UIElementAction[0];
+                }
+                return CurrentPage.actions[_currentActionIndex - 1].elementActions;
+            }
+        }
 
+        public bool NextPageIsEnabled
+        {
+            get
+            {
+                return CurrentPageIndex != _pageRouting.Length - 1; ;
+            }
+        }
+        public bool PrevPageIsEnabled
+        {
+            get
+            {
+                return CurrentPageIndex != 0;
+            }
+        }
+        public bool NextActionIsEnabled
+        {
+            get
+            {
+                // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
+                // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
+                // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
+                return CurrentPage.actionFrames > 0 && CurrentActionIndex != CurrentPage.actionFrames;
+            }
+        }
+        public bool PrevActionIsEnabled
+        {
+            get
+            {
+                return CurrentPage.actionFrames > 0 && CurrentActionIndex != 0;
+            }
+        }
+        #endregion
+
+        #region Click handlers
+        private void PrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.page.Visibility = Visibility.Collapsed;
+            CurrentPageIndex--;
+            CurrentPage.page.Visibility = Visibility.Visible;
+            CurrentActionIndex = 0;
+        }
+        private void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.page.Visibility = Visibility.Collapsed;
+            CurrentPageIndex++;
+            CurrentPage.page.Visibility = Visibility.Visible;
+            CurrentActionIndex = 0;
+        }
+        private void PrevAction_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (UIElementAction prevAction in PreviousActions)
+            {
+                if (prevAction.action == UIElementAction.Action.REPLACE)
+                {
+                    prevAction.element.Inlines.Clear();
+                    if (CurrentActionIndex == 0)
+                    {
+                        // if the last action was the first action, we don't have to add specific inline content
+                        // since we can assume that the elements never have any inline content in them at the start (at least this is the case up to now)
+                        break;
+                    }
+                    else
+                    {
+                        // get the inline content what the element has had before the last action was applied.
+                        // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
+                        // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
+                        for (int j = CurrentActionIndex - 2; j >= 0; --j)
+                        {
+                            foreach (UIElementAction prevAction_ in CurrentPage.actions[j].elementActions)
+                            {
+                                if (prevAction_.element.Name == prevAction.element.Name)
+                                {
+                                    Run r = createRunFromAction(prevAction_);
+                                    prevAction_.element.Inlines.Add(r);
+                                    goto End; // goto to break out of double for-loop
+                                }
+                            }
+                        }
+                    End:;
+                    }
+                }
+                else if (prevAction.action == UIElementAction.Action.ADD)
+                {
+                    // Remove the last inline element that was added to undo action
+                    removeLast(prevAction.element.Inlines);
+                }
+            }
+            CurrentActionIndex--;
+            // Re-highlight previously highlighted elements
+            foreach(UIElementAction prevAction in PreviousActions)
+            {
+                replaceLast(prevAction.element.Inlines, createRunFromAction(prevAction));
+            }
+        }
+        private void NextAction_Click(object sender, RoutedEventArgs e)
+        {
+            // unhighlight element added in previous action
+            foreach (UIElementAction uie in PreviousActions)
+            {
+                replaceLast(uie.element.Inlines, createRunFromAction(uie, false));
+            }
+            foreach (UIElementAction uie in CurrentActions)
+            {
+                Run r = createRunFromAction(uie);
+                if (uie.action == UIElementAction.Action.REPLACE)
+                {
+                    uie.element.Inlines.Clear();
+                }
+                uie.element.Inlines.Add(r);
+            }
+            CurrentActionIndex++;
+        }
+
+        private Run createRunFromAction(UIElementAction a, bool applyHighlightIfSpecified = true)
+        {
+            return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD && applyHighlightIfSpecified ? FontWeights.Bold : FontWeights.Normal };
+        }
+
+        private void removeLast(InlineCollection list)
+        {
+            list.Remove(list.LastInline);
+        }
+
+        private void replaceLast(InlineCollection list, Run r)
+        {
+            removeLast(list);
+            list.Add(r);
+        }
+
+        #endregion
+
+
+        #region Data binding notification
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string property)
@@ -320,6 +479,9 @@ namespace Cryptool.Plugins.ChaCha
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
+        #endregion
+
+        #endregion
 
         #region Input
         private byte[] _constants = new byte[0];
@@ -699,114 +861,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State15");
             }
         }
-        #endregion
-
-        #region Navigation
-
-        public bool NextPageIsEnabled
-        {
-            get
-            {
-                return CurrentPageIndex != _pageRouting.Length - 1; ;
-            }
-        }
-        public bool PrevPageIsEnabled
-        {
-            get
-            {
-                return CurrentPageIndex != 0;
-            }
-        }
-        private void PrevPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.page.Visibility = Visibility.Collapsed;
-            CurrentPageIndex--;
-            CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
-        }
-        private void NextPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.page.Visibility = Visibility.Collapsed;
-            CurrentPageIndex++;
-            CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
-        }
-        public bool PrevActionIsEnabled
-        {
-            get
-            {
-                return CurrentPage.actionFrames > 0 && CurrentActionIndex != 0;
-            }
-        }
-
-        public bool NextActionIsEnabled
-        {
-            get
-            {
-                // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
-                // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
-                // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
-                return CurrentPage.actionFrames > 0 && CurrentActionIndex != CurrentPage.actionFrames;
-            }
-        }
-        private void PrevAction_Click(object sender, RoutedEventArgs e)
-        {
-            // decrease action index first to get the last executed action list
-            CurrentActionIndex--;
-            UIElementAction[] lastActions = CurrentActions;
-            for (int i = 0; i < lastActions.Length; i++)
-            {
-                UIElementAction lastAction = lastActions[i];
-                if (lastAction.action == UIElementAction.Action.REPLACE)
-                {
-                    if(CurrentActionIndex == 0)
-                        // if the last action was the first action, we can just reset the element content to the empty string
-                        // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
-                        lastAction.element.Content = "";
-                    else
-                    {
-                        // get the content what the element has had before the last action was applied.
-                        // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
-                        // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
-                        for (int j = CurrentActionIndex - 1; j >= 0 ; --j)
-                        {
-                            foreach(UIElementAction previousAction in CurrentPage.actions[j].elementActions) {
-                                if(previousAction.element.Name == lastAction.element.Name)
-                                {
-                                    lastAction.element.Content = previousAction.content();
-                                    goto End; // goto to break out of double for-loop
-                                }
-                            }
-                        }
-                        // No previous action associated with same UIElement was found. Set content to empty string
-                        lastAction.element.Content = "";
-                    End:;
-                    }
-                }
-                else if (lastAction.action == UIElementAction.Action.ADD)
-                {
-                    // Remove the added string to undo action
-                    String addedString = (string)lastAction.content();
-                    int endIndex = lastAction.element.Content.ToString().Length - addedString.Length;
-                    lastAction.element.Content = (string)lastAction.element.Content.ToString().Substring(0, endIndex);
-                }
-            }
-
-        }
-        private void NextAction_Click(object sender, RoutedEventArgs e)
-        {
-            UIElementAction[] actions = CurrentActions;
-            for (int i = 0; i < actions.Length; i++)
-            {
-                UIElementAction a = actions[i];
-                if (a.action == UIElementAction.Action.REPLACE)
-                    a.element.Content = a.content();
-                else if (a.action == UIElementAction.Action.ADD)
-                    a.element.Content = (string) a.element.Content + a.content();
-            }
-            CurrentActionIndex++;
-        }
-
         #endregion
 
         #region ValueConversion
