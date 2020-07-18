@@ -157,7 +157,7 @@ namespace Cryptool.Plugins.ChaCha
                     elementActions = new UIElementAction[]
                     {
                         new UIElementAction() { element = UIStateMatrixStepDescription, content = () =>
-                        String.Format("The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length)
+                        string.Format("The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length)
                         + "First, we add the IV to the state. ", action = UIElementAction.Action.ADD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
@@ -521,7 +521,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("ConstantsLittleEndian");
             }
         }
-        public String HexConstants
+        public string HexConstants
         {
             get
             {
@@ -529,7 +529,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
         /* Constants splitted into 4 byte chunks */
-        public String ConstantsChunks
+        public string ConstantsChunks
         {
             get
             {
@@ -538,7 +538,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
         /* Constants with each 4 byte in little endian format*/
-        public String ConstantsLittleEndian
+        public string ConstantsLittleEndian
         {
             get
             {
@@ -561,21 +561,21 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("KeyLittleEndian");
             }
         }
-        public String HexInputKey
+        public string HexInputKey
         {
             get
             {
                 return HexString(_inputKey);
             }
         }
-        public String KeyChunks
+        public string KeyChunks
         {
             get
             {
                 return Chunkify(HexString(_inputKey), 8);
             }
         }
-        public String KeyLittleEndian
+        public string KeyLittleEndian
         {
             get
             {
@@ -597,21 +597,21 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("IVLittleEndian");
             }
         }
-        public String HexInputIV
+        public string HexInputIV
         {
             get
             {
                 return HexString(_inputIV);
             }
         }
-        public String IVChunks
+        public string IVChunks
         {
             get
             {
                 return Chunkify(HexString(_inputIV), 8);
             }
         }
-        public String IVLittleEndian
+        public string IVLittleEndian
         {
             get
             {
@@ -645,21 +645,21 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("InitialCounterLittleEndian");
             }
         }
-        public String HexInitialCounter
+        public string HexInitialCounter
         {
             get
             {
                 return HexString(_initialCounter);
             }
         }
-        public String InitialCounterChunks
+        public string InitialCounterChunks
         {
             get
             {
                 return Chunkify(HexString(_initialCounter), 8);
             }
         }
-        public String InitialCounterLittleEndian
+        public string InitialCounterLittleEndian
         {
             get
             {
@@ -669,23 +669,23 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region State
-        private String _state0;
-        private String _state1;
-        private String _state2;
-        private String _state3;
-        private String _state4;
-        private String _state5;
-        private String _state6;
-        private String _state7;
-        private String _state8;
-        private String _state9;
-        private String _state10;
-        private String _state11;
-        private String _state12;
-        private String _state13;
-        private String _state14;
-        private String _state15;
-        public String State0
+        private string _state0;
+        private string _state1;
+        private string _state2;
+        private string _state3;
+        private string _state4;
+        private string _state5;
+        private string _state6;
+        private string _state7;
+        private string _state8;
+        private string _state9;
+        private string _state10;
+        private string _state11;
+        private string _state12;
+        private string _state13;
+        private string _state14;
+        private string _state15;
+        public string State0
         {
             get
             {
@@ -697,7 +697,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State0");
             }
         }
-        public String State1
+        public string State1
         {
             get
             {
@@ -709,7 +709,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State1");
             }
         }
-        public String State2
+        public string State2
         {
             get
             {
@@ -721,7 +721,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State2");
             }
         }
-        public String State3
+        public string State3
         {
             get
             {
@@ -733,7 +733,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State3");
             }
         }
-        public String State4
+        public string State4
         {
             get
             {
@@ -745,7 +745,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State4");
             }
         }
-        public String State5
+        public string State5
         {
             get
             {
@@ -757,7 +757,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State5");
             }
         }
-        public String State6
+        public string State6
         {
             get
             {
@@ -769,7 +769,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State6");
             }
         }
-        public String State7
+        public string State7
         {
             get
             {
@@ -781,7 +781,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State7");
             }
         }
-        public String State8
+        public string State8
         {
             get
             {
@@ -793,7 +793,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State8");
             }
         }
-        public String State9
+        public string State9
         {
             get
             {
@@ -805,7 +805,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State9");
             }
         }
-        public String State10
+        public string State10
         {
             get
             {
@@ -817,7 +817,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State10");
             }
         }
-        public String State11
+        public string State11
         {
             get
             {
@@ -829,7 +829,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State11");
             }
         }
-        public String State12
+        public string State12
         {
             get
             {
@@ -841,7 +841,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State12");
             }
         }
-        public String State13
+        public string State13
         {
             get
             {
@@ -853,7 +853,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State13");
             }
         }
-        public String State14
+        public string State14
         {
             get
             {
@@ -865,7 +865,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State14");
             }
         }
-        public String State15
+        public string State15
         {
             get
             {
@@ -883,9 +883,9 @@ namespace Cryptool.Plugins.ChaCha
 
 
         /* insert a space after every n characters */
-        private String Chunkify(string text, int n)
+        private string Chunkify(string text, int n)
         {
-            string pattern = String.Format(".{{{0}}}", n);
+            string pattern = string.Format(".{{{0}}}", n);
             return Regex.Replace(text, pattern, "$0 ");
         }
 
@@ -910,7 +910,7 @@ namespace Cryptool.Plugins.ChaCha
             return HexString(ChaCha.GetBytes(u));
         }
         /* Write bytes as hex string with each 4 byte written in little-endian */
-        public String HexStringLittleEndian(byte[] bytes)
+        public string HexStringLittleEndian(byte[] bytes)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i += 4)

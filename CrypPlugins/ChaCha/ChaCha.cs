@@ -177,8 +177,8 @@ namespace Cryptool.Plugins.ChaCha
 
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
-            GuiLogMessage(String.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
-            GuiLogMessage(String.Format("Version: {0}", settings.Version.Name), NotificationLevel.Info);
+            GuiLogMessage(string.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
+            GuiLogMessage(string.Format("Version: {0}", settings.Version.Name), NotificationLevel.Info);
 
             COUNTERSIZE_BITS = settings.Version.BitsCounter;
             IVSIZE_BITS = settings.Version.BitsIV;
@@ -206,7 +206,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             else if (_inputIV.Length != IVSIZE_BITS / 8)
             {
-                message = String.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
+                message = string.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
             }
             if(message != null)
             {
