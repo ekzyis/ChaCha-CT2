@@ -25,31 +25,6 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
-        struct UIElementAction
-        {
-            public ContentControl element; 
-            public Func<object> content; // the content this UI element should be assigned
-            public Action action;
-            public enum Action {
-                REPLACE,
-                ADD
-            }
-        }
-        struct PageAction
-        {
-            public UIElementAction[] elementActions; // list of UIelement with the content they should be assigned
-        }
-
-        struct Page {
-            public UIElement page;
-            public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
-            public int actionFrames {
-                get
-                {
-                    return actions.Length;
-                }
-            }
-        }
 
         public ChaChaPresentation()
         {
@@ -262,6 +237,38 @@ namespace Cryptool.Plugins.ChaCha
             };
         }
 
+        #region Navigation
+
+        #region properties
+        struct UIElementAction
+        {
+            public ContentControl element;
+            public Func<object> content; // the content this UI element should be assigned
+            public Action action;
+            public enum Action
+            {
+                REPLACE,
+                ADD
+            }
+        }
+        struct PageAction
+        {
+            public UIElementAction[] elementActions; // list of UIelement with the content they should be assigned
+        }
+
+        struct Page
+        {
+            public UIElement page;
+            public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
+            public int actionFrames
+            {
+                get
+                {
+                    return actions.Length;
+                }
+            }
+        }
+
         // List with pages in particular order to implement page navigation + their page actions
         private Page[] _pageRouting;
         private int _currentPageIndex = 0;
@@ -313,6 +320,115 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public bool NextPageIsEnabled
+        {
+            get
+            {
+                return CurrentPageIndex != _pageRouting.Length - 1; ;
+            }
+        }
+        public bool PrevPageIsEnabled
+        {
+            get
+            {
+                return CurrentPageIndex != 0;
+            }
+        }
+        public bool NextActionIsEnabled
+        {
+            get
+            {
+                // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
+                // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
+                // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
+                return CurrentPage.actionFrames > 0 && CurrentActionIndex != CurrentPage.actionFrames;
+            }
+        }
+        public bool PrevActionIsEnabled
+        {
+            get
+            {
+                return CurrentPage.actionFrames > 0 && CurrentActionIndex != 0;
+            }
+        }
+        #endregion
+
+        #region Click handlers
+        private void PrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.page.Visibility = Visibility.Collapsed;
+            CurrentPageIndex--;
+            CurrentPage.page.Visibility = Visibility.Visible;
+            CurrentActionIndex = 0;
+        }
+        private void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.page.Visibility = Visibility.Collapsed;
+            CurrentPageIndex++;
+            CurrentPage.page.Visibility = Visibility.Visible;
+            CurrentActionIndex = 0;
+        }
+        private void PrevAction_Click(object sender, RoutedEventArgs e)
+        {
+            // decrease action index first to get the last executed action list
+            CurrentActionIndex--;
+            UIElementAction[] lastActions = CurrentActions;
+            for (int i = 0; i < lastActions.Length; i++)
+            {
+                UIElementAction lastAction = lastActions[i];
+                if (lastAction.action == UIElementAction.Action.REPLACE)
+                {
+                    if (CurrentActionIndex == 0)
+                        // if the last action was the first action, we can just reset the element content to the empty string
+                        // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
+                        lastAction.element.Content = "";
+                    else
+                    {
+                        // get the content what the element has had before the last action was applied.
+                        // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
+                        // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
+                        for (int j = CurrentActionIndex - 1; j >= 0; --j)
+                        {
+                            foreach (UIElementAction previousAction in CurrentPage.actions[j].elementActions)
+                            {
+                                if (previousAction.element.Name == lastAction.element.Name)
+                                {
+                                    lastAction.element.Content = previousAction.content();
+                                    goto End; // goto to break out of double for-loop
+                                }
+                            }
+                        }
+                        // No previous action associated with same UIElement was found. Set content to empty string
+                        lastAction.element.Content = "";
+                    End:;
+                    }
+                }
+                else if (lastAction.action == UIElementAction.Action.ADD)
+                {
+                    // Remove the added string to undo action
+                    String addedString = (string)lastAction.content();
+                    int endIndex = lastAction.element.Content.ToString().Length - addedString.Length;
+                    lastAction.element.Content = (string)lastAction.element.Content.ToString().Substring(0, endIndex);
+                }
+            }
+
+        }
+        private void NextAction_Click(object sender, RoutedEventArgs e)
+        {
+            UIElementAction[] actions = CurrentActions;
+            for (int i = 0; i < actions.Length; i++)
+            {
+                UIElementAction a = actions[i];
+                if (a.action == UIElementAction.Action.REPLACE)
+                    a.element.Content = a.content();
+                else if (a.action == UIElementAction.Action.ADD)
+                    a.element.Content = (string)a.element.Content + a.content();
+            }
+            CurrentActionIndex++;
+        }
+        #endregion
+
+        #region Data binding notification
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string property)
@@ -320,6 +436,9 @@ namespace Cryptool.Plugins.ChaCha
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
+        #endregion
+
+        #endregion
 
         #region Input
         private byte[] _constants = new byte[0];
@@ -699,114 +818,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("State15");
             }
         }
-        #endregion
-
-        #region Navigation
-
-        public bool NextPageIsEnabled
-        {
-            get
-            {
-                return CurrentPageIndex != _pageRouting.Length - 1; ;
-            }
-        }
-        public bool PrevPageIsEnabled
-        {
-            get
-            {
-                return CurrentPageIndex != 0;
-            }
-        }
-        private void PrevPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.page.Visibility = Visibility.Collapsed;
-            CurrentPageIndex--;
-            CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
-        }
-        private void NextPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.page.Visibility = Visibility.Collapsed;
-            CurrentPageIndex++;
-            CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
-        }
-        public bool PrevActionIsEnabled
-        {
-            get
-            {
-                return CurrentPage.actionFrames > 0 && CurrentActionIndex != 0;
-            }
-        }
-
-        public bool NextActionIsEnabled
-        {
-            get
-            {
-                // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
-                // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
-                // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
-                return CurrentPage.actionFrames > 0 && CurrentActionIndex != CurrentPage.actionFrames;
-            }
-        }
-        private void PrevAction_Click(object sender, RoutedEventArgs e)
-        {
-            // decrease action index first to get the last executed action list
-            CurrentActionIndex--;
-            UIElementAction[] lastActions = CurrentActions;
-            for (int i = 0; i < lastActions.Length; i++)
-            {
-                UIElementAction lastAction = lastActions[i];
-                if (lastAction.action == UIElementAction.Action.REPLACE)
-                {
-                    if(CurrentActionIndex == 0)
-                        // if the last action was the first action, we can just reset the element content to the empty string
-                        // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
-                        lastAction.element.Content = "";
-                    else
-                    {
-                        // get the content what the element has had before the last action was applied.
-                        // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
-                        // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
-                        for (int j = CurrentActionIndex - 1; j >= 0 ; --j)
-                        {
-                            foreach(UIElementAction previousAction in CurrentPage.actions[j].elementActions) {
-                                if(previousAction.element.Name == lastAction.element.Name)
-                                {
-                                    lastAction.element.Content = previousAction.content();
-                                    goto End; // goto to break out of double for-loop
-                                }
-                            }
-                        }
-                        // No previous action associated with same UIElement was found. Set content to empty string
-                        lastAction.element.Content = "";
-                    End:;
-                    }
-                }
-                else if (lastAction.action == UIElementAction.Action.ADD)
-                {
-                    // Remove the added string to undo action
-                    String addedString = (string)lastAction.content();
-                    int endIndex = lastAction.element.Content.ToString().Length - addedString.Length;
-                    lastAction.element.Content = (string)lastAction.element.Content.ToString().Substring(0, endIndex);
-                }
-            }
-
-        }
-        private void NextAction_Click(object sender, RoutedEventArgs e)
-        {
-            UIElementAction[] actions = CurrentActions;
-            for (int i = 0; i < actions.Length; i++)
-            {
-                UIElementAction a = actions[i];
-                if (a.action == UIElementAction.Action.REPLACE)
-                    a.element.Content = a.content();
-                else if (a.action == UIElementAction.Action.ADD)
-                    a.element.Content = (string) a.element.Content + a.content();
-            }
-            CurrentActionIndex++;
-        }
-
         #endregion
 
         #region ValueConversion
