@@ -25,8 +25,6 @@ namespace Cryptool.Plugins.ChaCha
     {
         private int rounds = 20;
         private int _version = 0;
-        private int initialCounter = 0;
-        private ChaCha.Version version = ChaCha.Version.IETF;
 
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
         public int Rounds
@@ -51,7 +49,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "IETF", "DJB" })]
-        public int _Version
+        public int Version_
         {
             get { return _version; }
             set
@@ -60,10 +58,10 @@ namespace Cryptool.Plugins.ChaCha
                 switch(value)
                 {
                     case 0:
-                        version = ChaCha.Version.IETF;
+                        Version = ChaCha.Version.IETF;
                         break;
                     case 1:
-                        version = ChaCha.Version.DJB;
+                        Version = ChaCha.Version.DJB;
                         break;
 
                 }
@@ -71,10 +69,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public ChaCha.Version Version
-        {
-            get { return version;  }
-        }
+        public ChaCha.Version Version { get; private set; } = ChaCha.Version.IETF;
 
         #region Events
 

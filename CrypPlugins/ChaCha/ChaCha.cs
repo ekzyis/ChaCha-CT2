@@ -42,7 +42,7 @@ namespace Cryptool.Plugins.ChaCha
         #region Private Variables
 
         private readonly ChaChaSettings settings;
-        private ChaChaPresentation _presentation = new ChaChaPresentation();
+        private readonly ChaChaPresentation _presentation = new ChaChaPresentation();
 
         private byte[] _inputData;
         private byte[] _outputData;
@@ -51,8 +51,6 @@ namespace Cryptool.Plugins.ChaCha
 
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
-        // each block entry has 32 bits
-        private readonly static int BLOCKENTRY_BYTES = 4;
         // counter size (depends on version)
         private int COUNTERSIZE_BITS;
         // IV size (depends on version)
@@ -60,7 +58,7 @@ namespace Cryptool.Plugins.ChaCha
         // initial counter value (for keystream blocks)
         private uint INITIAL_COUNTER;
         // ChaCha state consists of 16 32-bit integers
-        private uint[] initial_state = new uint[16]; 
+        private readonly uint[] initial_state = new uint[16];
 
         public sealed class Version
         {
@@ -186,7 +184,7 @@ namespace Cryptool.Plugins.ChaCha
             IVSIZE_BITS = settings.Version.BitsIV;
             INITIAL_COUNTER = settings.Version.InitialCounter;
 
-            if (validateInput())
+            if (ValidateInput())
             {
                 InitStateMatrix();
 
@@ -199,7 +197,7 @@ namespace Cryptool.Plugins.ChaCha
         /*
          * Validates the given inputs.
          */ 
-        public bool validateInput()
+        public bool ValidateInput()
         {
             string message = null;
             if (_inputKey.Length != 32 && _inputKey.Length != 16)
@@ -332,7 +330,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
-                byte[] keyblock = generateKeyStreamBlock(i);
+                byte[] keyblock = GenerateKeystreamBlock(i);
                 // add each byte of keyblock to keystream
                 addToKeystream(keyblock);
             }
@@ -348,22 +346,22 @@ namespace Cryptool.Plugins.ChaCha
          * 
          * Uses the initial state matrix to insert the counter n and then calculate the keystream block.
          */
-        public byte[] generateKeyStreamBlock(uint n)
+        public byte[] GenerateKeystreamBlock(uint n)
         {
             uint[] state = (uint[])(initial_state.Clone());
-            byte[] counter = getBytes(n);
+            byte[] counter = GetBytes(n);
             // counter as little-endian
             Array.Reverse(counter);
             // set counter value to state
             state[12] = To4ByteLE(counter, 0);
 
             // hash state block
-            uint[] hash = chachaHash(state);
+            uint[] hash = ChaChaHash(state);
             // convert the hashed uint state array into an array of bytes
             byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
             for (int i = 0; i < hash.Length; ++i)
             {
-                byte[] stateEntryBytes = getBytes(hash[i]);
+                byte[] stateEntryBytes = GetBytes(hash[i]);
                 keystreamBlock[4*i] = stateEntryBytes[0];
                 keystreamBlock[4*i+1] = stateEntryBytes[1];
                 keystreamBlock[4*i+2] = stateEntryBytes[2];
@@ -376,7 +374,7 @@ namespace Cryptool.Plugins.ChaCha
          * Return a bytes array of the given number with the highest significant byte always coming first (big-endian), independent of system architecture.
          * For example: getBytes(0x01020304) -> byte[4] { 1, 2, 3, 4 }
          */
-        public static byte[] getBytes(uint n)
+        public static byte[] GetBytes(uint n)
         {
             byte[] b = BitConverter.GetBytes(n);
             // if system architecture is little-endian,
@@ -403,21 +401,21 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /* Generates the hash out of the input state block.*/
-        public uint[] chachaHash(uint[] state)
+        public uint[] ChaChaHash(uint[] state)
         {
             uint[] originalState = (uint[])(state.Clone());
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
-                state = quarterroundState(state, 0, 4, 8, 12);
-                state = quarterroundState(state, 1, 5, 9, 13);
-                state = quarterroundState(state, 2, 6, 10, 14);
-                state = quarterroundState(state, 3, 7, 11, 15);
+                state = QuarterroundState(state, 0, 4, 8, 12);
+                state = QuarterroundState(state, 1, 5, 9, 13);
+                state = QuarterroundState(state, 2, 6, 10, 14);
+                state = QuarterroundState(state, 3, 7, 11, 15);
                 // diagonal round
-                state = quarterroundState(state, 0, 5, 10, 15);
-                state = quarterroundState(state, 1, 6, 11, 12);
-                state = quarterroundState(state, 2, 7, 8, 13);
-                state = quarterroundState(state, 3, 4, 9, 14);
+                state = QuarterroundState(state, 0, 5, 10, 15);
+                state = QuarterroundState(state, 1, 6, 11, 12);
+                state = QuarterroundState(state, 2, 7, 8, 13);
+                state = QuarterroundState(state, 3, 4, 9, 14);
             }
             // add the original state
             for (int i = 0; i < state.Length; ++i)
@@ -427,7 +425,7 @@ namespace Cryptool.Plugins.ChaCha
             // each 4 byte chunk as little-endian
             for (int i = 0; i < state.Length; ++i)
             {
-                byte[] b = getBytes(state[i]);
+                byte[] b = GetBytes(state[i]);
                 Array.Reverse(b);
                 state[i] = ToUInt32(b, 0);
             }
@@ -437,22 +435,22 @@ namespace Cryptool.Plugins.ChaCha
         /**
          * Calculate the quarterround value of the state using the given indices.
          */ 
-        public  uint[] quarterroundState(uint[] state, int i, int j, int k, int l)
+        public  uint[] QuarterroundState(uint[] state, int i, int j, int k, int l)
         {
-            (state[i], state[j], state[k], state[l]) = quarterround(state[i], state[j], state[k], state[l]);
+            (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
             return state;
         }
 
         /**
          * Calculate the quarterround value of the inputs.
          */
-        public (uint, uint, uint, uint) quarterround(uint a, uint b, uint c, uint d)
+        public (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
             (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
             {
                 x1 += x2;
                 x3 ^= x1;
-                x3 = rotateLeft(x3, shift);
+                x3 = RotateLeft(x3, shift);
                 return (x1, x2, x3);
             }
             (a, b, d) = quarterroundStep(a, b, d, 16);
@@ -465,7 +463,7 @@ namespace Cryptool.Plugins.ChaCha
         /**
          * Circular shift to the left.
          */ 
-        public uint rotateLeft(uint x, int shift)
+        public uint RotateLeft(uint x, int shift)
         {
             return (x << shift) | (x >> -shift);
         }

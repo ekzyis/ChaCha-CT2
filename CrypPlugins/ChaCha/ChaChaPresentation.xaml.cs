@@ -269,7 +269,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             public UIElement page;
             public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
-            public int actionFrames
+            public int ActionFrames
             {
                 get
                 {
@@ -279,7 +279,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         // List with pages in particular order to implement page navigation + their page actions
-        private Page[] _pageRouting;
+        private readonly Page[] _pageRouting;
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
 
@@ -365,14 +365,14 @@ namespace Cryptool.Plugins.ChaCha
                 // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
                 // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
                 // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
-                return CurrentPage.actionFrames > 0 && CurrentActionIndex != CurrentPage.actionFrames;
+                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != CurrentPage.ActionFrames;
             }
         }
         public bool PrevActionIsEnabled
         {
             get
             {
-                return CurrentPage.actionFrames > 0 && CurrentActionIndex != 0;
+                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
             }
         }
         #endregion
@@ -382,7 +382,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             CurrentPage.page.Visibility = Visibility.Collapsed;
             // undo actions on current page before switching
-            undoActions();
+            UndoActions();
             CurrentPageIndex--;
             CurrentPage.page.Visibility = Visibility.Visible;
         }
@@ -390,7 +390,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             CurrentPage.page.Visibility = Visibility.Collapsed;
             // undo actions on current page before switching
-            undoActions();
+            UndoActions();
             CurrentPageIndex++;
             CurrentPage.page.Visibility = Visibility.Visible;
         }
@@ -418,7 +418,7 @@ namespace Cryptool.Plugins.ChaCha
                             {
                                 if (prevAction_.element.Name == prevAction.element.Name)
                                 {
-                                    Run r = createRunFromAction(prevAction_);
+                                    Run r = CreateRunFromAction(prevAction_);
                                     prevAction_.element.Inlines.Add(r);
                                     goto End; // goto to break out of double for-loop
                                 }
@@ -430,14 +430,14 @@ namespace Cryptool.Plugins.ChaCha
                 else if (prevAction.action == UIElementAction.Action.ADD)
                 {
                     // Remove the last inline element that was added to undo action
-                    removeLast(prevAction.element.Inlines);
+                    RemoveLast(prevAction.element.Inlines);
                 }
             }
             CurrentActionIndex--;
             // Re-highlight previously highlighted elements
             foreach(UIElementAction prevAction in PreviousActions)
             {
-                replaceLast(prevAction.element.Inlines, createRunFromAction(prevAction));
+                ReplaceLast(prevAction.element.Inlines, CreateRunFromAction(prevAction));
             }
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
@@ -445,11 +445,11 @@ namespace Cryptool.Plugins.ChaCha
             // unhighlight element added in previous action
             foreach (UIElementAction uie in PreviousActions)
             {
-                replaceLast(uie.element.Inlines, createRunFromAction(uie, false));
+                ReplaceLast(uie.element.Inlines, CreateRunFromAction(uie, false));
             }
             foreach (UIElementAction uie in CurrentActions)
             {
-                Run r = createRunFromAction(uie);
+                Run r = CreateRunFromAction(uie);
                 if (uie.action == UIElementAction.Action.REPLACE)
                 {
                     uie.element.Inlines.Clear();
@@ -459,7 +459,7 @@ namespace Cryptool.Plugins.ChaCha
             CurrentActionIndex++;
         }
 
-        private void undoActions()
+        private void UndoActions()
         {
             // undo all actions by simulating clicking as many times on PREV_ACTION as clicked on NEXT_ACTION
             for(int i = CurrentActionIndex; i > 0; --i)
@@ -469,19 +469,19 @@ namespace Cryptool.Plugins.ChaCha
             Debug.Assert(CurrentActionIndex == 0);
         }
 
-        private Run createRunFromAction(UIElementAction a, bool applyHighlightIfSpecified = true)
+        private Run CreateRunFromAction(UIElementAction a, bool applyHighlightIfSpecified = true)
         {
             return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD && applyHighlightIfSpecified ? FontWeights.Bold : FontWeights.Normal };
         }
 
-        private void removeLast(InlineCollection list)
+        private void RemoveLast(InlineCollection list)
         {
             list.Remove(list.LastInline);
         }
 
-        private void replaceLast(InlineCollection list, Run r)
+        private void ReplaceLast(InlineCollection list, Run r)
         {
-            removeLast(list);
+            RemoveLast(list);
             list.Add(r);
         }
 
@@ -493,8 +493,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void OnPropertyChanged(string property)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
         #endregion
 
@@ -526,7 +525,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return hexString(_constants);
+                return HexString(_constants);
             }
         }
         /* Constants splitted into 4 byte chunks */
@@ -535,7 +534,7 @@ namespace Cryptool.Plugins.ChaCha
             get
             {
                 // insert space after every 8 characters
-                return chunkify(hexString(_constants), 8);
+                return Chunkify(HexString(_constants), 8);
             }
         }
         /* Constants with each 4 byte in little endian format*/
@@ -543,7 +542,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return chunkify(hexStringLittleEndian(_constants), 8);
+                return Chunkify(HexStringLittleEndian(_constants), 8);
             }
         }
 
@@ -566,21 +565,21 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return hexString(_inputKey);
+                return HexString(_inputKey);
             }
         }
         public String KeyChunks
         {
             get
             {
-                return chunkify(hexString(_inputKey), 8);
+                return Chunkify(HexString(_inputKey), 8);
             }
         }
         public String KeyLittleEndian
         {
             get
             {
-                return chunkify(hexStringLittleEndian(_inputKey), 8);
+                return Chunkify(HexStringLittleEndian(_inputKey), 8);
             }
         }
         public byte[] InputIV
@@ -602,21 +601,21 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return hexString(_inputIV);
+                return HexString(_inputIV);
             }
         }
         public String IVChunks
         {
             get
             {
-                return chunkify(hexString(_inputIV), 8);
+                return Chunkify(HexString(_inputIV), 8);
             }
         }
         public String IVLittleEndian
         {
             get
             {
-                return chunkify(hexStringLittleEndian(_inputIV), 8);
+                return Chunkify(HexStringLittleEndian(_inputIV), 8);
             }
         }
         public byte[] InputData
@@ -650,21 +649,21 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return hexString(_initialCounter);
+                return HexString(_initialCounter);
             }
         }
         public String InitialCounterChunks
         {
             get
             {
-                return chunkify(hexString(_initialCounter), 8);
+                return Chunkify(HexString(_initialCounter), 8);
             }
         }
         public String InitialCounterLittleEndian
         {
             get
             {
-                return chunkify(hexStringLittleEndian(_initialCounter), 8);
+                return Chunkify(HexStringLittleEndian(_initialCounter), 8);
             }
         }
         #endregion
@@ -884,14 +883,14 @@ namespace Cryptool.Plugins.ChaCha
 
 
         /* insert a space after every n characters */
-        private String chunkify(string text, int n)
+        private String Chunkify(string text, int n)
         {
             string pattern = String.Format(".{{{0}}}", n);
             return Regex.Replace(text, pattern, "$0 ");
         }
 
         /* print a hex presentation of the byte array*/
-        public string hexString(byte[] bytes, int offset, int length)
+        public string HexString(byte[] bytes, int offset, int length)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = offset; i < offset + length; ++i)
@@ -901,22 +900,22 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
 
-        public string hexString(byte[] bytes)
+        public string HexString(byte[] bytes)
         {
-            return hexString(bytes, 0, bytes.Length);
+            return HexString(bytes, 0, bytes.Length);
         }
 
-        public string hexString(uint u)
+        public string HexString(uint u)
         {
-            return hexString(ChaCha.getBytes(u));
+            return HexString(ChaCha.GetBytes(u));
         }
         /* Write bytes as hex string with each 4 byte written in little-endian */
-        public String hexStringLittleEndian(byte[] bytes)
+        public String HexStringLittleEndian(byte[] bytes)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i += 4)
             {
-                sb.Append(hexString(ChaCha.To4ByteLE(bytes, i)));
+                sb.Append(HexString(ChaCha.To4ByteLE(bytes, i)));
             }
             return sb.ToString();
         }
