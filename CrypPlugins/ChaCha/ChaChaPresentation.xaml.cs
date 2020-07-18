@@ -83,7 +83,7 @@ namespace Cryptool.Plugins.ChaCha
                     elementActions = new UIElementAction[]
                     {
                         new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. " 
-                        + " The first 16 bytes consist of the constants. " }
+                        + " The first 16 bytes consist of the constants. ", highlight = UIElementAction.Highlight.BOLD }
                     }
                 },
                 new PageAction() {
@@ -120,7 +120,8 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ",
+                            action = UIElementAction.Action.ADD, highlight = UIElementAction.Highlight.BOLD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
@@ -156,7 +157,7 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         new UIElementAction() { element = UIStateMatrixStepDescription, content = () =>
                         String.Format("The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length)
-                        + "First, we add the IV to the state. ", action = UIElementAction.Action.ADD },
+                        + "First, we add the IV to the state. ", action = UIElementAction.Action.ADD, highlight = UIElementAction.Highlight.BOLD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
@@ -190,7 +191,8 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0.", action = UIElementAction.Action.ADD },
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0.",
+                            action = UIElementAction.Action.ADD, highlight = UIElementAction.Highlight.BOLD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
                         new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
@@ -245,10 +247,16 @@ namespace Cryptool.Plugins.ChaCha
             public TextBlock element;
             public Func<string> content; // the content this UI element should be assigned
             public Action action;
+            public Highlight highlight; // highlight the UI element for this action (will be unhighlighted next action)
             public enum Action
             {
                 REPLACE,
                 ADD
+            }
+            public enum Highlight
+            {
+                NONE,
+                BOLD,
             }
         }
         struct PageAction
@@ -378,13 +386,16 @@ namespace Cryptool.Plugins.ChaCha
                 UIElementAction lastAction = lastActions[i];
                 if (lastAction.action == UIElementAction.Action.REPLACE)
                 {
+                    lastAction.element.Inlines.Clear();
                     if (CurrentActionIndex == 0)
-                        // if the last action was the first action, we can just reset the element content to the empty string
-                        // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
-                        lastAction.element.Text = "";
+                    {
+                        // if the last action was the first action, we don't have to add specific inline content
+                        // since we can assume that the elements never have any inline content in them at the start (at least this is the case up to now)
+                        break;
+                    }
                     else
                     {
-                        // get the content what the element has had before the last action was applied.
+                        // get the inline content what the element has had before the last action was applied.
                         // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
                         // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
                         for (int j = CurrentActionIndex - 1; j >= 0; --j)
@@ -393,22 +404,19 @@ namespace Cryptool.Plugins.ChaCha
                             {
                                 if (previousAction.element.Name == lastAction.element.Name)
                                 {
-                                    lastAction.element.Text = previousAction.content();
+                                    Run r = createRunFromAction(previousAction);
+                                    lastAction.element.Inlines.Add(r);
                                     goto End; // goto to break out of double for-loop
                                 }
                             }
                         }
-                        // No previous action associated with same UIElement was found. Set content to empty string
-                        lastAction.element.Text = "";
                     End:;
                     }
                 }
                 else if (lastAction.action == UIElementAction.Action.ADD)
                 {
-                    // Remove the added string to undo action
-                    String addedString = lastAction.content();
-                    int endIndex = lastAction.element.Text.Length - addedString.Length;
-                    lastAction.element.Text = lastAction.element.Text.Substring(0, endIndex);
+                    // Remove the last inline element that was added to undo action
+                    lastAction.element.Inlines.Remove(lastAction.element.Inlines.LastInline);
                 }
             }
 
@@ -419,14 +427,23 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < actions.Length; i++)
             {
                 UIElementAction a = actions[i];
+                Run r = createRunFromAction(a);
                 if (a.action == UIElementAction.Action.REPLACE)
-                    a.element.Text = a.content();
-                else if (a.action == UIElementAction.Action.ADD)
-                    a.element.Text = a.element.Text + a.content();
+                {
+                    a.element.Inlines.Clear();
+                }
+                a.element.Inlines.Add(r);
             }
             CurrentActionIndex++;
         }
+
+        private Run createRunFromAction(UIElementAction a)
+        {
+            return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD ? FontWeights.Bold : FontWeights.Normal };
+        }
+
         #endregion
+
 
         #region Data binding notification
         public event PropertyChangedEventHandler PropertyChanged;
