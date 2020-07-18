@@ -242,8 +242,8 @@ namespace Cryptool.Plugins.ChaCha
         #region properties
         struct UIElementAction
         {
-            public ContentControl element;
-            public Func<object> content; // the content this UI element should be assigned
+            public TextBlock element;
+            public Func<string> content; // the content this UI element should be assigned
             public Action action;
             public enum Action
             {
@@ -381,7 +381,7 @@ namespace Cryptool.Plugins.ChaCha
                     if (CurrentActionIndex == 0)
                         // if the last action was the first action, we can just reset the element content to the empty string
                         // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
-                        lastAction.element.Content = "";
+                        lastAction.element.Text = "";
                     else
                     {
                         // get the content what the element has had before the last action was applied.
@@ -393,13 +393,13 @@ namespace Cryptool.Plugins.ChaCha
                             {
                                 if (previousAction.element.Name == lastAction.element.Name)
                                 {
-                                    lastAction.element.Content = previousAction.content();
+                                    lastAction.element.Text = previousAction.content();
                                     goto End; // goto to break out of double for-loop
                                 }
                             }
                         }
                         // No previous action associated with same UIElement was found. Set content to empty string
-                        lastAction.element.Content = "";
+                        lastAction.element.Text = "";
                     End:;
                     }
                 }
@@ -407,8 +407,8 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     // Remove the added string to undo action
                     String addedString = (string)lastAction.content();
-                    int endIndex = lastAction.element.Content.ToString().Length - addedString.Length;
-                    lastAction.element.Content = (string)lastAction.element.Content.ToString().Substring(0, endIndex);
+                    int endIndex = lastAction.element.Text.Length - addedString.Length;
+                    lastAction.element.Text = (string)lastAction.element.Text.Substring(0, endIndex);
                 }
             }
 
@@ -420,9 +420,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 UIElementAction a = actions[i];
                 if (a.action == UIElementAction.Action.REPLACE)
-                    a.element.Content = a.content();
+                    a.element.Text = a.content();
                 else if (a.action == UIElementAction.Action.ADD)
-                    a.element.Content = (string)a.element.Content + a.content();
+                    a.element.Text = (string)a.element.Text + a.content();
             }
             CurrentActionIndex++;
         }
