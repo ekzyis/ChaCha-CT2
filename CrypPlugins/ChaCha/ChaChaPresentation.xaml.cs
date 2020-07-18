@@ -333,7 +333,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if(_currentActionIndex == 0)
                 {
-                    return null;
+                    return new UIElementAction[0];
                 }
                 return CurrentPage.actions[_currentActionIndex - 1].elementActions;
             }
@@ -435,14 +435,11 @@ namespace Cryptool.Plugins.ChaCha
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
             // unhighlight element added in previous action
-            if(PreviousActions != null)
+            foreach (UIElementAction uie in PreviousActions)
             {
-                foreach (UIElementAction uie in PreviousActions)
-                {
-                    Run r = createRunFromAction(uie, false);
-                    removeLast(uie.element.Inlines);
-                    uie.element.Inlines.Add(r);
-                }
+                Run r = createRunFromAction(uie, false);
+                removeLast(uie.element.Inlines);
+                uie.element.Inlines.Add(r);
             }
             foreach (UIElementAction uie in CurrentActions)
             {
