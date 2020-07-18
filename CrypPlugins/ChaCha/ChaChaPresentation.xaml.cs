@@ -327,6 +327,17 @@ namespace Cryptool.Plugins.ChaCha
                 return CurrentPage.actions[_currentActionIndex].elementActions;
             }
         }
+        private UIElementAction[] PreviousActions
+        {
+            get
+            {
+                if(_currentActionIndex == 0)
+                {
+                    return null;
+                }
+                return CurrentPage.actions[_currentActionIndex - 1].elementActions;
+            }
+        }
 
         public bool NextPageIsEnabled
         {
@@ -424,6 +435,17 @@ namespace Cryptool.Plugins.ChaCha
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
             UIElementAction[] actions = CurrentActions;
+            // unhighlight element added in previous action
+            UIElementAction[] previousActions = PreviousActions;
+            if(previousActions != null)
+            {
+                foreach (UIElementAction uie in previousActions)
+                {
+                    Run r = createRunFromAction(uie, false);
+                    removeLast(uie.element.Inlines);
+                    uie.element.Inlines.Add(r);
+                }
+            }
             for (int i = 0; i < actions.Length; i++)
             {
                 UIElementAction a = actions[i];
@@ -437,9 +459,9 @@ namespace Cryptool.Plugins.ChaCha
             CurrentActionIndex++;
         }
 
-        private Run createRunFromAction(UIElementAction a)
+        private Run createRunFromAction(UIElementAction a, bool applyHighlightIfSpecified = true)
         {
-            return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD ? FontWeights.Bold : FontWeights.Normal };
+            return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD && applyHighlightIfSpecified ? FontWeights.Bold : FontWeights.Normal };
         }
 
         private void removeLast(InlineCollection list)
