@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -290,11 +291,15 @@ namespace Cryptool.Plugins.ChaCha
             }
             set
             {
-                _currentPageIndex = value;
-                OnPropertyChanged("CurrentPageIndex");
-                OnPropertyChanged("CurrentPage");
-                OnPropertyChanged("NextPageIsEnabled");
-                OnPropertyChanged("PrevPageIsEnabled");
+                if(value != _currentPageIndex)
+                {
+                    _currentPageIndex = value;
+                    CurrentActionIndex = 0;
+                    OnPropertyChanged("CurrentPageIndex");
+                    OnPropertyChanged("CurrentPage");
+                    OnPropertyChanged("NextPageIsEnabled");
+                    OnPropertyChanged("PrevPageIsEnabled");
+                }
             }
         }
         private int CurrentActionIndex
@@ -376,16 +381,18 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.page.Visibility = Visibility.Collapsed;
+            // undo actions on current page before switching
+            undoActions();
             CurrentPageIndex--;
             CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.page.Visibility = Visibility.Collapsed;
+            // undo actions on current page before switching
+            undoActions();
             CurrentPageIndex++;
             CurrentPage.page.Visibility = Visibility.Visible;
-            CurrentActionIndex = 0;
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
@@ -450,6 +457,16 @@ namespace Cryptool.Plugins.ChaCha
                 uie.element.Inlines.Add(r);
             }
             CurrentActionIndex++;
+        }
+
+        private void undoActions()
+        {
+            // undo all actions by simulating clicking as many times on PREV_ACTION as clicked on NEXT_ACTION
+            for(int i = CurrentActionIndex; i > 0; --i)
+            {
+                PrevAction_Click(null, null);
+            }
+            Debug.Assert(CurrentActionIndex == 0);
         }
 
         private Run createRunFromAction(UIElementAction a, bool applyHighlightIfSpecified = true)
