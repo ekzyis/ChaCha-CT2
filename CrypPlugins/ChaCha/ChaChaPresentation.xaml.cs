@@ -758,7 +758,31 @@ namespace Cryptool.Plugins.ChaCha
             {
                 UIElementAction a = lastActions[i];
                 if (a.action == UIElementAction.Action.REPLACE)
-                    a.element.Content = "";
+                {
+                    if(CurrentActionIndex == 0)
+                        // if the last action was the first action, we can just reset the element content to the empty string
+                        // since we can assume that the elements never have any content in them at the start (at least this is the case up to now)
+                        a.element.Content = "";
+                    else
+                    {
+                        // get the content what the element has had before the last action was applied.
+                        // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
+                        // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
+                        for (int j = CurrentActionIndex - 1; j >= 0 ; --j)
+                        {
+                            foreach(UIElementAction previousAction in CurrentPage.actions[j].elementActions) {
+                                if(previousAction.element.Name == a.element.Name)
+                                {
+                                    a.element.Content = previousAction.content();
+                                    goto End; // goto to break out of double for-loop
+                                }
+                            }
+                        }
+                        // No previous action associated with same UIElement was found. Set content to empty string
+                        a.element.Content = "";
+                    End:;
+                    }
+                }
                 else if (a.action == UIElementAction.Action.ADD)
                 {
                     // Remove the added string to undo action
