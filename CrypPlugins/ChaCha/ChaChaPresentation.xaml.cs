@@ -427,15 +427,18 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
             CurrentActionIndex--;
+            // Re-highlight previously highlighted elements
+            foreach(UIElementAction prevAction in PreviousActions)
+            {
+                replaceLast(prevAction.element.Inlines, createRunFromAction(prevAction));
+            }
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
             // unhighlight element added in previous action
             foreach (UIElementAction uie in PreviousActions)
             {
-                Run r = createRunFromAction(uie, false);
-                removeLast(uie.element.Inlines);
-                uie.element.Inlines.Add(r);
+                replaceLast(uie.element.Inlines, createRunFromAction(uie, false));
             }
             foreach (UIElementAction uie in CurrentActions)
             {
@@ -457,6 +460,12 @@ namespace Cryptool.Plugins.ChaCha
         private void removeLast(InlineCollection list)
         {
             list.Remove(list.LastInline);
+        }
+
+        private void replaceLast(InlineCollection list, Run r)
+        {
+            removeLast(list);
+            list.Add(r);
         }
 
         #endregion
