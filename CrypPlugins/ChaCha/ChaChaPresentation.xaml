@@ -132,55 +132,55 @@
                     </Grid.RowDefinitions>
                     <!-- Row 0 -->
                     <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState0"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState0"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState1"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState1"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState2"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState2"/>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState3"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState3"/>
                     </Border>
                     <!-- Row 1 -->
                     <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState4"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState4"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState5"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState5"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState6"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState6"/>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState7"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState7"/>
                     </Border>
                     <!-- Row 2 -->
                     <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState8"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState8"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState9"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState9"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState10"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState10"/>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState11"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState11"/>
                     </Border>
                     <!-- Row 3 -->
                     <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState12"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState12"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState13"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState13"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState14"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState14"/>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                      <TextBlock Name="UIState15"/>
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIState15"/>
                     </Border>
                   </Grid>
                 </Border>
