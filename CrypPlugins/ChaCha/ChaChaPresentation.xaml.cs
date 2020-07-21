@@ -237,6 +237,7 @@ namespace Cryptool.Plugins.ChaCha
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
                 new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
                 new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
+                new Page() { page = UIKeystreamBlockGenPage, actions = new PageAction[0] },
             };
         }
 

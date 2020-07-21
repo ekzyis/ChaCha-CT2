@@ -237,6 +237,108 @@
           </Grid>
         </Grid>
       </Grid>
+      <!-- ChaCha Generate Keystream block page -->
+      <Grid Margin="20" Name="UIKeystreamBlockGenPage" Visibility="Collapsed">
+        <!-- Grid for title and content -->
+        <Grid.RowDefinitions>
+          <RowDefinition Height="50" />
+          <!-- Title row -->
+          <RowDefinition />
+          <!-- Content row -->
+        </Grid.RowDefinitions>
+        <!-- Title -->
+        <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Generate Keystream Block</TextBlock>
+        <Grid Grid.Row="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <!-- state matrix + transformation steps column -->
+            <ColumnDefinition Width="3*"/>
+            <!-- Input params column -->
+          </Grid.ColumnDefinitions>
+          <!-- state matrix + transformation steps -->
+          <Grid Grid.Column="0">
+            <Grid>
+              <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <!-- state matrix row -->
+                <RowDefinition></RowDefinition>
+                <!-- little-endian transformation step row -->
+              </Grid.RowDefinitions>
+              <!-- State matrix -->
+              <Grid Grid.Row="0">
+                <Border BorderBrush="Black" BorderThickness="0,1,1,0">
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition></ColumnDefinition>
+                      <ColumnDefinition></ColumnDefinition>
+                      <ColumnDefinition></ColumnDefinition>
+                      <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition></RowDefinition>
+                      <RowDefinition></RowDefinition>
+                      <RowDefinition></RowDefinition>
+                      <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <!-- Row 0 -->
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0" Text="{ Binding ElementName=UIState0, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1" Text="{ Binding ElementName=UIState1, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2" Text="{ Binding ElementName=UIState2, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3" Text="{ Binding ElementName=UIState3, Path=Text }"/>
+                    </Border>
+                    <!-- Row 1 -->
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4" Text="{ Binding ElementName=UIState4, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5" Text="{ Binding ElementName=UIState5, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6" Text="{ Binding ElementName=UIState6, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7" Text="{ Binding ElementName=UIState7, Path=Text }"/>
+                    </Border>
+                    <!-- Row 2 -->
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8" Text="{ Binding ElementName=UIState8, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9" Text="{ Binding ElementName=UIState9, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10" Text="{ Binding ElementName=UIState10, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11" Text="{ Binding ElementName=UIState11, Path=Text }"/>
+                    </Border>
+                    <!-- Row 3 -->
+                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12" Text="{ Binding ElementName=UIState12, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13" Text="{ Binding ElementName=UIState13, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14" Text="{ Binding ElementName=UIState14, Path=Text }"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15" Text="{ Binding ElementName=UIState15, Path=Text }"/>
+                    </Border>
+                  </Grid>
+                </Border>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </Grid>
   </Grid>
 </UserControl>
