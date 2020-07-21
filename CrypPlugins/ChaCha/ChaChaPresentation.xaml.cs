@@ -192,7 +192,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0.",
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0. ",
                             action = UIElementAction.Action.ADD },
                         new UIElementAction() { element = UITransformInput, content = () => "" },
                         new UIElementAction() { element = UITransformChunks, content = () => "" },
