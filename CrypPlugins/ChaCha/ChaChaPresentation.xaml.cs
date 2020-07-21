@@ -230,6 +230,16 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
                     }
+                },
+                #endregion
+                #region Inform user about next step
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "On the next page, we will use this initialized state matrix to generate the first keystream block.",
+                            action = UIElementAction.Action.ADD }
+                    }
                 }
                 #endregion
             };
