@@ -282,13 +282,24 @@ namespace Cryptool.Plugins.ChaCha
                     new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) } :
                     new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) },
             };
+            PageAction[] UIKeystreamBlockGenPageActions = new PageAction[]
+            {
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIKeystreamBlockGenStepDescription, content = () => "To generate a keystream block, we pass the state into the ChaCha Hash function. " +
+                        "The ChaCha hash function consists of X rounds. One round consists of 4 quarterround functions hence the name \"quarterround\". A quarterround takes in 4 state entries and modifies them." }
+                    }
+                }
+            };
             #endregion
 
             _pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
                 new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
                 new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
-                new Page() { page = UIKeystreamBlockGenPage, actions = new PageAction[0], _initActions = UIKeystreamBlockGenPageInitActions },
+                new Page() { page = UIKeystreamBlockGenPage, actions = UIKeystreamBlockGenPageActions, _initActions = UIKeystreamBlockGenPageInitActions },
             };
             #endregion
         }
