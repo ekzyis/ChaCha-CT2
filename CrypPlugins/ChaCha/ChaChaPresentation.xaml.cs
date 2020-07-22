@@ -265,6 +265,16 @@ namespace Cryptool.Plugins.ChaCha
                 InputKey.Length == 16 ?
                     new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) } :
                     new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
+                InputIV.Length == 8 ?
+                    new UIElementAction() { element = UIState13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) } :
+                    new UIElementAction() { element = UIState13, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
+                InputIV.Length == 8 ?
+                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) } :
+                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) },
+                InputIV.Length == 8 ?
+                    new UIElementAction() { element = UIState15, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) } :
+                    new UIElementAction() { element = UIState15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) },
             };
             _pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
