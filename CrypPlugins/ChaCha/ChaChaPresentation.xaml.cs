@@ -31,6 +31,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             InitializeComponent();
             DataContext = this;
+            #region Page initialization
+
+            #region UIStateMatrixPage
             PageAction UIStateMatrixPageKey16Action = new PageAction()
             {
                 elementActions = new UIElementAction[]
@@ -243,6 +246,9 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 #endregion
             };
+            #endregion
+
+            #region UIKeystreamBlockGenPage
             UIElementAction[] UIKeystreamBlockGenPageInitActions = new UIElementAction[]
             {
                 new UIElementAction() { element = UIKeystreamBlockGen0, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(0, 8) },
@@ -276,12 +282,15 @@ namespace Cryptool.Plugins.ChaCha
                     new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) } :
                     new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) },
             };
+            #endregion
+
             _pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
                 new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
                 new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
                 new Page() { page = UIKeystreamBlockGenPage, actions = new PageAction[0], _initActions = UIKeystreamBlockGenPageInitActions },
             };
+            #endregion
         }
 
         #region Navigation
