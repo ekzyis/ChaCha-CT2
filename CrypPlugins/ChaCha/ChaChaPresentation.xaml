@@ -105,7 +105,7 @@
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/> <!-- state matrix + transformation steps column -->
-            <ColumnDefinition Width="3*"/> <!-- Input params column -->
+            <ColumnDefinition Width="3*"/> <!-- Input params + step description column -->
           </Grid.ColumnDefinitions>
           <!-- state matrix + transformation steps -->
           <Grid Grid.Column="0">
