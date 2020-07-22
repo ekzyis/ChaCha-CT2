@@ -339,6 +339,8 @@ namespace Cryptool.Plugins.ChaCha
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
 
+        private bool _executionFinished = false;
+
         private int CurrentPageIndex
         {
             get
@@ -400,18 +402,34 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public bool ExecutionFinished
+        {
+            get
+            {
+                return _executionFinished;
+            }
+            set
+            {
+                _executionFinished = value;
+                OnPropertyChanged("NextPageIsEnabled");
+                OnPropertyChanged("PrevPageIsEnabled");
+                OnPropertyChanged("NextActionIsEnabled");
+                OnPropertyChanged("PrevActionIsEnabled");
+            }
+        }
+
         public bool NextPageIsEnabled
         {
             get
             {
-                return CurrentPageIndex != _pageRouting.Length - 1; ;
+                return CurrentPageIndex != _pageRouting.Length - 1 && ExecutionFinished;
             }
         }
         public bool PrevPageIsEnabled
         {
             get
             {
-                return CurrentPageIndex != 0;
+                return CurrentPageIndex != 0 && ExecutionFinished;
             }
         }
         public bool NextActionIsEnabled
@@ -421,14 +439,14 @@ namespace Cryptool.Plugins.ChaCha
                 // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
                 // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
                 // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
-                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != CurrentPage.ActionFrames;
+                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != CurrentPage.ActionFrames && ExecutionFinished;
             }
         }
         public bool PrevActionIsEnabled
         {
             get
             {
-                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
+                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0 && ExecutionFinished;
             }
         }
         #endregion

@@ -165,7 +165,6 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public void PreExecution()
         {
-            // TODO disable page navigation until execution is started
         }
 
         /// <summary>
@@ -192,6 +191,9 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             ProgressChanged(1, 1);
+
+            // enable navigation since now all values needed for visualization are set.
+            _presentation.ExecutionFinished = true;
         }
 
         /*
