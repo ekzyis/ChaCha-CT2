@@ -254,17 +254,17 @@ namespace Cryptool.Plugins.ChaCha
                 new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
                 new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) } :
-                    new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                    new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) } :
+                    new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) } :
-                    new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                    new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) } :
+                    new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) } :
-                    new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                    new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) } :
+                    new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) } :
-                    new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                    new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) } :
+                    new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
                 new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
                 InputIV.Length == 8 ?
                     new UIElementAction() { element = UIState13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) } :
