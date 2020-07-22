@@ -522,6 +522,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 PrevAction_Click(null, null);
             }
+            // undo init actions
+            foreach(UIElementAction uie in CurrentPage.InitActions)
+            {
+                // assume that there was not content previously in it thus clearing it reverts action.
+                uie.element.Inlines.Clear();
+            }
             Debug.Assert(CurrentActionIndex == 0);
         }
 
