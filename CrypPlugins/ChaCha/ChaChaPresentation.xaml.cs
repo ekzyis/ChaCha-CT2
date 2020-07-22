@@ -270,7 +270,7 @@ namespace Cryptool.Plugins.ChaCha
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
                 new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
                 new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
-                new Page() { page = UIKeystreamBlockGenPage, actions = new PageAction[0], initActions = UIKeystreamBlockGenPageInitActions },
+                new Page() { page = UIKeystreamBlockGenPage, actions = new PageAction[0], _initActions = UIKeystreamBlockGenPageInitActions },
             };
         }
 
@@ -302,13 +302,24 @@ namespace Cryptool.Plugins.ChaCha
         struct Page
         {
             public UIElement page;
-            public UIElementAction[] initActions;
+            public UIElementAction[] _initActions;
             public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
             public int ActionFrames
             {
                 get
                 {
                     return actions.Length;
+                }
+            }
+            public UIElementAction[] InitActions
+            {
+                get
+                {
+                    if(_initActions != null)
+                    {
+                        return _initActions;
+                    }
+                    return new UIElementAction[0];
                 }
             }
         }
@@ -429,17 +440,14 @@ namespace Cryptool.Plugins.ChaCha
             CurrentPageIndex++;
             CurrentPage.page.Visibility = Visibility.Visible;
             // initialize page by running init actions
-            if(CurrentPage.initActions != null)
+            foreach (UIElementAction uie in CurrentPage.InitActions)
             {
-                foreach (UIElementAction uie in CurrentPage.initActions)
+                Run r = CreateRunFromAction(uie);
+                if (uie.action == UIElementAction.Action.REPLACE)
                 {
-                    Run r = CreateRunFromAction(uie);
-                    if (uie.action == UIElementAction.Action.REPLACE)
-                    {
-                        uie.element.Inlines.Clear();
-                    }
-                    uie.element.Inlines.Add(r);
+                    uie.element.Inlines.Clear();
                 }
+                uie.element.Inlines.Add(r);
             }
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
