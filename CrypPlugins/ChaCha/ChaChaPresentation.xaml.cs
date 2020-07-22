@@ -245,36 +245,36 @@ namespace Cryptool.Plugins.ChaCha
             };
             UIElementAction[] UIKeystreamBlockGenPageInitActions = new UIElementAction[]
             {
-                new UIElementAction() { element = UIState0, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(0, 8) },
-                new UIElementAction() { element = UIState1, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(8, 8) },
-                new UIElementAction() { element = UIState2, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(16, 8) },
-                new UIElementAction() { element = UIState3, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(24, 8) },
-                new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen0, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(0, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen1, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(8, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen2, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(16, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen3, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(24, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) } :
-                    new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) } :
-                    new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) } :
-                    new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
                 InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) } :
-                    new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
-                new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
+                new UIElementAction() { element = UIKeystreamBlockGen12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
                 InputIV.Length == 8 ?
-                    new UIElementAction() { element = UIState13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) } :
-                    new UIElementAction() { element = UIState13, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen13, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
                 InputIV.Length == 8 ?
-                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) } :
-                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen14, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) },
                 InputIV.Length == 8 ?
-                    new UIElementAction() { element = UIState15, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) } :
-                    new UIElementAction() { element = UIState15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) },
+                    new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) } :
+                    new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) },
             };
             _pageRouting = new Page[] {
                 new Page() { page = UILandingPage, actions = new PageAction[0] },
