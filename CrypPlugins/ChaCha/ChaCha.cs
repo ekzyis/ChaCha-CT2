@@ -432,9 +432,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
             {
-                x1 += x2;
-                x3 ^= x1;
-                x3 = RotateLeft(x3, shift);
+                x1 += x2; // x1 = x1 + x2
+                x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
+                x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
                 return (x1, x2, x3);
             }
             (a, b, d) = quarterroundStep(a, b, d, 16);
