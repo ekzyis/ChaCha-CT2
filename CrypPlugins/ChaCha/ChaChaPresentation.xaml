@@ -260,7 +260,7 @@
                 <RowDefinition></RowDefinition>
                 <!-- state matrix row -->
                 <RowDefinition></RowDefinition>
-                <!-- little-endian transformation step row -->
+                <!-- quarterround transformation step row -->
               </Grid.RowDefinitions>
               <!-- State matrix -->
               <Grid Grid.Row="0">
@@ -279,56 +279,84 @@
                       <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <!-- Row 0 -->
-                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell0" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell1" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell2" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell3" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3"/>
                     </Border>
                     <!-- Row 1 -->
-                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell4" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell5" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell6" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell7" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7"/>
                     </Border>
                     <!-- Row 2 -->
-                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell8" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell9" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell10" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell11" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11"/>
                     </Border>
                     <!-- Row 3 -->
-                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell12" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell13" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell14" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenCell15" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15"/>
+                    </Border>
+                  </Grid>
+                </Border>
+              </Grid>
+              <Grid Margin="5" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="1*"/>
+                  <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderBrush="Black" BorderThickness="0,1,1,0">
+                  <Grid>
+                    <Grid.RowDefinitions>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRA"/>
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRB"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRC"/>
+                    </Border>
+                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRD"/>
                     </Border>
                   </Grid>
                 </Border>
@@ -337,7 +365,60 @@
           </Grid>
           <!-- Step description -->
           <Grid Margin="100,0,0,0" Grid.Column="1">
-            <TextBlock Name="UIKeystreamBlockGenStepDescription"/>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"  Name="UIKeystreamBlockGenStepDescription"/>
+            <Grid Grid.Row="1">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+              </Grid.RowDefinitions>
+              <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock>Round:</TextBlock>
+                <TextBlock Name="UIKeystreamBlockGenCurrentRound"/>
+              </StackPanel>
+              <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound1" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(0, 4, 8, 12)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound2" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(1, 5, 9, 13)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound3" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(2, 6, 10, 14)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="4" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound4" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(3, 7, 11, 15)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="5" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound5" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(0, 5, 10, 15)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="6" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound6" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(1, 6, 11, 12)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="7" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound7" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(2, 7, 8, 13)</TextBlock>
+              </StackPanel>
+              <StackPanel Grid.Row="8" Orientation="Horizontal">
+                <TextBlock Name="UIKeystreamBlockGenColumnRound8" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock>Quarterround(3, 4, 9, 14)</TextBlock>
+              </StackPanel>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

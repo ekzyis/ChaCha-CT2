@@ -288,8 +288,26 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     elementActions = new UIElementAction[]
                     {
-                        new UIElementAction() { element = UIKeystreamBlockGenStepDescription, content = () => "To generate a keystream block, we pass the state into the ChaCha Hash function. " +
-                        "The ChaCha hash function consists of X rounds. One round consists of 4 quarterround functions hence the name \"quarterround\". A quarterround takes in 4 state entries and modifies them." }
+                        new UIElementAction() { element = UIKeystreamBlockGenStepDescription, content = () => "To generate a keystream block, we apply the ChaCha Hash function to the state. " +
+                        "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them." },
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIKeystreamBlockGenStepDescription,
+                            content = () => "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ", action = UIElementAction.Action.ADD }
+                    }
+                },
+                new PageAction()
+                {
+                    elementActions = new UIElementAction[]
+                    {
+                        new UIElementAction() { element = UIKeystreamBlockGenCell0, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
+                        new UIElementAction() { element = UIKeystreamBlockGenCell4, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
+                        new UIElementAction() { element = UIKeystreamBlockGenCell8, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
+                        new UIElementAction() { element = UIKeystreamBlockGenCell12, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
                     }
                 }
             };
@@ -309,19 +327,21 @@ namespace Cryptool.Plugins.ChaCha
         #region properties
         struct UIElementAction
         {
-            public TextBlock element;
+            public FrameworkElement element;
             public Func<string> content; // the content this UI element should be assigned
             public Action action;
+            public Brush brush;
             public Highlight highlight; // highlight the UI element for this action (will be unhighlighted next action)
             public enum Action
             {
                 REPLACE,
-                ADD
+                ADD,
+                CHANGE_BACKGROUND
             }
             public enum Highlight
             {
                 BOLD,
-                NONE,
+                NONE
             }
         }
         struct PageAction
@@ -490,58 +510,69 @@ namespace Cryptool.Plugins.ChaCha
             // initialize page by running init actions
             foreach (UIElementAction uie in CurrentPage.InitActions)
             {
+                TextBlock tb = (TextBlock) uie.element;
                 Run r = CreateRunFromAction(uie);
                 if (uie.action == UIElementAction.Action.REPLACE)
                 {
-                    uie.element.Inlines.Clear();
+                    tb.Inlines.Clear();
                 }
-                uie.element.Inlines.Add(r);
+                tb.Inlines.Add(r);
             }
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             foreach (UIElementAction prevAction in PreviousActions)
             {
-                if (prevAction.action == UIElementAction.Action.REPLACE)
+                if (prevAction.action == UIElementAction.Action.CHANGE_BACKGROUND)
                 {
-                    prevAction.element.Inlines.Clear();
-                    if (CurrentActionIndex == 0)
+                    Debug.Assert(prevAction.brush != null);
+                    ((Border)prevAction.element).Background = Brushes.White;
+                }
+                else
+                {
+                    TextBlock tb = (TextBlock)prevAction.element;
+                    if (prevAction.action == UIElementAction.Action.REPLACE)
                     {
-                        // if the last action was the first action, we don't have to add specific inline content
-                        // since we can assume that the elements never have any inline content in them at the start (at least this is the case up to now)
-                        break;
-                    }
-                    else
-                    {
-                        // get the inline content what the element has had before the last action was applied.
-                        // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
-                        // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
-                        for (int j = CurrentActionIndex - 2; j >= 0; --j)
+                        tb.Inlines.Clear();
+                        if (CurrentActionIndex == 0)
                         {
-                            foreach (UIElementAction prevAction_ in CurrentPage.actions[j].elementActions)
+                            // if the last action was the first action, we don't have to add specific inline content
+                            // since we can assume that the elements never have any inline content in them at the start (at least this is the case up to now)
+                            break;
+                        }
+                        else
+                        {
+                            // get the inline content what the element has had before the last action was applied.
+                            // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
+                            // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
+                            for (int j = CurrentActionIndex - 2; j >= 0; --j)
                             {
-                                if (prevAction_.element.Name == prevAction.element.Name)
+                                foreach (UIElementAction prevAction_ in CurrentPage.actions[j].elementActions)
                                 {
-                                    Run r = CreateRunFromAction(prevAction_);
-                                    prevAction_.element.Inlines.Add(r);
-                                    goto End; // goto to break out of double for-loop
+                                    if (prevAction_.element.Name == prevAction.element.Name)
+                                    {
+                                        TextBlock tb_ = (TextBlock)prevAction_.element;
+                                        Run r = CreateRunFromAction(prevAction_);
+                                        tb_.Inlines.Add(r);
+                                        goto End; // goto to break out of double for-loop
+                                    }
                                 }
                             }
+                        End:;
                         }
-                    End:;
                     }
-                }
-                else if (prevAction.action == UIElementAction.Action.ADD)
-                {
-                    // Remove the last inline element that was added to undo action
-                    RemoveLast(prevAction.element.Inlines);
+                    else if (prevAction.action == UIElementAction.Action.ADD)
+                    {
+                        // Remove the last inline element that was added to undo action
+                        RemoveLast(tb.Inlines);
+                    }
                 }
             }
             CurrentActionIndex--;
             // Re-highlight previously highlighted elements
             foreach(UIElementAction prevAction in PreviousActions)
             {
-                ReplaceLast(prevAction.element.Inlines, CreateRunFromAction(prevAction));
+                ReplaceLast(((TextBlock)prevAction.element).Inlines, CreateRunFromAction(prevAction));
             }
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
@@ -549,16 +580,25 @@ namespace Cryptool.Plugins.ChaCha
             // unhighlight element added in previous action
             foreach (UIElementAction uie in PreviousActions)
             {
-                ReplaceLast(uie.element.Inlines, CreateRunFromAction(uie, false));
+                ReplaceLast(((TextBlock)uie.element).Inlines, CreateRunFromAction(uie, false));
             }
             foreach (UIElementAction uie in CurrentActions)
             {
-                Run r = CreateRunFromAction(uie);
-                if (uie.action == UIElementAction.Action.REPLACE)
+                if(uie.action == UIElementAction.Action.CHANGE_BACKGROUND)
                 {
-                    uie.element.Inlines.Clear();
+                    Debug.Assert(uie.brush != null);
+                    ((Border)uie.element).Background = uie.brush;
                 }
-                uie.element.Inlines.Add(r);
+                else
+                {
+                    Run r = CreateRunFromAction(uie);
+                    TextBlock tb = (TextBlock)uie.element;
+                    if (uie.action == UIElementAction.Action.REPLACE)
+                    {
+                        tb.Inlines.Clear();
+                    }
+                    tb.Inlines.Add(r);
+                }
             }
             CurrentActionIndex++;
         }
@@ -573,8 +613,9 @@ namespace Cryptool.Plugins.ChaCha
             // undo init actions
             foreach(UIElementAction uie in CurrentPage.InitActions)
             {
+                TextBlock tb = (TextBlock)uie.element;
                 // assume that there was not content previously in it thus clearing it reverts action.
-                uie.element.Inlines.Clear();
+                tb.Inlines.Clear();
             }
             Debug.Assert(CurrentActionIndex == 0);
         }
