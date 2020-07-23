@@ -334,15 +334,10 @@ namespace Cryptool.Plugins.ChaCha
          * 
          * Uses the initial state matrix to insert the counter n and then calculate the keystream block.
          */
-        public byte[] GenerateKeystreamBlock(uint n)
+        public byte[] GenerateKeystreamBlock(ulong n)
         {
             uint[] state = (uint[])(initial_state.Clone());
-            byte[] counter = GetBytes(n);
-            // counter as little-endian
-            Array.Reverse(counter);
-            // set counter value to state
-            state[12] = To4ByteLE(counter, 0);
-
+            setCounterToState(state, n);
             // hash state block
             uint[] hash = ChaChaHash(state);
             // convert the hashed uint state array into an array of bytes
@@ -358,11 +353,35 @@ namespace Cryptool.Plugins.ChaCha
             return keystreamBlock;
         }
 
+        public void setCounterToState(uint[] state, ulong c)
+        {
+            byte[] counter = GetBytes(c);
+            // counter as little-endian
+            Array.Reverse(counter);
+            // set counter value to state
+            state[12] = To4ByteLE(counter, 0);
+            if (COUNTERSIZE_BITS > 32)
+                state[13] = To4ByteLE(counter, 4);
+        }
+
         /**
          * Return a bytes array of the given number with the highest significant byte always coming first (big-endian), independent of system architecture.
          * For example: getBytes(0x01020304) -> byte[4] { 1, 2, 3, 4 }
          */
         public static byte[] GetBytes(uint n)
+        {
+            byte[] b = BitConverter.GetBytes(n);
+            // if system architecture is little-endian,
+            // BitConverter.GetBytes returned bytes in little-endian order thus we reverse the order
+            // to always get the highest significant byte first (big-endian)
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(b);
+            }
+            return b;
+        }
+
+        public static byte[] GetBytes(ulong n)
         {
             byte[] b = BitConverter.GetBytes(n);
             // if system architecture is little-endian,
