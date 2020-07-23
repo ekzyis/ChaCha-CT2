@@ -15,8 +15,10 @@
   </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
-      <RowDefinition Height="95*"></RowDefinition> <!-- Content row -->
-      <RowDefinition Height="5*"></RowDefinition> <!-- Navigation bar row -->
+      <!-- Content row -->
+      <RowDefinition Height="95*"></RowDefinition>
+      <!-- Navigation bar row -->
+      <RowDefinition Height="5*"></RowDefinition>
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
     <Grid Name="UINavbar" Grid.Row="1">
@@ -32,7 +34,7 @@
     <!-- Main grid for content pane -->
     <Grid Name="UIContentPane">
       <!-- Landing page -->
-      <Grid Name="UILandingPage" Visibility="Visible">
+      <Grid Name="UILandingPage" Visibility="Collapsed">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -44,20 +46,16 @@
       </Grid>
       <!-- ChaCha workflow page -->
       <Grid Margin="20" Name="UIWorkflowPage" Visibility="Collapsed">
-        <!-- Grid for title and content -->
         <Grid.RowDefinitions>
-          <RowDefinition Height="50" /> <!-- Title row -->
-          <RowDefinition /> <!-- Content row -->
+          <RowDefinition Height="50" />
+          <RowDefinition />
         </Grid.RowDefinitions>
-        <!-- Title -->
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">ChaCha workflow</TextBlock>
-        <!-- Grid for content -->
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/> <!-- Steps + description column -->
-            <ColumnDefinition Width="3*"/> <!-- Input params column -->
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
           </Grid.ColumnDefinitions>
-          <!-- Steps + description -->
           <Grid Grid.Column="0">
             <Grid.RowDefinitions>
               <RowDefinition></RowDefinition>
@@ -94,25 +92,21 @@
       </Grid>
       <!-- ChaCha State matrix page -->
       <Grid Margin="20" Name="UIStateMatrixPage" Visibility="Collapsed">
-        <!-- Grid for title and content -->
         <Grid.RowDefinitions>
-          <RowDefinition Height="50" /> <!-- Title row -->
-          <RowDefinition /> <!-- Content row -->
+          <RowDefinition Height="50" />
+          <RowDefinition />
         </Grid.RowDefinitions>
-        <!-- Title -->
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">State matrix</TextBlock>
-        <!-- Grid for content -->
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/> <!-- state matrix + transformation steps column -->
-            <ColumnDefinition Width="3*"/> <!-- Input params + step description column -->
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
           </Grid.ColumnDefinitions>
-          <!-- state matrix + transformation steps -->
           <Grid Grid.Column="0">
             <Grid>
               <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition> <!-- state matrix row -->
-                <RowDefinition></RowDefinition> <!-- little-endian transformation step row -->
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
               </Grid.RowDefinitions>
               <!-- State matrix -->
               <Grid Grid.Row="0">
@@ -211,7 +205,6 @@
               </Grid>
             </Grid>
           </Grid>
-          <!-- Step description + Input parameter -->
           <Grid Margin="100,0,0,0" Grid.Column="1">
             <Grid.RowDefinitions>
               <RowDefinition Height="14*"></RowDefinition>
@@ -220,7 +213,9 @@
               <RowDefinition Height="4*"></RowDefinition>
               <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
+            <!-- Step description -->
             <TextBlock Name="UIStateMatrixStepDescription"/>
+            <!-- state parameters -->
             <Label Grid.Row="1" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <Label>Constant:</Label>
@@ -238,29 +233,22 @@
         </Grid>
       </Grid>
       <!-- ChaCha Generate Keystream block page -->
-      <Grid Margin="20" Name="UIKeystreamBlockGenPage" Visibility="Collapsed">
-        <!-- Grid for title and content -->
+      <Grid Margin="20" Name="UIKeystreamBlockGenPage" Visibility="Visible">
         <Grid.RowDefinitions>
           <RowDefinition Height="50" />
-          <!-- Title row -->
           <RowDefinition />
-          <!-- Content row -->
         </Grid.RowDefinitions>
-        <!-- Title -->
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Generate Keystream Block</TextBlock>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/> <!-- state matrix + quarterround steps column -->
-            <ColumnDefinition Width="3*"/> <!-- step description column -->
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="3*"/>
           </Grid.ColumnDefinitions>
-          <!-- state matrix + transformation steps -->
           <Grid Grid.Column="0">
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
-                <!-- state matrix row -->
                 <RowDefinition></RowDefinition>
-                <!-- quarterround transformation step row -->
               </Grid.RowDefinitions>
               <!-- State matrix -->
               <Grid Grid.Row="0">
@@ -363,13 +351,14 @@
               </Grid>
             </Grid>
           </Grid>
-          <!-- Step description -->
           <Grid Margin="100,0,0,0" Grid.Column="1">
             <Grid.RowDefinitions>
               <RowDefinition/>
               <RowDefinition/>
             </Grid.RowDefinitions>
+            <!-- Step description -->
             <TextBlock Grid.Row="0"  Name="UIKeystreamBlockGenStepDescription"/>
+            <!-- Current step -->
             <Grid Grid.Row="1">
               <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
