@@ -17,13 +17,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
+                    SaveState(UIStateMatrixStepDescription);
                     string desc = "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ";
                     Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
+                    FinishPageAction();
                 },
-                undo = () =>
-                {
-                    Clear(UIStateMatrixStepDescription);
-                }
+                undo = Undo
             };
             PageAction constantsInputAction = new PageAction()
             {

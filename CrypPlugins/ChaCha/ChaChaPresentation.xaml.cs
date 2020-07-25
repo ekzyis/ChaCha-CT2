@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Security.Policy;
 using System.Runtime.CompilerServices;
 using System.Windows.Markup;
+using System.Data;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -27,7 +28,7 @@ namespace Cryptool.Plugins.ChaCha
     /// Interaction logic for ChaChaPresentation.xaml
     /// </summary>
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
+    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock>
     {
 
         public ChaChaPresentation()
@@ -46,6 +47,47 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region Navigation
+
+        #region interface methods
+        /*
+         * Stack with actions where the last dictionary contains undo actions which reverts changes from the last applied page action of an UI Element.
+         */
+        private Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
+        // temporary variable to collect undo actions before pushing into stack.
+        private Dictionary<int, Action> _undoActions = new Dictionary<int, Action> ();
+        public void SaveState(TextBlock tb)
+        {
+            InlineCollection tbState = tb.Inlines;
+            _undoActions[tbState.GetHashCode()] = () => {
+                tb.Inlines.Clear();
+                foreach (Inline i in tbState)
+                {
+                    tb.Inlines.Add(i);
+                }
+            };
+        }
+
+        public void FinishPageAction()
+        {
+            // copy dictionary using new
+            _undoState.Push(new Dictionary<int, Action>(_undoActions));
+            _undoActions.Clear();
+        }
+
+        public Dictionary<int, Action> GetUndoActions()
+        {
+            return _undoState.Pop();
+        }
+
+        public void Undo()
+        {
+            Dictionary<int, Action> undoActions = GetUndoActions();
+            foreach(Action undo in undoActions.Values)
+            {
+                undo();
+            }
+        }
+        #endregion
 
         #region properties
 
@@ -532,5 +574,20 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
         #endregion
+    }
+
+    interface INavigationService<T>
+    {
+        // Save state of element such that we can retrieve it later for undoing action.
+        void SaveState(T t);
+
+        // Tells that current page action is finished and thus next calls to save state are for a new page action.
+        void FinishPageAction();
+
+        // Get list of actions which completely reverts the page action of the given index.
+        Dictionary<int, Action> GetUndoActions();
+
+        // Execute automatic undoing of actions.
+        void Undo();
     }
 }
