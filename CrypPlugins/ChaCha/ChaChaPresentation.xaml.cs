@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 using System.Security.Policy;
 using System.Runtime.CompilerServices;
+using System.Windows.Markup;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -32,7 +33,16 @@ namespace Cryptool.Plugins.ChaCha
         public ChaChaPresentation()
         {
             InitializeComponent();
+            InitPages();
             DataContext = this;
+        }
+
+        private void InitPages()
+        {
+            AddPage(LandingPage());
+            AddPage(WorkflowPage());
+            AddPage(StateMatrixPage());
+            //AddPage(KeystreamBlockGenPage());
         }
 
         #region Navigation
@@ -41,24 +51,52 @@ namespace Cryptool.Plugins.ChaCha
 
         struct PageAction
         {
-            Action execAction;
-            Action undoAction;
+            public Action exec;
+            public Action undo;
         }
-        struct Page
+        class Page
         {
-            UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
-            PageAction[] _pageActions;
+            public Page(UIElement UIPageElement)
+            {
+                _page = UIPageElement;
+            }            
+            private readonly UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
+            private readonly List<PageAction> _pageActions = new List<PageAction>();
             public int ActionFrames
             {
                 get
                 {
-                    return _pageActions.Length;
+                    return _pageActions.Count;
+                }
+            }
+            public PageAction[] Actions { 
+                get
+                {
+                    return _pageActions.ToArray();
+                }
+            }
+            public void AddAction(PageAction pageAction)
+            {
+                _pageActions.Add(pageAction);
+            }
+            public Visibility Visibility
+            {
+                get {
+                    return _page.Visibility;
+                }
+                set {
+                    _page.Visibility = value;
                 }
             }
         }
 
         // List with pages in particular order to implement page navigation + their page actions
-        private readonly Page[] _pageRouting;
+        private readonly List<Page> _pages = new List<Page>();
+        private void AddPage(Page page)
+        {
+            _pages.Add(page);
+        }
+
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
 
@@ -102,7 +140,15 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return _pageRouting[CurrentPageIndex];
+                return _pages[CurrentPageIndex];
+            }
+        }
+
+        private PageAction[] CurrentActions
+        {
+            get
+            {
+                return CurrentPage.Actions;
             }
         }
 
@@ -126,7 +172,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return _pageRouting.Length - 1;
+                return _pages.Count - 1;
             }
         }
 
@@ -166,19 +212,92 @@ namespace Cryptool.Plugins.ChaCha
         #region Click handlers
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
+            CurrentPage.Visibility = Visibility.Collapsed;
+            // TODO undo actions on current page before switching
+            CurrentPageIndex--;
+            CurrentPage.Visibility = Visibility.Visible;
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
+            CurrentPage.Visibility = Visibility.Collapsed;
+            // TODO undo actions on current page before switching
+            CurrentPageIndex++;
+            CurrentPage.Visibility = Visibility.Visible;
+            // TODO initialize page by running init actions
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
+            CurrentActionIndex--;
+            CurrentPage.Actions[CurrentActionIndex].undo();
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
+            CurrentPage.Actions[CurrentActionIndex].exec();
+            CurrentActionIndex++;
         }
 
         #endregion
 
+        #region action helper methods
+
+        private Run MakeBold(Run r)
+        {
+            return new Run { Text = r.Text, FontWeight = FontWeights.Bold };
+        }
+
+        private void RemoveLast(InlineCollection list)
+        {
+            list.Remove(list.LastInline);
+        }
+        private void RemoveLast(TextBlock tb)
+        {
+            RemoveLast(tb.Inlines);
+        }
+        private void ReplaceLast(InlineCollection list, Inline element)
+        {
+            RemoveLast(list);
+            list.Add(element);
+        }
+        private void ReplaceLast(TextBlock tb, Inline element)
+        {
+            ReplaceLast(tb.Inlines, element);
+        }
+        private void MakeBoldLast(InlineCollection list)
+        {
+            ReplaceLast(list, MakeBold((Run)(list.LastInline)));
+        }
+        private void MakeBoldLast(TextBlock tb)
+        {
+            MakeBoldLast(tb.Inlines);
+        }
+        private void UnboldLast(InlineCollection list)
+        {
+            ReplaceLast(list, new Run { Text = ((Run)(list.LastInline)).Text });
+        }
+        private void UnboldLast(TextBlock tb)
+        {
+            UnboldLast(tb.Inlines);
+        }
+        private void Add(InlineCollection list, Inline element)
+        {
+            list.Add(element);
+        }
+        private void Add(TextBlock tb, Inline element)
+        {
+            Add(tb.Inlines, element);
+        }
+        private void Clear(InlineCollection list)
+        {
+            list.Clear();
+        }
+        private void Clear(TextBlock tb)
+        {
+            Clear(tb.Inlines);
+        }
+
+        #endregion
+
+        #endregion
 
         #region Data binding notification
         public event PropertyChangedEventHandler PropertyChanged;
@@ -188,8 +307,6 @@ namespace Cryptool.Plugins.ChaCha
             if(PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
         }
-        #endregion
-
         #endregion
 
         #region Input
@@ -359,6 +476,19 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8);
             }
         }
+        private ChaCha.Version _version;
+        public ChaCha.Version Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+
         #endregion
 
         #region ValueConversion

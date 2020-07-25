@@ -82,6 +82,9 @@
     </Compile>
     <Compile Include="ChaChaSettings.cs" />
     <Compile Include="DebugHelper.cs" />
+    <Compile Include="Pages\LandingPage.cs" />
+    <Compile Include="Pages\StateMatrixPage.cs" />
+    <Compile Include="Pages\WorkflowPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +120,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
