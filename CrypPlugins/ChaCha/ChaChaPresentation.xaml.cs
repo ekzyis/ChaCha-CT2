@@ -57,10 +57,12 @@ namespace Cryptool.Plugins.ChaCha
         private Dictionary<int, Action> _undoActions = new Dictionary<int, Action> ();
         public void SaveState(TextBlock tb)
         {
-            InlineCollection tbState = tb.Inlines;
-            _undoActions[tbState.GetHashCode()] = () => {
+            // copy inline elements
+            Inline[] state = new Inline[tb.Inlines.Count];
+            tb.Inlines.CopyTo(state, 0);
+            _undoActions[tb.GetHashCode()] = () => {
                 tb.Inlines.Clear();
-                foreach (Inline i in tbState)
+                foreach (Inline i in state)
                 {
                     tb.Inlines.Add(i);
                 }
