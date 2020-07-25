@@ -28,14 +28,13 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
+                    SaveState(UIStateMatrixStepDescription);
+                    SaveState(UITransformInput);
                     UnboldLast(UIStateMatrixStepDescription);
                     Add(UITransformInput, MakeBold(new Run(HexConstants)));
+                    FinishPageAction();
                 },
-                undo = () =>
-                {
-                    MakeBoldLast(UIStateMatrixStepDescription);
-                    Clear(UITransformInput);
-                }
+                undo = Undo
             };
             PageAction constantsChunksAction = new PageAction()
             {
