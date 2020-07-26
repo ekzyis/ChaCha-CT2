@@ -62,14 +62,15 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+            Brush copyBrush = Brushes.AliceBlue;
             PageAction initFirstColumnRoundAction1 = new PageAction()
             {
                 exec = () =>
                 {
-                    SetBackground(UIKeystreamBlockGenCell0, Brushes.Blue);
-                    SetBackground(UIKeystreamBlockGenCell4, Brushes.Blue);
-                    SetBackground(UIKeystreamBlockGenCell8, Brushes.Blue);
-                    SetBackground(UIKeystreamBlockGenCell12, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenCell0, copyBrush);
+                    SetBackground(UIKeystreamBlockGenCell4, copyBrush);
+                    SetBackground(UIKeystreamBlockGenCell8, copyBrush);
+                    SetBackground(UIKeystreamBlockGenCell12, copyBrush);
                 },
                 undo = Undo
             };
@@ -77,10 +78,10 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SetBackground(UIKeystreamBlockGenQRACell, Brushes.Blue);
-                    SetBackground(UIKeystreamBlockGenQRBCell, Brushes.Blue);
-                    SetBackground(UIKeystreamBlockGenQRCCell, Brushes.Blue);
-                    SetBackground(UIKeystreamBlockGenQRDCell, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenQRACell, copyBrush);
+                    SetBackground(UIKeystreamBlockGenQRBCell, copyBrush);
+                    SetBackground(UIKeystreamBlockGenQRCCell, copyBrush);
+                    SetBackground(UIKeystreamBlockGenQRDCell, copyBrush);
                     CopyLastText(UIKeystreamBlockGenQRA, UIKeystreamBlockGen0);
                     CopyLastText(UIKeystreamBlockGenQRB, UIKeystreamBlockGen4);
                     CopyLastText(UIKeystreamBlockGenQRC, UIKeystreamBlockGen8);
