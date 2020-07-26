@@ -429,6 +429,11 @@ namespace Cryptool.Plugins.ChaCha
             b.Background = background;
         }
 
+        private void CopyLastText(TextBlock tbToCopyTo, TextBlock tbToCopyFrom)
+        {
+            SaveState(tbToCopyTo);
+            tbToCopyTo.Inlines.Add(((Run)(tbToCopyFrom.Inlines.LastInline)).Text);
+        }
         #endregion
 
         #endregion

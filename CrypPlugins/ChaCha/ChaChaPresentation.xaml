@@ -334,16 +334,16 @@
                       <RowDefinition/>
                       <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenQRACell" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRA"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenQRBCell" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRB"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenQRCCell" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRC"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Name="UIKeystreamBlockGenQRDCell" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGenQRD"/>
                     </Border>
                   </Grid>

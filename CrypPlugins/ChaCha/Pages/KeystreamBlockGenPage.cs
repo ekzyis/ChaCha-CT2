@@ -62,7 +62,7 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            PageAction initFirstColumnRoundAction = new PageAction()
+            PageAction initFirstColumnRoundAction1 = new PageAction()
             {
                 exec = () =>
                 {
@@ -73,9 +73,25 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+            PageAction initFirstColumnRoundAction2 = new PageAction()
+            {
+                exec = () =>
+                {
+                    SetBackground(UIKeystreamBlockGenQRACell, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenQRBCell, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenQRCCell, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenQRDCell, Brushes.Blue);
+                    CopyLastText(UIKeystreamBlockGenQRA, UIKeystreamBlockGen0);
+                    CopyLastText(UIKeystreamBlockGenQRB, UIKeystreamBlockGen4);
+                    CopyLastText(UIKeystreamBlockGenQRC, UIKeystreamBlockGen8);
+                    CopyLastText(UIKeystreamBlockGenQRD, UIKeystreamBlockGen12);
+                },
+                undo = Undo
+            };
             p.AddAction(generalDescriptionAction);
             p.AddAction(firstColumnRoundDescriptionAction);
-            p.AddAction(initFirstColumnRoundAction);
+            p.AddAction(initFirstColumnRoundAction1);
+            p.AddAction(initFirstColumnRoundAction2);
             return p;
         }
     }
