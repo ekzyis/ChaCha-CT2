@@ -114,6 +114,7 @@ namespace Cryptool.Plugins.ChaCha
             }            
             private readonly UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
             private readonly List<PageAction> _pageActions = new List<PageAction>();
+            private readonly List<PageAction> _pageInitActions = new List<PageAction>();
             public int ActionFrames
             {
                 get
@@ -130,6 +131,17 @@ namespace Cryptool.Plugins.ChaCha
             public void AddAction(PageAction pageAction)
             {
                 _pageActions.Add(pageAction);
+            }
+            public PageAction[] InitActions
+            {
+                get
+                {
+                    return _pageInitActions.ToArray();
+                }
+            }
+            public void AddInitAction(PageAction pageAction)
+            {
+                _pageInitActions.Add(pageAction);
             }
             public Visibility Visibility
             {
@@ -275,7 +287,11 @@ namespace Cryptool.Plugins.ChaCha
             UndoActions();
             CurrentPageIndex++;
             CurrentPage.Visibility = Visibility.Visible;
-            // TODO initialize page by running init actions
+            foreach(PageAction pageAction in CurrentPage.InitActions)
+            {
+                pageAction.exec();
+                FinishPageAction();
+            }
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
@@ -295,6 +311,11 @@ namespace Cryptool.Plugins.ChaCha
                 PrevAction_Click(null, null);
             }
             Debug.Assert(CurrentActionIndex == 0);
+            // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
+            foreach(PageAction pageAction in CurrentPage.InitActions.Reverse())
+            {
+                pageAction.undo();
+            }
         }
         #endregion
 
