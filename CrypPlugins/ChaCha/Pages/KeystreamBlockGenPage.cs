@@ -41,6 +41,28 @@ namespace Cryptool.Plugins.ChaCha
                 undo = Undo
             };
             p.AddInitAction(initAction);
+            PageAction generalDescriptionAction = new PageAction()
+            {
+                exec = () =>
+                {
+                    string desc = "To generate a keystream block, we apply the ChaCha Hash function to the state. "
+                        + "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.";
+                    Add(UIKeystreamBlockGenStepDescription, MakeBold(new Run(desc)));
+                },
+                undo = Undo
+            };
+            PageAction firstColumnRoundDescriptionAction = new PageAction()
+            {
+                exec = () =>
+                {
+                    string desc = "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ";
+                    UnboldLast(UIKeystreamBlockGenStepDescription);
+                    Add(UIKeystreamBlockGenStepDescription, MakeBold(new Run(desc)));
+                },
+                undo = Undo
+            };
+            p.AddAction(generalDescriptionAction);
+            p.AddAction(firstColumnRoundDescriptionAction);
             return p;
         }
     }
