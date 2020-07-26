@@ -280,6 +280,7 @@ namespace Cryptool.Plugins.ChaCha
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.Actions[CurrentActionIndex].exec();
+            FinishPageAction();
             CurrentActionIndex++;
         }
 
@@ -298,6 +299,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void RemoveLast(TextBlock tb)
         {
+            SaveState(tb);
             RemoveLast(tb.Inlines);
         }
         private void ReplaceLast(InlineCollection list, Inline element)
@@ -307,6 +309,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceLast(TextBlock tb, Inline element)
         {
+            SaveState(tb);
             ReplaceLast(tb.Inlines, element);
         }
         private void MakeBoldLast(InlineCollection list)
@@ -315,6 +318,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void MakeBoldLast(TextBlock tb)
         {
+            SaveState(tb);
             MakeBoldLast(tb.Inlines);
         }
         private void UnboldLast(InlineCollection list)
@@ -323,6 +327,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void UnboldLast(TextBlock tb)
         {
+            SaveState(tb);
             UnboldLast(tb.Inlines);
         }
         private void Add(InlineCollection list, Inline element)
@@ -331,6 +336,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void Add(TextBlock tb, Inline element)
         {
+            SaveState(tb);
             Add(tb.Inlines, element);
         }
         private void Clear(InlineCollection list)
@@ -339,6 +345,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void Clear(TextBlock tb)
         {
+            SaveState(tb);
             Clear(tb.Inlines);
         }
 

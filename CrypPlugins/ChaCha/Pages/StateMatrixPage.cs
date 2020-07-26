@@ -17,10 +17,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription);
                     string desc = "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ";
                     Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -28,10 +26,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput);
                     UnboldLast(UIStateMatrixStepDescription);
                     Add(UITransformInput, MakeBold(new Run(HexConstants)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -39,10 +35,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformInput, UITransformChunks);
                     UnboldLast(UITransformInput);
                     Add(UITransformChunks, MakeBold(new Run(ConstantsChunks)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -50,10 +44,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformChunks, UITransformLittleEndian);
                     UnboldLast(UITransformChunks);
                     Add(UITransformLittleEndian, MakeBold(new Run(ConstantsLittleEndian)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -61,13 +53,11 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformLittleEndian, UIState0, UIState1, UIState2, UIState3);
                     UnboldLast(UITransformLittleEndian);
                     Add(UIState0, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(0, 8))));
                     Add(UIState1, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(8, 8))));
                     Add(UIState2, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(16, 8))));
                     Add(UIState3, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(24, 8))));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -82,7 +72,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput, UITransformChunks, UITransformLittleEndian, UIState0, UIState1, UIState2, UIState3);
                     string desc = "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ";
                     Run r = MakeBold(new Run(desc));
                     Add(UIStateMatrixStepDescription, r);
@@ -93,7 +82,6 @@ namespace Cryptool.Plugins.ChaCha
                     UnboldLast(UIState1);
                     UnboldLast(UIState2);
                     UnboldLast(UIState3);
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -101,10 +89,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput);
                     UnboldLast(UIStateMatrixStepDescription);
                     Add(UITransformInput, MakeBold(new Run(HexInputKey)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -112,10 +98,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformInput, UITransformChunks);
                     UnboldLast(UITransformInput);
                     Add(UITransformChunks, MakeBold(new Run(KeyChunks)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -123,10 +107,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformChunks, UITransformLittleEndian);
                     UnboldLast(UITransformChunks);
                     Add(UITransformLittleEndian, MakeBold(new Run(KeyLittleEndian)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -134,7 +116,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformLittleEndian, UIState4, UIState5, UIState6, UIState7, UIState8, UIState9, UIState10, UIState11);
                     UnboldLast(UITransformLittleEndian);
                     Add(UIState4, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(0, 8))));
                     Add(UIState5, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(8, 8))));
@@ -144,7 +125,6 @@ namespace Cryptool.Plugins.ChaCha
                     Add(UIState9, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8))));
                     Add(UIState10, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8))));
                     Add(UIState11, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8))));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -159,7 +139,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput, UITransformChunks, UITransformLittleEndian, UIState4, UIState5, UIState6, UIState7, UIState8, UIState9, UIState10, UIState11);
                     string desc = string.Format(
                         "The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length
                     ) + "First, we add the IV to the state. ";
@@ -176,7 +155,6 @@ namespace Cryptool.Plugins.ChaCha
                     UnboldLast(UIState9);
                     UnboldLast(UIState10);
                     UnboldLast(UIState11);
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -184,10 +162,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput);
                     UnboldLast(UIStateMatrixStepDescription);
                     Add(UITransformInput, MakeBold(new Run(HexInputIV)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -195,10 +171,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformInput, UITransformChunks);
                     UnboldLast(UITransformInput);
                     Add(UITransformChunks, MakeBold(new Run(IVChunks)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -206,10 +180,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformChunks, UITransformLittleEndian);
                     UnboldLast(UITransformChunks);
                     Add(UITransformLittleEndian, MakeBold(new Run(IVLittleEndian)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -217,16 +189,13 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformLittleEndian, UIState14, UIState15);
                     UnboldLast(UITransformLittleEndian);
                     if (!versionIsDJB)
                     {
-                        SaveState(UIState13);
                         Add(UIState13, MakeBold(new Run(IVLittleEndian.Replace(" ", "").Substring(0, 8))));
                     }
                     Add(UIState14, MakeBold(new Run(IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8))));
                     Add(UIState15, MakeBold(new Run(IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8))));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -241,7 +210,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput, UITransformChunks, UITransformLittleEndian, UIState14, UIState15);
                     string desc = "And then the counter. Since this is our first keystream block, we set the counter to 0. ";
                     Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
                     Clear(UITransformInput);
@@ -249,12 +217,10 @@ namespace Cryptool.Plugins.ChaCha
                     Clear(UITransformLittleEndian);
                     if (!versionIsDJB)
                     {
-                        SaveState(UIState13);
                         UnboldLast(UIState13);
                     }
                     UnboldLast(UIState14);
                     UnboldLast(UIState15);
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -262,10 +228,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput);
                     UnboldLast(UIStateMatrixStepDescription);
                     Add(UITransformInput, MakeBold(new Run(HexInitialCounter)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -273,10 +237,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformInput, UITransformChunks);
                     UnboldLast(UITransformInput);
                     Add(UITransformChunks, MakeBold(new Run(InitialCounterChunks)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -284,10 +246,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformChunks, UITransformLittleEndian);
                     UnboldLast(UITransformChunks);
                     Add(UITransformLittleEndian, MakeBold(new Run(InitialCounterLittleEndian)));
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -295,15 +255,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UITransformLittleEndian, UIState12);
                     UnboldLast(UITransformLittleEndian);
                     Add(UIState12, MakeBold(new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8))));
                     if(versionIsDJB)
                     {
-                        SaveState(UIState13);
                         Add(UIState13, MakeBold(new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8))));
                     }
-                    FinishPageAction();
                 },
                 undo = Undo
             };
@@ -316,7 +273,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription, UITransformInput, UITransformChunks, UITransformLittleEndian, UIState12);
                     string desc = "On the next page, we will use this initialized state matrix to generate the first keystream block.";
                     Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
                     Clear(UITransformInput);
@@ -325,10 +281,8 @@ namespace Cryptool.Plugins.ChaCha
                     UnboldLast(UIState12);
                     if (versionIsDJB)
                     {
-                        SaveState(UIState13);
                         UnboldLast(UIState13);
                     };
-                    FinishPageAction();
                 },
                 undo = Undo
             };
