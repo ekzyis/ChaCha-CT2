@@ -67,13 +67,14 @@ namespace Cryptool.Plugins.ChaCha
             _saveStateHasBeenCalled = true;
             foreach (TextBlock tb in textblocks)
             {
+                int hash = tb.GetHashCode();
                 // do not overwrite states since first added state was the "most original one"
-                if (!_undoActions.ContainsKey(tb.GetHashCode()))
+                if (!_undoActions.ContainsKey(hash))
                 {
                     // copy inline elements
                     Inline[] state = new Inline[tb.Inlines.Count];
                     tb.Inlines.CopyTo(state, 0);
-                    _undoActions[tb.GetHashCode()] = () => {
+                    _undoActions[hash] = () => {
                         tb.Inlines.Clear();
                         foreach (Inline i in state)
                         {
