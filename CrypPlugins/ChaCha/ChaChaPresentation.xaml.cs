@@ -272,7 +272,6 @@ namespace Cryptool.Plugins.ChaCha
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.Visibility = Visibility.Collapsed;
-            // TODO undo actions on current page before switching
             UndoActions();
             CurrentPageIndex++;
             CurrentPage.Visibility = Visibility.Visible;
