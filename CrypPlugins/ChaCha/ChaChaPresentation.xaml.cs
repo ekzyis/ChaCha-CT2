@@ -67,13 +67,17 @@ namespace Cryptool.Plugins.ChaCha
                 // copy inline elements
                 Inline[] state = new Inline[tb.Inlines.Count];
                 tb.Inlines.CopyTo(state, 0);
-                _undoActions[tb.GetHashCode()] = () => {
-                    tb.Inlines.Clear();
-                    foreach (Inline i in state)
-                    {
-                        tb.Inlines.Add(i);
-                    }
-                };
+                // do not overwrite states since first added state was the "most original one"
+                if(!_undoActions.ContainsKey(tb.GetHashCode()))
+                {
+                    _undoActions[tb.GetHashCode()] = () => {
+                        tb.Inlines.Clear();
+                        foreach (Inline i in state)
+                        {
+                            tb.Inlines.Add(i);
+                        }
+                    };
+                }
             }
         }
 
