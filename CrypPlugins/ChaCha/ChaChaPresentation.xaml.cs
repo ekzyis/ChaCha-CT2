@@ -60,9 +60,12 @@ namespace Cryptool.Plugins.ChaCha
         private Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
         // temporary variable to collect undo actions before pushing into stack.
         private Dictionary<int, Action> _undoActions = new Dictionary<int, Action> ();
+        // bool to check if FinishPageAction should be called after a page action execution.
+        private bool _saveStateHasBeenCalled = false;
         public void SaveState(params TextBlock[] textblocks)
         {
-            foreach(TextBlock tb in textblocks)
+            _saveStateHasBeenCalled = true;
+            foreach (TextBlock tb in textblocks)
             {
                 // copy inline elements
                 Inline[] state = new Inline[tb.Inlines.Count];
@@ -293,8 +296,7 @@ namespace Cryptool.Plugins.ChaCha
             CurrentPage.Visibility = Visibility.Visible;
             foreach(PageAction pageAction in CurrentPage.InitActions)
             {
-                pageAction.exec();
-                FinishPageAction();
+                WrapExecWithNavigation(pageAction);
             }
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
@@ -304,8 +306,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage.Actions[CurrentActionIndex].exec();
-            FinishPageAction();
+            WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
         }
         private void UndoActions()
@@ -319,6 +320,16 @@ namespace Cryptool.Plugins.ChaCha
             foreach(PageAction pageAction in CurrentPage.InitActions.Reverse())
             {
                 pageAction.undo();
+            }
+        }
+
+        private void WrapExecWithNavigation(PageAction pageAction)
+        {
+            _saveStateHasBeenCalled = false;
+            pageAction.exec();
+            if (_saveStateHasBeenCalled)
+            {
+                FinishPageAction();
             }
         }
         #endregion
