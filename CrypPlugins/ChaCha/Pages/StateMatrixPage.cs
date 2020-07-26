@@ -28,8 +28,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    SaveState(UIStateMatrixStepDescription);
-                    SaveState(UITransformInput);
+                    SaveState(UIStateMatrixStepDescription, UITransformInput);
                     UnboldLast(UIStateMatrixStepDescription);
                     Add(UITransformInput, MakeBold(new Run(HexConstants)));
                     FinishPageAction();

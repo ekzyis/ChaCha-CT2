@@ -55,18 +55,21 @@ namespace Cryptool.Plugins.ChaCha
         private Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
         // temporary variable to collect undo actions before pushing into stack.
         private Dictionary<int, Action> _undoActions = new Dictionary<int, Action> ();
-        public void SaveState(TextBlock tb)
+        public void SaveState(params TextBlock[] textblocks)
         {
-            // copy inline elements
-            Inline[] state = new Inline[tb.Inlines.Count];
-            tb.Inlines.CopyTo(state, 0);
-            _undoActions[tb.GetHashCode()] = () => {
-                tb.Inlines.Clear();
-                foreach (Inline i in state)
-                {
-                    tb.Inlines.Add(i);
-                }
-            };
+            foreach(TextBlock tb in textblocks)
+            {
+                // copy inline elements
+                Inline[] state = new Inline[tb.Inlines.Count];
+                tb.Inlines.CopyTo(state, 0);
+                _undoActions[tb.GetHashCode()] = () => {
+                    tb.Inlines.Clear();
+                    foreach (Inline i in state)
+                    {
+                        tb.Inlines.Add(i);
+                    }
+                };
+            }
         }
 
         public void FinishPageAction()
@@ -580,8 +583,8 @@ namespace Cryptool.Plugins.ChaCha
 
     interface INavigationService<T>
     {
-        // Save state of element such that we can retrieve it later for undoing action.
-        void SaveState(T t);
+        // Save state of each element such that we can retrieve it later for undoing action.
+        void SaveState(params T[] t);
 
         // Tells that current page action is finished and thus next calls to save state are for a new page action.
         void FinishPageAction();
