@@ -28,7 +28,7 @@ namespace Cryptool.Plugins.ChaCha
     /// Interaction logic for ChaChaPresentation.xaml
     /// </summary>
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock>
+    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock, Border>
     {
 
         public ChaChaPresentation()
@@ -80,6 +80,31 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             tb.Inlines.Add(i);
                         }
+                    };
+                }
+            }
+        }
+
+        public void SaveState(params Border[] borders)
+        {
+            _saveStateHasBeenCalled = true;
+            foreach (Border b in borders)
+            {
+                int hash = b.GetHashCode();
+                if (!_undoActions.ContainsKey(hash))
+                {
+                    Brush background;
+                    if(b.Background != null)
+                    {
+                        background = b.Background.Clone();
+                    }
+                    else
+                    {
+                        background = Brushes.White;
+                    }
+                    _undoActions[hash] = () =>
+                    {
+                        b.Background = background;
                     };
                 }
             }
@@ -398,6 +423,12 @@ namespace Cryptool.Plugins.ChaCha
             Clear(tb.Inlines);
         }
 
+        private void SetBackground(Border b, Brush background)
+        {
+            SaveState(b);
+            b.Background = background;
+        }
+
         #endregion
 
         #endregion
@@ -637,10 +668,13 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
     }
 
-    interface INavigationService<T>
+    // I wish I had variadic templates in C# like in C++11 ...
+    interface INavigationService<T1, T2>
     {
         // Save state of each element such that we can retrieve it later for undoing action.
-        void SaveState(params T[] t);
+        void SaveState(params T1[] t);
+
+        void SaveState(params T2[] t);
 
         // Tells that current page action is finished and thus next calls to save state are for a new page action.
         void FinishPageAction();

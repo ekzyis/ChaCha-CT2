@@ -66,18 +66,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    UIKeystreamBlockGenCell0.Background = Brushes.Blue;
-                    UIKeystreamBlockGenCell4.Background = Brushes.Blue;
-                    UIKeystreamBlockGenCell8.Background = Brushes.Blue;
-                    UIKeystreamBlockGenCell12.Background = Brushes.Blue;
+                    SetBackground(UIKeystreamBlockGenCell0, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenCell4, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenCell8, Brushes.Blue);
+                    SetBackground(UIKeystreamBlockGenCell12, Brushes.Blue);
                 },
-                undo = () =>
-                {
-                    UIKeystreamBlockGenCell0.Background = Brushes.White;
-                    UIKeystreamBlockGenCell4.Background = Brushes.White;
-                    UIKeystreamBlockGenCell8.Background = Brushes.White;
-                    UIKeystreamBlockGenCell12.Background = Brushes.White;
-                }
+                undo = Undo
             };
             p.AddAction(generalDescriptionAction);
             p.AddAction(firstColumnRoundDescriptionAction);
