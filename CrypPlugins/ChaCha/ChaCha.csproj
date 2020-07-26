@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="ChaChaSettings.cs" />
     <Compile Include="DebugHelper.cs" />
+    <Compile Include="Pages\KeystreamBlockGenPage.cs" />
     <Compile Include="Pages\LandingPage.cs" />
     <Compile Include="Pages\StateMatrixPage.cs" />
     <Compile Include="Pages\WorkflowPage.cs" />

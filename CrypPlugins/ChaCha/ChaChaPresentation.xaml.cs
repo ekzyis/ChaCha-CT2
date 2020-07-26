@@ -48,7 +48,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 NextPage_Click(null, null);
             }
-            //AddPage(KeystreamBlockGenPage());
+            AddPage(KeystreamBlockGenPage());
         }
 
         #region Navigation
