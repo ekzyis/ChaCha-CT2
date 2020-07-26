@@ -17,6 +17,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Security.Policy;
+using System.Runtime.CompilerServices;
+using System.Windows.Markup;
+using System.Data;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -24,358 +28,122 @@ namespace Cryptool.Plugins.ChaCha
     /// Interaction logic for ChaChaPresentation.xaml
     /// </summary>
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
+    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock>
     {
 
         public ChaChaPresentation()
         {
             InitializeComponent();
+            InitPages();
             DataContext = this;
-            #region Page initialization
+        }
 
-            #region UIStateMatrixPage
-            PageAction UIStateMatrixPageKey16Action = new PageAction()
-            {
-                elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                        new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                        new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                        new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
-                        new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                        new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                        new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                        new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
-                    }
-            };
-            PageAction UIStateMatrixPageKey32Action = new PageAction()
-            {
-                elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIState4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                        new UIElementAction() { element = UIState5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                        new UIElementAction() { element = UIState6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                        new UIElementAction() { element = UIState7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
-                        new UIElementAction() { element = UIState8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
-                        new UIElementAction() { element = UIState9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
-                        new UIElementAction() { element = UIState10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
-                        new UIElementAction() { element = UIState11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
-                    }
-            };
-            PageAction UIStateMatrixPageIV8Action = new PageAction()
-            {
-                elementActions = new UIElementAction[]
-                {
-                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
-                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) }
-                }
-            };
-            PageAction UIStateMatrixPageIV12Action = new PageAction()
-            {
-                elementActions = new UIElementAction[]
-                {
-                    new UIElementAction() { element = UIState13, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
-                    new UIElementAction() { element = UIState14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) },
-                    new UIElementAction() { element = UIState15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) }
-                }
-            };
-            PageAction[] UIStateMatrixPageActions = new PageAction[]
-            {
-                #region Write Constants into State Matrix
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. " 
-                        + " The first 16 bytes consist of the constants. " }
-                    }
-                },
-                new PageAction() {
-                    elementActions = new UIElementAction[] {
-                        new UIElementAction() { element = UITransformInput, content = () => HexConstants },
-                    },
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[] {
-                        new UIElementAction() { element = UITransformChunks, content = () => ConstantsChunks },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => ConstantsLittleEndian }
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIState0, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(0, 8) },
-                        new UIElementAction() { element = UIState1, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(8, 8) },
-                        new UIElementAction() { element = UIState2, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(16, 8) },
-                        new UIElementAction() { element = UIState3, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(24, 8) },
-                    }
-                },
-                #endregion
-                #region Write Key into State Matrix
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ",
-                            action = UIElementAction.Action.ADD },
-                        new UIElementAction() { element = UITransformInput, content = () => "" },
-                        new UIElementAction() { element = UITransformChunks, content = () => "" },
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformInput, content = () => HexInputKey },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformChunks, content = () => KeyChunks }
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => KeyLittleEndian }
-                    }
-                },
-                InputKey.Length == 16 ? UIStateMatrixPageKey16Action : UIStateMatrixPageKey32Action,
-                #endregion
-                #region Write IV into State Matrix
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () =>
-                        string.Format("The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length)
-                        + "First, we add the IV to the state. ", action = UIElementAction.Action.ADD },
-                        new UIElementAction() { element = UITransformInput, content = () => "" },
-                        new UIElementAction() { element = UITransformChunks, content = () => "" },
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformInput, content = () => HexInputIV },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformChunks, content = () => IVChunks }
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => IVLittleEndian }
-                    }
-                },
-                InputIV.Length == 8 ? UIStateMatrixPageIV8Action : UIStateMatrixPageIV12Action,
-                #endregion
-                #region Write Counter into State Matrix
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "And then the counter. Since this is our first keystream block, we set the counter to 0. ",
-                            action = UIElementAction.Action.ADD },
-                        new UIElementAction() { element = UITransformInput, content = () => "" },
-                        new UIElementAction() { element = UITransformChunks, content = () => "" },
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => "" },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformInput, content = () => HexInitialCounter },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformChunks, content = () => InitialCounterChunks }
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UITransformLittleEndian, content = () => InitialCounterLittleEndian }
-                    }
-                },
-                InputIV.Length == 8 ? new PageAction() {
-                    elementActions = new UIElementAction[] {
-                        new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
-                        new UIElementAction() { element = UIState13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) },
-                    }
-                }: new PageAction() {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIState12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
-                    }
-                },
-                #endregion
-                #region Inform user about next step
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIStateMatrixStepDescription, content = () => "On the next page, we will use this initialized state matrix to generate the first keystream block.",
-                            action = UIElementAction.Action.ADD }
-                    }
-                }
-                #endregion
-            };
-            #endregion
-
-            #region UIKeystreamBlockGenPage
-            UIElementAction[] UIKeystreamBlockGenPageInitActions = new UIElementAction[]
-            {
-                new UIElementAction() { element = UIKeystreamBlockGen0, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(0, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen1, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(8, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen2, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(16, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen3, content = () => ConstantsLittleEndian.Replace(" ", "").Substring(24, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen4, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen5, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen6, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen7, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) },
-                InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen8, content = () => KeyLittleEndian.Replace(" ", "").Substring(0, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen8, content = () => KeyLittleEndian.Replace(" ", "").Substring(32, 8) },
-                InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen9, content = () => KeyLittleEndian.Replace(" ", "").Substring(8, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen9, content = () => KeyLittleEndian.Replace(" ", "").Substring(40, 8) },
-                InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen10, content = () => KeyLittleEndian.Replace(" ", "").Substring(16, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen10, content = () => KeyLittleEndian.Replace(" ", "").Substring(48, 8) },
-                InputKey.Length == 16 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen11, content = () => KeyLittleEndian.Replace(" ", "").Substring(24, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen11, content = () => KeyLittleEndian.Replace(" ", "").Substring(56, 8) },
-                new UIElementAction() { element = UIKeystreamBlockGen12, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8) },
-                InputIV.Length == 8 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen13, content = () => InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen13, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) },
-                InputIV.Length == 8 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen14, content = () => IVLittleEndian.Replace(" ", "").Substring(0, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen14, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) },
-                InputIV.Length == 8 ?
-                    new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(8, 8) } :
-                    new UIElementAction() { element = UIKeystreamBlockGen15, content = () => IVLittleEndian.Replace(" ", "").Substring(16, 8) },
-            };
-            PageAction[] UIKeystreamBlockGenPageActions = new PageAction[]
-            {
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIKeystreamBlockGenStepDescription, content = () => "To generate a keystream block, we apply the ChaCha Hash function to the state. " +
-                        "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them." },
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIKeystreamBlockGenStepDescription,
-                            content = () => "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ", action = UIElementAction.Action.ADD }
-                    }
-                },
-                new PageAction()
-                {
-                    elementActions = new UIElementAction[]
-                    {
-                        new UIElementAction() { element = UIKeystreamBlockGenCell0, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
-                        new UIElementAction() { element = UIKeystreamBlockGenCell4, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
-                        new UIElementAction() { element = UIKeystreamBlockGenCell8, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
-                        new UIElementAction() { element = UIKeystreamBlockGenCell12, action = UIElementAction.Action.CHANGE_BACKGROUND, brush = Brushes.Blue },
-                    }
-                }
-            };
-            #endregion
-
-            _pageRouting = new Page[] {
-                new Page() { page = UILandingPage, actions = new PageAction[0] },
-                new Page() { page = UIWorkflowPage, actions = new PageAction[0] },
-                new Page() { page = UIStateMatrixPage, actions = UIStateMatrixPageActions },
-                new Page() { page = UIKeystreamBlockGenPage, actions = UIKeystreamBlockGenPageActions, _initActions = UIKeystreamBlockGenPageInitActions },
-            };
-            #endregion
+        private void InitPages()
+        {
+            AddPage(LandingPage());
+            AddPage(WorkflowPage());
+            AddPage(StateMatrixPage());
+            //AddPage(KeystreamBlockGenPage());
         }
 
         #region Navigation
 
-        #region properties
-        struct UIElementAction
+        #region interface methods
+        /*
+         * Stack with actions where the last dictionary contains undo actions which reverts changes from the last applied page action of an UI Element.
+         */
+        private Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
+        // temporary variable to collect undo actions before pushing into stack.
+        private Dictionary<int, Action> _undoActions = new Dictionary<int, Action> ();
+        public void SaveState(params TextBlock[] textblocks)
         {
-            public FrameworkElement element;
-            public Func<string> content; // the content this UI element should be assigned
-            public Action action;
-            public Brush brush;
-            public Highlight highlight; // highlight the UI element for this action (will be unhighlighted next action)
-            public enum Action
+            foreach(TextBlock tb in textblocks)
             {
-                REPLACE,
-                ADD,
-                CHANGE_BACKGROUND
+                // copy inline elements
+                Inline[] state = new Inline[tb.Inlines.Count];
+                tb.Inlines.CopyTo(state, 0);
+                _undoActions[tb.GetHashCode()] = () => {
+                    tb.Inlines.Clear();
+                    foreach (Inline i in state)
+                    {
+                        tb.Inlines.Add(i);
+                    }
+                };
             }
-            public enum Highlight
-            {
-                BOLD,
-                NONE
-            }
-        }
-        struct PageAction
-        {
-            public UIElementAction[] elementActions; // list of UIelement with the content they should be assigned
         }
 
-        struct Page
+        public void FinishPageAction()
         {
-            public UIElement page;
-            public UIElementAction[] _initActions;
-            public PageAction[] actions; // implements hiding and showing of specific page elements to implement action navigation
+            // copy dictionary using new
+            _undoState.Push(new Dictionary<int, Action>(_undoActions));
+            _undoActions.Clear();
+        }
+
+        public Dictionary<int, Action> GetUndoActions()
+        {
+            return _undoState.Pop();
+        }
+
+        public void Undo()
+        {
+            Dictionary<int, Action> undoActions = GetUndoActions();
+            foreach(Action undo in undoActions.Values)
+            {
+                undo();
+            }
+        }
+        #endregion
+
+        #region properties
+
+        struct PageAction
+        {
+            public Action exec;
+            public Action undo;
+        }
+        class Page
+        {
+            public Page(UIElement UIPageElement)
+            {
+                _page = UIPageElement;
+            }            
+            private readonly UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
+            private readonly List<PageAction> _pageActions = new List<PageAction>();
             public int ActionFrames
             {
                 get
                 {
-                    return actions.Length;
+                    return _pageActions.Count;
                 }
             }
-            public UIElementAction[] InitActions
-            {
+            public PageAction[] Actions { 
                 get
                 {
-                    if(_initActions != null)
-                    {
-                        return _initActions;
-                    }
-                    return new UIElementAction[0];
+                    return _pageActions.ToArray();
+                }
+            }
+            public void AddAction(PageAction pageAction)
+            {
+                _pageActions.Add(pageAction);
+            }
+            public Visibility Visibility
+            {
+                get {
+                    return _page.Visibility;
+                }
+                set {
+                    _page.Visibility = value;
                 }
             }
         }
 
         // List with pages in particular order to implement page navigation + their page actions
-        private readonly Page[] _pageRouting;
+        private readonly List<Page> _pages = new List<Page>();
+        private void AddPage(Page page)
+        {
+            _pages.Add(page);
+        }
+
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
 
@@ -419,26 +187,15 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return _pageRouting[CurrentPageIndex];
+                return _pages[CurrentPageIndex];
             }
         }
 
-        private UIElementAction[] CurrentActions
+        private PageAction[] CurrentActions
         {
             get
             {
-                return CurrentPage.actions[_currentActionIndex].elementActions;
-            }
-        }
-        private UIElementAction[] PreviousActions
-        {
-            get
-            {
-                if(_currentActionIndex == 0)
-                {
-                    return new UIElementAction[0];
-                }
-                return CurrentPage.actions[_currentActionIndex - 1].elementActions;
+                return CurrentPage.Actions;
             }
         }
 
@@ -458,11 +215,19 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public int MaxPageIndex
+        {
+            get
+            {
+                return _pages.Count - 1;
+            }
+        }
+
         public bool NextPageIsEnabled
         {
             get
             {
-                return CurrentPageIndex != _pageRouting.Length - 1 && ExecutionFinished;
+                return CurrentPageIndex != MaxPageIndex && ExecutionFinished;
             }
         }
         public bool PrevPageIsEnabled
@@ -486,7 +251,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0 && ExecutionFinished;
+                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
             }
         }
         #endregion
@@ -494,150 +259,99 @@ namespace Cryptool.Plugins.ChaCha
         #region Click handlers
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage.page.Visibility = Visibility.Collapsed;
-            // undo actions on current page before switching
-            UndoActions();
+            CurrentPage.Visibility = Visibility.Collapsed;
+            // TODO undo actions on current page before switching
             CurrentPageIndex--;
-            CurrentPage.page.Visibility = Visibility.Visible;
+            CurrentPage.Visibility = Visibility.Visible;
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage.page.Visibility = Visibility.Collapsed;
-            // undo actions on current page before switching
-            UndoActions();
+            CurrentPage.Visibility = Visibility.Collapsed;
+            // TODO undo actions on current page before switching
             CurrentPageIndex++;
-            CurrentPage.page.Visibility = Visibility.Visible;
-            // initialize page by running init actions
-            foreach (UIElementAction uie in CurrentPage.InitActions)
-            {
-                TextBlock tb = (TextBlock) uie.element;
-                Run r = CreateRunFromAction(uie);
-                if (uie.action == UIElementAction.Action.REPLACE)
-                {
-                    tb.Inlines.Clear();
-                }
-                tb.Inlines.Add(r);
-            }
+            CurrentPage.Visibility = Visibility.Visible;
+            // TODO initialize page by running init actions
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
-            foreach (UIElementAction prevAction in PreviousActions)
-            {
-                if (prevAction.action == UIElementAction.Action.CHANGE_BACKGROUND)
-                {
-                    Debug.Assert(prevAction.brush != null);
-                    ((Border)prevAction.element).Background = Brushes.White;
-                }
-                else
-                {
-                    TextBlock tb = (TextBlock)prevAction.element;
-                    if (prevAction.action == UIElementAction.Action.REPLACE)
-                    {
-                        tb.Inlines.Clear();
-                        if (CurrentActionIndex == 0)
-                        {
-                            // if the last action was the first action, we don't have to add specific inline content
-                            // since we can assume that the elements never have any inline content in them at the start (at least this is the case up to now)
-                            break;
-                        }
-                        else
-                        {
-                            // get the inline content what the element has had before the last action was applied.
-                            // This is done by traversing the previous PageActions and checking it there is a UIElementAction applying an action to the same UIElement.
-                            // The content function of that previous UIElementAction with the same UIElement gives us the correct content for undoing the last action.
-                            for (int j = CurrentActionIndex - 2; j >= 0; --j)
-                            {
-                                foreach (UIElementAction prevAction_ in CurrentPage.actions[j].elementActions)
-                                {
-                                    if (prevAction_.element.Name == prevAction.element.Name)
-                                    {
-                                        TextBlock tb_ = (TextBlock)prevAction_.element;
-                                        Run r = CreateRunFromAction(prevAction_);
-                                        tb_.Inlines.Add(r);
-                                        goto End; // goto to break out of double for-loop
-                                    }
-                                }
-                            }
-                        End:;
-                        }
-                    }
-                    else if (prevAction.action == UIElementAction.Action.ADD)
-                    {
-                        // Remove the last inline element that was added to undo action
-                        RemoveLast(tb.Inlines);
-                    }
-                }
-            }
             CurrentActionIndex--;
-            // Re-highlight previously highlighted elements
-            foreach(UIElementAction prevAction in PreviousActions)
-            {
-                ReplaceLast(((TextBlock)prevAction.element).Inlines, CreateRunFromAction(prevAction));
-            }
+            CurrentPage.Actions[CurrentActionIndex].undo();
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
-            // unhighlight element added in previous action
-            foreach (UIElementAction uie in PreviousActions)
-            {
-                ReplaceLast(((TextBlock)uie.element).Inlines, CreateRunFromAction(uie, false));
-            }
-            foreach (UIElementAction uie in CurrentActions)
-            {
-                if(uie.action == UIElementAction.Action.CHANGE_BACKGROUND)
-                {
-                    Debug.Assert(uie.brush != null);
-                    ((Border)uie.element).Background = uie.brush;
-                }
-                else
-                {
-                    Run r = CreateRunFromAction(uie);
-                    TextBlock tb = (TextBlock)uie.element;
-                    if (uie.action == UIElementAction.Action.REPLACE)
-                    {
-                        tb.Inlines.Clear();
-                    }
-                    tb.Inlines.Add(r);
-                }
-            }
+            CurrentPage.Actions[CurrentActionIndex].exec();
+            FinishPageAction();
             CurrentActionIndex++;
         }
 
-        private void UndoActions()
-        {
-            // undo all actions by simulating clicking as many times on PREV_ACTION as clicked on NEXT_ACTION
-            for(int i = CurrentActionIndex; i > 0; --i)
-            {
-                PrevAction_Click(null, null);
-            }
-            // undo init actions
-            foreach(UIElementAction uie in CurrentPage.InitActions)
-            {
-                TextBlock tb = (TextBlock)uie.element;
-                // assume that there was not content previously in it thus clearing it reverts action.
-                tb.Inlines.Clear();
-            }
-            Debug.Assert(CurrentActionIndex == 0);
-        }
+        #endregion
 
-        private Run CreateRunFromAction(UIElementAction a, bool applyHighlightIfSpecified = true)
+        #region action helper methods
+
+        private Run MakeBold(Run r)
         {
-            return new Run { Text = a.content(), FontWeight = a.highlight == UIElementAction.Highlight.BOLD && applyHighlightIfSpecified ? FontWeights.Bold : FontWeights.Normal };
+            return new Run { Text = r.Text, FontWeight = FontWeights.Bold };
         }
 
         private void RemoveLast(InlineCollection list)
         {
             list.Remove(list.LastInline);
         }
-
-        private void ReplaceLast(InlineCollection list, Run r)
+        private void RemoveLast(TextBlock tb)
+        {
+            SaveState(tb);
+            RemoveLast(tb.Inlines);
+        }
+        private void ReplaceLast(InlineCollection list, Inline element)
         {
             RemoveLast(list);
-            list.Add(r);
+            list.Add(element);
+        }
+        private void ReplaceLast(TextBlock tb, Inline element)
+        {
+            SaveState(tb);
+            ReplaceLast(tb.Inlines, element);
+        }
+        private void MakeBoldLast(InlineCollection list)
+        {
+            ReplaceLast(list, MakeBold((Run)(list.LastInline)));
+        }
+        private void MakeBoldLast(TextBlock tb)
+        {
+            SaveState(tb);
+            MakeBoldLast(tb.Inlines);
+        }
+        private void UnboldLast(InlineCollection list)
+        {
+            ReplaceLast(list, new Run { Text = ((Run)(list.LastInline)).Text });
+        }
+        private void UnboldLast(TextBlock tb)
+        {
+            SaveState(tb);
+            UnboldLast(tb.Inlines);
+        }
+        private void Add(InlineCollection list, Inline element)
+        {
+            list.Add(element);
+        }
+        private void Add(TextBlock tb, Inline element)
+        {
+            SaveState(tb);
+            Add(tb.Inlines, element);
+        }
+        private void Clear(InlineCollection list)
+        {
+            list.Clear();
+        }
+        private void Clear(TextBlock tb)
+        {
+            SaveState(tb);
+            Clear(tb.Inlines);
         }
 
         #endregion
 
+        #endregion
 
         #region Data binding notification
         public event PropertyChangedEventHandler PropertyChanged;
@@ -647,8 +361,6 @@ namespace Cryptool.Plugins.ChaCha
             if(PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(property));
         }
-        #endregion
-
         #endregion
 
         #region Input
@@ -818,6 +530,19 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8);
             }
         }
+        private ChaCha.Version _version;
+        public ChaCha.Version Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+
         #endregion
 
         #region ValueConversion
@@ -861,5 +586,20 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
         #endregion
+    }
+
+    interface INavigationService<T>
+    {
+        // Save state of each element such that we can retrieve it later for undoing action.
+        void SaveState(params T[] t);
+
+        // Tells that current page action is finished and thus next calls to save state are for a new page action.
+        void FinishPageAction();
+
+        // Get list of actions which completely reverts the page action of the given index.
+        Dictionary<int, Action> GetUndoActions();
+
+        // Execute automatic undoing of actions.
+        void Undo();
     }
 }

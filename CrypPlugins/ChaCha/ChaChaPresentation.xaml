@@ -34,7 +34,7 @@
     <!-- Main grid for content pane -->
     <Grid Name="UIContentPane">
       <!-- Landing page -->
-      <Grid Name="UILandingPage" Visibility="Collapsed">
+      <Grid Name="UILandingPage" Visibility="Visible">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -233,7 +233,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha Generate Keystream block page -->
-      <Grid Margin="20" Name="UIKeystreamBlockGenPage" Visibility="Visible">
+      <Grid Margin="20" Name="UIKeystreamBlockGenPage" Visibility="Collapsed">
         <Grid.RowDefinitions>
           <RowDefinition Height="50" />
           <RowDefinition />
