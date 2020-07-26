@@ -40,9 +40,14 @@ namespace Cryptool.Plugins.ChaCha
 
         private void InitPages()
         {
+            const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 2;
             AddPage(LandingPage());
             AddPage(WorkflowPage());
             AddPage(StateMatrixPage());
+            for(int i = 0; i < __START_VISUALIZATION_ON_PAGE_INDEX__; ++i)
+            {
+                NextPage_Click(null, null);
+            }
             //AddPage(KeystreamBlockGenPage());
         }
 
