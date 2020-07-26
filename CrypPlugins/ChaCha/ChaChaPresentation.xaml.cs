@@ -265,7 +265,7 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.Visibility = Visibility.Collapsed;
-            // TODO undo actions on current page before switching
+            UndoActions();
             CurrentPageIndex--;
             CurrentPage.Visibility = Visibility.Visible;
         }
@@ -273,6 +273,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             CurrentPage.Visibility = Visibility.Collapsed;
             // TODO undo actions on current page before switching
+            UndoActions();
             CurrentPageIndex++;
             CurrentPage.Visibility = Visibility.Visible;
             // TODO initialize page by running init actions
@@ -288,7 +289,14 @@ namespace Cryptool.Plugins.ChaCha
             FinishPageAction();
             CurrentActionIndex++;
         }
-
+        private void UndoActions()
+        {
+            for (int i = CurrentActionIndex; i > 0; i--)
+            {
+                PrevAction_Click(null, null);
+            }
+            Debug.Assert(CurrentActionIndex == 0);
+        }
         #endregion
 
         #region action helper methods
