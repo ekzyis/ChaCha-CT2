@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -61,8 +62,26 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+            PageAction initFirstColumnRoundAction = new PageAction()
+            {
+                exec = () =>
+                {
+                    UIKeystreamBlockGenCell0.Background = Brushes.Blue;
+                    UIKeystreamBlockGenCell4.Background = Brushes.Blue;
+                    UIKeystreamBlockGenCell8.Background = Brushes.Blue;
+                    UIKeystreamBlockGenCell12.Background = Brushes.Blue;
+                },
+                undo = () =>
+                {
+                    UIKeystreamBlockGenCell0.Background = Brushes.White;
+                    UIKeystreamBlockGenCell4.Background = Brushes.White;
+                    UIKeystreamBlockGenCell8.Background = Brushes.White;
+                    UIKeystreamBlockGenCell12.Background = Brushes.White;
+                }
+            };
             p.AddAction(generalDescriptionAction);
             p.AddAction(firstColumnRoundDescriptionAction);
+            p.AddAction(initFirstColumnRoundAction);
             return p;
         }
     }
