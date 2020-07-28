@@ -481,16 +481,16 @@
         <Path Grid.Row="4" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 80" />
         <!-- Output -->
         <Border Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">d'</TextBlock>
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">a'</TextBlock>
         </Border>
         <Border Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">c'</TextBlock>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
           <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">b'</TextBlock>
         </Border>
+        <Border Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">c'</TextBlock>
+        </Border>
         <Border Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">a'</TextBlock>
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">d'</TextBlock>
         </Border>
         <Canvas>
         </Canvas>
