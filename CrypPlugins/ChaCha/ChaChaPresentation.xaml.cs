@@ -190,6 +190,14 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
+        private void InitPage(Page p)
+        {
+            foreach (PageAction pageAction in p.InitActions)
+            {
+                WrapExecWithNavigation(pageAction);
+            }
+        }
+
         private void MovePages(int n)
         {
             if (n < 0)
@@ -328,6 +336,7 @@ namespace Cryptool.Plugins.ChaCha
             UndoActions();
             CurrentPageIndex--;
             CurrentPage.Visibility = Visibility.Visible;
+            InitPage(CurrentPage);
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
@@ -335,10 +344,7 @@ namespace Cryptool.Plugins.ChaCha
             UndoActions();
             CurrentPageIndex++;
             CurrentPage.Visibility = Visibility.Visible;
-            foreach(PageAction pageAction in CurrentPage.InitActions)
-            {
-                WrapExecWithNavigation(pageAction);
-            }
+            InitPage(CurrentPage);
         }
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
