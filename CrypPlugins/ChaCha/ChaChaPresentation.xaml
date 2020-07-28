@@ -421,6 +421,30 @@
         </Grid.RowDefinitions>
         <!-- Detail box -->
         <Canvas Width="200" Height="200">
+          <Border Canvas.Top="0" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QRInX1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Canvas.Top="80" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QRInX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Canvas.Top="160" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QRInX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Canvas.Top="0" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QROutX1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Canvas.Top="80" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QROutX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Canvas.Top="160" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QROutX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Canvas.Top="120" Canvas.Left="110" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+            <TextBlock Name="QRXOR" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <!-- Arrow -->
+          <Path Stroke="Black" StrokeThickness="1" Data="M 120,160 v 18" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 120,178 l 3,-5 m -3,5 l -3,-5" />
           <Rectangle Stroke="Black" Width="200" Height="200" StrokeThickness="1"/>
           <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 40" />
           <TextBlock Width="20" Height="20" Canvas.Left="40" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextAlignment="Center">+</TextBlock>
