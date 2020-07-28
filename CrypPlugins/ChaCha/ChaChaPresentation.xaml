@@ -414,86 +414,123 @@
         </Grid>
       </Grid>
       <!-- Quarterround page -->
-      <Grid HorizontalAlignment="Center" Margin="20" Height="160" Name="UIQuarterroundPage" Visibility="Collapsed">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="60"/>
-          <ColumnDefinition Width="80"/>
-          <ColumnDefinition Width="40"/>
-          <ColumnDefinition Width="80"/>
-          <ColumnDefinition Width="40"/>
-          <ColumnDefinition Width="80"/>
-          <ColumnDefinition Width="40"/>
-          <ColumnDefinition Width="80"/>
-          <ColumnDefinition Width="40"/>
-          <ColumnDefinition Width="80"/>
-          <ColumnDefinition Width="60"/>
-        </Grid.ColumnDefinitions>
+      <Grid HorizontalAlignment="Center" Margin="20" Height="400" Name="UIQuarterroundPage" Visibility="Visible">
         <Grid.RowDefinitions>
-          <RowDefinition Height="40"/>
-          <RowDefinition Height="40"/>
-          <RowDefinition Height="40"/>
-          <RowDefinition Height="40"/>
+          <RowDefinition Height="200"/>
+          <RowDefinition Height="160"/>
         </Grid.RowDefinitions>
-        <!-- Input -->
-        <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </Border>
-        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
-          <TextBlock Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        </Border>
-        <Path Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,20 h 20" />
-        <Path Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 120" />
-        <Path Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,60 h 20 l 40,-20 h 20" />
-        <Path Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,60 h 20 l 40,-20 h 20" />
-        <!-- First QR box -->
-        <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0"/>
-        <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1"/>
-        <Path Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
-        <Path Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 20" />
-        <Path Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,60 h 20" />
-        <Path Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,20 h 60" />
-        <!-- Second QR box -->
-        <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="4" BorderBrush="Black" BorderThickness="1,1,1,0"/>
-        <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="4" BorderBrush="Black" BorderThickness="1,0,1,1"/>
-        <Path Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
-        <Path Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 20" />
-        <Path Grid.Row="1" Grid.Column="5" Grid.RowSpan="3" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-60 h 60" />
-        <Path Grid.Row="2" Grid.Column="5" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,60 h 20 l 40,-20 h 20" />
-        <!-- Third QR box -->
-        <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="6" BorderBrush="Black" BorderThickness="1,1,1,0"/>
-        <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="6" BorderBrush="Black" BorderThickness="1,0,1,1"/>
-        <Path Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
-        <Path Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 20" />
-        <Path Grid.Row="1" Grid.Column="7" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,60 h 20" />
-        <Path Grid.Row="2" Grid.Column="7" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,20 h 60" />
-        <!-- Fourth QR box -->
-        <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="8" BorderBrush="Black" BorderThickness="1,1,1,0"/>
-        <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="8" BorderBrush="Black" BorderThickness="1,0,1,1"/>
-        <Path Grid.Row="0" Grid.Column="9" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,60 h 20" />
-        <Path Grid.Row="0" Grid.Column="9" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-60 h 20" />
-        <Path Grid.Row="1" Grid.Column="9" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-60 h 20" />
-        <Path Grid.Row="4" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 80" />
-        <!-- Output -->
-        <Border Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">a'</TextBlock>
-        </Border>
-        <Border Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">b'</TextBlock>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">c'</TextBlock>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">d'</TextBlock>
-        </Border>
-        <Canvas>
+        <!-- Detail box -->
+        <Canvas Width="200" Height="200">
+          <Rectangle Stroke="Black" Width="200" Height="200" StrokeThickness="1"/>
+          <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 40" />
+          <TextBlock Width="20" Height="20" Canvas.Left="40" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextAlignment="Center">+</TextBlock>
+          <Path Stroke="Black" StrokeThickness="1">
+            <Path.Data>
+              <EllipseGeometry Center="50,20" RadiusX="10" RadiusY="10"/>
+            </Path.Data>
+          </Path>
+          <Path Stroke="Black" StrokeThickness="1" Data="M 60,20 h 140" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 100,20 v 70 A 5 5 10 0 0 100,110" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 100,110 v 60" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 50,100 v -70" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 0,100 h 200" />
+          <TextBlock Width="20" Height="20" Canvas.Left="90" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center">XOR</TextBlock>
+          <Path Stroke="Black" StrokeThickness="1">
+            <Path.Data>
+              <EllipseGeometry Center="100,180" RadiusX="10" RadiusY="10"/>
+            </Path.Data>
+          </Path>
+          <Path Stroke="Black" StrokeThickness="1" Data="M 0,180 h 90" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 110,180 h 30" />
+          <TextBlock Width="20" Height="20" Canvas.Left="140" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center">&lt;&lt;&lt;</TextBlock>
+          <Path Stroke="Black" StrokeThickness="1">
+            <Path.Data>
+              <EllipseGeometry Center="150,180" RadiusX="10" RadiusY="10"/>
+            </Path.Data>
+          </Path>
+          <Path Stroke="Black" StrokeThickness="1" Data="M 160,180 h 40" />
         </Canvas>
+        <Grid Grid.Row="1">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="60"/>
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
+          </Grid.RowDefinitions>
+          <!-- Input -->
+          <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
+            <TextBlock Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
+            <TextBlock Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
+            <TextBlock Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+            <TextBlock Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+          </Border>
+          <Path Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,20 h 20" />
+          <Path Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 120" />
+          <Path Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,60 h 20 l 40,-20 h 20" />
+          <Path Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,60 h 20 l 40,-20 h 20" />
+          <!-- First QR box -->
+          <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,1,1,0"/>
+          <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,1,1"/>
+          <Path Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
+          <Path Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 20" />
+          <Path Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,60 h 20" />
+          <Path Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,20 h 60" />
+          <!-- Second QR box -->
+          <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="4" BorderBrush="Black" BorderThickness="1,1,1,0"/>
+          <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="4" BorderBrush="Black" BorderThickness="1,0,1,1"/>
+          <Path Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
+          <Path Grid.Row="0" Grid.Column="5" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 20" />
+          <Path Grid.Row="1" Grid.Column="5" Grid.RowSpan="3" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-60 h 60" />
+          <Path Grid.Row="2" Grid.Column="5" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,60 h 20 l 40,-20 h 20" />
+          <!-- Third QR box -->
+          <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="6" BorderBrush="Black" BorderThickness="1,1,1,0"/>
+          <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="6" BorderBrush="Black" BorderThickness="1,0,1,1"/>
+          <Path Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
+          <Path Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 20" />
+          <Path Grid.Row="1" Grid.Column="7" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,60 h 20" />
+          <Path Grid.Row="2" Grid.Column="7" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,20 h 60" />
+          <!-- Fourth QR box -->
+          <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="8" BorderBrush="Black" BorderThickness="1,1,1,0"/>
+          <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="8" BorderBrush="Black" BorderThickness="1,0,1,1"/>
+          <Path Grid.Row="0" Grid.Column="9" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,40 h 20 l 40,60 h 20" />
+          <Path Grid.Row="0" Grid.Column="9" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-60 h 20" />
+          <Path Grid.Row="1" Grid.Column="9" Grid.RowSpan="3" Stroke="Black" StrokeThickness="1" Data="M 0,80 h 20 l 40,-60 h 20" />
+          <Path Grid.Row="4" Grid.Column="9" Grid.RowSpan="2" Grid.ColumnSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 80" />
+          <!-- Output -->
+          <Border Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">a'</TextBlock>
+          </Border>
+          <Border Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">b'</TextBlock>
+          </Border>
+          <Border Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">c'</TextBlock>
+          </Border>
+          <Border Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">d'</TextBlock>
+          </Border>
+          <Canvas>
+          </Canvas>
+        </Grid>
       </Grid>
     </Grid>
   </Grid>
