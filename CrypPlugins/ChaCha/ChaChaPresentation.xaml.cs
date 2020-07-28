@@ -45,6 +45,7 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
             AddPage(QuarterroundPage());
+            CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
         }
 
         #region Navigation
@@ -212,6 +213,18 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 0; i < Math.Abs(n); ++i)
                 {
                     NextPage_Click(null, null);
+                }
+            }
+        }
+
+        // useful for development: setting pages visible for development purposes does not infer with execution
+        private void CollapseAllPagesExpect(int pageIndex)
+        {
+            for(int i = 0; i < _pages.Count; ++i)
+            {
+                if (i != pageIndex)
+                {
+                    _pages[i].Visibility = Visibility.Collapsed;
                 }
             }
         }
