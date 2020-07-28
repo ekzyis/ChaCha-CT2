@@ -197,7 +197,10 @@ namespace Cryptool.Plugins.ChaCha
             ProgressChanged(1, 1);
 
             // enable navigation since now all values needed for visualization are set.
-            _presentation.ExecutionFinished = true;
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            {
+                _presentation.ExecutionFinished = true;
+            }, null);
         }
 
         /*
