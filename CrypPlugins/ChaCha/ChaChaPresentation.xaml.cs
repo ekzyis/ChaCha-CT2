@@ -37,19 +37,14 @@ namespace Cryptool.Plugins.ChaCha
             InitPages();
             DataContext = this;
         }
-
+        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 4;
         private void InitPages()
         {
-            const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 4;
             AddPage(LandingPage());
             AddPage(WorkflowPage());
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
             AddPage(QuarterroundPage());
-            for (int i = 0; i < __START_VISUALIZATION_ON_PAGE_INDEX__; ++i)
-            {
-                NextPage_Click(null, null);
-            }
         }
 
         #region Navigation
@@ -195,6 +190,24 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
+        private void MovePages(int n)
+        {
+            if (n < 0)
+            {
+                for (int i = 0; i < Math.Abs(n); ++i)
+                {
+                    PrevPage_Click(null, null);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Math.Abs(n); ++i)
+                {
+                    NextPage_Click(null, null);
+                }
+            }
+        }
+
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
 
@@ -258,6 +271,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             set
             {
+                MovePages(__START_VISUALIZATION_ON_PAGE_INDEX__ - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
