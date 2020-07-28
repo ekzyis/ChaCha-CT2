@@ -45,11 +45,11 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(WorkflowPage());
             AddPage(StateMatrixPage());
             AddPage(QuarterroundPage());
-            for(int i = 0; i < __START_VISUALIZATION_ON_PAGE_INDEX__; ++i)
+            AddPage(KeystreamBlockGenPage());
+            for (int i = 0; i < __START_VISUALIZATION_ON_PAGE_INDEX__; ++i)
             {
                 NextPage_Click(null, null);
             }
-            AddPage(KeystreamBlockGenPage());
         }
 
         #region Navigation
