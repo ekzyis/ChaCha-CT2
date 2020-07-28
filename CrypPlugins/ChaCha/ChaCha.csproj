@@ -84,6 +84,7 @@
     <Compile Include="DebugHelper.cs" />
     <Compile Include="Pages\KeystreamBlockGenPage.cs" />
     <Compile Include="Pages\LandingPage.cs" />
+    <Compile Include="Pages\QuarterroundPage.cs" />
     <Compile Include="Pages\StateMatrixPage.cs" />
     <Compile Include="Pages\WorkflowPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

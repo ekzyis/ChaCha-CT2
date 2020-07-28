@@ -34,7 +34,7 @@
     <!-- Main grid for content pane -->
     <Grid Name="UIContentPane">
       <!-- Landing page -->
-      <Grid Name="UILandingPage" Visibility="Visible">
+      <Grid Name="UILandingPage" Visibility="Collapsed">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
           <TextBlock Margin="10" FontSize="24" HorizontalAlignment="Center">
             ChaCha Visualization
@@ -414,7 +414,7 @@
         </Grid>
       </Grid>
       <!-- Quarterround page -->
-      <Grid HorizontalAlignment="Center" Margin="20" Height="160" Name="UIQuarterroundPage" Visibility="Collapsed">
+      <Grid HorizontalAlignment="Center" Margin="20" Height="160" Name="UIQuarterroundPage" Visibility="Visible">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="60"/>
           <ColumnDefinition Width="80"/>
