@@ -744,11 +744,11 @@ namespace Cryptool.Plugins.ChaCha
             X2
         }
 
-        private List<uint> add_x1_x2 = new List<uint>();
+        private List<uint> _add_x1_x2 = new List<uint>();
         private List<uint> _x2 = new List<uint>();
         public string HexResultAddX1X2(int index)
         {
-            return HexString(add_x1_x2[index]);
+            return HexString(_add_x1_x2[index]);
         }
         public string HexResultOutX2(int index)
         {
@@ -759,7 +759,7 @@ namespace Cryptool.Plugins.ChaCha
             switch(type)
             {
                 case ResultType.ADD_X1_X2:
-                    add_x1_x2.Add((uint)result);
+                    _add_x1_x2.Add((uint)result);
                     break;
                 case ResultType.X2:
                     _x2.Add((uint)result);
