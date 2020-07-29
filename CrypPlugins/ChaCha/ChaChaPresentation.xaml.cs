@@ -766,6 +766,11 @@ namespace Cryptool.Plugins.ChaCha
                     break;
             }
         }
+        public void clearResults()
+        {
+            _add_x1_x2.Clear();
+            _x2.Clear();
+        }
 
         #endregion
 

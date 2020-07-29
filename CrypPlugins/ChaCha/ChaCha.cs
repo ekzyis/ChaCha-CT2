@@ -169,6 +169,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
+            // clear all previous results (important if user started workflow, stopped and then restarted)
+            DispatchToPresentation(delegate
+            {
+                _presentation.clearResults();
+            });
+
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
             GuiLogMessage(string.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
