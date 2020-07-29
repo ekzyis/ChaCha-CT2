@@ -126,8 +126,20 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+            PageAction unmarkOutX2 = new PageAction()
+            {
+                exec = () =>
+                {
+                    UnmarkBorder(QRInX2Cell);
+                    UnmarkShape(OutputPathX2_1);
+                    UnmarkShape(OutputPathX2_2);
+                    UnmarkBorder(QROutX2Cell);
+                },
+                undo = Undo
+            };
             p.AddAction(prepareOutX2);
             p.AddAction(execOutX2);
+            p.AddAction(unmarkOutX2);
             #endregion
             #region out x3
             #endregion
