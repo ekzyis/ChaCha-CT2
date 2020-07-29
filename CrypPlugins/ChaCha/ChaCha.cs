@@ -20,13 +20,8 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Windows.Documents;
-using System.Diagnostics;
-using System.Security.Policy;
-using System.IO.Ports;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha
 {
