@@ -741,18 +741,29 @@ namespace Cryptool.Plugins.ChaCha
         public enum ResultType
         {
             ADD_X1_X2,
+            X2
         }
 
         private List<uint> add_x1_x2 = new List<uint>();
+        private List<uint> _x2 = new List<uint>();
         public string HexResultAddX1X2(int index)
         {
             return HexString(add_x1_x2[index]);
         }
+        public string HexResultOutX2(int index)
+        {
+            return HexString(_x2[index]);
+        }
         public void AddResult(ResultType type, object result)
         {
-            if(type == ResultType.ADD_X1_X2)
+            switch(type)
             {
-                add_x1_x2.Add((uint)result);
+                case ResultType.ADD_X1_X2:
+                    add_x1_x2.Add((uint)result);
+                    break;
+                case ResultType.X2:
+                    _x2.Add((uint)result);
+                    break;
             }
         }
 
