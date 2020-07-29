@@ -552,8 +552,6 @@
           <Border Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">d'</TextBlock>
           </Border>
-          <Canvas>
-          </Canvas>
         </Grid>
       </Grid>
     </Grid>
