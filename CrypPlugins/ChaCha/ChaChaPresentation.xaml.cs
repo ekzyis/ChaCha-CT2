@@ -28,16 +28,6 @@ namespace Cryptool.Plugins.ChaCha
             InitPages();
             DataContext = this;
         }
-        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 4;
-        private void InitPages()
-        {
-            AddPage(LandingPage());
-            AddPage(WorkflowPage());
-            AddPage(StateMatrixPage());
-            AddPage(KeystreamBlockGenPage());
-            AddPage(QuarterroundPage());
-            CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
-        }
 
         #region Navigation
 
@@ -167,7 +157,9 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region properties
+        #region page navigation
+
+        #region classes, structs and methods related page navigation
 
         struct PageAction
         {
@@ -255,6 +247,17 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 4;
+        private void InitPages()
+        {
+            AddPage(LandingPage());
+            AddPage(WorkflowPage());
+            AddPage(StateMatrixPage());
+            AddPage(KeystreamBlockGenPage());
+            AddPage(QuarterroundPage());
+            CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
+        }
+
         // useful for development: setting pages visible for development purposes does not infer with execution
         private void CollapseAllPagesExpect(int pageIndex)
         {
@@ -266,6 +269,40 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+
+        private void WrapExecWithNavigation(PageAction pageAction)
+        {
+            _saveStateHasBeenCalled = false;
+            pageAction.exec();
+            if (_saveStateHasBeenCalled)
+            {
+                FinishPageAction();
+            }
+        }
+
+        #endregion
+
+        #region page navigation click handlers
+        private void PrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.Visibility = Visibility.Collapsed;
+            UndoActions();
+            CurrentPageIndex--;
+            CurrentPage.Visibility = Visibility.Visible;
+            InitPage(CurrentPage);
+        }
+        private void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.Visibility = Visibility.Collapsed;
+            UndoActions();
+            CurrentPageIndex++;
+            CurrentPage.Visibility = Visibility.Visible;
+            InitPage(CurrentPage);
+        }
+
+        #endregion
+
+        #region variables related to page navigation
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
@@ -322,6 +359,14 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public int MaxPageIndex
+        {
+            get
+            {
+                return _pages.Count - 1;
+            }
+        }
+
         public bool ExecutionFinished
         {
             get
@@ -339,14 +384,6 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public int MaxPageIndex
-        {
-            get
-            {
-                return _pages.Count - 1;
-            }
-        }
-
         public bool NextPageIsEnabled
         {
             get
@@ -361,6 +398,15 @@ namespace Cryptool.Plugins.ChaCha
                 return CurrentPageIndex != 0 && ExecutionFinished;
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region action navigation
+
+        #region variables related to action navigation
+
         public bool NextActionIsEnabled
         {
             get
@@ -378,25 +424,11 @@ namespace Cryptool.Plugins.ChaCha
                 return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
             }
         }
+
         #endregion
 
-        #region Click handlers
-        private void PrevPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.Visibility = Visibility.Collapsed;
-            UndoActions();
-            CurrentPageIndex--;
-            CurrentPage.Visibility = Visibility.Visible;
-            InitPage(CurrentPage);
-        }
-        private void NextPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.Visibility = Visibility.Collapsed;
-            UndoActions();
-            CurrentPageIndex++;
-            CurrentPage.Visibility = Visibility.Visible;
-            InitPage(CurrentPage);
-        }
+        #region action navigation click handlers
+
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIndex--;
@@ -415,21 +447,13 @@ namespace Cryptool.Plugins.ChaCha
             }
             Debug.Assert(CurrentActionIndex == 0);
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
-            foreach(PageAction pageAction in CurrentPage.InitActions.Reverse())
+            foreach (PageAction pageAction in CurrentPage.InitActions.Reverse())
             {
                 pageAction.undo();
             }
         }
 
-        private void WrapExecWithNavigation(PageAction pageAction)
-        {
-            _saveStateHasBeenCalled = false;
-            pageAction.exec();
-            if (_saveStateHasBeenCalled)
-            {
-                FinishPageAction();
-            }
-        }
+
         #endregion
 
         #region action helper methods
@@ -552,6 +576,8 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tbToCopyTo);
             tbToCopyTo.Inlines.Add(((Run)(tbToCopyFrom.Inlines.LastInline)).Text);
         }
+        #endregion
+
         #endregion
 
         #endregion
@@ -841,6 +867,8 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
     }
 
+    #region NavigationInterface
+
     // I wish I had variadic templates in C# like in C++11 ...
     interface INavigationService<T1, T2, T3>
     {
@@ -860,4 +888,6 @@ namespace Cryptool.Plugins.ChaCha
         // Execute automatic undoing of actions.
         void Undo();
     }
+
+    #endregion
 }
