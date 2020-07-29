@@ -192,10 +192,12 @@ namespace Cryptool.Plugins.ChaCha
             ProgressChanged(1, 1);
 
             // enable navigation since now all values needed for visualization are set.
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
-            {
-                _presentation.ExecutionFinished = true;
-            }, null);
+            DispatchToPresentation(delegate { _presentation.ExecutionFinished = true; });
+        }
+
+        private void DispatchToPresentation(SendOrPostCallback callback)
+        {
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, callback, null);
         }
 
         /*
@@ -280,7 +282,7 @@ namespace Cryptool.Plugins.ChaCha
                 stateOffset++;
             }
 
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            DispatchToPresentation(delegate
             {
                 // set state params
                 _presentation.Constants = constants;
@@ -288,7 +290,7 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.InputIV = _inputIV;
                 _presentation.InputData = _inputData;
                 _presentation.InitialCounter = counter;
-            }, null);
+            });
         }
 
         /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
