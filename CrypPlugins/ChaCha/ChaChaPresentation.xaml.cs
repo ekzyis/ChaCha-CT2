@@ -9,6 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -16,9 +17,11 @@ namespace Cryptool.Plugins.ChaCha
     /// Interaction logic for ChaChaPresentation.xaml
     /// </summary>
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock, Border>
+    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock, Border, Shape>
     {
 
+        private Brush copyBrush = Brushes.AliceBlue;
+        private Brush markBrush = Brushes.Purple;
         public ChaChaPresentation()
         {
             InitializeComponent();
@@ -79,6 +82,8 @@ namespace Cryptool.Plugins.ChaCha
                 if (!_undoActions.ContainsKey(hash))
                 {
                     Brush background;
+                    Brush borderBrush;
+                    Thickness borderThickness;
                     if(b.Background != null)
                     {
                         background = b.Background.Clone();
@@ -87,9 +92,54 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         background = Brushes.White;
                     }
+                    if(b.BorderBrush != null)
+                    {
+                        borderBrush = b.BorderBrush.Clone();
+                    }
+                    else
+                    {
+                        borderBrush = Brushes.Black;
+                    }
+                    if(b.BorderThickness != null)
+                    {
+                        borderThickness = b.BorderThickness;
+                    }
+                    else
+                    {
+                        borderThickness = new Thickness(1);
+                    }
                     _undoActions[hash] = () =>
                     {
                         b.Background = background;
+                        b.BorderBrush = borderBrush;
+                        b.BorderThickness = borderThickness;
+                    };
+                }
+            }
+        }
+
+        public void SaveState(params Shape[] shapes)
+        {
+            _saveStateHasBeenCalled = true;
+            foreach (Shape s in shapes)
+            {
+                int hash = s.GetHashCode();
+                if (!_undoActions.ContainsKey(hash))
+                {
+                    Brush strokeBrush;
+                    double strokeThickness = s.StrokeThickness;
+                    if (s.Stroke != null)
+                    {
+                        strokeBrush = s.Stroke.Clone();
+                    }
+                    else
+                    {
+                        strokeBrush = Brushes.Black;
+                    }
+                    _undoActions[hash] = () =>
+                    {
+                        s.Stroke = strokeBrush;
+                        s.StrokeThickness = strokeThickness;
                     };
                 }
             }
@@ -435,6 +485,10 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tb);
             Add(tb.Inlines, element);
         }
+        private void Add(TextBlock tb, string element)
+        {
+            Add(tb, new Run(element));
+        }
         private void Clear(InlineCollection list)
         {
             list.Clear();
@@ -444,13 +498,45 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tb);
             Clear(tb.Inlines);
         }
-
         private void SetBackground(Border b, Brush background)
         {
             SaveState(b);
             b.Background = background;
         }
-
+        private void UnsetBackground(Border b)
+        {
+            SetBackground(b, Brushes.White);
+        }
+        private void SetBorderColor(Border b, Brush borderBrush)
+        {
+            SaveState(b);
+            b.BorderBrush = borderBrush;
+        }
+        private void SetBorderStroke(Border b, double stroke)
+        {
+            SaveState(b);
+            b.BorderThickness = new Thickness(stroke);
+        }
+        private void MarkBorder(Border b)
+        {
+            SetBorderColor(b, markBrush);
+            SetBorderStroke(b, 2);
+        }
+        private void SetShapeStrokeColor(Shape s, Brush brush)
+        {
+            SaveState(s);
+            s.Stroke = brush;
+        }
+        private void SetShapeStroke(Shape s, double stroke)
+        {
+            SaveState(s);
+            s.StrokeThickness = stroke;
+        }
+        private void MarkShape(Shape s)
+        {
+            SetShapeStrokeColor(s, markBrush);
+            SetShapeStroke(s, 2);
+        }
         private void CopyLastText(TextBlock tbToCopyTo, TextBlock tbToCopyFrom)
         {
             SaveState(tbToCopyTo);
@@ -696,12 +782,14 @@ namespace Cryptool.Plugins.ChaCha
     }
 
     // I wish I had variadic templates in C# like in C++11 ...
-    interface INavigationService<T1, T2>
+    interface INavigationService<T1, T2, T3>
     {
         // Save state of each element such that we can retrieve it later for undoing action.
         void SaveState(params T1[] t);
 
         void SaveState(params T2[] t);
+
+        void SaveState(params T3[] t);
 
         // Tells that current page action is finished and thus next calls to save state are for a new page action.
         void FinishPageAction();

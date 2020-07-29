@@ -421,43 +421,46 @@
         </Grid.RowDefinitions>
         <!-- Detail box -->
         <Canvas Width="200" Height="200">
-          <Border Canvas.Top="0" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRInX1Cell" Canvas.Top="0" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QRInX1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Canvas.Top="80" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRInX2Cell" Canvas.Top="80" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QRInX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Canvas.Top="160" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRInX3Cell" Canvas.Top="160" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QRInX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Canvas.Top="0" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX1Cell" Canvas.Top="0" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QROutX1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Canvas.Top="80" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX2Cell" Canvas.Top="80" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QROutX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Canvas.Top="160" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX3Cell" Canvas.Top="160" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QROutX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Canvas.Top="120" Canvas.Left="110" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRXORCell" Canvas.Top="120" Canvas.Left="110" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Name="QRXOR" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
           <!-- Arrow -->
           <Path Stroke="Black" StrokeThickness="1" Data="M 120,160 v 18" />
           <Path Stroke="Black" StrokeThickness="1" Data="M 120,178 l 3,-5 m -3,5 l -3,-5" />
-          <Rectangle Stroke="Black" Width="200" Height="200" StrokeThickness="1"/>
-          <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 40" />
-          <TextBlock Width="20" Height="20" Canvas.Left="40" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextAlignment="Center">+</TextBlock>
-          <Path Stroke="Black" StrokeThickness="1">
+          <Rectangle Stroke="Black" Width="200" Height="200" StrokeThickness="1" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 40" Name="AddInputPathX1"/>
+          <TextBlock Width="20" Height="20" Canvas.Left="40" Canvas.Top="5" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" TextAlignment="Center" Foreground="{ Binding ElementName=AddCircle, Path=Stroke}">
+            +
+          </TextBlock>
+          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle">
             <Path.Data>
               <EllipseGeometry Center="50,20" RadiusX="10" RadiusY="10"/>
             </Path.Data>
           </Path>
-          <Path Stroke="Black" StrokeThickness="1" Data="M 60,20 h 140" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 60,20 h 140" Name="OutputPathX1"/>
           <Path Stroke="Black" StrokeThickness="1" Data="M 100,20 v 70 A 5 5 10 0 0 100,110" />
           <Path Stroke="Black" StrokeThickness="1" Data="M 100,110 v 60" />
-          <Path Stroke="Black" StrokeThickness="1" Data="M 50,100 v -70" />
-          <Path Stroke="Black" StrokeThickness="1" Data="M 0,100 h 200" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 50,100 v -70" Name="AddInputPathX2"/>
+          <Path Stroke="Black" StrokeThickness="1" Data="M 0,100 h 50" Name="OutputPathX2_1" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 50,100 h 150" Name="OutputPathX2_2" />
           <TextBlock Width="20" Height="20" Canvas.Left="90" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center">XOR</TextBlock>
           <Path Stroke="Black" StrokeThickness="1">
             <Path.Data>

@@ -21,17 +21,62 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            PageAction detailFirstQRBox = new PageAction()
+            PageAction markQRInput = new PageAction()
             {
                 exec = () =>
                 {
-                    SetBackground(QRInACell, Brushes.AliceBlue);
-                    SetBackground(QRInBCell, Brushes.AliceBlue);
-                    SetBackground(QRInCCell, Brushes.AliceBlue);
-                    SetBackground(QRInDCell, Brushes.AliceBlue);
-                }
+                    SetBackground(QRInACell, copyBrush);
+                    SetBackground(QRInBCell, copyBrush);
+                    SetBackground(QRInDCell, copyBrush);
+                },
+                undo = Undo
+            };
+            PageAction copyMarkedQRInputToDetail = new PageAction()
+            {
+                exec = () =>
+                {
+                    SetBackground(QRInX1Cell, copyBrush);
+                    SetBackground(QRInX2Cell, copyBrush);
+                    SetBackground(QRInX3Cell, copyBrush);
+                    Add(QRInX1, QRInA.Text);
+                    Add(QRInX2, QRInB.Text);
+                    Add(QRInX3, QRInD.Text);
+                },
+                undo = Undo
+            };
+            PageAction unmark = new PageAction()
+            {
+                exec = () =>
+                {
+                    UnsetBackground(QRInACell);
+                    UnsetBackground(QRInBCell);
+                    UnsetBackground(QRInDCell);
+                    UnsetBackground(QRInX1Cell);
+                    UnsetBackground(QRInX2Cell);
+                    UnsetBackground(QRInX3Cell);
+                },
+                undo = Undo
             };
             p.AddAction(showInput);
+            p.AddAction(markQRInput);
+            p.AddAction(copyMarkedQRInputToDetail);
+            p.AddAction(unmark);
+            PageAction prepareAddX1X2 = new PageAction()
+            {
+                exec = () =>
+                {
+                    MarkBorder(QRInX1Cell);
+                    MarkBorder(QRInX2Cell);
+                    MarkShape(AddInputPathX1);
+                    MarkShape(AddInputPathX2);
+                    MarkShape(OutputPathX1);
+                    MarkShape(OutputPathX2_1);
+                    MarkShape(AddCircle);
+                    MarkBorder(QROutX1Cell);
+                },
+                undo = Undo
+            };
+            p.AddAction(prepareAddX1X2);
             return p;
         }
     }
