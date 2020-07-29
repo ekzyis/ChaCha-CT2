@@ -463,26 +463,29 @@
             </Path.Data>
           </Path>
           <Path Stroke="Black" StrokeThickness="1" Data="M 60,20 h 140" Name="OutputPathX1"/>
-          <Path Stroke="Black" StrokeThickness="1" Data="M 100,20 v 70 A 5 5 10 0 0 100,110" />
-          <Path Stroke="Black" StrokeThickness="1" Data="M 100,110 v 60" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 100,20 v 70 A 5 5 10 0 0 100,110 v 60" Name="XORInputPathX1"/>
           <Path Stroke="Black" StrokeThickness="1" Data="M 50,100 v -70" Name="AddInputPathX2"/>
           <Path Stroke="Black" StrokeThickness="1" Data="M 0,100 h 50" Name="OutputPathX2_1" />
           <Path Stroke="Black" StrokeThickness="1" Data="M 50,100 h 150" Name="OutputPathX2_2" />
-          <TextBlock Width="20" Height="20" Canvas.Left="90" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center">XOR</TextBlock>
-          <Path Stroke="Black" StrokeThickness="1">
+          <TextBlock Width="20" Height="20" Canvas.Left="90" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle, Path=Stroke}">
+            XOR
+          </TextBlock>
+          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle">
             <Path.Data>
               <EllipseGeometry Center="100,180" RadiusX="10" RadiusY="10"/>
             </Path.Data>
           </Path>
-          <Path Stroke="Black" StrokeThickness="1" Data="M 0,180 h 90" />
-          <Path Stroke="Black" StrokeThickness="1" Data="M 110,180 h 30" />
-          <TextBlock Width="20" Height="20" Canvas.Left="140" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center">&lt;&lt;&lt;</TextBlock>
-          <Path Stroke="Black" StrokeThickness="1">
+          <Path Stroke="Black" StrokeThickness="1" Data="M 0,180 h 90" Name="OutputPathX3_1"/>
+          <Path Stroke="Black" StrokeThickness="1" Data="M 110,180 h 30" Name="OutputPathX3_2"/>
+          <TextBlock Width="20" Height="20" Canvas.Left="140" Canvas.Top="175" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle, Path=Stroke}">
+            &lt;&lt;&lt;
+          </TextBlock>
+          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle">
             <Path.Data>
               <EllipseGeometry Center="150,180" RadiusX="10" RadiusY="10"/>
             </Path.Data>
           </Path>
-          <Path Stroke="Black" StrokeThickness="1" Data="M 160,180 h 40" />
+          <Path Stroke="Black" StrokeThickness="1" Data="M 160,180 h 40" Name="OutputPathX3_3"/>
         </Canvas>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>

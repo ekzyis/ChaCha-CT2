@@ -741,11 +741,13 @@ namespace Cryptool.Plugins.ChaCha
         public enum ResultType
         {
             ADD_X1_X2,
-            X2
+            X2,
+            QR_XOR
         }
 
         private List<uint> _add_x1_x2 = new List<uint>();
         private List<uint> _x2 = new List<uint>();
+        private List<uint> _qr_xor = new List<uint>();
         public string HexResultAddX1X2(int index)
         {
             return HexString(_add_x1_x2[index]);
@@ -753,6 +755,10 @@ namespace Cryptool.Plugins.ChaCha
         public string HexResultOutX2(int index)
         {
             return HexString(_x2[index]);
+        }
+        public string HexResultQRXOR(int index)
+        {
+            return HexString(_qr_xor[index]);
         }
         public void AddResult(ResultType type, object result)
         {
@@ -763,6 +769,9 @@ namespace Cryptool.Plugins.ChaCha
                     break;
                 case ResultType.X2:
                     _x2.Add((uint)result);
+                    break;
+                case ResultType.QR_XOR:
+                    _qr_xor.Add((uint)result);
                     break;
             }
         }
