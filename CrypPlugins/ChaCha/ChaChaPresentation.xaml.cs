@@ -19,9 +19,10 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock, Border, Shape>
     {
-
+        #region private variables
         private Brush copyBrush = Brushes.AliceBlue;
         private Brush markBrush = Brushes.Purple;
+        #endregion
         public ChaChaPresentation()
         {
             InitializeComponent();
@@ -592,14 +593,16 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region Variables
+        #region Visualization variables
+
+        #region Input variables
+
         private byte[] _constants = new byte[0];
         private byte[] _inputKey = new byte[0];
         private byte[] _inputIV = new byte[0];
         private byte[] _initialCounter = new byte[0];
         private byte[] _inputData = new byte[0];
-
-        #region Input variables
+        
         public byte[] Constants
         {
             get
@@ -760,6 +763,20 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8);
             }
         }
+
+        private ChaCha.Version _version;
+        public ChaCha.Version Version
+        {
+            get
+            {
+                return _version;
+            }
+            set
+            {
+                _version = value;
+            }
+        }
+
         #endregion
 
         #region interim results
@@ -809,22 +826,9 @@ namespace Cryptool.Plugins.ChaCha
 
         #endregion
 
-        private ChaCha.Version _version;
-        public ChaCha.Version Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-
         #endregion
 
-        #region ValueConversion
+        #region Visualization helper methods
 
 
         /* insert a space after every n characters */
