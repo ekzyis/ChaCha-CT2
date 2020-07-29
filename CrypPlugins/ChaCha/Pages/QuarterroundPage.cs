@@ -9,9 +9,9 @@ namespace Cryptool.Plugins.ChaCha
     {
         private Page QuarterroundPage()
         {
-            #region Copy input values
+            #region QR input
             Page p = new Page(UIQuarterroundPage);
-            PageAction showInput = new PageAction()
+            PageAction insertQRInput = new PageAction()
             {
                 exec = () =>
                 {
@@ -32,7 +32,7 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            PageAction copyMarkedQRInputToDetail = new PageAction()
+            PageAction copyQRInputToDetail = new PageAction()
             {
                 exec = () =>
                 {
@@ -45,7 +45,7 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            PageAction unmark = new PageAction()
+            PageAction unmarkQRInput = new PageAction()
             {
                 exec = () =>
                 {
@@ -58,13 +58,13 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            p.AddAction(showInput);
+            p.AddAction(insertQRInput);
             p.AddAction(markQRInput);
-            p.AddAction(copyMarkedQRInputToDetail);
-            p.AddAction(unmark);
+            p.AddAction(copyQRInputToDetail);
+            p.AddAction(unmarkQRInput);
             #endregion
             #region out x1
-            PageAction prepareAddX1X2 = new PageAction()
+            PageAction markOutX1 = new PageAction()
             {
                 exec = () =>
                 {
@@ -79,8 +79,7 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            p.AddAction(prepareAddX1X2);
-            PageAction execAddX1X2 = new PageAction()
+            PageAction execOutX1 = new PageAction()
             {
                 exec = () =>
                 {
@@ -88,7 +87,7 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            PageAction unmarkX1X2 = new PageAction()
+            PageAction unmarkOutX1 = new PageAction()
             {
                 exec = () =>
                 {
@@ -103,11 +102,12 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            p.AddAction(execAddX1X2);
-            p.AddAction(unmarkX1X2);
+            p.AddAction(markOutX1);
+            p.AddAction(execOutX1);
+            p.AddAction(unmarkOutX1);
             #endregion
             #region out x2
-            PageAction prepareOutX2 = new PageAction()
+            PageAction markOutX2 = new PageAction()
             {
                 exec = () =>
                 {
@@ -137,7 +137,7 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            p.AddAction(prepareOutX2);
+            p.AddAction(markOutX2);
             p.AddAction(execOutX2);
             p.AddAction(unmarkOutX2);
             #endregion
