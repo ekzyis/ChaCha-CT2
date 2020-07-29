@@ -9,6 +9,7 @@ namespace Cryptool.Plugins.ChaCha
     {
         private Page QuarterroundPage()
         {
+            #region Copy input values
             Page p = new Page(UIQuarterroundPage);
             PageAction showInput = new PageAction()
             {
@@ -61,6 +62,8 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(markQRInput);
             p.AddAction(copyMarkedQRInputToDetail);
             p.AddAction(unmark);
+            #endregion
+            #region out x1
             PageAction prepareAddX1X2 = new PageAction()
             {
                 exec = () =>
@@ -102,6 +105,8 @@ namespace Cryptool.Plugins.ChaCha
             };
             p.AddAction(execAddX1X2);
             p.AddAction(unmarkX1X2);
+            #endregion
+            #region out x2
             PageAction prepareOutX2 = new PageAction()
             {
                 exec = () =>
@@ -123,6 +128,9 @@ namespace Cryptool.Plugins.ChaCha
             };
             p.AddAction(prepareOutX2);
             p.AddAction(execOutX2);
+            #endregion
+            #region out x3
+            #endregion
             return p;
         }
     }
