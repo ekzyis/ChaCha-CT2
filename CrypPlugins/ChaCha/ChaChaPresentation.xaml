@@ -437,13 +437,13 @@
           <Border Name="QRInX3Cell" Canvas.Top="160" Canvas.Left="-70" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QRInX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QROutX1Cell" Canvas.Top="0" Canvas.Left="210" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX1Cell" Canvas.Top="0" Canvas.Left="205" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QROutX1" VerticalAlignment="Center" HorizontalAlignment="Center" />
           </Border>
-          <Border Name="QROutX2Cell" Canvas.Top="80" Canvas.Left="210" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX2Cell" Canvas.Top="80" Canvas.Left="205" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QROutX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QROutX3Cell" Canvas.Top="160" Canvas.Left="210" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX3Cell" Canvas.Top="160" Canvas.Left="205" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QROutX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
           <Border Name="QRXORCell" Canvas.Top="120" Canvas.Left="110" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
