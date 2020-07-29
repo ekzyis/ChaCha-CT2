@@ -428,25 +428,25 @@
         </Grid.RowDefinitions>
         <!-- Detail box -->
         <Canvas Width="200" Height="200">
-          <Border Name="QRInX1Cell" Canvas.Top="0" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRInX1Cell" Canvas.Top="0" Canvas.Left="-70" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QRInX1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QRInX2Cell" Canvas.Top="80" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRInX2Cell" Canvas.Top="80" Canvas.Left="-70" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QRInX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QRInX3Cell" Canvas.Top="160" Canvas.Left="-70" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRInX3Cell" Canvas.Top="160" Canvas.Left="-70" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QRInX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QROutX1Cell" Canvas.Top="0" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX1Cell" Canvas.Top="0" Canvas.Left="210" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QROutX1" VerticalAlignment="Center" HorizontalAlignment="Center" />
           </Border>
-          <Border Name="QROutX2Cell" Canvas.Top="80" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX2Cell" Canvas.Top="80" Canvas.Left="210" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QROutX2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QROutX3Cell" Canvas.Top="160" Canvas.Left="210" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QROutX3Cell" Canvas.Top="160" Canvas.Left="210" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QROutX3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Name="QRXORCell" Canvas.Top="120" Canvas.Left="110" Width="60" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
+          <Border Name="QRXORCell" Canvas.Top="120" Canvas.Left="110" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QRXOR" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
           <!-- Arrow -->
@@ -486,7 +486,7 @@
         </Canvas>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="65"/>
             <ColumnDefinition Width="80"/>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="80"/>
@@ -496,7 +496,7 @@
             <ColumnDefinition Width="80"/>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="80"/>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="65"/>
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
