@@ -77,6 +77,31 @@ namespace Cryptool.Plugins.ChaCha
                 undo = Undo
             };
             p.AddAction(prepareAddX1X2);
+            PageAction execAddX1X2 = new PageAction()
+            {
+                exec = () =>
+                {
+                    Add(QROutX1, HexResultAddX1X2(0));
+                },
+                undo = Undo
+            };
+            PageAction unmarkX1X2 = new PageAction()
+            {
+                exec = () =>
+                {
+                    UnmarkBorder(QRInX1Cell);
+                    UnmarkBorder(QRInX2Cell);
+                    UnmarkShape(AddInputPathX1);
+                    UnmarkShape(AddInputPathX2);
+                    UnmarkShape(OutputPathX1);
+                    UnmarkShape(OutputPathX2_1);
+                    UnmarkShape(AddCircle);
+                    UnmarkBorder(QROutX1Cell);
+                },
+                undo = Undo
+            };
+            p.AddAction(execAddX1X2);
+            p.AddAction(unmarkX1X2);
             return p;
         }
     }

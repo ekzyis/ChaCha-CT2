@@ -463,6 +463,10 @@ namespace Cryptool.Plugins.ChaCha
         public uint[] quarterroundStep(uint x1, uint x2, uint x3, int shift)
         {
             x1 += x2; // x1 = x1 + x2
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.ADD_X1_X2, x1);
+            });
             x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
             x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
             return new uint[] { x1, x2, x3 };

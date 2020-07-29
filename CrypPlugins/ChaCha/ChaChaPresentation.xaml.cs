@@ -522,6 +522,11 @@ namespace Cryptool.Plugins.ChaCha
             SetBorderColor(b, markBrush);
             SetBorderStroke(b, 2);
         }
+        private void UnmarkBorder(Border b)
+        {
+            SetBorderColor(b, Brushes.Black);
+            SetBorderStroke(b, 1);
+        }
         private void SetShapeStrokeColor(Shape s, Brush brush)
         {
             SaveState(s);
@@ -536,6 +541,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             SetShapeStrokeColor(s, markBrush);
             SetShapeStroke(s, 2);
+        }
+        private void UnmarkShape(Shape s)
+        {
+            SetShapeStrokeColor(s, Brushes.Black);
+            SetShapeStroke(s, 1);
         }
         private void CopyLastText(TextBlock tbToCopyTo, TextBlock tbToCopyFrom)
         {
@@ -556,13 +566,14 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region Input
+        #region Variables
         private byte[] _constants = new byte[0];
         private byte[] _inputKey = new byte[0];
         private byte[] _inputIV = new byte[0];
         private byte[] _initialCounter = new byte[0];
         private byte[] _inputData = new byte[0];
 
+        #region Input variables
         public byte[] Constants
         {
             get
@@ -723,6 +734,30 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8);
             }
         }
+        #endregion
+
+        #region interim results
+
+        public enum ResultType
+        {
+            ADD_X1_X2,
+        }
+
+        private List<uint> add_x1_x2 = new List<uint>();
+        public string HexResultAddX1X2(int index)
+        {
+            return HexString(add_x1_x2[index]);
+        }
+        public void AddResult(ResultType type, object result)
+        {
+            if(type == ResultType.ADD_X1_X2)
+            {
+                add_x1_x2.Add((uint)result);
+            }
+        }
+
+        #endregion
+
         private ChaCha.Version _version;
         public ChaCha.Version Version
         {
