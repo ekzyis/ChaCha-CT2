@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -19,6 +20,16 @@ namespace Cryptool.Plugins.ChaCha
                     Add(QRInD, new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8)));
                 },
                 undo = Undo
+            };
+            PageAction detailFirstQRBox = new PageAction()
+            {
+                exec = () =>
+                {
+                    SetBackground(QRInACell, Brushes.AliceBlue);
+                    SetBackground(QRInBCell, Brushes.AliceBlue);
+                    SetBackground(QRInCCell, Brushes.AliceBlue);
+                    SetBackground(QRInDCell, Brushes.AliceBlue);
+                }
             };
             p.AddAction(showInput);
             return p;

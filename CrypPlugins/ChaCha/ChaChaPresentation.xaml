@@ -495,16 +495,16 @@
             <RowDefinition Height="40"/>
           </Grid.RowDefinitions>
           <!-- Input -->
-          <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
+          <Border Name="QRInACell" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
             <TextBlock Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
+          <Border Name="QRInBCell" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
             <TextBlock Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
+          <Border Name="QRInCCell" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,1,1,0">
             <TextBlock Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
-          <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+          <Border Name="QRInDCell" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1">
             <TextBlock Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
           <Path Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Stroke="Black" StrokeThickness="1" Data="M 0,20 h 20 l 40,20 h 20" />
