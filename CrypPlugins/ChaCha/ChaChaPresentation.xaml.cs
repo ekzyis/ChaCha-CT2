@@ -783,16 +783,53 @@ namespace Cryptool.Plugins.ChaCha
 
         public enum ResultType
         {
+            QR_INPUT_A, QR_INPUT_B, QR_INPUT_C, QR_INPUT_D,
+            QR_INPUT_X1, QR_INPUT_X2, QR_INPUT_X3,
             QR_ADD_X1_X2,
             QR_X2,
             QR_XOR,
             QR_SHIFT
         }
 
+        private List<uint> _qr_input_a = new List<uint>();
+        private List<uint> _qr_input_b = new List<uint>();
+        private List<uint> _qr_input_c = new List<uint>();
+        private List<uint> _qr_input_d = new List<uint>();
+        private List<uint> _qr_input_x1 = new List<uint>();
+        private List<uint> _qr_input_x2 = new List<uint>();
+        private List<uint> _qr_input_x3 = new List<uint>();
         private List<uint> _qr_add_x1_x2 = new List<uint>();
         private List<uint> _qr_x2 = new List<uint>();
         private List<uint> _qr_xor = new List<uint>();
         private List<uint> _qr_shift = new List<uint>();
+        public String HexResultQRInputA(int index)
+        {
+            return HexString(_qr_input_a[index]);
+        }
+        public String HexResultQRInputB(int index)
+        {
+            return HexString(_qr_input_b[index]);
+        }
+        public String HexResultQRInputC(int index)
+        {
+            return HexString(_qr_input_c[index]);
+        }
+        public String HexResultQRInputD(int index)
+        {
+            return HexString(_qr_input_d[index]);
+        }
+        public String HexResultQRInputX1(int index)
+        {
+            return HexString(_qr_input_x1[index]);
+        }
+        public String HexResultQRInputX2(int index)
+        {
+            return HexString(_qr_input_x2[index]);
+        }
+        public String HexResultQRInputX3(int index)
+        {
+            return HexString(_qr_input_x3[index]);
+        }
         public string HexResultAddX1X2(int index)
         {
             return HexString(_qr_add_x1_x2[index]);
@@ -813,6 +850,27 @@ namespace Cryptool.Plugins.ChaCha
         {
             switch(type)
             {
+                case ResultType.QR_INPUT_A:
+                    _qr_input_a.Add((uint)result);
+                    break;
+                case ResultType.QR_INPUT_B:
+                    _qr_input_b.Add((uint)result);
+                    break;
+                case ResultType.QR_INPUT_C:
+                    _qr_input_c.Add((uint)result);
+                    break;
+                case ResultType.QR_INPUT_D:
+                    _qr_input_d.Add((uint)result);
+                    break;
+                case ResultType.QR_INPUT_X1:
+                    _qr_input_x1.Add((uint)result);
+                    break;
+                case ResultType.QR_INPUT_X2:
+                    _qr_input_x2.Add((uint)result);
+                    break;
+                case ResultType.QR_INPUT_X3:
+                    _qr_input_x3.Add((uint)result);
+                    break;
                 case ResultType.QR_ADD_X1_X2:
                     _qr_add_x1_x2.Add((uint)result);
                     break;
@@ -829,6 +887,13 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void clearResults()
         {
+            _qr_input_a.Clear();
+            _qr_input_b.Clear();
+            _qr_input_c.Clear();
+            _qr_input_d.Clear();
+            _qr_input_x1.Clear();
+            _qr_input_x2.Clear();
+            _qr_input_x3.Clear();
             _qr_add_x1_x2.Clear();
             _qr_x2.Clear();
             _qr_xor.Clear();

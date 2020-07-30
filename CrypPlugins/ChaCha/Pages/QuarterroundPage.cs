@@ -15,10 +15,10 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    Add(QRInA, new Run(ConstantsLittleEndian.Replace(" ", "").Substring(0, 8)));
-                    Add(QRInB, new Run(KeyLittleEndian.Replace(" ", "").Substring(0, 8)));
-                    Add(QRInC, new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8)));
-                    Add(QRInD, new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8)));
+                    Add(QRInA, HexResultQRInputA(0));
+                    Add(QRInB, HexResultQRInputB(0));
+                    Add(QRInC, HexResultQRInputC(0));
+                    Add(QRInD, HexResultQRInputD(0));
                 },
                 undo = Undo
             };
@@ -39,9 +39,9 @@ namespace Cryptool.Plugins.ChaCha
                     SetBackground(QRInX1Cell, copyBrush);
                     SetBackground(QRInX2Cell, copyBrush);
                     SetBackground(QRInX3Cell, copyBrush);
-                    Add(QRInX1, QRInA.Text);
-                    Add(QRInX2, QRInB.Text);
-                    Add(QRInX3, QRInD.Text);
+                    Add(QRInX1, HexResultQRInputX1(0));
+                    Add(QRInX2, HexResultQRInputX2(0));
+                    Add(QRInX3, HexResultQRInputX3(0));
                 },
                 undo = Undo
             };

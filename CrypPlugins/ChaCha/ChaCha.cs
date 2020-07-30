@@ -408,6 +408,13 @@ namespace Cryptool.Plugins.ChaCha
          */
         public uint[] Quarterround(uint a, uint b, uint c, uint d)
         {
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_A, a);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_B, b);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_C, c);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_D, d);
+            });
             uint[] qrstep = quarterroundStep(a, b, d, 16);
             a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
             qrstep = quarterroundStep(c, d, b, 12);
@@ -421,6 +428,12 @@ namespace Cryptool.Plugins.ChaCha
 
         public uint[] quarterroundStep(uint x1, uint x2, uint x3, int shift)
         {
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X1, x1);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X2, x2);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X3, x3);
+            });
             x1 += x2; // x1 = x1 + x2
             DispatchToPresentation(delegate
             {
