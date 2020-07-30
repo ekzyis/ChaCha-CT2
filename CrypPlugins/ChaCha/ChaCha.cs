@@ -439,10 +439,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _presentation.AddResult(ChaChaPresentation.ResultType.QR_ADD_X1_X2, x1);
             });
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_X2, x2);
-            });
             x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
             DispatchToPresentation(delegate
             {
@@ -451,7 +447,9 @@ namespace Cryptool.Plugins.ChaCha
             x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_SHIFT, x3);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X1, x1);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X2, x2);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X3, x3);
             });
             return new uint[] { x1, x2, x3 };
         }

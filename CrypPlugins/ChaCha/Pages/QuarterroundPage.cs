@@ -15,10 +15,10 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    Add(QRInA, HexResultQRInputA(0));
-                    Add(QRInB, HexResultQRInputB(0));
-                    Add(QRInC, HexResultQRInputC(0));
-                    Add(QRInD, HexResultQRInputD(0));
+                    Add(QRInA, GetHexResult(ResultType.QR_INPUT_A, 0));
+                    Add(QRInB, GetHexResult(ResultType.QR_INPUT_B, 0));
+                    Add(QRInC, GetHexResult(ResultType.QR_INPUT_C, 0));
+                    Add(QRInD, GetHexResult(ResultType.QR_INPUT_D, 0));
                 },
                 undo = Undo
             };
@@ -39,9 +39,9 @@ namespace Cryptool.Plugins.ChaCha
                     SetBackground(QRInX1Cell, copyBrush);
                     SetBackground(QRInX2Cell, copyBrush);
                     SetBackground(QRInX3Cell, copyBrush);
-                    Add(QRInX1, HexResultQRInputX1(0));
-                    Add(QRInX2, HexResultQRInputX2(0));
-                    Add(QRInX3, HexResultQRInputX3(0));
+                    Add(QRInX1, GetHexResult(ResultType.QR_INPUT_X1, 0));
+                    Add(QRInX2, GetHexResult(ResultType.QR_INPUT_X2, 0));
+                    Add(QRInX3, GetHexResult(ResultType.QR_INPUT_X3, 0));
                 },
                 undo = Undo
             };
@@ -83,7 +83,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    Add(QROutX1, HexResultAddX1X2(0));
+                    Add(QROutX1, GetHexResult(ResultType.QR_ADD_X1_X2, 0));
                 },
                 undo = Undo
             };
@@ -122,7 +122,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    Add(QROutX2, HexResultOutX2(0));
+                    Add(QROutX2, GetHexResult(ResultType.QR_OUTPUT_X2, 0));
                 },
                 undo = Undo
             };
@@ -160,7 +160,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    Add(QRXOR, HexResultQRXOR(0));
+                    Add(QRXOR, GetHexResult(ResultType.QR_XOR, 0));
                 },
                 undo = Undo
             };
@@ -198,7 +198,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 exec = () =>
                 {
-                    Add(QROutX3, HexResultQRShift(0));
+                    Add(QROutX3, GetHexResult(ResultType.QR_OUTPUT_X3, 0));
                 },
                 undo = Undo
             };

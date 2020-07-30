@@ -785,120 +785,95 @@ namespace Cryptool.Plugins.ChaCha
         {
             QR_INPUT_A, QR_INPUT_B, QR_INPUT_C, QR_INPUT_D,
             QR_INPUT_X1, QR_INPUT_X2, QR_INPUT_X3,
-            QR_ADD_X1_X2,
-            QR_X2,
-            QR_XOR,
-            QR_SHIFT
+            QR_OUTPUT_X1, QR_OUTPUT_X2, QR_OUTPUT_X3,
+            QR_ADD_X1_X2, QR_XOR
         }
 
-        private List<uint> _qr_input_a = new List<uint>();
-        private List<uint> _qr_input_b = new List<uint>();
-        private List<uint> _qr_input_c = new List<uint>();
-        private List<uint> _qr_input_d = new List<uint>();
-        private List<uint> _qr_input_x1 = new List<uint>();
-        private List<uint> _qr_input_x2 = new List<uint>();
-        private List<uint> _qr_input_x3 = new List<uint>();
-        private List<uint> _qr_add_x1_x2 = new List<uint>();
-        private List<uint> _qr_x2 = new List<uint>();
-        private List<uint> _qr_xor = new List<uint>();
-        private List<uint> _qr_shift = new List<uint>();
-        public String HexResultQRInputA(int index)
+        #region interim results manager class
+        static class InterimResultsManager
         {
-            return HexString(_qr_input_a[index]);
-        }
-        public String HexResultQRInputB(int index)
-        {
-            return HexString(_qr_input_b[index]);
-        }
-        public String HexResultQRInputC(int index)
-        {
-            return HexString(_qr_input_c[index]);
-        }
-        public String HexResultQRInputD(int index)
-        {
-            return HexString(_qr_input_d[index]);
-        }
-        public String HexResultQRInputX1(int index)
-        {
-            return HexString(_qr_input_x1[index]);
-        }
-        public String HexResultQRInputX2(int index)
-        {
-            return HexString(_qr_input_x2[index]);
-        }
-        public String HexResultQRInputX3(int index)
-        {
-            return HexString(_qr_input_x3[index]);
-        }
-        public string HexResultAddX1X2(int index)
-        {
-            return HexString(_qr_add_x1_x2[index]);
-        }
-        public string HexResultOutX2(int index)
-        {
-            return HexString(_qr_x2[index]);
-        }
-        public string HexResultQRXOR(int index)
-        {
-            return HexString(_qr_xor[index]);
-        }
-        public string HexResultQRShift(int index)
-        {
-            return HexString(_qr_shift[index]);
+            private class InterimResultList
+            {
+                private List<uint> _results;
+                private ResultType _type;
+                public InterimResultList(ResultType type)
+                {
+                    _results = new List<uint>();
+                    _type = type;
+                }
+                public ResultType Type
+                {
+                    get
+                    {
+                        return _type;
+                    }
+                }
+                public string Hex(int index)
+                {
+                    return HexString(_results[index]);
+                }
+                public void Add(uint result)
+                {
+                    _results.Add(result);
+                }
+                public void Clear()
+                {
+                    _results.Clear();
+                }
+            }
+            private static List<InterimResultList> _interimResultsList = new List<InterimResultList>();
+            private static bool TypeExists(ResultType type)
+            {
+                return _interimResultsList.Exists(list => list.Type == type);
+            }
+            private static InterimResultList GetList(ResultType type)
+            {
+                if(!TypeExists(type))
+                {
+                    return null;
+                }
+                return _interimResultsList.Find(list => list.Type == type);
+            }
+            public static void Clear()
+            {
+                foreach(InterimResultList r in _interimResultsList)
+                {
+                    r.Clear();
+                }
+                _interimResultsList.Clear();
+            }
+            public static void AddResult(ResultType type, uint result)
+            {
+                if(!TypeExists(type))
+                {
+                    _interimResultsList.Add(new InterimResultList(type));
+                }
+                GetList(type).Add(result);
+            }
+            public static string Hex(ResultType type, int index)
+            {
+                InterimResultList list = GetList(type);
+                if (list == null)
+                {
+                    throw new ArgumentException("InterimResultList of type {0} does not exist", type.ToString());
+                }
+                return list.Hex(index);
+            }
         }
         public void AddResult(ResultType type, object result)
         {
-            switch(type)
-            {
-                case ResultType.QR_INPUT_A:
-                    _qr_input_a.Add((uint)result);
-                    break;
-                case ResultType.QR_INPUT_B:
-                    _qr_input_b.Add((uint)result);
-                    break;
-                case ResultType.QR_INPUT_C:
-                    _qr_input_c.Add((uint)result);
-                    break;
-                case ResultType.QR_INPUT_D:
-                    _qr_input_d.Add((uint)result);
-                    break;
-                case ResultType.QR_INPUT_X1:
-                    _qr_input_x1.Add((uint)result);
-                    break;
-                case ResultType.QR_INPUT_X2:
-                    _qr_input_x2.Add((uint)result);
-                    break;
-                case ResultType.QR_INPUT_X3:
-                    _qr_input_x3.Add((uint)result);
-                    break;
-                case ResultType.QR_ADD_X1_X2:
-                    _qr_add_x1_x2.Add((uint)result);
-                    break;
-                case ResultType.QR_X2:
-                    _qr_x2.Add((uint)result);
-                    break;
-                case ResultType.QR_XOR:
-                    _qr_xor.Add((uint)result);
-                    break;
-                case ResultType.QR_SHIFT:
-                    _qr_shift.Add((uint)result);
-                    break; ;
-            }
+            InterimResultsManager.AddResult(type, (uint)result);
+        }
+        public string GetHexResult(ResultType type, int index)
+        {
+            return InterimResultsManager.Hex(type, index);
         }
         public void clearResults()
         {
-            _qr_input_a.Clear();
-            _qr_input_b.Clear();
-            _qr_input_c.Clear();
-            _qr_input_d.Clear();
-            _qr_input_x1.Clear();
-            _qr_input_x2.Clear();
-            _qr_input_x3.Clear();
-            _qr_add_x1_x2.Clear();
-            _qr_x2.Clear();
-            _qr_xor.Clear();
-            _qr_shift.Clear();
+            InterimResultsManager.Clear();
         }
+
+        #endregion
 
         #endregion
 
@@ -908,14 +883,14 @@ namespace Cryptool.Plugins.ChaCha
 
 
         /* insert a space after every n characters */
-        private string Chunkify(string text, int n)
+        private static string Chunkify(string text, int n)
         {
             string pattern = string.Format(".{{{0}}}", n);
             return Regex.Replace(text, pattern, "$0 ");
         }
 
         /* print a hex presentation of the byte array*/
-        public string HexString(byte[] bytes, int offset, int length)
+        public static string HexString(byte[] bytes, int offset, int length)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = offset; i < offset + length; ++i)
@@ -925,17 +900,17 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
 
-        public string HexString(byte[] bytes)
+        public static string HexString(byte[] bytes)
         {
             return HexString(bytes, 0, bytes.Length);
         }
 
-        public string HexString(uint u)
+        public static string HexString(uint u)
         {
             return HexString(ChaCha.GetBytes(u));
         }
         /* Write bytes as hex string with each 4 byte written in little-endian */
-        public string HexStringLittleEndian(byte[] bytes)
+        public static string HexStringLittleEndian(byte[] bytes)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i += 4)
