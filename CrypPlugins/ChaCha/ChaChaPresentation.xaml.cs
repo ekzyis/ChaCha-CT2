@@ -783,23 +783,23 @@ namespace Cryptool.Plugins.ChaCha
 
         public enum ResultType
         {
-            ADD_X1_X2,
-            X2,
+            QR_ADD_X1_X2,
+            QR_X2,
             QR_XOR,
             QR_SHIFT
         }
 
-        private List<uint> _add_x1_x2 = new List<uint>();
-        private List<uint> _x2 = new List<uint>();
+        private List<uint> _qr_add_x1_x2 = new List<uint>();
+        private List<uint> _qr_x2 = new List<uint>();
         private List<uint> _qr_xor = new List<uint>();
         private List<uint> _qr_shift = new List<uint>();
         public string HexResultAddX1X2(int index)
         {
-            return HexString(_add_x1_x2[index]);
+            return HexString(_qr_add_x1_x2[index]);
         }
         public string HexResultOutX2(int index)
         {
-            return HexString(_x2[index]);
+            return HexString(_qr_x2[index]);
         }
         public string HexResultQRXOR(int index)
         {
@@ -813,11 +813,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             switch(type)
             {
-                case ResultType.ADD_X1_X2:
-                    _add_x1_x2.Add((uint)result);
+                case ResultType.QR_ADD_X1_X2:
+                    _qr_add_x1_x2.Add((uint)result);
                     break;
-                case ResultType.X2:
-                    _x2.Add((uint)result);
+                case ResultType.QR_X2:
+                    _qr_x2.Add((uint)result);
                     break;
                 case ResultType.QR_XOR:
                     _qr_xor.Add((uint)result);
@@ -829,8 +829,8 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void clearResults()
         {
-            _add_x1_x2.Clear();
-            _x2.Clear();
+            _qr_add_x1_x2.Clear();
+            _qr_x2.Clear();
         }
 
         #endregion
