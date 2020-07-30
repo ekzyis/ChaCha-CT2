@@ -22,48 +22,10 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+            p.AddAction(insertQRInput);
             #endregion
             #region copy into QR detail
-            PageAction markQRInput = new PageAction()
-            {
-                exec = () =>
-                {
-                    SetBackground(QRInACell, copyBrush);
-                    SetBackground(QRInBCell, copyBrush);
-                    SetBackground(QRInDCell, copyBrush);
-                },
-                undo = Undo
-            };
-            PageAction copyQRInputToDetail = new PageAction()
-            {
-                exec = () =>
-                {
-                    SetBackground(QRInX1Cell, copyBrush);
-                    SetBackground(QRInX2Cell, copyBrush);
-                    SetBackground(QRInX3Cell, copyBrush);
-                    Add(QRInX1, GetHexResult(ResultType.QR_INPUT_X1, 0));
-                    Add(QRInX2, GetHexResult(ResultType.QR_INPUT_X2, 0));
-                    Add(QRInX3, GetHexResult(ResultType.QR_INPUT_X3, 0));
-                },
-                undo = Undo
-            };
-            PageAction unmarkQRInput = new PageAction()
-            {
-                exec = () =>
-                {
-                    UnsetBackground(QRInACell);
-                    UnsetBackground(QRInBCell);
-                    UnsetBackground(QRInDCell);
-                    UnsetBackground(QRInX1Cell);
-                    UnsetBackground(QRInX2Cell);
-                    UnsetBackground(QRInX3Cell);
-                },
-                undo = Undo
-            };
-            p.AddAction(insertQRInput);
-            p.AddAction(markQRInput);
-            p.AddAction(copyQRInputToDetail);
-            p.AddAction(unmarkQRInput);
+            p.AddAction(CreateCopyActions(new Border[] { QRInACell, QRInBCell, QRInDCell }, new Border[] { QRInX1Cell, QRInX2Cell, QRInX3Cell }));
             #endregion
             #region out x1
             PageAction markOutX1 = new PageAction()
@@ -222,45 +184,7 @@ namespace Cryptool.Plugins.ChaCha
             #endregion
             #endregion
             #region copy into QR diagram
-            PageAction markQRDetailOutput= new PageAction()
-            {
-                exec = () =>
-                {
-                    SetBackground(QROutX1Cell, copyBrush);
-                    SetBackground(QROutX2Cell, copyBrush);
-                    SetBackground(QROutX3Cell, copyBrush);
-                },
-                undo = Undo
-            };
-            PageAction copyToQRDiagram = new PageAction()
-            {
-                exec = () =>
-                {
-                    SetBackground(QRDiagramX1Out_1_Cell, copyBrush);
-                    SetBackground(QRDiagramX2Out_1_Cell, copyBrush);
-                    SetBackground(QRDiagramX3Out_1_Cell, copyBrush);
-                    Add(QRDiagramX1Out_1, GetHexResult(ResultType.QR_OUTPUT_X1, 0));
-                    Add(QRDiagramX2Out_1, GetHexResult(ResultType.QR_OUTPUT_X2, 0));
-                    Add(QRDiagramX3Out_1, GetHexResult(ResultType.QR_OUTPUT_X3, 0));
-                },
-                undo = Undo
-            };
-            PageAction unmarkQRDetailOutput = new PageAction()
-            {
-                exec = () =>
-                {
-                    UnsetBackground(QROutX1Cell);
-                    UnsetBackground(QROutX2Cell);
-                    UnsetBackground(QROutX3Cell);
-                    UnsetBackground(QRDiagramX1Out_1_Cell);
-                    UnsetBackground(QRDiagramX2Out_1_Cell);
-                    UnsetBackground(QRDiagramX3Out_1_Cell);
-                },
-                undo = Undo
-            };
-            p.AddAction(markQRDetailOutput);
-            p.AddAction(copyToQRDiagram);
-            p.AddAction(unmarkQRDetailOutput);
+            p.AddAction(CreateCopyActions(new Border[] { QROutX1Cell, QROutX2Cell, QROutX3Cell }, new Border[] { QRDiagramX1Out_1_Cell, QRDiagramX2Out_1_Cell, QRDiagramX3Out_1_Cell }));
             #endregion
             return p;
         }

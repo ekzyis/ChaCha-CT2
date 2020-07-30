@@ -162,7 +162,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region classes, structs and methods related page navigation
 
-        struct PageAction
+        public struct PageAction
         {
             public Action exec;
             public Action undo;
@@ -189,9 +189,12 @@ namespace Cryptool.Plugins.ChaCha
                     return _pageActions.ToArray();
                 }
             }
-            public void AddAction(PageAction pageAction)
+            public void AddAction(params PageAction[] pageActions)
             {
-                _pageActions.Add(pageAction);
+                foreach(PageAction pageAction in pageActions)
+                {
+                    _pageActions.Add(pageAction);
+                }
             }
             public PageAction[] InitActions
             {
@@ -459,6 +462,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region action helper methods
 
+        #region WPF Wrapper
         private Run MakeBold(Run r)
         {
             return new Run { Text = r.Text, FontWeight = FontWeights.Bold };
@@ -577,6 +581,59 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tbToCopyTo);
             tbToCopyTo.Inlines.Add(((Run)(tbToCopyFrom.Inlines.LastInline)).Text);
         }
+        #endregion
+
+        #region Page Action creators
+
+        public PageAction[] CreateCopyActions(Border[] copyFrom, Border[] copyTo)
+        {
+            Debug.Assert(copyFrom.Length == copyTo.Length);
+            PageAction mark = new PageAction()
+            {
+                exec = () =>
+                {
+                    foreach (Border b in copyFrom)
+                    {
+                        SetBackground(b, copyBrush);
+                    }
+                },
+                undo = Undo
+            };
+            PageAction copy = new PageAction()
+            {
+                exec = () =>
+                {
+                    for(int i = 0; i < copyTo.Length; ++i)
+                    {
+                        Border copyFromBorder = copyFrom[i];
+                        TextBlock copyFromTextBlock = (TextBlock)copyFromBorder.Child;
+                        Border copyToBorder = copyTo[i];
+                        TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
+                        SetBackground(copyToBorder, copyBrush);
+                        Add(copyToTextBlock, ((Run)copyFromTextBlock.Inlines.LastInline).Text);
+                    }
+                },
+                undo = Undo
+            };
+            PageAction unmark = new PageAction()
+            {
+                exec = () =>
+                {
+                    foreach(Border b in copyFrom)
+                    {
+                        UnsetBackground(b);
+                    }
+                    foreach (Border b in copyTo)
+                    {
+                        UnsetBackground(b);
+                    }
+                },
+                undo = Undo
+            };
+            return new PageAction[] { mark, copy, unmark };
+        }
+        #endregion
+
         #endregion
 
         #endregion
