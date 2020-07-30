@@ -22,6 +22,8 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+            #endregion
+            #region copy into QR detail
             PageAction markQRInput = new PageAction()
             {
                 exec = () =>
@@ -218,6 +220,47 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(execShift);
             p.AddAction(unmarkShift);
             #endregion
+            #endregion
+            #region copy into QR diagram
+            PageAction markQRDetailOutput= new PageAction()
+            {
+                exec = () =>
+                {
+                    SetBackground(QROutX1Cell, copyBrush);
+                    SetBackground(QROutX2Cell, copyBrush);
+                    SetBackground(QROutX3Cell, copyBrush);
+                },
+                undo = Undo
+            };
+            PageAction copyToQRDiagram = new PageAction()
+            {
+                exec = () =>
+                {
+                    SetBackground(QRDiagramX1Out_1_Cell, copyBrush);
+                    SetBackground(QRDiagramX2Out_1_Cell, copyBrush);
+                    SetBackground(QRDiagramX3Out_1_Cell, copyBrush);
+                    Add(QRDiagramX1Out_1, GetHexResult(ResultType.QR_OUTPUT_X1, 0));
+                    Add(QRDiagramX2Out_1, GetHexResult(ResultType.QR_OUTPUT_X2, 0));
+                    Add(QRDiagramX3Out_1, GetHexResult(ResultType.QR_OUTPUT_X3, 0));
+                },
+                undo = Undo
+            };
+            PageAction unmarkQRDetailOutput = new PageAction()
+            {
+                exec = () =>
+                {
+                    UnsetBackground(QROutX1Cell);
+                    UnsetBackground(QROutX2Cell);
+                    UnsetBackground(QROutX3Cell);
+                    UnsetBackground(QRDiagramX1Out_1_Cell);
+                    UnsetBackground(QRDiagramX2Out_1_Cell);
+                    UnsetBackground(QRDiagramX3Out_1_Cell);
+                },
+                undo = Undo
+            };
+            p.AddAction(markQRDetailOutput);
+            p.AddAction(copyToQRDiagram);
+            p.AddAction(unmarkQRDetailOutput);
             #endregion
             return p;
         }
