@@ -831,6 +831,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             _qr_add_x1_x2.Clear();
             _qr_x2.Clear();
+            _qr_xor.Clear();
+            _qr_shift.Clear();
         }
 
         #endregion
