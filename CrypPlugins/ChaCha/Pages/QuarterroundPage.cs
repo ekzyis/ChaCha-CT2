@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -203,20 +204,31 @@ namespace Cryptool.Plugins.ChaCha
             return clearQRDetail;
         }
 
+        private PageAction[] CreateQRExecActions(int index)
+        {
+            List<PageAction> actions = new List<PageAction>();
+            PageAction[] x1OutActions = CreateX1OutActions(index);
+            PageAction[] x2OutActions = CreateX2OutActions(index);
+            PageAction[] x3OutActions = CreateX3OutActions(index);
+            actions.AddRange(x1OutActions);
+            actions.AddRange(x2OutActions);
+            actions.AddRange(x3OutActions);
+            return actions.ToArray();
+        }
+
         private Page QuarterroundPage()
         {
             Page p = new Page(UIQuarterroundPage);
             p.AddAction(CreateQRInputAction(0));
             // copy A,B,D to X1,X2,X3
             p.AddAction(CreateCopyActions(new Border[] { QRInACell, QRInBCell, QRInDCell }, new Border[] { QRInX1Cell, QRInX2Cell, QRInX3Cell }));
-            p.AddAction(CreateX1OutActions(0));
-            p.AddAction(CreateX2OutActions(0));
-            p.AddAction(CreateX3OutActions(0));
+            p.AddAction(CreateQRExecActions(0));
             // copy X1,X2,X3 to diagram
             p.AddAction(CreateCopyActions(new Border[] { QROutX1Cell, QROutX2Cell, QROutX3Cell }, new Border[] { QRDiagramX1Out_1_Cell, QRDiagramX2Out_1_Cell, QRDiagramX3Out_1_Cell }));
             p.AddAction(CreateClearQRDetailAction());
             // copy from diagram to X1,X2,X3
             p.AddAction(CreateCopyActions(new Border[] { QRInCCell, QRDiagramX3Out_1_Cell, QRDiagramX2Out_1_Cell }, new Border[] { QRInX1Cell, QRInX2Cell, QRInX3Cell }));
+
             return p;
         }
     }
