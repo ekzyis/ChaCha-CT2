@@ -231,19 +231,15 @@ namespace Cryptool.Plugins.ChaCha
             Page p = new Page(UIQuarterroundPage);
             p.AddAction(CreateQRInputAction(0));
 
-            // copy A,B,D to X1,X2,X3
             p.AddAction(CreateCopyFromDiagramToQRDetailInActions(new Border[] { QRInACell, QRInBCell, QRInDCell }));
             p.AddAction(CreateQRExecActions(0));
-            // copy X1,X2,X3 to diagram
             p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { QRDiagramX1Out_1_Cell, QRDiagramX2Out_1_Cell, QRDiagramX3Out_1_Cell }));
             p.AddAction(CreateClearQRDetailAction());
 
             p.AddAction(CreateCopyFromDiagramToQRDetailInActions(new Border[] { QRInCCell, QRDiagramX3Out_1_Cell, QRDiagramX2Out_1_Cell }));
             p.AddAction(CreateQRExecActions(1));
-            // copy X1,X2,X3 to diagram
             p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { QRDiagramX1Out_2_Cell, QRDiagramX2Out_2_Cell, QRDiagramX3Out_2_Cell }));
             p.AddAction(CreateClearQRDetailAction());
-
             return p;
         }
     }
