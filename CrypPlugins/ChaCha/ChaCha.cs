@@ -424,11 +424,11 @@ namespace Cryptool.Plugins.ChaCha
             x1 += x2; // x1 = x1 + x2
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ChaChaPresentation.ResultType.ADD_X1_X2, x1);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_ADD_X1_X2, x1);
             });
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ChaChaPresentation.ResultType.X2, x2);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_X2, x2);
             });
             x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
             DispatchToPresentation(delegate
