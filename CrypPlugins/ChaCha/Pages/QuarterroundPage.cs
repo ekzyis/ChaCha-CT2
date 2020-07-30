@@ -142,6 +142,7 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(unmarkOutX2);
             #endregion
             #region out x3
+            #region out xor
             PageAction markXOR = new PageAction()
             {
                 exec = () =>
@@ -179,6 +180,9 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(markXOR);
             p.AddAction(execXOR);
             p.AddAction(unmarkXOR);
+            #endregion
+            #region out shift
+            #endregion
             #endregion
             return p;
         }
