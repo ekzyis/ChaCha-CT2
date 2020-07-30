@@ -436,6 +436,10 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.AddResult(ChaChaPresentation.ResultType.QR_XOR, x3);
             });
             x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_SHIFT, x3);
+            });
             return new uint[] { x1, x2, x3 };
         }
 

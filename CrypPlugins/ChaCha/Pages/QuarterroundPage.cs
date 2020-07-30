@@ -182,6 +182,41 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(unmarkXOR);
             #endregion
             #region out shift
+            PageAction markShift = new PageAction()
+            {
+                exec = () =>
+                {
+                    MarkBorder(QROutX3Cell);
+                    MarkBorder(QRXORCell);
+                    MarkShape(OutputPathX3_2);
+                    MarkShape(OutputPathX3_3);
+                    MarkShape(ShiftCircle);
+                },
+                undo = Undo
+            };
+            PageAction execShift = new PageAction()
+            {
+                exec = () =>
+                {
+                    Add(QROutX3, HexResultQRShift(0));
+                },
+                undo = Undo
+            };
+            PageAction unmarkShift = new PageAction()
+            {
+                exec = () =>
+                {
+                    UnmarkBorder(QROutX3Cell);
+                    UnmarkBorder(QRXORCell);
+                    UnmarkShape(OutputPathX3_2);
+                    UnmarkShape(OutputPathX3_3);
+                    UnmarkShape(ShiftCircle);
+                },
+                undo = Undo
+            };
+            p.AddAction(markShift);
+            p.AddAction(execShift);
+            p.AddAction(unmarkShift);
             #endregion
             #endregion
             return p;
