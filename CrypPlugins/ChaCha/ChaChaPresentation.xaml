@@ -428,7 +428,7 @@
         </Grid.RowDefinitions>
         <!-- Detail box -->
         <Canvas>
-          <UniformGrid Columns="4" Width="1600">
+          <UniformGrid Canvas.Left="100" HorizontalAlignment="Center" Columns="4" Width="1400">
             <Canvas Canvas.Left="10" HorizontalAlignment="Center" Width="250" Height="200">
               <Border Name="QRInX1Cell_1" Canvas.Top="0" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
                 <TextBlock Style="{StaticResource hex}" Name="QRInX1_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
