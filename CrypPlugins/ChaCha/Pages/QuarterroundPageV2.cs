@@ -27,6 +27,14 @@ namespace Cryptool.Plugins.ChaCha
             return insertQRInput;
         }
 
+        private PageAction[] CreateQROutputActions()
+        {
+            return CreateCopyActions(
+                new Border[] { (Border)GetIndexElement("QROutX1Cell", 3), (Border)GetIndexElement("QROutX3Cell", 4), (Border)GetIndexElement("QROutX1Cell", 4), (Border)GetIndexElement("QROutX2Cell", 4)},
+                new Border[] { QROutACell, QROutBCell, QROutCCell, QROutDCell}
+                );
+        }
+
         private PageAction[] CreateX1OutActions(int index)
         {
             PageAction markOutX1 = new PageAction()
@@ -203,49 +211,28 @@ namespace Cryptool.Plugins.ChaCha
             return actions.ToArray();
         }
 
-        private PageAction[] CreateCopyQRDetailOutToDiagramActions(Border[] b, int index)
-        {
-            return CreateCopyActions(new Border[] { (Border)GetIndexElement("QROutX1Cell", index), (Border)GetIndexElement("QROutX2Cell", index), (Border)GetIndexElement("QROutX3Cell", index)}, b);
-        }
-
-        private PageAction[] CreateCopyFromDiagramToQRDetailInActions(Border[] b, int index)
+        private PageAction[] CreateCopyToQRDetailInput(Border[] b, int index)
         {
             return CreateCopyActions(b, new Border[] { (Border)GetIndexElement("QRInX1Cell", index), (Border)GetIndexElement("QRInX2Cell", index), (Border)GetIndexElement("QRInX3Cell", index) });
-        }
-
-        private PageAction CreateClearQRDetailAction(int index)
-        {
-            PageAction clearQRDetail = new PageAction()
-            {
-                exec = () =>
-                {
-                    Clear((TextBlock)GetIndexElement("QRInX1", index));
-                    Clear((TextBlock)GetIndexElement("QRInX2", index));
-                    Clear((TextBlock)GetIndexElement("QRInX3", index));
-                    Clear((TextBlock)GetIndexElement("QROutX1", index));
-                    Clear((TextBlock)GetIndexElement("QROutX2", index));
-                    Clear((TextBlock)GetIndexElement("QROutX3", index));
-                    Clear((TextBlock)GetIndexElement("QRXOR", index));
-                },
-                undo = Undo
-            };
-            return clearQRDetail;
         }
 
         private Page QuarterroundPageV2()
         {
             Page p = new Page(UIQuarterroundPage);
             p.AddAction(CreateQRInputAction(1));
-
-            p.AddAction(CreateCopyFromDiagramToQRDetailInActions(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
             p.AddAction(CreateQRExecActions(1));
-            p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { (Border)GetIndexElement("QRDiagramX1Out_1_Cell", 1), (Border)GetIndexElement("QRDiagramX2Out_1_Cell", 1), (Border)GetIndexElement("QRDiagramX3Out_1_Cell", 1) }, 1));
-            p.AddAction(CreateClearQRDetailAction(1));
 
-            p.AddAction(CreateCopyFromDiagramToQRDetailInActions(new Border[] { QRInCCell, (Border)GetIndexElement("QRDiagramX3Out_1_Cell", 2), (Border)GetIndexElement("QRDiagramX2Out_1_Cell", 2) }, 2));
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { QRInCCell, (Border)GetIndexElement("QROutX3Cell", 1), (Border)GetIndexElement("QROutX2Cell", 1) }, 2));
             p.AddAction(CreateQRExecActions(2));
-            p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { (Border)GetIndexElement("QRDiagramX1Out_2_Cell", 2), (Border)GetIndexElement("QRDiagramX2Out_2_Cell", 2), (Border)GetIndexElement("QRDiagramX3Out_2_Cell", 2) }, 2));
-            p.AddAction(CreateClearQRDetailAction(2));
+
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 1), (Border)GetIndexElement("QROutX3Cell", 2), (Border)GetIndexElement("QROutX2Cell", 2) }, 3));
+            p.AddAction(CreateQRExecActions(3));
+
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 2), (Border)GetIndexElement("QROutX3Cell", 3), (Border)GetIndexElement("QROutX2Cell", 3) }, 4));
+            p.AddAction(CreateQRExecActions(4));
+
+            p.AddAction(CreateQROutputActions());
             return p;
         }
     }
