@@ -226,6 +226,14 @@ namespace Cryptool.Plugins.ChaCha
             return CreateCopyActions(b, new Border[] { QRInX1Cell, QRInX2Cell, QRInX3Cell });
         }
 
+        private PageAction[] CreateCopyToQROutputAction()
+        {
+            return CreateCopyActions(
+                new Border[] { QRDiagramX1Out_3_Cell, QRDiagramX1Out_4_Cell, QRDiagramX2Out_4_Cell, QRDiagramX3Out_4_Cell },
+                new Border[] { QROutACell, QROutCCell, QROutDCell, QROutBCell }
+            );
+        }
+
         private Page QuarterroundPage()
         {
             Page p = new Page(UIQuarterroundPage);
@@ -250,6 +258,8 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(CreateQRExecActions(3));
             p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { QRDiagramX1Out_4_Cell, QRDiagramX2Out_4_Cell, QRDiagramX3Out_4_Cell }));
             p.AddAction(CreateClearQRDetailAction());
+
+            p.AddAction(CreateCopyToQROutputAction());
             return p;
         }
     }
