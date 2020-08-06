@@ -240,6 +240,16 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(CreateQRExecActions(1));
             p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { QRDiagramX1Out_2_Cell, QRDiagramX2Out_2_Cell, QRDiagramX3Out_2_Cell }));
             p.AddAction(CreateClearQRDetailAction());
+
+            p.AddAction(CreateCopyFromDiagramToQRDetailInActions(new Border[] { QRDiagramX1Out_1_Cell, QRDiagramX3Out_2_Cell, QRDiagramX2Out_2_Cell}));
+            p.AddAction(CreateQRExecActions(2));
+            p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { QRDiagramX1Out_3_Cell, QRDiagramX2Out_3_Cell, QRDiagramX3Out_3_Cell }));
+            p.AddAction(CreateClearQRDetailAction());
+
+            p.AddAction(CreateCopyFromDiagramToQRDetailInActions(new Border[] { QRDiagramX1Out_2_Cell, QRDiagramX3Out_3_Cell, QRDiagramX2Out_3_Cell }));
+            p.AddAction(CreateQRExecActions(3));
+            p.AddAction(CreateCopyQRDetailOutToDiagramActions(new Border[] { QRDiagramX1Out_4_Cell, QRDiagramX2Out_4_Cell, QRDiagramX3Out_4_Cell }));
+            p.AddAction(CreateClearQRDetailAction());
             return p;
         }
     }
