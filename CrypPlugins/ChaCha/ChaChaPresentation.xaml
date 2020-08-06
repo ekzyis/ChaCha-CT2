@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cryptool.Plugins.ChaCha"
              mc:Ignorable="d" 
-             d:DesignHeight="675" d:DesignWidth="1200"
+             d:DesignHeight="675" d:DesignWidth="1200" MinHeight="675" MinWidth="1200"
              Background="White">
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <UserControl.Resources>
