@@ -421,13 +421,13 @@
         </Grid>
       </Grid>
       <!-- Quarterround page -->
-      <Grid HorizontalAlignment="Center" Height="400" Name="UIQuarterroundPage" Visibility="Visible">
+      <Grid HorizontalAlignment="Center" Height="400" Width="1200" Name="UIQuarterroundPage" Visibility="Visible">
         <Grid.RowDefinitions>
           <RowDefinition Height="200"/>
           <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
         <!-- Detail box -->
-        <Canvas Width="200" Height="200">
+        <Canvas HorizontalAlignment="Center" Width="200" Height="200">
           <Border Name="QRInX1Cell" Canvas.Top="0" Canvas.Left="-70" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
             <TextBlock Style="{StaticResource hex}" Name="QRInX1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
@@ -541,7 +541,7 @@
             </Canvas>
           </Grid>
         </Canvas>
-        <Grid Grid.Row="1">
+        <Grid HorizontalAlignment="Center" Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="65"/>
             <ColumnDefinition Width="80"/>
@@ -621,61 +621,63 @@
           </Border>
         </Grid>
         <Canvas Grid.Row="1">
-          <Canvas>
-            <Border Name="QRDiagramX1Out_1_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX1Out_1_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
-            <Border Name="QRDiagramX2Out_1_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX2Out_1_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
-            <Border Name="QRDiagramX3Out_1_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX3Out_1_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
-          </Canvas>
-          <Canvas Canvas.Left="120">
-            <Border Name="QRDiagramX1Out_2_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX1Out_2_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
-            <Border Name="QRDiagramX2Out_2_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX2Out_2_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
-            <Border Name="QRDiagramX3Out_2_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX3Out_2_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
-          </Canvas>
-          <Canvas Canvas.Left="240">
-            <Border Name="QRDiagramX1Out_3_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX1Out_3_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
-            <Border Name="QRDiagramX2Out_3_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX2Out_3_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
-            <Border Name="QRDiagramX3Out_3_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX3Out_3_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
-          </Canvas>
-          <Canvas Canvas.Left="360">
-            <Border Name="QRDiagramX1Out_4_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX1Out_4_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
-            <Border Name="QRDiagramX2Out_4_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX2Out_4_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
-            <Border Name="QRDiagramX3Out_4_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
-              <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Border>
-            <Path Name="QRDiagramX3Out_4_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
+          <Canvas Canvas.Left="255">
+            <Canvas>
+              <Border Name="QRDiagramX1Out_1_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX1Out_1_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
+              <Border Name="QRDiagramX2Out_1_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX2Out_1_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
+              <Border Name="QRDiagramX3Out_1_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX3Out_1_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
+            </Canvas>
+            <Canvas Canvas.Left="120">
+              <Border Name="QRDiagramX1Out_2_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX1Out_2_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
+              <Border Name="QRDiagramX2Out_2_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX2Out_2_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
+              <Border Name="QRDiagramX3Out_2_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX3Out_2_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
+            </Canvas>
+            <Canvas Canvas.Left="240">
+              <Border Name="QRDiagramX1Out_3_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX1Out_3_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
+              <Border Name="QRDiagramX2Out_3_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX2Out_3_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
+              <Border Name="QRDiagramX3Out_3_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX3Out_3_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
+            </Canvas>
+            <Canvas Canvas.Left="360">
+              <Border Name="QRDiagramX1Out_4_Cell" Canvas.Left="115" Canvas.Top="145"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX1Out_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX1Out_4_Path" Stroke="Black" StrokeThickness="1" Data="M 190,43 l 3,5 m -3,-5 l -3,5 m 3,-5 V 155 H 180 "/>
+              <Border Name="QRDiagramX2Out_4_Cell" Canvas.Left="115" Canvas.Top="167"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX2Out_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX2Out_4_Path" Stroke="Black" StrokeThickness="1" Data="M 195,83 l 3,5 m -3,-5 l -3,5 m 3,-5 V 177 H 180"/>
+              <Border Name="QRDiagramX3Out_4_Cell" Canvas.Left="115" Canvas.Top="189"  Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1">
+                <TextBlock Style="{StaticResource hex}" Name="QRDiagramX3Out_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+              </Border>
+              <Path Name="QRDiagramX3Out_4_Path" Stroke="Black" StrokeThickness="1" Data="M 200,123 l 3,5 m -3,-5 l -3,5 m 3,-5 V 199 H 180"/>
+            </Canvas>
           </Canvas>
         </Canvas>
       </Grid>
