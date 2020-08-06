@@ -2,8 +2,6 @@
 using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows.Shapes;
-using System.Windows.Media.Animation;
-using System;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -37,17 +35,11 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     MarkBorder((Border)GetIndexElement("QRInX1Cell", index));
                     MarkBorder((Border)GetIndexElement("QRInX2Cell", index));
-                    Console.WriteLine("HERE");
                     MarkShape((Shape)GetIndexElement("AddInputPathX1", index));
-                    Console.WriteLine("HERE2");
                     MarkShape((Shape)GetIndexElement("AddInputPathX2", index));
-                    Console.WriteLine("HERE3");
                     MarkShape((Shape)GetIndexElement("OutputPathX1", index));
-                    Console.WriteLine("HERE4");
                     MarkShape((Shape)GetIndexElement("OutputPathX2_1", index));
-                    Console.WriteLine("HERE5");
                     MarkShape((Shape)GetIndexElement("AddCircle", index));
-                    Console.WriteLine("HERE6");
                     MarkBorder((Border)GetIndexElement("QROutX1Cell", index));
                 },
                 undo = Undo
