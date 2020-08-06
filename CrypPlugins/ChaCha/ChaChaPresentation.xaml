@@ -542,7 +542,7 @@
           <Border Margin="0,-5,0,0" Grid.Row="1" Grid.Column="6" BorderBrush="Black" BorderThickness="1,1,1,0"/>
           <Border Margin="0,0,0,-5" Grid.Row="2" Grid.Column="6" BorderBrush="Black" BorderThickness="1,0,1,1"/>
           <Path Grid.Row="0" Grid.Column="7" Grid.RowSpan="2" Stroke="LightGreen" Grid.ColumnSpan="2" StrokeThickness="1" Data="M 0,40 h 20 l 40,-20 h 60" />
-          <Path Grid.Row="2" Grid.Column="7" Grid.RowSpan="3" Stroke="Red" Grid.ColumnSpan="2" StrokeThickness="1" Data="M 0,20 h 20 l 40,-61 h 60" />
+          <Path Grid.Row="2" Grid.Column="7" Grid.RowSpan="3" Stroke="Red" Grid.ColumnSpan="1" StrokeThickness="1" Data="M 0,20 h 20 l 40,-61 h 20" />
           <Path Grid.Row="1" Grid.Column="7" Grid.RowSpan="2" Stroke="Aqua" StrokeThickness="1" Data="M 0,40 h 20 l 40,40 h 20" />
           <Path Grid.Row="1" Grid.Column="7" Grid.RowSpan="3" Stroke="Purple" StrokeThickness="1" Data="M 0,80 h 20 l 40,-40 h 60" />
           <!-- Fourth QR box -->
