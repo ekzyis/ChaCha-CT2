@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace Cryptool.Plugins.ChaCha
 {
+    /*
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
         private PageAction CreateQRInputAction(int index)
@@ -263,4 +264,5 @@ namespace Cryptool.Plugins.ChaCha
             return p;
         }
     }
+    */
 }
