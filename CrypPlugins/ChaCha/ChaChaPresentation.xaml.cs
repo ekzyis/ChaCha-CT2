@@ -258,7 +258,7 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(WorkflowPage());
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
-            //AddPage(QuarterroundPage());
+            AddPage(QuarterroundPageV2());
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
         }
 
