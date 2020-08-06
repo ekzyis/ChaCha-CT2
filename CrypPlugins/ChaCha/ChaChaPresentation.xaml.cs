@@ -172,7 +172,7 @@ namespace Cryptool.Plugins.ChaCha
             public Page(UIElement UIPageElement)
             {
                 _page = UIPageElement;
-            }            
+            }
             private readonly UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
             private readonly List<PageAction> _pageActions = new List<PageAction>();
             private readonly List<PageAction> _pageInitActions = new List<PageAction>();
@@ -183,7 +183,7 @@ namespace Cryptool.Plugins.ChaCha
                     return _pageActions.Count;
                 }
             }
-            public PageAction[] Actions { 
+            public PageAction[] Actions {
                 get
                 {
                     return _pageActions.ToArray();
@@ -659,7 +659,7 @@ namespace Cryptool.Plugins.ChaCha
         private byte[] _inputIV = new byte[0];
         private byte[] _initialCounter = new byte[0];
         private byte[] _inputData = new byte[0];
-        
+
         public byte[] Constants
         {
             get

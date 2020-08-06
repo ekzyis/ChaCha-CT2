@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="Cryptool.Plugins.ChaCha.ChaChaPresentation"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cryptool.Plugins.ChaCha"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="675" d:DesignWidth="1600" MinHeight="675" MinWidth="1600"
              Background="White">
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
