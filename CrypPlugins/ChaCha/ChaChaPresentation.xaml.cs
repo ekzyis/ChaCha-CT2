@@ -162,10 +162,36 @@ namespace Cryptool.Plugins.ChaCha
 
         #region classes, structs and methods related page navigation
 
-        public struct PageAction
+        public class PageAction
         {
-            public Action exec;
-            public Action undo;
+            private List<Action> _exec = new List<Action>();
+            private List<Action> _undo = new List<Action>();
+            public PageAction(Action exec, Action undo)
+            {
+                _exec.Add(exec);
+                _undo.Add(undo);
+            }
+            public void exec() {
+                foreach(Action a in _exec)
+                {
+                    a();
+                }
+            }
+            public void undo()
+            {
+                foreach(Action a in _undo)
+                {
+                    a();
+                }
+            }
+            public void AddToExec(Action toAdd)
+            {
+                _exec.Add(toAdd);
+            }
+            public void AddToUndo(Action toAdd)
+            {
+                _undo.Add(toAdd);
+            }
         }
         class Page
         {
@@ -587,56 +613,44 @@ namespace Cryptool.Plugins.ChaCha
 
         public PageAction MarkCopyFromAction(Border[] borders)
         {
-            return new PageAction()
+            return new PageAction(() =>
             {
-                exec = () =>
+                foreach (Border b in borders)
                 {
-                    foreach (Border b in borders)
-                    {
-                        SetBackground(b, copyBrush);
-                    }
-                },
-                undo = Undo
-            };
+                    SetBackground(b, copyBrush);
+                }
+            }, Undo);
         }
 
         public PageAction CopyAction(Border[] copyFrom, Border[] copyTo)
         {
-            return new PageAction()
+            return new PageAction(() =>
             {
-                exec = () =>
+                for (int i = 0; i < copyTo.Length; ++i)
                 {
-                    for (int i = 0; i < copyTo.Length; ++i)
-                    {
-                        Border copyFromBorder = copyFrom[i];
-                        TextBlock copyFromTextBlock = (TextBlock)copyFromBorder.Child;
-                        Border copyToBorder = copyTo[i];
-                        TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
-                        SetBackground(copyToBorder, copyBrush);
-                        Add(copyToTextBlock, ((Run)copyFromTextBlock.Inlines.LastInline).Text);
-                    }
-                },
-                undo = Undo
-            };
+                    Border copyFromBorder = copyFrom[i];
+                    TextBlock copyFromTextBlock = (TextBlock)copyFromBorder.Child;
+                    Border copyToBorder = copyTo[i];
+                    TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
+                    SetBackground(copyToBorder, copyBrush);
+                    Add(copyToTextBlock, ((Run)copyFromTextBlock.Inlines.LastInline).Text);
+                }
+            }, Undo);
         }
 
         public PageAction UnmarkCopyAction(Border[] copyFrom, Border[] copyTo)
         {
-            return new PageAction()
+            return new PageAction(() =>
             {
-                exec = () =>
+                foreach (Border b in copyFrom)
                 {
-                    foreach (Border b in copyFrom)
-                    {
-                        UnsetBackground(b);
-                    }
-                    foreach (Border b in copyTo)
-                    {
-                        UnsetBackground(b);
-                    }
-                },
-                undo = Undo
-            };
+                    UnsetBackground(b);
+                }
+                foreach (Border b in copyTo)
+                {
+                    UnsetBackground(b);
+                }
+            }, Undo);
         }
 
         public PageAction[] CreateCopyActions(Border[] copyFrom, Border[] copyTo)
@@ -646,6 +660,31 @@ namespace Cryptool.Plugins.ChaCha
             PageAction copy = CopyAction(copyFrom, copyTo);
             PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
+        }
+        public PageAction[] CreateCopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo)
+        {
+            PageAction[] copyActions = CreateCopyActions(copyFrom, copyTo);
+            Action markPaths = () =>
+            {
+                foreach (Shape s in paths)
+                {
+                    s.StrokeThickness = 5;
+                }
+            };
+            Action undoMarkPaths = () =>
+            {
+                foreach (Shape s in paths)
+                {
+                    s.StrokeThickness = 1;
+                }
+            };
+            PageAction mark = copyActions[0];
+            mark.AddToExec(markPaths);
+            mark.AddToUndo(undoMarkPaths);
+            PageAction unmark = copyActions[2];
+            unmark.AddToExec(undoMarkPaths);
+            unmark.AddToUndo(markPaths);
+            return copyActions;
         }
         #endregion
 
