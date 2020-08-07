@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Documents;
 using System.Diagnostics;
@@ -221,18 +222,33 @@ namespace Cryptool.Plugins.ChaCha
                 // new round begins
                 PageAction updateRoundCount = new PageAction(() =>
                 {
-                    ReplaceLast(CurrentRound, round.ToString());
-                }, Undo);
+                    ReplaceLast(CurrentRound.Inlines, round.ToString());
+                }, () =>
+                {
+                    string text = "";
+                    if(round > 1)
+                    {
+                        text = (round - 1).ToString();
+                    }
+                    ReplaceLast(CurrentRound.Inlines, text);
+                });
                 copyActions[0].Add(updateRoundCount);
             }
             PageAction updateQRArrow = new PageAction(() =>
             {
-                if(qrIndex > 1)
+                if (qrIndex > 1)
                 {
-                    SetInvisible((TextBlock)GetIndexElement("ArrowQRRound", qrIndex - 1));
+                    ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Hidden;
                 }
-                SetVisible((TextBlock)GetIndexElement("ArrowQRRound", qrIndex));
-            }, Undo);
+                ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Visible;
+            }, () =>
+            {
+                if (qrIndex > 1)
+                {
+                    ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Visible;
+                }
+                ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Hidden;
+            });
             copyActions[0].Add(updateQRArrow);
             return copyActions;
         }

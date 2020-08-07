@@ -51,7 +51,6 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     // copy inline elements
                     Inline[] state = new Inline[tb.Inlines.Count];
-                    Visibility visibility = tb.Visibility;
                     tb.Inlines.CopyTo(state, 0);
                     _undoActions[hash] = () => {
                         tb.Inlines.Clear();
@@ -59,7 +58,6 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             tb.Inlines.Add(i);
                         }
-                        tb.Visibility = visibility;
                     };
                 }
             }
