@@ -24,16 +24,16 @@ namespace Cryptool.Plugins.ChaCha
             return insertQRInput;
         }
 
-        private PageAction[] CreateQROutputActions()
+        private PageAction[] QROutputActions()
         {
-            return CreateCopyActions(
+            return CopyActions(
                 new Border[] { (Border)GetIndexElement("QROutX1Cell", 3), (Border)GetIndexElement("QROutX3Cell", 4), (Border)GetIndexElement("QROutX1Cell", 4), (Border)GetIndexElement("QROutX2Cell", 4) },
                 new Shape[] { QROutAPath, QROutBPath, QROutCPath, QROutDPath },
                 new Border[] { QROutACell, QROutBCell, QROutCCell, QROutDCell }
                 );
         }
 
-        private PageAction[] CreateX1OutActions(int index)
+        private PageAction[] X1OutActions(int index)
         {
             PageAction markOutX1 = new PageAction(() =>
             {
@@ -64,7 +64,7 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { markOutX1, execOutX1, unmarkOutX1 };
         }
 
-        private PageAction[] CreateX2OutActions(int index)
+        private PageAction[] X2OutActions(int index)
         {
             PageAction markOutX2 = new PageAction(() =>
             {
@@ -87,7 +87,7 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { markOutX2, execOutX2, unmarkOutX2 };
         }
 
-        private PageAction[] CreateXORActions(int index)
+        private PageAction[] XORActions(int index)
         {
             PageAction markXOR = new PageAction(() =>
             {
@@ -114,7 +114,7 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { markXOR, execXOR, unmarkXOR };
         }
 
-        private PageAction[] CreateShiftActions(int index)
+        private PageAction[] ShiftActions(int index)
         {
             PageAction markShift = new PageAction(() =>
             {
@@ -139,31 +139,31 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { markShift, execShift, unmarkShift };
         }
 
-        private PageAction[] CreateX3OutActions(int index)
+        private PageAction[] X3OutActions(int index)
         {
-            PageAction[] xorActions = CreateXORActions(index);
-            PageAction[] shiftActions = CreateShiftActions(index);
+            PageAction[] xorActions = XORActions(index);
+            PageAction[] shiftActions = ShiftActions(index);
             PageAction[] actions = new PageAction[xorActions.Length + shiftActions.Length];
             xorActions.CopyTo(actions, 0);
             shiftActions.CopyTo(actions, xorActions.Length);
             return actions;
         }
 
-        private PageAction[] CreateQRExecActions(int index)
+        private PageAction[] QRExecActions(int index)
         {
             List<PageAction> actions = new List<PageAction>();
-            PageAction[] x1OutActions = CreateX1OutActions(index);
-            PageAction[] x2OutActions = CreateX2OutActions(index);
-            PageAction[] x3OutActions = CreateX3OutActions(index);
+            PageAction[] x1OutActions = X1OutActions(index);
+            PageAction[] x2OutActions = X2OutActions(index);
+            PageAction[] x3OutActions = X3OutActions(index);
             actions.AddRange(x1OutActions);
             actions.AddRange(x2OutActions);
             actions.AddRange(x3OutActions);
             return actions.ToArray();
         }
 
-        private PageAction[] CreateCopyToQRDetailInput(Border[] b, int index)
+        private PageAction[] CopyToQRDetailInput(Border[] b, int index)
         {
-            return CreateCopyActions(
+            return CopyActions(
                 b,
                 new Shape[] { (Shape)GetIndexElement("QRInX1Path", index), (Shape)GetIndexElement("QRInX2Path", index), (Shape)GetIndexElement("QRInX3Path", index) },
                 new Border[] { (Border)GetIndexElement("QRInX1Cell", index), (Border)GetIndexElement("QRInX2Cell", index), (Border)GetIndexElement("QRInX3Cell", index) }
@@ -174,7 +174,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return (Border)GetIndexElement("UIKeystreamBlockGenCell", stateIndex);
         }
-        private PageAction[] CreateCopyFromStateTOQRInputActions(int index)
+        private PageAction[] CopyFromStateTOQRInputActions(int index)
         {
             int i = 0, j = 0, k = 0, l = 0;
             switch(index)
@@ -184,7 +184,7 @@ namespace Cryptool.Plugins.ChaCha
                     break;
             }
             Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
-            return CreateCopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
+            return CopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
         }
 
         private Page KeystreamBlockGenPage()
@@ -233,22 +233,22 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(generalDescriptionAction);
             p.AddAction(firstColumnRoundDescriptionAction);
 
-            p.AddAction(CreateCopyFromStateTOQRInputActions(1));
+            p.AddAction(CopyFromStateTOQRInputActions(1));
 
             //p.AddAction(CreateQRInputAction(1));
-            p.AddAction(CreateCopyToQRDetailInput(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
-            p.AddAction(CreateQRExecActions(1));
+            p.AddAction(CopyToQRDetailInput(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
+            p.AddAction(QRExecActions(1));
 
-            p.AddAction(CreateCopyToQRDetailInput(new Border[] { QRInCCell, (Border)GetIndexElement("QROutX3Cell", 1), (Border)GetIndexElement("QROutX2Cell", 1) }, 2));
-            p.AddAction(CreateQRExecActions(2));
+            p.AddAction(CopyToQRDetailInput(new Border[] { QRInCCell, (Border)GetIndexElement("QROutX3Cell", 1), (Border)GetIndexElement("QROutX2Cell", 1) }, 2));
+            p.AddAction(QRExecActions(2));
 
-            p.AddAction(CreateCopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 1), (Border)GetIndexElement("QROutX3Cell", 2), (Border)GetIndexElement("QROutX2Cell", 2) }, 3));
-            p.AddAction(CreateQRExecActions(3));
+            p.AddAction(CopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 1), (Border)GetIndexElement("QROutX3Cell", 2), (Border)GetIndexElement("QROutX2Cell", 2) }, 3));
+            p.AddAction(QRExecActions(3));
 
-            p.AddAction(CreateCopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 2), (Border)GetIndexElement("QROutX3Cell", 3), (Border)GetIndexElement("QROutX2Cell", 3) }, 4));
-            p.AddAction(CreateQRExecActions(4));
+            p.AddAction(CopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 2), (Border)GetIndexElement("QROutX3Cell", 3), (Border)GetIndexElement("QROutX2Cell", 3) }, 4));
+            p.AddAction(QRExecActions(4));
 
-            p.AddAction(CreateQROutputActions());
+            p.AddAction(QROutputActions());
             return p;
         }
     }

@@ -652,7 +652,7 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
         }
 
-        public PageAction[] CreateCopyActions(Border[] copyFrom, Border[] copyTo)
+        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo)
         {
             Debug.Assert(copyFrom.Length == copyTo.Length);
             PageAction mark = MarkCopyFromAction(copyFrom);
@@ -660,9 +660,9 @@ namespace Cryptool.Plugins.ChaCha
             PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
         }
-        public PageAction[] CreateCopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo)
+        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo)
         {
-            PageAction[] copyActions = CreateCopyActions(copyFrom, copyTo);
+            PageAction[] copyActions = CopyActions(copyFrom, copyTo);
             Action markPaths = () =>
             {
                 foreach (Shape s in paths)
