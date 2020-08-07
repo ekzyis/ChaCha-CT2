@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.Windows.Documents;
 using System.Diagnostics;
+using System;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -213,7 +214,27 @@ namespace Cryptool.Plugins.ChaCha
             int k = stateIndices[2];
             int l = stateIndices[3];
             Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
-            return CopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
+            PageAction[] copyActions = CopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
+            int round = (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
+            if ((qrIndex - 1) % 4 == 0)
+            {
+                // new round begins
+                PageAction updateRoundCount = new PageAction(() =>
+                {
+                    ReplaceLast(CurrentRound, round.ToString());
+                }, Undo);
+                copyActions[0].Add(updateRoundCount);
+            }
+            PageAction updateQRArrow = new PageAction(() =>
+            {
+                if(qrIndex > 1)
+                {
+                    SetInvisible((TextBlock)GetIndexElement("ArrowQRRound", qrIndex - 1));
+                }
+                SetVisible((TextBlock)GetIndexElement("ArrowQRRound", qrIndex));
+            }, Undo);
+            copyActions[0].Add(updateQRArrow);
+            return copyActions;
         }
 
         private PageAction[] ReplaceStateEntriesWithQROutput(int qrIndex)

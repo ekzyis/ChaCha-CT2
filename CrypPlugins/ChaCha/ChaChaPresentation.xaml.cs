@@ -51,6 +51,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     // copy inline elements
                     Inline[] state = new Inline[tb.Inlines.Count];
+                    Visibility visibility = tb.Visibility;
                     tb.Inlines.CopyTo(state, 0);
                     _undoActions[hash] = () => {
                         tb.Inlines.Clear();
@@ -58,6 +59,7 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             tb.Inlines.Add(i);
                         }
+                        tb.Visibility = visibility;
                     };
                 }
             }
@@ -190,6 +192,12 @@ namespace Cryptool.Plugins.ChaCha
             public void AddToUndo(Action toAdd)
             {
                 _undo.Add(toAdd);
+            }
+
+            public void Add(PageAction toAdd)
+            {
+                _exec.Add(toAdd.exec);
+                _undo.Add(toAdd.undo);
             }
         }
         class Page
@@ -624,6 +632,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             SaveState(tbToCopyTo);
             tbToCopyTo.Inlines.Add(((Run)(tbToCopyFrom.Inlines.LastInline)).Text);
+        }
+        private void SetVisible(TextBlock tb)
+        {
+            SaveState(tb);
+            tb.Visibility = Visibility.Visible;
+        }
+        private void SetInvisible(TextBlock tb)
+        {
+            SaveState(tb);
+            tb.Visibility = Visibility.Hidden;
         }
         #endregion
 

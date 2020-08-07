@@ -343,38 +343,38 @@
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <TextBlock>Round:</TextBlock>
-                <TextBlock Name="UIKeystreamBlockGenCurrentRound"/>
+                <TextBlock Name="CurrentRound"/>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound1" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(0, 4, 8, 12)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound2" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(1, 5, 9, 13)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound3" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(2, 6, 10, 14)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound4" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(3, 7, 11, 15)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="5" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound5" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(0, 5, 10, 15)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="6" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound6" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(1, 6, 11, 12)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="7" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound7" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(2, 7, 8, 13)</TextBlock>
               </StackPanel>
               <StackPanel Grid.Row="8" Orientation="Horizontal">
-                <TextBlock Name="UIKeystreamBlockGenColumnRound8" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBlock Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x2794;"/>
                 <TextBlock>Quarterround(3, 4, 9, 14)</TextBlock>
               </StackPanel>
             </Grid>
