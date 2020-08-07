@@ -585,25 +585,28 @@ namespace Cryptool.Plugins.ChaCha
 
         #region Page Action creators
 
-        public PageAction[] CreateCopyActions(Border[] copyFrom, Border[] copyTo)
+        public PageAction MarkCopyFromAction(Border[] borders)
         {
-            Debug.Assert(copyFrom.Length == copyTo.Length);
-            PageAction mark = new PageAction()
+            return new PageAction()
             {
                 exec = () =>
                 {
-                    foreach (Border b in copyFrom)
+                    foreach (Border b in borders)
                     {
                         SetBackground(b, copyBrush);
                     }
                 },
                 undo = Undo
             };
-            PageAction copy = new PageAction()
+        }
+
+        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo)
+        {
+            return new PageAction()
             {
                 exec = () =>
                 {
-                    for(int i = 0; i < copyTo.Length; ++i)
+                    for (int i = 0; i < copyTo.Length; ++i)
                     {
                         Border copyFromBorder = copyFrom[i];
                         TextBlock copyFromTextBlock = (TextBlock)copyFromBorder.Child;
@@ -615,11 +618,15 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
-            PageAction unmark = new PageAction()
+        }
+
+        public PageAction UnmarkCopyAction(Border[] copyFrom, Border[] copyTo)
+        {
+            return new PageAction()
             {
                 exec = () =>
                 {
-                    foreach(Border b in copyFrom)
+                    foreach (Border b in copyFrom)
                     {
                         UnsetBackground(b);
                     }
@@ -630,6 +637,14 @@ namespace Cryptool.Plugins.ChaCha
                 },
                 undo = Undo
             };
+        }
+
+        public PageAction[] CreateCopyActions(Border[] copyFrom, Border[] copyTo)
+        {
+            Debug.Assert(copyFrom.Length == copyTo.Length);
+            PageAction mark = MarkCopyFromAction(copyFrom);
+            PageAction copy = CopyAction(copyFrom, copyTo);
+            PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
         }
         #endregion
