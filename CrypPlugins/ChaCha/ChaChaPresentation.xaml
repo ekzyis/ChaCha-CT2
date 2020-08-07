@@ -450,18 +450,87 @@
           <Border Width="65" Height="40" Name="QROutDCell" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1485" Canvas.Top="100">
             <TextBlock Style="{StaticResource hex}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
           </Border>
+
           <Path Stroke="LightGreen" StrokeThickness="1"
                 Data="M 0,20 h 20 l 34,20 h 20 m 249,0 h 20 l 34,-40 h 20 h 249 h 20 l 34,40 h 24 m 249,0 h 20 l 34,-40 h 20 h 249 h 20 l 34,20 h 20"
                 Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}"/>
+          <Path Stroke="LightGreen" StrokeThickness="1"
+                Data="M 0,20 h 20 l 34,20 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}"
+                Name="QRInX1Path_1"/>
+          <Path Stroke="LightGreen" StrokeThickness="1"
+                Data="M 74,40 m 249,0 h 20 l 34,-40 h 20 h 249 h 20 l 34,40 h 24"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}"
+                Name="QRInX1Path_3"/>
+          <Path Stroke="LightGreen" StrokeThickness="1"
+                Data="M 723,40 m 249,0 h 21 l 34,-40 h 20 h 249 h 20 l 34,20 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}"
+                Name="QROutAPath"/>
+
           <Path Stroke="Aqua" StrokeThickness="1"
                 Data="M 0,20 h 20 l 34,20 h 20 m 249,0 h 20 l 34,40 h 20 m 249,0 h 20 l 34,-40 h 24 m 249,0 h 20 l 34,40 h 20 m 249,0 h 20 l 34,-60 h 20"
                 Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"/>
+          <Path Stroke="Aqua" StrokeThickness="1"
+                Data="M 0,20 h 20 l 34,20 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX2Path_1"/>
+          <Path Stroke="Aqua" StrokeThickness="1"
+                Data="M 74,40 m 249,0 h 20 l 34,40 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX3Path_2"/>
+          <Path Stroke="Aqua" StrokeThickness="1"
+                Data="M 397,80 m 249,0 h 20 l 34,-40 h 24"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX2Path_3"/>
+          <Path Stroke="Aqua" StrokeThickness="1"
+                Data="M 723,40 m 249,0 h 21 l 34,40 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX3Path_4"/>
+          <Path Stroke="Aqua" StrokeThickness="1"
+                Data="M 1048,80 m 249,0 h 19 l 34,-60 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QROutBPath"/>
+
           <Path Stroke="Red" StrokeThickness="1"
                 Data="M 0,20 h 20 l 34,60 h 20 h 249,0 h 20 l 34,-120 h 20 m 249,0 h 20 l 34,120 h 24 h 249 h 20 l 34,-120 h 20 m 249,0 h 20 l 34,60 h 20"
                 Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"/>
+          <Path Stroke="Red" StrokeThickness="1"
+                Data="M 0,20 h 20 l 34,60 h 20 h 249,0 h 20 l 34,-120 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"
+                Name="QRInX1Path_2"/>
+          <Path Stroke="Red" StrokeThickness="1"
+                Data="M 646,-40 h 20 l 34,120 h 24 h 249,0 h 20 l 34,-120 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"
+                Name="QRInX1Path_4"/>
+          <Path Stroke="Red" StrokeThickness="1"
+                Data="M 1048,-40 m 249,0 h 19 l 34,60 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"
+                Name="QROutCPath"/>
+
           <Path Stroke="Purple" StrokeThickness="1"
                 Data="M 0,20 h 20 l 34,-20 h 20 m 249,0 h 20 l 34,-40  h 20 m 249,0 h 20 l 34,40 h 24 m 249,0 h 20 l 34,-40 h 20 m 249,0 h 20 l 34,60 h 20"
                 Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
+          <Path Stroke="Purple" StrokeThickness="1"
+                Data="M 0,100 h 20 l 34,-20 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX3Path_1"/>
+          <Path Stroke="Purple" StrokeThickness="1"
+                Data="M 74,80 m 249,0 h 20 l 34,-40 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX2Path_2"/>
+          <Path Stroke="Purple" StrokeThickness="1"
+                Data="M 397,40 m 249,0 h 20 l 34,40 h 24"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX3Path_3"/>
+          <Path Stroke="Purple" StrokeThickness="1"
+                Data="M 723,80 m 249,0 h 21 l 34,-40 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QRInX2Path_4"/>
+          <Path Stroke="Purple" StrokeThickness="1"
+                Data="M 1048,40 m 249,0 h 19 l 34,60 h 20"
+                Canvas.Left="115" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"
+                Name="QROutDPath"/>
+
           <UniformGrid Canvas.Left="150" HorizontalAlignment="Center" Columns="4" Width="1300">
             <Canvas Canvas.Left="10" HorizontalAlignment="Center" Width="250" Height="200">
               <Border Name="QRInX1Cell_1" Canvas.Top="0" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
