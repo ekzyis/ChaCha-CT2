@@ -297,6 +297,7 @@ namespace Cryptool.Plugins.ChaCha
                     _pages[i].Visibility = Visibility.Collapsed;
                 }
             }
+            _pages[pageIndex].Visibility = Visibility.Visible;
         }
 
         private void WrapExecWithNavigation(PageAction pageAction)
