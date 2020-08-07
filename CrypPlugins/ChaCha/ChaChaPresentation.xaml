@@ -405,16 +405,16 @@
                   <TextBlock Style="{StaticResource hex}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <Border Width="65" Height="40" Name="QROutACell" Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="1485" Canvas.Top="-20">
-                  <TextBlock Style="{StaticResource hex}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  <TextBlock Style="{StaticResource hex}" Name="QROutA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <Border Width="65" Height="40" Name="QROutBCell" Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="1485" Canvas.Top="20">
-                  <TextBlock Style="{StaticResource hex}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  <TextBlock Style="{StaticResource hex}" Name="QROutB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <Border Width="65" Height="40" Name="QROutCCell" Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="1485" Canvas.Top="60">
-                  <TextBlock Style="{StaticResource hex}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  <TextBlock Style="{StaticResource hex}" Name="QROutC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <Border Width="65" Height="40" Name="QROutDCell" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1485" Canvas.Top="100">
-                  <TextBlock Style="{StaticResource hex}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  <TextBlock Style="{StaticResource hex}" Name="QROutD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
 
                 <Path Stroke="LightGreen" StrokeThickness="1"

@@ -563,10 +563,13 @@ namespace Cryptool.Plugins.ChaCha
         {
             list.Clear();
         }
-        private void Clear(TextBlock tb)
+        private void Clear(params TextBlock[] textblocks)
         {
-            SaveState(tb);
-            Clear(tb.Inlines);
+            foreach(TextBlock tb in textblocks)
+            {
+                SaveState(tb);
+                Clear(tb.Inlines);
+            }
         }
         private void SetBackground(Border b, Brush background)
         {

@@ -223,6 +223,25 @@ namespace Cryptool.Plugins.ChaCha
             return CopyActions(new Border[] { QROutACell, QROutBCell, QROutCCell, QROutDCell }, stateCells, true);
         }
 
+        private PageAction ClearQRDetail()
+        {
+            return new PageAction(() =>
+            {
+                Clear(QRInA, QRInB, QRInC, QRInD);
+                Clear(QROutA, QROutB, QROutC, QROutD);
+                for(int i = 1; i <= 4; ++i)
+                {
+                    Clear((TextBlock)GetIndexElement("QRInX1", i));
+                    Clear((TextBlock)GetIndexElement("QRInX2", i));
+                    Clear((TextBlock)GetIndexElement("QRInX3", i));
+                    Clear((TextBlock)GetIndexElement("QROutX1", i));
+                    Clear((TextBlock)GetIndexElement("QROutX2", i));
+                    Clear((TextBlock)GetIndexElement("QROutX3", i));
+                    Clear((TextBlock)GetIndexElement("QRXOR", i));
+                }
+            }, Undo);
+        }
+
         private Page KeystreamBlockGenPage()
         {
             Page p = new Page(UIKeystreamBlockGenPage);
@@ -282,6 +301,7 @@ namespace Cryptool.Plugins.ChaCha
                 p.AddAction(QRExecActions(4));
                 p.AddAction(QROutputActions());
                 p.AddAction(ReplaceStateEntriesWithQROutput(quarterround));
+                p.AddAction(ClearQRDetail());
             }
 
             return p;
