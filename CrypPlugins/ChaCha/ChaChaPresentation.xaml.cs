@@ -904,6 +904,19 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        private int _rounds;
+        public int Rounds
+        {
+            get
+            {
+                return _rounds;
+            }
+            set
+            {
+                _rounds = value;
+            }
+        }
+
         #endregion
 
         #region interim results

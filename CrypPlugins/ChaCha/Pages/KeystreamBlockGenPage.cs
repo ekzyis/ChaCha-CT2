@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Windows.Shapes;
 using System.Windows.Documents;
+using System.Diagnostics;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -175,20 +176,34 @@ namespace Cryptool.Plugins.ChaCha
             return (Border)GetIndexElement("UIKeystreamBlockGenCell", stateIndex);
         }
 
-        private int[] GetStateIndices(int roundIndex)
+        private int[] GetStateIndices(int quarterround)
         {
-            int i = 0, j = 0, k = 0, l = 0;
-            switch (roundIndex)
+            switch (((quarterround - 1) % 8) + 1)
             {
                 case 1:
-                    i = 0; j = 4; k = 8; l = 12;
-                    break;
+                    return new int[] { 0, 4, 8, 12 };
+                case 2:
+                    return new int[] { 1, 5, 9, 13 };
+                case 3:
+                    return new int[] { 2, 6, 10, 14 };
+                case 4:
+                    return new int[] { 3, 7, 11, 15 };
+                case 5:
+                    return new int[] { 0, 5, 10, 15 };
+                case 6:
+                    return new int[] { 1, 6, 11, 12 };
+                case 7:
+                    return new int[] { 2, 7, 8, 13 };
+                case 8:
+                    return new int[] { 3, 4, 9, 14 };
+                default:
+                    Debug.Assert(false, string.Format("No state indices found for round", quarterround));
+                    return new int[0];
             }
-            return new int[] { i, j, k, l };
         }
-        private PageAction[] CopyFromStateTOQRInputActions(int index)
+        private PageAction[] CopyFromStateTOQRInputActions(int quarterround)
         {
-            int[] stateIndices = GetStateIndices(index);
+            int[] stateIndices = GetStateIndices(quarterround);
             int i = stateIndices[0];
             int j = stateIndices[1];
             int k = stateIndices[2];
@@ -197,9 +212,9 @@ namespace Cryptool.Plugins.ChaCha
             return CopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
         }
 
-        private PageAction[] ReplaceStateEntriesWithQROutput(int index)
+        private PageAction[] ReplaceStateEntriesWithQROutput(int round)
         {
-            int[] stateIndices = GetStateIndices(index);
+            int[] stateIndices = GetStateIndices(round);
             int i = stateIndices[0];
             int j = stateIndices[1];
             int k = stateIndices[2];
@@ -254,24 +269,21 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(generalDescriptionAction);
             p.AddAction(firstColumnRoundDescriptionAction);
 
-            p.AddAction(CopyFromStateTOQRInputActions(1));
+            for (int quarterround = 1; quarterround <= Rounds * 4; ++quarterround)
+            {
+                p.AddAction(CopyFromStateTOQRInputActions(quarterround));
+                p.AddAction(CopyToQRDetailInput(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
+                p.AddAction(QRExecActions(1));
+                p.AddAction(CopyToQRDetailInput(new Border[] { QRInCCell, (Border)GetIndexElement("QROutX3Cell", 1), (Border)GetIndexElement("QROutX2Cell", 1) }, 2));
+                p.AddAction(QRExecActions(2));
+                p.AddAction(CopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 1), (Border)GetIndexElement("QROutX3Cell", 2), (Border)GetIndexElement("QROutX2Cell", 2) }, 3));
+                p.AddAction(QRExecActions(3));
+                p.AddAction(CopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 2), (Border)GetIndexElement("QROutX3Cell", 3), (Border)GetIndexElement("QROutX2Cell", 3) }, 4));
+                p.AddAction(QRExecActions(4));
+                p.AddAction(QROutputActions());
+                p.AddAction(ReplaceStateEntriesWithQROutput(quarterround));
+            }
 
-            //p.AddAction(CreateQRInputAction(1));
-            p.AddAction(CopyToQRDetailInput(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
-            p.AddAction(QRExecActions(1));
-
-            p.AddAction(CopyToQRDetailInput(new Border[] { QRInCCell, (Border)GetIndexElement("QROutX3Cell", 1), (Border)GetIndexElement("QROutX2Cell", 1) }, 2));
-            p.AddAction(QRExecActions(2));
-
-            p.AddAction(CopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 1), (Border)GetIndexElement("QROutX3Cell", 2), (Border)GetIndexElement("QROutX2Cell", 2) }, 3));
-            p.AddAction(QRExecActions(3));
-
-            p.AddAction(CopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 2), (Border)GetIndexElement("QROutX3Cell", 3), (Border)GetIndexElement("QROutX2Cell", 3) }, 4));
-            p.AddAction(QRExecActions(4));
-
-            p.AddAction(QROutputActions());
-
-            p.AddAction(ReplaceStateEntriesWithQROutput(1));
             return p;
         }
     }

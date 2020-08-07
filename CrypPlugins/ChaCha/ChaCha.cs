@@ -177,6 +177,8 @@ namespace Cryptool.Plugins.ChaCha
             DispatchToPresentation(delegate
             {
                 _presentation.clearResults();
+                _presentation.Version = settings.Version;
+                _presentation.Rounds = settings.Rounds;
             });
 
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
