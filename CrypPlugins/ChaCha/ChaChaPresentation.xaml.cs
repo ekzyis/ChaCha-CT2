@@ -277,14 +277,13 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 4;
+        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 0;
         private void InitPages()
         {
             AddPage(LandingPage());
             AddPage(WorkflowPage());
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
-            AddPage(QuarterroundPageV2());
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
         }
 

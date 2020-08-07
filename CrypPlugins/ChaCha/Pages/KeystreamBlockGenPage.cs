@@ -1,16 +1,196 @@
 ﻿using System.ComponentModel;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows.Shapes;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace Cryptool.Plugins.ChaCha
 {
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
+        private object GetIndexElement(string nameId, int index)
+        {
+            return FindName(string.Format("{0}_{1}", nameId, index));
+        }
+        private PageAction CreateQRInputAction(int index)
+        {
+            PageAction insertQRInput = new PageAction(() =>
+            {
+                Add(QRInA, GetHexResult(ResultType.QR_INPUT_A, index - 1));
+                Add(QRInB, GetHexResult(ResultType.QR_INPUT_B, index - 1));
+                Add(QRInC, GetHexResult(ResultType.QR_INPUT_C, index - 1));
+                Add(QRInD, GetHexResult(ResultType.QR_INPUT_D, index - 1));
+            }, Undo);
+            return insertQRInput;
+        }
+
+        private PageAction[] CreateQROutputActions()
+        {
+            return CreateCopyActions(
+                new Border[] { (Border)GetIndexElement("QROutX1Cell", 3), (Border)GetIndexElement("QROutX3Cell", 4), (Border)GetIndexElement("QROutX1Cell", 4), (Border)GetIndexElement("QROutX2Cell", 4) },
+                new Shape[] { QROutAPath, QROutBPath, QROutCPath, QROutDPath },
+                new Border[] { QROutACell, QROutBCell, QROutCCell, QROutDCell }
+                );
+        }
+
+        private PageAction[] CreateX1OutActions(int index)
+        {
+            PageAction markOutX1 = new PageAction(() =>
+            {
+                MarkBorder((Border)GetIndexElement("QRInX1Cell", index));
+                MarkBorder((Border)GetIndexElement("QRInX2Cell", index));
+                MarkShape((Shape)GetIndexElement("AddInputPathX1", index));
+                MarkShape((Shape)GetIndexElement("AddInputPathX2", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX1", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX2_1", index));
+                MarkShape((Shape)GetIndexElement("AddCircle", index));
+                MarkBorder((Border)GetIndexElement("QROutX1Cell", index));
+            }, Undo);
+            PageAction execOutX1 = new PageAction(() =>
+            {
+                Add((TextBlock)GetIndexElement("QROutX1", index), GetHexResult(ResultType.QR_ADD_X1_X2, index - 1));
+            }, Undo);
+            PageAction unmarkOutX1 = new PageAction(() =>
+            {
+                UnmarkBorder((Border)GetIndexElement("QRInX1Cell", index));
+                UnmarkBorder((Border)GetIndexElement("QRInX2Cell", index));
+                UnmarkShape((Shape)GetIndexElement("AddInputPathX1", index));
+                UnmarkShape((Shape)GetIndexElement("AddInputPathX2", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX1", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX2_1", index));
+                UnmarkShape((Shape)GetIndexElement("AddCircle", index));
+                UnmarkBorder((Border)GetIndexElement("QROutX1Cell", index));
+            }, Undo);
+            return new PageAction[] { markOutX1, execOutX1, unmarkOutX1 };
+        }
+
+        private PageAction[] CreateX2OutActions(int index)
+        {
+            PageAction markOutX2 = new PageAction(() =>
+            {
+                MarkBorder((Border)GetIndexElement("QRInX2Cell", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX2_1", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX2_2", index));
+                MarkBorder((Border)GetIndexElement("QROutX2Cell", index));
+            }, Undo);
+            PageAction execOutX2 = new PageAction(() =>
+            {
+                Add((TextBlock)GetIndexElement("QROutX2", index), GetHexResult(ResultType.QR_OUTPUT_X2, index - 1));
+            }, Undo);
+            PageAction unmarkOutX2 = new PageAction(() =>
+            {
+                UnmarkBorder((Border)GetIndexElement("QRInX2Cell", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX2_1", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX2_2", index));
+                UnmarkBorder((Border)GetIndexElement("QROutX2Cell", index));
+            }, Undo);
+            return new PageAction[] { markOutX2, execOutX2, unmarkOutX2 };
+        }
+
+        private PageAction[] CreateXORActions(int index)
+        {
+            PageAction markXOR = new PageAction(() =>
+            {
+                MarkBorder((Border)GetIndexElement("QRInX3Cell", index));
+                MarkBorder((Border)GetIndexElement("QROutX1Cell", index));
+                MarkBorder((Border)GetIndexElement("QRXORCell", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX3_1", index));
+                MarkShape((Shape)GetIndexElement("XORInputPathX1", index));
+                MarkShape((Shape)GetIndexElement("XORCircle", index));
+            }, Undo);
+            PageAction execXOR = new PageAction(() =>
+            {
+                Add((TextBlock)GetIndexElement("QRXOR", index), GetHexResult(ResultType.QR_XOR, index - 1));
+            }, Undo);
+            PageAction unmarkXOR = new PageAction(() =>
+            {
+                UnmarkBorder((Border)GetIndexElement("QRInX3Cell", index));
+                UnmarkBorder((Border)GetIndexElement("QROutX1Cell", index));
+                UnmarkBorder((Border)GetIndexElement("QRXORCell", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX3_1", index));
+                UnmarkShape((Shape)GetIndexElement("XORInputPathX1", index));
+                UnmarkShape((Shape)GetIndexElement("XORCircle", index));
+            }, Undo);
+            return new PageAction[] { markXOR, execXOR, unmarkXOR };
+        }
+
+        private PageAction[] CreateShiftActions(int index)
+        {
+            PageAction markShift = new PageAction(() =>
+            {
+                MarkBorder((Border)GetIndexElement("QROutX3Cell", index));
+                MarkBorder((Border)GetIndexElement("QRXORCell", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX3_2", index));
+                MarkShape((Shape)GetIndexElement("OutputPathX3_3", index));
+                MarkShape((Shape)GetIndexElement("ShiftCircle", index));
+            }, Undo);
+            PageAction execShift = new PageAction(() =>
+            {
+                Add((TextBlock)GetIndexElement("QROutX3", index), GetHexResult(ResultType.QR_OUTPUT_X3, index - 1));
+            }, Undo);
+            PageAction unmarkShift = new PageAction(() =>
+            {
+                UnmarkBorder((Border)GetIndexElement("QROutX3Cell", index));
+                UnmarkBorder((Border)GetIndexElement("QRXORCell", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX3_2", index));
+                UnmarkShape((Shape)GetIndexElement("OutputPathX3_3", index));
+                UnmarkShape((Shape)GetIndexElement("ShiftCircle", index));
+            }, Undo);
+            return new PageAction[] { markShift, execShift, unmarkShift };
+        }
+
+        private PageAction[] CreateX3OutActions(int index)
+        {
+            PageAction[] xorActions = CreateXORActions(index);
+            PageAction[] shiftActions = CreateShiftActions(index);
+            PageAction[] actions = new PageAction[xorActions.Length + shiftActions.Length];
+            xorActions.CopyTo(actions, 0);
+            shiftActions.CopyTo(actions, xorActions.Length);
+            return actions;
+        }
+
+        private PageAction[] CreateQRExecActions(int index)
+        {
+            List<PageAction> actions = new List<PageAction>();
+            PageAction[] x1OutActions = CreateX1OutActions(index);
+            PageAction[] x2OutActions = CreateX2OutActions(index);
+            PageAction[] x3OutActions = CreateX3OutActions(index);
+            actions.AddRange(x1OutActions);
+            actions.AddRange(x2OutActions);
+            actions.AddRange(x3OutActions);
+            return actions.ToArray();
+        }
+
+        private PageAction[] CreateCopyToQRDetailInput(Border[] b, int index)
+        {
+            return CreateCopyActions(
+                b,
+                new Shape[] { (Shape)GetIndexElement("QRInX1Path", index), (Shape)GetIndexElement("QRInX2Path", index), (Shape)GetIndexElement("QRInX3Path", index) },
+                new Border[] { (Border)GetIndexElement("QRInX1Cell", index), (Border)GetIndexElement("QRInX2Cell", index), (Border)GetIndexElement("QRInX3Cell", index) }
+                );
+        }
+
+        private Border GetStateCell(int stateIndex)
+        {
+            return (Border)GetIndexElement("UIKeystreamBlockGenCell", stateIndex);
+        }
+        private PageAction[] CreateCopyFromStateTOQRInputActions(int index)
+        {
+            int i = 0, j = 0, k = 0, l = 0;
+            switch(index)
+            {
+                case 1:
+                    i = 0; j = 4; k = 8; l = 12;
+                    break;
+            }
+            Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
+            return CreateCopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
+        }
+
         private Page KeystreamBlockGenPage()
         {
-            bool versionIsDJB = Version == ChaCha.Version.DJB;
             Page p = new Page(UIKeystreamBlockGenPage);
+            bool versionIsDJB = Version == ChaCha.Version.DJB;
             PageAction initAction = new PageAction(() =>
             {
                 Add(UIKeystreamBlockGen0, new Run(ConstantsLittleEndian.Replace(" ", "").Substring(0, 8)));
@@ -50,29 +230,25 @@ namespace Cryptool.Plugins.ChaCha
                 UnboldLast(UIKeystreamBlockGenStepDescription);
                 Add(UIKeystreamBlockGenStepDescription, MakeBold(new Run(desc)));
             }, Undo);
-            Brush copyBrush = Brushes.AliceBlue;
-            PageAction initFirstColumnRoundAction1 = new PageAction(() =>
-            {
-                SetBackground(UIKeystreamBlockGenCell0, copyBrush);
-                SetBackground(UIKeystreamBlockGenCell4, copyBrush);
-                SetBackground(UIKeystreamBlockGenCell8, copyBrush);
-                SetBackground(UIKeystreamBlockGenCell12, copyBrush);
-            }, Undo);
-            PageAction initFirstColumnRoundAction2 = new PageAction(() =>
-            {
-                SetBackground(UIKeystreamBlockGenQRACell, copyBrush);
-                SetBackground(UIKeystreamBlockGenQRBCell, copyBrush);
-                SetBackground(UIKeystreamBlockGenQRCCell, copyBrush);
-                SetBackground(UIKeystreamBlockGenQRDCell, copyBrush);
-                CopyLastText(UIKeystreamBlockGenQRA, UIKeystreamBlockGen0);
-                CopyLastText(UIKeystreamBlockGenQRB, UIKeystreamBlockGen4);
-                CopyLastText(UIKeystreamBlockGenQRC, UIKeystreamBlockGen8);
-                CopyLastText(UIKeystreamBlockGenQRD, UIKeystreamBlockGen12);
-            }, Undo);
             p.AddAction(generalDescriptionAction);
             p.AddAction(firstColumnRoundDescriptionAction);
-            p.AddAction(initFirstColumnRoundAction1);
-            p.AddAction(initFirstColumnRoundAction2);
+
+            p.AddAction(CreateCopyFromStateTOQRInputActions(1));
+
+            //p.AddAction(CreateQRInputAction(1));
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { QRInACell, QRInBCell, QRInDCell }, 1));
+            p.AddAction(CreateQRExecActions(1));
+
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { QRInCCell, (Border)GetIndexElement("QROutX3Cell", 1), (Border)GetIndexElement("QROutX2Cell", 1) }, 2));
+            p.AddAction(CreateQRExecActions(2));
+
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 1), (Border)GetIndexElement("QROutX3Cell", 2), (Border)GetIndexElement("QROutX2Cell", 2) }, 3));
+            p.AddAction(CreateQRExecActions(3));
+
+            p.AddAction(CreateCopyToQRDetailInput(new Border[] { (Border)GetIndexElement("QROutX1Cell", 2), (Border)GetIndexElement("QROutX3Cell", 3), (Border)GetIndexElement("QROutX2Cell", 3) }, 4));
+            p.AddAction(CreateQRExecActions(4));
+
+            p.AddAction(CreateQROutputActions());
             return p;
         }
     }
