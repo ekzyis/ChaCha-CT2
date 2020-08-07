@@ -26,6 +26,7 @@ namespace Cryptool.Plugins.ChaCha
         public ChaChaPresentation()
         {
             InitializeComponent();
+            InitPages();
             DataContext = this;
         }
 
@@ -285,6 +286,7 @@ namespace Cryptool.Plugins.ChaCha
         const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 0;
         private void InitPages()
         {
+            _pages.Clear();
             AddPage(LandingPage());
             AddPage(WorkflowPage());
             AddPage(StateMatrixPage());
