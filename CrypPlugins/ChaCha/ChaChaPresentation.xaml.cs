@@ -26,7 +26,6 @@ namespace Cryptool.Plugins.ChaCha
         public ChaChaPresentation()
         {
             InitializeComponent();
-            InitPages();
             DataContext = this;
         }
 
@@ -377,6 +376,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
+                if(_pages.Count == 0)
+                {
+                    return LandingPage();
+                }
                 return _pages[CurrentPageIndex];
             }
         }
@@ -405,6 +408,8 @@ namespace Cryptool.Plugins.ChaCha
             }
             set
             {
+                // reload pages to use new variables
+                InitPages();
                 MovePages(__START_VISUALIZATION_ON_PAGE_INDEX__ - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");
