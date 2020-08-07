@@ -9,6 +9,10 @@ namespace Cryptool.Plugins.ChaCha
 {
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
+        private int ResultIndex(int actionIndex, int qrIndex)
+        {
+            return (qrIndex - 1) * 4 + (actionIndex - 1);
+        }
         private object GetIndexElement(string nameId, int index)
         {
             return FindName(string.Format("{0}_{1}", nameId, index));
@@ -49,7 +53,7 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
             PageAction execOutX1 = new PageAction(() =>
             {
-                Add((TextBlock)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, qrIndex - 1));
+                Add((TextBlock)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
             }, Undo);
             PageAction unmarkOutX1 = new PageAction(() =>
             {
@@ -76,7 +80,7 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
             PageAction execOutX2 = new PageAction(() =>
             {
-                Add((TextBlock)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, qrIndex - 1));
+                Add((TextBlock)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
             }, Undo);
             PageAction unmarkOutX2 = new PageAction(() =>
             {
@@ -101,7 +105,7 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
             PageAction execXOR = new PageAction(() =>
             {
-                Add((TextBlock)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, qrIndex - 1));
+                Add((TextBlock)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
             }, Undo);
             PageAction unmarkXOR = new PageAction(() =>
             {
@@ -127,7 +131,7 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
             PageAction execShift = new PageAction(() =>
             {
-                Add((TextBlock)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, qrIndex - 1));
+                Add((TextBlock)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
             }, Undo);
             PageAction unmarkShift = new PageAction(() =>
             {
