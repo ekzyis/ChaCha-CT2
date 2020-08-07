@@ -174,17 +174,38 @@ namespace Cryptool.Plugins.ChaCha
         {
             return (Border)GetIndexElement("UIKeystreamBlockGenCell", stateIndex);
         }
-        private PageAction[] CopyFromStateTOQRInputActions(int index)
+
+        private int[] GetStateIndices(int roundIndex)
         {
             int i = 0, j = 0, k = 0, l = 0;
-            switch(index)
+            switch (roundIndex)
             {
                 case 1:
                     i = 0; j = 4; k = 8; l = 12;
                     break;
             }
+            return new int[] { i, j, k, l };
+        }
+        private PageAction[] CopyFromStateTOQRInputActions(int index)
+        {
+            int[] stateIndices = GetStateIndices(index);
+            int i = stateIndices[0];
+            int j = stateIndices[1];
+            int k = stateIndices[2];
+            int l = stateIndices[3];
             Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
             return CopyActions(stateCells, new Border[] { QRInACell, QRInBCell, QRInCCell, QRInDCell });
+        }
+
+        private PageAction[] ReplaceStateEntriesWithQROutput(int index)
+        {
+            int[] stateIndices = GetStateIndices(index);
+            int i = stateIndices[0];
+            int j = stateIndices[1];
+            int k = stateIndices[2];
+            int l = stateIndices[3];
+            Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
+            return CopyActions(new Border[] { QROutACell, QROutBCell, QROutCCell, QROutDCell }, stateCells, true);
         }
 
         private Page KeystreamBlockGenPage()
@@ -249,6 +270,8 @@ namespace Cryptool.Plugins.ChaCha
             p.AddAction(QRExecActions(4));
 
             p.AddAction(QROutputActions());
+
+            p.AddAction(ReplaceStateEntriesWithQROutput(1));
             return p;
         }
     }

@@ -508,10 +508,20 @@ namespace Cryptool.Plugins.ChaCha
             RemoveLast(list);
             list.Add(element);
         }
+        private void ReplaceLast(InlineCollection list, string text)
+        {
+            RemoveLast(list);
+            list.Add(new Run(text));
+        }
         private void ReplaceLast(TextBlock tb, Inline element)
         {
             SaveState(tb);
             ReplaceLast(tb.Inlines, element);
+        }
+        private void ReplaceLast(TextBlock tb, string text)
+        {
+            SaveState(tb);
+            ReplaceLast(tb.Inlines, text);
         }
         private void MakeBoldLast(InlineCollection list)
         {
@@ -622,7 +632,7 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
         }
 
-        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo)
+        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, bool replace = false)
         {
             return new PageAction(() =>
             {
@@ -633,7 +643,13 @@ namespace Cryptool.Plugins.ChaCha
                     Border copyToBorder = copyTo[i];
                     TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
                     SetBackground(copyToBorder, copyBrush);
-                    Add(copyToTextBlock, ((Run)copyFromTextBlock.Inlines.LastInline).Text);
+                    string text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
+                    if (replace) {
+                        ReplaceLast(copyToTextBlock, text);
+                    }
+                    else {
+                        Add(copyToTextBlock, text);
+                    }
                 }
             }, Undo);
         }
@@ -653,17 +669,17 @@ namespace Cryptool.Plugins.ChaCha
             }, Undo);
         }
 
-        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo)
+        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, bool replace = false)
         {
             Debug.Assert(copyFrom.Length == copyTo.Length);
             PageAction mark = MarkCopyFromAction(copyFrom);
-            PageAction copy = CopyAction(copyFrom, copyTo);
+            PageAction copy = CopyAction(copyFrom, copyTo, replace);
             PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
         }
-        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo)
+        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
         {
-            PageAction[] copyActions = CopyActions(copyFrom, copyTo);
+            PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
             Action markPaths = () =>
             {
                 foreach (Shape s in paths)
