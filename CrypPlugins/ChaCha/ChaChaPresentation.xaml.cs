@@ -1,26 +1,15 @@
-﻿using Cryptool.PluginBase.Miscellaneous;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-using System.Security.Policy;
-using System.Runtime.CompilerServices;
-using System.Windows.Markup;
-using System.Data;
+using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -28,27 +17,17 @@ namespace Cryptool.Plugins.ChaCha
     /// Interaction logic for ChaChaPresentation.xaml
     /// </summary>
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock>
+    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged, INavigationService<TextBlock, Border, Shape>
     {
-
+        #region private variables
+        private Brush copyBrush = Brushes.AliceBlue;
+        private Brush markBrush = Brushes.Purple;
+        #endregion
         public ChaChaPresentation()
         {
             InitializeComponent();
             InitPages();
             DataContext = this;
-        }
-
-        private void InitPages()
-        {
-            const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 2;
-            AddPage(LandingPage());
-            AddPage(WorkflowPage());
-            AddPage(StateMatrixPage());
-            for(int i = 0; i < __START_VISUALIZATION_ON_PAGE_INDEX__; ++i)
-            {
-                NextPage_Click(null, null);
-            }
-            //AddPage(KeystreamBlockGenPage());
         }
 
         #region Navigation
@@ -60,20 +39,100 @@ namespace Cryptool.Plugins.ChaCha
         private Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
         // temporary variable to collect undo actions before pushing into stack.
         private Dictionary<int, Action> _undoActions = new Dictionary<int, Action> ();
+        // bool to check if FinishPageAction should be called after a page action execution.
+        private bool _saveStateHasBeenCalled = false;
         public void SaveState(params TextBlock[] textblocks)
         {
-            foreach(TextBlock tb in textblocks)
+            _saveStateHasBeenCalled = true;
+            foreach (TextBlock tb in textblocks)
             {
-                // copy inline elements
-                Inline[] state = new Inline[tb.Inlines.Count];
-                tb.Inlines.CopyTo(state, 0);
-                _undoActions[tb.GetHashCode()] = () => {
-                    tb.Inlines.Clear();
-                    foreach (Inline i in state)
+                int hash = tb.GetHashCode();
+                // do not overwrite states since first added state was the "most original one"
+                if (!_undoActions.ContainsKey(hash))
+                {
+                    // copy inline elements
+                    Inline[] state = new Inline[tb.Inlines.Count];
+                    tb.Inlines.CopyTo(state, 0);
+                    _undoActions[hash] = () => {
+                        tb.Inlines.Clear();
+                        foreach (Inline i in state)
+                        {
+                            tb.Inlines.Add(i);
+                        }
+                    };
+                }
+            }
+        }
+
+        public void SaveState(params Border[] borders)
+        {
+            _saveStateHasBeenCalled = true;
+            foreach (Border b in borders)
+            {
+                int hash = b.GetHashCode();
+                if (!_undoActions.ContainsKey(hash))
+                {
+                    Brush background;
+                    Brush borderBrush;
+                    Thickness borderThickness;
+                    if(b.Background != null)
                     {
-                        tb.Inlines.Add(i);
+                        background = b.Background.Clone();
                     }
-                };
+                    else
+                    {
+                        background = Brushes.White;
+                    }
+                    if(b.BorderBrush != null)
+                    {
+                        borderBrush = b.BorderBrush.Clone();
+                    }
+                    else
+                    {
+                        borderBrush = Brushes.Black;
+                    }
+                    if(b.BorderThickness != null)
+                    {
+                        borderThickness = b.BorderThickness;
+                    }
+                    else
+                    {
+                        borderThickness = new Thickness(1);
+                    }
+                    _undoActions[hash] = () =>
+                    {
+                        b.Background = background;
+                        b.BorderBrush = borderBrush;
+                        b.BorderThickness = borderThickness;
+                    };
+                }
+            }
+        }
+
+        public void SaveState(params Shape[] shapes)
+        {
+            _saveStateHasBeenCalled = true;
+            foreach (Shape s in shapes)
+            {
+                int hash = s.GetHashCode();
+                if (!_undoActions.ContainsKey(hash))
+                {
+                    Brush strokeBrush;
+                    double strokeThickness = s.StrokeThickness;
+                    if (s.Stroke != null)
+                    {
+                        strokeBrush = s.Stroke.Clone();
+                    }
+                    else
+                    {
+                        strokeBrush = Brushes.Black;
+                    }
+                    _undoActions[hash] = () =>
+                    {
+                        s.Stroke = strokeBrush;
+                        s.StrokeThickness = strokeThickness;
+                    };
+                }
             }
         }
 
@@ -99,21 +158,56 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region properties
+        #region page navigation
 
-        struct PageAction
+        #region classes, structs and methods related page navigation
+
+        public class PageAction
         {
-            public Action exec;
-            public Action undo;
+            private List<Action> _exec = new List<Action>();
+            private List<Action> _undo = new List<Action>();
+            public PageAction(Action exec, Action undo)
+            {
+                _exec.Add(exec);
+                _undo.Add(undo);
+            }
+            public void exec() {
+                foreach(Action a in _exec)
+                {
+                    a();
+                }
+            }
+            public void undo()
+            {
+                foreach(Action a in _undo)
+                {
+                    a();
+                }
+            }
+            public void AddToExec(Action toAdd)
+            {
+                _exec.Add(toAdd);
+            }
+            public void AddToUndo(Action toAdd)
+            {
+                _undo.Add(toAdd);
+            }
+
+            public void Add(PageAction toAdd)
+            {
+                _exec.Add(toAdd.exec);
+                _undo.Add(toAdd.undo);
+            }
         }
         class Page
         {
             public Page(UIElement UIPageElement)
             {
                 _page = UIPageElement;
-            }            
+            }
             private readonly UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
             private readonly List<PageAction> _pageActions = new List<PageAction>();
+            private readonly List<PageAction> _pageInitActions = new List<PageAction>();
             public int ActionFrames
             {
                 get
@@ -121,15 +215,29 @@ namespace Cryptool.Plugins.ChaCha
                     return _pageActions.Count;
                 }
             }
-            public PageAction[] Actions { 
+            public PageAction[] Actions {
                 get
                 {
                     return _pageActions.ToArray();
                 }
             }
-            public void AddAction(PageAction pageAction)
+            public void AddAction(params PageAction[] pageActions)
             {
-                _pageActions.Add(pageAction);
+                foreach(PageAction pageAction in pageActions)
+                {
+                    _pageActions.Add(pageAction);
+                }
+            }
+            public PageAction[] InitActions
+            {
+                get
+                {
+                    return _pageInitActions.ToArray();
+                }
+            }
+            public void AddInitAction(PageAction pageAction)
+            {
+                _pageInitActions.Add(pageAction);
             }
             public Visibility Visibility
             {
@@ -148,6 +256,90 @@ namespace Cryptool.Plugins.ChaCha
         {
             _pages.Add(page);
         }
+
+        private void InitPage(Page p)
+        {
+            foreach (PageAction pageAction in p.InitActions)
+            {
+                WrapExecWithNavigation(pageAction);
+            }
+        }
+
+        private void MovePages(int n)
+        {
+            if (n < 0)
+            {
+                for (int i = 0; i < Math.Abs(n); ++i)
+                {
+                    PrevPage_Click(null, null);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Math.Abs(n); ++i)
+                {
+                    NextPage_Click(null, null);
+                }
+            }
+        }
+
+        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 0;
+        private void InitPages()
+        {
+            _pages.Clear();
+            AddPage(LandingPage());
+            AddPage(WorkflowPage());
+            AddPage(StateMatrixPage());
+            AddPage(KeystreamBlockGenPage());
+            CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
+        }
+
+        // useful for development: setting pages visible for development purposes does not infer with execution
+        private void CollapseAllPagesExpect(int pageIndex)
+        {
+            for(int i = 0; i < _pages.Count; ++i)
+            {
+                if (i != pageIndex)
+                {
+                    _pages[i].Visibility = Visibility.Collapsed;
+                }
+            }
+            _pages[pageIndex].Visibility = Visibility.Visible;
+        }
+
+        private void WrapExecWithNavigation(PageAction pageAction)
+        {
+            _saveStateHasBeenCalled = false;
+            pageAction.exec();
+            if (_saveStateHasBeenCalled)
+            {
+                FinishPageAction();
+            }
+        }
+
+        #endregion
+
+        #region page navigation click handlers
+        private void PrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.Visibility = Visibility.Collapsed;
+            UndoActions();
+            CurrentPageIndex--;
+            CurrentPage.Visibility = Visibility.Visible;
+            InitPage(CurrentPage);
+        }
+        private void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.Visibility = Visibility.Collapsed;
+            UndoActions();
+            CurrentPageIndex++;
+            CurrentPage.Visibility = Visibility.Visible;
+            InitPage(CurrentPage);
+        }
+
+        #endregion
+
+        #region variables related to page navigation
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
@@ -192,6 +384,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
+                if(_pages.Count == 0)
+                {
+                    return LandingPage();
+                }
                 return _pages[CurrentPageIndex];
             }
         }
@@ -204,6 +400,14 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public int MaxPageIndex
+        {
+            get
+            {
+                return _pages.Count - 1;
+            }
+        }
+
         public bool ExecutionFinished
         {
             get
@@ -212,19 +416,14 @@ namespace Cryptool.Plugins.ChaCha
             }
             set
             {
+                // reload pages to use new variables
+                InitPages();
+                MovePages(__START_VISUALIZATION_ON_PAGE_INDEX__ - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
-            }
-        }
-
-        public int MaxPageIndex
-        {
-            get
-            {
-                return _pages.Count - 1;
             }
         }
 
@@ -242,6 +441,15 @@ namespace Cryptool.Plugins.ChaCha
                 return CurrentPageIndex != 0 && ExecutionFinished;
             }
         }
+
+        #endregion
+
+        #endregion
+
+        #region action navigation
+
+        #region variables related to action navigation
+
         public bool NextActionIsEnabled
         {
             get
@@ -259,25 +467,11 @@ namespace Cryptool.Plugins.ChaCha
                 return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
             }
         }
+
         #endregion
 
-        #region Click handlers
-        private void PrevPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.Visibility = Visibility.Collapsed;
-            UndoActions();
-            CurrentPageIndex--;
-            CurrentPage.Visibility = Visibility.Visible;
-        }
-        private void NextPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentPage.Visibility = Visibility.Collapsed;
-            // TODO undo actions on current page before switching
-            UndoActions();
-            CurrentPageIndex++;
-            CurrentPage.Visibility = Visibility.Visible;
-            // TODO initialize page by running init actions
-        }
+        #region action navigation click handlers
+
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIndex--;
@@ -285,8 +479,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
-            CurrentPage.Actions[CurrentActionIndex].exec();
-            FinishPageAction();
+            WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
         }
         private void UndoActions()
@@ -296,11 +489,19 @@ namespace Cryptool.Plugins.ChaCha
                 PrevAction_Click(null, null);
             }
             Debug.Assert(CurrentActionIndex == 0);
+            // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
+            foreach (PageAction pageAction in CurrentPage.InitActions.Reverse())
+            {
+                pageAction.undo();
+            }
         }
+
+
         #endregion
 
         #region action helper methods
 
+        #region WPF Wrapper
         private Run MakeBold(Run r)
         {
             return new Run { Text = r.Text, FontWeight = FontWeights.Bold };
@@ -320,10 +521,20 @@ namespace Cryptool.Plugins.ChaCha
             RemoveLast(list);
             list.Add(element);
         }
+        private void ReplaceLast(InlineCollection list, string text)
+        {
+            RemoveLast(list);
+            list.Add(new Run(text));
+        }
         private void ReplaceLast(TextBlock tb, Inline element)
         {
             SaveState(tb);
             ReplaceLast(tb.Inlines, element);
+        }
+        private void ReplaceLast(TextBlock tb, string text)
+        {
+            SaveState(tb);
+            ReplaceLast(tb.Inlines, text);
         }
         private void MakeBoldLast(InlineCollection list)
         {
@@ -352,15 +563,174 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tb);
             Add(tb.Inlines, element);
         }
+        private void Add(TextBlock tb, string element)
+        {
+            Add(tb, new Run(element));
+        }
         private void Clear(InlineCollection list)
         {
             list.Clear();
         }
-        private void Clear(TextBlock tb)
+        private void Clear(params TextBlock[] textblocks)
+        {
+            foreach(TextBlock tb in textblocks)
+            {
+                SaveState(tb);
+                Clear(tb.Inlines);
+            }
+        }
+        private void SetBackground(Border b, Brush background)
+        {
+            SaveState(b);
+            b.Background = background;
+        }
+        private void UnsetBackground(Border b)
+        {
+            SetBackground(b, Brushes.White);
+        }
+        private void SetBorderColor(Border b, Brush borderBrush)
+        {
+            SaveState(b);
+            b.BorderBrush = borderBrush;
+        }
+        private void SetBorderStroke(Border b, double stroke)
+        {
+            SaveState(b);
+            b.BorderThickness = new Thickness(stroke);
+        }
+        private void MarkBorder(Border b)
+        {
+            SetBorderColor(b, markBrush);
+            SetBorderStroke(b, 2);
+        }
+        private void UnmarkBorder(Border b)
+        {
+            SetBorderColor(b, Brushes.Black);
+            SetBorderStroke(b, 1);
+        }
+        private void SetShapeStrokeColor(Shape s, Brush brush)
+        {
+            SaveState(s);
+            s.Stroke = brush;
+        }
+        private void SetShapeStroke(Shape s, double stroke)
+        {
+            SaveState(s);
+            s.StrokeThickness = stroke;
+        }
+        private void MarkShape(Shape s)
+        {
+            SetShapeStrokeColor(s, markBrush);
+            SetShapeStroke(s, 2);
+        }
+        private void UnmarkShape(Shape s)
+        {
+            SetShapeStrokeColor(s, Brushes.Black);
+            SetShapeStroke(s, 1);
+        }
+        private void CopyLastText(TextBlock tbToCopyTo, TextBlock tbToCopyFrom)
+        {
+            SaveState(tbToCopyTo);
+            tbToCopyTo.Inlines.Add(((Run)(tbToCopyFrom.Inlines.LastInline)).Text);
+        }
+        private void SetVisible(TextBlock tb)
         {
             SaveState(tb);
-            Clear(tb.Inlines);
+            tb.Visibility = Visibility.Visible;
         }
+        private void SetInvisible(TextBlock tb)
+        {
+            SaveState(tb);
+            tb.Visibility = Visibility.Hidden;
+        }
+        #endregion
+
+        #region Page Action creators
+
+        public PageAction MarkCopyFromAction(Border[] borders)
+        {
+            return new PageAction(() =>
+            {
+                foreach (Border b in borders)
+                {
+                    SetBackground(b, copyBrush);
+                }
+            }, Undo);
+        }
+
+        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        {
+            return new PageAction(() =>
+            {
+                for (int i = 0; i < copyTo.Length; ++i)
+                {
+                    Border copyFromBorder = copyFrom[i];
+                    TextBlock copyFromTextBlock = (TextBlock)copyFromBorder.Child;
+                    Border copyToBorder = copyTo[i];
+                    TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
+                    SetBackground(copyToBorder, copyBrush);
+                    string text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
+                    if (replace) {
+                        ReplaceLast(copyToTextBlock, text);
+                    }
+                    else {
+                        Add(copyToTextBlock, text);
+                    }
+                }
+            }, Undo);
+        }
+
+        public PageAction UnmarkCopyAction(Border[] copyFrom, Border[] copyTo)
+        {
+            return new PageAction(() =>
+            {
+                foreach (Border b in copyFrom)
+                {
+                    UnsetBackground(b);
+                }
+                foreach (Border b in copyTo)
+                {
+                    UnsetBackground(b);
+                }
+            }, Undo);
+        }
+
+        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        {
+            Debug.Assert(copyFrom.Length == copyTo.Length);
+            PageAction mark = MarkCopyFromAction(copyFrom);
+            PageAction copy = CopyAction(copyFrom, copyTo, replace);
+            PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
+            return new PageAction[] { mark, copy, unmark };
+        }
+        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
+        {
+            PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
+            Action markPaths = () =>
+            {
+                foreach (Shape s in paths)
+                {
+                    s.StrokeThickness = 5;
+                }
+            };
+            Action undoMarkPaths = () =>
+            {
+                foreach (Shape s in paths)
+                {
+                    s.StrokeThickness = 1;
+                }
+            };
+            PageAction mark = copyActions[0];
+            mark.AddToExec(markPaths);
+            mark.AddToUndo(undoMarkPaths);
+            PageAction unmark = copyActions[2];
+            unmark.AddToExec(undoMarkPaths);
+            unmark.AddToUndo(markPaths);
+            return copyActions;
+        }
+        #endregion
+
+        #endregion
 
         #endregion
 
@@ -376,7 +746,10 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region Input
+        #region Visualization variables
+
+        #region Input variables
+
         private byte[] _constants = new byte[0];
         private byte[] _inputKey = new byte[0];
         private byte[] _inputIV = new byte[0];
@@ -543,6 +916,7 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8);
             }
         }
+
         private ChaCha.Version _version;
         public ChaCha.Version Version
         {
@@ -556,20 +930,133 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        private int _rounds;
+        public int Rounds
+        {
+            get
+            {
+                return _rounds;
+            }
+            set
+            {
+                _rounds = value;
+            }
+        }
+
         #endregion
 
-        #region ValueConversion
+        #region interim results
+
+        public enum ResultType
+        {
+            QR_INPUT_A, QR_INPUT_B, QR_INPUT_C, QR_INPUT_D,
+            QR_INPUT_X1, QR_INPUT_X2, QR_INPUT_X3,
+            QR_OUTPUT_X1, QR_OUTPUT_X2, QR_OUTPUT_X3,
+            QR_ADD_X1_X2, QR_XOR
+        }
+
+        #region interim results manager class
+        static class InterimResultsManager
+        {
+            private class InterimResultList
+            {
+                private List<uint> _results;
+                private ResultType _type;
+                public InterimResultList(ResultType type)
+                {
+                    _results = new List<uint>();
+                    _type = type;
+                }
+                public ResultType Type
+                {
+                    get
+                    {
+                        return _type;
+                    }
+                }
+                public string Hex(int index)
+                {
+                    return HexString(_results[index]);
+                }
+                public void Add(uint result)
+                {
+                    _results.Add(result);
+                }
+                public void Clear()
+                {
+                    _results.Clear();
+                }
+            }
+            private static List<InterimResultList> _interimResultsList = new List<InterimResultList>();
+            private static bool TypeExists(ResultType type)
+            {
+                return _interimResultsList.Exists(list => list.Type == type);
+            }
+            private static InterimResultList GetList(ResultType type)
+            {
+                if(!TypeExists(type))
+                {
+                    return null;
+                }
+                return _interimResultsList.Find(list => list.Type == type);
+            }
+            public static void Clear()
+            {
+                foreach(InterimResultList r in _interimResultsList)
+                {
+                    r.Clear();
+                }
+                _interimResultsList.Clear();
+            }
+            public static void AddResult(ResultType type, uint result)
+            {
+                if(!TypeExists(type))
+                {
+                    _interimResultsList.Add(new InterimResultList(type));
+                }
+                GetList(type).Add(result);
+            }
+            public static string Hex(ResultType type, int index)
+            {
+                InterimResultList list = GetList(type);
+                if (list == null)
+                {
+                    throw new ArgumentException("InterimResultList of type {0} does not exist", type.ToString());
+                }
+                return list.Hex(index);
+            }
+        }
+        public void AddResult(ResultType type, object result)
+        {
+            InterimResultsManager.AddResult(type, (uint)result);
+        }
+        public string GetHexResult(ResultType type, int index)
+        {
+            return InterimResultsManager.Hex(type, index);
+        }
+        public void clearResults()
+        {
+            InterimResultsManager.Clear();
+        }
+
+        #endregion
+
+        #endregion
+
+        #endregion
+
+        #region Visualization helper methods
 
 
         /* insert a space after every n characters */
-        private string Chunkify(string text, int n)
+        private static string Chunkify(string text, int n)
         {
             string pattern = string.Format(".{{{0}}}", n);
             return Regex.Replace(text, pattern, "$0 ");
         }
 
         /* print a hex presentation of the byte array*/
-        public string HexString(byte[] bytes, int offset, int length)
+        public static string HexString(byte[] bytes, int offset, int length)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = offset; i < offset + length; ++i)
@@ -579,17 +1066,17 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
 
-        public string HexString(byte[] bytes)
+        public static string HexString(byte[] bytes)
         {
             return HexString(bytes, 0, bytes.Length);
         }
 
-        public string HexString(uint u)
+        public static string HexString(uint u)
         {
             return HexString(ChaCha.GetBytes(u));
         }
         /* Write bytes as hex string with each 4 byte written in little-endian */
-        public string HexStringLittleEndian(byte[] bytes)
+        public static string HexStringLittleEndian(byte[] bytes)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i += 4)
@@ -601,10 +1088,17 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
     }
 
-    interface INavigationService<T>
+    #region NavigationInterface
+
+    // I wish I had variadic templates in C# like in C++11 ...
+    interface INavigationService<T1, T2, T3>
     {
         // Save state of each element such that we can retrieve it later for undoing action.
-        void SaveState(params T[] t);
+        void SaveState(params T1[] t);
+
+        void SaveState(params T2[] t);
+
+        void SaveState(params T3[] t);
 
         // Tells that current page action is finished and thus next calls to save state are for a new page action.
         void FinishPageAction();
@@ -615,4 +1109,6 @@ namespace Cryptool.Plugins.ChaCha
         // Execute automatic undoing of actions.
         void Undo();
     }
+
+    #endregion
 }

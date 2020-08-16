@@ -20,13 +20,8 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
-using System.Windows.Documents;
-using System.Diagnostics;
-using System.Security.Policy;
-using System.IO.Ports;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -60,6 +55,13 @@ namespace Cryptool.Plugins.ChaCha
         // ChaCha state consists of 16 32-bit integers
         private readonly uint[] initial_state = new uint[16];
 
+        #endregion
+
+        #region Public Variables
+
+        public static byte[] sigma = Encoding.ASCII.GetBytes("expand 32-byte k");
+        public static byte[] tau = Encoding.ASCII.GetBytes("expand 16-byte k");
+
         public sealed class Version
         {
             public static readonly Version IETF = new Version("IETF", 32, 96, 1);
@@ -77,13 +79,6 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        #endregion
-
-        #region Public Variables
-
-        public static byte[] sigma = Encoding.ASCII.GetBytes("expand 32-byte k");
-        public static byte[] tau = Encoding.ASCII.GetBytes("expand 16-byte k");
-        
         public ChaCha()
         {
             this.settings = new ChaChaSettings();
@@ -160,6 +155,10 @@ namespace Cryptool.Plugins.ChaCha
             get { return _presentation; }
         }
 
+        #endregion
+
+        #region ICrypComponent lifecycle methods
+
         /// <summary>
         /// Called once when workflow execution starts.
         /// </summary>
@@ -173,6 +172,14 @@ namespace Cryptool.Plugins.ChaCha
         public void Execute()
         {
             ProgressChanged(0, 1);
+
+            // clear all previous results (important if user started workflow, stopped and then restarted)
+            DispatchToPresentation(delegate
+            {
+                _presentation.clearResults();
+                _presentation.Version = settings.Version;
+                _presentation.Rounds = settings.Rounds;
+            });
 
             GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
 
@@ -197,30 +204,41 @@ namespace Cryptool.Plugins.ChaCha
             ProgressChanged(1, 1);
 
             // enable navigation since now all values needed for visualization are set.
-            _presentation.ExecutionFinished = true;
+            DispatchToPresentation(delegate { _presentation.ExecutionFinished = true; });
         }
 
-        /*
-         * Validates the given inputs.
-         */ 
-        public bool ValidateInput()
+        /// <summary>
+        /// Called once after workflow execution has stopped.
+        /// </summary>
+        public void PostExecution()
         {
-            string message = null;
-            if (_inputKey.Length != 32 && _inputKey.Length != 16)
-            {
-                message = "Key must be 32 or 16-byte.";
-            }
-            else if (_inputIV.Length != IVSIZE_BITS / 8)
-            {
-                message = string.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
-            }
-            if(message != null)
-            {
-                GuiLogMessage(message, NotificationLevel.Error);
-                return false;
-            }
-            return true;
         }
+
+        /// <summary>
+        /// Triggered time when user clicks stop button.
+        /// Shall abort long-running execution.
+        /// </summary>
+        public void Stop()
+        {
+        }
+
+        /// <summary>
+        /// Called once when plugin is loaded into editor workspace.
+        /// </summary>
+        public void Initialize()
+        {
+        }
+
+        /// <summary>
+        /// Called once when plugin is removed from editor workspace.
+        /// </summary>
+        public void Dispose()
+        {
+        }
+
+        #endregion
+
+        #region cipher methods
 
         /* 
          * Initialize the state of ChaCha which can be represented as a matrix.
@@ -282,7 +300,7 @@ namespace Cryptool.Plugins.ChaCha
                 stateOffset++;
             }
 
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, (SendOrPostCallback)delegate
+            DispatchToPresentation(delegate
             {
                 // set state params
                 _presentation.Constants = constants;
@@ -290,33 +308,14 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.InputIV = _inputIV;
                 _presentation.InputData = _inputData;
                 _presentation.InitialCounter = counter;
-            }, null);
-        }
-
-        /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
-        public static uint To4ByteLE(byte[] x, int offset)
-        {
-            byte b1 = x[offset];
-            byte b2 = x[offset + 1];
-            byte b3 = x[offset + 2];
-            byte b4 = x[offset + 3];
-
-            return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
-        }
-        public static uint To4ByteLE(uint x)
-        {
-            uint b1 = x >> 24;
-            uint b2 = (x >> 16) & 0xFF;
-            uint b3 = (x >> 8) & 0xFF;
-            uint b4 = x & 0xFF;
-            return b4 << 24 | b3 << 16 | b2 << 8 | b1;
+            });
         }
 
         /* XOR the input with the keystream which results in en- or decryption.*/
         public byte[] Xcrypt(byte[] src)
         {
             byte[] dst = new byte[src.Length];
-            int keystreamBlocksNeeded = (int) Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
+            int keystreamBlocksNeeded = (int)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
             byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
 
@@ -353,12 +352,158 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < hash.Length; ++i)
             {
                 byte[] stateEntryBytes = GetBytes(hash[i]);
-                keystreamBlock[4*i] = stateEntryBytes[0];
-                keystreamBlock[4*i+1] = stateEntryBytes[1];
-                keystreamBlock[4*i+2] = stateEntryBytes[2];
-                keystreamBlock[4*i+3] = stateEntryBytes[3];
+                keystreamBlock[4 * i] = stateEntryBytes[0];
+                keystreamBlock[4 * i + 1] = stateEntryBytes[1];
+                keystreamBlock[4 * i + 2] = stateEntryBytes[2];
+                keystreamBlock[4 * i + 3] = stateEntryBytes[3];
             }
             return keystreamBlock;
+        }
+
+        /* Generates the hash out of the input state block.*/
+        public uint[] ChaChaHash(uint[] state)
+        {
+            uint[] originalState = (uint[])(state.Clone());
+            for (int i = 0; i < settings.Rounds / 2; ++i)
+            {
+                // column round
+                state = QuarterroundState(state, 0, 4, 8, 12);
+                state = QuarterroundState(state, 1, 5, 9, 13);
+                state = QuarterroundState(state, 2, 6, 10, 14);
+                state = QuarterroundState(state, 3, 7, 11, 15);
+                // diagonal round
+                state = QuarterroundState(state, 0, 5, 10, 15);
+                state = QuarterroundState(state, 1, 6, 11, 12);
+                state = QuarterroundState(state, 2, 7, 8, 13);
+                state = QuarterroundState(state, 3, 4, 9, 14);
+            }
+            // add the original state
+            for (int i = 0; i < state.Length; ++i)
+            {
+                state[i] += originalState[i];
+            }
+            // each 4 byte chunk as little-endian
+            for (int i = 0; i < state.Length; ++i)
+            {
+                byte[] b = GetBytes(state[i]);
+                Array.Reverse(b);
+                state[i] = ToUInt32(b, 0);
+            }
+            return state;
+        }
+
+        /**
+         * Calculate the quarterround value of the state using the given indices.
+         */
+        public uint[] QuarterroundState(uint[] state, int i, int j, int k, int l)
+        {
+            uint[] qr = Quarterround(state[i], state[j], state[k], state[l]);
+            state[i] = qr[0];
+            state[j] = qr[1];
+            state[k] = qr[2];
+            state[l] = qr[3];
+            return state;
+        }
+
+        /**
+         * Calculate the quarterround value of the inputs.
+         */
+        public uint[] Quarterround(uint a, uint b, uint c, uint d)
+        {
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_A, a);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_B, b);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_C, c);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_D, d);
+            });
+            uint[] qrstep = quarterroundStep(a, b, d, 16);
+            a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
+            qrstep = quarterroundStep(c, d, b, 12);
+            c = qrstep[0]; d = qrstep[1]; b = qrstep[2];
+            qrstep = quarterroundStep(a, b, d, 8);
+            a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
+            qrstep = quarterroundStep(c, d, b, 7);
+            c = qrstep[0]; d = qrstep[1]; b = qrstep[2];
+            return new uint[] { a, b, c, d };
+        }
+
+        public uint[] quarterroundStep(uint x1, uint x2, uint x3, int shift)
+        {
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X1, x1);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X2, x2);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X3, x3);
+            });
+            x1 += x2; // x1 = x1 + x2
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_ADD_X1_X2, x1);
+            });
+            x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_XOR, x3);
+            });
+            x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X1, x1);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X2, x2);
+                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X3, x3);
+            });
+            return new uint[] { x1, x2, x3 };
+        }
+
+        #endregion
+
+        #region cipher helper methods
+
+        /*
+         * Validates the given inputs.
+         */
+        public bool ValidateInput()
+        {
+            string message = null;
+            if (_inputKey.Length != 32 && _inputKey.Length != 16)
+            {
+                message = "Key must be 32 or 16-byte.";
+            }
+            else if (_inputIV.Length != IVSIZE_BITS / 8)
+            {
+                message = string.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
+            }
+            if (message != null)
+            {
+                GuiLogMessage(message, NotificationLevel.Error);
+                return false;
+            }
+            return true;
+        }
+
+        private void DispatchToPresentation(SendOrPostCallback callback)
+        {
+            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, callback, null);
+        }
+
+        /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
+        public static uint To4ByteLE(byte[] x, int offset)
+        {
+            byte b1 = x[offset];
+            byte b2 = x[offset + 1];
+            byte b3 = x[offset + 2];
+            byte b4 = x[offset + 3];
+
+            return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
+        }
+        public static uint To4ByteLE(uint x)
+        {
+            uint b1 = x >> 24;
+            uint b2 = (x >> 16) & 0xFF;
+            uint b3 = (x >> 8) & 0xFF;
+            uint b4 = x & 0xFF;
+            return b4 << 24 | b3 << 16 | b2 << 8 | b1;
         }
 
         public void setCounterToState(uint[] state, ulong c)
@@ -415,110 +560,12 @@ namespace Cryptool.Plugins.ChaCha
             return BitConverter.ToUInt32(b, startIndex);
         }
 
-        /* Generates the hash out of the input state block.*/
-        public uint[] ChaChaHash(uint[] state)
-        {
-            uint[] originalState = (uint[])(state.Clone());
-            for (int i = 0; i < settings.Rounds / 2; ++i)
-            {
-                // column round
-                state = QuarterroundState(state, 0, 4, 8, 12);
-                state = QuarterroundState(state, 1, 5, 9, 13);
-                state = QuarterroundState(state, 2, 6, 10, 14);
-                state = QuarterroundState(state, 3, 7, 11, 15);
-                // diagonal round
-                state = QuarterroundState(state, 0, 5, 10, 15);
-                state = QuarterroundState(state, 1, 6, 11, 12);
-                state = QuarterroundState(state, 2, 7, 8, 13);
-                state = QuarterroundState(state, 3, 4, 9, 14);
-            }
-            // add the original state
-            for (int i = 0; i < state.Length; ++i)
-            {
-                state[i] += originalState[i];
-            }
-            // each 4 byte chunk as little-endian
-            for (int i = 0; i < state.Length; ++i)
-            {
-                byte[] b = GetBytes(state[i]);
-                Array.Reverse(b);
-                state[i] = ToUInt32(b, 0);
-            }
-            return state;
-        }
-
         /**
-         * Calculate the quarterround value of the state using the given indices.
-         */ 
-        public  uint[] QuarterroundState(uint[] state, int i, int j, int k, int l)
-        {
-            uint[] qr = Quarterround(state[i], state[j], state[k], state[l]);
-            state[i] = qr[0];
-            state[j] = qr[1];
-            state[k] = qr[2];
-            state[l] = qr[3];
-            return state;
-        }
-
-        public uint[] quarterroundStep(uint x1, uint x2, uint x3, int shift)
-        {
-            x1 += x2; // x1 = x1 + x2
-            x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
-            x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
-            return new uint[] { x1, x2, x3 };
-        }
-
-        /**
-         * Calculate the quarterround value of the inputs.
-         */
-        public uint[] Quarterround(uint a, uint b, uint c, uint d)
-        {
-            uint[] qrstep = quarterroundStep(a, b, d, 16);
-            a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
-            qrstep = quarterroundStep(c, d, b, 12);
-            c = qrstep[0]; d = qrstep[1]; b = qrstep[2];
-            qrstep = quarterroundStep(a, b, d, 8);
-            a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
-            qrstep = quarterroundStep(c, d, b, 7);
-            c = qrstep[0]; d = qrstep[1]; b = qrstep[2];
-            return new uint[] { a, b, c, d };
-        }
-
-        /**
-         * Circular shift to the left.
-         */ 
+        * Circular shift to the left.
+        */
         public uint RotateLeft(uint x, int shift)
         {
             return (x << shift) | (x >> -shift);
-        }
-
-        /// <summary>
-        /// Called once after workflow execution has stopped.
-        /// </summary>
-        public void PostExecution()
-        {
-        }
-
-        /// <summary>
-        /// Triggered time when user clicks stop button.
-        /// Shall abort long-running execution.
-        /// </summary>
-        public void Stop()
-        {
-        }
-
-        /// <summary>
-        /// Called once when plugin is loaded into editor workspace.
-        /// </summary>
-        public void Initialize()
-        {
-        }
-
-        /// <summary>
-        /// Called once when plugin is removed from editor workspace.
-        /// </summary>
-        public void Dispose()
-        {
         }
 
         #endregion
