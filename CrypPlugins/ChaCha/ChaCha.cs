@@ -267,38 +267,26 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             int stateOffset = 0;
-            for (int i = 0; 4 * i < constants.Length; ++i)
+            // Convenience method to abstract away state offset.
+            void addToState(uint value)
             {
-                uint le = To4ByteLE(constants, 0 + 4 * i);
-                initial_state[stateOffset] = le;
+                initial_state[stateOffset] = value;
                 stateOffset++;
             }
-            for (int i = 0; 4 * i < _inputKey.Length; ++i)
+            void add4ByteChunksToStateAsLittleEndian(byte[] toAdd)
             {
-                uint le = To4ByteLE(_inputKey, 0 + 4 * i);
-                initial_state[stateOffset] = le;
-                stateOffset++;
-            }
-            if (_inputKey.Length == 16)
-            {
-                for (int i = 0; 4 * i < _inputKey.Length; ++i)
+                for (int i = 0; 4 * i < toAdd.Length; ++i)
                 {
-                    uint le = To4ByteLE(_inputKey, 0 + 4 * i);
-                    initial_state[stateOffset] = le;
-                    stateOffset++;
+                    addToState(To4ByteLE(toAdd, 0 + 4 * i));
                 }
             }
+
+            add4ByteChunksToStateAsLittleEndian(constants);
+            add4ByteChunksToStateAsLittleEndian(_inputKey);
+            if(_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_inputKey);
             byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE_BITS / 8).ToArray();
-            for (int i = 0; 4 * i < counter.Length; ++i)
-            {
-                initial_state[stateOffset] = To4ByteLE(counter, 0 + 4 * i);
-                stateOffset++;
-            }
-            for (int i = 0; 4 * i < InputIV.Length; ++i)
-            {
-                initial_state[stateOffset] = To4ByteLE(InputIV, 0 + 4 * i);
-                stateOffset++;
-            }
+            add4ByteChunksToStateAsLittleEndian(counter);
+            add4ByteChunksToStateAsLittleEndian(InputIV);
 
             DispatchToPresentation(delegate
             {
@@ -318,16 +306,20 @@ namespace Cryptool.Plugins.ChaCha
             int keystreamBlocksNeeded = (int)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
             byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
-
+            // Convenience method to abstract away keystream offset.
+            void addToKeystream(byte[] block)
+            {
+                for (int i = 0; i < block.Length; ++i)
+                {
+                    keystream[keystreamBlocksOffset] = block[i];
+                    keystreamBlocksOffset++;
+                }
+            }
             for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
                 byte[] keyblock = GenerateKeystreamBlock(i);
                 // add each byte of keyblock to keystream
-                for (int j = 0; j < keyblock.Length; ++j)
-                {
-                    keystream[keystreamBlocksOffset] = keyblock[j];
-                    keystreamBlocksOffset++;
-                }
+                addToKeystream(keyblock);
             }
             // XOR the input with the keystream
             for (int i = 0; i < src.Length; ++i)
@@ -397,18 +389,14 @@ namespace Cryptool.Plugins.ChaCha
          */
         public uint[] QuarterroundState(uint[] state, int i, int j, int k, int l)
         {
-            uint[] qr = Quarterround(state[i], state[j], state[k], state[l]);
-            state[i] = qr[0];
-            state[j] = qr[1];
-            state[k] = qr[2];
-            state[l] = qr[3];
+            (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
             return state;
         }
 
         /**
          * Calculate the quarterround value of the inputs.
          */
-        public uint[] Quarterround(uint a, uint b, uint c, uint d)
+        public (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
             DispatchToPresentation(delegate
             {
@@ -417,43 +405,38 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_C, c);
                 _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_D, d);
             });
-            uint[] qrstep = quarterroundStep(a, b, d, 16);
-            a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
-            qrstep = quarterroundStep(c, d, b, 12);
-            c = qrstep[0]; d = qrstep[1]; b = qrstep[2];
-            qrstep = quarterroundStep(a, b, d, 8);
-            a = qrstep[0]; b = qrstep[1]; d = qrstep[2];
-            qrstep = quarterroundStep(c, d, b, 7);
-            c = qrstep[0]; d = qrstep[1]; b = qrstep[2];
-            return new uint[] { a, b, c, d };
-        }
-
-        public uint[] quarterroundStep(uint x1, uint x2, uint x3, int shift)
-        {
-            DispatchToPresentation(delegate
+            (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
             {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X1, x1);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X2, x2);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X3, x3);
-            });
-            x1 += x2; // x1 = x1 + x2
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_ADD_X1_X2, x1);
-            });
-            x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_XOR, x3);
-            });
-            x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X1, x1);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X2, x2);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X3, x3);
-            });
-            return new uint[] { x1, x2, x3 };
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X1, x1);
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X2, x2);
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X3, x3);
+                });
+                x1 += x2; // x1 = x1 + x2
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_ADD_X1_X2, x1);
+                });
+                x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_XOR, x3);
+                });
+                x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X1, x1);
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X2, x2);
+                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X3, x3);
+                });
+                return (x1, x2, x3);
+            }
+            (a, b, d) = quarterroundStep(a, b, d, 16);
+            (c, d, b) = quarterroundStep(c, d, b, 12);
+            (a, b, d) = quarterroundStep(a, b, d, 8);
+            (c, d, b) = quarterroundStep(c, d, b, 7);
+            return (a, b, c, d);
         }
 
         #endregion
