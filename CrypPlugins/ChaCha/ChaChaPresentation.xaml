@@ -41,7 +41,7 @@
       </StackPanel>
     </Grid>
     <!-- Main grid for content pane -->
-    <Grid Name="UIContentPane">
+    <Grid Margin="20" Name="UIContentPane">
       <Grid.LayoutTransform>
         <ScaleTransform ScaleX="1" ScaleY="1" />
       </Grid.LayoutTransform>
@@ -57,7 +57,7 @@
         </StackPanel>
       </Grid>
       <!-- ChaCha workflow page -->
-      <Grid Margin="20" Name="UIWorkflowPage" Visibility="Collapsed">
+      <Grid Name="UIWorkflowPage" Visibility="Collapsed">
         <Grid.RowDefinitions>
           <RowDefinition Height="50" />
           <RowDefinition />
@@ -103,7 +103,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha State matrix page -->
-      <Grid Margin="20" Name="UIStateMatrixPage" Visibility="Collapsed">
+      <Grid Name="UIStateMatrixPage" Visibility="Collapsed">
         <Grid.RowDefinitions>
           <RowDefinition Height="50" />
           <RowDefinition />
@@ -245,7 +245,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha Generate Keystream block page -->
-      <Grid Margin="20" Name="UIKeystreamBlockGenPage" Visibility="Visible">
+      <Grid Name="UIKeystreamBlockGenPage" Visibility="Visible">
         <Grid.RowDefinitions>
           <RowDefinition Height="50" />
           <RowDefinition />
