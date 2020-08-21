@@ -45,9 +45,6 @@
     </Grid>
     <!-- Main grid for content pane -->
     <Grid Margin="20" Name="UIContentPane">
-      <Grid.LayoutTransform>
-        <ScaleTransform ScaleX="1" ScaleY="1" />
-      </Grid.LayoutTransform>
       <!-- Landing page -->
       <Grid Name="UILandingPage" Visibility="Collapsed">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
