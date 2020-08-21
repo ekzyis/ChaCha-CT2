@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:Cryptool.Plugins.ChaCha"
              mc:Ignorable="d"
              d:DesignHeight="675" d:DesignWidth="1600" MinHeight="400" MinWidth="800"
-             Background="White">
+             Width="1600"
+             Background="White"
+             Name="UserControl">
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <UserControl.Resources>
     <Style TargetType="TextBlock">
@@ -39,7 +41,10 @@
       </StackPanel>
     </Grid>
     <!-- Main grid for content pane -->
-    <Grid Name="UIContentPane">
+    <Grid Name="UIContentPane" Width="{ Binding ElementName=UserControl, Path=Width }">
+      <Grid.LayoutTransform>
+        <ScaleTransform ScaleX="1" ScaleY="1" />
+      </Grid.LayoutTransform>
       <!-- Landing page -->
       <Grid Name="UILandingPage" Visibility="Collapsed">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
