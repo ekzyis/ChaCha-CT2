@@ -393,10 +393,8 @@
           </Grid>
           <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
-              <RowDefinition Height="40"/>
               <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Quarterround</TextBlock>
             <!-- Quarterround visualization -->
             <Canvas Grid.Row="1">
               <Canvas Canvas.Top="30">
