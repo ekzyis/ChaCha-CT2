@@ -21,6 +21,9 @@
     <Style x:Key="hexLabel" TargetType="Label">
       <Setter Property="FontFamily" Value="Courier New" />
     </Style>
+    <Style x:Key="title" TargetType="RowDefinition">
+      <Setter Property="Height" Value="50"/>
+    </Style>
   </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
@@ -59,7 +62,7 @@
       <!-- ChaCha workflow page -->
       <Grid Name="UIWorkflowPage" Visibility="Collapsed">
         <Grid.RowDefinitions>
-          <RowDefinition Height="50" />
+          <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">ChaCha workflow</TextBlock>
@@ -105,7 +108,7 @@
       <!-- ChaCha State matrix page -->
       <Grid Name="UIStateMatrixPage" Visibility="Collapsed">
         <Grid.RowDefinitions>
-          <RowDefinition Height="50" />
+          <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">State matrix</TextBlock>
@@ -247,7 +250,7 @@
       <!-- ChaCha Generate Keystream block page -->
       <Grid Name="UIKeystreamBlockGenPage" Visibility="Visible">
         <Grid.RowDefinitions>
-          <RowDefinition Height="50" />
+          <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Generate Keystream Block</TextBlock>
