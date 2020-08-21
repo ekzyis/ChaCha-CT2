@@ -339,15 +339,15 @@
           <Grid Grid.Column="1" Grid.Row="0" Margin="20,0,0,0">
             <Grid>
               <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <TextBlock>Round:</TextBlock>
