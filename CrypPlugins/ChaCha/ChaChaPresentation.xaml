@@ -22,7 +22,7 @@
       <Setter Property="FontFamily" Value="Courier New" />
     </Style>
     <Style x:Key="title" TargetType="RowDefinition">
-      <Setter Property="Height" Value="50"/>
+      <Setter Property="Height" Value="35"/>
     </Style>
   </UserControl.Resources>
   <Grid>
