@@ -397,7 +397,7 @@
             </Grid.RowDefinitions>
             <!-- Quarterround visualization -->
             <Canvas Grid.Row="1">
-              <Canvas Canvas.Top="30">
+              <Canvas Canvas.Top="30" Canvas.Left="-50">
                 <Border Width="65" Height="40" Name="QRInACell" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="50" Canvas.Top="-20">
                   <TextBlock Style="{StaticResource hex}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
