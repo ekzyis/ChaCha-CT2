@@ -973,13 +973,6 @@
           </Grid>
         </Grid>
       </Grid>
-      <!-- Quarterround page -->
-      <Grid HorizontalAlignment="Center" Height="200" Width="1600" Name="UIQuarterroundPage" Visibility="Collapsed">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="200"/>
-        </Grid.RowDefinitions>
-       
-      </Grid>
     </Grid>
   </Grid>
 </UserControl>
