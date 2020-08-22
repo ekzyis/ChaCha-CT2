@@ -183,6 +183,10 @@ namespace Cryptool.Plugins.ChaCha
             IVSIZE_BITS = settings.Version.BitsIV;
             INITIAL_COUNTER = settings.Version.InitialCounter;
 
+            Console.WriteLine(String.Format("Rounds: {0}, Counter size: {1}", settings.Rounds, COUNTERSIZE_BITS / 8));
+            Console.WriteLine(String.Format("Expected: Key size: 16 or 32, IV size: {0}", IVSIZE_BITS / 8));
+            Console.WriteLine(String.Format("Actual: Key size: {0}, IV size: {1}", InputKey.Length, InputIV.Length));
+
             if (ValidateInput())
             {
                 InitStateMatrix();
