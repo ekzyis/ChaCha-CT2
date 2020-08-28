@@ -55,7 +55,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execOutX1 = new PageAction(() =>
             {
-                nav.Add((RichTextBox)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((TextBlock)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkOutX1 = new PageAction(() =>
             {
@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execOutX2 = new PageAction(() =>
             {
-                nav.Add((RichTextBox)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((TextBlock)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkOutX2 = new PageAction(() =>
             {
@@ -107,7 +107,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execXOR = new PageAction(() =>
             {
-                nav.Add((RichTextBox)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((TextBlock)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkXOR = new PageAction(() =>
             {
@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execShift = new PageAction(() =>
             {
-                nav.Add((RichTextBox)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((TextBlock)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkShift = new PageAction(() =>
             {
@@ -272,13 +272,13 @@ namespace Cryptool.Plugins.ChaCha
                 nav.Clear(QROutA, QROutB, QROutC, QROutD);
                 for(int i = 1; i <= 4; ++i)
                 {
-                    nav.Clear((RichTextBox)GetIndexElement("QRInX1", i));
-                    nav.Clear((RichTextBox)GetIndexElement("QRInX2", i));
-                    nav.Clear((RichTextBox)GetIndexElement("QRInX3", i));
-                    nav.Clear((RichTextBox)GetIndexElement("QROutX1", i));
-                    nav.Clear((RichTextBox)GetIndexElement("QROutX2", i));
-                    nav.Clear((RichTextBox)GetIndexElement("QROutX3", i));
-                    nav.Clear((RichTextBox)GetIndexElement("QRXOR", i));
+                    nav.Clear((TextBlock)GetIndexElement("QRInX1", i));
+                    nav.Clear((TextBlock)GetIndexElement("QRInX2", i));
+                    nav.Clear((TextBlock)GetIndexElement("QRInX3", i));
+                    nav.Clear((TextBlock)GetIndexElement("QROutX1", i));
+                    nav.Clear((TextBlock)GetIndexElement("QROutX2", i));
+                    nav.Clear((TextBlock)GetIndexElement("QROutX3", i));
+                    nav.Clear((TextBlock)GetIndexElement("QRXOR", i));
                 }
             }, nav.Undo);
         }
