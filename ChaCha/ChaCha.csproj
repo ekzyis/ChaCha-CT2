@@ -81,6 +81,7 @@
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChaChaSettings.cs" />
+    <Compile Include="Navigation.cs" />
     <Compile Include="Pages\KeystreamBlockGenPage.cs" />
     <Compile Include="Pages\LandingPage.cs" />
     <Compile Include="Pages\StateMatrixPage.cs" />

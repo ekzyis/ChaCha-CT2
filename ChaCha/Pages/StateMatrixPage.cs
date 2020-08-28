@@ -16,31 +16,31 @@ namespace Cryptool.Plugins.ChaCha
             PageAction constantsStepDescriptionAction = new PageAction(() =>
             {
                 string desc = "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ";
-                Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
-            }, Undo);
+                nav.AddBold(UIStateMatrixStepDescription, desc);
+            }, nav.Undo);
             PageAction constantsInputAction = new PageAction(() =>
             {
-                UnboldLast(UIStateMatrixStepDescription);
-                Add(UITransformInput, MakeBold(new Run(HexConstants)));
-            }, Undo);
+                nav.UnboldLast(UIStateMatrixStepDescription);
+                nav.AddBold(UITransformInput, HexConstants);
+            }, nav.Undo);
             PageAction constantsChunksAction = new PageAction(() =>
             {
-                UnboldLast(UITransformInput);
-                Add(UITransformChunks, MakeBold(new Run(ConstantsChunks)));
-            }, Undo);
+                nav.UnboldLast(UITransformInput);
+                nav.AddBold(UITransformChunks, ConstantsChunks);
+            }, nav.Undo);
             PageAction constantsLittleEndianAction = new PageAction(() =>
             {
-                UnboldLast(UITransformChunks);
-                Add(UITransformLittleEndian, MakeBold(new Run(ConstantsLittleEndian)));
-            }, Undo);
+                nav.UnboldLast(UITransformChunks);
+                nav.AddBold(UITransformLittleEndian, ConstantsLittleEndian);
+            }, nav.Undo);
             PageAction addConstantsToStateAction = new PageAction(() =>
             {
-                UnboldLast(UITransformLittleEndian);
-                Add(UIState0, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(0, 8))));
-                Add(UIState1, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(8, 8))));
-                Add(UIState2, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(16, 8))));
-                Add(UIState3, MakeBold(new Run(ConstantsLittleEndian.Replace(" ", "").Substring(24, 8))));
-            }, Undo);
+                nav.UnboldLast(UITransformLittleEndian);
+                nav.Replace(UIState0, ConstantsLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIState1, ConstantsLittleEndian.Replace(" ", "").Substring(8, 8));
+                nav.Replace(UIState2, ConstantsLittleEndian.Replace(" ", "").Substring(16, 8));
+                nav.Replace(UIState3, ConstantsLittleEndian.Replace(" ", "").Substring(24, 8));
+            }, nav.Undo);
             p.AddAction(constantsStepDescriptionAction);
             p.AddAction(constantsInputAction);
             p.AddAction(constantsChunksAction);
@@ -51,43 +51,38 @@ namespace Cryptool.Plugins.ChaCha
             PageAction keyStepDescriptionAction = new PageAction(() =>
             {
                 string desc = "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ";
-                Run r = MakeBold(new Run(desc));
-                Add(UIStateMatrixStepDescription, r);
-                Clear(UITransformInput);
-                Clear(UITransformChunks);
-                Clear(UITransformLittleEndian);
-                UnboldLast(UIState0);
-                UnboldLast(UIState1);
-                UnboldLast(UIState2);
-                UnboldLast(UIState3);
-            }, Undo);
+                nav.AddBold(UIStateMatrixStepDescription, desc);
+                nav.Clear(UITransformInput);
+                nav.Clear(UITransformChunks);
+                nav.Clear(UITransformLittleEndian);
+            }, nav.Undo);
             PageAction keyInputAction = new PageAction(() =>
             {
-                UnboldLast(UIStateMatrixStepDescription);
-                Add(UITransformInput, MakeBold(new Run(HexInputKey)));
-            }, Undo);
+                nav.UnboldLast(UIStateMatrixStepDescription);
+                nav.AddBold(UITransformInput, HexInputKey);
+            }, nav.Undo);
             PageAction keyChunksAction = new PageAction(() =>
             {
-                UnboldLast(UITransformInput);
-                Add(UITransformChunks, MakeBold(new Run(KeyChunks)));
-            }, Undo);
+                nav.UnboldLast(UITransformInput);
+                nav.AddBold(UITransformChunks, KeyChunks);
+            }, nav.Undo);
             PageAction keyLittleEndianAction = new PageAction(() =>
             {
-                UnboldLast(UITransformChunks);
-                Add(UITransformLittleEndian, MakeBold(new Run(KeyLittleEndian)));
-            }, Undo);
+                nav.UnboldLast(UITransformChunks);
+                nav.AddBold(UITransformLittleEndian, KeyLittleEndian);
+            }, nav.Undo);
             PageAction addKeyToStateAction = new PageAction(() =>
             {
-                UnboldLast(UITransformLittleEndian);
-                Add(UIState4, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(0, 8))));
-                Add(UIState5, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(8, 8))));
-                Add(UIState6, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(16, 8))));
-                Add(UIState7, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(24, 8))));
-                Add(UIState8, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8))));
-                Add(UIState9, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8))));
-                Add(UIState10, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8))));
-                Add(UIState11, MakeBold(new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8))));
-            }, Undo);
+                nav.UnboldLast(UITransformLittleEndian);
+                nav.Replace(UIState4, KeyLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIState5, KeyLittleEndian.Replace(" ", "").Substring(8, 8));
+                nav.Replace(UIState6, KeyLittleEndian.Replace(" ", "").Substring(16, 8));
+                nav.Replace(UIState7, KeyLittleEndian.Replace(" ", "").Substring(24, 8));
+                nav.Replace(UIState8, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8));
+                nav.Replace(UIState9, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8));
+                nav.Replace(UIState10, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8));
+                nav.Replace(UIState11, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8));
+            }, nav.Undo);
             p.AddAction(keyStepDescriptionAction);
             p.AddAction(keyInputAction);
             p.AddAction(keyChunksAction);
@@ -100,45 +95,36 @@ namespace Cryptool.Plugins.ChaCha
                 string desc = string.Format(
                     "The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", InputIV.Length
                 ) + "First, we add the IV to the state. ";
-                Run r = MakeBold(new Run(desc));
-                Add(UIStateMatrixStepDescription, r);
-                Clear(UITransformInput);
-                Clear(UITransformChunks);
-                Clear(UITransformLittleEndian);
-                UnboldLast(UIState4);
-                UnboldLast(UIState5);
-                UnboldLast(UIState6);
-                UnboldLast(UIState7);
-                UnboldLast(UIState8);
-                UnboldLast(UIState9);
-                UnboldLast(UIState10);
-                UnboldLast(UIState11);
-            }, Undo);
+                nav.AddBold(UIStateMatrixStepDescription, desc);
+                nav.Clear(UITransformInput);
+                nav.Clear(UITransformChunks);
+                nav.Clear(UITransformLittleEndian);
+            }, nav.Undo);
             PageAction ivInputAction = new PageAction(() =>
             {
-                UnboldLast(UIStateMatrixStepDescription);
-                Add(UITransformInput, MakeBold(new Run(HexInputIV)));
-            }, Undo);
+                nav.UnboldLast(UIStateMatrixStepDescription);
+                nav.AddBold(UITransformInput, HexInputIV);
+            }, nav.Undo);
             PageAction ivChunksAction = new PageAction(() =>
             {
-                UnboldLast(UITransformInput);
-                Add(UITransformChunks, MakeBold(new Run(IVChunks)));
-            }, Undo);
+                nav.UnboldLast(UITransformInput);
+                nav.AddBold(UITransformChunks, IVChunks);
+            }, nav.Undo);
             PageAction ivLittleEndianAction = new PageAction(() =>
             {
-                UnboldLast(UITransformChunks);
-                Add(UITransformLittleEndian, MakeBold(new Run(IVLittleEndian)));
-            }, Undo);
+                nav.UnboldLast(UITransformChunks);
+                nav.AddBold(UITransformLittleEndian, IVLittleEndian);
+            }, nav.Undo);
             PageAction addIvToStateAction = new PageAction(() =>
             {
-                UnboldLast(UITransformLittleEndian);
+                nav.UnboldLast(UITransformLittleEndian);
                 if (!versionIsDJB)
                 {
-                    Add(UIState13, MakeBold(new Run(IVLittleEndian.Replace(" ", "").Substring(0, 8))));
+                    nav.Replace(UIState13, IVLittleEndian.Replace(" ", "").Substring(0, 8));
                 }
-                Add(UIState14, MakeBold(new Run(IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8))));
-                Add(UIState15, MakeBold(new Run(IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8))));
-            }, Undo);
+                nav.Replace(UIState14, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8));
+                nav.Replace(UIState15, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8));
+            }, nav.Undo);
             p.AddAction(ivStepDescriptionAction);
             p.AddAction(ivInputAction);
             p.AddAction(ivChunksAction);
@@ -149,41 +135,35 @@ namespace Cryptool.Plugins.ChaCha
             PageAction counterStepDescriptionAction = new PageAction(() =>
             {
                 string desc = "And then the counter. Since this is our first keystream block, we set the counter to 0. ";
-                Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
-                Clear(UITransformInput);
-                Clear(UITransformChunks);
-                Clear(UITransformLittleEndian);
-                if (!versionIsDJB)
-                {
-                    UnboldLast(UIState13);
-                }
-                UnboldLast(UIState14);
-                UnboldLast(UIState15);
-            }, Undo);
+                nav.AddBold(UIStateMatrixStepDescription, desc);
+                nav.Clear(UITransformInput);
+                nav.Clear(UITransformChunks);
+                nav.Clear(UITransformLittleEndian);
+            }, nav.Undo);
             PageAction counterInputAction = new PageAction(() =>
             {
-                UnboldLast(UIStateMatrixStepDescription);
-                Add(UITransformInput, MakeBold(new Run(HexInitialCounter)));
-            }, Undo);
+                nav.UnboldLast(UIStateMatrixStepDescription);
+                nav.AddBold(UITransformInput, HexInitialCounter);
+            }, nav.Undo);
             PageAction counterChunksAction = new PageAction(() =>
             {
-                UnboldLast(UITransformInput);
-                Add(UITransformChunks, MakeBold(new Run(InitialCounterChunks)));
-            }, Undo);
+                nav.UnboldLast(UITransformInput);
+                nav.AddBold(UITransformChunks, InitialCounterChunks);
+            }, nav.Undo);
             PageAction counterLittleEndianAction = new PageAction(() =>
             {
-                UnboldLast(UITransformChunks);
-                Add(UITransformLittleEndian, MakeBold(new Run(InitialCounterLittleEndian)));
-            }, Undo);
+                nav.UnboldLast(UITransformChunks);
+                nav.AddBold(UITransformLittleEndian, InitialCounterLittleEndian);
+            }, nav.Undo);
             PageAction addCounterToStateAction = new PageAction(() =>
             {
-                UnboldLast(UITransformLittleEndian);
-                Add(UIState12, MakeBold(new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8))));
+                nav.UnboldLast(UITransformLittleEndian);
+                nav.Replace(UIState12, InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8));
                 if (versionIsDJB)
                 {
-                    Add(UIState13, MakeBold(new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8))));
+                    nav.Replace(UIState13, InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8));
                 }
-            }, Undo);
+            }, nav.Undo);
             p.AddAction(counterStepDescriptionAction);
             p.AddAction(counterInputAction);
             p.AddAction(counterChunksAction);
@@ -192,16 +172,11 @@ namespace Cryptool.Plugins.ChaCha
             PageAction nextPageDesc = new PageAction(() =>
             {
                 string desc = "On the next page, we will use this initialized state matrix to generate the first keystream block.";
-                Add(UIStateMatrixStepDescription, MakeBold(new Run(desc)));
-                Clear(UITransformInput);
-                Clear(UITransformChunks);
-                Clear(UITransformLittleEndian);
-                UnboldLast(UIState12);
-                if (versionIsDJB)
-                {
-                    UnboldLast(UIState13);
-                };
-            }, Undo);
+                nav.AddBold(UIStateMatrixStepDescription, desc);
+                nav.Clear(UITransformInput);
+                nav.Clear(UITransformChunks);
+                nav.Clear(UITransformLittleEndian);
+            }, nav.Undo);
             p.AddAction(nextPageDesc);
             #endregion
             return p;          
