@@ -383,18 +383,40 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 0; i < copyTo.Length; ++i)
                 {
                     Border copyFromBorder = copyFrom[i];
-                    TextBlock copyFromTextBlock = (TextBlock)copyFromBorder.Child;
-                    Border copyToBorder = copyTo[i];
-                    TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
-                    nav.SetCopyBackground(copyToBorder);
-                    string text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
-                    if (replace)
+                    if(copyFromBorder.Child is TextBlock copyFromTextBlock)
                     {
-                        nav.ReplaceLast(copyToTextBlock, text);
+                        Border copyToBorder = copyTo[i];
+                        TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
+                        nav.SetCopyBackground(copyToBorder);
+                        string text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
+                        if (replace)
+                        {
+                            nav.ReplaceLast(copyToTextBlock, text);
+                        }
+                        else
+                        {
+                            nav.Add(copyToTextBlock, text);
+                        }
+                    }
+                    else if(copyFromBorder.Child is RichTextBox copyFromRichTextBox)
+                    {
+                        Border copyToBorder = copyTo[i];
+                        RichTextBox copyToRichTextBox = (RichTextBox)copyToBorder.Child;
+                        nav.SetCopyBackground(copyToBorder);
+                        TextRange textRange = new TextRange(copyFromRichTextBox.Document.ContentStart, copyFromRichTextBox.Document.ContentEnd);
+                        string text = textRange.Text;
+                        if (replace)
+                        {
+                            nav.Replace(copyToRichTextBox, text);
+                        }
+                        else
+                        {
+                            nav.Add(copyToRichTextBox, text);
+                        }
                     }
                     else
                     {
-                        nav.Add(copyToTextBlock, text);
+                        Debug.Assert(false, "Invalid child type of border for CopyAction.");
                     }
                 }
             }, nav.Undo);
