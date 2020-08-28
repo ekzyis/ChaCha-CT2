@@ -55,7 +55,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execOutX1 = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((RichTextBox)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkOutX1 = new PageAction(() =>
             {
@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execOutX2 = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((RichTextBox)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkOutX2 = new PageAction(() =>
             {
@@ -107,7 +107,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execXOR = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((RichTextBox)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkXOR = new PageAction(() =>
             {
@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execShift = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
+                nav.Add((RichTextBox)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkShift = new PageAction(() =>
             {
