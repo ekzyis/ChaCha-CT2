@@ -36,10 +36,10 @@ namespace Cryptool.Plugins.ChaCha
             PageAction addConstantsToStateAction = new PageAction(() =>
             {
                 nav.UnboldLast(UITransformLittleEndian);
-                nav.AddBold(UIState0, ConstantsLittleEndian.Replace(" ", "").Substring(0, 8));
-                nav.AddBold(UIState1, ConstantsLittleEndian.Replace(" ", "").Substring(8, 8));
-                nav.AddBold(UIState2, ConstantsLittleEndian.Replace(" ", "").Substring(16, 8));
-                nav.AddBold(UIState3, ConstantsLittleEndian.Replace(" ", "").Substring(24, 8));
+                nav.Replace(UIState0, ConstantsLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIState1, ConstantsLittleEndian.Replace(" ", "").Substring(8, 8));
+                nav.Replace(UIState2, ConstantsLittleEndian.Replace(" ", "").Substring(16, 8));
+                nav.Replace(UIState3, ConstantsLittleEndian.Replace(" ", "").Substring(24, 8));
             }, nav.Undo);
             p.AddAction(constantsStepDescriptionAction);
             p.AddAction(constantsInputAction);
@@ -55,10 +55,6 @@ namespace Cryptool.Plugins.ChaCha
                 nav.Clear(UITransformInput);
                 nav.Clear(UITransformChunks);
                 nav.Clear(UITransformLittleEndian);
-                nav.UnboldLast(UIState0);
-                nav.UnboldLast(UIState1);
-                nav.UnboldLast(UIState2);
-                nav.UnboldLast(UIState3);
             }, nav.Undo);
             PageAction keyInputAction = new PageAction(() =>
             {
@@ -78,14 +74,14 @@ namespace Cryptool.Plugins.ChaCha
             PageAction addKeyToStateAction = new PageAction(() =>
             {
                 nav.UnboldLast(UITransformLittleEndian);
-                nav.AddBold(UIState4, KeyLittleEndian.Replace(" ", "").Substring(0, 8));
-                nav.AddBold(UIState5, KeyLittleEndian.Replace(" ", "").Substring(8, 8));
-                nav.AddBold(UIState6, KeyLittleEndian.Replace(" ", "").Substring(16, 8));
-                nav.AddBold(UIState7, KeyLittleEndian.Replace(" ", "").Substring(24, 8));
-                nav.AddBold(UIState8, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8));
-                nav.AddBold(UIState9, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8));
-                nav.AddBold(UIState10, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8));
-                nav.AddBold(UIState11, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8));
+                nav.Replace(UIState4, KeyLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIState5, KeyLittleEndian.Replace(" ", "").Substring(8, 8));
+                nav.Replace(UIState6, KeyLittleEndian.Replace(" ", "").Substring(16, 8));
+                nav.Replace(UIState7, KeyLittleEndian.Replace(" ", "").Substring(24, 8));
+                nav.Replace(UIState8, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8));
+                nav.Replace(UIState9, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8));
+                nav.Replace(UIState10, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8));
+                nav.Replace(UIState11, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8));
             }, nav.Undo);
             p.AddAction(keyStepDescriptionAction);
             p.AddAction(keyInputAction);
@@ -103,14 +99,6 @@ namespace Cryptool.Plugins.ChaCha
                 nav.Clear(UITransformInput);
                 nav.Clear(UITransformChunks);
                 nav.Clear(UITransformLittleEndian);
-                nav.UnboldLast(UIState4);
-                nav.UnboldLast(UIState5);
-                nav.UnboldLast(UIState6);
-                nav.UnboldLast(UIState7);
-                nav.UnboldLast(UIState8);
-                nav.UnboldLast(UIState9);
-                nav.UnboldLast(UIState10);
-                nav.UnboldLast(UIState11);
             }, nav.Undo);
             PageAction ivInputAction = new PageAction(() =>
             {
@@ -132,10 +120,10 @@ namespace Cryptool.Plugins.ChaCha
                 nav.UnboldLast(UITransformLittleEndian);
                 if (!versionIsDJB)
                 {
-                    nav.AddBold(UIState13, IVLittleEndian.Replace(" ", "").Substring(0, 8));
+                    nav.Replace(UIState13, IVLittleEndian.Replace(" ", "").Substring(0, 8));
                 }
-                nav.AddBold(UIState14, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8));
-                nav.AddBold(UIState15, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8));
+                nav.Replace(UIState14, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8));
+                nav.Replace(UIState15, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8));
             }, nav.Undo);
             p.AddAction(ivStepDescriptionAction);
             p.AddAction(ivInputAction);
@@ -151,12 +139,6 @@ namespace Cryptool.Plugins.ChaCha
                 nav.Clear(UITransformInput);
                 nav.Clear(UITransformChunks);
                 nav.Clear(UITransformLittleEndian);
-                if (!versionIsDJB)
-                {
-                    nav.UnboldLast(UIState13);
-                }
-                nav.UnboldLast(UIState14);
-                nav.UnboldLast(UIState15);
             }, nav.Undo);
             PageAction counterInputAction = new PageAction(() =>
             {
@@ -176,10 +158,10 @@ namespace Cryptool.Plugins.ChaCha
             PageAction addCounterToStateAction = new PageAction(() =>
             {
                 nav.UnboldLast(UITransformLittleEndian);
-                nav.AddBold(UIState12, InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIState12, InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8));
                 if (versionIsDJB)
                 {
-                    nav.AddBold(UIState13, InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8));
+                    nav.Replace(UIState13, InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8));
                 }
             }, nav.Undo);
             p.AddAction(counterStepDescriptionAction);
@@ -190,15 +172,10 @@ namespace Cryptool.Plugins.ChaCha
             PageAction nextPageDesc = new PageAction(() =>
             {
                 string desc = "On the next page, we will use this initialized state matrix to generate the first keystream block.";
-                nav.Add(UIStateMatrixStepDescription, desc);
+                nav.AddBold(UIStateMatrixStepDescription, desc);
                 nav.Clear(UITransformInput);
                 nav.Clear(UITransformChunks);
                 nav.Clear(UITransformLittleEndian);
-                nav.UnboldLast(UIState12);
-                if (versionIsDJB)
-                {
-                    nav.UnboldLast(UIState13);
-                };
             }, nav.Undo);
             p.AddAction(nextPageDesc);
             #endregion

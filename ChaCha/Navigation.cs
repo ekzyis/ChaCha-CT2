@@ -383,12 +383,29 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 0; i < copyTo.Length; ++i)
                 {
                     Border copyFromBorder = copyFrom[i];
-                    if(copyFromBorder.Child is TextBlock copyFromTextBlock)
+                    Border copyToBorder = copyTo[i];
+                    nav.SetCopyBackground(copyToBorder);
+                    string text = "";
+                    if (copyFromBorder.Child is TextBlock copyFromTextBlock)
                     {
-                        Border copyToBorder = copyTo[i];
-                        TextBlock copyToTextBlock = (TextBlock)copyToBorder.Child;
-                        nav.SetCopyBackground(copyToBorder);
-                        string text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
+                        text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
+
+                    }
+                    else if (copyFromBorder.Child is RichTextBox copyFromRichTextBox)
+                    {
+                        TextRange textRange = new TextRange(copyFromRichTextBox.Document.ContentStart, copyFromRichTextBox.Document.ContentEnd);
+                        text = textRange.Text;
+                    }
+                    else if(copyFromBorder.Child is TextBox copyFromTextBox)
+                    {
+                        text = copyFromTextBox.Text;
+                    }
+                    else
+                    {
+                        Debug.Assert(false, "Input type for CopyAction not supported.");
+                    }
+                    if(copyToBorder.Child is TextBlock copyToTextBlock)
+                    {
                         if (replace)
                         {
                             nav.ReplaceLast(copyToTextBlock, text);
@@ -398,13 +415,8 @@ namespace Cryptool.Plugins.ChaCha
                             nav.Add(copyToTextBlock, text);
                         }
                     }
-                    else if(copyFromBorder.Child is RichTextBox copyFromRichTextBox)
+                    else if(copyToBorder.Child is RichTextBox copyToRichTextBox)
                     {
-                        Border copyToBorder = copyTo[i];
-                        RichTextBox copyToRichTextBox = (RichTextBox)copyToBorder.Child;
-                        nav.SetCopyBackground(copyToBorder);
-                        TextRange textRange = new TextRange(copyFromRichTextBox.Document.ContentStart, copyFromRichTextBox.Document.ContentEnd);
-                        string text = textRange.Text;
                         if (replace)
                         {
                             nav.Replace(copyToRichTextBox, text);
@@ -414,9 +426,13 @@ namespace Cryptool.Plugins.ChaCha
                             nav.Add(copyToRichTextBox, text);
                         }
                     }
+                    else if(copyToBorder.Child is TextBox copyToTextBox)
+                    {
+                        nav.Replace(copyToTextBox, text);
+                    }
                     else
                     {
-                        Debug.Assert(false, "Invalid child type of border for CopyAction.");
+                        Debug.Assert(false, "Output type for CopyAction not supported.");
                     }
                 }
             }, nav.Undo);
@@ -924,6 +940,14 @@ namespace Cryptool.Plugins.ChaCha
             tb.Text = text;
         }
 
+        public void Clear(params TextBox[] tbs)
+        {
+            foreach(TextBox tb in tbs)
+            {
+                SaveState(tb);
+                tb.Text = "";
+            }
+        }
         #endregion
 
         #endregion

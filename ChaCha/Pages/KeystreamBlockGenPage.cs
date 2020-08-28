@@ -23,10 +23,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             PageAction insertQRInput = new PageAction(() =>
             {
-                nav.Add(QRInA, GetHexResult(ResultType.QR_INPUT_A, index - 1));
-                nav.Add(QRInB, GetHexResult(ResultType.QR_INPUT_B, index - 1));
-                nav.Add(QRInC, GetHexResult(ResultType.QR_INPUT_C, index - 1));
-                nav.Add(QRInD, GetHexResult(ResultType.QR_INPUT_D, index - 1));
+                nav.Replace(QRInA, GetHexResult(ResultType.QR_INPUT_A, index - 1));
+                nav.Replace(QRInB, GetHexResult(ResultType.QR_INPUT_B, index - 1));
+                nav.Replace(QRInC, GetHexResult(ResultType.QR_INPUT_C, index - 1));
+                nav.Replace(QRInD, GetHexResult(ResultType.QR_INPUT_D, index - 1));
             }, nav.Undo);
             return insertQRInput;
         }
@@ -55,7 +55,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execOutX1 = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
+                nav.Replace((TextBox)GetIndexElement("QROutX1", actionIndex), GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkOutX1 = new PageAction(() =>
             {
@@ -82,7 +82,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execOutX2 = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
+                nav.Replace((TextBox)GetIndexElement("QROutX2", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X2, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkOutX2 = new PageAction(() =>
             {
@@ -107,7 +107,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execXOR = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
+                nav.Replace((TextBox)GetIndexElement("QRXOR", actionIndex), GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkXOR = new PageAction(() =>
             {
@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.ChaCha
             }, nav.Undo);
             PageAction execShift = new PageAction(() =>
             {
-                nav.Add((TextBlock)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
+                nav.Replace((TextBox)GetIndexElement("QROutX3", actionIndex), GetHexResult(ResultType.QR_OUTPUT_X3, ResultIndex(actionIndex, qrIndex)));
             }, nav.Undo);
             PageAction unmarkShift = new PageAction(() =>
             {
@@ -268,17 +268,18 @@ namespace Cryptool.Plugins.ChaCha
         {
             return new PageAction(() =>
             {
-                nav.Clear(QRInA, QRInB, QRInC, QRInD);
+                nav.Clear(QRInA);
+                nav.Clear(QRInB, QRInC, QRInD);
                 nav.Clear(QROutA, QROutB, QROutC, QROutD);
                 for(int i = 1; i <= 4; ++i)
                 {
-                    nav.Clear((TextBlock)GetIndexElement("QRInX1", i));
-                    nav.Clear((TextBlock)GetIndexElement("QRInX2", i));
-                    nav.Clear((TextBlock)GetIndexElement("QRInX3", i));
-                    nav.Clear((TextBlock)GetIndexElement("QROutX1", i));
-                    nav.Clear((TextBlock)GetIndexElement("QROutX2", i));
-                    nav.Clear((TextBlock)GetIndexElement("QROutX3", i));
-                    nav.Clear((TextBlock)GetIndexElement("QRXOR", i));
+                    nav.Clear((TextBox)GetIndexElement("QRInX1", i));
+                    nav.Clear((TextBox)GetIndexElement("QRInX2", i));
+                    nav.Clear((TextBox)GetIndexElement("QRInX3", i));
+                    nav.Clear((TextBox)GetIndexElement("QROutX1", i));
+                    nav.Clear((TextBox)GetIndexElement("QROutX2", i));
+                    nav.Clear((TextBox)GetIndexElement("QROutX3", i));
+                    nav.Clear((TextBox)GetIndexElement("QRXOR", i));
                 }
             }, nav.Undo);
         }
@@ -289,29 +290,29 @@ namespace Cryptool.Plugins.ChaCha
             bool versionIsDJB = Version == ChaCha.Version.DJB;
             PageAction initAction = new PageAction(() =>
             {
-                nav.Add(UIKeystreamBlockGen0, new Run(ConstantsLittleEndian.Replace(" ", "").Substring(0, 8)));
-                nav.Add(UIKeystreamBlockGen1, new Run(ConstantsLittleEndian.Replace(" ", "").Substring(8, 8)));
-                nav.Add(UIKeystreamBlockGen2, new Run(ConstantsLittleEndian.Replace(" ", "").Substring(16, 8)));
-                nav.Add(UIKeystreamBlockGen3, new Run(ConstantsLittleEndian.Replace(" ", "").Substring(24, 8)));
-                nav.Add(UIKeystreamBlockGen4, new Run(KeyLittleEndian.Replace(" ", "").Substring(0, 8)));
-                nav.Add(UIKeystreamBlockGen5, new Run(KeyLittleEndian.Replace(" ", "").Substring(8, 8)));
-                nav.Add(UIKeystreamBlockGen6, new Run(KeyLittleEndian.Replace(" ", "").Substring(16, 8)));
-                nav.Add(UIKeystreamBlockGen7, new Run(KeyLittleEndian.Replace(" ", "").Substring(24, 8)));
-                nav.Add(UIKeystreamBlockGen8, new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8)));
-                nav.Add(UIKeystreamBlockGen9, new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8)));
-                nav.Add(UIKeystreamBlockGen10, new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8)));
-                nav.Add(UIKeystreamBlockGen11, new Run(KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8)));
-                nav.Add(UIKeystreamBlockGen12, new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8)));
+                nav.Replace(UIKeystreamBlockGen0, ConstantsLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIKeystreamBlockGen1, ConstantsLittleEndian.Replace(" ", "").Substring(8, 8));
+                nav.Replace(UIKeystreamBlockGen2, ConstantsLittleEndian.Replace(" ", "").Substring(16, 8));
+                nav.Replace(UIKeystreamBlockGen3, ConstantsLittleEndian.Replace(" ", "").Substring(24, 8));
+                nav.Replace(UIKeystreamBlockGen4, KeyLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIKeystreamBlockGen5, KeyLittleEndian.Replace(" ", "").Substring(8, 8));
+                nav.Replace(UIKeystreamBlockGen6, KeyLittleEndian.Replace(" ", "").Substring(16, 8));
+                nav.Replace(UIKeystreamBlockGen7, KeyLittleEndian.Replace(" ", "").Substring(24, 8));
+                nav.Replace(UIKeystreamBlockGen8, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8));
+                nav.Replace(UIKeystreamBlockGen9, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8));
+                nav.Replace(UIKeystreamBlockGen10, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8));
+                nav.Replace(UIKeystreamBlockGen11, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8));
+                nav.Replace(UIKeystreamBlockGen12, InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8));
                 if (versionIsDJB)
                 {
-                    nav.Add(UIKeystreamBlockGen13, new Run(InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8)));
+                    nav.Replace(UIKeystreamBlockGen13, InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8));
                 }
                 else
                 {
-                    nav.Add(UIKeystreamBlockGen13, new Run(IVLittleEndian.Replace(" ", "").Substring(0, 8)));
+                    nav.Replace(UIKeystreamBlockGen13, IVLittleEndian.Replace(" ", "").Substring(0, 8));
                 }
-                nav.Add(UIKeystreamBlockGen14, new Run(IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8)));
-                nav.Add(UIKeystreamBlockGen15, new Run(IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8)));
+                nav.Replace(UIKeystreamBlockGen14, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8));
+                nav.Replace(UIKeystreamBlockGen15, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8));
             }, nav.Undo);
             p.AddInitAction(initAction);
             PageAction generalDescriptionAction = new PageAction(() =>
