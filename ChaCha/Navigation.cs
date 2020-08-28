@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    partial class ChaChaPresentation : INavigationService<TextBlock, Border, Shape>
+    partial class ChaChaPresentation : INavigationService<TextBlock, Border, Shape, RichTextBox>
     {
         #region Navigation
 
@@ -115,6 +115,26 @@ namespace Cryptool.Plugins.ChaCha
                         s.StrokeThickness = strokeThickness;
                     };
                 }
+            }
+        }
+
+        public void SaveState(params RichTextBox[] textboxes)
+        {
+            _saveStateHasBeenCalled = true;
+            foreach(RichTextBox rtb in textboxes)
+            {
+                int hash = rtb.GetHashCode();
+                // copy block element
+                Block[] state = new Block[rtb.Document.Blocks.Count];
+                rtb.Document.Blocks.CopyTo(state, 0);
+                _undoActions[hash] = () =>
+                {
+                    rtb.Document.Blocks.Clear();
+                    foreach (Block b in state)
+                    {
+                        rtb.Document.Blocks.Add(b);
+                    }
+                };
             }
         }
 
@@ -497,6 +517,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             list.Remove(list.LastInline);
         }
+        private void RemoveLast(BlockCollection list)
+        {
+            list.Remove(list.LastBlock);
+        }
         private void RemoveLast(TextBlock tb)
         {
             SaveState(tb);
@@ -506,6 +530,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             RemoveLast(list);
             list.Add(element);
+        }
+        private void ReplaceLast(BlockCollection list, Inline element)
+        {
+            RemoveLast(list);
+            list.Add(new Paragraph(element));
         }
         private void ReplaceLast(InlineCollection list, string text)
         {
@@ -535,10 +564,19 @@ namespace Cryptool.Plugins.ChaCha
         {
             ReplaceLast(list, new Run { Text = ((Run)(list.LastInline)).Text });
         }
+        private void UnboldLast(BlockCollection list)
+        {
+            ReplaceLast(list, new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) });
+        }
         private void UnboldLast(TextBlock tb)
         {
             SaveState(tb);
             UnboldLast(tb.Inlines);
+        }
+        private void UnboldLast(RichTextBox tb)
+        {
+            SaveState(tb);
+            UnboldLast(tb.Document.Blocks);
         }
         private void Add(InlineCollection list, Inline element)
         {
@@ -548,6 +586,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             SaveState(tb);
             Add(tb.Inlines, element);
+        }
+        private void Add(RichTextBox tb, Inline element)
+        {
+            SaveState(tb);
+            tb.Document.Blocks.Add(new Paragraph(element));
         }
         private void Add(TextBlock tb, string element)
         {
@@ -728,7 +771,7 @@ namespace Cryptool.Plugins.ChaCha
     #region NavigationInterface
 
     // I wish I had variadic templates in C# like in C++11 ...
-    interface INavigationService<T1, T2, T3>
+    interface INavigationService<T1, T2, T3, T4>
     {
         // Save state of each element such that we can retrieve it later for undoing action.
         void SaveState(params T1[] t);
@@ -736,6 +779,8 @@ namespace Cryptool.Plugins.ChaCha
         void SaveState(params T2[] t);
 
         void SaveState(params T3[] t);
+
+        void SaveState(params T4[] t);
 
         // Tells that current page action is finished and thus next calls to save state are for a new page action.
         void FinishPageAction();
