@@ -20,8 +20,7 @@ namespace Cryptool.Plugins.ChaCha
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
         #region private variables
-        private Brush copyBrush = Brushes.AliceBlue;
-        private Brush markBrush = Brushes.Purple;
+
         #endregion
         public ChaChaPresentation()
         {
