@@ -458,7 +458,7 @@ namespace Cryptool.Plugins.ChaCha
     #region ActionNavigationInterface
 
     // I wish I had variadic templates in C# like in C++11 ...
-    interface IActionNavigationService<T1, T2, T3, T4>
+    interface IActionNavigationService<T1, T2, T3, T4, T5>
     {
         // Save state of each element such that we can retrieve it later for undoing action.
         void SaveState(params T1[] t);
@@ -468,6 +468,8 @@ namespace Cryptool.Plugins.ChaCha
         void SaveState(params T3[] t);
 
         void SaveState(params T4[] t);
+
+        void SaveState(params T5[] t);
 
         // Tells that current page action is finished and thus next calls to save state are for a new page action.
         void FinishPageAction();
@@ -483,7 +485,7 @@ namespace Cryptool.Plugins.ChaCha
 
     #region NavigationInterface implementation
 
-    class ActionNavigation : IActionNavigationService<TextBlock, Border, Shape, RichTextBox>
+    class ActionNavigation : IActionNavigationService<TextBlock, Border, Shape, RichTextBox, TextBox>
     {
         #region interface methods
         /*
@@ -618,6 +620,21 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public void SaveState(params TextBox[] textboxes)
+        {
+            _saveStateHasBeenCalled = true;
+            foreach (TextBox tb in textboxes)
+            {
+                int hash = tb.GetHashCode();
+                // copy text element
+                string state = tb.Text;
+                _undoActions[hash] = () =>
+                {
+                    tb.Text = state;
+                };
+            }
+        }
+
         public void FinishPageAction()
         {
             // copy dictionary using new
@@ -697,6 +714,10 @@ namespace Cryptool.Plugins.ChaCha
         private void _Add(BlockCollection list, Inline element)
         {
             list.Add(new Paragraph(element));
+        }
+        private void _Clear(BlockCollection list)
+        {
+            list.Clear();
         }
         #endregion
 
@@ -850,10 +871,37 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tb);
             _Add(tb.Document.Blocks, element);
         }
+        public void Add(RichTextBox tb, string text)
+        {
+            Add(tb, new Run(text));
+        }
         public void AddBold(RichTextBox tb, string text)
         {
             Add(tb, MakeBold(new Run(text)));
         }
+        public void Clear(params RichTextBox[] tbs)
+        {
+            foreach (RichTextBox tb in tbs)
+            {
+                SaveState(tb);
+                _Clear(tb.Document.Blocks);
+            }
+        }
+        public void Replace(RichTextBox rtb, string text)
+        {
+            _Clear(rtb.Document.Blocks);
+            Add(rtb, text);
+        }
+        #endregion
+
+        #region TextBox
+
+        public void Replace(TextBox tb, string text)
+        {
+            SaveState(tb);
+            tb.Text = text;
+        }
+
         #endregion
 
         #endregion

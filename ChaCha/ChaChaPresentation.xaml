@@ -29,6 +29,11 @@
       <Setter Property="IsReadOnly" Value="True"/>
       <Setter Property="BorderThickness" Value="0"/>
     </Style>
+    <Style x:Key="hexTextBox" TargetType="TextBox">
+      <Setter Property="FontFamily" Value="Courier New" />
+      <Setter Property="IsReadOnly" Value="True"/>
+      <Setter Property="BorderThickness" Value="0"/>
+    </Style>
     <Style TargetType="RichTextBox">
       <Setter Property="IsReadOnly" Value="True"/>
       <Setter Property="BorderThickness" Value="0"/>
@@ -223,18 +228,18 @@
                   <ColumnDefinition></ColumnDefinition>
                   <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0">
+                <TextBox Grid.Row="0" Grid.Column="0">
                   Input:
-                </TextBlock>
-                <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource hex}" Name="UITransformInput"/>
-                <TextBlock Grid.Row="1" Grid.Column="0">
+                </TextBox>
+                <RichTextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource hexRichTextBox}" Name="UITransformInput"/>
+                <TextBox Grid.Row="1" Grid.Column="0">
                   Split into 4 byte chunks:
-                </TextBlock>
-                <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource hex}" Name="UITransformChunks"/>
-                <TextBlock Grid.Row="2" Grid.Column="0">
-                  Transform each chunk into <LineBreak/> little-endian:
-                </TextBlock>
-                <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource hex}" Name="UITransformLittleEndian"/>
+                </TextBox>
+                <RichTextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource hexRichTextBox}" Name="UITransformChunks"/>
+                <TextBox Grid.Row="2" Grid.Column="0">
+                  Transform each chunk into little-endian:
+                </TextBox>
+                <RichTextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndian"/>
               </Grid>
             </Grid>
           </Grid>
@@ -251,16 +256,16 @@
             <!-- state parameters -->
             <Label Grid.Row="1" HorizontalAlignment="Center">State Parameters</Label>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
-              <Label>Constant:</Label>
-              <Label Style="{StaticResource hexLabel}" Content="{ Binding HexConstants }" Name="UIConstant"/>
+              <TextBox>Constant:</TextBox>
+              <TextBox Style="{StaticResource hexTextBox}" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
             </StackPanel>
             <StackPanel Grid.Row="3" Orientation="Horizontal">
-              <Label>Key:</Label>
-              <Label Style="{StaticResource hexLabel}" Content="{ Binding HexInputKey }" Name="UIInputKey"/>
+              <TextBox>Key:</TextBox>
+              <TextBox Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
             </StackPanel>
             <StackPanel Grid.Row="4" Orientation="Horizontal">
-              <Label>Initialization vector (IV):</Label>
-              <Label Style="{StaticResource hexLabel}" Content="{ Binding HexInputIV }" Name="UIInputIV"/>
+              <TextBox>Initialization vector (IV):</TextBox>
+              <TextBox Style="{StaticResource hexTextBox}" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
             </StackPanel>
           </Grid>
         </Grid>
@@ -300,55 +305,55 @@
                 </Grid.RowDefinitions>
                 <!-- Row 0 -->
                 <Border Name="UIKeystreamBlockGenCell_0" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_1" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_2" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_3" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3"/>
                 </Border>
                 <!-- Row 1 -->
                 <Border Name="UIKeystreamBlockGenCell_4" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_5" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_6" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_7" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7"/>
                 </Border>
                 <!-- Row 2 -->
                 <Border Name="UIKeystreamBlockGenCell_8" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_9" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_10" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_11" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11"/>
                 </Border>
                 <!-- Row 3 -->
                 <Border Name="UIKeystreamBlockGenCell_12" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_13" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_14" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14"/>
                 </Border>
                 <Border Name="UIKeystreamBlockGenCell_15" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBlock Style="{StaticResource hex}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15"/>
+                  <RichTextBox Style="{StaticResource hexRichTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15"/>
                 </Border>
               </Grid>
             </Border>
@@ -368,40 +373,40 @@
                 <RowDefinition/>
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock>Round:</TextBlock>
-                <TextBlock Name="CurrentRound"/>
+                <TextBox>Round:</TextBox>
+                <TextBox Name="CurrentRound"/>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(0, 4, 8, 12)</TextBlock>
+                <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(1, 5, 9, 13)</TextBlock>
+                <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(2, 6, 10, 14)</TextBlock>
+                <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(3, 7, 11, 15)</TextBlock>
+                <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="5" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(0, 5, 10, 15)</TextBlock>
+                <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="6" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(1, 6, 11, 12)</TextBlock>
+                <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="7" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(2, 7, 8, 13)</TextBlock>
+                <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
               </StackPanel>
               <StackPanel Grid.Row="8" Orientation="Horizontal">
-                <TextBlock Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x2794;"/>
-                <TextBlock>Quarterround(3, 4, 9, 14)</TextBlock>
+                <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x2794;"/>
+                <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
               </StackPanel>
             </Grid>
           </Grid>
@@ -418,28 +423,28 @@
               <Canvas Background="White" Width="1500" Height="160" Grid.Row="1">
                 <Canvas>
                   <Border Width="65" Height="40" Name="QRInACell" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="00" Canvas.Top="-20">
-                    <TextBlock Style="{StaticResource hex}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QRInBCell" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="00" Canvas.Top="20">
-                    <TextBlock Style="{StaticResource hex}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QRInCCell" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="00" Canvas.Top="60">
-                    <TextBlock Style="{StaticResource hex}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QRInDCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="100">
-                    <TextBlock Style="{StaticResource hex}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QROutACell" Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="1435" Canvas.Top="-20">
-                    <TextBlock Style="{StaticResource hex}" Name="QROutA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QROutBCell" Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="1435" Canvas.Top="20">
-                    <TextBlock Style="{StaticResource hex}" Name="QROutB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QROutCCell" Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="1435" Canvas.Top="60">
-                    <TextBlock Style="{StaticResource hex}" Name="QROutC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Border Width="65" Height="40" Name="QROutDCell" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="100">
-                    <TextBlock Style="{StaticResource hex}" Name="QROutD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
                   <Path Stroke="LightGreen" StrokeThickness="1"
                     Data="M 0,20 h 20 l 34,20 h 20 m 249,0 h 20 l 34,-40 h 20 h 249 h 20 l 34,40 h 24 m 249,0 h 20 l 34,-40 h 20 h 249 h 20 l 34,20 h 20"
@@ -524,22 +529,22 @@
                   <UniformGrid Canvas.Left="100" HorizontalAlignment="Center" Columns="4" Width="1300">
                     <Canvas Canvas.Left="10" HorizontalAlignment="Center" Width="250" Height="200">
                       <Border Name="QRInX1Cell_1" Canvas.Top="0" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX1_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX1_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX2Cell_1" Canvas.Top="40" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX2_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX2_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX3Cell_1" Canvas.Top="80" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX3_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX3_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX1Cell_1" Canvas.Top="0" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX1_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX1_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                       </Border>
                       <Border Name="QROutX2Cell_1" Canvas.Top="40" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX2_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX2_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX3Cell_1" Canvas.Top="80" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX3_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX3_1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <!-- Rectangle grid -->
                       <Grid Canvas.Left="70" Width="110" Height="120">
@@ -640,22 +645,22 @@
                     </Canvas>
                     <Canvas Canvas.Left="300" HorizontalAlignment="Center" Width="250" Height="200">
                       <Border Name="QRInX1Cell_2" Canvas.Top="0" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX1_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX1_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX2Cell_2" Canvas.Top="40" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX2_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX2_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX3Cell_2" Canvas.Top="80" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX3_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX3_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX1Cell_2" Canvas.Top="0" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX1_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX1_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
                       </Border>
                       <Border Name="QROutX2Cell_2" Canvas.Top="40" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX2_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX2_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX3Cell_2" Canvas.Top="80" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX3_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX3_2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <!-- Rectangle grid -->
                       <Grid Canvas.Left="70" Width="110" Height="120">
@@ -756,22 +761,22 @@
                     </Canvas>
                     <Canvas Canvas.Left="600" HorizontalAlignment="Center" Width="250" Height="200">
                       <Border Name="QRInX1Cell_3" Canvas.Top="0" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX1_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX1_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX2Cell_3" Canvas.Top="40" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX2_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX2_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX3Cell_3" Canvas.Top="80" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX3_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX3_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX1Cell_3" Canvas.Top="0" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX1_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX1_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
                       </Border>
                       <Border Name="QROutX2Cell_3" Canvas.Top="40" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX2_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX2_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX3Cell_3" Canvas.Top="80" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX3_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX3_3" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <!-- Rectangle grid -->
                       <Grid Canvas.Left="70" Width="110" Height="120">
@@ -872,22 +877,22 @@
                     </Canvas>
                     <Canvas Canvas.Left="900" HorizontalAlignment="Center" Width="250" Height="200">
                       <Border Name="QRInX1Cell_4" Canvas.Top="0" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX1_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX1_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX2Cell_4" Canvas.Top="40" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX2_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX2_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QRInX3Cell_4" Canvas.Top="80" Canvas.Left="0" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QRInX3_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QRInX3_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX1Cell_4" Canvas.Top="0" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX1_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX1_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
                       </Border>
                       <Border Name="QROutX2Cell_4" Canvas.Top="40" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,0">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX2_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX2_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <Border Name="QROutX3Cell_4" Canvas.Top="80" Canvas.Left="185" Width="65" Height="40" BorderBrush="Black" BorderThickness="1,1,1,1">
-                        <TextBlock Style="{StaticResource hex}" Name="QROutX3_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource hexRichTextBox}" Name="QROutX3_4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                       </Border>
                       <!-- Rectangle grid -->
                       <Grid Canvas.Left="70" Width="110" Height="120">

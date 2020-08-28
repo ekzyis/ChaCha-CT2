@@ -222,7 +222,7 @@ namespace Cryptool.Plugins.ChaCha
                 // new round begins
                 PageAction updateRoundCount = new PageAction(() =>
                 {
-                    nav.ReplaceLast(CurrentRound, round.ToString());
+                    nav.Replace(CurrentRound, round.ToString());
                 }, () =>
                 {
                     string text = "";
@@ -230,7 +230,7 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         text = (round - 1).ToString();
                     }
-                    nav.ReplaceLast(CurrentRound, text);
+                    nav.Replace(CurrentRound, text);
                 });
                 copyActions[0].Add(updateRoundCount);
             }
@@ -238,16 +238,16 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if (qrIndex > 1)
                 {
-                    ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Hidden;
+                    ((TextBox)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Hidden;
                 }
-                ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Visible;
+                ((TextBox)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Visible;
             }, () =>
             {
                 if (qrIndex > 1)
                 {
-                    ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Visible;
+                    ((TextBox)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Visible;
                 }
-                ((TextBlock)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Hidden;
+                ((TextBox)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Hidden;
             });
             copyActions[0].Add(updateQRArrow);
             return copyActions;
@@ -272,13 +272,13 @@ namespace Cryptool.Plugins.ChaCha
                 nav.Clear(QROutA, QROutB, QROutC, QROutD);
                 for(int i = 1; i <= 4; ++i)
                 {
-                    nav.Clear((TextBlock)GetIndexElement("QRInX1", i));
-                    nav.Clear((TextBlock)GetIndexElement("QRInX2", i));
-                    nav.Clear((TextBlock)GetIndexElement("QRInX3", i));
-                    nav.Clear((TextBlock)GetIndexElement("QROutX1", i));
-                    nav.Clear((TextBlock)GetIndexElement("QROutX2", i));
-                    nav.Clear((TextBlock)GetIndexElement("QROutX3", i));
-                    nav.Clear((TextBlock)GetIndexElement("QRXOR", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QRInX1", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QRInX2", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QRInX3", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QROutX1", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QROutX2", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QROutX3", i));
+                    nav.Clear((RichTextBox)GetIndexElement("QRXOR", i));
                 }
             }, nav.Undo);
         }
