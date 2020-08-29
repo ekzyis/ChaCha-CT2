@@ -71,20 +71,20 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
         /* Constants splitted into 4 byte chunks */
-        public string ConstantsChunks
+        public string[] ConstantsChunks
         {
             get
             {
                 // insert space after every 8 characters
-                return Chunkify(HexString(_constants), 8);
+                return Chunkify(HexString(_constants), 8).Split(' ');
             }
         }
         /* Constants with each 4 byte in little endian format*/
-        public string ConstantsLittleEndian
+        public string[] ConstantsLittleEndian
         {
             get
             {
-                return Chunkify(HexStringLittleEndian(_constants), 8);
+                return Chunkify(HexStringLittleEndian(_constants), 8).Split(' ');
             }
         }
 
@@ -110,18 +110,18 @@ namespace Cryptool.Plugins.ChaCha
                 return HexString(_inputKey);
             }
         }
-        public string KeyChunks
+        public string[] KeyChunks
         {
             get
             {
-                return Chunkify(HexString(_inputKey), 8);
+                return Chunkify(HexString(_inputKey), 8).Split(' ');
             }
         }
-        public string KeyLittleEndian
+        public string[] KeyLittleEndian
         {
             get
             {
-                return Chunkify(HexStringLittleEndian(_inputKey), 8);
+                return Chunkify(HexStringLittleEndian(_inputKey), 8).Split(' ');
             }
         }
         public byte[] InputIV
@@ -146,18 +146,18 @@ namespace Cryptool.Plugins.ChaCha
                 return HexString(_inputIV);
             }
         }
-        public string IVChunks
+        public string[] IVChunks
         {
             get
             {
-                return Chunkify(HexString(_inputIV), 8);
+                return Chunkify(HexString(_inputIV), 8).Split(' ');
             }
         }
-        public string IVLittleEndian
+        public string[] IVLittleEndian
         {
             get
             {
-                return Chunkify(HexStringLittleEndian(_inputIV), 8);
+                return Chunkify(HexStringLittleEndian(_inputIV), 8).Split(' ');
             }
         }
         public byte[] InputData
@@ -194,18 +194,18 @@ namespace Cryptool.Plugins.ChaCha
                 return HexString(_initialCounter);
             }
         }
-        public string InitialCounterChunks
+        public string[] InitialCounterChunks
         {
             get
             {
-                return Chunkify(HexString(_initialCounter), 8);
+                return Chunkify(HexString(_initialCounter), 8).Split(' ');
             }
         }
-        public string InitialCounterLittleEndian
+        public string[] InitialCounterLittleEndian
         {
             get
             {
-                return Chunkify(HexStringLittleEndian(_initialCounter), 8);
+                return Chunkify(HexStringLittleEndian(_initialCounter), 8).Split(' ');
             }
         }
 

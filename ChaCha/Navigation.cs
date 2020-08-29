@@ -764,7 +764,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void _UnboldLast(BlockCollection list)
         {
-            _ReplaceLast(list, new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) });
+            if(list.LastBlock != null) _ReplaceLast(list, new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) });
         }
         private void _Add(BlockCollection list, Inline element)
         {
@@ -809,10 +809,13 @@ namespace Cryptool.Plugins.ChaCha
             SaveState(tb);
             _MakeBoldLast(tb.Inlines);
         }
-        public void UnboldLast(TextBlock tb)
+        public void UnboldLast(params TextBlock[] tbs)
         {
-            SaveState(tb);
-            _UnboldLast(tb.Inlines);
+            foreach(TextBlock tb in tbs)
+            {
+                SaveState(tb);
+                _UnboldLast(tb.Inlines);
+            }
         }
         public void Add(TextBlock tb, Inline element)
         {
@@ -916,10 +919,13 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region RichTextBox
-        public void UnboldLast(RichTextBox tb)
+        public void UnboldLast(params RichTextBox[] rtbs)
         {
-            SaveState(tb);
-            _UnboldLast(tb.Document.Blocks);
+            foreach(RichTextBox rtb in rtbs)
+            {
+                SaveState(rtb);
+                _UnboldLast(rtb.Document.Blocks);
+            }
         }
         public void Add(RichTextBox tb, Inline element)
         {
