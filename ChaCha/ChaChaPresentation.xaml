@@ -294,7 +294,7 @@
               </Grid>
             </Grid>
           </Grid>
-          <Grid Margin="100,0,0,0" Grid.Column="1">
+          <Grid Margin="100,0,0,0" Grid.Column="1" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
               <RowDefinition Height="14*"></RowDefinition>
               <RowDefinition Height="2*"></RowDefinition>
