@@ -128,7 +128,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha State matrix page -->
-      <Grid Name="UIStateMatrixPage" Visibility="Collapsed">
+      <Grid Name="UIStateMatrixPage" Visibility="Visible">
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -163,55 +163,55 @@
                       <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
                     <!-- Row 0 -->
-                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState0Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState0"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState1Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState1"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState2Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState2"/>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState3Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState3"/>
                     </Border>
                     <!-- Row 1 -->
-                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState4Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState4"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState5Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState5"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState6Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState6"/>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState7Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState7"/>
                     </Border>
                     <!-- Row 2 -->
-                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState8Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState8"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState9Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState9"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState10Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState10"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState11Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState11"/>
                     </Border>
                     <!-- Row 3 -->
-                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState12Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState12"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState13Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState13"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState14Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState14"/>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                    <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState15Cell">
                       <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UIState15"/>
                     </Border>
                   </Grid>
@@ -231,15 +231,66 @@
                 <TextBox Grid.Row="0" Grid.Column="0">
                   Input:
                 </TextBox>
-                <RichTextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource hexRichTextBox}" Name="UITransformInput"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
                 <TextBox Grid.Row="1" Grid.Column="0">
                   Split into 4 byte chunks:
                 </TextBox>
-                <RichTextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource hexRichTextBox}" Name="UITransformChunks"/>
+                <UniformGrid Grid.Column="1" Grid.Row="1" Rows="2" Columns="4">
+                  <Border Grid.Row="0" Grid.Column="0">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
+                  </Border>
+                  <Border Grid.Row="0" Grid.Column="1">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk1"/>
+                  </Border>
+                  <Border Grid.Row="0" Grid.Column="2">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk2"/>
+                  </Border>
+                  <Border Grid.Row="0" Grid.Column="3">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource hexTextBox}" Name="UITransformChunk3"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="0">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="1">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk5"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="2">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk6"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="3">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
+                  </Border>
+                </UniformGrid>
                 <TextBox Grid.Row="2" Grid.Column="0">
                   Transform each chunk into little-endian:
                 </TextBox>
-                <RichTextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndian"/>
+                <UniformGrid Grid.Row="2" Grid.Column="1" Rows="2" Columns="4">
+                  <Border Grid.Row="0" Grid.Column="0" Name="UITransformLittleEndian0Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
+                  </Border>
+                  <Border Grid.Row="0" Grid.Column="1" Name="UITransformLittleEndian1Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian1"/>
+                  </Border>
+                  <Border Grid.Row="0" Grid.Column="2" Name="UITransformLittleEndian2Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian2"/>
+                  </Border>
+                  <Border Grid.Row="0" Grid.Column="3" Name="UITransformLittleEndian3Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian3"/>
+                  </Border>
+
+                  <Border Grid.Row="1" Grid.Column="0" Name="UITransformLittleEndian4Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian4"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="1" Name="UITransformLittleEndian5Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian5"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="2" Name="UITransformLittleEndian6Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian6"/>
+                  </Border>
+                  <Border Grid.Row="1" Grid.Column="3" Name="UITransformLittleEndian7Cell">
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
+                  </Border>
+                </UniformGrid>
               </Grid>
             </Grid>
           </Grid>
@@ -271,7 +322,7 @@
         </Grid>
       </Grid>
       <!-- ChaCha Generate Keystream block page -->
-      <Grid Name="UIKeystreamBlockGenPage" Visibility="Visible">
+      <Grid Name="UIKeystreamBlockGenPage" Visibility="Collapsed">
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />

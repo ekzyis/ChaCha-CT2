@@ -11,6 +11,7 @@ namespace Cryptool.Plugins.ChaCha
         private Page StateMatrixPage()
         {
             bool versionIsDJB = Version == ChaCha.Version.DJB;
+            bool keyIs32Byte = InputKey.Length == 32;
             Page p = new Page(UIStateMatrixPage);
             #region constants
             PageAction constantsStepDescriptionAction = new PageAction(() =>
@@ -21,31 +22,30 @@ namespace Cryptool.Plugins.ChaCha
             PageAction constantsInputAction = new PageAction(() =>
             {
                 nav.UnboldLast(UIStateMatrixStepDescription);
-                nav.AddBold(UITransformInput, HexConstants);
+                nav.Replace(UITransformInput, HexConstants);
             }, nav.Undo);
             PageAction constantsChunksAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformInput);
-                nav.AddBold(UITransformChunks, ConstantsChunks);
+                nav.Replace(UITransformChunk0, ConstantsChunks[0]);
+                nav.Replace(UITransformChunk1, ConstantsChunks[1]);
+                nav.Replace(UITransformChunk2, ConstantsChunks[2]);
+                nav.Replace(UITransformChunk3, ConstantsChunks[3]);
             }, nav.Undo);
             PageAction constantsLittleEndianAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformChunks);
-                nav.AddBold(UITransformLittleEndian, ConstantsLittleEndian);
+                nav.Replace(UITransformLittleEndian0, ConstantsLittleEndian[0]);
+                nav.Replace(UITransformLittleEndian1, ConstantsLittleEndian[1]);
+                nav.Replace(UITransformLittleEndian2, ConstantsLittleEndian[2]);
+                nav.Replace(UITransformLittleEndian3, ConstantsLittleEndian[3]);
             }, nav.Undo);
-            PageAction addConstantsToStateAction = new PageAction(() =>
-            {
-                nav.UnboldLast(UITransformLittleEndian);
-                nav.Replace(UIState0, ConstantsLittleEndian.Replace(" ", "").Substring(0, 8));
-                nav.Replace(UIState1, ConstantsLittleEndian.Replace(" ", "").Substring(8, 8));
-                nav.Replace(UIState2, ConstantsLittleEndian.Replace(" ", "").Substring(16, 8));
-                nav.Replace(UIState3, ConstantsLittleEndian.Replace(" ", "").Substring(24, 8));
-            }, nav.Undo);
+            PageAction[] copyConstantsToStateActions = CopyActions(
+                new Border[] { UITransformLittleEndian0Cell, UITransformLittleEndian1Cell, UITransformLittleEndian2Cell, UITransformLittleEndian3Cell },
+                new Border[] { UIState0Cell, UIState1Cell, UIState2Cell, UIState3Cell });
             p.AddAction(constantsStepDescriptionAction);
             p.AddAction(constantsInputAction);
             p.AddAction(constantsChunksAction);
             p.AddAction(constantsLittleEndianAction);
-            p.AddAction(addConstantsToStateAction);
+            p.AddAction(copyConstantsToStateActions);
             #endregion
             #region key
             PageAction keyStepDescriptionAction = new PageAction(() =>
@@ -53,41 +53,44 @@ namespace Cryptool.Plugins.ChaCha
                 string desc = "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ";
                 nav.AddBold(UIStateMatrixStepDescription, desc);
                 nav.Clear(UITransformInput);
-                nav.Clear(UITransformChunks);
-                nav.Clear(UITransformLittleEndian);
+                nav.Clear(UITransformChunk0, UITransformChunk1, UITransformChunk2, UITransformChunk3);
+                nav.Clear(UITransformLittleEndian0, UITransformLittleEndian1, UITransformLittleEndian2, UITransformLittleEndian3);
             }, nav.Undo);
             PageAction keyInputAction = new PageAction(() =>
             {
                 nav.UnboldLast(UIStateMatrixStepDescription);
-                nav.AddBold(UITransformInput, HexInputKey);
+                nav.Replace(UITransformInput, HexInputKey);
             }, nav.Undo);
             PageAction keyChunksAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformInput);
-                nav.AddBold(UITransformChunks, KeyChunks);
+                nav.Replace(UITransformChunk0, KeyChunks[0]);
+                nav.Replace(UITransformChunk1, KeyChunks[1]);
+                nav.Replace(UITransformChunk2, KeyChunks[2]);
+                nav.Replace(UITransformChunk3, KeyChunks[3]);
+                nav.Replace(UITransformChunk4, KeyChunks[keyIs32Byte ? 4 : 0]);
+                nav.Replace(UITransformChunk5, KeyChunks[keyIs32Byte ? 5 : 1]);
+                nav.Replace(UITransformChunk6, KeyChunks[keyIs32Byte ? 6 : 2]);
+                nav.Replace(UITransformChunk7, KeyChunks[keyIs32Byte ? 7 : 3]);
             }, nav.Undo);
             PageAction keyLittleEndianAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformChunks);
-                nav.AddBold(UITransformLittleEndian, KeyLittleEndian);
+                nav.Replace(UITransformLittleEndian0, KeyLittleEndian[0]);
+                nav.Replace(UITransformLittleEndian1, KeyLittleEndian[1]);
+                nav.Replace(UITransformLittleEndian2, KeyLittleEndian[2]);
+                nav.Replace(UITransformLittleEndian3, KeyLittleEndian[3]);
+                nav.Replace(UITransformLittleEndian4, KeyLittleEndian[keyIs32Byte ? 4 : 0]);
+                nav.Replace(UITransformLittleEndian5, KeyLittleEndian[keyIs32Byte ? 5 : 1]);
+                nav.Replace(UITransformLittleEndian6, KeyLittleEndian[keyIs32Byte ? 6 : 2]);
+                nav.Replace(UITransformLittleEndian7, KeyLittleEndian[keyIs32Byte ? 7 : 3]);
             }, nav.Undo);
-            PageAction addKeyToStateAction = new PageAction(() =>
-            {
-                nav.UnboldLast(UITransformLittleEndian);
-                nav.Replace(UIState4, KeyLittleEndian.Replace(" ", "").Substring(0, 8));
-                nav.Replace(UIState5, KeyLittleEndian.Replace(" ", "").Substring(8, 8));
-                nav.Replace(UIState6, KeyLittleEndian.Replace(" ", "").Substring(16, 8));
-                nav.Replace(UIState7, KeyLittleEndian.Replace(" ", "").Substring(24, 8));
-                nav.Replace(UIState8, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8));
-                nav.Replace(UIState9, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8));
-                nav.Replace(UIState10, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8));
-                nav.Replace(UIState11, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8));
-            }, nav.Undo);
+            PageAction[] copyKeyToStateActions = CopyActions(
+                new Border[] { UITransformLittleEndian0Cell, UITransformLittleEndian1Cell, UITransformLittleEndian2Cell, UITransformLittleEndian3Cell, UITransformLittleEndian4Cell, UITransformLittleEndian5Cell, UITransformLittleEndian6Cell, UITransformLittleEndian7Cell },
+                new Border[] { UIState4Cell, UIState5Cell, UIState6Cell, UIState7Cell, UIState8Cell, UIState9Cell, UIState10Cell, UIState11Cell });
             p.AddAction(keyStepDescriptionAction);
             p.AddAction(keyInputAction);
             p.AddAction(keyChunksAction);
             p.AddAction(keyLittleEndianAction);
-            p.AddAction(addKeyToStateAction);
+            p.AddAction(copyKeyToStateActions);
             #endregion
             #region iv
             PageAction ivStepDescriptionAction = new PageAction(() =>
@@ -97,39 +100,33 @@ namespace Cryptool.Plugins.ChaCha
                 ) + "First, we add the IV to the state. ";
                 nav.AddBold(UIStateMatrixStepDescription, desc);
                 nav.Clear(UITransformInput);
-                nav.Clear(UITransformChunks);
-                nav.Clear(UITransformLittleEndian);
+                nav.Clear(UITransformChunk0, UITransformChunk1, UITransformChunk2, UITransformChunk3, UITransformChunk4, UITransformChunk5, UITransformChunk6, UITransformChunk7);
+                nav.Clear(UITransformLittleEndian0, UITransformLittleEndian1, UITransformLittleEndian2, UITransformLittleEndian3, UITransformLittleEndian4, UITransformLittleEndian5, UITransformLittleEndian6, UITransformLittleEndian7);
             }, nav.Undo);
             PageAction ivInputAction = new PageAction(() =>
             {
                 nav.UnboldLast(UIStateMatrixStepDescription);
-                nav.AddBold(UITransformInput, HexInputIV);
+                nav.Replace(UITransformInput, HexInputIV);
             }, nav.Undo);
             PageAction ivChunksAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformInput);
-                nav.AddBold(UITransformChunks, IVChunks);
+                nav.Replace(UITransformChunk0, IVChunks[0]);
+                nav.Replace(UITransformChunk1, IVChunks[1]);
+                if(!versionIsDJB) nav.Replace(UITransformChunk2, IVChunks[2]);
             }, nav.Undo);
             PageAction ivLittleEndianAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformChunks);
-                nav.AddBold(UITransformLittleEndian, IVLittleEndian);
+                nav.Replace(UITransformLittleEndian0, IVLittleEndian[0]);
+                nav.Replace(UITransformLittleEndian1, IVLittleEndian[1]);
+                if(!versionIsDJB) nav.Replace(UITransformLittleEndian2, IVLittleEndian[2]);
             }, nav.Undo);
-            PageAction addIvToStateAction = new PageAction(() =>
-            {
-                nav.UnboldLast(UITransformLittleEndian);
-                if (!versionIsDJB)
-                {
-                    nav.Replace(UIState13, IVLittleEndian.Replace(" ", "").Substring(0, 8));
-                }
-                nav.Replace(UIState14, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8));
-                nav.Replace(UIState15, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8));
-            }, nav.Undo);
+            PageAction[] copyIVToStateActions = versionIsDJB ? CopyActions(new Border[] { UITransformLittleEndian0Cell, UITransformLittleEndian1Cell }, new Border[] { UIState14Cell, UIState15Cell })
+                : CopyActions(new Border[] { UITransformLittleEndian0Cell, UITransformLittleEndian1Cell, UITransformLittleEndian2Cell }, new Border[] { UIState13Cell, UIState14Cell, UIState15Cell });
             p.AddAction(ivStepDescriptionAction);
             p.AddAction(ivInputAction);
             p.AddAction(ivChunksAction);
             p.AddAction(ivLittleEndianAction);
-            p.AddAction(addIvToStateAction);
+            p.AddAction(copyIVToStateActions);
             #endregion
             #region counter
             PageAction counterStepDescriptionAction = new PageAction(() =>
@@ -137,45 +134,44 @@ namespace Cryptool.Plugins.ChaCha
                 string desc = "And then the counter. Since this is our first keystream block, we set the counter to 0. ";
                 nav.AddBold(UIStateMatrixStepDescription, desc);
                 nav.Clear(UITransformInput);
-                nav.Clear(UITransformChunks);
-                nav.Clear(UITransformLittleEndian);
+                nav.Clear(UITransformChunk0, UITransformChunk1, UITransformChunk2, UITransformChunk3);
+                nav.Clear(UITransformLittleEndian0, UITransformLittleEndian1, UITransformLittleEndian2, UITransformLittleEndian3);
             }, nav.Undo);
             PageAction counterInputAction = new PageAction(() =>
             {
                 nav.UnboldLast(UIStateMatrixStepDescription);
-                nav.AddBold(UITransformInput, HexInitialCounter);
+                nav.Replace(UITransformInput, HexInitialCounter);
             }, nav.Undo);
             PageAction counterChunksAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformInput);
-                nav.AddBold(UITransformChunks, InitialCounterChunks);
+                nav.Replace(UITransformChunk0, InitialCounterChunks[0]);
+                if(versionIsDJB)
+                {
+                    nav.Replace(UITransformChunk1, InitialCounterChunks[1]);
+                }
             }, nav.Undo);
             PageAction counterLittleEndianAction = new PageAction(() =>
             {
-                nav.UnboldLast(UITransformChunks);
-                nav.AddBold(UITransformLittleEndian, InitialCounterLittleEndian);
-            }, nav.Undo);
-            PageAction addCounterToStateAction = new PageAction(() =>
-            {
-                nav.UnboldLast(UITransformLittleEndian);
-                nav.Replace(UIState12, InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UITransformLittleEndian0, InitialCounterLittleEndian[0]);
                 if (versionIsDJB)
                 {
-                    nav.Replace(UIState13, InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8));
+                    nav.Replace(UITransformLittleEndian1, InitialCounterLittleEndian[1]);
                 }
             }, nav.Undo);
+            PageAction[] copyCounterToStateActions = versionIsDJB ? CopyActions(new Border[] { UITransformLittleEndian0Cell, UITransformLittleEndian1Cell }, new Border[] { UIState12Cell, UIState13Cell }) :
+                CopyActions(new Border[] { UITransformLittleEndian0Cell }, new Border[] { UIState12Cell });
             p.AddAction(counterStepDescriptionAction);
             p.AddAction(counterInputAction);
             p.AddAction(counterChunksAction);
             p.AddAction(counterLittleEndianAction);
-            p.AddAction(addCounterToStateAction);
+            p.AddAction(copyCounterToStateActions);
             PageAction nextPageDesc = new PageAction(() =>
             {
                 string desc = "On the next page, we will use this initialized state matrix to generate the first keystream block.";
                 nav.AddBold(UIStateMatrixStepDescription, desc);
                 nav.Clear(UITransformInput);
-                nav.Clear(UITransformChunks);
-                nav.Clear(UITransformLittleEndian);
+                nav.Clear(UITransformChunk0, UITransformChunk1, UITransformChunk2, UITransformChunk3);
+                nav.Clear(UITransformLittleEndian0, UITransformLittleEndian1, UITransformLittleEndian2, UITransformLittleEndian3);
             }, nav.Undo);
             p.AddAction(nextPageDesc);
             #endregion

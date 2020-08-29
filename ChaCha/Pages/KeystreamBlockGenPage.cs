@@ -290,29 +290,29 @@ namespace Cryptool.Plugins.ChaCha
             bool versionIsDJB = Version == ChaCha.Version.DJB;
             PageAction initAction = new PageAction(() =>
             {
-                nav.Replace(UIKeystreamBlockGen0, ConstantsLittleEndian.Replace(" ", "").Substring(0, 8));
-                nav.Replace(UIKeystreamBlockGen1, ConstantsLittleEndian.Replace(" ", "").Substring(8, 8));
-                nav.Replace(UIKeystreamBlockGen2, ConstantsLittleEndian.Replace(" ", "").Substring(16, 8));
-                nav.Replace(UIKeystreamBlockGen3, ConstantsLittleEndian.Replace(" ", "").Substring(24, 8));
-                nav.Replace(UIKeystreamBlockGen4, KeyLittleEndian.Replace(" ", "").Substring(0, 8));
-                nav.Replace(UIKeystreamBlockGen5, KeyLittleEndian.Replace(" ", "").Substring(8, 8));
-                nav.Replace(UIKeystreamBlockGen6, KeyLittleEndian.Replace(" ", "").Substring(16, 8));
-                nav.Replace(UIKeystreamBlockGen7, KeyLittleEndian.Replace(" ", "").Substring(24, 8));
-                nav.Replace(UIKeystreamBlockGen8, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 0 : 32, 8));
-                nav.Replace(UIKeystreamBlockGen9, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 8 : 40, 8));
-                nav.Replace(UIKeystreamBlockGen10, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 16 : 48, 8));
-                nav.Replace(UIKeystreamBlockGen11, KeyLittleEndian.Replace(" ", "").Substring(InputKey.Length == 16 ? 24 : 56, 8));
-                nav.Replace(UIKeystreamBlockGen12, InitialCounterLittleEndian.Replace(" ", "").Substring(0, 8));
+                nav.Replace(UIKeystreamBlockGen0, ConstantsLittleEndian[0]);
+                nav.Replace(UIKeystreamBlockGen1, ConstantsLittleEndian[1]);
+                nav.Replace(UIKeystreamBlockGen2, ConstantsLittleEndian[2]);
+                nav.Replace(UIKeystreamBlockGen3, ConstantsLittleEndian[3]);
+                nav.Replace(UIKeystreamBlockGen4, KeyLittleEndian[0]);
+                nav.Replace(UIKeystreamBlockGen5, KeyLittleEndian[1]);
+                nav.Replace(UIKeystreamBlockGen6, KeyLittleEndian[2]);
+                nav.Replace(UIKeystreamBlockGen7, KeyLittleEndian[3]);
+                nav.Replace(UIKeystreamBlockGen8, KeyLittleEndian[InputKey.Length == 32 ? 4 : 0]);
+                nav.Replace(UIKeystreamBlockGen9, KeyLittleEndian[InputKey.Length == 32 ? 5 : 1]);
+                nav.Replace(UIKeystreamBlockGen10, KeyLittleEndian[InputKey.Length == 32 ? 6 : 2]);
+                nav.Replace(UIKeystreamBlockGen11, KeyLittleEndian[InputKey.Length == 32 ? 7 : 3]);
+                nav.Replace(UIKeystreamBlockGen12, InitialCounterLittleEndian[0]);
                 if (versionIsDJB)
                 {
-                    nav.Replace(UIKeystreamBlockGen13, InitialCounterLittleEndian.Replace(" ", "").Substring(8, 8));
+                    nav.Replace(UIKeystreamBlockGen13, InitialCounterLittleEndian[1]);
                 }
                 else
                 {
-                    nav.Replace(UIKeystreamBlockGen13, IVLittleEndian.Replace(" ", "").Substring(0, 8));
+                    nav.Replace(UIKeystreamBlockGen13, IVLittleEndian[0]);
                 }
-                nav.Replace(UIKeystreamBlockGen14, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 0 : 8, 8));
-                nav.Replace(UIKeystreamBlockGen15, IVLittleEndian.Replace(" ", "").Substring(versionIsDJB ? 8 : 16, 8));
+                nav.Replace(UIKeystreamBlockGen14, IVLittleEndian[versionIsDJB ? 0 : 1]);
+                nav.Replace(UIKeystreamBlockGen15, IVLittleEndian[versionIsDJB ? 1 : 2]);
             }, nav.Undo);
             p.AddInitAction(initAction);
             PageAction generalDescriptionAction = new PageAction(() =>
