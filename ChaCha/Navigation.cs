@@ -205,6 +205,7 @@ namespace Cryptool.Plugins.ChaCha
         private int _currentActionIndex = 0;
 
         private bool _executionFinished = false;
+        private bool _inputValid = false;
 
         private int CurrentPageIndex
         {
@@ -287,18 +288,34 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public bool InputValid
+        {
+            get
+            {
+                return _inputValid;
+            }
+            set
+            {
+                _inputValid = value;
+                OnPropertyChanged("NextPageIsEnabled");
+                OnPropertyChanged("PrevPageIsEnabled");
+                OnPropertyChanged("NextActionIsEnabled");
+                OnPropertyChanged("PrevActionIsEnabled");
+            }
+        }
+
         public bool NextPageIsEnabled
         {
             get
             {
-                return CurrentPageIndex != MaxPageIndex && ExecutionFinished;
+                return CurrentPageIndex != MaxPageIndex && ExecutionFinished && InputValid;
             }
         }
         public bool PrevPageIsEnabled
         {
             get
             {
-                return CurrentPageIndex != 0 && ExecutionFinished;
+                return CurrentPageIndex != 0 && ExecutionFinished && InputValid;
             }
         }
 

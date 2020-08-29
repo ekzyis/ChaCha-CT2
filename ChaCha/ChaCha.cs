@@ -189,7 +189,8 @@ namespace Cryptool.Plugins.ChaCha
             GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, IVSIZE_BITS / 8, COUNTERSIZE_BITS / 8), NotificationLevel.Info);
             GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
 
-            if (ValidateInput())
+            bool inputValid = ValidateInput();
+            if (inputValid)
             {
                 InitStateMatrix();
 
@@ -198,8 +199,8 @@ namespace Cryptool.Plugins.ChaCha
 
             ProgressChanged(1, 1);
 
-            // enable navigation since now all values needed for visualization are set.
-            DispatchToPresentation(delegate { _presentation.ExecutionFinished = true; });
+            // set values needed to enable navigation since now all values needed for visualization are set.
+            DispatchToPresentation(delegate { _presentation.InputValid = inputValid;  _presentation.ExecutionFinished = true; });
         }
 
         /// <summary>
