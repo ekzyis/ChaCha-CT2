@@ -181,18 +181,13 @@ namespace Cryptool.Plugins.ChaCha
                 _presentation.Rounds = settings.Rounds;
             });
 
-            GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
-
-            GuiLogMessage(string.Format("Rounds: {0}", settings.Rounds), NotificationLevel.Info);
-            GuiLogMessage(string.Format("Version: {0}", settings.Version.Name), NotificationLevel.Info);
-
             COUNTERSIZE_BITS = settings.Version.BitsCounter;
             IVSIZE_BITS = settings.Version.BitsIV;
             INITIAL_COUNTER = settings.Version.InitialCounter;
 
-            Console.WriteLine(String.Format("Rounds: {0}, Counter size: {1}", settings.Rounds, COUNTERSIZE_BITS / 8));
-            Console.WriteLine(String.Format("Expected: Key size: 16 or 32, IV size: {0}", IVSIZE_BITS / 8));
-            Console.WriteLine(String.Format("Actual: Key size: {0}, IV size: {1}", InputKey.Length, InputIV.Length));
+            GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
+            GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, IVSIZE_BITS / 8, COUNTERSIZE_BITS / 8), NotificationLevel.Info);
+            GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
 
             if (ValidateInput())
             {
