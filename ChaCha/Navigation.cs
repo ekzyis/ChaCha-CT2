@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -124,6 +125,41 @@ namespace Cryptool.Plugins.ChaCha
             {
                 WrapExecWithNavigation(pageAction);
             }
+            InitActionNavigationBar(p);
+        }
+
+        private void InitActionNavigationBar(Page p)
+        {
+            UINavbarAction.Children.Clear();
+            if(p.ActionFrames > 0)
+            {
+                string actionLabelName = "UINavbarActionLabel";
+                TextBlock actionLabel = new TextBlock();
+                actionLabel.Name = actionLabelName;
+                actionLabel.VerticalAlignment = VerticalAlignment.Center;
+                actionLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                actionLabel.FontSize = 10.0;
+                actionLabel.Margin = new Thickness(0, 0, 1, 0);
+                actionLabel.Text = "Actions:";
+                UINavbarAction.Children.Add(actionLabel);
+                for (int i = 0; i <= p.ActionFrames; ++i)
+                {
+                    Button b = new Button();
+                    b.Height = 15; b.Width = 24;
+                    b.Margin = new Thickness(1, 0, 1, 0);
+                    b.Click += new RoutedEventHandler(MoveToActionClickWrapper(i));
+                    TextBlock tb = new TextBlock();
+                    tb.VerticalAlignment = VerticalAlignment.Center;
+                    tb.HorizontalAlignment = HorizontalAlignment.Center;
+                    Binding binding = new Binding();
+                    binding.ElementName = actionLabelName;
+                    binding.Path = new PropertyPath("FontSize");
+                    tb.SetBinding(TextBlock.FontSizeProperty, binding);
+                    b.Content = tb;
+                    tb.Text = (i + 1).ToString();
+                    UINavbarAction.Children.Add(b);
+                }
+            }
         }
 
         private void MovePages(int n)
@@ -144,6 +180,11 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        private void MoveToPage(int n)
+        {
+            MovePages(n - CurrentPageIndex);
+        }
+
         const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 0;
         private void InitPages()
         {
@@ -153,6 +194,15 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
+        }
+
+        private void InitNavigationPageClickHandlers()
+        {
+            Button[] pageButtons = UINavbarPage.Children.OfType<Button>().ToArray();
+            for(int i = 0; i < pageButtons.Length; ++i)
+            {
+                pageButtons[i].Click += new RoutedEventHandler(MoveToPageClickWrapper(i));
+            }
         }
 
         // useful for development: setting pages visible for development purposes does not infer with execution
@@ -197,6 +247,17 @@ namespace Cryptool.Plugins.ChaCha
             InitPage(CurrentPage);
         }
 
+        private Action<object, RoutedEventArgs> MoveToPageClickWrapper(int n)
+        {
+            Action<object, RoutedEventArgs> moveToPage_Click = (sender, e) => { MoveToPage(n); };
+            return moveToPage_Click;
+        }
+
+        private Action<object, RoutedEventArgs> MoveToActionClickWrapper(int n)
+        {
+            Action<object, RoutedEventArgs> moveToAction_Click = (sender, e) => { MoveToAction(n); };
+            return moveToAction_Click;
+        }
         #endregion
 
         #region variables related to page navigation
@@ -375,6 +436,28 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        private void MoveActions(int n)
+        {
+            if (n < 0)
+            {
+                for (int i = 0; i < Math.Abs(n); ++i)
+                {
+                    PrevAction_Click(null, null);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Math.Abs(n); ++i)
+                {
+                    NextAction_Click(null, null);
+                }
+            }
+        }
+
+        private void MoveToAction(int n)
+        {
+            MoveActions(n - CurrentActionIndex);
+        }
 
         #endregion
 

@@ -58,14 +58,28 @@
       <RowDefinition Height="5*"></RowDefinition>
     </Grid.RowDefinitions>
     <!-- Navigation bar -->
-    <Grid Name="UINavbar" Grid.Row="1">
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        <Button Name="UIPrevPage" Click="PrevPage_Click" IsEnabled="{ Binding PrevPageIsEnabled }" Content="&lt;"/>
-        <Label Content="PAGE"/>
-        <Button Name="UINextPage" Click="NextPage_Click" IsEnabled="{ Binding NextPageIsEnabled }" Content="&gt;"/>
-        <Button Name="UIPrevAction" Click="PrevAction_Click" IsEnabled="{ Binding PrevActionIsEnabled }" Content="&lt;"/>
-        <Label Content="ACTION"/>
-        <Button Name="UINextAction" Click="NextAction_Click" IsEnabled="{ Binding NextActionIsEnabled }" Content="&gt;"/>
+    <Grid  Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <StackPanel Name="UINavbarPage" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,1,0" FontSize="10" Name="UINavbarPageLabel">Pages:</TextBlock>
+        <!-- Click handlers are set in code-behind -->
+        <Button Height="15" Width="24" Margin="1,0,1,0">
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">1</TextBlock>
+        </Button>
+        <Button Height="15" Width="24" Margin="1,0,1,0">
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">2</TextBlock>
+        </Button>
+        <Button Height="15" Width="24" Margin="1,0,1,0">
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">3</TextBlock>
+        </Button>
+        <Button Height="15" Width="24" Margin="1,0,1,0">
+          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">4</TextBlock>
+        </Button>
+      </StackPanel>
+      <StackPanel Name="UINavbarAction" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
       </StackPanel>
     </Grid>
     <!-- Main grid for content pane -->
