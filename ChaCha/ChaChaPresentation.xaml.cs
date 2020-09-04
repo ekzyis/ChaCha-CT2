@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             ContentControl c = new ContentControl();
             InitializeComponent();
-            InitPages();
+            InitVisualization();
             //InitNavigationPageClickHandlers();
             DataContext = this;
         }

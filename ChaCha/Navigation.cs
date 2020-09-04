@@ -127,6 +127,7 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
+        // Initializes page by wrapping the init action functions with the navigation interface methods and calling them.
         private void InitPage(Page p)
         {
             foreach (PageAction pageAction in p.InitActions)
@@ -194,7 +195,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 0;
-        private void InitPages()
+        private void InitVisualization()
         {
             _pages.Clear();
             AddPage(LandingPage());
@@ -202,12 +203,13 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
-            foreach(Page p in _pages)
+            foreach (Page p in _pages)
             {
                 InitPageNavigationBar(p);
             }
         }
 
+        // this must be called after all pages have been added
         private void InitPageNavigationBar(Page p)
         {
             StackPanel pageNavBar = p.PageNavigationBar;
@@ -237,6 +239,7 @@ namespace Cryptool.Plugins.ChaCha
             _pages[pageIndex].Visibility = Visibility.Visible;
         }
 
+        // Calls FinishPageAction if page action used navigation interface methods.
         private void WrapExecWithNavigation(PageAction pageAction)
         {
             pageAction.exec();
@@ -358,7 +361,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 // reload pages to use new variables
-                InitPages();
+                InitVisualization();
                 MovePages(__START_VISUALIZATION_ON_PAGE_INDEX__ - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");
