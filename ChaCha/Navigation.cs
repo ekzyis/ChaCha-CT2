@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaCha
@@ -92,7 +93,18 @@ namespace Cryptool.Plugins.ChaCha
                 actionNavBar.Children.Add(CreateNavBarLabel(_ACTIONLABELNAME, "Actions:"));
                 for (int i = 0; i <= Math.Min(p.ActionFrames, 49); ++i)
                 {
-                    actionNavBar.Children.Add(CreateActionNavigationButton(i));
+                    actionNavBar.Children.Add(CreateActionNavigationButton(CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE + i));
+                }
+                if(p.ActionFrames > 49)
+                {
+                    Button prevInterval =  CreateNavigationButton();
+                    prevInterval.Click += PrevInterval_Click;
+                    prevInterval.Content = "<";
+                    Button nextInterval = CreateNavigationButton();
+                    nextInterval.Click += NextInterval_Click;
+                    nextInterval.Content = ">";
+                    actionNavBar.Children.Insert(1, prevInterval);
+                    actionNavBar.Children.Add(nextInterval);
                 }
             }
         }
@@ -326,6 +338,8 @@ namespace Cryptool.Plugins.ChaCha
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
+        private int _currentActionIntervalIndex = 0;
+        private int _ACTION_INTERVAL_SIZE = 20;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
@@ -364,6 +378,18 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevActionIsEnabled");
             }
         }
+        private int CurrentActionIntervalIndex
+        {
+            get
+            {
+                return _currentActionIntervalIndex;
+            }
+            set
+            {
+                _currentActionIntervalIndex = value;
+            }
+        }
+
         private Page CurrentPage
         {
             get
@@ -519,6 +545,18 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToAction(int n)
         {
             MoveActions(n - CurrentActionIndex);
+        }
+
+        private void PrevInterval_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentActionIntervalIndex = Math.Max(0, CurrentActionIntervalIndex-1);
+            InitActionNavigationBar(CurrentPage);
+
+        }
+        private void NextInterval_Click(object sender, RoutedEventArgs e)
+        {
+            CurrentActionIntervalIndex = Math.Min(CurrentPage.ActionFrames / _ACTION_INTERVAL_SIZE, CurrentActionIntervalIndex+1);
+            InitActionNavigationBar(CurrentPage);
         }
 
         #endregion
