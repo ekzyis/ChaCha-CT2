@@ -60,11 +60,11 @@ namespace Cryptool.Plugins.ChaCha
         }
         class Page
         {
-            public Page(UIElement UIPageElement)
+            public Page(ContentControl pageElement)
             {
-                _page = UIPageElement;
+                _page = pageElement;
             }
-            private readonly UIElement _page; // the UI element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
+            private readonly ContentControl _page; // the visual tree element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
             private readonly List<PageAction> _pageActions = new List<PageAction>();
             private readonly List<PageAction> _pageInitActions = new List<PageAction>();
             public int ActionFrames
@@ -110,6 +110,14 @@ namespace Cryptool.Plugins.ChaCha
                     _page.Visibility = value;
                 }
             }
+            public StackPanel PageNavigationBar
+            {
+                get
+                {
+                    bool b = _page.ApplyTemplate();
+                    return (StackPanel)_page.Template.FindName("PageNavBar", _page);
+                }
+            }
         }
 
         // List with pages in particular order to implement page navigation + their page actions
@@ -125,9 +133,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 WrapExecWithNavigation(pageAction);
             }
-            InitActionNavigationBar(p);
+            //InitActionNavigationBar(p);
         }
-
+        /*
         private void InitActionNavigationBar(Page p)
         {
             UINavbarAction.Children.Clear();
@@ -161,7 +169,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
-
+        */
         private void MovePages(int n)
         {
             if (n < 0)
@@ -194,14 +202,25 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
+            foreach(Page p in _pages)
+            {
+                InitPageNavigationBar(p);
+            }
         }
 
-        private void InitNavigationPageClickHandlers()
+        private void InitPageNavigationBar(Page p)
         {
-            Button[] pageButtons = UINavbarPage.Children.OfType<Button>().ToArray();
-            for(int i = 0; i < pageButtons.Length; ++i)
+            StackPanel pageNavBar = p.PageNavigationBar;
+            pageNavBar.Children.Clear();
+            for (int i = 0; i < _pages.Count; ++i)
             {
-                pageButtons[i].Click += new RoutedEventHandler(MoveToPageClickWrapper(i));
+                Button b = new Button();
+                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(i));
+                b.Margin = new Thickness(1, 0, 1, 0);
+                TextBlock tb = new TextBlock();
+                tb.Text = (i + 1).ToString();
+                b.Content = tb;
+                pageNavBar.Children.Add(b);
             }
         }
 

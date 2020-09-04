@@ -24,9 +24,10 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
         public ChaChaPresentation()
         {
+            ContentControl c = new ContentControl();
             InitializeComponent();
             InitPages();
-            InitNavigationPageClickHandlers();
+            //InitNavigationPageClickHandlers();
             DataContext = this;
         }
 

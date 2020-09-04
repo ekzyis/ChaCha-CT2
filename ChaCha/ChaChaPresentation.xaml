@@ -49,54 +49,47 @@
       <Setter Property="Height" Value="35"/>
     </Style>
     
-  </UserControl.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <!-- Content row -->
-      <RowDefinition Height="95*"></RowDefinition>
-      <!-- Navigation bar row -->
-      <RowDefinition Height="5*"></RowDefinition>
-    </Grid.RowDefinitions>
-    <!-- Navigation bar -->
-    <Grid  Grid.Row="1">
-      <Grid.RowDefinitions>
-        <RowDefinition/>
-        <RowDefinition/>
-      </Grid.RowDefinitions>
-      <StackPanel Name="UINavbarPage" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,1,0" FontSize="10" Name="UINavbarPageLabel">Pages:</TextBlock>
-        <!-- Click handlers are set in code-behind -->
-        <Button Height="15" Width="24" Margin="1,0,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">1</TextBlock>
-        </Button>
-        <Button Height="15" Width="24" Margin="1,0,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">2</TextBlock>
-        </Button>
-        <Button Height="15" Width="24" Margin="1,0,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">3</TextBlock>
-        </Button>
-        <Button Height="15" Width="24" Margin="1,0,1,0">
-          <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{ Binding ElementName=UINavbarPageLabel, Path=FontSize}">4</TextBlock>
-        </Button>
-      </StackPanel>
-      <StackPanel Name="UINavbarAction" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-      </StackPanel>
-    </Grid>
-    <!-- Main grid for content pane -->
-    <Grid Margin="20" Name="UIContentPane">
-      <!-- Landing page -->
-      <Grid Name="UILandingPage" Visibility="Collapsed">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-          <TextBox Margin="10" FontSize="24" HorizontalAlignment="Center">
-            ChaCha Visualization
-          </TextBox>
-          <TextBox HorizontalAlignment="Center">
-            A stream cipher used in TLS by Daniel J. Bernstein
-          </TextBox>
-        </StackPanel>
+    <!-- Page template -->
+    <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="95*"/>
+          <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+          <StackPanel Name="PageNavBar" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Page click handlers are inserted here in code-behind -->
+          </StackPanel>
+          <StackPanel Name="ActionNavBar" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Action click handlers are inserted here in code-behind -->
+          </StackPanel>
+        </Grid>
+        <Grid Grid.Row="0">
+          <ContentPresenter/>
+        </Grid>
       </Grid>
-      <!-- ChaCha workflow page -->
-      <Grid Name="UIWorkflowPage" Visibility="Collapsed">
+    </ControlTemplate>
+  </UserControl.Resources>
+  <!-- Main grid for content pane -->
+  <Grid Margin="20" Name="UIContentPane">
+      <!-- Landing page -->
+    <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox Margin="10" FontSize="24" HorizontalAlignment="Center">
+          ChaCha Visualization
+        </TextBox>
+        <TextBox HorizontalAlignment="Center">
+          A stream cipher used in TLS by Daniel J. Bernstein
+        </TextBox>
+      </StackPanel>
+    </ContentControl>
+    <!-- ChaCha workflow page -->
+    <ContentControl Name="UIWorkflowPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -141,8 +134,10 @@
           </Grid>
         </Grid>
       </Grid>
-      <!-- ChaCha State matrix page -->
-      <Grid Name="UIStateMatrixPage" Visibility="Visible">
+    </ContentControl>
+    <!-- ChaCha State matrix page -->
+    <ContentControl Name="UIStateMatrixPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -335,8 +330,10 @@
           </Grid>
         </Grid>
       </Grid>
-      <!-- ChaCha Generate Keystream block page -->
-      <Grid Name="UIKeystreamBlockGenPage" Visibility="Collapsed">
+    </ContentControl>
+    <!-- ChaCha Generate Keystream block page -->
+    <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -1063,6 +1060,6 @@
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </ContentControl>
   </Grid>
 </UserControl>
