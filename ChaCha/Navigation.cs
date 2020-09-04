@@ -188,6 +188,15 @@ namespace Cryptool.Plugins.ChaCha
         {
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
+            string pageLabelName = "UINavbarPageLabel";
+            TextBlock pageLabel = new TextBlock();
+            pageLabel.Name = pageLabelName;
+            pageLabel.VerticalAlignment = VerticalAlignment.Center;
+            pageLabel.HorizontalAlignment = HorizontalAlignment.Center;
+            pageLabel.FontSize = 10.0;
+            pageLabel.Margin = new Thickness(0, 0, 1, 0);
+            pageLabel.Text = "Pages:";
+            pageNavBar.Children.Add(pageLabel);
             for (int i = 0; i < _pages.Count; ++i)
             {
                 Button b = new Button();
@@ -197,7 +206,10 @@ namespace Cryptool.Plugins.ChaCha
                 TextBlock tb = new TextBlock();
                 tb.VerticalAlignment = VerticalAlignment.Center;
                 tb.HorizontalAlignment = HorizontalAlignment.Center;
-                tb.FontSize = 10.0;
+                Binding binding = new Binding();
+                binding.ElementName = pageLabelName;
+                binding.Path = new PropertyPath("FontSize");
+                tb.SetBinding(TextBlock.FontSizeProperty, binding);
                 tb.Text = (i + 1).ToString();
                 b.Content = tb;
                 pageNavBar.Children.Add(b);
