@@ -191,9 +191,13 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < _pages.Count; ++i)
             {
                 Button b = new Button();
-                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(i));
+                b.Height = 16; b.Width = 20;
                 b.Margin = new Thickness(1, 0, 1, 0);
+                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(i));
                 TextBlock tb = new TextBlock();
+                tb.VerticalAlignment = VerticalAlignment.Center;
+                tb.HorizontalAlignment = HorizontalAlignment.Center;
+                tb.FontSize = 10.0;
                 tb.Text = (i + 1).ToString();
                 b.Content = tb;
                 pageNavBar.Children.Add(b);
@@ -218,7 +222,7 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 0; i <= Math.Min(p.ActionFrames, 49); ++i)
                 {
                     Button b = new Button();
-                    b.Height = 15; b.Width = 24;
+                    b.Height = 16; b.Width = 20;
                     b.Margin = new Thickness(1, 0, 1, 0);
                     b.Click += new RoutedEventHandler(MoveToActionClickWrapper(i));
                     TextBlock tb = new TextBlock();

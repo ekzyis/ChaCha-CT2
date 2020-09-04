@@ -51,20 +51,20 @@
     
     <!-- Page template -->
     <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
-      <Grid>
+      <Grid Margin="5">
         <Grid.RowDefinitions>
-          <RowDefinition Height="95*"/>
-          <RowDefinition Height="5*"/>
+          <RowDefinition Height="92*"/>
+          <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
           <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
           </Grid.RowDefinitions>
-          <StackPanel Name="PageNavBar" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+          <StackPanel Margin="1" Name="PageNavBar" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
             <!-- Page click handlers are inserted here in code-behind -->
           </StackPanel>
-          <StackPanel Name="ActionNavBar" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+          <StackPanel Margin="1" Name="ActionNavBar" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <!-- Action click handlers are inserted here in code-behind -->
           </StackPanel>
         </Grid>
@@ -75,7 +75,7 @@
     </ControlTemplate>
   </UserControl.Resources>
   <!-- Main grid for content pane -->
-  <Grid Margin="20" Name="UIContentPane">
+  <Grid Name="UIContentPane">
       <!-- Landing page -->
     <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
