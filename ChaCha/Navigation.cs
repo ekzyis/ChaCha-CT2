@@ -118,6 +118,14 @@ namespace Cryptool.Plugins.ChaCha
                     return (StackPanel)_page.Template.FindName("PageNavBar", _page);
                 }
             }
+            public StackPanel ActionNavigationBar
+            {
+                get
+                {
+                    bool b = _page.ApplyTemplate();
+                    return (StackPanel)_page.Template.FindName("ActionNavBar", _page);
+                }
+            }
         }
 
         // List with pages in particular order to implement page navigation + their page actions
@@ -134,43 +142,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 WrapExecWithNavigation(pageAction);
             }
-            //InitActionNavigationBar(p);
         }
-        /*
-        private void InitActionNavigationBar(Page p)
-        {
-            UINavbarAction.Children.Clear();
-            if(p.ActionFrames > 0)
-            {
-                string actionLabelName = "UINavbarActionLabel";
-                TextBlock actionLabel = new TextBlock();
-                actionLabel.Name = actionLabelName;
-                actionLabel.VerticalAlignment = VerticalAlignment.Center;
-                actionLabel.HorizontalAlignment = HorizontalAlignment.Center;
-                actionLabel.FontSize = 10.0;
-                actionLabel.Margin = new Thickness(0, 0, 1, 0);
-                actionLabel.Text = "Actions:";
-                UINavbarAction.Children.Add(actionLabel);
-                for (int i = 0; i <= p.ActionFrames; ++i)
-                {
-                    Button b = new Button();
-                    b.Height = 15; b.Width = 24;
-                    b.Margin = new Thickness(1, 0, 1, 0);
-                    b.Click += new RoutedEventHandler(MoveToActionClickWrapper(i));
-                    TextBlock tb = new TextBlock();
-                    tb.VerticalAlignment = VerticalAlignment.Center;
-                    tb.HorizontalAlignment = HorizontalAlignment.Center;
-                    Binding binding = new Binding();
-                    binding.ElementName = actionLabelName;
-                    binding.Path = new PropertyPath("FontSize");
-                    tb.SetBinding(TextBlock.FontSizeProperty, binding);
-                    b.Content = tb;
-                    tb.Text = (i + 1).ToString();
-                    UINavbarAction.Children.Add(b);
-                }
-            }
-        }
-        */
+
         private void MovePages(int n)
         {
             if (n < 0)
@@ -206,6 +179,7 @@ namespace Cryptool.Plugins.ChaCha
             foreach (Page p in _pages)
             {
                 InitPageNavigationBar(p);
+                InitActionNavigationBar(p);
             }
         }
 
@@ -223,6 +197,41 @@ namespace Cryptool.Plugins.ChaCha
                 tb.Text = (i + 1).ToString();
                 b.Content = tb;
                 pageNavBar.Children.Add(b);
+            }
+        }
+
+        private void InitActionNavigationBar(Page p)
+        {
+            StackPanel actionNavBar = p.ActionNavigationBar;
+            actionNavBar.Children.Clear();
+            if (p.ActionFrames > 0)
+            {
+                string actionLabelName = "UINavbarActionLabel";
+                TextBlock actionLabel = new TextBlock();
+                actionLabel.Name = actionLabelName;
+                actionLabel.VerticalAlignment = VerticalAlignment.Center;
+                actionLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                actionLabel.FontSize = 10.0;
+                actionLabel.Margin = new Thickness(0, 0, 1, 0);
+                actionLabel.Text = "Actions:";
+                actionNavBar.Children.Add(actionLabel);
+                for (int i = 0; i <= Math.Min(p.ActionFrames, 49); ++i)
+                {
+                    Button b = new Button();
+                    b.Height = 15; b.Width = 24;
+                    b.Margin = new Thickness(1, 0, 1, 0);
+                    b.Click += new RoutedEventHandler(MoveToActionClickWrapper(i));
+                    TextBlock tb = new TextBlock();
+                    tb.VerticalAlignment = VerticalAlignment.Center;
+                    tb.HorizontalAlignment = HorizontalAlignment.Center;
+                    Binding binding = new Binding();
+                    binding.ElementName = actionLabelName;
+                    binding.Path = new PropertyPath("FontSize");
+                    tb.SetBinding(TextBlock.FontSizeProperty, binding);
+                    b.Content = tb;
+                    tb.Text = (i + 1).ToString();
+                    actionNavBar.Children.Add(b);
+                }
             }
         }
 
