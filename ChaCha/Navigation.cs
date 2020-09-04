@@ -183,36 +183,69 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        
+        private Button CreateNavigationButton()
+        {
+            Button b = new Button();
+            b.Height = 16; b.Width = 20;
+            b.Margin = new Thickness(1, 0, 1, 0);
+            return b;
+        }
+
+        private TextBlock CreateNavigationTextBlock(int index, string bindingElementName)
+        {
+            TextBlock tb = new TextBlock();
+            tb.VerticalAlignment = VerticalAlignment.Center;
+            tb.HorizontalAlignment = HorizontalAlignment.Center;
+            Binding binding = new Binding();
+            binding.ElementName = bindingElementName;
+            binding.Path = new PropertyPath("FontSize");
+            tb.SetBinding(TextBlock.FontSizeProperty, binding);
+            tb.Text = (index + 1).ToString();
+            return tb;
+        }
+
+        private TextBlock CreateNavBarLabel(string bindingElementName, string text)
+        {
+            TextBlock tb = new TextBlock();
+            tb.Name = bindingElementName;
+            tb.VerticalAlignment = VerticalAlignment.Center;
+            tb.HorizontalAlignment = HorizontalAlignment.Center;
+            tb.FontSize = 10.0;
+            tb.Margin = new Thickness(0, 0, 1, 0);
+            tb.Text = text;
+            return tb;
+        }
+
+        private string _PAGELABELNAME = "UINavBarPageLabel";
+        private Button CreatePageNavigationButton(int index)
+        {
+            Button b = CreateNavigationButton();
+            b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
+            TextBlock tb = CreateNavigationTextBlock(index, _PAGELABELNAME);
+            b.Content = tb;
+            return b;
+        }
+
+        private string _ACTIONLABELNAME = "UINavBarActionLabel";
+        private Button CreateActionNavigationButton(int index)
+        {
+            Button b = CreateNavigationButton();
+            b.Click += new RoutedEventHandler(MoveToActionClickWrapper(index));
+            TextBlock tb = CreateNavigationTextBlock(index, _ACTIONLABELNAME);
+            b.Content = tb;
+            return b;
+        }
+
         // this must be called after all pages have been added
         private void InitPageNavigationBar(Page p)
         {
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
-            string pageLabelName = "UINavbarPageLabel";
-            TextBlock pageLabel = new TextBlock();
-            pageLabel.Name = pageLabelName;
-            pageLabel.VerticalAlignment = VerticalAlignment.Center;
-            pageLabel.HorizontalAlignment = HorizontalAlignment.Center;
-            pageLabel.FontSize = 10.0;
-            pageLabel.Margin = new Thickness(0, 0, 1, 0);
-            pageLabel.Text = "Pages:";
-            pageNavBar.Children.Add(pageLabel);
+            pageNavBar.Children.Add(CreateNavBarLabel(_PAGELABELNAME, "Pages:"));
             for (int i = 0; i < _pages.Count; ++i)
             {
-                Button b = new Button();
-                b.Height = 16; b.Width = 20;
-                b.Margin = new Thickness(1, 0, 1, 0);
-                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(i));
-                TextBlock tb = new TextBlock();
-                tb.VerticalAlignment = VerticalAlignment.Center;
-                tb.HorizontalAlignment = HorizontalAlignment.Center;
-                Binding binding = new Binding();
-                binding.ElementName = pageLabelName;
-                binding.Path = new PropertyPath("FontSize");
-                tb.SetBinding(TextBlock.FontSizeProperty, binding);
-                tb.Text = (i + 1).ToString();
-                b.Content = tb;
-                pageNavBar.Children.Add(b);
+                pageNavBar.Children.Add(CreatePageNavigationButton(i));
             }
         }
 
@@ -222,31 +255,10 @@ namespace Cryptool.Plugins.ChaCha
             actionNavBar.Children.Clear();
             if (p.ActionFrames > 0)
             {
-                string actionLabelName = "UINavbarActionLabel";
-                TextBlock actionLabel = new TextBlock();
-                actionLabel.Name = actionLabelName;
-                actionLabel.VerticalAlignment = VerticalAlignment.Center;
-                actionLabel.HorizontalAlignment = HorizontalAlignment.Center;
-                actionLabel.FontSize = 10.0;
-                actionLabel.Margin = new Thickness(0, 0, 1, 0);
-                actionLabel.Text = "Actions:";
-                actionNavBar.Children.Add(actionLabel);
+                actionNavBar.Children.Add(CreateNavBarLabel(_ACTIONLABELNAME, "Actions:"));
                 for (int i = 0; i <= Math.Min(p.ActionFrames, 49); ++i)
                 {
-                    Button b = new Button();
-                    b.Height = 16; b.Width = 20;
-                    b.Margin = new Thickness(1, 0, 1, 0);
-                    b.Click += new RoutedEventHandler(MoveToActionClickWrapper(i));
-                    TextBlock tb = new TextBlock();
-                    tb.VerticalAlignment = VerticalAlignment.Center;
-                    tb.HorizontalAlignment = HorizontalAlignment.Center;
-                    Binding binding = new Binding();
-                    binding.ElementName = actionLabelName;
-                    binding.Path = new PropertyPath("FontSize");
-                    tb.SetBinding(TextBlock.FontSizeProperty, binding);
-                    b.Content = tb;
-                    tb.Text = (i + 1).ToString();
-                    actionNavBar.Children.Add(b);
+                    actionNavBar.Children.Add(CreateActionNavigationButton(i));
                 }
             }
         }
