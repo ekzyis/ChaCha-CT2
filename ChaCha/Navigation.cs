@@ -140,7 +140,18 @@ namespace Cryptool.Plugins.ChaCha
                 MoveToAction((int)s.Value);
             };
             s.ValueChanged += S_ValueChanged;
+            TextBlock current = new TextBlock();
+            Binding b = new Binding("Value");
+            b.Source = s;
+            current.SetBinding(TextBlock.TextProperty, b);
+            TextBlock delimiter = new TextBlock();
+            delimiter.Text = "/";
+            TextBlock total = new TextBlock();
+            total.Text = totalActions.ToString();
             actionNavBar.Children.Add(s);
+            actionNavBar.Children.Add(current);
+            actionNavBar.Children.Add(delimiter);
+            actionNavBar.Children.Add(total);
         }
         private void InitActionNavigationBar(Page p)
         {
