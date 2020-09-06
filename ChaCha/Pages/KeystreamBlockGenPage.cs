@@ -222,6 +222,7 @@ namespace Cryptool.Plugins.ChaCha
                 // new round begins
                 PageAction updateRoundCount = new PageAction(() =>
                 {
+                    CurrentRoundIndex = round;
                     nav.Replace(CurrentRound, round.ToString());
                 }, () =>
                 {
@@ -230,26 +231,39 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         text = (round - 1).ToString();
                     }
+                    else if(round == 1)
+                    {
+                        text = "-";
+                    }
+                    CurrentRoundIndex = round - 1;
                     nav.Replace(CurrentRound, text);
                 });
                 copyActions[0].Add(updateRoundCount);
+                copyActions[0].AddLabel(string.Format("_ROUND_ACTION_LABEL_{0}", round));
+            }
+            int QR_ARROW_MAX_INDEX = 8;
+            (int, int) calculateQRArrowIndex(int qrIndex_)
+            {
+                int qrArrowIndex = ((qrIndex_ - 1) % QR_ARROW_MAX_INDEX) + 1;
+                int qrPrevArrowIndex = qrArrowIndex == 1 ? QR_ARROW_MAX_INDEX : qrArrowIndex - 1;
+                return (qrArrowIndex, qrPrevArrowIndex);
             }
             PageAction updateQRArrow = new PageAction(() =>
             {
-                if (qrIndex > 1)
-                {
-                    ((TextBox)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Hidden;
-                }
-                ((TextBox)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Visible;
+                (int qrArrowIndex, int qrPrevArrowIndex)  = calculateQRArrowIndex(qrIndex);
+                ((TextBox)GetIndexElement("ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Hidden;
+                ((TextBox)GetIndexElement("ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Visible;
             }, () =>
             {
-                if (qrIndex > 1)
+                if(qrIndex > 1)
                 {
-                    ((TextBox)GetIndexElement("ArrowQRRound", qrIndex - 1)).Visibility = Visibility.Visible;
+                    (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
+                    ((TextBox)GetIndexElement("ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Visible;
+                    ((TextBox)GetIndexElement("ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Hidden;
                 }
-                ((TextBox)GetIndexElement("ArrowQRRound", qrIndex)).Visibility = Visibility.Hidden;
             });
             copyActions[0].Add(updateQRArrow);
+            copyActions[0].AddLabel(string.Format("_QR_ACTION_LABEL_{0}_{1}", ((qrIndex - 1) % 4) + 1, round));
             return copyActions;
         }
 

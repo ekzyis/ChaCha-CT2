@@ -49,40 +49,47 @@
       <Setter Property="Height" Value="35"/>
     </Style>
     
-  </UserControl.Resources>
-  <Grid>
-    <Grid.RowDefinitions>
-      <!-- Content row -->
-      <RowDefinition Height="95*"></RowDefinition>
-      <!-- Navigation bar row -->
-      <RowDefinition Height="5*"></RowDefinition>
-    </Grid.RowDefinitions>
-    <!-- Navigation bar -->
-    <Grid Name="UINavbar" Grid.Row="1">
-      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-        <Button Name="UIPrevPage" Click="PrevPage_Click" IsEnabled="{ Binding PrevPageIsEnabled }" Content="&lt;"/>
-        <Label Content="PAGE"/>
-        <Button Name="UINextPage" Click="NextPage_Click" IsEnabled="{ Binding NextPageIsEnabled }" Content="&gt;"/>
-        <Button Name="UIPrevAction" Click="PrevAction_Click" IsEnabled="{ Binding PrevActionIsEnabled }" Content="&lt;"/>
-        <Label Content="ACTION"/>
-        <Button Name="UINextAction" Click="NextAction_Click" IsEnabled="{ Binding NextActionIsEnabled }" Content="&gt;"/>
-      </StackPanel>
-    </Grid>
-    <!-- Main grid for content pane -->
-    <Grid Margin="20" Name="UIContentPane">
-      <!-- Landing page -->
-      <Grid Name="UILandingPage" Visibility="Collapsed">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-          <TextBox Margin="10" FontSize="24" HorizontalAlignment="Center">
-            ChaCha Visualization
-          </TextBox>
-          <TextBox HorizontalAlignment="Center">
-            A stream cipher used in TLS by Daniel J. Bernstein
-          </TextBox>
-        </StackPanel>
+    <!-- Page template -->
+    <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
+      <Grid Margin="5">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="92*"/>
+          <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+          <StackPanel Margin="1" Name="PageNavBar" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Page click handlers are inserted here in code-behind -->
+          </StackPanel>
+          <StackPanel Margin="1" Name="ActionNavBar" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <!-- Action click handlers are inserted here in code-behind -->
+          </StackPanel>
+        </Grid>
+        <Grid Grid.Row="0">
+          <ContentPresenter/>
+        </Grid>
       </Grid>
-      <!-- ChaCha workflow page -->
-      <Grid Name="UIWorkflowPage" Visibility="Collapsed">
+    </ControlTemplate>
+  </UserControl.Resources>
+  <!-- Main grid for content pane -->
+  <Grid Name="UIContentPane">
+      <!-- Landing page -->
+    <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBox Margin="10" FontSize="24" HorizontalAlignment="Center">
+          ChaCha Visualization
+        </TextBox>
+        <TextBox HorizontalAlignment="Center">
+          A stream cipher used in TLS by Daniel J. Bernstein
+        </TextBox>
+      </StackPanel>
+    </ContentControl>
+    <!-- ChaCha workflow page -->
+    <ContentControl Name="UIWorkflowPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -127,8 +134,10 @@
           </Grid>
         </Grid>
       </Grid>
-      <!-- ChaCha State matrix page -->
-      <Grid Name="UIStateMatrixPage" Visibility="Visible">
+    </ContentControl>
+    <!-- ChaCha State matrix page -->
+    <ContentControl Name="UIStateMatrixPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -321,8 +330,10 @@
           </Grid>
         </Grid>
       </Grid>
-      <!-- ChaCha Generate Keystream block page -->
-      <Grid Name="UIKeystreamBlockGenPage" Visibility="Collapsed">
+    </ContentControl>
+    <!-- ChaCha Generate Keystream block page -->
+    <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
+      <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -424,40 +435,70 @@
                 <RowDefinition/>
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBox>Round:</TextBox>
-                <TextBox Name="CurrentRound"/>
+                <Button Margin="3" Height="18.75" Width="18.75" Click="PrevRound_Click" IsEnabled="{ Binding PrevRoundIsEnabled }">
+                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="&lt;"/>
+                </Button>
+                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center">Round:</TextBox>
+                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="CurrentRound" Text="-"/>
+                <Button Margin="3" Height="18.75" Width="18.75" Click="NextRound_Click" IsEnabled="{ Binding NextRoundIsEnabled }">
+                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="&gt;"/>
+                </Button>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR1_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
+                <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR2_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
+                <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR3_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
+                <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR4_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
+                <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="5" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR5_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
+                <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="6" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR6_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
+                <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="7" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR7_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
+                <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="8" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR8_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
+                <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
             </Grid>
           </Grid>
@@ -1049,6 +1090,6 @@
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
+    </ContentControl>
   </Grid>
 </UserControl>
