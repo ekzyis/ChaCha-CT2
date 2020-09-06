@@ -130,7 +130,7 @@ namespace Cryptool.Plugins.ChaCha
             // TODO set width dynamically depending on total actions
             s.Width = 1000;
             s.TickFrequency = 1;
-            s.TickPlacement = TickPlacement.TopLeft;
+            s.TickPlacement = TickPlacement.None;
             s.IsSnapToTickEnabled = true;
             s.Value = CurrentActionIndex;
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
