@@ -436,12 +436,12 @@
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <Button Margin="3" Height="18.75" Width="18.75" Click="PrevRound_Click" IsEnabled="{ Binding PrevRoundIsEnabled }">
-                  <TextBlock Text="&lt;"/>
+                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="&lt;"/>
                 </Button>
-                <TextBox VerticalAlignment="Center">Round:</TextBox>
-                <TextBox VerticalAlignment="Center" Name="CurrentRound" Text="-"/>
+                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center">Round:</TextBox>
+                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="CurrentRound" Text="-"/>
                 <Button Margin="3" Height="18.75" Width="18.75" Click="NextRound_Click" IsEnabled="{ Binding NextRoundIsEnabled }">
-                  <TextBlock Text="&gt;"/>
+                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="&gt;"/>
                 </Button>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Horizontal">
