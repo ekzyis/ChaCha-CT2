@@ -22,7 +22,7 @@ namespace Cryptool.Plugins.ChaCha
         private Button CreateNavigationButton()
         {
             Button b = new Button();
-            b.Height = 18.75; b.Width = 30;
+            b.Height = 18.75; b.Width = 32;
             b.Margin = new Thickness(1, 0, 1, 0);
             return b;
         }
