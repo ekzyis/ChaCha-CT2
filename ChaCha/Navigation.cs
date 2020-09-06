@@ -87,18 +87,17 @@ namespace Cryptool.Plugins.ChaCha
                 pageNavBar.Children.Add(CreatePageNavigationButton(i));
             }
         }
-        private void _InitActionButtonNavigationBar(Page p)
+        private void _InitActionButtonNavigationBar(StackPanel actionNavBar, int totalActions)
         {
-            StackPanel actionNavBar = p.ActionNavigationBar;
             actionNavBar.Children.Clear();
             actionNavBar.Children.Add(CreateNavBarLabel(_ACTIONLABELNAME, "Actions:"));
             int startIndex = CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE;
-            int endIndex = Math.Min(p.ActionFrames, (CurrentActionIntervalIndex + 1) * _ACTION_INTERVAL_SIZE);
+            int endIndex = Math.Min(totalActions, (CurrentActionIntervalIndex + 1) * _ACTION_INTERVAL_SIZE);
             for (int i = startIndex; i <= endIndex; ++i)
             {
                 actionNavBar.Children.Add(CreateActionNavigationButton(i));
             }
-            if (p.ActionFrames > _ACTION_INTERVAL_SIZE)
+            if (totalActions > _ACTION_INTERVAL_SIZE)
             {
                 Button prevInterval = CreateNavigationButton();
                 prevInterval.Click += PrevInterval_Click;
@@ -107,16 +106,17 @@ namespace Cryptool.Plugins.ChaCha
                 Button nextInterval = CreateNavigationButton();
                 nextInterval.Click += NextInterval_Click;
                 nextInterval.Content = ">";
-                nextInterval.IsEnabled = CurrentActionIntervalIndex < p.ActionFrames / _ACTION_INTERVAL_SIZE;
+                nextInterval.IsEnabled = CurrentActionIntervalIndex < totalActions / _ACTION_INTERVAL_SIZE;
                 actionNavBar.Children.Insert(1, prevInterval);
                 actionNavBar.Children.Add(nextInterval);
             }
         }
         private void InitActionNavigationBar(Page p)
         {
-            if (p.ActionFrames > 0)
+            int totalActions = p.ActionFrames;
+            if (totalActions > 0)
             {
-                _InitActionButtonNavigationBar(p);
+                _InitActionButtonNavigationBar(p.ActionNavigationBar, totalActions);
             }
         }
 
