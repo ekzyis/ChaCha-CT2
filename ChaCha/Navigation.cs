@@ -364,6 +364,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     _currentPageIndex = value;
                     CurrentActionIndex = 0;
+                    CurrentActionIntervalIndex = 0;
                     OnPropertyChanged("CurrentPageIndex");
                     OnPropertyChanged("CurrentPage");
                     OnPropertyChanged("NextPageIsEnabled");
