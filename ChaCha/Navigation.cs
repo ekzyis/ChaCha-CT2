@@ -570,7 +570,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return CurrentRoundIndex > 1;
+                return CurrentRoundIndex >= 1;
             }
         }
 
