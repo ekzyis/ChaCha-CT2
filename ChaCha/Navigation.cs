@@ -589,7 +589,6 @@ namespace Cryptool.Plugins.ChaCha
             CurrentActionIntervalIndex = Math.Min(CurrentPage.ActionFrames / _ACTION_INTERVAL_SIZE, CurrentActionIntervalIndex+1);
             InitActionNavigationBar(CurrentPage);
         }
-        private int _ACTIONS_PER_ROUND = 120;
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
