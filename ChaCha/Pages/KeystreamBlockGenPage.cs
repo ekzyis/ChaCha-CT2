@@ -222,6 +222,7 @@ namespace Cryptool.Plugins.ChaCha
                 // new round begins
                 PageAction updateRoundCount = new PageAction(() =>
                 {
+                    CurrentRoundIndex = round;
                     nav.Replace(CurrentRound, round.ToString());
                 }, () =>
                 {
@@ -230,9 +231,11 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         text = (round - 1).ToString();
                     }
+                    CurrentRoundIndex = round - 1;
                     nav.Replace(CurrentRound, text);
                 });
                 copyActions[0].Add(updateRoundCount);
+                copyActions[0].Label = (string)this.GetType().GetField(string.Format("_ROUND_ACTION_LABEL_{0}", round)).GetValue(this);
             }
             int QR_ARROW_MAX_INDEX = 8;
             (int, int) calculateQRArrowIndex(int qrIndex_)
