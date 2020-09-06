@@ -641,7 +641,6 @@ namespace Cryptool.Plugins.ChaCha
                     NextAction_Click(null, null);
                 }
             }
-            InitActionNavigationBar(CurrentPage);
         }
         private void MoveToAction(int n)
         {
@@ -715,6 +714,7 @@ namespace Cryptool.Plugins.ChaCha
             string searchLabel = string.Format("_QR_ACTION_LABEL_{0}_{1}", qrLabelSearchIndex, roundLabelSearchIndex);
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel) + 1;
             MoveToAction(qrActionIndex);
+            InitActionNavigationBar(CurrentPage);
         }
         private void QR1_Click(object sender, RoutedEventArgs e)
         {
