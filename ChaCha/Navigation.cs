@@ -132,7 +132,6 @@ namespace Cryptool.Plugins.ChaCha
             s.TickFrequency = 1;
             s.TickPlacement = TickPlacement.TopLeft;
             s.IsSnapToTickEnabled = true;
-            s.TickFrequency = 1;
             s.Value = CurrentActionIndex;
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
