@@ -64,6 +64,8 @@ namespace Cryptool.Plugins.ChaCha
             b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
             TextBlock tb = CreateNavigationTextBlock(index, CurrentPageIndex, _PAGELABELNAME);
             b.Content = tb;
+            Binding binding = new Binding("NavigationEnabled");
+            b.SetBinding(Button.IsEnabledProperty, binding);
             return b;
         }
 
@@ -500,6 +502,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
+                OnPropertyChanged("NavigationEnabled");
             }
         }
 
@@ -516,6 +519,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
+                OnPropertyChanged("NavigationEnabled");
             }
         }
 
@@ -523,14 +527,21 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                return CurrentPageIndex != MaxPageIndex && ExecutionFinished && InputValid;
+                return CurrentPageIndex != MaxPageIndex && NavigationEnabled;
             }
         }
         public bool PrevPageIsEnabled
         {
             get
             {
-                return CurrentPageIndex != 0 && ExecutionFinished && InputValid;
+                return CurrentPageIndex != 0 && NavigationEnabled;
+            }
+        }
+        public bool NavigationEnabled
+        {
+            get
+            {
+                return ExecutionFinished && InputValid;
             }
         }
 
