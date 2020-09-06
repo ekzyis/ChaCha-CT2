@@ -369,6 +369,8 @@ namespace Cryptool.Plugins.ChaCha
                     OnPropertyChanged("CurrentPage");
                     OnPropertyChanged("NextPageIsEnabled");
                     OnPropertyChanged("PrevPageIsEnabled");
+                    OnPropertyChanged("NextRoundIsEnabled");
+                    OnPropertyChanged("PrevRoundIsEnabled");
                     InitPageNavigationBar(CurrentPage);
                 }
             }
@@ -386,6 +388,8 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("CurrentActions");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
+                OnPropertyChanged("NextRoundIsEnabled");
+                OnPropertyChanged("PrevRoundIsEnabled");
                 InitActionNavigationBar(CurrentPage);
             }
         }
@@ -507,6 +511,20 @@ namespace Cryptool.Plugins.ChaCha
             get
             {
                 return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
+            }
+        }
+        public bool NextRoundIsEnabled
+        {
+            get
+            {
+                return CurrentRoundIndex != 20;
+            }
+        }
+        public bool PrevRoundIsEnabled
+        {
+            get
+            {
+                return CurrentRoundIndex > 1;
             }
         }
 
