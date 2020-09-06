@@ -396,6 +396,10 @@ namespace Cryptool.Plugins.ChaCha
                 _currentActionIntervalIndex = value;
             }
         }
+        private void UpdateCurrentActionIntervalIndex()
+        {
+            CurrentActionIntervalIndex = CurrentActionIndex / _ACTION_INTERVAL_SIZE;
+        }
 
         private Page CurrentPage
         {
@@ -600,6 +604,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 PrevAction_Click(null, null);
             }
+            UpdateCurrentActionIntervalIndex();
+            InitActionNavigationBar(CurrentPage);
         }
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
@@ -610,6 +616,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 NextAction_Click(null, null);
             }
+            UpdateCurrentActionIntervalIndex();
+            InitActionNavigationBar(CurrentPage);
         }
 
         private int CurrentRoundIndex { get; set; } = 0;
