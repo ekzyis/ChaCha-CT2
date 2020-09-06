@@ -105,9 +105,11 @@ namespace Cryptool.Plugins.ChaCha
                     Button prevInterval =  CreateNavigationButton();
                     prevInterval.Click += PrevInterval_Click;
                     prevInterval.Content = "<";
+                    prevInterval.IsEnabled = CurrentActionIntervalIndex != 0;
                     Button nextInterval = CreateNavigationButton();
                     nextInterval.Click += NextInterval_Click;
                     nextInterval.Content = ">";
+                    nextInterval.IsEnabled = CurrentActionIntervalIndex < p.ActionFrames / _ACTION_INTERVAL_SIZE;
                     actionNavBar.Children.Insert(1, prevInterval);
                     actionNavBar.Children.Add(nextInterval);
                 }
