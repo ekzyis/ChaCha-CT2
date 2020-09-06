@@ -27,7 +27,7 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private TextBlock CreateNavigationTextBlock(int index, string bindingElementName)
+        private TextBlock CreateNavigationTextBlock(int index, int activeIndex, string bindingElementName)
         {
             TextBlock tb = new TextBlock();
             tb.VerticalAlignment = VerticalAlignment.Center;
@@ -37,6 +37,10 @@ namespace Cryptool.Plugins.ChaCha
             binding.Path = new PropertyPath("FontSize");
             tb.SetBinding(TextBlock.FontSizeProperty, binding);
             tb.Text = (index + 1).ToString();
+            if(activeIndex == index)
+            {
+                tb.FontWeight = FontWeights.Bold;
+            }
             return tb;
         }
 
@@ -57,7 +61,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             Button b = CreateNavigationButton();
             b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
-            TextBlock tb = CreateNavigationTextBlock(index, _PAGELABELNAME);
+            TextBlock tb = CreateNavigationTextBlock(index, CurrentPageIndex, _PAGELABELNAME);
             b.Content = tb;
             return b;
         }
@@ -67,7 +71,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             Button b = CreateNavigationButton();
             b.Click += new RoutedEventHandler(MoveToActionClickWrapper(index));
-            TextBlock tb = CreateNavigationTextBlock(index, _ACTIONLABELNAME);
+            TextBlock tb = CreateNavigationTextBlock(index, CurrentActionIndex, _ACTIONLABELNAME);
             b.Content = tb;
             return b;
         }
