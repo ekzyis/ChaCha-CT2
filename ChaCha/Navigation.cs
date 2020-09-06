@@ -585,27 +585,6 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public readonly string _ROUND_ACTION_LABEL_1 = "_ROUND_ACTION_LABEL_1";
-        public readonly string _ROUND_ACTION_LABEL_2 = "_ROUND_ACTION_LABEL_2";
-        public readonly string _ROUND_ACTION_LABEL_3 = "_ROUND_ACTION_LABEL_3";
-        public readonly string _ROUND_ACTION_LABEL_4 = "_ROUND_ACTION_LABEL_4";
-        public readonly string _ROUND_ACTION_LABEL_5 = "_ROUND_ACTION_LABEL_5";
-        public readonly string _ROUND_ACTION_LABEL_6 = "_ROUND_ACTION_LABEL_6";
-        public readonly string _ROUND_ACTION_LABEL_7 = "_ROUND_ACTION_LABEL_7";
-        public readonly string _ROUND_ACTION_LABEL_8 = "_ROUND_ACTION_LABEL_8";
-        public readonly string _ROUND_ACTION_LABEL_9 = "_ROUND_ACTION_LABEL_9";
-        public readonly string _ROUND_ACTION_LABEL_10 = "_ROUND_ACTION_LABEL_10";
-        public readonly string _ROUND_ACTION_LABEL_11 = "_ROUND_ACTION_LABEL_11";
-        public readonly string _ROUND_ACTION_LABEL_12 = "_ROUND_ACTION_LABEL_12";
-        public readonly string _ROUND_ACTION_LABEL_13 = "_ROUND_ACTION_LABEL_13";
-        public readonly string _ROUND_ACTION_LABEL_14 = "_ROUND_ACTION_LABEL_14";
-        public readonly string _ROUND_ACTION_LABEL_15 = "_ROUND_ACTION_LABEL_15";
-        public readonly string _ROUND_ACTION_LABEL_16 = "_ROUND_ACTION_LABEL_16";
-        public readonly string _ROUND_ACTION_LABEL_17 = "_ROUND_ACTION_LABEL_17";
-        public readonly string _ROUND_ACTION_LABEL_18 = "_ROUND_ACTION_LABEL_18";
-        public readonly string _ROUND_ACTION_LABEL_19 = "_ROUND_ACTION_LABEL_19";
-        public readonly string _ROUND_ACTION_LABEL_20 = "_ROUND_ACTION_LABEL_20";
-
         #endregion
 
         #region action navigation click handlers
@@ -653,6 +632,10 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+        private int GetLabeledPageActionIndex(string label)
+        {
+            return Array.FindIndex(CurrentActions, pageAction => pageAction.Label == label);
+        }
 
         private void MoveToAction(int n)
         {
@@ -661,11 +644,11 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = Array.FindIndex(CurrentActions, pageAction => pageAction.Label == string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex)) + 1;
+            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex)) + 1;
             if(startIndex == endIndex)
             {
                 // We are currently at the start of a round. Go to previous round.
-                endIndex = Array.FindIndex(CurrentActions, pageAction => pageAction.Label == string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex - 1)) + 1;
+                endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex - 1)) + 1;
             }
             Debug.Assert(startIndex > endIndex);
             for (int i = startIndex; i > endIndex; --i)
@@ -677,7 +660,7 @@ namespace Cryptool.Plugins.ChaCha
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = Array.FindIndex(CurrentActions, pageAction => pageAction.Label == string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1));
+            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1));
             Debug.Assert(startIndex < endIndex);
             for (int i = startIndex; i <= endIndex; ++i)
             {

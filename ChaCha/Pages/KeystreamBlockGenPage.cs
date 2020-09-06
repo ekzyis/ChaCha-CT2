@@ -239,7 +239,7 @@ namespace Cryptool.Plugins.ChaCha
                     nav.Replace(CurrentRound, text);
                 });
                 copyActions[0].Add(updateRoundCount);
-                copyActions[0].Label = (string)this.GetType().GetField(string.Format("_ROUND_ACTION_LABEL_{0}", round)).GetValue(this);
+                copyActions[0].Label = string.Format("_ROUND_ACTION_LABEL_{0}", round);
             }
             int QR_ARROW_MAX_INDEX = 8;
             (int, int) calculateQRArrowIndex(int qrIndex_)
