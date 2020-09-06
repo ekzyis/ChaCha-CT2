@@ -315,7 +315,7 @@ namespace Cryptool.Plugins.ChaCha
                 InterimResultList list = GetList(type);
                 if (list == null)
                 {
-                    throw new ArgumentException("InterimResultList of type {0} does not exist", type.ToString());
+                    throw new ArgumentException(string.Format("InterimResultList of type {0}, index {1} does not exist", type.ToString(), index));
                 }
                 return list.Hex(index);
             }
