@@ -125,7 +125,7 @@ namespace Cryptool.Plugins.ChaCha
 
             actionNavBar.Children.Clear();
             Slider s = new Slider();
-            s.Minimum = 1;
+            s.Minimum = 0;
             s.Maximum = totalActions;
             // TODO set width dynamically depending on total actions
             s.Width = 1000;
