@@ -579,7 +579,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             CurrentActionIntervalIndex = Math.Max(0, CurrentActionIntervalIndex-1);
             InitActionNavigationBar(CurrentPage);
-
         }
         private void NextInterval_Click(object sender, RoutedEventArgs e)
         {
