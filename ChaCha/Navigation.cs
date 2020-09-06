@@ -678,9 +678,42 @@ namespace Cryptool.Plugins.ChaCha
             }
             UpdateCurrentActionIntervalIndex();
         }
-        private void QR_Click(int qrIndex)
+        private void QR_Click(int qrLabelIndex)
         {
-            int qrActionIndex = GetLabeledPageActionIndex(string.Format("_QR_ACTION_LABEL_{0}", qrIndex)) + 1;
+            /*
+             * We need to map the QR Label Index which is between 1 and 8 and is corresponds to the row of the pressed Quarterround button to
+             * the appropriate page action label.
+             * The page action labels are in this format: _QR_ACTION_LABEL_{QR_ROUND}_{ROUND} where QR_ROUND is between 1 - 4 and ROUND from 1 - 20
+             * This means, for example, for the first quarterround of round 3, the label is _QR_ACTION_LABEL_1_3.
+             */
+            int qrLabelSearchIndex = -1;
+            int roundLabelSearchIndex = -1;
+            if(qrLabelIndex <= 4)
+            {
+                qrLabelSearchIndex = qrLabelIndex;
+                if (CurrentRoundIndex % 2 == 1 || CurrentRoundIndex == 0)
+                {
+                    roundLabelSearchIndex = CurrentRoundIndex != 0 ? CurrentRoundIndex : 1;
+                }
+                else
+                {
+                    roundLabelSearchIndex = CurrentRoundIndex - 1;
+                }
+            }
+            if(qrLabelIndex > 4)
+            {
+                qrLabelSearchIndex = (qrLabelIndex - 1) % 4 + 1;
+                if (CurrentRoundIndex % 2 == 1 || CurrentRoundIndex == 0)
+                {
+                    roundLabelSearchIndex = CurrentRoundIndex + 1;
+                }
+                else
+                {
+                    roundLabelSearchIndex = CurrentRoundIndex;
+                }
+            }
+            string searchLabel = string.Format("_QR_ACTION_LABEL_{0}_{1}", qrLabelSearchIndex, roundLabelSearchIndex);
+            int qrActionIndex = GetLabeledPageActionIndex(searchLabel) + 1;
             MoveToAction(qrActionIndex);
         }
         private void QR1_Click(object sender, RoutedEventArgs e)

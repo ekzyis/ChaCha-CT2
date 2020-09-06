@@ -263,7 +263,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
             });
             copyActions[0].Add(updateQRArrow);
-            copyActions[0].AddLabel(string.Format("_QR_ACTION_LABEL_{0}", qrIndex));
+            copyActions[0].AddLabel(string.Format("_QR_ACTION_LABEL_{0}_{1}", ((qrIndex - 1) % 4) + 1, round));
             return copyActions;
         }
 
