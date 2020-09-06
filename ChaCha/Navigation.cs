@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -111,12 +112,34 @@ namespace Cryptool.Plugins.ChaCha
                 actionNavBar.Children.Add(nextInterval);
             }
         }
+        private void _InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
+        {
+            actionNavBar.Children.Clear();
+            Slider s = new Slider();
+            s.Minimum = 1;
+            s.Maximum = totalActions + 1;
+            // TODO set width dynamically depending on total actions
+            s.Width = 1000;
+            s.TickFrequency = 1;
+            s.TickPlacement = TickPlacement.TopLeft;
+            s.IsSnapToTickEnabled = true;
+            s.TickFrequency = 1;
+            s.ValueChanged += S_ValueChanged;
+            actionNavBar.Children.Add(s);
+        }
+
+        private void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            throw new NotImplementedException();
+        }
+
         private void InitActionNavigationBar(Page p)
         {
             int totalActions = p.ActionFrames;
             if (totalActions > 0)
             {
-                _InitActionButtonNavigationBar(p.ActionNavigationBar, totalActions);
+                //_InitActionButtonNavigationBar(p.ActionNavigationBar, totalActions);
+                _InitActionSliderNavigationBar(p.ActionNavigationBar, totalActions);
             }
         }
 
