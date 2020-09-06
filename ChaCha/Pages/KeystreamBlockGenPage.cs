@@ -231,6 +231,10 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         text = (round - 1).ToString();
                     }
+                    else if(round == 1)
+                    {
+                        text = "-";
+                    }
                     CurrentRoundIndex = round - 1;
                     nav.Replace(CurrentRound, text);
                 });

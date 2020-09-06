@@ -439,7 +439,7 @@
                   <TextBlock Text="&lt;"/>
                 </Button>
                 <TextBox VerticalAlignment="Center">Round:</TextBox>
-                <TextBox VerticalAlignment="Center" Name="CurrentRound"/>
+                <TextBox VerticalAlignment="Center" Name="CurrentRound" Text="-"/>
                 <Button Margin="3" Height="18.75" Width="18.75" Click="NextRound_Click" IsEnabled="{ Binding NextRoundIsEnabled }">
                   <TextBlock Text="&gt;"/>
                 </Button>
