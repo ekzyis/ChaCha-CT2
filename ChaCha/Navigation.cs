@@ -122,25 +122,24 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void _InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
         {
+
             actionNavBar.Children.Clear();
             Slider s = new Slider();
             s.Minimum = 1;
-            s.Maximum = totalActions + 1;
+            s.Maximum = totalActions;
             // TODO set width dynamically depending on total actions
             s.Width = 1000;
             s.TickFrequency = 1;
             s.TickPlacement = TickPlacement.TopLeft;
             s.IsSnapToTickEnabled = true;
             s.TickFrequency = 1;
+            void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+            {
+                MoveToAction((int)s.Value);
+            };
             s.ValueChanged += S_ValueChanged;
             actionNavBar.Children.Add(s);
         }
-
-        private void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void InitActionNavigationBar(Page p)
         {
             int totalActions = p.ActionFrames;
