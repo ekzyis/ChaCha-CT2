@@ -91,11 +91,16 @@ namespace Cryptool.Plugins.ChaCha
             if (p.ActionFrames > 0)
             {
                 actionNavBar.Children.Add(CreateNavBarLabel(_ACTIONLABELNAME, "Actions:"));
-                for (int i = CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE; i <= CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE + Math.Min(p.ActionFrames, 49); ++i)
+                int startIndex = CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE;
+                int endIndex = Math.Min(p.ActionFrames, (CurrentActionIntervalIndex + 1) * _ACTION_INTERVAL_SIZE);
+                Console.WriteLine(p.ActionFrames);
+                Console.WriteLine(startIndex);
+                Console.WriteLine(endIndex);
+                for (int i = startIndex; i < endIndex; ++i)
                 {
                     actionNavBar.Children.Add(CreateActionNavigationButton(i));
                 }
-                if(p.ActionFrames > 49)
+                if(p.ActionFrames > _ACTION_INTERVAL_SIZE)
                 {
                     Button prevInterval =  CreateNavigationButton();
                     prevInterval.Click += PrevInterval_Click;
