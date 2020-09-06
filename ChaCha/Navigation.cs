@@ -174,12 +174,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             private List<Action> _exec = new List<Action>();
             private List<Action> _undo = new List<Action>();
-
+            private List<string> _labels = new List<string>();
             public PageAction(Action exec, Action undo, string label = "")
             {
                 _exec.Add(exec);
                 _undo.Add(undo);
-                Label = label;
+                _labels.Add(label);
             }
             public void exec()
             {
@@ -195,7 +195,17 @@ namespace Cryptool.Plugins.ChaCha
                     a();
                 }
             }
-            public string Label { get; set; }
+            public string[] Labels
+            {
+                get
+                {
+                    return _labels.ToArray();
+                }
+            }
+            public void AddLabel(string label)
+            {
+                _labels.Add(label);
+            }
             public void AddToExec(Action toAdd)
             {
                 _exec.Add(toAdd);
@@ -631,15 +641,15 @@ namespace Cryptool.Plugins.ChaCha
                     NextAction_Click(null, null);
                 }
             }
+            InitActionNavigationBar(CurrentPage);
         }
-        private int GetLabeledPageActionIndex(string label)
-        {
-            return Array.FindIndex(CurrentActions, pageAction => pageAction.Label == label);
-        }
-
         private void MoveToAction(int n)
         {
             MoveActions(n - CurrentActionIndex);
+        }
+        private int GetLabeledPageActionIndex(string label)
+        {
+            return Array.FindIndex(CurrentActions, pageAction => Array.FindIndex(pageAction.Labels, actionlabel => actionlabel == label) != -1);
         }
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
@@ -667,6 +677,43 @@ namespace Cryptool.Plugins.ChaCha
                 NextAction_Click(null, null);
             }
             UpdateCurrentActionIntervalIndex();
+        }
+        private void QR_Click(int qrIndex)
+        {
+            int qrActionIndex = GetLabeledPageActionIndex(string.Format("_QR_ACTION_LABEL_{0}", qrIndex)) + 1;
+            MoveToAction(qrActionIndex);
+        }
+        private void QR1_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(1);
+        }
+        private void QR2_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(2);
+        }
+        private void QR3_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(3);
+        }
+        private void QR4_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(4);
+        }
+        private void QR5_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(5);
+        }
+        private void QR6_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(6);
+        }
+        private void QR7_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(7);
+        }
+        private void QR8_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Click(8);
         }
 
         private int CurrentRoundIndex { get; set; } = 0;

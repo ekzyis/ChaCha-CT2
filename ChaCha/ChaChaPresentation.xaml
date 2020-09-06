@@ -445,36 +445,60 @@
                 </Button>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR1_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
+                <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR2_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
+                <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR3_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
+                <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR4_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
+                <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="5" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR5_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
+                <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="6" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR6_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
+                <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="7" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR7_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
+                <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
               <StackPanel Grid.Row="8" Orientation="Horizontal">
-                <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x2794;"/>
+                <Button Click="QR8_Click">
+                  <TextBox Text="&#x1f81e;"/>
+                </Button>
                 <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
+                <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x1f81c;"/>
               </StackPanel>
             </Grid>
           </Grid>
