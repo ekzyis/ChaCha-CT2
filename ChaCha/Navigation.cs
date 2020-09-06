@@ -282,11 +282,8 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(StateMatrixPage());
             AddPage(KeystreamBlockGenPage());
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
-            foreach (Page p in _pages)
-            {
-                InitPageNavigationBar(p);
-                InitActionNavigationBar(p);
-            }
+            InitPageNavigationBar(CurrentPage);
+            InitActionNavigationBar(CurrentPage);
         }
 
         // useful for development: setting pages visible for development purposes does not infer with execution
@@ -371,6 +368,7 @@ namespace Cryptool.Plugins.ChaCha
                     OnPropertyChanged("CurrentPage");
                     OnPropertyChanged("NextPageIsEnabled");
                     OnPropertyChanged("PrevPageIsEnabled");
+                    InitPageNavigationBar(CurrentPage);
                 }
             }
         }
@@ -387,6 +385,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("CurrentActions");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
+                InitActionNavigationBar(CurrentPage);
             }
         }
         private int CurrentActionIntervalIndex
@@ -398,6 +397,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentActionIntervalIndex = value;
+                InitActionNavigationBar(CurrentPage);
             }
         }
         private void UpdateCurrentActionIntervalIndex()
@@ -586,12 +586,10 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevInterval_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIntervalIndex = Math.Max(0, CurrentActionIntervalIndex-1);
-            InitActionNavigationBar(CurrentPage);
         }
         private void NextInterval_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIntervalIndex = Math.Min(CurrentPage.ActionFrames / _ACTION_INTERVAL_SIZE, CurrentActionIntervalIndex+1);
-            InitActionNavigationBar(CurrentPage);
         }
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
@@ -608,7 +606,6 @@ namespace Cryptool.Plugins.ChaCha
                 PrevAction_Click(null, null);
             }
             UpdateCurrentActionIntervalIndex();
-            InitActionNavigationBar(CurrentPage);
         }
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
@@ -620,7 +617,6 @@ namespace Cryptool.Plugins.ChaCha
                 NextAction_Click(null, null);
             }
             UpdateCurrentActionIntervalIndex();
-            InitActionNavigationBar(CurrentPage);
         }
 
         private int CurrentRoundIndex { get; set; } = 0;
