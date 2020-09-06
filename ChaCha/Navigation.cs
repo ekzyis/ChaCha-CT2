@@ -406,6 +406,7 @@ namespace Cryptool.Plugins.ChaCha
                     OnPropertyChanged("NextRoundIsEnabled");
                     OnPropertyChanged("PrevRoundIsEnabled");
                     InitPageNavigationBar(CurrentPage);
+                    InitActionNavigationBar(CurrentPage);
                 }
             }
         }
@@ -424,7 +425,7 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevActionIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                InitActionNavigationBar(CurrentPage);
+                //InitActionNavigationBar(CurrentPage);
             }
         }
         private int CurrentActionIntervalIndex
