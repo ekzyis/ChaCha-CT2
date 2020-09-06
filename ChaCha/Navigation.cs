@@ -94,6 +94,14 @@ namespace Cryptool.Plugins.ChaCha
             actionNavBar.Children.Add(CreateNavBarLabel(_ACTIONLABELNAME, "Actions:"));
             int startIndex = CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE;
             int endIndex = Math.Min(totalActions, (CurrentActionIntervalIndex + 1) * _ACTION_INTERVAL_SIZE);
+            void PrevInterval_Click(object sender, RoutedEventArgs e)
+            {
+                CurrentActionIntervalIndex = Math.Max(0, CurrentActionIntervalIndex - 1);
+            }
+            void NextInterval_Click(object sender, RoutedEventArgs e)
+            {
+                CurrentActionIntervalIndex = Math.Min(CurrentPage.ActionFrames / _ACTION_INTERVAL_SIZE, CurrentActionIntervalIndex + 1);
+            }
             for (int i = startIndex; i <= endIndex; ++i)
             {
                 actionNavBar.Children.Add(CreateActionNavigationButton(i));
@@ -626,15 +634,6 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToAction(int n)
         {
             MoveActions(n - CurrentActionIndex);
-        }
-
-        private void PrevInterval_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentActionIntervalIndex = Math.Max(0, CurrentActionIntervalIndex-1);
-        }
-        private void NextInterval_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentActionIntervalIndex = Math.Min(CurrentPage.ActionFrames / _ACTION_INTERVAL_SIZE, CurrentActionIntervalIndex+1);
         }
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
