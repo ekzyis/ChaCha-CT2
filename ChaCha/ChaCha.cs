@@ -34,34 +34,20 @@ namespace Cryptool.Plugins.ChaCha
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class ChaCha : ICrypComponent
     {
-        #region Private Variables
-
-        private readonly ChaChaSettings settings;
-        private readonly ChaChaPresentation _presentation = new ChaChaPresentation();
-
-        private byte[] _inputData;
-        private byte[] _outputData;
-        private byte[] _inputKey;
-        private byte[] _inputIV;
-
         // one block has 512 bits
         private readonly static int BLOCKSIZE_BYTES = 64;
-        // counter size (depends on version)
-        private int COUNTERSIZE_BITS;
-        // IV size (depends on version)
-        private int IVSIZE_BITS;
-        // initial counter value (for keystream blocks)
-        private uint INITIAL_COUNTER;
         // ChaCha state consists of 16 32-bit integers
-        private readonly uint[] initial_state = new uint[16];
+        private readonly uint[] initialState = new uint[16];
+        // constants
+        private static readonly byte[] SIGMA = Encoding.ASCII.GetBytes("expand 32-byte k");
+        private static readonly byte[] TAU = Encoding.ASCII.GetBytes("expand 16-byte k");
 
-        #endregion
-
-        #region Public Variables
-
-        public static byte[] sigma = Encoding.ASCII.GetBytes("expand 32-byte k");
-        public static byte[] tau = Encoding.ASCII.GetBytes("expand 16-byte k");
-
+        // counter size (depends on version)
+        private int BITS_COUNTER;
+        // IV size (depends on version)
+        private int BITS_IV;
+        // initial counter value (for keystream blocks) (depends on version)
+        private uint INITIAL_COUNTER;
         public sealed class Version
         {
             public static readonly Version IETF = new Version("IETF", 32, 96, 1);
@@ -81,12 +67,18 @@ namespace Cryptool.Plugins.ChaCha
 
         public ChaCha()
         {
-            this.settings = new ChaChaSettings();
+            settings = new ChaChaSettings();
         }
 
-        #endregion
-
-        #region Data Properties
+        #region ICrypComponent I/O
+        // plaintext
+        private byte[] _inputData;
+        // ciphertext
+        private byte[] _outputData;
+        // key
+        private byte[] _inputKey;
+        // initialization vector
+        private byte[] _inputIV;
 
         /// <summary>
         /// HOWTO: Input interface to read the input data. 
@@ -134,11 +126,11 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("OutputData");
             }
         }
-
         #endregion
 
-        #region IPlugin Members
-
+        #region IPlugin Members (Settings & Presentation)
+        private readonly ChaChaSettings settings;
+        private readonly ChaChaPresentation _presentation = new ChaChaPresentation();
         /// <summary>
         /// Provide plugin-related parameters (per instance) or return null.
         /// </summary>
@@ -146,7 +138,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             get { return settings; }
         }
-
         /// <summary>
         /// Provide custom presentation to visualize the execution or return null.
         /// </summary>
@@ -154,11 +145,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             get { return _presentation; }
         }
-
         #endregion
 
-        #region ICrypComponent lifecycle methods
-
+        #region ICrypComponent Lifecycle Methods
         /// <summary>
         /// Called once when workflow execution starts.
         /// </summary>
@@ -172,35 +161,8 @@ namespace Cryptool.Plugins.ChaCha
         public void Execute()
         {
             ProgressChanged(0, 1);
-
-            // clear all previous results (important if user started workflow, stopped and then restarted)
-            DispatchToPresentation(delegate
-            {
-                _presentation.clearResults();
-                _presentation.Version = settings.Version;
-                _presentation.Rounds = settings.Rounds;
-            });
-
-            COUNTERSIZE_BITS = settings.Version.BitsCounter;
-            IVSIZE_BITS = settings.Version.BitsIV;
-            INITIAL_COUNTER = settings.Version.InitialCounter;
-
-            GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
-            GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, IVSIZE_BITS / 8, COUNTERSIZE_BITS / 8), NotificationLevel.Info);
-            GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
-
-            bool inputValid = ValidateInput();
-            if (inputValid)
-            {
-                InitStateMatrix();
-
-                OutputData = Xcrypt(InputData);
-            }
-
+            ExecuteChaCha();
             ProgressChanged(1, 1);
-
-            // set values needed to enable navigation since now all values needed for visualization are set.
-            DispatchToPresentation(delegate { _presentation.InputValid = inputValid;  _presentation.ExecutionFinished = true; });
         }
 
         /// <summary>
@@ -234,9 +196,41 @@ namespace Cryptool.Plugins.ChaCha
 
         #endregion
 
-        #region cipher methods
+        #region ChaCha Cipher Methods
 
-        /* 
+        /**
+         * Starts ChaCha execution after validating input.
+         */ 
+        private void ExecuteChaCha()
+        {
+            // clear all previous results (important if user started workflow, stopped and then restarted)
+            DispatchToPresentation(delegate
+            {
+                _presentation.clearResults();
+                _presentation.Version = settings.Version;
+                _presentation.Rounds = settings.Rounds;
+            });
+
+            BITS_COUNTER = settings.Version.BitsCounter;
+            BITS_IV = settings.Version.BitsIV;
+            INITIAL_COUNTER = settings.Version.InitialCounter;
+
+            GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
+            GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, BITS_IV / 8, BITS_COUNTER / 8), NotificationLevel.Info);
+            GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
+
+            bool inputValid = ValidateInput();
+            if (inputValid)
+            {
+                InitStateMatrix();
+                OutputData = Xcrypt(InputData);
+            }
+
+            // set values needed to enable navigation since now all values needed for visualization are set.
+            DispatchToPresentation(delegate { _presentation.InputValid = inputValid; _presentation.ExecutionFinished = true; });
+        }
+
+        /**
          * Initialize the state of ChaCha which can be represented as a matrix.
          * 
          * The state matrix consists of 16 4-byte entries which makes the state 64 byte large in total.
@@ -255,18 +249,18 @@ namespace Cryptool.Plugins.ChaCha
             byte[] constants;
             if (_inputKey.Length == 32) // 32 byte key
             {
-                constants = sigma;
+                constants = SIGMA;
             }
             else // 16-byte key
             {
-                constants = tau;
+                constants = TAU;
             }
 
             int stateOffset = 0;
             // Convenience method to abstract away state offset.
             void addToState(uint value)
             {
-                initial_state[stateOffset] = value;
+                initialState[stateOffset] = value;
                 stateOffset++;
             }
             void add4ByteChunksToStateAsLittleEndian(byte[] toAdd)
@@ -280,7 +274,7 @@ namespace Cryptool.Plugins.ChaCha
             add4ByteChunksToStateAsLittleEndian(constants);
             add4ByteChunksToStateAsLittleEndian(_inputKey);
             if(_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_inputKey);
-            byte[] counter = Enumerable.Repeat<byte>(0, COUNTERSIZE_BITS / 8).ToArray();
+            byte[] counter = Enumerable.Repeat<byte>(0, BITS_COUNTER / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
 
@@ -295,7 +289,11 @@ namespace Cryptool.Plugins.ChaCha
             });
         }
 
-        /* XOR the input with the keystream which results in en- or decryption.*/
+        /**
+         * XOR the input with the keystream which results in en- or decryption.
+         * 
+         * Called Xcrypt because the same algorithm en- and decrypts since XOR is the inverse function of XOR.
+         */
         public byte[] Xcrypt(byte[] src)
         {
             byte[] dst = new byte[src.Length];
@@ -325,14 +323,15 @@ namespace Cryptool.Plugins.ChaCha
             return dst;
         }
 
-        /* Generate the n-th keystream block.
+        /**
+         * Generate the n-th keystream block.
          * 
          * Uses the initial state matrix to insert the counter n and then calculate the keystream block.
          */
         public byte[] GenerateKeystreamBlock(ulong n)
         {
-            uint[] state = (uint[])(initial_state.Clone());
-            setCounterToState(state, n);
+            uint[] state = (uint[])(initialState.Clone());
+            SetCounterToState(state, n);
             // hash state block
             uint[] hash = ChaChaHash(state);
             // convert the hashed uint state array into an array of bytes
@@ -348,7 +347,12 @@ namespace Cryptool.Plugins.ChaCha
             return keystreamBlock;
         }
 
-        /* Generates the hash out of the input state block.*/
+        /**
+         * ChaCha Hash function.
+         * 
+         * Generates the ChaCha Hash out of the input state block 
+         * by running the state a set times through the quarterround function.
+         */
         public uint[] ChaChaHash(uint[] state)
         {
             uint[] originalState = (uint[])(state.Clone());
@@ -419,7 +423,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     _presentation.AddResult(ChaChaPresentation.ResultType.QR_XOR, x3);
                 });
-                x3 = RotateLeft(x3, shift); // x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
+                x3 = RotateLeft(x3, shift); // x3 = x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
                 DispatchToPresentation(delegate
                 {
                     _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X1, x1);
@@ -437,10 +441,9 @@ namespace Cryptool.Plugins.ChaCha
 
         #endregion
 
-        #region cipher helper methods
-
-        /*
-         * Validates the given inputs.
+        #region Cipher Helper Methods
+        /**
+         * Validates the given inputs by looking which version was set and if input data matches that setting..
          */
         public bool ValidateInput()
         {
@@ -449,9 +452,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 message = "Key must be 32 or 16-byte.";
             }
-            else if (_inputIV.Length != IVSIZE_BITS / 8)
+            else if (_inputIV.Length != BITS_IV / 8)
             {
-                message = string.Format("IV must be {0}-byte", IVSIZE_BITS / 8);
+                message = string.Format("IV must be {0}-byte", BITS_IV / 8);
             }
             if (message != null)
             {
@@ -485,14 +488,14 @@ namespace Cryptool.Plugins.ChaCha
             return b4 << 24 | b3 << 16 | b2 << 8 | b1;
         }
 
-        public void setCounterToState(uint[] state, ulong c)
+        public void SetCounterToState(uint[] state, ulong c)
         {
             byte[] counter = GetBytes(c);
             // counter as little-endian
             Array.Reverse(counter);
             // set counter value to state
             state[12] = To4ByteLE(counter, 0);
-            if (COUNTERSIZE_BITS > 32)
+            if (BITS_COUNTER > 32)
                 state[13] = To4ByteLE(counter, 4);
         }
 
@@ -512,7 +515,6 @@ namespace Cryptool.Plugins.ChaCha
             }
             return b;
         }
-
         public static byte[] GetBytes(ulong n)
         {
             byte[] b = BitConverter.GetBytes(n);
@@ -540,17 +542,15 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /**
-        * Circular shift to the left.
+        * Circular bit shift to the left. 
         */
         public uint RotateLeft(uint x, int shift)
         {
             return (x << shift) | (x >> -shift);
         }
-
         #endregion
 
-        #region Event Handling
-
+        #region Event Handling and Logging
         public event StatusChangedEventHandler OnPluginStatusChanged;
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
