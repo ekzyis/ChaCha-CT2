@@ -127,6 +127,7 @@ namespace Cryptool.Plugins.ChaCha
 
             actionNavBar.Children.Clear();
             Slider s = new Slider();
+            Binding currentActionIndexBinding = new Binding("CurrentActionIndex");
             s.Minimum = 0;
             s.Maximum = totalActions;
             // TODO set width dynamically depending on total actions
@@ -134,7 +135,7 @@ namespace Cryptool.Plugins.ChaCha
             s.TickFrequency = 1;
             s.TickPlacement = TickPlacement.None;
             s.IsSnapToTickEnabled = true;
-            s.Value = CurrentActionIndex;
+            s.SetBinding(Slider.ValueProperty, currentActionIndexBinding);
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
@@ -142,9 +143,7 @@ namespace Cryptool.Plugins.ChaCha
             };
             s.ValueChanged += S_ValueChanged;
             TextBlock current = new TextBlock();
-            Binding b = new Binding("Value");
-            b.Source = s;
-            current.SetBinding(TextBlock.TextProperty, b);
+            current.SetBinding(TextBlock.TextProperty, currentActionIndexBinding);
             TextBlock delimiter = new TextBlock();
             delimiter.Text = "/";
             TextBlock total = new TextBlock();
@@ -436,7 +435,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
-        private int CurrentActionIndex
+        public int CurrentActionIndex
         {
             get
             {
