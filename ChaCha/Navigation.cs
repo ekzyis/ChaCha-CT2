@@ -127,7 +127,7 @@ namespace Cryptool.Plugins.ChaCha
 
             actionNavBar.Children.Clear();
             Slider s = new Slider();
-            Binding currentActionIndexBinding = new Binding("CurrentActionIndex");
+            Binding currentActionIndexBinding = new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay };
             s.Minimum = 0;
             s.Maximum = totalActions;
             // TODO set width dynamically depending on total actions
