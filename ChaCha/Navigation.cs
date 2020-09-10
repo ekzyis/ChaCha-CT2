@@ -127,6 +127,7 @@ namespace Cryptool.Plugins.ChaCha
 
             actionNavBar.Children.Clear();
             Slider s = new Slider();
+            Binding currentActionIndexBinding = new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay };
             s.Minimum = 0;
             s.Maximum = totalActions;
             // TODO set width dynamically depending on total actions
@@ -134,26 +135,28 @@ namespace Cryptool.Plugins.ChaCha
             s.TickFrequency = 1;
             s.TickPlacement = TickPlacement.None;
             s.IsSnapToTickEnabled = true;
-            s.Value = CurrentActionIndex;
+            s.SetBinding(Slider.ValueProperty, currentActionIndexBinding);
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
                 MoveToAction((int)s.Value);
             };
             s.ValueChanged += S_ValueChanged;
-            TextBlock current = new TextBlock();
-            Binding b = new Binding("Value");
-            b.Source = s;
-            current.SetBinding(TextBlock.TextProperty, b);
-            TextBlock delimiter = new TextBlock();
-            delimiter.Text = "/";
-            TextBlock total = new TextBlock();
-            total.Text = totalActions.ToString();
+            s.VerticalAlignment = VerticalAlignment.Center;
+            TextBlock current = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
+            current.SetBinding(TextBlock.TextProperty, currentActionIndexBinding);
+            TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
+            TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
+            actionNavBar.Children.Add(PrevButton());
             actionNavBar.Children.Add(s);
+            Button next = NextButton();
+            next.Margin = new Thickness(1, 0, 3, 0);
+            actionNavBar.Children.Add(next);
             actionNavBar.Children.Add(current);
             actionNavBar.Children.Add(delimiter);
             actionNavBar.Children.Add(total);
         }
+
         private void InitActionNavigationBar(Page p)
         {
             int totalActions = p.ActionFrames;
@@ -433,7 +436,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
-        private int CurrentActionIndex
+        public int CurrentActionIndex
         {
             get
             {
@@ -608,6 +611,22 @@ namespace Cryptool.Plugins.ChaCha
         {
             WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
+        }
+        private Button PrevButton()
+        {
+            Button b = CreateNavigationButton();
+            b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
+            b.Click += PrevAction_Click;
+            b.Content = "<";
+            return b;
+        }
+        private Button NextButton()
+        {
+            Button b = CreateNavigationButton();
+            b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
+            b.Click += NextAction_Click;
+            b.Content = ">";
+            return b;
         }
         private void ResetPageActions()
         {
