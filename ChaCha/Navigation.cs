@@ -142,15 +142,16 @@ namespace Cryptool.Plugins.ChaCha
                 MoveToAction((int)s.Value);
             };
             s.ValueChanged += S_ValueChanged;
-            TextBlock current = new TextBlock();
+            s.VerticalAlignment = VerticalAlignment.Center;
+            TextBlock current = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
             current.SetBinding(TextBlock.TextProperty, currentActionIndexBinding);
-            TextBlock delimiter = new TextBlock();
-            delimiter.Text = "/";
-            TextBlock total = new TextBlock();
-            total.Text = totalActions.ToString();
+            TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
+            TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
             actionNavBar.Children.Add(s);
-            actionNavBar.Children.Add(NextButton());
+            Button next = NextButton();
+            next.Margin = new Thickness(1, 0, 3, 0);
+            actionNavBar.Children.Add(next);
             actionNavBar.Children.Add(current);
             actionNavBar.Children.Add(delimiter);
             actionNavBar.Children.Add(total);
@@ -613,7 +614,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private Button PrevButton()
         {
-            Button b = new Button();
+            Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
             b.Click += PrevAction_Click;
             b.Content = "<";
@@ -621,7 +622,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private Button NextButton()
         {
-            Button b = new Button();
+            Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
             b.Click += NextAction_Click;
             b.Content = ">";
