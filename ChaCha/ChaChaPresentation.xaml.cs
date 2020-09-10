@@ -21,10 +21,13 @@ namespace Cryptool.Plugins.ChaCha
     {
         #region private variables
 
+        private InterimResultsManager interimResultsManager;
+
         #endregion
         public ChaChaPresentation()
         {
             ContentControl c = new ContentControl();
+            interimResultsManager = new InterimResultsManager();
             InitializeComponent();
             InitVisualization();
             //InitNavigationPageClickHandlers();
@@ -250,7 +253,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region interim results manager class
-        static class InterimResultsManager
+        class InterimResultsManager
         {
             private class InterimResultList
             {
@@ -281,12 +284,12 @@ namespace Cryptool.Plugins.ChaCha
                     _results.Clear();
                 }
             }
-            private static List<InterimResultList> _interimResultsList = new List<InterimResultList>();
-            private static bool TypeExists(ResultType type)
+            private List<InterimResultList> _interimResultsList = new List<InterimResultList>();
+            private bool TypeExists(ResultType type)
             {
                 return _interimResultsList.Exists(list => list.Type == type);
             }
-            private static InterimResultList GetList(ResultType type)
+            private InterimResultList GetList(ResultType type)
             {
                 if(!TypeExists(type))
                 {
@@ -294,7 +297,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 return _interimResultsList.Find(list => list.Type == type);
             }
-            public static void Clear()
+            public void Clear()
             {
                 foreach(InterimResultList r in _interimResultsList)
                 {
@@ -302,7 +305,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 _interimResultsList.Clear();
             }
-            public static void AddResult(ResultType type, uint result)
+            public void AddResult(ResultType type, uint result)
             {
                 if(!TypeExists(type))
                 {
@@ -310,7 +313,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 GetList(type).Add(result);
             }
-            public static string Hex(ResultType type, int index)
+            public string Hex(ResultType type, int index)
             {
                 InterimResultList list = GetList(type);
                 if (list == null)
@@ -322,15 +325,15 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void AddResult(ResultType type, object result)
         {
-            InterimResultsManager.AddResult(type, (uint)result);
+            interimResultsManager.AddResult(type, (uint)result);
         }
         public string GetHexResult(ResultType type, int index)
         {
-            return InterimResultsManager.Hex(type, index);
+            return interimResultsManager.Hex(type, index);
         }
         public void clearResults()
         {
-            InterimResultsManager.Clear();
+            interimResultsManager.Clear();
         }
 
         #endregion
