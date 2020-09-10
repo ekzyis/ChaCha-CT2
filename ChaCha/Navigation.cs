@@ -149,11 +149,14 @@ namespace Cryptool.Plugins.ChaCha
             delimiter.Text = "/";
             TextBlock total = new TextBlock();
             total.Text = totalActions.ToString();
+            actionNavBar.Children.Add(PrevButton());
             actionNavBar.Children.Add(s);
+            actionNavBar.Children.Add(NextButton());
             actionNavBar.Children.Add(current);
             actionNavBar.Children.Add(delimiter);
             actionNavBar.Children.Add(total);
         }
+
         private void InitActionNavigationBar(Page p)
         {
             int totalActions = p.ActionFrames;
@@ -608,6 +611,22 @@ namespace Cryptool.Plugins.ChaCha
         {
             WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
+        }
+        private Button PrevButton()
+        {
+            Button b = new Button();
+            b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
+            b.Click += PrevAction_Click;
+            b.Content = "<";
+            return b;
+        }
+        private Button NextButton()
+        {
+            Button b = new Button();
+            b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
+            b.Click += NextAction_Click;
+            b.Content = ">";
+            return b;
         }
         private void ResetPageActions()
         {
