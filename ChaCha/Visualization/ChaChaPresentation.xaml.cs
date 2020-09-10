@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
 using System.Text.RegularExpressions;
-using System.Diagnostics;
-using System.Windows.Shapes;
+using static Cryptool.Plugins.ChaCha.IntermediateResultsManager;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -19,34 +15,16 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
-        #region private variables
-
-        private InterimResultsManager interimResultsManager;
-
-        #endregion
+        private IntermediateResultsManager intermediateResultsManager;
         public ChaChaPresentation()
         {
-            ContentControl c = new ContentControl();
-            interimResultsManager = new InterimResultsManager();
+            intermediateResultsManager = new IntermediateResultsManager();
             InitializeComponent();
             InitVisualization();
-            //InitNavigationPageClickHandlers();
             DataContext = this;
         }
 
-        #region Data binding notification
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string property)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
-        #endregion
-
-        #region Visualization variables
-
-        #region Input variables
-
+        #region State Initialization Variables
         private byte[] _constants = new byte[0];
         private byte[] _inputKey = new byte[0];
         private byte[] _inputIV = new byte[0];
@@ -213,138 +191,29 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8).Split(' ');
             }
         }
-
-        private ChaCha.Version _version;
-        public ChaCha.Version Version
-        {
-            get
-            {
-                return _version;
-            }
-            set
-            {
-                _version = value;
-            }
-        }
-
-        private int _rounds;
-        public int Rounds
-        {
-            get
-            {
-                return _rounds;
-            }
-            set
-            {
-                _rounds = value;
-            }
-        }
-
         #endregion
 
-        #region interim results
+        #region Settings Variables
+        public ChaCha.Version Version { get; set; }
+        public int Rounds { get; set; }
+        #endregion
 
-        public enum ResultType
-        {
-            QR_INPUT_A, QR_INPUT_B, QR_INPUT_C, QR_INPUT_D,
-            QR_INPUT_X1, QR_INPUT_X2, QR_INPUT_X3,
-            QR_OUTPUT_X1, QR_OUTPUT_X2, QR_OUTPUT_X3,
-            QR_ADD_X1_X2, QR_XOR
-        }
-
-        #region interim results manager class
-        class InterimResultsManager
-        {
-            private class InterimResultList
-            {
-                private List<uint> _results;
-                private ResultType _type;
-                public InterimResultList(ResultType type)
-                {
-                    _results = new List<uint>();
-                    _type = type;
-                }
-                public ResultType Type
-                {
-                    get
-                    {
-                        return _type;
-                    }
-                }
-                public string Hex(int index)
-                {
-                    return HexString(_results[index]);
-                }
-                public void Add(uint result)
-                {
-                    _results.Add(result);
-                }
-                public void Clear()
-                {
-                    _results.Clear();
-                }
-            }
-            private List<InterimResultList> _interimResultsList = new List<InterimResultList>();
-            private bool TypeExists(ResultType type)
-            {
-                return _interimResultsList.Exists(list => list.Type == type);
-            }
-            private InterimResultList GetList(ResultType type)
-            {
-                if(!TypeExists(type))
-                {
-                    return null;
-                }
-                return _interimResultsList.Find(list => list.Type == type);
-            }
-            public void Clear()
-            {
-                foreach(InterimResultList r in _interimResultsList)
-                {
-                    r.Clear();
-                }
-                _interimResultsList.Clear();
-            }
-            public void AddResult(ResultType type, uint result)
-            {
-                if(!TypeExists(type))
-                {
-                    _interimResultsList.Add(new InterimResultList(type));
-                }
-                GetList(type).Add(result);
-            }
-            public string Hex(ResultType type, int index)
-            {
-                InterimResultList list = GetList(type);
-                if (list == null)
-                {
-                    throw new ArgumentException(string.Format("InterimResultList of type {0}, index {1} does not exist", type.ToString(), index));
-                }
-                return list.Hex(index);
-            }
-        }
+        #region IntermediateResultsManager API
         public void AddResult(ResultType type, object result)
         {
-            interimResultsManager.AddResult(type, (uint)result);
+            intermediateResultsManager.AddResult(type, (uint)result);
         }
         public string GetHexResult(ResultType type, int index)
         {
-            return interimResultsManager.Hex(type, index);
+            return HexString(intermediateResultsManager.Get(type, index));
         }
         public void clearResults()
         {
-            interimResultsManager.Clear();
+            intermediateResultsManager.Clear();
         }
-
         #endregion
 
-        #endregion
-
-        #endregion
-
-        #region Visualization helper methods
-
-
+        #region Visualization Helper Methods (Stringify)
         /* insert a space after every n characters */
         private static string Chunkify(string text, int n)
         {
@@ -362,16 +231,15 @@ namespace Cryptool.Plugins.ChaCha
             }
             return sb.ToString();
         }
-
         public static string HexString(byte[] bytes)
         {
             return HexString(bytes, 0, bytes.Length);
         }
-
         public static string HexString(uint u)
         {
             return HexString(ChaCha.GetBytes(u));
         }
+
         /* Write bytes as hex string with each 4 byte written in little-endian */
         public static string HexStringLittleEndian(byte[] bytes)
         {
@@ -383,5 +251,11 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
         #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string property)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
+        }
     }
 }

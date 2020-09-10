@@ -48,7 +48,7 @@ namespace Cryptool.Plugins.ChaCha
         private int BITS_IV;
         // initial counter value (for keystream blocks) (depends on version)
         private uint INITIAL_COUNTER;
-        public sealed class Version
+        public class Version
         {
             public static readonly Version IETF = new Version("IETF", 32, 96, 1);
             public static readonly Version DJB = new Version("DJB", 64, 64, 0);
@@ -400,35 +400,35 @@ namespace Cryptool.Plugins.ChaCha
         {
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_A, a);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_B, b);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_C, c);
-                _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_D, d);
+                _presentation.AddResult(ResultType.QR_INPUT_A, a);
+                _presentation.AddResult(ResultType.QR_INPUT_B, b);
+                _presentation.AddResult(ResultType.QR_INPUT_C, c);
+                _presentation.AddResult(ResultType.QR_INPUT_D, d);
             });
             (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
             {
                 DispatchToPresentation(delegate
                 {
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X1, x1);
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X2, x2);
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_INPUT_X3, x3);
+                    _presentation.AddResult(ResultType.QR_INPUT_X1, x1);
+                    _presentation.AddResult(ResultType.QR_INPUT_X2, x2);
+                    _presentation.AddResult(ResultType.QR_INPUT_X3, x3);
                 });
                 x1 += x2; // x1 = x1 + x2
                 DispatchToPresentation(delegate
                 {
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_ADD_X1_X2, x1);
+                    _presentation.AddResult(ResultType.QR_ADD_X1_X2, x1);
                 });
                 x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
                 DispatchToPresentation(delegate
                 {
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_XOR, x3);
+                    _presentation.AddResult(ResultType.QR_XOR, x3);
                 });
                 x3 = RotateLeft(x3, shift); // x3 = x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
                 DispatchToPresentation(delegate
                 {
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X1, x1);
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X2, x2);
-                    _presentation.AddResult(ChaChaPresentation.ResultType.QR_OUTPUT_X3, x3);
+                    _presentation.AddResult(ResultType.QR_OUTPUT_X1, x1);
+                    _presentation.AddResult(ResultType.QR_OUTPUT_X2, x2);
+                    _presentation.AddResult(ResultType.QR_OUTPUT_X3, x3);
                 });
                 return (x1, x2, x3);
             }
