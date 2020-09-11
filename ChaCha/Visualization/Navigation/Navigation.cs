@@ -337,6 +337,11 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        /**
+         * Move n actions back / forward.
+         *
+         * Implements action navigation with relative value.
+         */
         private void MoveActions(int n)
         {
             void PrevActionClick(object sender, RoutedEventArgs e)
@@ -366,6 +371,11 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        /**
+         * Move to Action with given index.
+         *
+         * Implements action navigation with absolute value.
+         */
         private void MoveToAction(int n)
         {
             MoveActions(n - CurrentActionIndex);
