@@ -307,23 +307,11 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool NavigationEnabled => InputValid && ExecutionFinished;
 
-        private void PrevAction_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentActionIndex--;
-            CurrentPage.Actions[CurrentActionIndex].Undo();
-        }
-
-        private void NextAction_Click(object sender, RoutedEventArgs e)
-        {
-            WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
-            CurrentActionIndex++;
-        }
-
         private Button PrevButton()
         {
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
-            b.Click += PrevAction_Click;
+            b.Click += (sender, e) => MoveActions(-1);
             b.Content = "<";
             return b;
         }
@@ -332,18 +320,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
-            b.Click += NextAction_Click;
+            b.Click += (sender, e) => MoveActions(1);
             b.Content = ">";
             return b;
         }
 
         private void ResetPageActions()
         {
-            for (int i = CurrentActionIndex; i > 0; i--)
-            {
-                // this undo's the page actions on each action click
-                PrevAction_Click(null, null);
-            }
+            MoveToAction(0);
             Debug.Assert(CurrentActionIndex == 0);
             // Dont forget to also undo init actions.
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
@@ -355,18 +339,29 @@ namespace Cryptool.Plugins.ChaCha
 
         private void MoveActions(int n)
         {
+            void PrevActionClick(object sender, RoutedEventArgs e)
+            {
+                CurrentActionIndex--;
+                CurrentPage.Actions[CurrentActionIndex].Undo();
+            }
+
+            void NextActionClick(object sender, RoutedEventArgs e)
+            {
+                WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
+                CurrentActionIndex++;
+            }
             if (n < 0)
             {
                 for (int i = 0; i < Math.Abs(n); ++i)
                 {
-                    PrevAction_Click(null, null);
+                    PrevActionClick(null, null);
                 }
             }
             else
             {
                 for (int i = 0; i < Math.Abs(n); ++i)
                 {
-                    NextAction_Click(null, null);
+                    NextActionClick(null, null);
                 }
             }
         }
