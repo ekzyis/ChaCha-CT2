@@ -306,6 +306,8 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
 
+        public bool NavigationEnabled => InputValid && ExecutionFinished;
+
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIndex--;
