@@ -34,7 +34,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.nav.Replace(pres.UITransformLittleEndian2, pres.ConstantsLittleEndian[2]);
                 pres.nav.Replace(pres.UITransformLittleEndian3, pres.ConstantsLittleEndian[3]);
             }, pres.nav.Undo);
-            PageAction[] copyConstantsToStateActions = pres.CopyActions(
+            PageAction[] copyConstantsToStateActions = pres.nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell },
                 new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell });
             page.AddAction(constantsStepDescriptionAction);
@@ -79,7 +79,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.nav.Replace(pres.UITransformLittleEndian6, pres.KeyLittleEndian[keyIs32Byte ? 6 : 2]);
                 pres.nav.Replace(pres.UITransformLittleEndian7, pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
             }, pres.nav.Undo);
-            PageAction[] copyKeyToStateActions = pres.CopyActions(
+            PageAction[] copyKeyToStateActions = pres.nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell, pres.UITransformLittleEndian4Cell, pres.UITransformLittleEndian5Cell, pres.UITransformLittleEndian6Cell, pres.UITransformLittleEndian7Cell },
                 new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell });
             page.AddAction(keyStepDescriptionAction);
@@ -116,8 +116,8 @@ namespace Cryptool.Plugins.ChaCha
                 pres.nav.Replace(pres.UITransformLittleEndian1, pres.IVLittleEndian[1]);
                 if(!versionIsDJB) pres.nav.Replace(pres.UITransformLittleEndian2, pres.IVLittleEndian[2]);
             }, pres.nav.Undo);
-            PageAction[] copyIVToStateActions = versionIsDJB ? pres.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell }, new Border[] { pres.UIState14Cell, pres.UIState15Cell })
-                : pres.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell }, new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell });
+            PageAction[] copyIVToStateActions = versionIsDJB ? pres.nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell }, new Border[] { pres.UIState14Cell, pres.UIState15Cell })
+                : pres.nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell }, new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell });
             page.AddAction(ivStepDescriptionAction);
             page.AddAction(ivInputAction);
             page.AddAction(ivChunksAction);
@@ -154,8 +154,8 @@ namespace Cryptool.Plugins.ChaCha
                     pres.nav.Replace(pres.UITransformLittleEndian1, pres.InitialCounterLittleEndian[1]);
                 }
             }, pres.nav.Undo);
-            PageAction[] copyCounterToStateActions = versionIsDJB ? pres.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell }, new Border[] { pres.UIState12Cell, pres.UIState13Cell }) :
-                pres.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell }, new Border[] { pres.UIState12Cell });
+            PageAction[] copyCounterToStateActions = versionIsDJB ? pres.nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell }, new Border[] { pres.UIState12Cell, pres.UIState13Cell }) :
+                pres.nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell }, new Border[] { pres.UIState12Cell });
             page.AddAction(counterStepDescriptionAction);
             page.AddAction(counterInputAction);
             page.AddAction(counterChunksAction);

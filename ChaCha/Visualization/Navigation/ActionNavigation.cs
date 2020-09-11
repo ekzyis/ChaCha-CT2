@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -314,6 +315,132 @@ namespace Cryptool.Plugins.ChaCha
         {
             SetBorderColor(b, Brushes.Black);
             SetBorderStroke(b, 1);
+        }
+
+        public PageAction MarkCopyFromAction(Border[] borders)
+        {
+            return new PageAction(() =>
+            {
+                foreach (Border b in borders)
+                {
+                    SetCopyBackground(b);
+                }
+            }, Undo);
+        }
+
+        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        {
+            return new PageAction(() =>
+            {
+                for (int i = 0; i < copyTo.Length; ++i)
+                {
+                    Border copyFromBorder = copyFrom[i];
+                    Border copyToBorder = copyTo[i];
+                    SetCopyBackground(copyToBorder);
+                    string text = "";
+                    if (copyFromBorder.Child is TextBlock copyFromTextBlock)
+                    {
+                        text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
+
+                    }
+                    else if (copyFromBorder.Child is RichTextBox copyFromRichTextBox)
+                    {
+                        TextRange textRange = new TextRange(copyFromRichTextBox.Document.ContentStart, copyFromRichTextBox.Document.ContentEnd);
+                        text = textRange.Text;
+                    }
+                    else if (copyFromBorder.Child is TextBox copyFromTextBox)
+                    {
+                        text = copyFromTextBox.Text;
+                    }
+                    else
+                    {
+                        Debug.Assert(false, "Input type for CopyAction not supported.");
+                    }
+                    if (copyToBorder.Child is TextBlock copyToTextBlock)
+                    {
+                        if (replace)
+                        {
+                            ReplaceLast(copyToTextBlock, text);
+                        }
+                        else
+                        {
+                            Add(copyToTextBlock, text);
+                        }
+                    }
+                    else if (copyToBorder.Child is RichTextBox copyToRichTextBox)
+                    {
+                        if (replace)
+                        {
+                            Replace(copyToRichTextBox, text);
+                        }
+                        else
+                        {
+                            Add(copyToRichTextBox, text);
+                        }
+                    }
+                    else if (copyToBorder.Child is TextBox copyToTextBox)
+                    {
+                        Replace(copyToTextBox, text);
+                    }
+                    else
+                    {
+                        Debug.Assert(false, "Output type for CopyAction not supported.");
+                    }
+                }
+            }, Undo);
+        }
+
+        public PageAction UnmarkCopyAction(Border[] copyFrom, Border[] copyTo)
+        {
+            return new PageAction(() =>
+            {
+                foreach (Border b in copyFrom)
+                {
+                    UnsetBackground(b);
+                }
+                foreach (Border b in copyTo)
+                {
+                    UnsetBackground(b);
+                }
+            }, Undo);
+        }
+
+        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        {
+            Debug.Assert(copyFrom.Length == copyTo.Length);
+            PageAction mark = MarkCopyFromAction(copyFrom);
+            PageAction copy = CopyAction(copyFrom, copyTo, replace);
+            PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
+            return new PageAction[] { mark, copy, unmark };
+        }
+
+        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
+        {
+            PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
+
+            void MarkPaths()
+            {
+                foreach (Shape s in paths)
+                {
+                    s.StrokeThickness = 5;
+                }
+            }
+
+            void UndoMarkPaths()
+            {
+                foreach (Shape s in paths)
+                {
+                    s.StrokeThickness = 1;
+                }
+            }
+
+            PageAction mark = copyActions[0];
+            mark.AddToExec(MarkPaths);
+            mark.AddToUndo(UndoMarkPaths);
+            PageAction unmark = copyActions[2];
+            unmark.AddToExec(UndoMarkPaths);
+            unmark.AddToUndo(MarkPaths);
+            return copyActions;
         }
         #endregion
 

@@ -22,7 +22,7 @@ namespace Cryptool.Plugins.ChaCha
 
             PageAction[] QROutputActions()
             {
-                return pres.CopyActions(
+                return pres.nav.CopyActions(
                     new Border[] { (Border)GetIndexElement("QROutX1Cell", 3), (Border)GetIndexElement("QROutX3Cell", 4), (Border)GetIndexElement("QROutX1Cell", 4), (Border)GetIndexElement("QROutX2Cell", 4) },
                     new Shape[] { pres.QROutAPath, pres.QROutBPath, pres.QROutCPath, pres.QROutDPath },
                     new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }
@@ -159,7 +159,7 @@ namespace Cryptool.Plugins.ChaCha
 
             PageAction[] CopyToQRDetailInput(Border[] b, int actionIndex)
             {
-                return pres.CopyActions(
+                return pres.nav.CopyActions(
                     b,
                     new Shape[] { (Shape)GetIndexElement("QRInX1Path", actionIndex), (Shape)GetIndexElement("QRInX2Path", actionIndex), (Shape)GetIndexElement("QRInX3Path", actionIndex) },
                     new Border[] { (Border)GetIndexElement("QRInX1Cell", actionIndex), (Border)GetIndexElement("QRInX2Cell", actionIndex), (Border)GetIndexElement("QRInX3Cell", actionIndex) }
@@ -204,7 +204,7 @@ namespace Cryptool.Plugins.ChaCha
                 int k = stateIndices[2];
                 int l = stateIndices[3];
                 Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
-                PageAction[] copyActions = pres.CopyActions(stateCells, new Border[] { pres.QRInACell, pres.QRInBCell, pres.QRInCCell, pres.QRInDCell });
+                PageAction[] copyActions = pres.nav.CopyActions(stateCells, new Border[] { pres.QRInACell, pres.QRInBCell, pres.QRInCCell, pres.QRInDCell });
                 int round = (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
                 if ((qrIndex - 1) % 4 == 0)
                 {
@@ -264,7 +264,7 @@ namespace Cryptool.Plugins.ChaCha
                 int k = stateIndices[2];
                 int l = stateIndices[3];
                 Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
-                return pres.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, true);
+                return pres.nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, true);
             }
 
             PageAction ClearQRDetail()
