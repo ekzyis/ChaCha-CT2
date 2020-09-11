@@ -255,7 +255,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevActionIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                //InitActionNavigationBar(CurrentPage);
             }
         }
 
