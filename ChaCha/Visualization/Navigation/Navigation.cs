@@ -17,22 +17,19 @@ namespace Cryptool.Plugins.ChaCha
     {
         public ActionNavigation nav = new ActionNavigation();
 
-        private Button CreateNavigationButton()
+        private static Button CreateNavigationButton()
         {
-            Button b = new Button();
-            b.Height = 18.75; b.Width = 32;
-            b.Margin = new Thickness(1, 0, 1, 0);
+            Button b = new Button {Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0)};
             return b;
         }
 
-        private TextBlock CreateNavigationTextBlock(int index, int activeIndex, string bindingElementName)
+        private static TextBlock CreateNavigationTextBlock(int index, int activeIndex, string bindingElementName)
         {
-            TextBlock tb = new TextBlock();
-            tb.VerticalAlignment = VerticalAlignment.Center;
-            tb.HorizontalAlignment = HorizontalAlignment.Center;
-            Binding binding = new Binding();
-            binding.ElementName = bindingElementName;
-            binding.Path = new PropertyPath("FontSize");
+            TextBlock tb = new TextBlock
+            {
+                VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center
+            };
+            Binding binding = new Binding {ElementName = bindingElementName, Path = new PropertyPath("FontSize")};
             tb.SetBinding(TextBlock.FontSizeProperty, binding);
             tb.Text = (index + 1).ToString();
             if(activeIndex == index)
@@ -42,19 +39,21 @@ namespace Cryptool.Plugins.ChaCha
             return tb;
         }
 
-        private TextBlock CreateNavBarLabel(string bindingElementName, string text)
+        private static TextBlock CreateNavBarLabel(string bindingElementName, string text)
         {
-            TextBlock tb = new TextBlock();
-            tb.Name = bindingElementName;
-            tb.VerticalAlignment = VerticalAlignment.Center;
-            tb.HorizontalAlignment = HorizontalAlignment.Center;
-            tb.FontSize = 10.0;
-            tb.Margin = new Thickness(0, 0, 1, 0);
-            tb.Text = text;
+            TextBlock tb = new TextBlock
+            {
+                Name = bindingElementName,
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                FontSize = 10.0,
+                Margin = new Thickness(0, 0, 1, 0),
+                Text = text
+            };
             return tb;
         }
 
-        private string _PAGELABELNAME = "UINavBarPageLabel";
+        private readonly string _PAGELABELNAME = "UINavBarPageLabel";
         private Button CreatePageNavigationButton(int index)
         {
             Button b = CreateNavigationButton();
@@ -63,16 +62,6 @@ namespace Cryptool.Plugins.ChaCha
             b.Content = tb;
             Binding binding = new Binding("NavigationEnabled");
             b.SetBinding(Button.IsEnabledProperty, binding);
-            return b;
-        }
-
-        private string _ACTIONLABELNAME = "UINavBarActionLabel";
-        private Button CreateActionNavigationButton(int index)
-        {
-            Button b = CreateNavigationButton();
-            b.Click += new RoutedEventHandler(MoveToActionClickWrapper(index));
-            TextBlock tb = CreateNavigationTextBlock(index, CurrentActionIndex, _ACTIONLABELNAME);
-            b.Content = tb;
             return b;
         }
 
@@ -87,39 +76,7 @@ namespace Cryptool.Plugins.ChaCha
                 pageNavBar.Children.Add(CreatePageNavigationButton(i));
             }
         }
-        private void _InitActionButtonNavigationBar(StackPanel actionNavBar, int totalActions)
-        {
-            actionNavBar.Children.Clear();
-            actionNavBar.Children.Add(CreateNavBarLabel(_ACTIONLABELNAME, "Actions:"));
-            int startIndex = CurrentActionIntervalIndex * _ACTION_INTERVAL_SIZE;
-            int endIndex = Math.Min(totalActions, (CurrentActionIntervalIndex + 1) * _ACTION_INTERVAL_SIZE);
-            void PrevInterval_Click(object sender, RoutedEventArgs e)
-            {
-                CurrentActionIntervalIndex = Math.Max(0, CurrentActionIntervalIndex - 1);
-            }
-            void NextInterval_Click(object sender, RoutedEventArgs e)
-            {
-                CurrentActionIntervalIndex = Math.Min(CurrentPage.ActionFrames / _ACTION_INTERVAL_SIZE, CurrentActionIntervalIndex + 1);
-            }
-            for (int i = startIndex; i <= endIndex; ++i)
-            {
-                actionNavBar.Children.Add(CreateActionNavigationButton(i));
-            }
-            if (totalActions > _ACTION_INTERVAL_SIZE)
-            {
-                Button prevInterval = CreateNavigationButton();
-                prevInterval.Click += PrevInterval_Click;
-                prevInterval.Content = "<";
-                prevInterval.IsEnabled = CurrentActionIntervalIndex != 0;
-                Button nextInterval = CreateNavigationButton();
-                nextInterval.Click += NextInterval_Click;
-                nextInterval.Content = ">";
-                nextInterval.IsEnabled = CurrentActionIntervalIndex < totalActions / _ACTION_INTERVAL_SIZE;
-                actionNavBar.Children.Insert(1, prevInterval);
-                actionNavBar.Children.Add(nextInterval);
-            }
-        }
-        private void _InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
+        private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
         {
 
             actionNavBar.Children.Clear();
@@ -159,8 +116,8 @@ namespace Cryptool.Plugins.ChaCha
             int totalActions = p.ActionFrames;
             if (totalActions > 0)
             {
-                //_InitActionButtonNavigationBar(p.ActionNavigationBar, totalActions);
-                _InitActionSliderNavigationBar(p.ActionNavigationBar, totalActions);
+                //InitActionButtonNavigationBar(p.ActionNavigationBar, totalActions);
+                InitActionSliderNavigationBar(p.ActionNavigationBar, totalActions);
             }
         }
 
@@ -209,7 +166,7 @@ namespace Cryptool.Plugins.ChaCha
             MovePages(n - CurrentPageIndex);
         }
 
-        const int __START_VISUALIZATION_ON_PAGE_INDEX__ = 0;
+        const int START_VISUALIZATION_ON_PAGE_INDEX = 0;
         private void InitVisualization()
         {
             _pages.Clear();
@@ -217,7 +174,7 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
             AddPage(Page.KeystreamBlockGenPage(this));
-            CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
+            CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
         }
@@ -238,7 +195,7 @@ namespace Cryptool.Plugins.ChaCha
         // Calls FinishPageAction if page action used navigation interface methods.
         private void WrapExecWithNavigation(PageAction pageAction)
         {
-            pageAction.exec();
+            pageAction.Exec();
             if (nav.SaveStateHasBeenCalled)
             {
                 nav.FinishPageAction();
@@ -267,14 +224,12 @@ namespace Cryptool.Plugins.ChaCha
 
         private Action<object, RoutedEventArgs> MoveToPageClickWrapper(int n)
         {
-            Action<object, RoutedEventArgs> moveToPage_Click = (sender, e) => { MoveToPage(n); };
-            return moveToPage_Click;
-        }
+            void MoveToPageClick(object sender, RoutedEventArgs e)
+            {
+                MoveToPage(n);
+            }
 
-        private Action<object, RoutedEventArgs> MoveToActionClickWrapper(int n)
-        {
-            Action<object, RoutedEventArgs> moveToAction_Click = (sender, e) => { MoveToAction(n); };
-            return moveToAction_Click;
+            return MoveToPageClick;
         }
         #endregion
 
@@ -282,25 +237,19 @@ namespace Cryptool.Plugins.ChaCha
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
-        private int _currentActionIntervalIndex = 0;
-        private int _ACTION_INTERVAL_SIZE = 20;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
 
         private int CurrentPageIndex
         {
-            get
-            {
-                return _currentPageIndex;
-            }
+            get => _currentPageIndex;
             set
             {
                 if (value != _currentPageIndex)
                 {
                     _currentPageIndex = value;
                     CurrentActionIndex = 0;
-                    CurrentActionIntervalIndex = 0;
                     OnPropertyChanged("CurrentPageIndex");
                     OnPropertyChanged("CurrentPage");
                     OnPropertyChanged("NextPageIsEnabled");
@@ -330,62 +279,21 @@ namespace Cryptool.Plugins.ChaCha
                 //InitActionNavigationBar(CurrentPage);
             }
         }
-        private int CurrentActionIntervalIndex
-        {
-            get
-            {
-                return _currentActionIntervalIndex;
-            }
-            set
-            {
-                _currentActionIntervalIndex = value;
-                InitActionNavigationBar(CurrentPage);
-            }
-        }
-        private void UpdateCurrentActionIntervalIndex()
-        {
-            CurrentActionIntervalIndex = CurrentActionIndex / _ACTION_INTERVAL_SIZE;
-        }
 
-        private Page CurrentPage
-        {
-            get
-            {
-                if (_pages.Count == 0)
-                {
-                    return Page.LandingPage(this);
-                }
-                return _pages[CurrentPageIndex];
-            }
-        }
+        private Page CurrentPage => _pages.Count == 0 ? Page.LandingPage(this) : _pages[CurrentPageIndex];
 
-        private PageAction[] CurrentActions
-        {
-            get
-            {
-                return CurrentPage.Actions;
-            }
-        }
+        private PageAction[] CurrentActions => CurrentPage.Actions;
 
-        public int MaxPageIndex
-        {
-            get
-            {
-                return _pages.Count - 1;
-            }
-        }
+        public int MaxPageIndex => _pages.Count - 1;
 
         public bool ExecutionFinished
         {
-            get
-            {
-                return _executionFinished;
-            }
+            get => _executionFinished;
             set
             {
                 // reload pages to use new variables
                 InitVisualization();
-                MovePages(__START_VISUALIZATION_ON_PAGE_INDEX__ - CurrentPageIndex);
+                MovePages(START_VISUALIZATION_ON_PAGE_INDEX - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
@@ -397,10 +305,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool InputValid
         {
-            get
-            {
-                return _inputValid;
-            }
+            get => _inputValid;
             set
             {
                 _inputValid = value;
@@ -409,28 +314,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
                 OnPropertyChanged("NavigationEnabled");
-            }
-        }
-
-        public bool NextPageIsEnabled
-        {
-            get
-            {
-                return CurrentPageIndex != MaxPageIndex && NavigationEnabled;
-            }
-        }
-        public bool PrevPageIsEnabled
-        {
-            get
-            {
-                return CurrentPageIndex != 0 && NavigationEnabled;
-            }
-        }
-        public bool NavigationEnabled
-        {
-            get
-            {
-                return ExecutionFinished && InputValid;
             }
         }
 
@@ -481,7 +364,7 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIndex--;
-            CurrentPage.Actions[CurrentActionIndex].undo();
+            CurrentPage.Actions[CurrentActionIndex].Undo();
         }
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
@@ -516,7 +399,7 @@ namespace Cryptool.Plugins.ChaCha
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
             foreach (PageAction pageAction in CurrentPage.InitActions.Reverse())
             {
-                pageAction.undo();
+                pageAction.Undo();
             }
         }
 
@@ -559,7 +442,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 PrevAction_Click(null, null);
             }
-            UpdateCurrentActionIntervalIndex();
         }
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
@@ -570,7 +452,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 NextAction_Click(null, null);
             }
-            UpdateCurrentActionIntervalIndex();
         }
         private void QR_Click(int qrLabelIndex)
         {
@@ -751,26 +632,29 @@ namespace Cryptool.Plugins.ChaCha
         public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
         {
             PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
-            Action markPaths = () =>
+
+            void MarkPaths()
             {
                 foreach (Shape s in paths)
                 {
                     s.StrokeThickness = 5;
                 }
-            };
-            Action undoMarkPaths = () =>
+            }
+
+            void UndoMarkPaths()
             {
                 foreach (Shape s in paths)
                 {
                     s.StrokeThickness = 1;
                 }
-            };
+            }
+
             PageAction mark = copyActions[0];
-            mark.AddToExec(markPaths);
-            mark.AddToUndo(undoMarkPaths);
+            mark.AddToExec(MarkPaths);
+            mark.AddToUndo(UndoMarkPaths);
             PageAction unmark = copyActions[2];
-            unmark.AddToExec(undoMarkPaths);
-            unmark.AddToUndo(markPaths);
+            unmark.AddToExec(UndoMarkPaths);
+            unmark.AddToUndo(MarkPaths);
             return copyActions;
         }
         #endregion

@@ -15,7 +15,7 @@ namespace Cryptool.Plugins.ChaCha
        
         private class InterimResultList
         {
-            private List<uint> _results;
+            private readonly List<uint> _results;
 
             public InterimResultList(ResultType type)
             {
@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.ChaCha
                 _results.Clear();
             }
         }
-        private List<InterimResultList> _interimResultsList = new List<InterimResultList>();
+        private readonly List<InterimResultList> _interimResultsList = new List<InterimResultList>();
         private bool TypeExists(ResultType type)
         {
             return _interimResultsList.Exists(list => list.Type == type);

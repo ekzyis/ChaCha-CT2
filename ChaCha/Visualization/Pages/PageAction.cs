@@ -5,36 +5,31 @@ namespace Cryptool.Plugins.ChaCha
 {
     public class PageAction
     {
-        private List<Action> _exec = new List<Action>();
-        private List<Action> _undo = new List<Action>();
-        private List<string> _labels = new List<string>();
+        private readonly List<Action> _exec = new List<Action>();
+        private readonly List<Action> _undo = new List<Action>();
+        private readonly List<string> _labels = new List<string>();
         public PageAction(Action exec, Action undo, string label = "")
         {
             _exec.Add(exec);
             _undo.Add(undo);
             _labels.Add(label);
         }
-        public void exec()
+        public void Exec()
         {
             foreach (Action a in _exec)
             {
                 a();
             }
         }
-        public void undo()
+        public void Undo()
         {
             foreach (Action a in _undo)
             {
                 a();
             }
         }
-        public string[] Labels
-        {
-            get
-            {
-                return _labels.ToArray();
-            }
-        }
+        public string[] Labels => _labels.ToArray();
+
         public void AddLabel(string label)
         {
             _labels.Add(label);
@@ -50,8 +45,8 @@ namespace Cryptool.Plugins.ChaCha
 
         public void Add(PageAction toAdd)
         {
-            _exec.Add(toAdd.exec);
-            _undo.Add(toAdd.undo);
+            _exec.Add(toAdd.Exec);
+            _undo.Add(toAdd.Undo);
         }
     }
 }

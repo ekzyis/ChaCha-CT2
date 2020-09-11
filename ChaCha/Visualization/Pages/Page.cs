@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,20 +14,10 @@ namespace Cryptool.Plugins.ChaCha
         private readonly ContentControl _page;
         private readonly List<PageAction> _pageActions = new List<PageAction>();
         private readonly List<PageAction> _pageInitActions = new List<PageAction>();
-        public int ActionFrames
-        {
-            get
-            {
-                return _pageActions.Count;
-            }
-        }
-        public PageAction[] Actions
-        {
-            get
-            {
-                return _pageActions.ToArray();
-            }
-        }
+        public int ActionFrames => _pageActions.Count;
+
+        public PageAction[] Actions => _pageActions.ToArray();
+
         public void AddAction(params PageAction[] pageActions)
         {
             foreach (PageAction pageAction in pageActions)
@@ -36,33 +25,22 @@ namespace Cryptool.Plugins.ChaCha
                 _pageActions.Add(pageAction);
             }
         }
-        public PageAction[] InitActions
-        {
-            get
-            {
-                return _pageInitActions.ToArray();
-            }
-        }
+        public PageAction[] InitActions => _pageInitActions.ToArray();
+
         public void AddInitAction(PageAction pageAction)
         {
             _pageInitActions.Add(pageAction);
         }
         public Visibility Visibility
         {
-            get
-            {
-                return _page.Visibility;
-            }
-            set
-            {
-                _page.Visibility = value;
-            }
+            get => _page.Visibility;
+            set => _page.Visibility = value;
         }
         public StackPanel PageNavigationBar
         {
             get
             {
-                bool b = _page.ApplyTemplate();
+                _page.ApplyTemplate();
                 return (StackPanel)_page.Template.FindName("PageNavBar", _page);
             }
         }
@@ -70,7 +48,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                bool b = _page.ApplyTemplate();
+                 _page.ApplyTemplate();
                 return (StackPanel)_page.Template.FindName("ActionNavBar", _page);
             }
         }

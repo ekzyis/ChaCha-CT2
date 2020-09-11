@@ -15,7 +15,7 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
-        private IntermediateResultsManager intermediateResultsManager;
+        private readonly IntermediateResultsManager intermediateResultsManager;
         public ChaChaPresentation()
         {
             intermediateResultsManager = new IntermediateResultsManager();
@@ -207,7 +207,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return HexString(intermediateResultsManager.Get(type, index));
         }
-        public void clearResults()
+        public void ClearResults()
         {
             intermediateResultsManager.Clear();
         }

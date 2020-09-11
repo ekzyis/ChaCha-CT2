@@ -35,7 +35,7 @@ namespace Cryptool.Plugins.ChaCha
     public class ChaCha : ICrypComponent
     {
         // one block has 512 bits
-        private readonly static int BLOCKSIZE_BYTES = 64;
+        private static readonly int BLOCKSIZE_BYTES = 64;
         // ChaCha state consists of 16 32-bit integers
         private readonly uint[] initialState = new uint[16];
         // constants
@@ -52,10 +52,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             public static readonly Version IETF = new Version("IETF", 32, 96, 1);
             public static readonly Version DJB = new Version("DJB", 64, 64, 0);
-            public string Name { get; private set; }
-            public int BitsCounter { get; private set; }
-            public int BitsIV { get; private set; }
-            public uint InitialCounter { get; private set; }
+            public string Name { get; }
+            public int BitsCounter { get; }
+            public int BitsIV { get; }
+            public uint InitialCounter { get; }
             private Version(string name, int bitsCounter, int bitsIV, uint initialCounter)
             {
                 Name = name;
@@ -206,7 +206,7 @@ namespace Cryptool.Plugins.ChaCha
             // clear all previous results (important if user started workflow, stopped and then restarted)
             DispatchToPresentation(delegate
             {
-                _presentation.clearResults();
+                _presentation.ClearResults();
                 _presentation.Version = settings.Version;
                 _presentation.Rounds = settings.Rounds;
             });

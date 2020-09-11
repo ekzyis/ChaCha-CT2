@@ -12,14 +12,14 @@ namespace Cryptool.Plugins.ChaCha
     {
         public bool SaveStateHasBeenCalled { get; private set; } = false;
 
-        private readonly Brush copyBrush = Brushes.AliceBlue;
-        private readonly Brush markBrush = Brushes.Purple;
+        private readonly Brush _copyBrush = Brushes.AliceBlue;
+        private readonly Brush _markBrush = Brushes.Purple;
 
         #region Interface implementation
         // Stack with actions where the last dictionary contains undo actions which reverts changes from the last applied page action of an UI Element.
-        private Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
+        private readonly Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
         // temporary variable to collect undo actions before pushing into stack.
-        private Dictionary<int, Action> _undoActions = new Dictionary<int, Action>();
+        private readonly Dictionary<int, Action> _undoActions = new Dictionary<int, Action>();
         public void SaveState(params TextBlock[] textblocks)
         {
             SaveStateHasBeenCalled = true;
@@ -174,62 +174,59 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Private and helper methods (methods which do not call SaveState)
-        private void _RemoveLast(InlineCollection list)
+        #pragma warning disable IDE1006
+        private static void _RemoveLast(InlineCollection list)
         {
             list.Remove(list.LastInline);
         }
-        private void _ReplaceLast(InlineCollection list, Inline element)
+        private static void _ReplaceLast(InlineCollection list, Inline element)
         {
             _RemoveLast(list);
             list.Add(element);
         }
-        private void _ReplaceLast(InlineCollection list, string text)
-        {
-            _ReplaceLast(list, new Run(text));
-        }
-        private void _MakeBoldLast(InlineCollection list)
+        private static void _MakeBoldLast(InlineCollection list)
         {
             _ReplaceLast(list, MakeBold((Run)(list.LastInline)));
         }
-        private void _UnboldLast(InlineCollection list)
+        private static void _UnboldLast(InlineCollection list)
         {
             _ReplaceLast(list, new Run { Text = ((Run)(list.LastInline)).Text });
         }
-        private void _Add(InlineCollection list, Inline element)
+        private static void _Add(InlineCollection list, Inline element)
         {
             list.Add(element);
         }
-        private void _Clear(InlineCollection list)
+        private static void _Clear(InlineCollection list)
         {
             list.Clear();
         }
-        private void _RemoveLast(BlockCollection list)
+        private static void _RemoveLast(BlockCollection list)
         {
             list.Remove(list.LastBlock);
         }
-        private void _ReplaceLast(BlockCollection list, Inline element)
+        private static void _ReplaceLast(BlockCollection list, Inline element)
         {
             _RemoveLast(list);
             list.Add(new Paragraph(element));
         }
-        private void _UnboldLast(BlockCollection list)
+        private static void _UnboldLast(BlockCollection list)
         {
             if (list.LastBlock != null) _ReplaceLast(list, new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) });
         }
-        private void _Add(BlockCollection list, Inline element)
+        private static void _Add(BlockCollection list, Inline element)
         {
             list.Add(new Paragraph(element));
         }
-        private void _Clear(BlockCollection list)
+        private static void _Clear(BlockCollection list)
         {
             list.Clear();
         }
+        #pragma warning restore IDE1006
 
-        private Run MakeBold(Run r)
+        private static Run MakeBold(Run r)
         {
             return new Run { Text = r.Text, FontWeight = FontWeights.Bold };
         }
-
         #endregion
 
         #region TextBlock API
@@ -282,21 +279,6 @@ namespace Cryptool.Plugins.ChaCha
                 _Clear(tb.Inlines);
             }
         }
-        private void CopyLastText(TextBlock tbToCopyTo, TextBlock tbToCopyFrom)
-        {
-            SaveState(tbToCopyTo);
-            tbToCopyTo.Inlines.Add(((Run)(tbToCopyFrom.Inlines.LastInline)).Text);
-        }
-        private void SetVisible(TextBlock tb)
-        {
-            SaveState(tb);
-            tb.Visibility = Visibility.Visible;
-        }
-        private void SetInvisible(TextBlock tb)
-        {
-            SaveState(tb);
-            tb.Visibility = Visibility.Hidden;
-        }
         #endregion
 
         #region Border API
@@ -307,7 +289,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void SetCopyBackground(Border b)
         {
-            SetBackground(b, copyBrush);
+            SetBackground(b, _copyBrush);
         }
         public void UnsetBackground(Border b)
         {
@@ -325,7 +307,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void MarkBorder(Border b)
         {
-            SetBorderColor(b, markBrush);
+            SetBorderColor(b, _markBrush);
             SetBorderStroke(b, 2);
         }
         public void UnmarkBorder(Border b)
@@ -348,7 +330,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void MarkShape(Shape s)
         {
-            SetShapeStrokeColor(s, markBrush);
+            SetShapeStrokeColor(s, _markBrush);
             SetShapeStroke(s, 2);
         }
         public void UnmarkShape(Shape s)
