@@ -329,7 +329,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             MoveToAction(0);
             Debug.Assert(CurrentActionIndex == 0);
-            // Dont forget to also undo init actions.
+            // Also undo init actions.
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
             foreach (PageAction pageAction in CurrentPage.InitActions.Reverse())
             {
