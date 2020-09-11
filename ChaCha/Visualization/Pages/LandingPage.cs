@@ -1,13 +1,10 @@
-﻿using System.ComponentModel;
-using System.Windows.Controls;
-
-namespace Cryptool.Plugins.ChaCha
+﻿namespace Cryptool.Plugins.ChaCha
 {
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
+    partial class Page
     {
-        private Page LandingPage()
+        public static Page LandingPage(ChaChaPresentation presentation)
         {
-            return new Page(UILandingPage);
+            return new Page(presentation.UILandingPage);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    class ActionNavigation : IActionNavigation<TextBlock, Border, Shape, RichTextBox, TextBox>
+    public class ActionNavigation : IActionNavigation<TextBlock, Border, Shape, RichTextBox, TextBox>
     {
         public bool SaveStateHasBeenCalled { get; private set; } = false;
 

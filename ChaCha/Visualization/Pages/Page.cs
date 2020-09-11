@@ -5,9 +5,9 @@ using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    public class Page
+    partial class Page
     {
-        public Page(ContentControl pageElement)
+        private Page(ContentControl pageElement)
         {
             _page = pageElement;
         }

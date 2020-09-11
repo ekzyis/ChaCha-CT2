@@ -15,7 +15,7 @@ namespace Cryptool.Plugins.ChaCha
 {
     partial class ChaChaPresentation
     {
-        ActionNavigation nav = new ActionNavigation();
+        public ActionNavigation nav = new ActionNavigation();
 
         private Button CreateNavigationButton()
         {
@@ -213,10 +213,10 @@ namespace Cryptool.Plugins.ChaCha
         private void InitVisualization()
         {
             _pages.Clear();
-            AddPage(LandingPage());
-            AddPage(WorkflowPage());
-            AddPage(StateMatrixPage());
-            AddPage(KeystreamBlockGenPage());
+            AddPage(Page.LandingPage(this));
+            AddPage(Page.WorkflowPage(this));
+            AddPage(Page.StateMatrixPage(this));
+            AddPage(Page.KeystreamBlockGenPage(this));
             CollapseAllPagesExpect(__START_VISUALIZATION_ON_PAGE_INDEX__);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
@@ -353,7 +353,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if (_pages.Count == 0)
                 {
-                    return LandingPage();
+                    return Page.LandingPage(this);
                 }
                 return _pages[CurrentPageIndex];
             }
@@ -644,7 +644,7 @@ namespace Cryptool.Plugins.ChaCha
             QR_Click(8);
         }
 
-        private int CurrentRoundIndex { get; set; } = 0;
+        public int CurrentRoundIndex { get; set; } = 0;
 
         #endregion
 

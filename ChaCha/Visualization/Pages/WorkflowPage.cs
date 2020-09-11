@@ -1,13 +1,10 @@
-﻿using System.ComponentModel;
-using System.Windows.Controls;
-
-namespace Cryptool.Plugins.ChaCha
+﻿namespace Cryptool.Plugins.ChaCha
 {
-    public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
+    partial class Page
     {
-        private Page WorkflowPage()
+        public static Page WorkflowPage(ChaChaPresentation presentation)
         {
-            return new Page(UIWorkflowPage);
+            return new Page(presentation.UIWorkflowPage);
         }
     }
 }
