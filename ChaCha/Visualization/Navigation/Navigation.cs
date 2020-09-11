@@ -391,21 +391,15 @@ namespace Cryptool.Plugins.ChaCha
                 endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex - 1)) + 1;
             }
             Debug.Assert(startIndex > endIndex);
-            for (int i = startIndex; i > endIndex; --i)
-            {
-                PrevAction_Click(null, null);
-            }
+            MoveToAction(endIndex);
         }
 
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1));
+            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1)) + 1;
             Debug.Assert(startIndex < endIndex);
-            for (int i = startIndex; i <= endIndex; ++i)
-            {
-                NextAction_Click(null, null);
-            }
+            MoveToAction(endIndex);
         }
 
         private void QR_Click(int qrLabelIndex)
