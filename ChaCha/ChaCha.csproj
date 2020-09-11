@@ -77,15 +77,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChaCha.cs" />
-    <Compile Include="ChaChaPresentation.xaml.cs">
+    <Compile Include="Visualization\Navigation\ActionNavigation.cs" />
+    <Compile Include="Visualization\ChaChaPresentation.xaml.cs">
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="ChaChaSettings.cs" />
-    <Compile Include="Navigation.cs" />
-    <Compile Include="Pages\KeystreamBlockGenPage.cs" />
-    <Compile Include="Pages\LandingPage.cs" />
-    <Compile Include="Pages\StateMatrixPage.cs" />
-    <Compile Include="Pages\WorkflowPage.cs" />
+    <Compile Include="Visualization\IntermediateResultsManager.cs" />
+    <Compile Include="Visualization\Navigation\Navigation.cs" />
+    <Compile Include="Visualization\Navigation\IActionNavigation.cs" />
+    <Compile Include="Visualization\Pages\KeystreamBlockGenPage.cs" />
+    <Compile Include="Visualization\Pages\LandingPage.cs" />
+    <Compile Include="Visualization\Pages\Page.cs" />
+    <Compile Include="Visualization\Pages\PageAction.cs" />
+    <Compile Include="Visualization\Pages\StateMatrixPage.cs" />
+    <Compile Include="Visualization\Pages\WorkflowPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -116,7 +121,7 @@
     <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ChaChaPresentation.xaml">
+    <Page Include="Visualization\ChaChaPresentation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
