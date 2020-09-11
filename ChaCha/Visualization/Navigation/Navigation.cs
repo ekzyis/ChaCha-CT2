@@ -118,13 +118,7 @@ namespace Cryptool.Plugins.ChaCha
                 InitActionSliderNavigationBar(p.ActionNavigationBar, totalActions);
             }
         }
-
-        #region page navigation
-
-        #region classes, structs and methods related page navigation
-
        
-
         // List with pages in particular order to implement page navigation + their page actions
         private readonly List<Page> _pages = new List<Page>();
         private void AddPage(Page page)
@@ -200,9 +194,6 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        #endregion
-
-        #region page navigation click handlers
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
             CurrentPage.Visibility = Visibility.Collapsed;
@@ -229,9 +220,6 @@ namespace Cryptool.Plugins.ChaCha
 
             return MoveToPageClick;
         }
-        #endregion
-
-        #region variables related to page navigation
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
@@ -244,27 +232,22 @@ namespace Cryptool.Plugins.ChaCha
             get => _currentPageIndex;
             set
             {
-                if (value != _currentPageIndex)
-                {
-                    _currentPageIndex = value;
-                    CurrentActionIndex = 0;
-                    OnPropertyChanged("CurrentPageIndex");
-                    OnPropertyChanged("CurrentPage");
-                    OnPropertyChanged("NextPageIsEnabled");
-                    OnPropertyChanged("PrevPageIsEnabled");
-                    OnPropertyChanged("NextRoundIsEnabled");
-                    OnPropertyChanged("PrevRoundIsEnabled");
-                    InitPageNavigationBar(CurrentPage);
-                    InitActionNavigationBar(CurrentPage);
-                }
+                if (value == _currentPageIndex) return;
+                _currentPageIndex = value;
+                CurrentActionIndex = 0;
+                OnPropertyChanged("CurrentPageIndex");
+                OnPropertyChanged("CurrentPage");
+                OnPropertyChanged("NextPageIsEnabled");
+                OnPropertyChanged("PrevPageIsEnabled");
+                OnPropertyChanged("NextRoundIsEnabled");
+                OnPropertyChanged("PrevRoundIsEnabled");
+                InitPageNavigationBar(CurrentPage);
+                InitActionNavigationBar(CurrentPage);
             }
         }
         public int CurrentActionIndex
         {
-            get
-            {
-                return _currentActionIndex;
-            }
+            get => _currentActionIndex;
             set
             {
                 _currentActionIndex = value;
@@ -281,8 +264,6 @@ namespace Cryptool.Plugins.ChaCha
         private Page CurrentPage => _pages.Count == 0 ? Page.LandingPage(this) : _pages[CurrentPageIndex];
 
         private PageAction[] CurrentActions => CurrentPage.Actions;
-
-        public int MaxPageIndex => _pages.Count - 1;
 
         public bool ExecutionFinished
         {
@@ -315,60 +296,30 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        #endregion
+        // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
+        // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
+        // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
+        public bool NextActionIsEnabled => CurrentPage.ActionFrames > 0 &&
+                                           CurrentActionIndex != CurrentPage.ActionFrames && ExecutionFinished;
 
-        #endregion
+        public bool PrevActionIsEnabled => CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
 
-        #region action navigation
+        public bool NextRoundIsEnabled => CurrentRoundIndex != 20;
 
-        #region variables related to action navigation
-
-        public bool NextActionIsEnabled
-        {
-            get
-            {
-                // next action is only enabled if currentActionIndex is not already pointing outside of actionFrames array since we increase it after each action.
-                // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
-                // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
-                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != CurrentPage.ActionFrames && ExecutionFinished;
-            }
-        }
-        public bool PrevActionIsEnabled
-        {
-            get
-            {
-                return CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
-            }
-        }
-        public bool NextRoundIsEnabled
-        {
-            get
-            {
-                return CurrentRoundIndex != 20;
-            }
-        }
-        public bool PrevRoundIsEnabled
-        {
-            get
-            {
-                return CurrentRoundIndex >= 1;
-            }
-        }
-
-        #endregion
-
-        #region action navigation click handlers
+        public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
 
         private void PrevAction_Click(object sender, RoutedEventArgs e)
         {
             CurrentActionIndex--;
             CurrentPage.Actions[CurrentActionIndex].Undo();
         }
+
         private void NextAction_Click(object sender, RoutedEventArgs e)
         {
             WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
         }
+
         private Button PrevButton()
         {
             Button b = CreateNavigationButton();
@@ -377,6 +328,7 @@ namespace Cryptool.Plugins.ChaCha
             b.Content = "<";
             return b;
         }
+
         private Button NextButton()
         {
             Button b = CreateNavigationButton();
@@ -385,6 +337,7 @@ namespace Cryptool.Plugins.ChaCha
             b.Content = ">";
             return b;
         }
+
         private void ResetPageActions()
         {
             for (int i = CurrentActionIndex; i > 0; i--)
@@ -418,14 +371,17 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+
         private void MoveToAction(int n)
         {
             MoveActions(n - CurrentActionIndex);
         }
+
         private int GetLabeledPageActionIndex(string label)
         {
             return Array.FindIndex(CurrentActions, pageAction => Array.FindIndex(pageAction.Labels, actionlabel => actionlabel == label) != -1);
         }
+
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
@@ -441,6 +397,7 @@ namespace Cryptool.Plugins.ChaCha
                 PrevAction_Click(null, null);
             }
         }
+
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
@@ -451,6 +408,7 @@ namespace Cryptool.Plugins.ChaCha
                 NextAction_Click(null, null);
             }
         }
+
         private void QR_Click(int qrLabelIndex)
         {
             /*
@@ -524,12 +482,6 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         public int CurrentRoundIndex { get; set; } = 0;
-
-        #endregion
-
-        #region action helper methods
-
-        #region Page Action creators
 
         public PageAction MarkCopyFromAction(Border[] borders)
         {
@@ -627,6 +579,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
         }
+
         public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
         {
             PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
@@ -655,10 +608,5 @@ namespace Cryptool.Plugins.ChaCha
             unmark.AddToUndo(MarkPaths);
             return copyActions;
         }
-        #endregion
-
-        #endregion
-
-        #endregion
     }
 }
