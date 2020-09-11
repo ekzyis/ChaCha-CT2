@@ -1,11 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -89,7 +93,7 @@ namespace Cryptool.Plugins.ChaCha
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
-                MoveToAction((int)s.Value);
+                QueueMoveToAction((int)s.Value);
             };
             s.ValueChanged += S_ValueChanged;
             s.VerticalAlignment = VerticalAlignment.Center;
@@ -167,6 +171,8 @@ namespace Cryptool.Plugins.ChaCha
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
+            CancellationToken cancellationToken = new CancellationToken();
+            StartActionBufferHandler(50, cancellationToken);
         }
 
         // useful for development: setting pages visible for development purposes does not infer with execution
@@ -311,7 +317,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
-            b.Click += (sender, e) => MoveActions(-1);
+            b.Click += (sender, e) => QueueMoveActions(-1);
             b.Content = "<";
             return b;
         }
@@ -320,14 +326,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
-            b.Click += (sender, e) => MoveActions(1);
+            b.Click += (sender, e) => QueueMoveActions(1);
             b.Content = ">";
             return b;
         }
 
         private void ResetPageActions()
         {
-            MoveToAction(0);
+            QueueMoveToAction(0);
             Debug.Assert(CurrentActionIndex == 0);
             // Also undo init actions.
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
@@ -342,32 +348,12 @@ namespace Cryptool.Plugins.ChaCha
          *
          * Implements action navigation with relative value.
          */
-        private void MoveActions(int n)
+        private readonly Queue<int> _moveActionQueue = new Queue<int>();
+        private void QueueMoveActions(int n)
         {
-            void PrevActionClick(object sender, RoutedEventArgs e)
+            lock (_moveActionQueue)
             {
-                CurrentActionIndex--;
-                CurrentPage.Actions[CurrentActionIndex].Undo();
-            }
-
-            void NextActionClick(object sender, RoutedEventArgs e)
-            {
-                WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
-                CurrentActionIndex++;
-            }
-            if (n < 0)
-            {
-                for (int i = 0; i < Math.Abs(n); ++i)
-                {
-                    PrevActionClick(null, null);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < Math.Abs(n); ++i)
-                {
-                    NextActionClick(null, null);
-                }
+                _moveActionQueue.Enqueue(n);
             }
         }
 
@@ -376,9 +362,73 @@ namespace Cryptool.Plugins.ChaCha
          *
          * Implements action navigation with absolute value.
          */
-        private void MoveToAction(int n)
+        private void QueueMoveToAction(int n)
         {
-            MoveActions(n - CurrentActionIndex);
+            QueueMoveActions(n - CurrentActionIndex);
+        }
+
+        /**
+         * Starts the handler which periodically runs all queued up actions to increase performance by using a cache. 
+         *
+         * Implemented as follows:
+         *   1. Sum up all relative action indices to get the resulting relative action index.
+         *        For example, if we have [-1, -2, 5] queued, we would first move one action back, then 5 and then 3 forward.
+         *        This is the same as just moving 2 actions forward.
+         *   2. Calculate nearest cached action index.
+         *   3. move to nearest cached action index in constant time from anywhere.
+         *   4. Move to destination.
+         */
+        private async void StartActionBufferHandler(int millisecondsPeriod, CancellationToken cancellationToken)
+        {
+            void PrevActionClick(object sender, RoutedEventArgs e)
+            {
+                CurrentActionIndex--;
+                CurrentPage.Actions[CurrentActionIndex].Undo();
+            }
+            void NextActionClick(object sender, RoutedEventArgs e)
+            {
+                WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
+                CurrentActionIndex++;
+            }
+            void MoveToAction(int n)
+            {
+                if (n < 0)
+                {
+                    for (int i = 0; i < Math.Abs(n); ++i)
+                    {
+                        PrevActionClick(null, null);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Math.Abs(n); ++i)
+                    {
+                        NextActionClick(null, null);
+                    }
+                }
+            }
+            Task ClearActionBuffer()
+            {
+                return Task.Run(() =>
+                {
+                    int n;
+                    lock (_moveActionQueue)
+                    {
+                        n = _moveActionQueue.Sum();
+                        _moveActionQueue.Clear();
+                    }
+                    this.Dispatcher.Invoke(() => MoveToAction(n));
+
+                });
+            }
+            while (true)
+            {
+                var delayTask = Task.Delay(millisecondsPeriod, cancellationToken);
+                await ClearActionBuffer();
+                await delayTask;
+                if (cancellationToken.IsCancellationRequested)
+                    break;
+            }
         }
 
         private int GetLabeledPageActionIndex(string label)
@@ -396,7 +446,7 @@ namespace Cryptool.Plugins.ChaCha
                 endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex - 1)) + 1;
             }
             Debug.Assert(startIndex > endIndex);
-            MoveToAction(endIndex);
+            QueueMoveToAction(endIndex);
         }
 
         private void NextRound_Click(object sender, RoutedEventArgs e)
@@ -404,7 +454,7 @@ namespace Cryptool.Plugins.ChaCha
             int startIndex = CurrentActionIndex;
             int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1)) + 1;
             Debug.Assert(startIndex < endIndex);
-            MoveToAction(endIndex);
+            QueueMoveToAction(endIndex);
         }
 
         private void QR_Click(int qrLabelIndex)
@@ -443,7 +493,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             string searchLabel = string.Format("_QR_ACTION_LABEL_{0}_{1}", qrLabelSearchIndex, roundLabelSearchIndex);
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel) + 1;
-            MoveToAction(qrActionIndex);
+            QueueMoveToAction(qrActionIndex);
         }
         private void QR1_Click(object sender, RoutedEventArgs e)
         {
