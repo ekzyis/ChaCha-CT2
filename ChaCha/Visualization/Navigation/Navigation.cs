@@ -13,7 +13,7 @@ namespace Cryptool.Plugins.ChaCha
 {
     partial class ChaChaPresentation
     {
-        public ActionNavigation nav = new ActionNavigation();
+        public ActionNavigation Nav = new ActionNavigation();
 
         private static Button CreateNavigationButton()
         {
@@ -188,9 +188,9 @@ namespace Cryptool.Plugins.ChaCha
         private void WrapExecWithNavigation(PageAction pageAction)
         {
             pageAction.Exec();
-            if (nav.SaveStateHasBeenCalled)
+            if (Nav.SaveStateHasBeenCalled)
             {
-                nav.FinishPageAction();
+                Nav.FinishPageAction();
             }
         }
 
