@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Text;
-using System.Windows.Controls;
 using System.Text.RegularExpressions;
-using static Cryptool.Plugins.ChaCha.IntermediateResultsManager;
+using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha
 {
