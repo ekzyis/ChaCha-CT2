@@ -98,7 +98,7 @@ namespace Cryptool.Plugins.ChaCha
             s.ValueChanged += S_ValueChanged;
             s.VerticalAlignment = VerticalAlignment.Center;
             TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
-            current.SetBinding(TextBlock.TextProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.TwoWay });
+            current.SetBinding(TextBlock.TextProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
@@ -139,10 +139,6 @@ namespace Cryptool.Plugins.ChaCha
             if (p.ActionFrames > 0)
             {
                 StartActionBufferHandler(50);
-            }
-            else
-            {
-                StopActionBufferHandler();
             }
         }
 
@@ -207,6 +203,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
+            StopActionBufferHandler();
             CurrentPage.Visibility = Visibility.Collapsed;
             ResetPageActions();
             CurrentPageIndex--;
@@ -215,6 +212,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
+            StopActionBufferHandler();
             CurrentPage.Visibility = Visibility.Collapsed;
             ResetPageActions();
             CurrentPageIndex++;
@@ -341,7 +339,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void ResetPageActions()
         {
-            MoveToActionAsync(0);
+            MoveToAction(0);
             Debug.Assert(CurrentActionIndex == 0);
             // Also undo init actions.
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
@@ -377,6 +375,38 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        private void PrevActionClick(object sender, RoutedEventArgs e)
+        {
+            CurrentActionIndex--;
+            CurrentPage.Actions[CurrentActionIndex].Undo();
+        }
+        private void NextActionClick(object sender, RoutedEventArgs e)
+        {
+            WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
+            CurrentActionIndex++;
+        }
+        private void MoveToAction(int n)
+        {
+            int relative = n - CurrentActionIndex;
+            if (relative != 0)
+            {
+            }
+            if (relative < 0)
+            {
+                for (int i = 0; i < Math.Abs(relative); ++i)
+                {
+                    PrevActionClick(null, null);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Math.Abs(relative); ++i)
+                {
+                    NextActionClick(null, null);
+                }
+            }
+        }
+
         /**
          * Starts the handler which periodically runs all queued up actions to increase performance by using a cache. 
          *
@@ -394,37 +424,6 @@ namespace Cryptool.Plugins.ChaCha
             StopActionBufferHandler();
             actionNavigationTokenSource = new CancellationTokenSource();
             CancellationToken cancellationToken = actionNavigationTokenSource.Token;
-            void PrevActionClick(object sender, RoutedEventArgs e)
-            {
-                CurrentActionIndex--;
-                CurrentPage.Actions[CurrentActionIndex].Undo();
-            }
-            void NextActionClick(object sender, RoutedEventArgs e)
-            {
-                WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
-                CurrentActionIndex++;
-            }
-            void MoveToAction(int n)
-            {
-                int relative = n - CurrentActionIndex;
-                if (relative != 0)
-                {
-                }
-                if (relative < 0)
-                {
-                    for (int i = 0; i < Math.Abs(relative); ++i)
-                    {
-                        PrevActionClick(null, null);
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < Math.Abs(relative); ++i)
-                    {
-                        NextActionClick(null, null);
-                    }
-                }
-            }
             Task ClearActionBuffer()
             {
                 return Task.Run(() =>
