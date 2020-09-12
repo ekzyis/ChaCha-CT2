@@ -77,30 +77,37 @@ namespace Cryptool.Plugins.ChaCha
                 pageNavBar.Children.Add(CreatePageNavigationButton(i));
             }
         }
-        private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
-        {
 
-            actionNavBar.Children.Clear();
-            Slider s = new Slider();
-            s.Minimum = 0;
-            s.Maximum = totalActions;
-            // TODO set width dynamically depending on total actions
-            s.Width = 1000;
-            s.TickFrequency = 1;
-            s.TickPlacement = TickPlacement.None;
-            s.IsSnapToTickEnabled = true;
+        private Slider CreateActionNavigationSlider(int totalActions)
+        {
+            Slider s = new Slider
+            {
+                Minimum = 0,
+                Maximum = totalActions,
+                // TODO set width dynamically depending on total actions
+                Width = 1000,
+                TickFrequency = 1,
+                TickPlacement = TickPlacement.None,
+                IsSnapToTickEnabled = true,
+                VerticalAlignment = VerticalAlignment.Center,
+                AutoToolTipPlacement = AutoToolTipPlacement.BottomRight
+            };
+            
             s.SetBinding(Slider.ValueProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
-            s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
-                int value = (int) s.Value;
-                if(CurrentActionIndex != value) MoveToActionAsync(value);
+                int value = (int)s.Value;
+                if (CurrentActionIndex != value) MoveToActionAsync(value);
             };
             s.ValueChanged += S_ValueChanged;
-            s.VerticalAlignment = VerticalAlignment.Center;
+            return s;
+        }
+
+        private TextBox CreateCurrentActionIndexTextBox()
+        {
             TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
             current.SetBinding(TextBox.TextProperty,
-                new Binding("CurrentActionIndexTextBox") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
+                new Binding("CurrentActionIndexTextBox") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
 
             void HandleKeyDown(object sender, KeyEventArgs e)
             {
@@ -116,10 +123,17 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             current.KeyDown += HandleKeyDown;
+            return current;
+        }
+        private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
+        {
+            actionNavBar.Children.Clear();
+            Slider actionSlider = CreateActionNavigationSlider(totalActions);
+            TextBox current = CreateCurrentActionIndexTextBox();
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
-            actionNavBar.Children.Add(s);
+            actionNavBar.Children.Add(actionSlider);
             Button next = NextButton();
             next.Margin = new Thickness(1, 0, 3, 0);
             actionNavBar.Children.Add(next);
