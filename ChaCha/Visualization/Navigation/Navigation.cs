@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
@@ -99,7 +100,22 @@ namespace Cryptool.Plugins.ChaCha
             s.VerticalAlignment = VerticalAlignment.Center;
             TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
             current.SetBinding(TextBox.TextProperty,
-                new Binding("CurrentActionIndex_") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
+                new Binding("CurrentActionIndexTextBox") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged});
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string text = ((TextBox)sender).Text;
+                    int value;
+                    if (int.TryParse(text, out value))
+                    {
+                        MoveToActionAsync(value);
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
@@ -234,6 +250,9 @@ namespace Cryptool.Plugins.ChaCha
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
+        // action index value for TextBox.
+        // Prevents direct write-access to actual current action index value while still being able to read from it.
+        private int _currentActionIndexTextBox = 0;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
@@ -262,8 +281,8 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentActionIndex = value;
+                CurrentActionIndexTextBox = value;
                 OnPropertyChanged("CurrentActionIndex");
-                OnPropertyChanged("CurrentActionIndex_");
                 OnPropertyChanged("CurrentActions");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
@@ -272,13 +291,14 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public int CurrentActionIndex_
+        public int CurrentActionIndexTextBox
         {
-            get => _currentActionIndex;
+            get => _currentActionIndexTextBox;
             set
             {
-                Console.WriteLine($"Set CurrentActionIndex to ${value} from TextBox");
-                MoveToActionAsync(value);
+                _currentActionIndexTextBox = value;
+                OnPropertyChanged("CurrentActionIndexTextBox");
+
             }
         }
 
