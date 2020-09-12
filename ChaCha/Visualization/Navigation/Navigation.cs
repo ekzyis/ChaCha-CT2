@@ -81,7 +81,6 @@ namespace Cryptool.Plugins.ChaCha
 
             actionNavBar.Children.Clear();
             Slider s = new Slider();
-            Binding currentActionIndexBinding = new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay };
             s.Minimum = 0;
             s.Maximum = totalActions;
             // TODO set width dynamically depending on total actions
@@ -89,7 +88,7 @@ namespace Cryptool.Plugins.ChaCha
             s.TickFrequency = 1;
             s.TickPlacement = TickPlacement.None;
             s.IsSnapToTickEnabled = true;
-            s.SetBinding(Slider.ValueProperty, currentActionIndexBinding);
+            s.SetBinding(Slider.ValueProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
@@ -98,8 +97,8 @@ namespace Cryptool.Plugins.ChaCha
             };
             s.ValueChanged += S_ValueChanged;
             s.VerticalAlignment = VerticalAlignment.Center;
-            TextBlock current = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
-            current.SetBinding(TextBlock.TextProperty, currentActionIndexBinding);
+            TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
+            current.SetBinding(TextBlock.TextProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.TwoWay });
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
