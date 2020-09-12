@@ -98,7 +98,7 @@ namespace Cryptool.Plugins.ChaCha
             s.ValueChanged += S_ValueChanged;
             s.VerticalAlignment = VerticalAlignment.Center;
             TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
-            current.SetBinding(TextBlock.TextProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
+            current.SetBinding(TextBox.TextProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.TwoWay });
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
