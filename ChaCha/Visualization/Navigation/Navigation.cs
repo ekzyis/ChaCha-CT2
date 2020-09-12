@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -102,22 +103,54 @@ namespace Cryptool.Plugins.ChaCha
             s.ValueChanged += S_ValueChanged;
             return s;
         }
+        private class InputActionIndexRule : ValidationRule
+        {
+            private int _maxActionIndex;
+            public InputActionIndexRule(int maxActionIndex)
+            {
+                _maxActionIndex = maxActionIndex;
+            }
 
-        private TextBox CreateCurrentActionIndexTextBox()
+            public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+            {
+                int input = 0;
+
+                try
+                {
+                    if (((string)value).Length > 0)
+                        input = int.Parse((String)value);
+                }
+                catch (Exception e)
+                {
+                    return new ValidationResult(false, $"Illegal characters or {e.Message}");
+                }
+
+                if ((input < 0) || (input > _maxActionIndex))
+                {
+                    return new ValidationResult(false,
+                        $"Please enter an age in the range: {0}-{_maxActionIndex}.");
+                }
+                return ValidationResult.ValidResult;
+            }
+        }
+        private TextBox CreateCurrentActionIndexTextBox(int totalActions)
         {
             TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
-            current.SetBinding(TextBox.TextProperty,
-                new Binding("CurrentActionIndexTextBox") { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged });
+            Binding actionIndexBinding = new Binding("CurrentActionIndexTextBox")
+                {Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged};
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(totalActions);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
 
             void HandleKeyDown(object sender, KeyEventArgs e)
             {
                 if (e.Key == Key.Return)
                 {
-                    string text = ((TextBox)sender).Text;
-                    int value;
-                    if (int.TryParse(text, out value))
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
                     {
-                        MoveToActionAsync(value);
+                        MoveToActionAsync(int.Parse(value));
                     }
                 }
             }
@@ -129,7 +162,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             actionNavBar.Children.Clear();
             Slider actionSlider = CreateActionNavigationSlider(totalActions);
-            TextBox current = CreateCurrentActionIndexTextBox();
+            TextBox current = CreateCurrentActionIndexTextBox(totalActions);
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
