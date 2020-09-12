@@ -518,7 +518,14 @@ namespace Cryptool.Plugins.ChaCha
                             _moveToActionIndicesStack.Clear();
                         }
                     }
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     this.Dispatcher.Invoke(() => MoveToAction(n));
+                    watch.Stop();
+                    var elapsedMs = watch.ElapsedMilliseconds;
+                    if (elapsedMs != 0)
+                    {
+                        Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
+                    }
                 }, cancellationToken);
             }
             while (true)
