@@ -385,6 +385,12 @@ namespace Cryptool.Plugins.ChaCha
             WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
         }
+        /**
+         * Move to Action with given index.
+         *
+         * Implements action navigation with absolute value.
+         * Action is immediately executed.
+         */
         private void MoveToAction(int n)
         {
             int relative = n - CurrentActionIndex;
