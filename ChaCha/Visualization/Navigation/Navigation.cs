@@ -16,7 +16,7 @@ namespace Cryptool.Plugins.ChaCha
     partial class ChaChaPresentation
     {
         public ActionNavigation Nav = new ActionNavigation();
-
+        private CancellationTokenSource actionNavigationTokenSource;
         private static Button CreateNavigationButton()
         {
             Button b = new Button {Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0)};
@@ -136,6 +136,15 @@ namespace Cryptool.Plugins.ChaCha
             {
                 WrapExecWithNavigation(pageAction);
             }
+
+            if (p.ActionFrames > 0)
+            {
+                StartActionBufferHandler(50);
+            }
+            else
+            {
+                StopActionBufferHandler();
+            }
         }
 
         private void MovePages(int n)
@@ -172,8 +181,6 @@ namespace Cryptool.Plugins.ChaCha
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
-            CancellationToken cancellationToken = new CancellationToken();
-            StartActionBufferHandler(50, cancellationToken);
         }
 
         // useful for development: setting pages visible for development purposes does not infer with execution
@@ -214,6 +221,7 @@ namespace Cryptool.Plugins.ChaCha
             CurrentPageIndex++;
             CurrentPage.Visibility = Visibility.Visible;
             InitPage(CurrentPage);
+
         }
 
         private Action<object, RoutedEventArgs> MoveToPageClickWrapper(int n)
@@ -381,8 +389,12 @@ namespace Cryptool.Plugins.ChaCha
          *   3. move to nearest cached action index in constant time from anywhere.
          *   4. Move to destination.
          */
-        private async void StartActionBufferHandler(int millisecondsPeriod, CancellationToken cancellationToken)
+        private async void StartActionBufferHandler(int millisecondsPeriod)
         {
+            // first stop action thread if one exists
+            StopActionBufferHandler();
+            actionNavigationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = actionNavigationTokenSource.Token;
             void PrevActionClick(object sender, RoutedEventArgs e)
             {
                 CurrentActionIndex--;
@@ -428,16 +440,26 @@ namespace Cryptool.Plugins.ChaCha
                         }
                     }
                     this.Dispatcher.Invoke(() => MoveToAction(n));
-                });
+                }, cancellationToken);
             }
             while (true)
             {
-                var delayTask = Task.Delay(millisecondsPeriod, cancellationToken);
-                await ClearActionBuffer();
-                await delayTask;
-                if (cancellationToken.IsCancellationRequested)
+                try
+                {
+                    var delayTask = Task.Delay(millisecondsPeriod, cancellationToken);
+                    await ClearActionBuffer();
+                    await delayTask;
+                }
+                catch (TaskCanceledException e)
+                {
                     break;
+                }
             }
+        }
+
+        private void StopActionBufferHandler()
+        {
+            actionNavigationTokenSource?.Cancel();
         }
 
         private int GetLabeledPageActionIndex(string label)
