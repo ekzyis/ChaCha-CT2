@@ -394,9 +394,6 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToAction(int n)
         {
             int relative = n - CurrentActionIndex;
-            if (relative != 0)
-            {
-            }
             if (relative < 0)
             {
                 for (int i = 0; i < Math.Abs(relative); ++i)
