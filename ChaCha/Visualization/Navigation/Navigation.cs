@@ -93,7 +93,8 @@ namespace Cryptool.Plugins.ChaCha
             s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
-                MoveToActionAsync((int)s.Value);
+                int value = (int) s.Value;
+                if(CurrentActionIndex != value) MoveToActionAsync(value);
             };
             s.ValueChanged += S_ValueChanged;
             s.VerticalAlignment = VerticalAlignment.Center;
