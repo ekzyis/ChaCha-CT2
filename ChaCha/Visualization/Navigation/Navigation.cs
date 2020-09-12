@@ -117,8 +117,7 @@ namespace Cryptool.Plugins.ChaCha
 
                 try
                 {
-                    if (((string)value).Length > 0)
-                        input = int.Parse((String)value);
+                    input = int.Parse((String)value);
                 }
                 catch (Exception e)
                 {
