@@ -21,7 +21,7 @@ namespace Cryptool.Plugins.ChaCha
                 a();
             }
         }
-        public void Undo()
+        public virtual void Undo()
         {
             foreach (Action a in _undo)
             {
