@@ -6,7 +6,7 @@ namespace Cryptool.Plugins.ChaCha
 {
     partial class Page
     {
-        private Page(ContentControl pageElement)
+        private protected Page(ContentControl pageElement)
         {
             _page = pageElement;
         }
