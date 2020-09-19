@@ -201,7 +201,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (PageAction pageAction in p.InitActions)
             {
-                WrapExecWithNavigation(pageAction);
+                pageAction.Exec();
             }
 
             if (p.ActionFrames > 0)
@@ -260,6 +260,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         // Calls FinishPageAction if page action used navigation interface methods.
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         private void WrapExecWithNavigation(PageAction pageAction)
         {
             pageAction.Exec();
@@ -468,7 +469,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextActionClick(object sender, RoutedEventArgs e)
         {
-            WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
+            CurrentPage.Actions[CurrentActionIndex].Exec();
             CurrentActionIndex++;
         }
         private void ExecuteCache(int n)
