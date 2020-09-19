@@ -463,6 +463,12 @@ namespace Cryptool.Plugins.ChaCha
             WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
             CurrentActionIndex++;
         }
+        private void ExecuteCache(int n)
+        {
+            cache.Get(n).Exec();
+            CurrentActionIndex = n;
+            _moveToActionIndicesStack.Clear();
+        }
         /**
          * Move to Action with given index.
          *
@@ -473,7 +479,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             int relative = n - CurrentActionIndex;
             // TODO check if action is cached
-            if (relative < 0)
+            if(cache.Includes(n))
+            {
+                ExecuteCache(n);
+            }
+            else if (relative < 0)
             {
                 for (int i = 0; i < Math.Abs(relative); ++i)
                 {

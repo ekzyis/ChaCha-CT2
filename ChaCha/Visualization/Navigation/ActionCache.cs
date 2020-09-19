@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Controls;
 
@@ -35,6 +36,7 @@ namespace Cryptool.Plugins.ChaCha
             cache238.Add(KeystreamBlockGenPage.ClearQRDetail(pres));
             cache238.AddToExec(() =>
             {
+                // update state matrix
                 TextBox[] stateTextBoxes = KeystreamBlockGenPage.GetStateTextBoxes(pres);
                 uint[] round2State = pres.GetResult(ResultType.CHACHA_HASH_ROUND, 1);
                 Debug.Assert(stateTextBoxes.Length == round2State.Length);
@@ -42,6 +44,11 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     stateTextBoxes[i].Text = ChaChaPresentation.HexString(round2State[i]);
                 }
+                // update round indicator
+                pres.CurrentRoundIndex = 2;
+                pres.Nav.Replace(pres.CurrentRound, "2");
+                // hide all QR arrows except the first
+                KeystreamBlockGenPage.HideAllQRArrowsExcept(pres, 1);
             });
             return new Dictionary<int, CachePageAction>{{ 238, cache238 }};
         }

@@ -13,10 +13,12 @@ namespace Cryptool.Plugins.ChaCha
     {
         private readonly IntermediateResultsManager<uint> uint_resultsManager;
         private readonly IntermediateResultsManager<uint[]> uint_array_resultsManager;
+        private readonly ActionCache cache;
         public ChaChaPresentation()
         {
             uint_resultsManager = new IntermediateResultsManager<uint>();
             uint_array_resultsManager = new IntermediateResultsManager<uint[]>();
+            cache = new ActionCache(this);
             InitializeComponent();
             InitVisualization();
             DataContext = this;

@@ -91,7 +91,13 @@ namespace Cryptool.Plugins.ChaCha
 
         public static TextBox[] GetStateTextBoxes(ChaChaPresentation pres)
         {
-            return (TextBox[])Enumerable.Range(0, 15).Select(i => (TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
+            return Enumerable.Range(0, 16).Select(i => (TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).ToArray();
+        }
+
+        public static void HideAllQRArrowsExcept(ChaChaPresentation pres, int arrowIndex)
+        {
+            Enumerable.Range(1, 8).Select(i => ((TextBox)GetIndexElement(pres, "ArrowQRRound", i)).Visibility = Visibility.Hidden);
+            ((TextBox)GetIndexElement(pres, "ArrowQRRound", arrowIndex)).Visibility = Visibility.Visible;
         }
 
         public static PageAction ClearQRDetail(ChaChaPresentation pres)
