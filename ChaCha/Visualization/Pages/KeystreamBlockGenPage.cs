@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Shapes;
@@ -78,14 +79,19 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public static object GetIndexElement(ChaChaPresentation pres, string nameId, int index)
+        public static object GetIndexElement(ChaChaPresentation pres, string nameId, int index, string delimiter = "_")
         {
-            return pres.FindName(string.Format("{0}_{1}", nameId, index));
+            return pres.FindName(string.Format("{0}{1}{2}", nameId, delimiter, index));
         }
 
         public static Border GetStateCell(ChaChaPresentation pres, int stateIndex)
         {
             return (Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", stateIndex);
+        }
+
+        public static TextBox[] GetStateTextBoxes(ChaChaPresentation pres)
+        {
+            return (TextBox[])Enumerable.Range(0, 15).Select(i => (TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
         }
 
         public static PageAction ClearQRDetail(ChaChaPresentation pres)

@@ -356,6 +356,10 @@ namespace Cryptool.Plugins.ChaCha
         public uint[] ChaChaHash(uint[] state)
         {
             uint[] originalState = (uint[])(state.Clone());
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ResultType.CHACHA_HASH_ROUND, state);
+            });
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
@@ -363,11 +367,19 @@ namespace Cryptool.Plugins.ChaCha
                 state = QuarterroundState(state, 1, 5, 9, 13);
                 state = QuarterroundState(state, 2, 6, 10, 14);
                 state = QuarterroundState(state, 3, 7, 11, 15);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_ROUND, state);
+                });
                 // diagonal round
                 state = QuarterroundState(state, 0, 5, 10, 15);
                 state = QuarterroundState(state, 1, 6, 11, 12);
                 state = QuarterroundState(state, 2, 7, 8, 13);
                 state = QuarterroundState(state, 3, 4, 9, 14);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_ROUND, state);
+                });
             }
             // add the original state
             for (int i = 0; i < state.Length; ++i)
