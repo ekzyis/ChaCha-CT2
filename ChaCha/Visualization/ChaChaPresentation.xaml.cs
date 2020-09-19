@@ -11,10 +11,12 @@ namespace Cryptool.Plugins.ChaCha
     [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaPresentation : UserControl, INotifyPropertyChanged
     {
-        private readonly IntermediateResultsManager intermediateResultsManager;
+        private readonly IntermediateResultsManager<uint> uint_resultsManager;
+        private readonly IntermediateResultsManager<uint[]> uint_array_resultsManager;
         public ChaChaPresentation()
         {
-            intermediateResultsManager = new IntermediateResultsManager();
+            uint_resultsManager = new IntermediateResultsManager<uint>();
+            uint_array_resultsManager = new IntermediateResultsManager<uint[]>();
             InitializeComponent();
             InitVisualization();
             DataContext = this;
@@ -195,17 +197,26 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region IntermediateResultsManager API
-        public void AddResult(ResultType type, object result)
+        public void AddResult(ResultType<uint> type, uint result)
         {
-            intermediateResultsManager.AddResult(type, (uint)result);
+            uint_resultsManager.AddResult(type, result);
         }
-        public string GetHexResult(ResultType type, int index)
+        public string GetHexResult(ResultType<uint> type, int index)
         {
-            return HexString(intermediateResultsManager.Get(type, index));
+            return HexString(uint_resultsManager.Get(type, index));
+        }
+        public void AddResult(ResultType<uint[]> type, uint[] result)
+        {
+            uint_array_resultsManager.AddResult(type, result);
+        }
+        public string GetHexResult(ResultType<uint[]> type, int i, int j)
+        {
+            return HexString(uint_array_resultsManager.Get(type, i)[j]);
         }
         public void ClearResults()
         {
-            intermediateResultsManager.Clear();
+            uint_resultsManager.Clear();
+            uint_array_resultsManager.Clear();
         }
         #endregion
 
