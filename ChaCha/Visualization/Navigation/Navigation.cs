@@ -97,8 +97,13 @@ namespace Cryptool.Plugins.ChaCha
             s.SetBinding(Slider.ValueProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
-                int value = (int)s.Value;
-                if (CurrentActionIndex != value) MoveToActionAsync(value);
+                // Only execute listener logic if value changed by user
+                if(s.IsFocused)
+                {
+                    int value = (int)s.Value;
+                    // Console.WriteLine($"Slider value changed to {value}");
+                    if (CurrentActionIndex != value) MoveToActionAsync(value);
+                }
             };
             s.ValueChanged += S_ValueChanged;
             return s;
