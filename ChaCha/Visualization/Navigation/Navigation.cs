@@ -332,6 +332,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentActionIndex = value;
+                // Console.WriteLine($"CurrentActionIndex = {n}");
                 CurrentActionIndexTextBox = value;
                 OnPropertyChanged("CurrentActionIndex");
                 OnPropertyChanged("CurrentActions");
@@ -475,7 +476,6 @@ namespace Cryptool.Plugins.ChaCha
             // Console.WriteLine($"ExecuteCache({n})");
             cache.Get(n).Exec();
             CurrentActionIndex = n;
-            // Console.WriteLine($"CurrentActionIndex = {n}");
             _moveToActionIndicesStack.Clear();
             // Console.WriteLine("Cleared action stack");
         }
