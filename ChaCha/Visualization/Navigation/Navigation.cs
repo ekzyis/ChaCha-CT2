@@ -488,7 +488,7 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToAction(int n)
         {
             int relative = n - CurrentActionIndex;
-            // Console.WriteLine($"MoveToAction({n}) - CurrentActionIndex: {CurrentActionIndex}, relative: {relative}");
+            // if (relative != 0) Console.WriteLine($"MoveToAction({n}) - CurrentActionIndex: {CurrentActionIndex}, relative: {relative}");
             // TODO check if action is cached
             if (relative != 0 && cache.Includes(n))
             {
