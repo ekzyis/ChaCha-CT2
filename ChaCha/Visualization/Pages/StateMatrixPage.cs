@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Runtime.InteropServices;
+using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -9,34 +11,120 @@ namespace Cryptool.Plugins.ChaCha
             bool versionIsDJB = pres.Version == ChaCha.Version.DJB;
             bool keyIs32Byte = pres.InputKey.Length == 32;
             Page page = new Page(pres.UIStateMatrixPage);
+            string STATE_MATRIX_DESCRIPTION_1 = "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ";
+            string STATE_MATRIX_DESCRIPTION_2 = "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ";
+            string STATE_MATRIX_DESCRIPTION_3 = string.Format(
+                    "The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", pres.InputIV.Length
+                ) + "First, we add the IV to the state. ";
+            string STATE_MATRIX_DESCRIPTION_4 = "And then the counter. Since this is our first keystream block, we set the counter to 0. ";
+            string STATE_MATRIX_DESCRIPTION_5 = "On the next page, we will use this initialized state matrix to generate the first keystream block.";
+            void AddBoldToDescription(string descToAdd)
+            {
+                pres.Nav.AddBold(pres.UIStateMatrixStepDescription, descToAdd);
+            }
+            void ClearDescription()
+            {
+                pres.Nav.Clear(pres.UIStateMatrixStepDescription);
+            }
+            void UnboldLastFromDescription()
+            {
+                pres.Nav.UnboldLast(pres.UIStateMatrixStepDescription);
+            }
+            void MakeLastBoldInDescription()
+            {
+                pres.Nav.MakeBoldLast(pres.UIStateMatrixStepDescription);
+            }
+            void RemoveLastFromDescription()
+            {
+                pres.Nav.RemoveLast(pres.UIStateMatrixStepDescription);
+            }
+            void ReplaceTransformInput(string input)
+            {
+                pres.Nav.Replace(pres.UITransformInput, input);
+            }
+            void ClearTransformInput()
+            {
+                pres.Nav.Clear(pres.UITransformInput);
+            }
+            void ReplaceTransformChunk(string chunk0, string chunk1 = "", string chunk2 = "", string chunk3 = "", string chunk4 = "", string chunk5 = "", string chunk6 = "", string chunk7 = "")
+            {
+                pres.Nav.Replace(pres.UITransformChunk0, chunk0);
+                pres.Nav.Replace(pres.UITransformChunk1, chunk1);
+                pres.Nav.Replace(pres.UITransformChunk2, chunk2);
+                pres.Nav.Replace(pres.UITransformChunk3, chunk3);
+                pres.Nav.Replace(pres.UITransformChunk3, chunk4);
+                pres.Nav.Replace(pres.UITransformChunk3, chunk5);
+                pres.Nav.Replace(pres.UITransformChunk3, chunk6);
+                pres.Nav.Replace(pres.UITransformChunk3, chunk7);
+            }
+            void ClearTransformChunk()
+            {
+                pres.Nav.Clear(pres.UITransformChunk0);
+                pres.Nav.Clear(pres.UITransformChunk1);
+                pres.Nav.Clear(pres.UITransformChunk2);
+                pres.Nav.Clear(pres.UITransformChunk3);
+                pres.Nav.Clear(pres.UITransformChunk4);
+                pres.Nav.Clear(pres.UITransformChunk5);
+                pres.Nav.Clear(pres.UITransformChunk6);
+                pres.Nav.Clear(pres.UITransformChunk7);
+            }
+            void ReplaceTransformLittleEndian(string le0, string le1 = "", string le2 = "", string le3 = "", string le4 = "", string le5 = "", string le6 = "", string le7 = "")
+            {
+                pres.Nav.Replace(pres.UITransformLittleEndian0, le0);
+                pres.Nav.Replace(pres.UITransformLittleEndian1, le1);
+                pres.Nav.Replace(pres.UITransformLittleEndian2, le2);
+                pres.Nav.Replace(pres.UITransformLittleEndian3, le3);
+                pres.Nav.Replace(pres.UITransformLittleEndian0, le4);
+                pres.Nav.Replace(pres.UITransformLittleEndian1, le5);
+                pres.Nav.Replace(pres.UITransformLittleEndian2, le6);
+                pres.Nav.Replace(pres.UITransformLittleEndian3, le7);
+            }
+            void ClearTransformLittleEndian()
+            {
+                pres.Nav.Clear(pres.UITransformLittleEndian0);
+                pres.Nav.Clear(pres.UITransformLittleEndian1);
+                pres.Nav.Clear(pres.UITransformLittleEndian2);
+                pres.Nav.Clear(pres.UITransformLittleEndian3);
+                pres.Nav.Clear(pres.UITransformLittleEndian4);
+                pres.Nav.Clear(pres.UITransformLittleEndian5);
+                pres.Nav.Clear(pres.UITransformLittleEndian6);
+                pres.Nav.Clear(pres.UITransformLittleEndian7);
+            }
             #region constants
             PageAction constantsStepDescriptionAction = new PageAction(() =>
             {
-                string desc = "The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ";
-                pres.Nav.AddBold(pres.UIStateMatrixStepDescription, desc);
-            }, pres.Nav.Undo);
+                AddBoldToDescription(STATE_MATRIX_DESCRIPTION_1);
+            }, () =>
+            {
+                ClearDescription();
+            });
             PageAction constantsInputAction = new PageAction(() =>
             {
-                pres.Nav.UnboldLast(pres.UIStateMatrixStepDescription);
-                pres.Nav.Replace(pres.UITransformInput, pres.HexConstants);
-            }, pres.Nav.Undo);
+                UnboldLastFromDescription();
+                ReplaceTransformInput(pres.HexConstants);
+            }, () =>
+            {
+                MakeLastBoldInDescription();
+                ClearTransformInput();
+            });
             PageAction constantsChunksAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformChunk0, pres.ConstantsChunks[0]);
-                pres.Nav.Replace(pres.UITransformChunk1, pres.ConstantsChunks[1]);
-                pres.Nav.Replace(pres.UITransformChunk2, pres.ConstantsChunks[2]);
-                pres.Nav.Replace(pres.UITransformChunk3, pres.ConstantsChunks[3]);
-            }, pres.Nav.Undo);
+                ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
+            }, () =>
+            {
+                ClearTransformChunk();
+            });
             PageAction constantsLittleEndianAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformLittleEndian0, pres.ConstantsLittleEndian[0]);
-                pres.Nav.Replace(pres.UITransformLittleEndian1, pres.ConstantsLittleEndian[1]);
-                pres.Nav.Replace(pres.UITransformLittleEndian2, pres.ConstantsLittleEndian[2]);
-                pres.Nav.Replace(pres.UITransformLittleEndian3, pres.ConstantsLittleEndian[3]);
-            }, pres.Nav.Undo);
+                ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
+            }, () =>
+            {
+                ClearTransformLittleEndian();
+            });
             PageAction[] copyConstantsToStateActions = pres.Nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell },
-                new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell });
+                new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell },
+                new string[] { "", "", "", "" });
             page.AddAction(constantsStepDescriptionAction);
             page.AddAction(constantsInputAction);
             page.AddAction(constantsChunksAction);
@@ -46,42 +134,48 @@ namespace Cryptool.Plugins.ChaCha
             #region key
             PageAction keyStepDescriptionAction = new PageAction(() =>
             {
-                string desc = "The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ";
-                pres.Nav.AddBold(pres.UIStateMatrixStepDescription, desc);
-                pres.Nav.Clear(pres.UITransformInput);
-                pres.Nav.Clear(pres.UITransformChunk0, pres.UITransformChunk1, pres.UITransformChunk2, pres.UITransformChunk3);
-                pres.Nav.Clear(pres.UITransformLittleEndian0, pres.UITransformLittleEndian1, pres.UITransformLittleEndian2, pres.UITransformLittleEndian3);
-            }, pres.Nav.Undo);
+                AddBoldToDescription(STATE_MATRIX_DESCRIPTION_2);
+                ClearTransformInput();
+                ClearTransformChunk();
+                ClearTransformLittleEndian();
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                ReplaceTransformInput(pres.HexConstants);
+                ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
+                ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
+            });
             PageAction keyInputAction = new PageAction(() =>
             {
-                pres.Nav.UnboldLast(pres.UIStateMatrixStepDescription);
-                pres.Nav.Replace(pres.UITransformInput, pres.HexInputKey);
-            }, pres.Nav.Undo);
+                UnboldLastFromDescription();
+                ReplaceTransformInput(pres.HexInputKey);
+            }, () =>
+            {
+                MakeLastBoldInDescription();
+                ClearTransformInput();
+            });
             PageAction keyChunksAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformChunk0, pres.KeyChunks[0]);
-                pres.Nav.Replace(pres.UITransformChunk1, pres.KeyChunks[1]);
-                pres.Nav.Replace(pres.UITransformChunk2, pres.KeyChunks[2]);
-                pres.Nav.Replace(pres.UITransformChunk3, pres.KeyChunks[3]);
-                pres.Nav.Replace(pres.UITransformChunk4, pres.KeyChunks[keyIs32Byte ? 4 : 0]);
-                pres.Nav.Replace(pres.UITransformChunk5, pres.KeyChunks[keyIs32Byte ? 5 : 1]);
-                pres.Nav.Replace(pres.UITransformChunk6, pres.KeyChunks[keyIs32Byte ? 6 : 2]);
-                pres.Nav.Replace(pres.UITransformChunk7, pres.KeyChunks[keyIs32Byte ? 7 : 3]);
-            }, pres.Nav.Undo);
+                ReplaceTransformChunk(
+                    pres.KeyChunks[0],  pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
+                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
+            }, () =>
+            {
+                ClearTransformChunk();
+            });
             PageAction keyLittleEndianAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformLittleEndian0, pres.KeyLittleEndian[0]);
-                pres.Nav.Replace(pres.UITransformLittleEndian1, pres.KeyLittleEndian[1]);
-                pres.Nav.Replace(pres.UITransformLittleEndian2, pres.KeyLittleEndian[2]);
-                pres.Nav.Replace(pres.UITransformLittleEndian3, pres.KeyLittleEndian[3]);
-                pres.Nav.Replace(pres.UITransformLittleEndian4, pres.KeyLittleEndian[keyIs32Byte ? 4 : 0]);
-                pres.Nav.Replace(pres.UITransformLittleEndian5, pres.KeyLittleEndian[keyIs32Byte ? 5 : 1]);
-                pres.Nav.Replace(pres.UITransformLittleEndian6, pres.KeyLittleEndian[keyIs32Byte ? 6 : 2]);
-                pres.Nav.Replace(pres.UITransformLittleEndian7, pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
-            }, pres.Nav.Undo);
+                ReplaceTransformLittleEndian(
+                    pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
+                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+            }, () =>
+            {
+                ClearTransformLittleEndian();
+            });
             PageAction[] copyKeyToStateActions = pres.Nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell, pres.UITransformLittleEndian4Cell, pres.UITransformLittleEndian5Cell, pres.UITransformLittleEndian6Cell, pres.UITransformLittleEndian7Cell },
-                new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell });
+                new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell },
+                new string[] { "", "", "", ""});
             page.AddAction(keyStepDescriptionAction);
             page.AddAction(keyInputAction);
             page.AddAction(keyChunksAction);
@@ -91,33 +185,66 @@ namespace Cryptool.Plugins.ChaCha
             #region iv
             PageAction ivStepDescriptionAction = new PageAction(() =>
             {
-                string desc = string.Format(
-                    "The last 16 bytes consist of the counter and the IV (in this order). Since the IV may vary between 8 and 12 bytes, the counter may vary between 8 and 4 bytes. You have chosen a {0}-byte IV. ", pres.InputIV.Length
-                ) + "First, we add the IV to the state. ";
-                pres.Nav.AddBold(pres.UIStateMatrixStepDescription, desc);
-                pres.Nav.Clear(pres.UITransformInput);
-                pres.Nav.Clear(pres.UITransformChunk0, pres.UITransformChunk1, pres.UITransformChunk2, pres.UITransformChunk3, pres.UITransformChunk4, pres.UITransformChunk5, pres.UITransformChunk6, pres.UITransformChunk7);
-                pres.Nav.Clear(pres.UITransformLittleEndian0, pres.UITransformLittleEndian1, pres.UITransformLittleEndian2, pres.UITransformLittleEndian3, pres.UITransformLittleEndian4, pres.UITransformLittleEndian5, pres.UITransformLittleEndian6, pres.UITransformLittleEndian7);
-            }, pres.Nav.Undo);
+                AddBoldToDescription(STATE_MATRIX_DESCRIPTION_3);
+                ClearTransformInput();
+                ClearTransformChunk();
+                ClearTransformLittleEndian();
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                ReplaceTransformInput(pres.HexInputKey);
+                ReplaceTransformChunk(pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
+                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
+                ReplaceTransformLittleEndian(pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
+                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+            });
             PageAction ivInputAction = new PageAction(() =>
             {
-                pres.Nav.UnboldLast(pres.UIStateMatrixStepDescription);
-                pres.Nav.Replace(pres.UITransformInput, pres.HexInputIV);
-            }, pres.Nav.Undo);
+                UnboldLastFromDescription();
+                ReplaceTransformInput(pres.HexInputIV);
+            }, () =>
+            {
+                MakeLastBoldInDescription();
+                ClearTransformInput();
+            });
             PageAction ivChunksAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformChunk0, pres.IVChunks[0]);
-                pres.Nav.Replace(pres.UITransformChunk1, pres.IVChunks[1]);
-                if(!versionIsDJB) pres.Nav.Replace(pres.UITransformChunk2, pres.IVChunks[2]);
-            }, pres.Nav.Undo);
+                ReplaceTransformChunk(pres.IVChunks[0], pres.IVChunks[1]);
+                if (versionIsDJB)
+                {
+                    ReplaceTransformChunk(pres.IVChunks[0], pres.IVChunks[1]);
+                }
+                else
+                {
+                    ReplaceTransformChunk(pres.IVChunks[0], pres.IVChunks[1], pres.IVChunks[2]);
+                }
+            }, () =>
+            {
+                ClearTransformChunk();
+            });
             PageAction ivLittleEndianAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformLittleEndian0, pres.IVLittleEndian[0]);
-                pres.Nav.Replace(pres.UITransformLittleEndian1, pres.IVLittleEndian[1]);
-                if(!versionIsDJB) pres.Nav.Replace(pres.UITransformLittleEndian2, pres.IVLittleEndian[2]);
-            }, pres.Nav.Undo);
-            PageAction[] copyIVToStateActions = versionIsDJB ? pres.Nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell }, new Border[] { pres.UIState14Cell, pres.UIState15Cell })
-                : pres.Nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell }, new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell });
+                if(versionIsDJB)
+                {
+                    ReplaceTransformLittleEndian(pres.IVLittleEndian[0], pres.IVLittleEndian[1]);
+                }
+                else
+                {
+                    ReplaceTransformLittleEndian(pres.IVLittleEndian[0], pres.IVLittleEndian[1], pres.IVLittleEndian[2]);
+                }
+            }, () =>
+            {
+                ClearTransformLittleEndian();
+            });
+            PageAction[] copyIVToStateActions = versionIsDJB ?
+                pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell },
+                    new Border[] { pres.UIState14Cell, pres.UIState15Cell },
+                    new string[] { "", "" })
+                : pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell },
+                    new string[] { "", "", "" });
             page.AddAction(ivStepDescriptionAction);
             page.AddAction(ivInputAction);
             page.AddAction(ivChunksAction);
@@ -127,35 +254,60 @@ namespace Cryptool.Plugins.ChaCha
             #region counter
             PageAction counterStepDescriptionAction = new PageAction(() =>
             {
-                string desc = "And then the counter. Since this is our first keystream block, we set the counter to 0. ";
-                pres.Nav.AddBold(pres.UIStateMatrixStepDescription, desc);
-                pres.Nav.Clear(pres.UITransformInput);
-                pres.Nav.Clear(pres.UITransformChunk0, pres.UITransformChunk1, pres.UITransformChunk2, pres.UITransformChunk3);
-                pres.Nav.Clear(pres.UITransformLittleEndian0, pres.UITransformLittleEndian1, pres.UITransformLittleEndian2, pres.UITransformLittleEndian3);
-            }, pres.Nav.Undo);
+                AddBoldToDescription(STATE_MATRIX_DESCRIPTION_4);
+                ClearTransformInput();
+                ClearTransformChunk();
+                ClearTransformLittleEndian();
+            }, () =>
+            {
+                RemoveLastFromDescription();
+            });
             PageAction counterInputAction = new PageAction(() =>
             {
-                pres.Nav.UnboldLast(pres.UIStateMatrixStepDescription);
-                pres.Nav.Replace(pres.UITransformInput, pres.HexInitialCounter);
-            }, pres.Nav.Undo);
+                UnboldLastFromDescription();
+                ReplaceTransformInput(pres.HexInitialCounter);
+            }, () =>
+            {
+                MakeLastBoldInDescription();
+                ClearTransformInput();
+            });
             PageAction counterChunksAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformChunk0, pres.InitialCounterChunks[0]);
                 if(versionIsDJB)
                 {
-                    pres.Nav.Replace(pres.UITransformChunk1, pres.InitialCounterChunks[1]);
+                    ReplaceTransformChunk(pres.InitialCounterChunks[0], pres.InitialCounterChunks[1]);
                 }
-            }, pres.Nav.Undo);
+                else
+                {
+                    ReplaceTransformChunk(pres.InitialCounterChunks[0]);
+                }
+            }, () =>
+            {
+                ClearTransformChunk();
+            });
             PageAction counterLittleEndianAction = new PageAction(() =>
             {
-                pres.Nav.Replace(pres.UITransformLittleEndian0, pres.InitialCounterLittleEndian[0]);
-                if (versionIsDJB)
+                if(versionIsDJB)
                 {
-                    pres.Nav.Replace(pres.UITransformLittleEndian1, pres.InitialCounterLittleEndian[1]);
+                    ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0], pres.InitialCounterLittleEndian[1]);
                 }
-            }, pres.Nav.Undo);
-            PageAction[] copyCounterToStateActions = versionIsDJB ? pres.Nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell }, new Border[] { pres.UIState12Cell, pres.UIState13Cell }) :
-                pres.Nav.CopyActions(new Border[] { pres.UITransformLittleEndian0Cell }, new Border[] { pres.UIState12Cell });
+                else
+                {
+                    ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
+                }
+            }, () =>
+            {
+                ClearTransformLittleEndian();
+            });
+            PageAction[] copyCounterToStateActions = versionIsDJB ?
+                pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell },
+                    new Border[] { pres.UIState12Cell, pres.UIState13Cell },
+                    new string[] { "", "" })
+                : pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian0Cell },
+                    new Border[] { pres.UIState12Cell },
+                    new string[] { "" });
             page.AddAction(counterStepDescriptionAction);
             page.AddAction(counterInputAction);
             page.AddAction(counterChunksAction);
@@ -163,15 +315,34 @@ namespace Cryptool.Plugins.ChaCha
             page.AddAction(copyCounterToStateActions);
             PageAction nextPageDesc = new PageAction(() =>
             {
-                string desc = "On the next page, we will use this initialized state matrix to generate the first keystream block.";
-                pres.Nav.AddBold(pres.UIStateMatrixStepDescription, desc);
-                pres.Nav.Clear(pres.UITransformInput);
-                pres.Nav.Clear(pres.UITransformChunk0, pres.UITransformChunk1, pres.UITransformChunk2, pres.UITransformChunk3);
-                pres.Nav.Clear(pres.UITransformLittleEndian0, pres.UITransformLittleEndian1, pres.UITransformLittleEndian2, pres.UITransformLittleEndian3);
-            }, pres.Nav.Undo);
+                AddBoldToDescription(STATE_MATRIX_DESCRIPTION_5);
+                ClearTransformInput();
+                ClearTransformChunk();
+                ClearTransformLittleEndian();
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                ReplaceTransformInput(pres.HexInitialCounter);
+                if (versionIsDJB)
+                {
+                    ReplaceTransformChunk(pres.InitialCounterChunks[0], pres.InitialCounterChunks[1]);
+                }
+                else
+                {
+                    ReplaceTransformChunk(pres.InitialCounterChunks[0]);
+                }
+                if (versionIsDJB)
+                {
+                    ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0], pres.InitialCounterLittleEndian[1]);
+                }
+                else
+                {
+                    ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
+                }
+            });
             page.AddAction(nextPageDesc);
             #endregion
-            return page;          
+            return page;
         }
     }
 }

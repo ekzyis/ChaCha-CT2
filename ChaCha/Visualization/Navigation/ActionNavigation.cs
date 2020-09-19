@@ -224,6 +224,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             if (list.LastBlock != null) _ReplaceLast(list, new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) });
         }
+        private static void _MakeBoldLast(BlockCollection list)
+        {
+            if (list.LastBlock != null) _ReplaceLast(list, MakeBold(new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) }) );
+        }
         private static void _Add(BlockCollection list, Inline element)
         {
             list.Add(new Paragraph(element));
@@ -325,10 +329,16 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     SetCopyBackground(b);
                 }
-            }, Undo);
+            }, () =>
+            {
+                foreach (Border b in borders)
+                {
+                    UnsetBackground(b);
+                }
+            });
         }
 
-        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
             return new PageAction(() =>
             {
@@ -341,7 +351,6 @@ namespace Cryptool.Plugins.ChaCha
                     if (copyFromBorder.Child is TextBlock copyFromTextBlock)
                     {
                         text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
-
                     }
                     else if (copyFromBorder.Child is RichTextBox copyFromRichTextBox)
                     {
@@ -387,7 +396,32 @@ namespace Cryptool.Plugins.ChaCha
                         Debug.Assert(false, "Output type for CopyAction not supported.");
                     }
                 }
-            }, Undo);
+            }, () =>
+            {
+                for (int i = 0; i < copyTo.Length; ++i)
+                {
+                    Border copyFromBorder = copyFrom[i];
+                    Border copyToBorder = copyTo[i];
+                    UnsetBackground(copyToBorder);
+                    string text = previousToValue[i];
+                    if (copyToBorder.Child is TextBlock copyToTextBlock)
+                    {
+                        ReplaceLast(copyToTextBlock, text);
+                    }
+                    else if (copyToBorder.Child is RichTextBox copyFromRichTextBox)
+                    {
+                        Replace(copyFromRichTextBox, text);
+                    }
+                    else if (copyToBorder.Child is TextBox copyFromTextBox)
+                    {
+                        Replace(copyFromTextBox, text);
+                    }
+                    else
+                    {
+                        Debug.Assert(false, "Output type for CopyAction not supported.");
+                    }
+                }
+            });
         }
 
         public PageAction UnmarkCopyAction(Border[] copyFrom, Border[] copyTo)
@@ -402,21 +436,31 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     UnsetBackground(b);
                 }
-            }, Undo);
+            }, () =>
+            {
+                foreach (Border b in copyFrom)
+                {
+                    SetCopyBackground(b);
+                }
+                foreach (Border b in copyTo)
+                {
+                    SetCopyBackground(b);
+                }
+            });
         }
 
-        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
             Debug.Assert(copyFrom.Length == copyTo.Length);
             PageAction mark = MarkCopyFromAction(copyFrom);
-            PageAction copy = CopyAction(copyFrom, copyTo, replace);
+            PageAction copy = CopyAction(copyFrom, copyTo, previousToValue, replace);
             PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
         }
 
-        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
+        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
-            PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
+            PageAction[] copyActions = CopyActions(copyFrom, copyTo, previousToValue, replace);
 
             void MarkPaths()
             {
@@ -472,6 +516,14 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _UnboldLast(rtb.Document.Blocks);
             }
+        }
+        public void MakeBoldLast(RichTextBox tb)
+        {
+            _MakeBoldLast(tb.Document.Blocks);
+        }
+        public void RemoveLast(RichTextBox tb)
+        {
+            _RemoveLast(tb.Document.Blocks);
         }
         public void Add(RichTextBox tb, Inline element)
         {
