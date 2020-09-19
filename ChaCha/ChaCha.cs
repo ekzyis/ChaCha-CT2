@@ -448,6 +448,13 @@ namespace Cryptool.Plugins.ChaCha
             (c, d, b) = quarterroundStep(c, d, b, 12);
             (a, b, d) = quarterroundStep(a, b, d, 8);
             (c, d, b) = quarterroundStep(c, d, b, 7);
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ResultType.QR_OUTPUT_A, a);
+                _presentation.AddResult(ResultType.QR_OUTPUT_B, b);
+                _presentation.AddResult(ResultType.QR_OUTPUT_C, c);
+                _presentation.AddResult(ResultType.QR_OUTPUT_D, d);
+            });
             return (a, b, c, d);
         }
 

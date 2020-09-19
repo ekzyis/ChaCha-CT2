@@ -380,7 +380,7 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         if (replace)
                         {
-                            Replace(copyToRichTextBox, text);
+                            ReplaceLast(copyToRichTextBox, text);
                         }
                         else
                         {
@@ -410,7 +410,7 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     else if (copyToBorder.Child is RichTextBox copyFromRichTextBox)
                     {
-                        Replace(copyFromRichTextBox, text);
+                        ReplaceLast(copyFromRichTextBox, text);
                     }
                     else if (copyToBorder.Child is TextBox copyFromTextBox)
                     {
@@ -525,6 +525,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             _RemoveLast(tb.Document.Blocks);
         }
+        public void ReplaceLast(RichTextBox tb, string text)
+        {
+            _ReplaceLast(tb.Document.Blocks, new Run(text));
+        }
         public void Add(RichTextBox tb, Inline element)
         {
             _Add(tb.Document.Blocks, element);
@@ -544,7 +548,7 @@ namespace Cryptool.Plugins.ChaCha
                 _Clear(tb.Document.Blocks);
             }
         }
-        public void Replace(RichTextBox rtb, string text)
+        public void Clear(RichTextBox rtb, string text)
         {
             _Clear(rtb.Document.Blocks);
             Add(rtb, text);

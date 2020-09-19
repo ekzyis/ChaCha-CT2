@@ -33,7 +33,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             // Cache entry for action index: 238 - "Round 2"
             CachePageAction cache238 = new CachePageAction();
-            cache238.Add(KeystreamBlockGenPage.ClearQRDetail(pres));
+            cache238.AddToExec(() => KeystreamBlockGenPage.ClearQRDetail(pres));
             cache238.AddToExec(() =>
             {
                 // update state matrix
