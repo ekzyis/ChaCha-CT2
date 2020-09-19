@@ -452,9 +452,11 @@ namespace Cryptool.Plugins.ChaCha
         private readonly Stack<int> _moveToActionIndicesStack = new Stack<int>();
         private void MoveToActionAsync(int n)
         {
+            // Console.WriteLine($"MoveToActionAsync({n})");
             lock (_moveToActionIndicesStack)
             {
                 _moveToActionIndicesStack.Push(n);
+                // Console.WriteLine($"Pushed {n} onto action stack.");
             }
         }
 
@@ -470,9 +472,12 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ExecuteCache(int n)
         {
+            // Console.WriteLine($"ExecuteCache({n})");
             cache.Get(n).Exec();
             CurrentActionIndex = n;
+            // Console.WriteLine($"CurrentActionIndex = {n}");
             _moveToActionIndicesStack.Clear();
+            // Console.WriteLine("Cleared action stack");
         }
         /**
          * Move to Action with given index.
@@ -483,8 +488,9 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToAction(int n)
         {
             int relative = n - CurrentActionIndex;
+            // Console.WriteLine($"MoveToAction({n}) - CurrentActionIndex: {CurrentActionIndex}, relative: {relative}");
             // TODO check if action is cached
-            if(cache.Includes(n))
+            if (cache.Includes(n))
             {
                 ExecuteCache(n);
             }
@@ -532,6 +538,7 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             n = _moveToActionIndicesStack.Pop();
                             _moveToActionIndicesStack.Clear();
+                            // Console.WriteLine($"Popped {n} from action stack and cleared stack");
                         }
                     }
                     var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -540,7 +547,7 @@ namespace Cryptool.Plugins.ChaCha
                     var elapsedMs = watch.ElapsedMilliseconds;
                     if (elapsedMs != 0)
                     {
-                        Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
+                        // Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
                     }
                 }, cancellationToken);
             }
