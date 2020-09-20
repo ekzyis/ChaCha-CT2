@@ -44,6 +44,8 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     stateTextBoxes[i].Text = ChaChaPresentation.HexString(round2State[i]);
                 }
+                // highlight only diagonal state entries because they will be copied into QR detail in next action
+                KeystreamBlockGenPage.UnmarkAllStateEntriesExcept(pres, 0, 5, 10, 15);
                 // update round indicator
                 pres.CurrentRoundIndex = 2;
                 pres.Nav.Replace(pres.CurrentRound, "2");

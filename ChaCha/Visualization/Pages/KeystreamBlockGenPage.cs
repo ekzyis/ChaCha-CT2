@@ -146,7 +146,17 @@ namespace Cryptool.Plugins.ChaCha
         {
             return Enumerable.Range(0, 16).Select(i => (TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).ToArray();
         }
-
+        public static void UnmarkAllStateEntriesExcept(ChaChaPresentation pres, int i, int j, int k, int l)
+        {
+            for(int x = 0; x < 16; ++x)
+            {
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", x));
+            }
+            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", i));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", j));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", k));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", l));
+        }
         public static void HideAllQRArrowsExcept(ChaChaPresentation pres, int arrowIndex)
         {
             ((TextBox)GetIndexElement(pres, "ArrowQRRound", 1)).Visibility = Visibility.Hidden;
