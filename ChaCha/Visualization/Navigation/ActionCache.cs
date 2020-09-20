@@ -47,8 +47,8 @@ namespace Cryptool.Plugins.ChaCha
                 // update round indicator
                 pres.CurrentRoundIndex = 2;
                 pres.Nav.Replace(pres.CurrentRound, "2");
-                // hide all QR arrows except the first
-                KeystreamBlockGenPage.HideAllQRArrowsExcept(pres, 1);
+                // hide all QR arrows except the fifth
+                KeystreamBlockGenPage.HideAllQRArrowsExcept(pres, 5);
             });
             return new Dictionary<int, CachePageAction>{{ 283, cache283 } };
         }
