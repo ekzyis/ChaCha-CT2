@@ -475,11 +475,20 @@ namespace Cryptool.Plugins.ChaCha
         private void ExecuteCache(int n)
         {
             // Console.WriteLine($"ExecuteCache({n})");
-            cache.Get(n).Exec();
+            Cache.Get(n).Exec();
             CurrentActionIndex = n;
             _moveToActionIndicesStack.Clear();
             // Console.WriteLine("Cleared action stack");
         }
+
+        private ActionCache Cache
+        {
+            get
+            {
+                return CurrentPage.Cache;
+            }
+        }
+
         /**
          * Move to Action with given index.
          *
@@ -492,11 +501,23 @@ namespace Cryptool.Plugins.ChaCha
             // if (relative != 0) Console.WriteLine($"MoveToAction({n}) - CurrentActionIndex: {CurrentActionIndex}, relative: {relative}");
             // TODO Implement "relative caching"
             //   (go first to nearest cache entry in constant time and then from there to destination index)
-            if (relative != 0 && cache.Includes(n))
+            if (relative != 0)
             {
-                ExecuteCache(n);
+                if(Cache.NotEmpty)
+                {
+                    int closestCache = Cache.GetClosestCache(n);
+                    int distanceCacheToDestination = Math.Abs(closestCache - n);
+                    // Console.WriteLine($"closestCache: {closestCache}, distanceCacheToDestination: {distanceCacheToDestination}");
+                    if (distanceCacheToDestination < Math.Abs(relative))
+                    {
+                        ExecuteCache(closestCache);
+                        relative = n - closestCache;
+                        // Console.WriteLine($"new relative: {relative}");
+                    }
+                    // Console.WriteLine($"closestCache: {closestCache}, n: {n}, relative: {relative}");
+                }
             }
-            else if (relative < 0)
+            if (relative < 0)
             {
                 for (int i = 0; i < Math.Abs(relative); ++i)
                 {
