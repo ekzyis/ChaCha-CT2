@@ -39,11 +39,11 @@ namespace Cryptool.Plugins.ChaCha
                     KeystreamBlockGenPage.ClearQRDetail(pres);
                     // update state matrix
                     TextBox[] stateTextBoxes = KeystreamBlockGenPage.GetStateTextBoxes(pres);
-                    uint[] round2State = pres.GetResult(ResultType.CHACHA_HASH_ROUND, round - 1);
-                    Debug.Assert(stateTextBoxes.Length == round2State.Length);
-                    for (int x = 0; x < round2State.Length; ++x)
+                    uint[] stateEntries = pres.GetResult(ResultType.CHACHA_HASH_ROUND, round - 1);
+                    Debug.Assert(stateTextBoxes.Length == stateEntries.Length);
+                    for (int x = 0; x < stateEntries.Length; ++x)
                     {
-                        stateTextBoxes[x].Text = ChaChaPresentation.HexString(round2State[x]);
+                        stateTextBoxes[x].Text = ChaChaPresentation.HexString(stateEntries[x]);
                     }
                     // highlight only diagonal state entries because they will be copied into QR detail in next action
                     (int i, int j, int k, int l) = round % 2 == 1 ? (0, 4, 8, 12) : (0, 5, 10, 15);
