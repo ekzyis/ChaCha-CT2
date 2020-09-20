@@ -1,18 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
 {
     partial class ChaChaPresentation
     {
         public ActionNavigation Nav = new ActionNavigation();
-
+        private CancellationTokenSource actionNavigationTokenSource;
         private static Button CreateNavigationButton()
         {
             Button b = new Button {Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0)};
@@ -72,33 +78,99 @@ namespace Cryptool.Plugins.ChaCha
                 pageNavBar.Children.Add(CreatePageNavigationButton(i));
             }
         }
-        private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
-        {
 
-            actionNavBar.Children.Clear();
-            Slider s = new Slider();
-            Binding currentActionIndexBinding = new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay };
-            s.Minimum = 0;
-            s.Maximum = totalActions;
-            // TODO set width dynamically depending on total actions
-            s.Width = 1000;
-            s.TickFrequency = 1;
-            s.TickPlacement = TickPlacement.None;
-            s.IsSnapToTickEnabled = true;
-            s.SetBinding(Slider.ValueProperty, currentActionIndexBinding);
-            s.AutoToolTipPlacement = AutoToolTipPlacement.BottomRight;
+        private Slider CreateActionNavigationSlider(int totalActions)
+        {
+            Slider s = new Slider
+            {
+                Minimum = 0,
+                Maximum = totalActions,
+                // TODO set width dynamically depending on total actions
+                Width = 1000,
+                TickFrequency = 1,
+                TickPlacement = TickPlacement.None,
+                IsSnapToTickEnabled = true,
+                VerticalAlignment = VerticalAlignment.Center,
+                AutoToolTipPlacement = AutoToolTipPlacement.BottomRight
+            };
+            
+            s.SetBinding(Slider.ValueProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
-                MoveToAction((int)s.Value);
+                // Only execute listener logic if value changed by user
+                if(s.IsFocused)
+                {
+                    int value = (int)s.Value;
+                    // Console.WriteLine($"Slider value changed to {value}");
+                    if (CurrentActionIndex != value) MoveToActionAsync(value);
+                }
             };
             s.ValueChanged += S_ValueChanged;
-            s.VerticalAlignment = VerticalAlignment.Center;
-            TextBlock current = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
-            current.SetBinding(TextBlock.TextProperty, currentActionIndexBinding);
+            return s;
+        }
+        private class InputActionIndexRule : ValidationRule
+        {
+            private int _maxActionIndex;
+            public InputActionIndexRule(int maxActionIndex)
+            {
+                _maxActionIndex = maxActionIndex;
+            }
+
+            public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+            {
+                int input = 0;
+
+                try
+                {
+                    input = int.Parse((String)value);
+                }
+                catch (Exception e)
+                {
+                    return new ValidationResult(false, $"Illegal characters or {e.Message}");
+                }
+
+                if ((input < 0) || (input > _maxActionIndex))
+                {
+                    return new ValidationResult(false,
+                        $"Please enter an age in the range: {0}-{_maxActionIndex}.");
+                }
+                return ValidationResult.ValidResult;
+            }
+        }
+        private TextBox CreateCurrentActionIndexTextBox(int totalActions)
+        {
+            TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
+            Binding actionIndexBinding = new Binding("CurrentActionIndexTextBox")
+                {Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged};
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(totalActions);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        MoveToActionAsync(int.Parse(value));
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+        private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
+        {
+            actionNavBar.Children.Clear();
+            Slider actionSlider = CreateActionNavigationSlider(totalActions);
+            TextBox current = CreateCurrentActionIndexTextBox(totalActions);
             TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
             TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
-            actionNavBar.Children.Add(s);
+            actionNavBar.Children.Add(actionSlider);
             Button next = NextButton();
             next.Margin = new Thickness(1, 0, 3, 0);
             actionNavBar.Children.Add(next);
@@ -129,7 +201,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (PageAction pageAction in p.InitActions)
             {
-                WrapExecWithNavigation(pageAction);
+                pageAction.Exec();
+            }
+
+            if (p.ActionFrames > 0)
+            {
+                StartActionBufferHandler(50);
             }
         }
 
@@ -183,6 +260,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         // Calls FinishPageAction if page action used navigation interface methods.
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         private void WrapExecWithNavigation(PageAction pageAction)
         {
             pageAction.Exec();
@@ -194,6 +272,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
+            StopActionBufferHandler();
             CurrentPage.Visibility = Visibility.Collapsed;
             ResetPageActions();
             CurrentPageIndex--;
@@ -202,11 +281,13 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
+            StopActionBufferHandler();
             CurrentPage.Visibility = Visibility.Collapsed;
             ResetPageActions();
             CurrentPageIndex++;
             CurrentPage.Visibility = Visibility.Visible;
             InitPage(CurrentPage);
+
         }
 
         private Action<object, RoutedEventArgs> MoveToPageClickWrapper(int n)
@@ -221,6 +302,9 @@ namespace Cryptool.Plugins.ChaCha
 
         private int _currentPageIndex = 0;
         private int _currentActionIndex = 0;
+        // action index value for TextBox.
+        // Prevents direct write-access to actual current action index value while still being able to read from it.
+        private int _currentActionIndexTextBox = 0;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
@@ -249,13 +333,25 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentActionIndex = value;
+                // Console.WriteLine($"CurrentActionIndex = {value}");
+                CurrentActionIndexTextBox = value;
                 OnPropertyChanged("CurrentActionIndex");
                 OnPropertyChanged("CurrentActions");
                 OnPropertyChanged("NextActionIsEnabled");
                 OnPropertyChanged("PrevActionIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                //InitActionNavigationBar(CurrentPage);
+            }
+        }
+
+        public int CurrentActionIndexTextBox
+        {
+            get => _currentActionIndexTextBox;
+            set
+            {
+                _currentActionIndexTextBox = value;
+                OnPropertyChanged("CurrentActionIndexTextBox");
+
             }
         }
 
@@ -308,23 +404,11 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool NavigationEnabled => InputValid && ExecutionFinished;
 
-        private void PrevAction_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentActionIndex--;
-            CurrentPage.Actions[CurrentActionIndex].Undo();
-        }
-
-        private void NextAction_Click(object sender, RoutedEventArgs e)
-        {
-            WrapExecWithNavigation(CurrentPage.Actions[CurrentActionIndex]);
-            CurrentActionIndex++;
-        }
-
         private Button PrevButton()
         {
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
-            b.Click += PrevAction_Click;
+            b.Click += (sender, e) => MoveActionsAsync(-1);
             b.Content = "<";
             return b;
         }
@@ -333,20 +417,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
-            b.Click += NextAction_Click;
+            b.Click += (sender, e) => MoveActionsAsync(1);
             b.Content = ">";
             return b;
         }
 
         private void ResetPageActions()
         {
-            for (int i = CurrentActionIndex; i > 0; i--)
-            {
-                // this undo's the page actions on each action click
-                PrevAction_Click(null, null);
-            }
+            MoveToAction(0);
             Debug.Assert(CurrentActionIndex == 0);
-            // Dont forget to also undo init actions.
+            // Also undo init actions.
             // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
             foreach (PageAction pageAction in CurrentPage.InitActions.Reverse())
             {
@@ -354,27 +434,164 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private void MoveActions(int n)
+        /**
+         * Move n actions back / forward.
+         *
+         * Implements action navigation with relative value.
+         * Action is not immediately executed but buffered and regularly executed by a different thread.
+         */
+        private void MoveActionsAsync(int n)
         {
-            if (n < 0)
+            MoveToActionAsync(n + CurrentActionIndex);
+        }
+
+        /**
+         * Move to Action with given index.
+         *
+         * Implements action navigation with absolute value.
+         * Action is not immediately executed but buffered and regularly executed by a different thread.
+         */
+        private readonly Stack<int> _moveToActionIndicesStack = new Stack<int>();
+        private void MoveToActionAsync(int n)
+        {
+            // Console.WriteLine($"MoveToActionAsync({n})");
+            lock (_moveToActionIndicesStack)
             {
-                for (int i = 0; i < Math.Abs(n); ++i)
+                _moveToActionIndicesStack.Push(n);
+                // Console.WriteLine($"Pushed {n} onto action stack.");
+            }
+        }
+
+        private void PrevActionClick(object sender, RoutedEventArgs e)
+        {
+            CurrentActionIndex--;
+            CurrentPage.Actions[CurrentActionIndex].Undo();
+        }
+        private void NextActionClick(object sender, RoutedEventArgs e)
+        {
+            CurrentPage.Actions[CurrentActionIndex].Exec();
+            CurrentActionIndex++;
+        }
+        private void ExecuteCache(int n)
+        {
+            // Console.WriteLine($"ExecuteCache({n})");
+            Cache.Get(n).Exec();
+            CurrentActionIndex = n;
+            _moveToActionIndicesStack.Clear();
+            // Console.WriteLine("Cleared action stack");
+        }
+
+        private ActionCache Cache
+        {
+            get
+            {
+                return CurrentPage.Cache;
+            }
+        }
+
+        /**
+         * Move to Action with given index.
+         *
+         * Implements action navigation with absolute value.
+         * Action is immediately executed.
+         */
+        private void MoveToAction(int n)
+        {
+            int relative = n - CurrentActionIndex;
+            // if (relative != 0) Console.WriteLine($"MoveToAction({n}) - CurrentActionIndex: {CurrentActionIndex}, relative: {relative}");
+            // TODO Implement "relative caching"
+            //   (go first to nearest cache entry in constant time and then from there to destination index)
+            if (relative != 0)
+            {
+                if(Cache.NotEmpty)
                 {
-                    PrevAction_Click(null, null);
+                    int closestCache = Cache.GetClosestCache(n);
+                    int distanceCacheToDestination = Math.Abs(closestCache - n);
+                    // Console.WriteLine($"closestCache: {closestCache}, distanceCacheToDestination: {distanceCacheToDestination}");
+                    if (distanceCacheToDestination < Math.Abs(relative))
+                    {
+                        ExecuteCache(closestCache);
+                        relative = n - closestCache;
+                        // Console.WriteLine($"new relative: {relative}");
+                    }
+                    // Console.WriteLine($"closestCache: {closestCache}, n: {n}, relative: {relative}");
+                }
+            }
+            if (relative < 0)
+            {
+                for (int i = 0; i < Math.Abs(relative); ++i)
+                {
+                    PrevActionClick(null, null);
                 }
             }
             else
             {
-                for (int i = 0; i < Math.Abs(n); ++i)
+                for (int i = 0; i < Math.Abs(relative); ++i)
                 {
-                    NextAction_Click(null, null);
+                    NextActionClick(null, null);
                 }
             }
         }
 
-        private void MoveToAction(int n)
+        /**
+         * Starts the handler which periodically runs all queued up actions to increase performance by using a cache. 
+         *
+         * Implemented as follows:
+         *   1. Sum up all relative action indices to get the resulting relative action index.
+         *        For example, if we have [-1, -2, 5] queued, we would first move one action back, then 5 and then 3 forward.
+         *        This is the same as just moving 2 actions forward.
+         *   2. Calculate nearest cached action index.
+         *   3. move to nearest cached action index in constant time from anywhere.
+         *   4. Move to destination.
+         */
+        private async void StartActionBufferHandler(int millisecondsPeriod)
         {
-            MoveActions(n - CurrentActionIndex);
+            // first stop action thread if one exists
+            StopActionBufferHandler();
+            actionNavigationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = actionNavigationTokenSource.Token;
+            Task ClearActionBuffer()
+            {
+                return Task.Run(() =>
+                {
+                    int n = CurrentActionIndex;
+                    lock (_moveToActionIndicesStack)
+                    {
+                        if (_moveToActionIndicesStack.Count != 0)
+                        {
+                            n = _moveToActionIndicesStack.Pop();
+                            _moveToActionIndicesStack.Clear();
+                            // Console.WriteLine($"Popped {n} from action stack and cleared stack");
+                        }
+                    }
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                    this.Dispatcher.Invoke(() => MoveToAction(n));
+                    watch.Stop();
+                    var elapsedMs = watch.ElapsedMilliseconds;
+                    if (elapsedMs != 0)
+                    {
+                        // Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
+                    }
+                }, cancellationToken);
+            }
+            while (true)
+            {
+                try
+                {
+                    var delayTask = Task.Delay(millisecondsPeriod, cancellationToken);
+                    await ClearActionBuffer();
+                    await delayTask;
+                }
+                catch (TaskCanceledException e)
+                {
+                    break;
+                }
+            }
+        }
+
+        private void StopActionBufferHandler()
+        {
+            actionNavigationTokenSource?.Cancel();
         }
 
         private int GetLabeledPageActionIndex(string label)
@@ -392,21 +609,15 @@ namespace Cryptool.Plugins.ChaCha
                 endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex - 1)) + 1;
             }
             Debug.Assert(startIndex > endIndex);
-            for (int i = startIndex; i > endIndex; --i)
-            {
-                PrevAction_Click(null, null);
-            }
+            MoveToActionAsync(endIndex);
         }
 
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1));
+            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1)) + 1;
             Debug.Assert(startIndex < endIndex);
-            for (int i = startIndex; i <= endIndex; ++i)
-            {
-                NextAction_Click(null, null);
-            }
+            MoveToActionAsync(endIndex);
         }
 
         private void QR_Click(int qrLabelIndex)
@@ -445,8 +656,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             string searchLabel = string.Format("_QR_ACTION_LABEL_{0}_{1}", qrLabelSearchIndex, roundLabelSearchIndex);
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel) + 1;
-            MoveToAction(qrActionIndex);
-            InitActionNavigationBar(CurrentPage);
+            MoveToActionAsync(qrActionIndex);
         }
         private void QR1_Click(object sender, RoutedEventArgs e)
         {

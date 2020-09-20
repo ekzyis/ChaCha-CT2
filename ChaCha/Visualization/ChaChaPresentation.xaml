@@ -25,10 +25,6 @@
     </Style>
 
     <!-- (Rich)TextBox styles -->
-    <Style TargetType="TextBox">
-      <Setter Property="IsReadOnly" Value="True"/>
-      <Setter Property="BorderThickness" Value="0"/>
-    </Style>
     <Style x:Key="hexTextBox" TargetType="TextBox">
       <Setter Property="FontFamily" Value="Courier New" />
       <Setter Property="IsReadOnly" Value="True"/>
@@ -78,6 +74,12 @@
   <Grid Name="UIContentPane">
       <!-- Landing page -->
     <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <ContentControl.Resources>
+        <Style TargetType="TextBox">
+          <Setter Property="IsReadOnly" Value="True"/>
+          <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+      </ContentControl.Resources>
       <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBox Margin="10" FontSize="24" HorizontalAlignment="Center">
           ChaCha Visualization
@@ -89,6 +91,12 @@
     </ContentControl>
     <!-- ChaCha workflow page -->
     <ContentControl Name="UIWorkflowPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+      <ContentControl.Resources>
+        <Style TargetType="TextBox">
+          <Setter Property="IsReadOnly" Value="True"/>
+          <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+      </ContentControl.Resources>
       <Grid>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
@@ -138,6 +146,12 @@
     <!-- ChaCha State matrix page -->
     <ContentControl Name="UIStateMatrixPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <Grid>
+        <Grid.Resources>
+          <Style TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="0"/>
+          </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -334,6 +348,12 @@
     <!-- ChaCha Generate Keystream block page -->
     <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
       <Grid>
+        <Grid.Resources>
+          <Style TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="BorderThickness" Value="0"/>
+          </Style>
+        </Grid.Resources>
         <Grid.RowDefinitions>
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
@@ -1063,7 +1083,7 @@
                              Canvas.Top="20" Canvas.Left="10"
                              FontSize="10"
                              TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_4, Path=Stroke}"
-                             Text="8"/>
+                             Text="7"/>
                         </Canvas>
                         <Canvas Grid.Row="1" Grid.Column="4">
                           <Border Name="QRXORCell_4" Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1" Canvas.Top="22">

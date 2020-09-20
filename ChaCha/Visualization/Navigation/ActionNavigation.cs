@@ -11,16 +11,19 @@ namespace Cryptool.Plugins.ChaCha
 {
     public class ActionNavigation : IActionNavigation<TextBlock, Border, Shape, RichTextBox, TextBox>
     {
-        public bool SaveStateHasBeenCalled { get; private set; } = false;
-
         private readonly Brush _copyBrush = Brushes.AliceBlue;
         private readonly Brush _markBrush = Brushes.Purple;
 
         #region Interface implementation
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
+        public bool SaveStateHasBeenCalled { get; private set; } = false;
         // Stack with actions where the last dictionary contains undo actions which reverts changes from the last applied page action of an UI Element.
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         private readonly Stack<Dictionary<int, Action>> _undoState = new Stack<Dictionary<int, Action>>();
         // temporary variable to collect undo actions before pushing into stack.
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         private readonly Dictionary<int, Action> _undoActions = new Dictionary<int, Action>();
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void SaveState(params TextBlock[] textblocks)
         {
             SaveStateHasBeenCalled = true;
@@ -44,6 +47,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void SaveState(params Border[] borders)
         {
             SaveStateHasBeenCalled = true;
@@ -89,6 +93,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void SaveState(params Shape[] shapes)
         {
             SaveStateHasBeenCalled = true;
@@ -116,6 +121,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void SaveState(params RichTextBox[] textboxes)
         {
             SaveStateHasBeenCalled = true;
@@ -136,6 +142,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void SaveState(params TextBox[] textboxes)
         {
             SaveStateHasBeenCalled = true;
@@ -151,6 +158,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void FinishPageAction()
         {
             // copy dictionary using new
@@ -159,11 +167,13 @@ namespace Cryptool.Plugins.ChaCha
             SaveStateHasBeenCalled = false;
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public Dictionary<int, Action> GetUndoActions()
         {
             return _undoState.Pop();
         }
 
+        [Obsolete("This method has been deprecated because it was incompatible with caching.", true)]
         public void Undo()
         {
             Dictionary<int, Action> undoActions = GetUndoActions();
@@ -214,6 +224,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             if (list.LastBlock != null) _ReplaceLast(list, new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) });
         }
+        private static void _MakeBoldLast(BlockCollection list)
+        {
+            if (list.LastBlock != null) _ReplaceLast(list, MakeBold(new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) }) );
+        }
         private static void _Add(BlockCollection list, Inline element)
         {
             list.Add(new Paragraph(element));
@@ -233,35 +247,29 @@ namespace Cryptool.Plugins.ChaCha
         #region TextBlock API
         public void RemoveLast(TextBlock tb)
         {
-            SaveState(tb);
             _RemoveLast(tb.Inlines);
         }
         public void ReplaceLast(TextBlock tb, Inline element)
         {
-            SaveState(tb);
             _ReplaceLast(tb.Inlines, element);
         }
         public void ReplaceLast(TextBlock tb, string text)
         {
-            SaveState(tb);
             _ReplaceLast(tb.Inlines, new Run(text));
         }
         public void MakeBoldLast(TextBlock tb)
         {
-            SaveState(tb);
             _MakeBoldLast(tb.Inlines);
         }
         public void UnboldLast(params TextBlock[] tbs)
         {
             foreach (TextBlock tb in tbs)
             {
-                SaveState(tb);
                 _UnboldLast(tb.Inlines);
             }
         }
         public void Add(TextBlock tb, Inline element)
         {
-            SaveState(tb);
             _Add(tb.Inlines, element);
         }
         public void Add(TextBlock tb, string element)
@@ -276,7 +284,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (TextBlock tb in textblocks)
             {
-                SaveState(tb);
                 _Clear(tb.Inlines);
             }
         }
@@ -285,25 +292,25 @@ namespace Cryptool.Plugins.ChaCha
         #region Border API
         public void SetBackground(Border b, Brush background)
         {
-            SaveState(b);
             b.Background = background;
         }
         public void SetCopyBackground(Border b)
         {
             SetBackground(b, _copyBrush);
         }
-        public void UnsetBackground(Border b)
+        public void UnsetBackground(params Border[] borders)
         {
-            SetBackground(b, Brushes.White);
+            foreach(Border b in borders)
+            {
+                SetBackground(b, Brushes.White);
+            }
         }
         public void SetBorderColor(Border b, Brush borderBrush)
         {
-            SaveState(b);
             b.BorderBrush = borderBrush;
         }
         public void SetBorderStroke(Border b, double stroke)
         {
-            SaveState(b);
             b.BorderThickness = new Thickness(stroke);
         }
         public void MarkBorder(Border b)
@@ -325,11 +332,19 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     SetCopyBackground(b);
                 }
-            }, Undo);
+            }, () =>
+            {
+                foreach (Border b in borders)
+                {
+                    UnsetBackground(b);
+                }
+            });
         }
 
-        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
+            Debug.Assert(copyTo.Length == copyFrom.Length, $"Amount of copyTo ({copyTo.Length}) and copyFrom elements ({copyFrom.Length}) not equal");
+            Debug.Assert(copyTo.Length == previousToValue.Length, $"Amount of copyTo ({copyTo.Length}) and previousToValue elements ({previousToValue.Length}) not equal");
             return new PageAction(() =>
             {
                 for (int i = 0; i < copyTo.Length; ++i)
@@ -341,7 +356,6 @@ namespace Cryptool.Plugins.ChaCha
                     if (copyFromBorder.Child is TextBlock copyFromTextBlock)
                     {
                         text = ((Run)copyFromTextBlock.Inlines.LastInline).Text;
-
                     }
                     else if (copyFromBorder.Child is RichTextBox copyFromRichTextBox)
                     {
@@ -371,7 +385,7 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         if (replace)
                         {
-                            Replace(copyToRichTextBox, text);
+                            ReplaceLast(copyToRichTextBox, text);
                         }
                         else
                         {
@@ -387,7 +401,32 @@ namespace Cryptool.Plugins.ChaCha
                         Debug.Assert(false, "Output type for CopyAction not supported.");
                     }
                 }
-            }, Undo);
+            }, () =>
+            {
+                for (int i = 0; i < copyTo.Length; ++i)
+                {
+                    Border copyFromBorder = copyFrom[i];
+                    Border copyToBorder = copyTo[i];
+                    UnsetBackground(copyToBorder);
+                    string text = previousToValue[i];
+                    if (copyToBorder.Child is TextBlock copyToTextBlock)
+                    {
+                        ReplaceLast(copyToTextBlock, text);
+                    }
+                    else if (copyToBorder.Child is RichTextBox copyFromRichTextBox)
+                    {
+                        ReplaceLast(copyFromRichTextBox, text);
+                    }
+                    else if (copyToBorder.Child is TextBox copyFromTextBox)
+                    {
+                        Replace(copyFromTextBox, text);
+                    }
+                    else
+                    {
+                        Debug.Assert(false, "Output type for CopyAction not supported.");
+                    }
+                }
+            });
         }
 
         public PageAction UnmarkCopyAction(Border[] copyFrom, Border[] copyTo)
@@ -402,21 +441,31 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     UnsetBackground(b);
                 }
-            }, Undo);
+            }, () =>
+            {
+                foreach (Border b in copyFrom)
+                {
+                    SetCopyBackground(b);
+                }
+                foreach (Border b in copyTo)
+                {
+                    SetCopyBackground(b);
+                }
+            });
         }
 
-        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, bool replace = false)
+        public PageAction[] CopyActions(Border[] copyFrom, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
             Debug.Assert(copyFrom.Length == copyTo.Length);
             PageAction mark = MarkCopyFromAction(copyFrom);
-            PageAction copy = CopyAction(copyFrom, copyTo, replace);
+            PageAction copy = CopyAction(copyFrom, copyTo, previousToValue, replace);
             PageAction unmark = UnmarkCopyAction(copyFrom, copyTo);
             return new PageAction[] { mark, copy, unmark };
         }
 
-        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, bool replace = false)
+        public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
-            PageAction[] copyActions = CopyActions(copyFrom, copyTo, replace);
+            PageAction[] copyActions = CopyActions(copyFrom, copyTo, previousToValue, replace);
 
             void MarkPaths()
             {
@@ -447,12 +496,10 @@ namespace Cryptool.Plugins.ChaCha
         #region Shape API
         public void SetShapeStrokeColor(Shape s, Brush brush)
         {
-            SaveState(s);
             s.Stroke = brush;
         }
         public void SetShapeStroke(Shape s, double stroke)
         {
-            SaveState(s);
             s.StrokeThickness = stroke;
         }
         public void MarkShape(Shape s)
@@ -472,13 +519,23 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (RichTextBox rtb in rtbs)
             {
-                SaveState(rtb);
                 _UnboldLast(rtb.Document.Blocks);
             }
         }
+        public void MakeBoldLast(RichTextBox tb)
+        {
+            _MakeBoldLast(tb.Document.Blocks);
+        }
+        public void RemoveLast(RichTextBox tb)
+        {
+            _RemoveLast(tb.Document.Blocks);
+        }
+        public void ReplaceLast(RichTextBox tb, string text)
+        {
+            _ReplaceLast(tb.Document.Blocks, new Run(text));
+        }
         public void Add(RichTextBox tb, Inline element)
         {
-            SaveState(tb);
             _Add(tb.Document.Blocks, element);
         }
         public void Add(RichTextBox tb, string text)
@@ -493,11 +550,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (RichTextBox tb in tbs)
             {
-                SaveState(tb);
                 _Clear(tb.Document.Blocks);
             }
         }
-        public void Replace(RichTextBox rtb, string text)
+        public void Clear(RichTextBox rtb, string text)
         {
             _Clear(rtb.Document.Blocks);
             Add(rtb, text);
@@ -507,7 +563,6 @@ namespace Cryptool.Plugins.ChaCha
         #region TextBox API
         public void Replace(TextBox tb, string text)
         {
-            SaveState(tb);
             tb.Text = text;
         }
 
@@ -515,7 +570,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (TextBox tb in tbs)
             {
-                SaveState(tb);
                 tb.Text = "";
             }
         }

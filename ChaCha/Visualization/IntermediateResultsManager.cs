@@ -3,31 +3,47 @@ using System.Collections.Generic;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    public enum ResultType
+    public class ResultType
     {
-        QR_INPUT_A, QR_INPUT_B, QR_INPUT_C, QR_INPUT_D,
-        QR_INPUT_X1, QR_INPUT_X2, QR_INPUT_X3,
-        QR_OUTPUT_X1, QR_OUTPUT_X2, QR_OUTPUT_X3,
-        QR_ADD_X1_X2, QR_XOR
+        public static readonly ResultType<uint> QR_INPUT_A = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_INPUT_B = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_INPUT_C = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_INPUT_D = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_INPUT_X1 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_INPUT_X2 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_INPUT_X3 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_X1 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_X2 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_X3 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_ADD_X1_X2 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_XOR = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_A = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_B = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_C = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_OUTPUT_D = new ResultType<uint>();
+        public static readonly ResultType<uint[]> CHACHA_HASH_ROUND = new ResultType<uint[]>();
     }
-    public class IntermediateResultsManager
+    public class ResultType<T> { }
+    public class IntermediateResultsManager<T>
     {
        
-        private class InterimResultList
+        private class IntermediateResultsList
         {
-            private readonly List<uint> _results;
+            private readonly List<T> _results;
+            private ResultType<T> type;
 
-            public InterimResultList(ResultType type)
+            public IntermediateResultsList(ResultType<T> type)
             {
-                _results = new List<uint>();
+                _results = new List<T>();
                 Type = type;
             }
-            public ResultType Type { get; }
-            public uint Get(int index)
+
+            public ResultType<T> Type { get; }
+            public T Get(int index)
             {
                 return _results[index];
             }
-            public void Add(uint result)
+            public void Add(T result)
             {
                 _results.Add(result);
             }
@@ -36,38 +52,38 @@ namespace Cryptool.Plugins.ChaCha
                 _results.Clear();
             }
         }
-        private readonly List<InterimResultList> _interimResultsList = new List<InterimResultList>();
-        private bool TypeExists(ResultType type)
+        private readonly List<IntermediateResultsList> _intermediateResultsList = new List<IntermediateResultsList>();
+        private bool TypeExists(ResultType<T> type)
         {
-            return _interimResultsList.Exists(list => list.Type == type);
+            return _intermediateResultsList.Exists(list => list.Type == type);
         }
-        private InterimResultList GetList(ResultType type)
+        private IntermediateResultsList GetList(ResultType<T> type)
         {
             if (!TypeExists(type))
             {
                 return null;
             }
-            return _interimResultsList.Find(list => list.Type == type);
+            return _intermediateResultsList.Find(list => list.Type == type);
         }
         public void Clear()
         {
-            foreach (InterimResultList r in _interimResultsList)
+            foreach (IntermediateResultsList r in _intermediateResultsList)
             {
                 r.Clear();
             }
-            _interimResultsList.Clear();
         }
-        public void AddResult(ResultType type, uint result)
+        public void AddResult(ResultType<T> type, T result)
         {
             if (!TypeExists(type))
             {
-                _interimResultsList.Add(new InterimResultList(type));
+                _intermediateResultsList.Add(new IntermediateResultsList(type));
             }
             GetList(type).Add(result);
         }
-        public uint Get(ResultType type, int index)
+
+        public T Get(ResultType<T> type, int index)
         {
-            InterimResultList list = GetList(type);
+            IntermediateResultsList list = GetList(type);
             if (list == null)
             {
                 throw new ArgumentException(string.Format("InterimResultList of type {0}, index {1} does not exist", type.ToString(), index));

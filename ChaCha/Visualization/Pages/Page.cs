@@ -6,14 +6,22 @@ namespace Cryptool.Plugins.ChaCha
 {
     partial class Page
     {
-        private Page(ContentControl pageElement)
+        private protected Page(ContentControl pageElement, ActionCache cache)
         {
             _page = pageElement;
+            Cache = cache;
+        }
+        private protected Page(ContentControl pageElement)
+        {
+            _page = pageElement;
+            Cache = ActionCache.Empty;
         }
         // the visual tree element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
         private readonly ContentControl _page;
         private readonly List<PageAction> _pageActions = new List<PageAction>();
         private readonly List<PageAction> _pageInitActions = new List<PageAction>();
+
+        public ActionCache Cache { get; }
         public int ActionFrames => _pageActions.Count;
 
         public PageAction[] Actions => _pageActions.ToArray();
