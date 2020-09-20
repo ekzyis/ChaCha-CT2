@@ -175,7 +175,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction[] copyKeyToStateActions = pres.Nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell, pres.UITransformLittleEndian4Cell, pres.UITransformLittleEndian5Cell, pres.UITransformLittleEndian6Cell, pres.UITransformLittleEndian7Cell },
                 new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell },
-                new string[] { "", "", "", ""});
+                new string[] { "", "", "", "", "", "", "", "" });
             page.AddAction(keyStepDescriptionAction);
             page.AddAction(keyInputAction);
             page.AddAction(keyChunksAction);

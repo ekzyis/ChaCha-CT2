@@ -340,6 +340,8 @@ namespace Cryptool.Plugins.ChaCha
 
         public PageAction CopyAction(Border[] copyFrom, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
+            Debug.Assert(copyTo.Length == copyFrom.Length, $"Amount of copyTo ({copyTo.Length}) and copyFrom elements ({copyFrom.Length}) not equal");
+            Debug.Assert(copyTo.Length == previousToValue.Length, $"Amount of copyTo ({copyTo.Length}) and previousToValue elements ({previousToValue.Length}) not equal");
             return new PageAction(() =>
             {
                 for (int i = 0; i < copyTo.Length; ++i)

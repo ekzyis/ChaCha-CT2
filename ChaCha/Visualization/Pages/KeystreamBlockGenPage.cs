@@ -380,7 +380,7 @@ namespace Cryptool.Plugins.ChaCha
                 b,
                 new Shape[] { (Shape)GetIndexElement(pres, "QRInX1Path", actionIndex), (Shape)GetIndexElement(pres, "QRInX2Path", actionIndex), (Shape)GetIndexElement(pres, "QRInX3Path", actionIndex) },
                 new Border[] { (Border)GetIndexElement(pres, "QRInX1Cell", actionIndex), (Border)GetIndexElement(pres, "QRInX2Cell", actionIndex), (Border)GetIndexElement(pres, "QRInX3Cell", actionIndex) },
-                new string[] { "", "", "", "" }
+                new string[] { "", "", "" }
                 );
         }
 
