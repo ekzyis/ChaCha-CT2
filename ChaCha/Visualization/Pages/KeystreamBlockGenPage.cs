@@ -477,10 +477,10 @@ namespace Cryptool.Plugins.ChaCha
             (int i, int j, int k, int l) = GetStateIndices(qrIndex);
             Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
             string[] previousStateEntries = new string[4];
-            previousStateEntries[0] = pres.GetHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
-            previousStateEntries[1] = pres.GetHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
-            previousStateEntries[2] = pres.GetHexResult(ResultType.QR_OUTPUT_C, qrIndex - 1);
-            previousStateEntries[3] = pres.GetHexResult(ResultType.QR_OUTPUT_D, qrIndex - 1);
+            previousStateEntries[0] = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
+            previousStateEntries[1] = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
+            previousStateEntries[2] = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
+            previousStateEntries[3] = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
             return pres.Nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, previousStateEntries, true);
         }
     }
