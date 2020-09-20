@@ -31,10 +31,10 @@ namespace Cryptool.Plugins.ChaCha
 
         public static Dictionary<int, CachePageAction> GetCache(ChaChaPresentation pres)
         {
-            // Cache entry for action index: 238 - "Round 2"
-            CachePageAction cache238 = new CachePageAction();
-            cache238.AddToExec(() => KeystreamBlockGenPage.ClearQRDetail(pres));
-            cache238.AddToExec(() =>
+            // Cache entry for action index: 283 - "Round 2"
+            CachePageAction cache283 = new CachePageAction();
+            cache283.AddToExec(() => KeystreamBlockGenPage.ClearQRDetail(pres));
+            cache283.AddToExec(() =>
             {
                 // update state matrix
                 TextBox[] stateTextBoxes = KeystreamBlockGenPage.GetStateTextBoxes(pres);
@@ -50,7 +50,7 @@ namespace Cryptool.Plugins.ChaCha
                 // hide all QR arrows except the first
                 KeystreamBlockGenPage.HideAllQRArrowsExcept(pres, 1);
             });
-            return new Dictionary<int, CachePageAction>{{ 238, cache238 }};
+            return new Dictionary<int, CachePageAction>{{ 283, cache283 } };
         }
     }
 }
