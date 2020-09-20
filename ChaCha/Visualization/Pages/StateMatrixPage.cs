@@ -207,9 +207,8 @@ namespace Cryptool.Plugins.ChaCha
                 MakeLastBoldInDescription();
                 ClearTransformInput();
             });
-            PageAction ivChunksAction = new PageAction(() =>
+            void ReplaceTransformChunkIV()
             {
-                ReplaceTransformChunk(pres.IVChunks[0], pres.IVChunks[1]);
                 if (versionIsDJB)
                 {
                     ReplaceTransformChunk(pres.IVChunks[0], pres.IVChunks[1]);
@@ -218,13 +217,17 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     ReplaceTransformChunk(pres.IVChunks[0], pres.IVChunks[1], pres.IVChunks[2]);
                 }
+            }
+            PageAction ivChunksAction = new PageAction(() =>
+            {
+                ReplaceTransformChunkIV();
             }, () =>
             {
                 ClearTransformChunk();
             });
-            PageAction ivLittleEndianAction = new PageAction(() =>
+            void ReplaceTransformLittleEndianIV()
             {
-                if(versionIsDJB)
+                if (versionIsDJB)
                 {
                     ReplaceTransformLittleEndian(pres.IVLittleEndian[0], pres.IVLittleEndian[1]);
                 }
@@ -232,6 +235,10 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     ReplaceTransformLittleEndian(pres.IVLittleEndian[0], pres.IVLittleEndian[1], pres.IVLittleEndian[2]);
                 }
+            }
+            PageAction ivLittleEndianAction = new PageAction(() =>
+            {
+                ReplaceTransformLittleEndianIV();
             }, () =>
             {
                 ClearTransformLittleEndian();
@@ -261,6 +268,9 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 RemoveLastFromDescription();
+                ReplaceTransformInput(pres.HexInputIV);
+                ReplaceTransformChunkIV();
+                ReplaceTransformLittleEndianIV();
             });
             PageAction counterInputAction = new PageAction(() =>
             {
