@@ -490,6 +490,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             int relative = n - CurrentActionIndex;
             // if (relative != 0) Console.WriteLine($"MoveToAction({n}) - CurrentActionIndex: {CurrentActionIndex}, relative: {relative}");
+            // TODO Implement "relative caching"
+            //   (go first to nearest cache entry in constant time and then from there to destination index)
             if (relative != 0 && cache.Includes(n))
             {
                 ExecuteCache(n);
