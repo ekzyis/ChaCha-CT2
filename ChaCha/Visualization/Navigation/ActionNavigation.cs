@@ -298,9 +298,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             SetBackground(b, _copyBrush);
         }
-        public void UnsetBackground(Border b)
+        public void UnsetBackground(params Border[] borders)
         {
-            SetBackground(b, Brushes.White);
+            foreach(Border b in borders)
+            {
+                SetBackground(b, Brushes.White);
+            }
         }
         public void SetBorderColor(Border b, Brush borderBrush)
         {

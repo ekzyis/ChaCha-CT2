@@ -172,16 +172,25 @@ namespace Cryptool.Plugins.ChaCha
         public static void ClearQRDetail(ChaChaPresentation pres)
         {
             pres.Nav.Clear(pres.QRInA, pres.QRInB, pres.QRInC, pres.QRInD);
+            pres.Nav.UnsetBackground(pres.QRInACell, pres.QRInBCell, pres.QRInCCell, pres.QRInDCell);
             pres.Nav.Clear(pres.QROutA, pres.QROutB, pres.QROutC, pres.QROutD);
+            pres.Nav.UnsetBackground(pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell);
             for (int i = 1; i <= 4; ++i)
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRInX1", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QRInX1Cell", i));
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRInX2", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QRInX2Cell", i));
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRInX3", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QRInX3Cell", i));
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QROutX1", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QROutX1Cell", i));
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QROutX2", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QROutX2Cell", i));
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QROutX3", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QROutX3Cell", i));
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRXOR", i));
+                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "QRXORCell", i));
             }
         }
         public static PageAction ClearQRDetail(ChaChaPresentation pres, int qrIndex)
