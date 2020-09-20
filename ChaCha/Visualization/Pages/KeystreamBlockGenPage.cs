@@ -208,6 +208,10 @@ namespace Cryptool.Plugins.ChaCha
                     pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX3", i), qrDetailValues[i - 1, 5]);
                     pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", i),   qrDetailValues[i - 1, 6]);
                 }
+                pres.Nav.Replace(pres.QROutA, qrOutA);
+                pres.Nav.Replace(pres.QROutB, qrOutB);
+                pres.Nav.Replace(pres.QROutC, qrOutC);
+                pres.Nav.Replace(pres.QROutD, qrOutD);
             });
         }
 
