@@ -74,10 +74,10 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.UITransformLittleEndian1, le1);
                 pres.Nav.Replace(pres.UITransformLittleEndian2, le2);
                 pres.Nav.Replace(pres.UITransformLittleEndian3, le3);
-                pres.Nav.Replace(pres.UITransformLittleEndian0, le4);
-                pres.Nav.Replace(pres.UITransformLittleEndian1, le5);
-                pres.Nav.Replace(pres.UITransformLittleEndian2, le6);
-                pres.Nav.Replace(pres.UITransformLittleEndian3, le7);
+                pres.Nav.Replace(pres.UITransformLittleEndian4, le4);
+                pres.Nav.Replace(pres.UITransformLittleEndian5, le5);
+                pres.Nav.Replace(pres.UITransformLittleEndian6, le6);
+                pres.Nav.Replace(pres.UITransformLittleEndian7, le7);
             }
             void ClearTransformLittleEndian()
             {
