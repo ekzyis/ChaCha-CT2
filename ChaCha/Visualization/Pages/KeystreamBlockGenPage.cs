@@ -414,7 +414,7 @@ namespace Cryptool.Plugins.ChaCha
                 );
         }
 
-        private static (int, int, int, int) GetStateIndices(int qrIndex)
+        private static (int, int, int, int) GetStateIndicesFromQRIndex(int qrIndex)
         {
             switch (((qrIndex - 1) % 8) + 1)
             {
@@ -435,7 +435,32 @@ namespace Cryptool.Plugins.ChaCha
                 case 8:
                     return (3, 4, 9, 14);
                 default:
-                    Debug.Assert(false, string.Format("No state indices found for round", qrIndex));
+                    Debug.Assert(false, string.Format("No state indices found for qrIndex", qrIndex));
+                    return (-1, -1, -1, -1);
+            }
+        }
+        public static (int, int, int, int) GetStateIndices(int round)
+        {
+            switch (round)
+            {
+                case 1:
+                    return (0, 4, 8, 12);
+                case 2:
+                    return (1, 5, 9, 13);
+                case 3:
+                    return (2, 6, 10, 14);
+                case 4:
+                    return (3, 7, 11, 15);
+                case 5:
+                    return (0, 5, 10, 15);
+                case 6:
+                    return (1, 6, 11, 12);
+                case 7:
+                    return (2, 7, 8, 13);
+                case 8:
+                    return (3, 4, 9, 14);
+                default:
+                    Debug.Assert(false, string.Format("No state indices found for round", round));
                     return (-1, -1, -1, -1);
             }
         }
@@ -446,7 +471,7 @@ namespace Cryptool.Plugins.ChaCha
         private static PageAction[] CopyFromStateTOQRInputActions(ChaChaPresentation pres, int qrIndex, int round)
         {
             uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ROUND, round - 1);
-            (int i, int j, int k, int l) = GetStateIndices(qrIndex);
+            (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
             Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
             PageAction[] copyActions = pres.Nav.CopyActions(stateCells, 
                 new Border[] { pres.QRInACell, pres.QRInBCell, pres.QRInCCell, pres.QRInDCell },
@@ -504,7 +529,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private static PageAction[] ReplaceStateEntriesWithQROutput(ChaChaPresentation pres, int qrIndex)
         {
-            (int i, int j, int k, int l) = GetStateIndices(qrIndex);
+            (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
             Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
             string[] previousStateEntries = new string[4];
             previousStateEntries[0] = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
