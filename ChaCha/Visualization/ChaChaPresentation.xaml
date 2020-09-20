@@ -1083,7 +1083,7 @@
                              Canvas.Top="20" Canvas.Left="10"
                              FontSize="10"
                              TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_4, Path=Stroke}"
-                             Text="8"/>
+                             Text="7"/>
                         </Canvas>
                         <Canvas Grid.Row="1" Grid.Column="4">
                           <Border Name="QRXORCell_4" Width="65" Height="20" BorderBrush="Black" BorderThickness="1,1,1,1" Canvas.Top="22">
