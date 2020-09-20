@@ -33,9 +33,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             // Cache entry for action index: 283 - "Round 2"
             CachePageAction cache283 = new CachePageAction();
-            cache283.AddToExec(() => KeystreamBlockGenPage.ClearQRDetail(pres));
             cache283.AddToExec(() =>
             {
+                KeystreamBlockGenPage.ClearQRDetail(pres);
                 // update state matrix
                 TextBox[] stateTextBoxes = KeystreamBlockGenPage.GetStateTextBoxes(pres);
                 uint[] round2State = pres.GetResult(ResultType.CHACHA_HASH_ROUND, 1);
