@@ -439,43 +439,6 @@ namespace Cryptool.Plugins.ChaCha
                     return (-1, -1, -1, -1);
             }
         }
-        public static (int, int, int, int) GetStateIndices(int round)
-        {
-            switch (round)
-            {
-                case 1:
-                case 9:
-                case 17:
-                    return (0, 4, 8, 12);
-                case 2:
-                case 10:
-                case 18:
-                    return (1, 5, 9, 13);
-                case 3:
-                case 11:
-                case 19:
-                    return (2, 6, 10, 14);
-                case 4:
-                case 12:
-                case 20:
-                    return (3, 7, 11, 15);
-                case 5:
-                case 13:
-                    return (0, 5, 10, 15);
-                case 6:
-                case 14:
-                    return (1, 6, 11, 12);
-                case 7:
-                case 15:
-                    return (2, 7, 8, 13);
-                case 8:
-                case 16:
-                    return (3, 4, 9, 14);
-                default:
-                    Debug.Assert(false, $"No state indices found for round {round}");
-                    return (-1, -1, -1, -1);
-            }
-        }
         private int calculateRoundFromQRIndex(int qrIndex)
         {
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
