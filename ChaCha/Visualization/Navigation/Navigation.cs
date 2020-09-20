@@ -333,7 +333,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentActionIndex = value;
-                // Console.WriteLine($"CurrentActionIndex = {n}");
+                // Console.WriteLine($"CurrentActionIndex = {value}");
                 CurrentActionIndexTextBox = value;
                 OnPropertyChanged("CurrentActionIndex");
                 OnPropertyChanged("CurrentActions");
