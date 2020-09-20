@@ -435,7 +435,7 @@ namespace Cryptool.Plugins.ChaCha
                 case 8:
                     return (3, 4, 9, 14);
                 default:
-                    Debug.Assert(false, string.Format("No state indices found for qrIndex", qrIndex));
+                    Debug.Assert(false, $"No state indices found for qrIndex {qrIndex}");
                     return (-1, -1, -1, -1);
             }
         }
@@ -460,7 +460,7 @@ namespace Cryptool.Plugins.ChaCha
                 case 8:
                     return (3, 4, 9, 14);
                 default:
-                    Debug.Assert(false, string.Format("No state indices found for round", round));
+                    Debug.Assert(false, $"No state indices found for round {round}");
                     return (-1, -1, -1, -1);
             }
         }
