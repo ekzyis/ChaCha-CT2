@@ -471,7 +471,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 foreach (Shape s in paths)
                 {
-                    s.StrokeThickness = 5;
+                    SetShapeStroke(s, 5);
                 }
             }
 
@@ -479,7 +479,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 foreach (Shape s in paths)
                 {
-                    s.StrokeThickness = 1;
+                    SetShapeStroke(s, 1);
+
                 }
             }
 
@@ -502,15 +503,25 @@ namespace Cryptool.Plugins.ChaCha
         {
             s.StrokeThickness = stroke;
         }
+        public void SetShapeStroke(double stroke, params Shape[] shapes)
+        {
+            foreach(Shape s in shapes)
+            {
+                SetShapeStroke(s, stroke);
+            }
+        }
         public void MarkShape(Shape s)
         {
             SetShapeStrokeColor(s, _markBrush);
             SetShapeStroke(s, 2);
         }
-        public void UnmarkShape(Shape s)
+        public void UnmarkShape(params Shape[] shapes)
         {
-            SetShapeStrokeColor(s, Brushes.Black);
-            SetShapeStroke(s, 1);
+            foreach (Shape s in shapes)
+            {
+                SetShapeStrokeColor(s, Brushes.Black);
+                SetShapeStroke(s, 1);
+            }
         }
         #endregion
 
