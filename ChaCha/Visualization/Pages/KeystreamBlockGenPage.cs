@@ -200,13 +200,13 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QRInD, qrInD);
                 for (int i = 1; i <= 4; ++i)
                 {
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX1", i),  qrDetailValues[i, 0]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX2", i),  qrDetailValues[i, 1]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX3", i),  qrDetailValues[i, 2]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX1", i), qrDetailValues[i, 3]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX2", i), qrDetailValues[i, 4]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX3", i), qrDetailValues[i, 5]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", i),   qrDetailValues[i, 6]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX1", i),  qrDetailValues[i - 1, 0]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX2", i),  qrDetailValues[i - 1, 1]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX3", i),  qrDetailValues[i - 1, 2]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX1", i), qrDetailValues[i - 1, 3]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX2", i), qrDetailValues[i - 1 , 4]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX3", i), qrDetailValues[i - 1, 5]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", i),   qrDetailValues[i - 1, 6]);
                 }
             });
         }
