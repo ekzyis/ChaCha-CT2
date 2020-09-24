@@ -358,27 +358,59 @@ namespace Cryptool.Plugins.ChaCha
             uint[] originalState = (uint[])(state.Clone());
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ResultType.CHACHA_HASH_ROUND, (uint[])(state.Clone()));
+                _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
             });
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
                 state = QuarterroundState(state, 0, 4, 8, 12);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
                 state = QuarterroundState(state, 1, 5, 9, 13);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
                 state = QuarterroundState(state, 2, 6, 10, 14);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
                 state = QuarterroundState(state, 3, 7, 11, 15);
                 DispatchToPresentation(delegate
                 {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_ROUND, (uint[])(state.Clone()));
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
                 });
                 // diagonal round
                 state = QuarterroundState(state, 0, 5, 10, 15);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
                 state = QuarterroundState(state, 1, 6, 11, 12);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
                 state = QuarterroundState(state, 2, 7, 8, 13);
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
                 state = QuarterroundState(state, 3, 4, 9, 14);
                 DispatchToPresentation(delegate
                 {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_ROUND, (uint[])(state.Clone()));
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                });
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
                 });
             }
             // add the original state
