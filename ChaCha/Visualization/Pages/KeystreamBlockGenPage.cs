@@ -23,6 +23,12 @@ namespace Cryptool.Plugins.ChaCha
 
         private static ActionCache GenerateCache(ChaChaPresentation pres)
         {
+            ActionCache roundCache = GenerateRoundCache(pres);
+            return new ActionCache(roundCache);
+        }
+
+        private static ActionCache GenerateRoundCache(ChaChaPresentation pres)
+        {
             CachePageAction GenerateRoundCacheEntry(int round)
             {
                 CachePageAction cache = new CachePageAction();

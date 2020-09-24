@@ -12,6 +12,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             _cache = cache;
         }
+        public ActionCache(params ActionCache[] caches)
+        {
+            _cache = caches.SelectMany(cache => cache._cache).ToDictionary(pair => pair.Key, pair => pair.Value);
+        }
         public bool NotEmpty
         {
             get
