@@ -12,6 +12,9 @@ namespace Cryptool.Plugins.ChaCha
     class KeystreamBlockGenPage : Page
     {
         ChaChaPresentation _pres;
+        static string DESCRIPTION_1 = "To generate a keystream block, we apply the ChaCha Hash function to the state. "
+                    + "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.";
+        static string DESCRIPTION_2 = "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ";
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement, GenerateCache(pres))
         {
             _pres = pres;
@@ -25,6 +28,9 @@ namespace Cryptool.Plugins.ChaCha
                 CachePageAction cache = new CachePageAction();
                 cache.AddToExec(() =>
                 {
+                    ClearDescription(pres);
+                    AddToDescription(pres, DESCRIPTION_1);
+                    AddBoldToDescription(pres, DESCRIPTION_2);
                     ClearQRDetail(pres);
                     // update state matrix
                     TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
@@ -150,16 +156,29 @@ namespace Cryptool.Plugins.ChaCha
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen11);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen12);
         }
-        private void AddBoldToDescription(string descToAdd)
+        private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
         {
             _pres.Nav.AddBold(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
         }
-        private void ClearDescription()
+        private void AddBoldToDescription(string descToAdd)
+        {
+            AddBoldToDescription(_pres, descToAdd);
+        }
+        private static void AddToDescription(ChaChaPresentation _pres, string descToAdd)
+        {
+            _pres.Nav.Add(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
+        }
+        private static void ClearDescription(ChaChaPresentation _pres)
         {
             _pres.Nav.Clear(_pres.UIKeystreamBlockGenStepDescription);
         }
+        private void ClearDescription()
+        {
+            ClearDescription(_pres);
+        }
         private void UnboldLastFromDescription()
         {
+
             _pres.Nav.UnboldLast(_pres.UIKeystreamBlockGenStepDescription);
         }
         void MakeLastBoldInDescription()
@@ -173,9 +192,6 @@ namespace Cryptool.Plugins.ChaCha
         private void Init()
         {
             bool versionIsDJB = _pres.Version == ChaCha.Version.DJB;
-            string DESCRIPTION_1 = "To generate a keystream block, we apply the ChaCha Hash function to the state. "
-                    + "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.";
-            string DESCRIPTION_2 = "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ";
             PageAction initAction = new PageAction(() =>
             {
                 AddToState(
