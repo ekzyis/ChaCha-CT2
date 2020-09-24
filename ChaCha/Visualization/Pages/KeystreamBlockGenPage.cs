@@ -46,7 +46,7 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         stateTextBoxes[x].Text = ChaChaPresentation.HexString(stateEntries[x]);
                     }
-                    // highlight only diagonal state entries because they will be copied into QR detail in next action
+                    // highlight corresponding state entries which will be copied into QR detail in next action
                     (int i, int j, int k, int l) = round % 2 == 1 ? (0, 4, 8, 12) : (0, 5, 10, 15);
                     UnmarkAllStateEntriesExcept(pres, i, j, k, l);
                     // update round indicator
