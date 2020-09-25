@@ -573,41 +573,41 @@
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
                   <!-- Input paths (named) -->
                   <!-- First box -->
-                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_1" Data="M 0,20 h 50 m 4,0 v 60 h -55 M 60,20 h 20"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRAddPath_1" Data="M 0,20 h 50 m 4,0 v 60 h -55 M 60,20 h 20"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_1" Data="M 0,20 h 140 m 9,-10 v -170 h -10 M 159,20 h 5"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRXORPath_1" Data="M 0,20 h 140 m 9,-10 v -170 h -10 M 159,20 h 5"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_1" Data="M 229,20 h 5 m 20,0 h 5"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRShiftPath_1" Data="M 229,20 h 5 m 20,0 h 5"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
                   <!-- Second box -->
-                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_2" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRAddPath_2" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_2" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRXORPath_2" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_2" Data="M 563,20 h 5 m 20,0 h 5"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRShiftPath_2" Data="M 563,20 h 5 m 20,0 h 5"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"/>
                   <!-- Third box -->
-                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_3" Data="M -529,20 H 50 m 4,0 v 60 h -65 M 60,20 h 20"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRAddPath_3" Data="M -529,20 H 50 m 4,0 v 60 h -65 M 60,20 h 20"
                         Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}" Panel.ZIndex="0"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_3" Data="M -344,20 H 140 m 9,-10 v -170 h -10 M 159,20 h 5"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRXORPath_3" Data="M -344,20 H 140 m 9,-10 v -170 h -10 M 159,20 h 5"
                         Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_3" Data="M 229,20 h 5 m 20,0 h 5"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRShiftPath_3" Data="M 229,20 h 5 m 20,0 h 5"
                         Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
                   <!-- Fourth box -->
-                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_4" Data="M -195,20 H 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRAddPath_4" Data="M -195,20 H 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64"
                         Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_4" Data="M -10,20 H 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRXORPath_4" Data="M -10,20 H 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10"
                         Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_4" Data="M 563,20 h 5 m 20,0 h 5"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QRShiftPath_4" Data="M 563,20 h 5 m 20,0 h 5"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"/>
                   <!-- Output paths -->
-                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X1" Data="M 0,20 h 563"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QROutputPath_A" Data="M 0,20 h 563"
                         Canvas.Left="872" Canvas.Top="{ Binding ElementName=QRInACell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X2" Data="M 0,20 h 44"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QROutputPath_B" Data="M 0,20 h 44"
                         Canvas.Left="1391" Canvas.Top="{ Binding ElementName=QRInBCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X3" Data="M 0,20 h 229"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QROutputPath_C" Data="M 0,20 h 229"
                         Canvas.Left="1206" Canvas.Top="{ Binding ElementName=QRInCCell, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X4" Data="M 0,20 h 378"
+                  <Path Stroke="Black" StrokeThickness="1" Name="QROutputPath_D" Data="M 0,20 h 378"
                         Canvas.Left="1057" Canvas.Top="{ Binding ElementName=QRInDCell, Path=(Canvas.Top)}"/>
                   <!-- Grid for qr detail boxes -->
                   <Grid Canvas.Left="65" Width="1370" Height="260" Canvas.Top="-20">
@@ -647,24 +647,23 @@
                         </Grid.RowDefinitions>
                         <Canvas Grid.Row="1" Grid.Column="0">
                           <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QROutX1Cell_1" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRAddCell_1" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRAdd_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_1" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_1" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
-                          <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
                           <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1, Path=Stroke}" Content="+"/>
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="1">
                           <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRXORX1Cell_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRXORCell_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                           <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
-                          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle_1">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_1">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -674,7 +673,7 @@
                           <Path Canvas.Left="30" Stroke="Black" StrokeThickness="1" Data="M 10,30 v 170"/>
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="2">
-                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle_1" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRShiftCircle_1" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -687,8 +686,8 @@
                                      Text="&lt;&lt;&lt;"
                           />
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRShiftX1Cell_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRShiftCell_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                         </Canvas>
                       </Grid>
@@ -714,8 +713,8 @@
                         </Grid.RowDefinitions>
                         <Canvas Grid.Row="3" Grid.Column="0">
                           <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QROutX1Cell_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRAddCell_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                           <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_2" Fill="White">
                             <Path.Data>
@@ -727,11 +726,11 @@
                         </Canvas>
                         <Canvas Grid.Row="2" Grid.Column="1">
                           <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRXORX1Cell_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRXORCell_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                           <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
-                          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle_2">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_2">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -739,7 +738,7 @@
                           <Path Stroke="Black" StrokeThickness="1" Data="M 40,40 v 50"/>
                         </Canvas>
                         <Canvas Grid.Row="2" Grid.Column="2">
-                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle_2" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRShiftCircle_2" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -752,8 +751,8 @@
                                      Text="&lt;&lt;&lt;"
                           />
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRShiftX1Cell_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRShiftCell_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                         </Canvas>
                       </Grid>
@@ -779,10 +778,10 @@
                         </Grid.RowDefinitions>
                         <Canvas Grid.Row="1" Grid.Column="0">
                           <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QROutX1Cell_3" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRAddCell_3" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRAdd_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_3" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_3" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -792,11 +791,11 @@
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="1">
                           <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRXORX1Cell_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                           <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
-                          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle_3">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_3">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -806,7 +805,7 @@
                           <Path Canvas.Left="30" Stroke="Black" StrokeThickness="1" Data="M 10,30 v 170"/>
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="2">
-                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle_3" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRShiftCircle_3" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -819,8 +818,8 @@
                                      Text="&lt;&lt;&lt;"
                           />
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRShiftX1Cell_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                         </Canvas>
                       </Grid>
@@ -846,10 +845,10 @@
                         </Grid.RowDefinitions>
                         <Canvas Grid.Row="3" Grid.Column="0">
                           <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QROutX1Cell_4" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRAddCell_4" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRAdd_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_4" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_4" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -859,11 +858,11 @@
                         </Canvas>
                         <Canvas Grid.Row="2" Grid.Column="1">
                           <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRXORX1Cell_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRXORCell_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                           <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
-                          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle_4">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_4">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -871,7 +870,7 @@
                           <Path Stroke="Black" StrokeThickness="1" Data="M 40,40 v 50"/>
                         </Canvas>
                         <Canvas Grid.Row="2" Grid.Column="2">
-                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle_4" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRShiftCircle_4" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
@@ -884,8 +883,8 @@
                                      Text="&lt;&lt;&lt;"
                           />
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
-                          <Border Name="QRShiftX1Cell_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          <Border Name="QRShiftCell_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
                         </Canvas>
                       </Grid>

@@ -492,6 +492,28 @@ namespace Cryptool.Plugins.ChaCha
             unmark.AddToUndo(MarkPaths);
             return copyActions;
         }
+
+        public void Clear(params Border[] borders)
+        {
+            foreach(Border b in borders)
+            {
+                UnsetBackground(b);
+                UnmarkBorder(b);
+                if (b.Child is TextBlock tblock)
+                {
+                    Clear(tblock);
+                }
+                else if (b.Child is RichTextBox rtb)
+                {
+                    Clear(rtb);
+                }
+                else if (b.Child is TextBox tbox)
+                {
+                    Clear(tbox);
+                }
+            }
+        }
+
         #endregion
 
         #region Shape API
@@ -522,6 +544,11 @@ namespace Cryptool.Plugins.ChaCha
                 SetShapeStrokeColor(s, Brushes.Black);
                 SetShapeStroke(s, 1);
             }
+        }
+
+        public void Clear(params Shape[] shapes)
+        {
+            UnmarkShape(shapes);
         }
         #endregion
 
