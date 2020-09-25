@@ -560,18 +560,56 @@
                   <Border Width="65" Height="40" Name="QROutDCellv2" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="180">
                     <TextBox Style="{StaticResource hexTextBox}" Name="QROutDv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
+                  <!-- General paths (unnamed) -->
                   <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInACellv2, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
+                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 648 c 0 -10 20 -10 20 0 H 1370"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Red" StrokeThickness="1" Data="M 0,20 h 184 c 0 -10 20 -10 20 0"
+                  <Path Stroke="Blue" StrokeThickness="1" Data="M 0,20 h 55" 
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
-                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
-                  <Path Stroke="Red" StrokeThickness="1" Data="M 0,20 h 184 c 0 -10 20 -10 20 0"
+                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 648 c 0 -10 20 -10 20 0 H 1370"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
                   <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
                         Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <!-- Input paths (named) -->
+                  <!-- First box -->
+                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_1" Data="M 0,20 h 50 m 4,0 v 60 h -55 M 60,20 h 20"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInACellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_1" Data="M 0,20 h 140 m 9,-10 v -170 h -10 M 159,20 h 5"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_1" Data="M 229,20 h 5 m 20,0 h 5"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <!-- Second box -->
+                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_2" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_2" Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_2" Data="M 563,20 h 5 m 20,0 h 5"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <!-- Third box -->
+                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_3" Data="M -529,20 H 50 m 4,0 v 60 h -65 M 60,20 h 20"
+                        Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInACellv2, Path=(Canvas.Top)}" Panel.ZIndex="0"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_3" Data="M -344,20 H 140 m 9,-10 v -170 h -10 M 159,20 h 5"
+                        Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_3" Data="M 229,20 h 5 m 20,0 h 5"
+                        Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <!-- Fourth box -->
+                  <Path Stroke="Black" StrokeThickness="1" Name="AddPath_4" Data="M -195,20 H 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64"
+                        Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="XORPath_4" Data="M -10,20 H 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10"
+                        Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="ShiftPath_4" Data="M 563,20 h 5 m 20,0 h 5"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <!-- Output paths -->
+                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X1" Data="M 0,20 h 563"
+                        Canvas.Left="872" Canvas.Top="{ Binding ElementName=QRInACellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X2" Data="M 0,20 h 44"
+                        Canvas.Left="1391" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X3" Data="M 0,20 h 229"
+                        Canvas.Left="1206" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Name="OutputPath_X4" Data="M 0,20 h 378"
+                        Canvas.Left="1057" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <!-- Grid for qr detail boxes -->
                   <Grid Canvas.Left="65" Width="1370" Height="260" Canvas.Top="-20">
                     <Grid.ColumnDefinitions>
                       <ColumnDefinition Width="0.0248*"/> <!--  34/1370 = 0.0248 -->
@@ -607,49 +645,250 @@
                           <RowDefinition Height="60"/>
                           <RowDefinition Height="10"/>
                         </Grid.RowDefinitions>
-                        <Canvas Grid.Row="1" Grid.Column="1">
-                          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_1v2" Fill="White">
+                        <Canvas Grid.Row="1" Grid.Column="0">
+                          <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QROutX1Cellv2_1" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1v2_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <Path Stroke="Black" StrokeThickness="1" Name="AddCirclev2_1" Fill="White">
                             <Path.Data>
-                              <EllipseGeometry Center="11,30" RadiusX="10" RadiusY="10"/>
+                              <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
-                          <Label Canvas.Top="11" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1v2, Path=Stroke}" Content="+"/>
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1v2, Path=Stroke}" Content="+"/>
+                        </Canvas>
+                        <Canvas Grid.Row="4" Grid.Column="1">
+                          <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRXORX1Cellv2_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1v2_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1v2, Path=Stroke}" Text="XOR"/>
+                          <Path Stroke="Black" StrokeThickness="1" Name="XORCirclev2_1">
+                            <Path.Data>
+                              <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                        </Canvas>
+                        <Canvas Grid.Row="1" Grid.Column="1">
+                          <Path Canvas.Left="30" Stroke="Black" StrokeThickness="1" Data="M 10,30 v 170"/>
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="2">
-                          <TextBox Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1v2, Path=Stroke}" Text="XOR"/>
-                          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle_1v2">
+                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCirclev2_1" Fill="White">
                             <Path.Data>
-                              <EllipseGeometry Center="10,30" RadiusX="10" RadiusY="10"/>
-                            </Path.Data>
-                          </Path>
-                        </Canvas>
-                        <Canvas Grid.Row="1" Grid.Column="2">
-                          <Path Stroke="Black" StrokeThickness="1" Data="M 10,30 v 170"/>
-                        </Canvas>
-                        <Canvas Grid.Row="4" Grid.Column="3">
-                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle_1v2" Fill="White">
-                            <Path.Data>
-                              <EllipseGeometry Center="15,30" RadiusX="10" RadiusY="10"/>
+                              <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
                           <TextBlock Width="20" Height="20"
-                                     Canvas.Top="24" Canvas.Left="5"
+                                     Canvas.Top="24" Canvas.Left="50"
                                      HorizontalAlignment="Center" VerticalAlignment="Center"
                                      FontSize="8"
-                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1v2, Path=Stroke}"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCirclev2_1, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
+                          <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRShiftX1Cellv2_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1v2_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
                         </Canvas>
                       </Grid>
                     </Canvas>
-                    <Canvas Width="300" Height="260" Grid.Column="3" Grid.RowSpan="4">
+                    <Canvas Grid.Column="3" Grid.RowSpan="4">
                       <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="75"/>
+                          <!-- Width: 300/4 = 75 -->
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="10"/>
+                          <RowDefinition Height="60"/>
+                          <!-- Height: 260/4 = 65-->
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Canvas Grid.Row="3" Grid.Column="0">
+                          <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QROutX1Cellv2_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1v2_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <Path Stroke="Black" StrokeThickness="1" Name="AddCirclev2_2" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1v2, Path=Stroke}" Content="+"/>
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
+                        </Canvas>
+                        <Canvas Grid.Row="2" Grid.Column="1">
+                          <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRXORX1Cellv2_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1v2_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1v2, Path=Stroke}" Text="XOR"/>
+                          <Path Stroke="Black" StrokeThickness="1" Name="XORCirclev2_2">
+                            <Path.Data>
+                              <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 40,40 v 50"/>
+                        </Canvas>
+                        <Canvas Grid.Row="2" Grid.Column="2">
+                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCirclev2_2" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <TextBlock Width="20" Height="20"
+                                     Canvas.Top="24" Canvas.Left="50"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     FontSize="8"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCirclev2_1, Path=Stroke}"
+                                     Text="&lt;&lt;&lt;"
+                          />
+                          <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRShiftX1Cellv2_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1v2_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                        </Canvas>
+                      </Grid>
                     </Canvas>
-                    <Canvas Width="300" Height="260" Grid.Column="5" Grid.RowSpan="4">
+                    <Canvas Grid.Column="5" Grid.RowSpan="4">
                       <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="75"/>
+                          <!-- Width: 300/4 = 75 -->
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="10"/>
+                          <RowDefinition Height="60"/>
+                          <!-- Height: 260/4 = 65-->
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Canvas Grid.Row="1" Grid.Column="0">
+                          <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QROutX1Cellv2_3" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1v2_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <Path Stroke="Black" StrokeThickness="1" Name="AddCirclev2_3" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1v2, Path=Stroke}" Content="+"/>
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
+                        </Canvas>
+                        <Canvas Grid.Row="4" Grid.Column="1">
+                          <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRXORX1Cellv2_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1v2_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1v2, Path=Stroke}" Text="XOR"/>
+                          <Path Stroke="Black" StrokeThickness="1" Name="XORCirclev2_3">
+                            <Path.Data>
+                              <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                        </Canvas>
+                        <Canvas Grid.Row="1" Grid.Column="1">
+                          <Path Canvas.Left="30" Stroke="Black" StrokeThickness="1" Data="M 10,30 v 170"/>
+                        </Canvas>
+                        <Canvas Grid.Row="4" Grid.Column="2">
+                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCirclev2_3" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <TextBlock Width="20" Height="20"
+                                     Canvas.Top="24" Canvas.Left="50"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     FontSize="8"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCirclev2_1, Path=Stroke}"
+                                     Text="&lt;&lt;&lt;"
+                          />
+                          <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRShiftX1Cellv2_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1v2_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                        </Canvas>
+                      </Grid>
                     </Canvas>
-                    <Canvas Width="300" Height="260" Grid.Column="7" Grid.RowSpan="4">
+                    <Canvas Grid.Column="7" Grid.RowSpan="4">
                       <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="75"/>
+                          <!-- Width: 300/4 = 75 -->
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="10"/>
+                          <RowDefinition Height="60"/>
+                          <!-- Height: 260/4 = 65-->
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Canvas Grid.Row="3" Grid.Column="0">
+                          <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QROutX1Cellv2_4" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QROutX1v2_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <Path Stroke="Black" StrokeThickness="1" Name="AddCirclev2_4" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1v2, Path=Stroke}" Content="+"/>
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
+                        </Canvas>
+                        <Canvas Grid.Row="2" Grid.Column="1">
+                          <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRXORX1Cellv2_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRXORX1v2_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1v2, Path=Stroke}" Text="XOR"/>
+                          <Path Stroke="Black" StrokeThickness="1" Name="XORCirclev2_4">
+                            <Path.Data>
+                              <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 40,40 v 50"/>
+                        </Canvas>
+                        <Canvas Grid.Row="2" Grid.Column="2">
+                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCirclev2_4" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <TextBlock Width="20" Height="20"
+                                     Canvas.Top="24" Canvas.Left="50"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     FontSize="8"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCirclev2_1, Path=Stroke}"
+                                     Text="&lt;&lt;&lt;"
+                          />
+                          <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
+                          <Border Name="QRShiftX1Cellv2_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
+                            <TextBox Style="{StaticResource hexTextBox}" Name="QRShiftX1v2_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                          </Border>
+                        </Canvas>
+                      </Grid>
                     </Canvas>
                   </Grid>
                 </Canvas>
