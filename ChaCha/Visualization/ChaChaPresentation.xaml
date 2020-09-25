@@ -534,6 +534,130 @@
             <Viewbox>
               <Canvas Background="White" Width="1500" Height="160" Grid.Row="1">
                 <Canvas>
+                  <!-- Input cells -->
+                  <Border Width="65" Height="40" Name="QRInACellv2" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="0">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QRInAv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Border Width="65" Height="40" Name="QRInBCellv2" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="60">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QRInBv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Border Width="65" Height="40" Name="QRInCCellv2" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="120">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QRInCv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Border Width="65" Height="40" Name="QRInDCellv2" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="180">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QRInv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <!-- Output cells -->
+                  <Border Width="65" Height="40" Name="QROutACellv2" Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="0">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QROutAv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Border Width="65" Height="40" Name="QROutBCellv2" Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="60">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QROutBv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Border Width="65" Height="40" Name="QROutCCellv2" Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="120">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QROutCv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Border Width="65" Height="40" Name="QROutDCellv2" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="180">
+                    <TextBox Style="{StaticResource hexTextBox}" Name="QROutDv2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                  </Border>
+                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInACellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Red" StrokeThickness="1" Data="M 0,20 h 184 c 0 -10 20 -10 20 0"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Red" StrokeThickness="1" Data="M 0,20 h 184 c 0 -10 20 -10 20 0"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCCellv2, Path=(Canvas.Top)}"/>
+                  <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
+                        Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDCellv2, Path=(Canvas.Top)}"/>
+                  <Grid Canvas.Left="65" Width="1370" Height="260" Canvas.Top="-20">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="0.0248*"/> <!--  34/1370 = 0.0248 -->
+                      <ColumnDefinition Width="0.2189*"/> <!-- 300/1370 = 0.2189 -->
+                      <ColumnDefinition Width="0.0248*"/>
+                      <ColumnDefinition Width="0.2189*"/>
+                      <ColumnDefinition Width="0.0248*"/>
+                      <ColumnDefinition Width="0.2189*"/>
+                      <ColumnDefinition Width="0.0248*"/>
+                      <ColumnDefinition Width="0.2189*"/>
+                      <ColumnDefinition Width="0.0248*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                      <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Canvas Grid.Column="1" Grid.RowSpan="4">
+                      <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                      <Grid>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="75"/> <!-- Width: 300/4 = 75 -->
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                          <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="10"/>
+                          <RowDefinition Height="60"/> <!-- Height: 260/4 = 65-->
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="60"/>
+                          <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <Canvas Grid.Row="1" Grid.Column="1">
+                          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_1v2" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="11,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <Label Canvas.Top="11" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1v2, Path=Stroke}" Content="+"/>
+                        </Canvas>
+                        <Canvas Grid.Row="4" Grid.Column="2">
+                          <TextBox Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1v2, Path=Stroke}" Text="XOR"/>
+                          <Path Stroke="Black" StrokeThickness="1" Name="XORCircle_1v2">
+                            <Path.Data>
+                              <EllipseGeometry Center="10,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                        </Canvas>
+                        <Canvas Grid.Row="1" Grid.Column="2">
+                          <Path Stroke="Black" StrokeThickness="1" Data="M 10,30 v 170"/>
+                        </Canvas>
+                        <Canvas Grid.Row="4" Grid.Column="3">
+                          <Path Stroke="Black" StrokeThickness="1" Name="ShiftCircle_1v2" Fill="White">
+                            <Path.Data>
+                              <EllipseGeometry Center="15,30" RadiusX="10" RadiusY="10"/>
+                            </Path.Data>
+                          </Path>
+                          <TextBlock Width="20" Height="20"
+                                     Canvas.Top="24" Canvas.Left="5"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                                     FontSize="8"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1v2, Path=Stroke}"
+                                     Text="&lt;&lt;&lt;"
+                          />
+                        </Canvas>
+                      </Grid>
+                    </Canvas>
+                    <Canvas Width="300" Height="260" Grid.Column="3" Grid.RowSpan="4">
+                      <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                    </Canvas>
+                    <Canvas Width="300" Height="260" Grid.Column="5" Grid.RowSpan="4">
+                      <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                    </Canvas>
+                    <Canvas Width="300" Height="260" Grid.Column="7" Grid.RowSpan="4">
+                      <Rectangle Stroke="Black" Width="300" Height="260" StrokeThickness="1" />
+                    </Canvas>
+                  </Grid>
+                </Canvas>
+              </Canvas>
+            </Viewbox>
+            <Viewbox Visibility="Hidden">
+              <Canvas Background="White" Width="1500" Height="160" Grid.Row="1">
+                <Canvas>
                   <Border Width="65" Height="40" Name="QRInACell" BorderBrush="Black" BorderThickness="1,1,1,0" Canvas.Left="00" Canvas.Top="-20">
                     <TextBox Style="{StaticResource hexTextBox}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                   </Border>
