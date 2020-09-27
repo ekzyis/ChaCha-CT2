@@ -31,6 +31,7 @@ namespace Cryptool.Plugins.ChaCha
                     _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
                     _pres.InitialCounterLittleEndian[0], versionIsDJB ? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2]
                     );
+                AssertStateAfterQuarterround(_pres, 0);
             }, () =>
             {
                 ClearState();
