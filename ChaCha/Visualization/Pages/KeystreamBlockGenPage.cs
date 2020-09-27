@@ -63,7 +63,7 @@ namespace Cryptool.Plugins.ChaCha
 
             for (int qrIndex = 1; qrIndex <= _pres.Rounds * 4; ++qrIndex)
             {
-                int round = calculateRoundFromQRIndex(qrIndex);
+                int round = CalculateRoundFromQRIndex(qrIndex);
                 AddAction(CopyFromStateTOQRInputActions(_pres, qrIndex, round));
                 AddAction(QRExecActions(_pres, 1, qrIndex));
                 AddAction(QRExecActions(_pres, 2, qrIndex));
@@ -102,8 +102,8 @@ namespace Cryptool.Plugins.ChaCha
                     (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
                     UnmarkAllStateEntriesExcept(pres, i, j, k, l);
                     // update round indicator
-                    int round = calculateRoundFromQRIndex(qrIndex);
-                    pres.CurrentRoundIndex = calculateRoundFromQRIndex(qrIndex);
+                    int round = CalculateRoundFromQRIndex(qrIndex);
+                    pres.CurrentRoundIndex = CalculateRoundFromQRIndex(qrIndex);
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
                     HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
                 });
@@ -440,7 +440,7 @@ namespace Cryptool.Plugins.ChaCha
                     return (-1, -1, -1, -1);
             }
         }
-        private static int calculateRoundFromQRIndex(int qrIndex)
+        private static int CalculateRoundFromQRIndex(int qrIndex)
         {
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
         }
