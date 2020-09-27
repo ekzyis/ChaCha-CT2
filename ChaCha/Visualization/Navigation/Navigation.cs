@@ -615,7 +615,7 @@ namespace Cryptool.Plugins.ChaCha
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex)) + 1;
+            int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex + 1)) + 1;
             Debug.Assert(startIndex < endIndex, $"startIndex ({startIndex}) should be lower than endIndex ({endIndex}) when clicking on next round");
             MoveToActionAsync(endIndex);
         }
