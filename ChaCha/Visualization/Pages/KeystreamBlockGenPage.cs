@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Shapes;
+using System;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -485,6 +483,18 @@ namespace Cryptool.Plugins.ChaCha
             return copyActions;
         }
 
+        private static void AssertStateAfterQuarterround(ChaChaPresentation pres, int qrIndex)
+        {
+            // Check that the state entries in the state matrix visualizatoin are the same as the actual values in the uint[] array
+            string[] expectedState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] visualState = new string[16];
+            for (int i = 0; i < 16; ++i)
+            {
+                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
+                Debug.Assert(expectedState[i] == visualState[i], $"Visual state after quarterround {qrIndex} execution does not match actual state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
+            }
+        }
+
         private static PageAction[] ReplaceStateEntriesWithQROutput(ChaChaPresentation pres, int qrIndex)
         {
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
@@ -494,7 +504,12 @@ namespace Cryptool.Plugins.ChaCha
             previousStateEntries[1] = pres.GetHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
             previousStateEntries[2] = pres.GetHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
             previousStateEntries[3] = pres.GetHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
-            return pres.Nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, previousStateEntries, true);
+            PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, previousStateEntries, true);
+            copyActions[2].AddToExec(() =>
+            {
+                AssertStateAfterQuarterround(pres, qrIndex);
+            });
+            return copyActions;
         }
     }
     partial class Page
