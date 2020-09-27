@@ -22,6 +22,55 @@ namespace Cryptool.Plugins.ChaCha
             Init();
         }
 
+        private void Init()
+        {
+            bool versionIsDJB = _pres.Version == ChaCha.Version.DJB;
+            PageAction initAction = new PageAction(() =>
+            {
+                AddToState(
+                    _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
+                    _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
+                    _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
+                    _pres.InitialCounterLittleEndian[0], versionIsDJB ? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2]
+                    );
+            }, () =>
+            {
+                ClearState();
+            });
+            AddInitAction(initAction);
+            PageAction generalDescriptionAction = new PageAction(() =>
+            {
+                AddBoldToDescription(DESCRIPTION_1);
+            }, () =>
+            {
+                ClearDescription();
+            });
+            PageAction firstColumnRoundDescriptionAction = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(DESCRIPTION_2);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
+            AddAction(generalDescriptionAction);
+            AddAction(firstColumnRoundDescriptionAction);
+
+            for (int qrIndex = 1; qrIndex <= _pres.Rounds * 4; ++qrIndex)
+            {
+                int round = calculateRoundFromQRIndex(qrIndex);
+                AddAction(CopyFromStateTOQRInputActions(_pres, qrIndex, round));
+                AddAction(QRExecActions(_pres, 1, qrIndex));
+                AddAction(QRExecActions(_pres, 2, qrIndex));
+                AddAction(QRExecActions(_pres, 3, qrIndex));
+                AddAction(QRExecActions(_pres, 4, qrIndex));
+                AddAction(QROutputActions(_pres));
+                AddAction(ReplaceStateEntriesWithQROutput(_pres, qrIndex));
+                AddAction(ClearQRDetail(_pres, qrIndex));
+            }
+        }
+
         private static ActionCache GenerateCache(ChaChaPresentation pres)
         {
             return GenerateQuarterroundCache(pres);
@@ -137,54 +186,6 @@ namespace Cryptool.Plugins.ChaCha
         void RemoveLastFromDescription()
         {
             _pres.Nav.RemoveLast(_pres.UIKeystreamBlockGenStepDescription);
-        }
-        private void Init()
-        {
-            bool versionIsDJB = _pres.Version == ChaCha.Version.DJB;
-            PageAction initAction = new PageAction(() =>
-            {
-                AddToState(
-                    _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
-                    _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
-                    _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
-                    _pres.InitialCounterLittleEndian[0], versionIsDJB ? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2]
-                    );
-            }, () =>
-            {
-                ClearState();
-            });
-            AddInitAction(initAction);
-            PageAction generalDescriptionAction = new PageAction(() =>
-            {
-                AddBoldToDescription(DESCRIPTION_1);
-            }, () =>
-            {
-                ClearDescription();
-            });
-            PageAction firstColumnRoundDescriptionAction = new PageAction(() =>
-            {
-                UnboldLastFromDescription();
-                AddBoldToDescription(DESCRIPTION_2);
-            }, () =>
-            {
-                RemoveLastFromDescription();
-                MakeLastBoldInDescription();
-            });
-            AddAction(generalDescriptionAction);
-            AddAction(firstColumnRoundDescriptionAction);
-
-            for (int qrIndex = 1; qrIndex <= _pres.Rounds * 4; ++qrIndex)
-            {
-                int round = calculateRoundFromQRIndex(qrIndex);
-                AddAction(CopyFromStateTOQRInputActions(_pres, qrIndex, round));
-                AddAction(QRExecActions(_pres, 1, qrIndex));
-                AddAction(QRExecActions(_pres, 2, qrIndex));
-                AddAction(QRExecActions(_pres, 3, qrIndex));
-                AddAction(QRExecActions(_pres, 4, qrIndex));
-                AddAction(QROutputActions(_pres));
-                AddAction(ReplaceStateEntriesWithQROutput(_pres, qrIndex));
-                AddAction(ClearQRDetail(_pres, qrIndex));
-            }
         }
 
         public static object GetIndexElement(ChaChaPresentation pres, string nameId, int index, string delimiter = "_")
