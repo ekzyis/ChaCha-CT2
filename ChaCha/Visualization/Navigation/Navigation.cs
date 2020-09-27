@@ -608,7 +608,7 @@ namespace Cryptool.Plugins.ChaCha
                 // We are currently at the start of a round. Go to previous round.
                 endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex - 1)) + 1;
             }
-            Debug.Assert(startIndex > endIndex);
+            Debug.Assert(startIndex > endIndex, $"startIndex ({startIndex}) should be higher than endIndex ({endIndex}) when clicking on previous round");
             MoveToActionAsync(endIndex);
         }
 
@@ -616,7 +616,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             int startIndex = CurrentActionIndex;
             int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex)) + 1;
-            Debug.Assert(startIndex < endIndex);
+            Debug.Assert(startIndex < endIndex, $"startIndex ({startIndex}) should be lower than endIndex ({endIndex}) when clicking on next round");
             MoveToActionAsync(endIndex);
         }
 
