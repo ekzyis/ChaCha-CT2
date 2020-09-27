@@ -112,6 +112,7 @@ namespace Cryptool.Plugins.ChaCha
                 int actionIndex = QUARTERRROUND_FIRST_ACTION_INDEX + (qrIndex - 1) * QUARTERROUND_ACTION_STEP;
                 qrCache.Set(GenerateQuarterroundCacheEntry(qrIndex), actionIndex);
             }
+            return ActionCache.Empty;
             return qrCache;
         }
         private void AddToState(
