@@ -444,6 +444,13 @@ namespace Cryptool.Plugins.ChaCha
         {
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
         }
+        public static string QuarterroundStartLabelWithoutRound(int qrIndex)
+        {
+            // Creates a label where the quarterround indicator is continuous.
+            // For example, the label for the beginning of the third quarterround in the second round: *PREFIX*_7
+            // ( 7 because 1,2,3,4 (first round) 5,6,7 (second round) )
+            return $"{ACTIONLABEL_QR_START}_{qrIndex}";
+        }
         public static string QuarterroundStartLabelWithRound(int qrIndex, int round)
         {
             // Creates a label with quarterround indicator between 1-8.
