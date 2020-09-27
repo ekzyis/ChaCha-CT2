@@ -152,6 +152,9 @@ namespace Cryptool.Plugins.ChaCha
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen10);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen11);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen12);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen13);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen14);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen15);
         }
         private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
         {
