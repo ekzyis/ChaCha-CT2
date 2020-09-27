@@ -328,7 +328,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRAdd", actionIndex), pres.GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRAdd", actionIndex), pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRAdd", actionIndex));
@@ -353,7 +353,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", actionIndex), pres.GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", actionIndex), pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRXOR", actionIndex));
@@ -378,7 +378,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", actionIndex), pres.GetHexResult(ResultType.QR_ADD_X1_X2, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", actionIndex), pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRShift", actionIndex));
@@ -387,12 +387,30 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { mark, exec, unmark };
         }
 
+        private static void AssertQRExecActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
+        {
+            int resultIndex = ResultIndex(actionIndex, qrIndex);
+            string add = ((TextBox)GetIndexElement(pres, "QRAdd", actionIndex)).Text;
+            string expectedAdd = pres.GetHexResult(ResultType.QR_ADD, resultIndex);
+            string xor = ((TextBox)GetIndexElement(pres, "QRXOR", actionIndex)).Text;
+            string expectedXor = pres.GetHexResult(ResultType.QR_XOR, resultIndex);
+            string shift = ((TextBox)GetIndexElement(pres, "QRShift", actionIndex)).Text;
+            string expectedShift = pres.GetHexResult(ResultType.QR_SHIFT, resultIndex);
+            Debug.Assert(add == expectedAdd, $"Visual value after ADD execution does not match actual value! expected {expectedAdd}, got {add}");
+            Debug.Assert(xor == expectedXor, $"Visual value after XOR execution does not match actual value! expected {expectedXor}, got {xor}");
+            Debug.Assert(shift == expectedShift, $"Visual value after SHIFT execution does not match actual value! expected {expectedShift}, got {shift}");
+        }
+
         private static PageAction[] QRExecActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
         {
             List<PageAction> actions = new List<PageAction>();
             PageAction[] execAdd = ExecAddActions(pres, actionIndex, qrIndex);
             PageAction[] execXOR = ExecXORActions(pres, actionIndex, qrIndex);
             PageAction[] execShift = ExecShiftActions(pres, actionIndex, qrIndex);
+            execShift[2].AddToExec(() =>
+            {
+                AssertQRExecActions(pres, actionIndex, qrIndex);
+            });
             actions.AddRange(execAdd);
             actions.AddRange(execXOR);
             actions.AddRange(execShift);
