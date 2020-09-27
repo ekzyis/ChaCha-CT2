@@ -716,7 +716,7 @@
                           <Border Name="QRAddCell_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <Path Stroke="Black" StrokeThickness="1" Name="AddCircle_2" Fill="White">
+                          <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_2" Fill="White">
                             <Path.Data>
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
