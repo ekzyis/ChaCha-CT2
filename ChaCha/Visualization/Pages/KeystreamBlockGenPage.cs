@@ -241,7 +241,7 @@ namespace Cryptool.Plugins.ChaCha
 
                 pres.Nav.Clear((Shape)GetIndexElement(pres, "QRShiftPath", i));
                 pres.Nav.Clear((Border)GetIndexElement(pres, "QRShiftCell", i));
-                pres.Nav.Clear((Border)GetIndexElement(pres, "QRShiftCircle", i));
+                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRShiftCircle", i));
             }
         }
         public static PageAction ClearQRDetail(ChaChaPresentation pres, int qrIndex)
