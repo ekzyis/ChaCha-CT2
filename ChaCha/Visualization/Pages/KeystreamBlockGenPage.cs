@@ -253,16 +253,12 @@ namespace Cryptool.Plugins.ChaCha
             string qrInB = pres.GetHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
             string qrInC = pres.GetHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
             string qrInD = pres.GetHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
-            string[,] qrDetailValues = new string[4, 7];
+            string[,] qrDetailValues = new string[4, 3];
             for (int i = 0; i < 4; ++i)
             {
-                qrDetailValues[i, 0] = pres.GetHexResult(ResultType.QR_INPUT_X1, i + qrIndex - 1);
-                qrDetailValues[i, 1] = pres.GetHexResult(ResultType.QR_INPUT_X2, i + qrIndex - 1);
-                qrDetailValues[i, 2] = pres.GetHexResult(ResultType.QR_INPUT_X3, i + qrIndex - 1);
-                qrDetailValues[i, 3] = pres.GetHexResult(ResultType.QR_OUTPUT_X1, i + qrIndex - 1);
-                qrDetailValues[i, 4] = pres.GetHexResult(ResultType.QR_OUTPUT_X2, i + qrIndex - 1);
-                qrDetailValues[i, 5] = pres.GetHexResult(ResultType.QR_OUTPUT_X3, i + qrIndex - 1);
-                qrDetailValues[i, 6] = pres.GetHexResult(ResultType.QR_XOR, i + qrIndex - 1);
+                qrDetailValues[i, 0] = pres.GetHexResult(ResultType.QR_ADD, i + qrIndex - 1);
+                qrDetailValues[i, 1] = pres.GetHexResult(ResultType.QR_XOR, i + qrIndex - 1);
+                qrDetailValues[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT, i + qrIndex - 1);
             }
             string qrOutA = pres.GetHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
             string qrOutB = pres.GetHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
@@ -280,13 +276,9 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QRInD, qrInD);
                 for (int i = 1; i <= 4; ++i)
                 {
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX1", i),  qrDetailValues[i - 1, 0]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX2", i),  qrDetailValues[i - 1, 1]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRInX3", i),  qrDetailValues[i - 1, 2]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX1", i), qrDetailValues[i - 1, 3]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX2", i), qrDetailValues[i - 1 , 4]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QROutX3", i), qrDetailValues[i - 1, 5]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", i),   qrDetailValues[i - 1, 6]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRAdd", i), qrDetailValues[i - 1, 0]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", i),   qrDetailValues[i - 1, 1]);
+                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", i), qrDetailValues[i - 1, 2]);
                 }
                 pres.Nav.Replace(pres.QROutA, qrOutA);
                 pres.Nav.Replace(pres.QROutB, qrOutB);
