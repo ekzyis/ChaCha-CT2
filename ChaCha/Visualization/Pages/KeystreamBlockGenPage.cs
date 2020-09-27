@@ -14,6 +14,11 @@ namespace Cryptool.Plugins.ChaCha
         static string DESCRIPTION_1 = "To generate a keystream block, we apply the ChaCha Hash function to the state. "
                     + "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.";
         static string DESCRIPTION_2 = "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ";
+
+
+        const string ACTIONLABEL_QR_START = "QUARTERROUND";
+        const string ACTIONLABEL_ROUND_START = "ROUND";
+
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement, GenerateCache(pres))
         {
             _pres = pres;
@@ -439,6 +444,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
         }
+        public static string QuarterroundStartLabel(int qrIndex, int round)
+        {
+            return $"{ACTIONLABEL_QR_START}_{qrIndex}_{round}";
+        }
+        public static string RoundStartLabel(int round)
+        {
+            return $"{ACTIONLABEL_ROUND_START}_{round}";
+        }
         private static PageAction[] CopyFromStateTOQRInputActions(ChaChaPresentation pres, int qrIndex, int round)
         {
             uint[] state = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, (round * 4) - 1);
@@ -470,7 +483,7 @@ namespace Cryptool.Plugins.ChaCha
                     pres.Nav.Replace(pres.CurrentRound, text);
                 });
                 copyActions[0].Add(updateRoundCount);
-                copyActions[0].AddLabel(string.Format("_ROUND_ACTION_LABEL_{0}", round));
+                copyActions[0].AddLabel(RoundStartLabel(round));
             }
             int QR_ARROW_MAX_INDEX = 8;
             (int, int) calculateQRArrowIndex(int qrIndex_)
@@ -494,7 +507,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
             });
             copyActions[0].Add(updateQRArrow);
-            copyActions[0].AddLabel(string.Format("_QR_ACTION_LABEL_{0}_{1}", ((qrIndex - 1) % 4) + 1, round));
+            copyActions[0].AddLabel(QuarterroundStartLabel(qrIndex, round));
             return copyActions;
         }
 
