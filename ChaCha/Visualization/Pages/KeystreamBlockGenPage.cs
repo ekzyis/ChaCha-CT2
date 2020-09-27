@@ -446,7 +446,9 @@ namespace Cryptool.Plugins.ChaCha
         }
         public static string QuarterroundStartLabel(int qrIndex, int round)
         {
-            return $"{ACTIONLABEL_QR_START}_{qrIndex}_{round}";
+            // Creates a label with quarterround indicator between 1-8.
+            // For example, the label for the beginning of third quarterround in the secound round: *PREFIX*_3_2
+            return $"{ACTIONLABEL_QR_START}_{((qrIndex - 1) % 4) + 1}_{round}";
         }
         public static string RoundStartLabel(int round)
         {
