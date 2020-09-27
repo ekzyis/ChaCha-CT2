@@ -654,7 +654,7 @@ namespace Cryptool.Plugins.ChaCha
                     roundLabelSearchIndex = CurrentRoundIndex;
                 }
             }
-            string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabel(qrLabelSearchIndex, roundLabelSearchIndex);
+            string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(qrLabelSearchIndex, roundLabelSearchIndex);
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel) + 1;
             MoveToActionAsync(qrActionIndex);
         }

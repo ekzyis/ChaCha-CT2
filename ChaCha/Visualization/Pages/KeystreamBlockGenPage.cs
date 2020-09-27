@@ -444,7 +444,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
         }
-        public static string QuarterroundStartLabel(int qrIndex, int round)
+        public static string QuarterroundStartLabelWithRound(int qrIndex, int round)
         {
             // Creates a label with quarterround indicator between 1-8.
             // For example, the label for the beginning of third quarterround in the secound round: *PREFIX*_3_2
@@ -509,7 +509,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
             });
             copyActions[0].Add(updateQRArrow);
-            copyActions[0].AddLabel(QuarterroundStartLabel(qrIndex, round));
+            copyActions[0].AddLabel(QuarterroundStartLabelWithRound(qrIndex, round));
             return copyActions;
         }
 
