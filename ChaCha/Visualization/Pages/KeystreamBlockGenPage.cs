@@ -353,7 +353,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", actionIndex), pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", actionIndex), pres.GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRXOR", actionIndex));
@@ -378,7 +378,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", actionIndex), pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", actionIndex), pres.GetHexResult(ResultType.QR_SHIFT, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRShift", actionIndex));
