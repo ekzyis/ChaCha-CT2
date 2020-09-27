@@ -383,10 +383,6 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
                 });
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
                 // diagonal round
                 state = QuarterroundState(state, 0, 5, 10, 15);
                 DispatchToPresentation(delegate
@@ -404,10 +400,6 @@ namespace Cryptool.Plugins.ChaCha
                     _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
                 });
                 state = QuarterroundState(state, 3, 4, 9, 14);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
                 DispatchToPresentation(delegate
                 {
                     _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
