@@ -386,56 +386,168 @@
                   <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <!-- Row 0 -->
-                <Border Name="UIKeystreamBlockGenCell_0" Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0"/>
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_0">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_0_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_1" Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1"/>
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_1_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_2" Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2"/>
+                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_2">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_2_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_3" Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3"/>
+                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_3">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_3_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <!-- Row 1 -->
-                <Border Name="UIKeystreamBlockGenCell_4" Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4"/>
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_4">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_4_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_5" Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5"/>
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_5">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_5_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_6" Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6"/>
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_6">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_6_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_7" Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7"/>
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_7">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_7_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <!-- Row 2 -->
-                <Border Name="UIKeystreamBlockGenCell_8" Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_8">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_8_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_9" Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9"/>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_9">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_9_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_10" Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10"/>
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_10">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_10_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_11" Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11"/>
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_11">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_11_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <!-- Row 3 -->
-                <Border Name="UIKeystreamBlockGenCell_12" Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12"/>
+                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_12">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_12_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_13" Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13"/>
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_13">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_13_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_14" Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14"/>
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_14">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_14_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Name="UIKeystreamBlockGenCell_15" Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
-                  <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15"/>
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel VerticalAlignment="Center">
+                    <Border Name="UIKeystreamBlockGenCell_15">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15"/>
+                    </Border>
+                    <Border Name="UIKeystreamBlockGenCell_15_1">
+                      <TextBox Style="{StaticResource hexTextBox}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15_1"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
               </Grid>
             </Border>
