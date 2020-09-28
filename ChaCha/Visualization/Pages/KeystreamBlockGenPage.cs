@@ -75,7 +75,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(ReplaceStateEntriesWithQROutput(_pres, qrIndex));
                 AddAction(ClearQRDetail(_pres, qrIndex));
             }
-            AddAction(AddOriginalState(_pres));
+            AddAction(AddOriginalState(_pres, 0));
         }
 
         private ActionCache GenerateCache()
@@ -704,7 +704,7 @@ namespace Cryptool.Plugins.ChaCha
             return copyActions;
         }
 
-        private PageAction[] AddOriginalState(ChaChaPresentation pres)
+        private PageAction[] AddOriginalState(ChaChaPresentation pres, int keyblockNr)
         {
             PageAction showOriginalState = new PageAction(() =>
             {
@@ -713,7 +713,17 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearStateSecondaryRow();
             });
-            return new PageAction[] { showOriginalState };
+            string[] previousState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, (keyblockNr + 1) * pres.Rounds * 4).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            PageAction addStates = new PageAction(() =>
+            {
+                ClearStateSecondaryRow();
+                ReplaceState(pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+            }, () =>
+            {
+                ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
+                ReplaceState(previousState);
+            });
+            return new PageAction[] { showOriginalState, addStates };
         }
     }
     partial class Page

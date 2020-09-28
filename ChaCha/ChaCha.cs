@@ -410,6 +410,10 @@ namespace Cryptool.Plugins.ChaCha
             {
                 state[i] += originalState[i];
             }
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (uint[])(state.Clone()));
+            });
             // each 4 byte chunk as little-endian
             for (int i = 0; i < state.Length; ++i)
             {
@@ -417,6 +421,10 @@ namespace Cryptool.Plugins.ChaCha
                 Array.Reverse(b);
                 state[i] = ToUInt32(b, 0);
             }
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (uint[])(state.Clone()));
+            });
             return state;
         }
 
