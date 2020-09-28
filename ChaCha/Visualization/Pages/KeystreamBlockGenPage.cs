@@ -517,6 +517,7 @@ namespace Cryptool.Plugins.ChaCha
             });
             copyActions[0].Add(updateQRArrow);
             copyActions[0].AddLabel(QuarterroundStartLabelWithRound(qrIndex, round));
+            copyActions[0].AddLabel(QuarterroundStartLabelWithoutRound(qrIndex));
             return copyActions;
         }
 
