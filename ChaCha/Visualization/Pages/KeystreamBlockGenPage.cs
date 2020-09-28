@@ -148,7 +148,33 @@ namespace Cryptool.Plugins.ChaCha
             _pres.Nav.Add(_pres.UIKeystreamBlockGen14, state14);
             _pres.Nav.Add(_pres.UIKeystreamBlockGen15, state15);
         }
-        private void ReplaceState(string[] state)
+        private void ReplaceStateSecondaryRow(string[] state)
+        {
+            ReplaceStateSecondaryRow(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+        }
+        private void ReplaceStateSecondaryRow(string state0, string state1, string state2, string state3,
+                string state4, string state5, string state6, string state7,
+                string state8, string state9, string state10, string state11,
+                string state12, string state13, string state14, string state15)
+        {
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen0_1, state0);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen1_1, state1);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen2_1, state2);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen3_1, state3);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen4_1, state4);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen5_1, state5);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen6_1, state6);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen7_1, state7);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen8_1, state8);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen9_1, state9);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen10_1, state10);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen11_1, state11);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen12_1, state12);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen13_1, state13);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen14_1, state14);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen15_1, state15);
+        }
+            private void ReplaceState(string[] state)
         {
             ReplaceState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
         }
@@ -193,6 +219,25 @@ namespace Cryptool.Plugins.ChaCha
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen13);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen14);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen15);
+        }
+        private void ClearStateSecondaryRow()
+        {
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen0_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen1_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen2_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen3_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen4_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen5_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen6_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen7_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen8_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen9_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen10_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen11_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen12_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen13_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen14_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen15_1);
         }
         private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
         {
@@ -663,10 +708,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             PageAction showOriginalState = new PageAction(() =>
             {
-                AddToState(originalState.Select(x => $"+ {x}").ToArray());
+                ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
             }, () =>
             {
-                ReplaceState(originalState);
+                ClearStateSecondaryRow();
             });
             return new PageAction[] { showOriginalState };
         }
