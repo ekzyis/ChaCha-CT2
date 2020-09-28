@@ -234,14 +234,24 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         const int START_VISUALIZATION_ON_PAGE_INDEX = 0;
-        private void InitVisualization()
+        private void InitStaticVisualization()
+        {
+            // Static visualization means that only the first page is added.
+            // Other pages are added when execution has finished and thus all variables needed exist.
+            _pages.Clear();
+            AddPage(Page.LandingPage(this));
+            CollapseAllPagesExpect(0);
+            InitPageNavigationBar(CurrentPage);
+            InitActionNavigationBar(CurrentPage);
+        }
+
+        private void InitExecutableVisualization()
         {
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
             AddPage(Page.KeystreamBlockGenPage(this));
-
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
@@ -365,8 +375,7 @@ namespace Cryptool.Plugins.ChaCha
             get => _executionFinished;
             set
             {
-                // reload pages to use new variables
-                InitVisualization();
+                InitExecutableVisualization();
                 MovePages(START_VISUALIZATION_ON_PAGE_INDEX - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");

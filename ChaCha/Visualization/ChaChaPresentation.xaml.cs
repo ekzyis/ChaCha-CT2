@@ -18,7 +18,7 @@ namespace Cryptool.Plugins.ChaCha
             uint_resultsManager = new IntermediateResultsManager<uint>();
             uint_array_resultsManager = new IntermediateResultsManager<uint[]>();
             InitializeComponent();
-            InitVisualization();
+            InitStaticVisualization();
             DataContext = this;
         }
 
