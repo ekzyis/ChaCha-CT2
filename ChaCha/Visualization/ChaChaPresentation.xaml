@@ -685,6 +685,7 @@
                                      TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
+                          <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="16"/>
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                           <Border Name="QRShiftCell_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -750,6 +751,7 @@
                                      TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
+                          <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="12"/>
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                           <Border Name="QRShiftCell_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -817,6 +819,7 @@
                                      TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
+                          <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="8"/>
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                           <Border Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
@@ -882,6 +885,7 @@
                                      TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
+                          <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="7"/>
                           <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                           <Border Name="QRShiftCell_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
