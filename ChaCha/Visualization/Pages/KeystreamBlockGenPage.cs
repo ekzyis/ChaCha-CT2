@@ -309,77 +309,153 @@ namespace Cryptool.Plugins.ChaCha
         // TODO: Following three functions are very similar and can be refactored into one function
         private static PageAction[] ExecAddActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
         {
+            (Border, Border) GetInputs(int actionIndex_)
+            {
+                switch(actionIndex_)
+                {
+                    case 1:
+                        return (pres.QRInACell, pres.QRInBCell);
+                    case 2:
+                        return (pres.QRInCCell, pres.QRShiftCell_1);
+                    case 3:
+                        return (pres.QRAddCell_1, pres.QRShiftCell_2);
+                    case 4:
+                        return (pres.QRAddCell_2, pres.QRShiftCell_3);
+                    default:
+                        Debug.Assert(false, $"No add inputs found for actionIndex {actionIndex_}");
+                        return (null, null);
+
+                }
+            }
+            Border input1, input2;
+            (input1, input2) = GetInputs(actionIndex);
+            Border addCell = (Border)GetIndexElement(pres, "QRAddCell", actionIndex);
+            Shape addPath = (Shape)GetIndexElement(pres, "QRAddPath", actionIndex);
+            Shape addCircle = (Shape)GetIndexElement(pres, "QRAddCircle", actionIndex);
+            TextBox addBox = (TextBox)GetIndexElement(pres, "QRAdd", actionIndex);
             void Mark()
             {
-                pres.Nav.MarkShape((Shape)GetIndexElement(pres, "QRAddPath", actionIndex));
-                pres.Nav.MarkShape((Shape)GetIndexElement(pres, "QRAddCircle", actionIndex));
-                pres.Nav.MarkBorder((Border)GetIndexElement(pres, "QRAddCell", actionIndex));
+                pres.Nav.MarkShape(addPath, addCircle);
+                pres.Nav.SetCopyBackground(input1, input2);
             }
             void Unmark()
             {
-                pres.Nav.UnmarkShape((Shape)GetIndexElement(pres, "QRAddPath", actionIndex));
-                pres.Nav.UnmarkShape((Shape)GetIndexElement(pres, "QRAddCircle", actionIndex));
-                pres.Nav.UnmarkBorder((Border)GetIndexElement(pres, "QRAddCell", actionIndex));
+                pres.Nav.UnmarkShape(addPath, addCircle);
+                pres.Nav.UnsetBackground(input1, input2);
             }
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRAdd", actionIndex), pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.SetCopyBackground(addCell);
+                pres.Nav.Replace(addBox, pres.GetHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
-                pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRAdd", actionIndex));
+                pres.Nav.UnsetBackground(addCell);
+                pres.Nav.Clear(addBox);
             });
             PageAction unmark = new PageAction(Unmark, Mark);
+            unmark.AddToExec(() =>
+            {
+                pres.Nav.UnsetBackground(addCell);
+            });
+            unmark.AddToUndo(() =>
+            {
+                pres.Nav.SetCopyBackground(addCell);
+            });
             return new PageAction[] { mark, exec, unmark };
         }
         private static PageAction[] ExecXORActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
         {
+            (Border, Border) GetInputs(int actionIndex_)
+            {
+                switch (actionIndex_)
+                {
+                    case 1:
+                        return (pres.QRAddCell_1, pres.QRInDCell);
+                    case 2:
+                        return (pres.QRInBCell, pres.QRAddCell_2);
+                    case 3:
+                        return (pres.QRAddCell_3, pres.QRShiftCell_1);
+                    case 4:
+                        return (pres.QRShiftCell_2, pres.QRAddCell_4);
+                    default:
+                        Debug.Assert(false, $"No add inputs found for actionIndex {actionIndex_}");
+                        return (null, null);
+
+                }
+            }
+            Border input1, input2;
+            (input1, input2) = GetInputs(actionIndex);
+            Border xorCell = (Border)GetIndexElement(pres, "QRXORCell", actionIndex);
+            Shape xorPath = (Shape)GetIndexElement(pres, "QRXORPath", actionIndex);
+            Shape xorCircle = (Shape)GetIndexElement(pres, "QRXORCircle", actionIndex);
+            TextBox xorBox = (TextBox)GetIndexElement(pres, "QRXOR", actionIndex);
             void Mark()
             {
-                pres.Nav.MarkShape((Shape)GetIndexElement(pres, "QRXORPath", actionIndex));
-                pres.Nav.MarkShape((Shape)GetIndexElement(pres, "QRXORCircle", actionIndex));
-                pres.Nav.MarkBorder((Border)GetIndexElement(pres, "QRXORCell", actionIndex));
+                pres.Nav.MarkShape(xorPath, xorCircle);
+                pres.Nav.SetCopyBackground(input1, input2);
             }
             void Unmark()
             {
-                pres.Nav.UnmarkShape((Shape)GetIndexElement(pres, "QRXORPath", actionIndex));
-                pres.Nav.UnmarkShape((Shape)GetIndexElement(pres, "QRXORCircle", actionIndex));
-                pres.Nav.UnmarkBorder((Border)GetIndexElement(pres, "QRXORCell", actionIndex));
+                pres.Nav.UnmarkShape(xorPath, xorCircle);
+                pres.Nav.UnsetBackground(input1, input2);
             }
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", actionIndex), pres.GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.SetCopyBackground(xorCell);
+                pres.Nav.Replace(xorBox, pres.GetHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
-                pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRXOR", actionIndex));
+                pres.Nav.UnsetBackground(xorCell);
+                pres.Nav.Clear(xorBox);
             });
             PageAction unmark = new PageAction(Unmark, Mark);
+            unmark.AddToExec(() =>
+            {
+                pres.Nav.UnsetBackground(xorCell);
+            });
+            unmark.AddToUndo(() =>
+            {
+                pres.Nav.SetCopyBackground(xorCell);
+            });
             return new PageAction[] { mark, exec, unmark };
         }
         private static PageAction[] ExecShiftActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
         {
+            Border input = (Border)GetIndexElement(pres, "QRXORCell", actionIndex);
+            Border shiftCell = (Border)GetIndexElement(pres, "QRShiftCell", actionIndex);
+            Shape shiftPath = (Shape)GetIndexElement(pres, "QRShiftPath", actionIndex);
+            Shape shiftCircle = (Shape)GetIndexElement(pres, "QRShiftCircle", actionIndex);
+            TextBox shiftBox = (TextBox)GetIndexElement(pres, "QRShift", actionIndex);
             void Mark()
             {
-                pres.Nav.MarkShape((Shape)GetIndexElement(pres, "QRShiftPath", actionIndex));
-                pres.Nav.MarkShape((Shape)GetIndexElement(pres, "QRShiftCircle", actionIndex));
-                pres.Nav.MarkBorder((Border)GetIndexElement(pres, "QRShiftCell", actionIndex));
+                pres.Nav.MarkShape(shiftPath, shiftCircle);
+                pres.Nav.SetCopyBackground(input);
             }
             void Unmark()
             {
-                pres.Nav.UnmarkShape((Shape)GetIndexElement(pres, "QRShiftPath", actionIndex));
-                pres.Nav.UnmarkShape((Shape)GetIndexElement(pres, "QRShiftCircle", actionIndex));
-                pres.Nav.UnmarkBorder((Border)GetIndexElement(pres, "QRShiftCell", actionIndex));
+                pres.Nav.UnmarkShape(shiftPath, shiftCircle);
+                pres.Nav.UnsetBackground(input);
             }
             PageAction mark = new PageAction(Mark, Unmark);
             PageAction exec = new PageAction(() =>
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", actionIndex), pres.GetHexResult(ResultType.QR_SHIFT, ResultIndex(actionIndex, qrIndex)));
+                pres.Nav.SetCopyBackground(shiftCell);
+                pres.Nav.Replace(shiftBox, pres.GetHexResult(ResultType.QR_SHIFT, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
-                pres.Nav.Clear((TextBox)GetIndexElement(pres, "QRShift", actionIndex));
+                pres.Nav.Clear(shiftBox);
             });
             PageAction unmark = new PageAction(Unmark, Mark);
+            unmark.AddToExec(() =>
+            {
+                pres.Nav.UnsetBackground(shiftCell);
+            });
+            unmark.AddToUndo(() =>
+            {
+                pres.Nav.SetCopyBackground(shiftCell);
+            });
             return new PageAction[] { mark, exec, unmark };
         }
 

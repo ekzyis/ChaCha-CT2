@@ -294,9 +294,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             b.Background = background;
         }
-        public void SetCopyBackground(Border b)
+        public void SetCopyBackground(params Border[] borders)
         {
-            SetBackground(b, _copyBrush);
+            foreach(Border b in borders)
+            {
+                SetBackground(b, _copyBrush);
+            }
         }
         public void UnsetBackground(params Border[] borders)
         {
@@ -532,10 +535,13 @@ namespace Cryptool.Plugins.ChaCha
                 SetShapeStroke(s, stroke);
             }
         }
-        public void MarkShape(Shape s)
+        public void MarkShape(params Shape[] shapes)
         {
-            SetShapeStrokeColor(s, _markBrush);
-            SetShapeStroke(s, 2);
+            foreach(Shape s in shapes)
+            {
+                SetShapeStrokeColor(s, _markBrush);
+                SetShapeStroke(s, 2);
+            }
         }
         public void UnmarkShape(params Shape[] shapes)
         {
