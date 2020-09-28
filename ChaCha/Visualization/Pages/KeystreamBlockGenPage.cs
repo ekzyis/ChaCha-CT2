@@ -24,8 +24,8 @@ namespace Cryptool.Plugins.ChaCha
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement)
         {
             _pres = pres;
-            Cache = GenerateCache();
             Init();
+            Cache = GenerateCache();
             versionIsDJB = _pres.Version == ChaCha.Version.DJB;
             originalState = new string[] { _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
                     _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
@@ -84,6 +84,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private ActionCache GenerateQuarterroundCache()
         {
+            Debug.Assert(Actions.Length != 0, $"Actions empty while generating cache. Did you initialize the actions?");
             CachePageAction GenerateQuarterroundCacheEntry(int qrIndex)
             {
                 CachePageAction cache = new CachePageAction();
