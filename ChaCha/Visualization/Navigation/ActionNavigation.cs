@@ -471,7 +471,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 foreach (Shape s in paths)
                 {
-                    SetShapeStroke(s, 5);
+                    MarkShape(s);
                 }
             }
 
@@ -479,7 +479,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 foreach (Shape s in paths)
                 {
-                    SetShapeStroke(s, 1);
+                    UnmarkShape(s);
 
                 }
             }
