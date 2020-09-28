@@ -260,9 +260,9 @@ namespace Cryptool.Plugins.ChaCha
             string[,] qrDetailValues = new string[4, 3];
             for (int i = 0; i < 4; ++i)
             {
-                qrDetailValues[i, 0] = pres.GetHexResult(ResultType.QR_ADD, i + qrIndex - 1);
-                qrDetailValues[i, 1] = pres.GetHexResult(ResultType.QR_XOR, i + qrIndex - 1);
-                qrDetailValues[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT, i + qrIndex - 1);
+                qrDetailValues[i, 0] = pres.GetHexResult(ResultType.QR_ADD, i + (qrIndex - 1) * 4);
+                qrDetailValues[i, 1] = pres.GetHexResult(ResultType.QR_XOR, i + (qrIndex - 1) * 4);
+                qrDetailValues[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT, i + (qrIndex - 1) * 4);
             }
             string qrOutA = pres.GetHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
             string qrOutB = pres.GetHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
