@@ -655,14 +655,14 @@
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
-                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1, Path=Stroke}" Content="+"/>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=QRAddCircle_1, Path=Stroke}" Content="+"/>
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="1">
                           <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                           <Border Name="QRXORCell_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_1, Path=Stroke}" Text="XOR"/>
                           <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_1">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
@@ -682,7 +682,7 @@
                                      Canvas.Top="24" Canvas.Left="50"
                                      HorizontalAlignment="Center" VerticalAlignment="Center"
                                      FontSize="8"
-                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=QRShiftCircle_1, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
                           <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="16"/>
@@ -722,7 +722,7 @@
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
-                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1, Path=Stroke}" Content="+"/>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=QRAddCircle_2, Path=Stroke}" Content="+"/>
                           <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
                         </Canvas>
                         <Canvas Grid.Row="2" Grid.Column="1">
@@ -730,7 +730,7 @@
                           <Border Name="QRXORCell_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" Text="XOR"/>
                           <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_2">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
@@ -748,7 +748,7 @@
                                      Canvas.Top="24" Canvas.Left="50"
                                      HorizontalAlignment="Center" VerticalAlignment="Center"
                                      FontSize="8"
-                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=QRShiftCircle_2, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
                           <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="12"/>
@@ -788,7 +788,7 @@
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
-                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1, Path=Stroke}" Content="+"/>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=QRAddCircle_3, Path=Stroke}" Content="+"/>
                           <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
                         </Canvas>
                         <Canvas Grid.Row="4" Grid.Column="1">
@@ -796,7 +796,7 @@
                           <Border Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" Text="XOR"/>
                           <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_3">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
@@ -816,7 +816,7 @@
                                      Canvas.Top="24" Canvas.Left="50"
                                      HorizontalAlignment="Center" VerticalAlignment="Center"
                                      FontSize="8"
-                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=QRShiftCircle_3, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
                           <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="8"/>
@@ -856,7 +856,7 @@
                               <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10"/>
                             </Path.Data>
                           </Path>
-                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=AddCircle_1, Path=Stroke}" Content="+"/>
+                          <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=QRAddCircle_4, Path=Stroke}" Content="+"/>
                           <Path Stroke="Black" StrokeThickness="1" Data="M 20,40 v 50"/>
                         </Canvas>
                         <Canvas Grid.Row="2" Grid.Column="1">
@@ -864,7 +864,7 @@
                           <Border Name="QRXORCell_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                             <TextBox Style="{StaticResource hexTextBox}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
                           </Border>
-                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=XORCircle_1, Path=Stroke}" Text="XOR"/>
+                          <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_4, Path=Stroke}" Text="XOR"/>
                           <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_4">
                             <Path.Data>
                               <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10"/>
@@ -882,7 +882,7 @@
                                      Canvas.Top="24" Canvas.Left="50"
                                      HorizontalAlignment="Center" VerticalAlignment="Center"
                                      FontSize="8"
-                                     TextAlignment="Center" Foreground="{ Binding ElementName=ShiftCircle_1, Path=Stroke}"
+                                     TextAlignment="Center" Foreground="{ Binding ElementName=QRShiftCircle_4, Path=Stroke}"
                                      Text="&lt;&lt;&lt;"
                           />
                           <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="7"/>
