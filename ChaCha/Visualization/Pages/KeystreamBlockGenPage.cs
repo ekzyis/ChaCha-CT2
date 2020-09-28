@@ -109,15 +109,12 @@ namespace Cryptool.Plugins.ChaCha
                 });
                 return cache;
             }
-            int QUARTERROUND_ACTION_STEP = 70;
-            int QUARTERRROUND_FIRST_ACTION_INDEX = 3;
             ActionCache qrCache = new ActionCache();
             for (int qrIndex = 1; qrIndex <= pres.Rounds * 4; ++qrIndex)
             {
-                int actionIndex = QUARTERRROUND_FIRST_ACTION_INDEX + (qrIndex - 1) * QUARTERROUND_ACTION_STEP;
+                int actionIndex = pres.GetLabeledPageActionIndex(QuarterroundStartLabelWithoutRound(qrIndex));
                 qrCache.Set(GenerateQuarterroundCacheEntry(qrIndex), actionIndex);
             }
-            return ActionCache.Empty;
             return qrCache;
         }
         private void AddToState(

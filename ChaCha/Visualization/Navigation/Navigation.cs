@@ -594,7 +594,7 @@ namespace Cryptool.Plugins.ChaCha
             actionNavigationTokenSource?.Cancel();
         }
 
-        private int GetLabeledPageActionIndex(string label)
+        public int GetLabeledPageActionIndex(string label)
         {
             return Array.FindIndex(CurrentActions, pageAction => Array.FindIndex(pageAction.Labels, actionlabel => actionlabel == label) != -1);
         }
