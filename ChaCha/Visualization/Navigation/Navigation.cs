@@ -241,6 +241,7 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
             AddPage(Page.KeystreamBlockGenPage(this));
+
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);

@@ -19,24 +19,25 @@ namespace Cryptool.Plugins.ChaCha
         const string ACTIONLABEL_QR_START = "QUARTERROUND";
         const string ACTIONLABEL_ROUND_START = "ROUND";
 
+        string[] originalState;
+        bool versionIsDJB;
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement)
         {
             _pres = pres;
-            Init();
             Cache = GenerateCache();
+            Init();
+            versionIsDJB = _pres.Version == ChaCha.Version.DJB;
+            originalState = new string[] { _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
+                    _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
+                    _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
+                    _pres.InitialCounterLittleEndian[0], versionIsDJB? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2] };
         }
 
         private void Init()
         {
-            bool versionIsDJB = _pres.Version == ChaCha.Version.DJB;
             PageAction initAction = new PageAction(() =>
             {
-                AddToState(
-                    _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
-                    _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
-                    _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
-                    _pres.InitialCounterLittleEndian[0], versionIsDJB ? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2]
-                    );
+                AddToState(originalState);
                 AssertStateAfterQuarterround(_pres, 0);
             }, () =>
             {
@@ -74,6 +75,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(ReplaceStateEntriesWithQROutput(_pres, qrIndex));
                 AddAction(ClearQRDetail(_pres, qrIndex));
             }
+            AddAction(AddOriginalState(_pres));
         }
 
         private ActionCache GenerateCache()
@@ -118,11 +120,42 @@ namespace Cryptool.Plugins.ChaCha
             }
             return qrCache;
         }
+        private void AddToState(string[] state)
+        {
+            AddToState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+        }
         private void AddToState(
                 string state0, string state1, string state2, string state3,
                 string state4, string state5, string state6, string state7,
                 string state8, string state9, string state10, string state11,
                 string state12, string state13, string state14, string state15)
+        {
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen0, state0);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen1, state1);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen2, state2);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen3, state3);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen4, state4);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen5, state5);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen6, state6);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen7, state7);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen8, state8);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen9, state9);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen10, state10);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen11, state11);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen12, state12);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen13, state13);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen14, state14);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen15, state15);
+        }
+        private void ReplaceState(string[] state)
+        {
+            ReplaceState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+        }
+        private void ReplaceState(
+           string state0, string state1, string state2, string state3,
+           string state4, string state5, string state6, string state7,
+           string state8, string state9, string state10, string state11,
+           string state12, string state13, string state14, string state15)
         {
             _pres.Nav.Replace(_pres.UIKeystreamBlockGen0, state0);
             _pres.Nav.Replace(_pres.UIKeystreamBlockGen1, state1);
@@ -623,6 +656,18 @@ namespace Cryptool.Plugins.ChaCha
                 AssertStateAfterQuarterround(pres, qrIndex);
             });
             return copyActions;
+        }
+
+        private PageAction[] AddOriginalState(ChaChaPresentation pres)
+        {
+            PageAction showOriginalState = new PageAction(() =>
+            {
+                AddToState(originalState.Select(x => $"+ {x}").ToArray());
+            }, () =>
+            {
+                ReplaceState(originalState);
+            });
+            return new PageAction[] { showOriginalState };
         }
     }
     partial class Page
