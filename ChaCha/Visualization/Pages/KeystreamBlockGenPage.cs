@@ -113,7 +113,7 @@ namespace Cryptool.Plugins.ChaCha
             ActionCache qrCache = new ActionCache();
             for (int qrIndex = 1; qrIndex <= _pres.Rounds * 4; ++qrIndex)
             {
-                int actionIndex = ChaChaPresentation.GetLabeledPageActionIndex(QuarterroundStartLabelWithoutRound(qrIndex), Actions);
+                int actionIndex = ChaChaPresentation.GetLabeledPageActionIndex(QuarterroundStartLabelWithoutRound(qrIndex), Actions) + 1;
                 qrCache.Set(GenerateQuarterroundCacheEntry(qrIndex), actionIndex);
             }
             return qrCache;
