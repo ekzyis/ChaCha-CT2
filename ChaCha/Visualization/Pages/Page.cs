@@ -21,7 +21,7 @@ namespace Cryptool.Plugins.ChaCha
         private readonly List<PageAction> _pageActions = new List<PageAction>();
         private readonly List<PageAction> _pageInitActions = new List<PageAction>();
 
-        public ActionCache Cache { get; }
+        public ActionCache Cache { get; protected set; }
         public int ActionFrames => _pageActions.Count;
 
         public PageAction[] Actions => _pageActions.ToArray();

@@ -19,10 +19,11 @@ namespace Cryptool.Plugins.ChaCha
         const string ACTIONLABEL_QR_START = "QUARTERROUND";
         const string ACTIONLABEL_ROUND_START = "ROUND";
 
-        public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement, GenerateCache(pres))
+        public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement)
         {
             _pres = pres;
             Init();
+            Cache = GenerateCache();
         }
 
         private void Init()
@@ -75,24 +76,24 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private static ActionCache GenerateCache(ChaChaPresentation pres)
+        private ActionCache GenerateCache()
         {
-            return GenerateQuarterroundCache(pres);
+            return GenerateQuarterroundCache();
         }
-        private static ActionCache GenerateQuarterroundCache(ChaChaPresentation pres)
+        private ActionCache GenerateQuarterroundCache()
         {
             CachePageAction GenerateQuarterroundCacheEntry(int qrIndex)
             {
                 CachePageAction cache = new CachePageAction();
                 cache.AddToExec(() =>
                 {
-                    ClearDescription(pres);
-                    AddToDescription(pres, DESCRIPTION_1);
-                    AddBoldToDescription(pres, DESCRIPTION_2);
-                    ClearQRDetail(pres);
+                    ClearDescription(_pres);
+                    AddToDescription(_pres, DESCRIPTION_1);
+                    AddBoldToDescription(_pres, DESCRIPTION_2);
+                    ClearQRDetail(_pres);
                     // update state matrix
-                    TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
-                    uint[] stateEntries = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1);
+                    TextBox[] stateTextBoxes = GetStateTextBoxes(_pres);
+                    uint[] stateEntries = _pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1);
                     Debug.Assert(stateTextBoxes.Length == stateEntries.Length);
                     for (int x = 0; x < stateEntries.Length; ++x)
                     {
@@ -100,19 +101,19 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     // highlight corresponding state entries which will be copied into QR detail in next action
                     (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
-                    UnmarkAllStateEntriesExcept(pres, i, j, k, l);
+                    UnmarkAllStateEntriesExcept(_pres, i, j, k, l);
                     // update round indicator
                     int round = CalculateRoundFromQRIndex(qrIndex);
-                    pres.CurrentRoundIndex = CalculateRoundFromQRIndex(qrIndex);
-                    pres.Nav.Replace(pres.CurrentRound, round.ToString());
-                    HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
+                    _pres.CurrentRoundIndex = CalculateRoundFromQRIndex(qrIndex);
+                    _pres.Nav.Replace(_pres.CurrentRound, round.ToString());
+                    HideAllQRArrowsExcept(_pres, ((qrIndex - 1) % 8) + 1);
                 });
                 return cache;
             }
             ActionCache qrCache = new ActionCache();
-            for (int qrIndex = 1; qrIndex <= pres.Rounds * 4; ++qrIndex)
+            for (int qrIndex = 1; qrIndex <= _pres.Rounds * 4; ++qrIndex)
             {
-                int actionIndex = pres.GetLabeledPageActionIndex(QuarterroundStartLabelWithoutRound(qrIndex));
+                int actionIndex = ChaChaPresentation.GetLabeledPageActionIndex(QuarterroundStartLabelWithoutRound(qrIndex), Actions);
                 qrCache.Set(GenerateQuarterroundCacheEntry(qrIndex), actionIndex);
             }
             return qrCache;
