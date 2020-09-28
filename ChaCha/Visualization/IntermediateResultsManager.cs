@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 
 namespace Cryptool.Plugins.ChaCha
@@ -15,13 +16,13 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint> QR_OUTPUT_X1 = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_X2 = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_X3 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_ADD_X1_X2 = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_ADD = new ResultType<uint>();
         public static readonly ResultType<uint> QR_XOR = new ResultType<uint>();
+        public static readonly ResultType<uint> QR_SHIFT = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_A = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_B = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_C = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_D = new ResultType<uint>();
-        public static readonly ResultType<uint[]> CHACHA_HASH_ROUND = new ResultType<uint[]>();
         public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND = new ResultType<uint[]>();
     }
     public class ResultType<T> { }

@@ -594,29 +594,29 @@ namespace Cryptool.Plugins.ChaCha
             actionNavigationTokenSource?.Cancel();
         }
 
-        private int GetLabeledPageActionIndex(string label)
+        public static int GetLabeledPageActionIndex(string label, PageAction[] actions)
         {
-            return Array.FindIndex(CurrentActions, pageAction => Array.FindIndex(pageAction.Labels, actionlabel => actionlabel == label) != -1);
+            return Array.FindIndex(actions, pageAction => Array.FindIndex(pageAction.Labels, actionlabel => actionlabel == label) != -1);
         }
 
         private void PrevRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex)) + 1;
+            int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex), CurrentActions) + 1;
             if(startIndex == endIndex)
             {
                 // We are currently at the start of a round. Go to previous round.
-                endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex - 1)) + 1;
+                endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex - 1), CurrentActions) + 1;
             }
-            Debug.Assert(startIndex > endIndex);
+            Debug.Assert(startIndex > endIndex, $"startIndex ({startIndex}) should be higher than endIndex ({endIndex}) when clicking on previous round");
             MoveToActionAsync(endIndex);
         }
 
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int startIndex = CurrentActionIndex;
-            int endIndex = GetLabeledPageActionIndex(string.Format("_ROUND_ACTION_LABEL_{0}", CurrentRoundIndex + 1)) + 1;
-            Debug.Assert(startIndex < endIndex);
+            int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex + 1), CurrentActions) + 1;
+            Debug.Assert(startIndex < endIndex, $"startIndex ({startIndex}) should be lower than endIndex ({endIndex}) when clicking on next round");
             MoveToActionAsync(endIndex);
         }
 
@@ -654,8 +654,8 @@ namespace Cryptool.Plugins.ChaCha
                     roundLabelSearchIndex = CurrentRoundIndex;
                 }
             }
-            string searchLabel = string.Format("_QR_ACTION_LABEL_{0}_{1}", qrLabelSearchIndex, roundLabelSearchIndex);
-            int qrActionIndex = GetLabeledPageActionIndex(searchLabel) + 1;
+            string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(qrLabelSearchIndex, roundLabelSearchIndex);
+            int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
             MoveToActionAsync(qrActionIndex);
         }
         private void QR1_Click(object sender, RoutedEventArgs e)

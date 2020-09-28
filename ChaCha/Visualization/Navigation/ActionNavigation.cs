@@ -294,9 +294,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             b.Background = background;
         }
-        public void SetCopyBackground(Border b)
+        public void SetCopyBackground(params Border[] borders)
         {
-            SetBackground(b, _copyBrush);
+            foreach(Border b in borders)
+            {
+                SetBackground(b, _copyBrush);
+            }
         }
         public void UnsetBackground(params Border[] borders)
         {
@@ -471,7 +474,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 foreach (Shape s in paths)
                 {
-                    SetShapeStroke(s, 5);
+                    MarkShape(s);
                 }
             }
 
@@ -479,7 +482,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 foreach (Shape s in paths)
                 {
-                    SetShapeStroke(s, 1);
+                    UnmarkShape(s);
 
                 }
             }
@@ -492,6 +495,28 @@ namespace Cryptool.Plugins.ChaCha
             unmark.AddToUndo(MarkPaths);
             return copyActions;
         }
+
+        public void Clear(params Border[] borders)
+        {
+            foreach(Border b in borders)
+            {
+                UnsetBackground(b);
+                UnmarkBorder(b);
+                if (b.Child is TextBlock tblock)
+                {
+                    Clear(tblock);
+                }
+                else if (b.Child is RichTextBox rtb)
+                {
+                    Clear(rtb);
+                }
+                else if (b.Child is TextBox tbox)
+                {
+                    Clear(tbox);
+                }
+            }
+        }
+
         #endregion
 
         #region Shape API
@@ -510,10 +535,13 @@ namespace Cryptool.Plugins.ChaCha
                 SetShapeStroke(s, stroke);
             }
         }
-        public void MarkShape(Shape s)
+        public void MarkShape(params Shape[] shapes)
         {
-            SetShapeStrokeColor(s, _markBrush);
-            SetShapeStroke(s, 2);
+            foreach(Shape s in shapes)
+            {
+                SetShapeStrokeColor(s, _markBrush);
+                SetShapeStroke(s, 2);
+            }
         }
         public void UnmarkShape(params Shape[] shapes)
         {
@@ -522,6 +550,11 @@ namespace Cryptool.Plugins.ChaCha
                 SetShapeStrokeColor(s, Brushes.Black);
                 SetShapeStroke(s, 1);
             }
+        }
+
+        public void Clear(params Shape[] shapes)
+        {
+            UnmarkShape(shapes);
         }
         #endregion
 
