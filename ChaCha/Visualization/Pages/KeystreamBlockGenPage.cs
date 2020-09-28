@@ -445,6 +445,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(shiftBox, pres.GetHexResult(ResultType.QR_SHIFT, ResultIndex(actionIndex, qrIndex)));
             }, () =>
             {
+                pres.Nav.UnsetBackground(shiftCell);
                 pres.Nav.Clear(shiftBox);
             });
             PageAction unmark = new PageAction(Unmark, Mark);
