@@ -226,7 +226,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region Visualization Helper Methods (Stringify)
         /* insert a space after every n characters */
-        private static string Chunkify(string text, int n)
+        public static string Chunkify(string text, int n)
         {
             string pattern = string.Format(".{{{0}}}", n);
             return Regex.Replace(text, pattern, "$0 ");
@@ -260,6 +260,10 @@ namespace Cryptool.Plugins.ChaCha
                 sb.Append(HexString(ChaCha.To4ByteLE(bytes, i)));
             }
             return sb.ToString();
+        }
+        public static string HexStringLittleEndian(uint u)
+        {
+            return HexStringLittleEndian(ChaCha.GetBytes(u));
         }
         #endregion
 

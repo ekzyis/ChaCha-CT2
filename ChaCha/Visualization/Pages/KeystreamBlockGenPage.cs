@@ -76,6 +76,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(ClearQRDetail(_pres, qrIndex));
             }
             AddAction(AddOriginalState(_pres, 0));
+            AddAction(ConvertStateEntriesToLittleEndian(_pres, 0));
         }
 
         private ActionCache GenerateCache()
@@ -748,6 +749,21 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceState(previousState);
             });
             return new PageAction[] { showOriginalState, addStates };
+        }
+
+        private PageAction ConvertStateEntriesToLittleEndian(ChaChaPresentation pres, int keyblockNr)
+        {
+            uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr);
+            string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
+            PageAction convert = new PageAction(() =>
+            {
+                ReplaceState(littleEndianState);
+            }, () =>
+            {
+                ReplaceState(previousState);
+            });
+            return convert;
         }
     }
     partial class Page
