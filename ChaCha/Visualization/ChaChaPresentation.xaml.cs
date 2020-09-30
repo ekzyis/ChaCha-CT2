@@ -230,6 +230,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             return uint_array_resultsManager.Get(type, index);
         }
+        public int GetSize(ResultType<uint[]> type)
+        {
+            return uint_array_resultsManager.GetList(type).Size();
+        }
+        public int GetSize(ResultType<uint> type)
+        {
+            return uint_resultsManager.GetList(type).Size();
+        }
         public void ClearResults()
         {
             uint_resultsManager.Clear();

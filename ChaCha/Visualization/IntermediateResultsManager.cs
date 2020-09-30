@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.ChaCha
     public class IntermediateResultsManager<T>
     {
        
-        private class IntermediateResultsList
+        public class IntermediateResultsList
         {
             private readonly List<T> _results;
             private ResultType<T> type;
@@ -55,13 +55,17 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _results.Clear();
             }
+            public int Size()
+            {
+                return _results.Count;
+            }
         }
         private readonly List<IntermediateResultsList> _intermediateResultsList = new List<IntermediateResultsList>();
         private bool TypeExists(ResultType<T> type)
         {
             return _intermediateResultsList.Exists(list => list.Type == type);
         }
-        private IntermediateResultsList GetList(ResultType<T> type)
+        public IntermediateResultsList GetList(ResultType<T> type)
         {
             if (!TypeExists(type))
             {
