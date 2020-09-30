@@ -88,6 +88,7 @@
     <Compile Include="Visualization\Navigation\Navigation.cs" />
     <Compile Include="Visualization\Navigation\IActionNavigation.cs" />
     <Compile Include="Visualization\Pages\CachePageAction.cs" />
+    <Compile Include="Visualization\Pages\GeneralKeystreamBlockGenPage.cs" />
     <Compile Include="Visualization\Pages\KeystreamBlockGenPage.cs" />
     <Compile Include="Visualization\Pages\LandingPage.cs" />
     <Compile Include="Visualization\Pages\Page.cs" />

@@ -278,6 +278,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             return HexStringLittleEndian(ChaCha.GetBytes(u));
         }
+        public static string HexStringLittleEndian(ulong u)
+        {
+            return HexStringLittleEndian(ChaCha.GetBytes(u));
+        }
         #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
