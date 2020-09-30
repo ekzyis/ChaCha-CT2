@@ -25,6 +25,8 @@
 	<replacement key="$iv$" value="Initialisierungsvektor" />
 	<replacement key="$decode$" value="String-Decodierer" />
 	<replacement key="$encode$" value="String-Encodierer" />
+	<replacement key="$chacha_enc$" value="ChaCha (Verschlüsselung)" />
+	<replacement key="$chacha_dec$" value="ChaCha (Entschlüsselung)" />
   </replacements>
   
   <replacements lang="en">
@@ -36,5 +38,7 @@
 	<replacement key="$iv$" value="Initialization vector" />
 	<replacement key="$decode$" value="String decoder" />
 	<replacement key="$encode$" value="String encoder" />
+	<replacement key="$chacha_enc$" value="ChaCha (Encryption)" />
+	<replacement key="$chacha_dec$" value="ChaCha (Decryption)" />
   </replacements>
 </sample>
