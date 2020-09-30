@@ -41,12 +41,21 @@ namespace Cryptool.Plugins.ChaCha
             return tb;
         }
 
+        private List<Button> _pageButtons = new List<Button>();
         private void InitNavigationPopupMenu()
         {
-            PageButton_Start.Click += new RoutedEventHandler(MoveToPageClickWrapper(0));
-            PageButton_Overview.Click += new RoutedEventHandler(MoveToPageClickWrapper(1));
-            PageButton_StateMatrixInitialization.Click += new RoutedEventHandler(MoveToPageClickWrapper(2));
-            PageButton_KeystreamBlockGeneration_1.Click += new RoutedEventHandler(MoveToPageClickWrapper(3));
+            int index = 0;
+            void InitPageButton(Button b)
+            {
+                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
+                _pageButtons.Add(b);
+                index++;
+            }
+            InitPageButton(PageButton_Start);
+            InitPageButton(PageButton_Overview);
+            InitPageButton(PageButton_StateMatrixInitialization);
+            InitPageButton(PageButton_KeystreamBlockGeneration_1);
+            UpdatePageButtons(CurrentPageIndex);
         }
 
         private void ToggleNavigationMenu(object sender, RoutedEventArgs e)
@@ -201,6 +210,17 @@ namespace Cryptool.Plugins.ChaCha
                     NextPage_Click(null, null);
                 }
             }
+            if (n != 0)
+            {
+                UpdatePageButtons(CurrentPageIndex);
+            }
+        }
+
+        private void UpdatePageButtons(int pageIndex)
+        {
+            // update font weight to indicate current page
+            _pageButtons.ForEach(b => b.FontWeight = FontWeights.Normal);
+            _pageButtons[pageIndex].FontWeight = FontWeights.Bold;
         }
 
         private void MoveToPage(int n)
