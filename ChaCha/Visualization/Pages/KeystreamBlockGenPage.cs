@@ -11,10 +11,7 @@ namespace Cryptool.Plugins.ChaCha
     class KeystreamBlockGenPage : Page
     {
         ChaChaPresentation _pres;
-        static string DESCRIPTION_1 = "To generate a keystream block, we apply the ChaCha Hash function to the state. "
-                    + "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.";
-        static string DESCRIPTION_2 = "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ";
-
+        List<string> descriptions = new List<string>();
 
         const string ACTIONLABEL_QR_START = "QUARTERROUND";
         const string ACTIONLABEL_ROUND_START = "ROUND";
@@ -31,6 +28,12 @@ namespace Cryptool.Plugins.ChaCha
                     _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
                     _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
                     _pres.InitialCounterLittleEndian[0], versionIsDJB? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2] };
+            descriptions.Add( "To generate a keystream block, we apply the ChaCha Hash function to the state. "
+                    + $"The ChaCha hash function consists of {_pres.Rounds} rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.");
+            descriptions.Add("Every odd round consists of 4 so called column rounds since all entries in a column are selected as the input to the quarterround function. ");
+            descriptions.Add("Every even round consists of 4 so called diagonal rounds since all diagonal entries are selected as the input to the quarterround function. ");
+            descriptions.Add("After all rounds, we add the original state (the state before we applied the ChaCha Hash function) ...");
+            descriptions.Add("... and transform each 4 byte of the state into little-endian notation.");
         }
 
         private void Init()
@@ -46,7 +49,7 @@ namespace Cryptool.Plugins.ChaCha
             AddInitAction(initAction);
             PageAction generalDescriptionAction = new PageAction(() =>
             {
-                AddBoldToDescription(DESCRIPTION_1);
+                AddBoldToDescription(descriptions[0]);
             }, () =>
             {
                 ClearDescription();
@@ -54,7 +57,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction firstColumnRoundDescriptionAction = new PageAction(() =>
             {
                 UnboldLastFromDescription();
-                AddBoldToDescription(DESCRIPTION_2);
+                AddBoldToDescription(descriptions[1]);
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -91,9 +94,6 @@ namespace Cryptool.Plugins.ChaCha
                 CachePageAction cache = new CachePageAction();
                 cache.AddToExec(() =>
                 {
-                    ClearDescription(_pres);
-                    AddToDescription(_pres, DESCRIPTION_1);
-                    AddBoldToDescription(_pres, DESCRIPTION_2);
                     ClearQRDetail(_pres);
                     // update state matrix
                     TextBox[] stateTextBoxes = GetStateTextBoxes(_pres);
@@ -111,6 +111,18 @@ namespace Cryptool.Plugins.ChaCha
                     _pres.CurrentRoundIndex = CalculateRoundFromQRIndex(qrIndex);
                     _pres.Nav.Replace(_pres.CurrentRound, round.ToString());
                     HideAllQRArrowsExcept(_pres, ((qrIndex - 1) % 8) + 1);
+
+                    ClearDescription(_pres);
+                    AddToDescription(_pres, descriptions[0]);
+                    if (round >= 2)
+                    {
+                        AddToDescription(_pres, descriptions[1]);
+                        AddBoldToDescription(_pres, descriptions[2]);
+                    }
+                    else
+                    {
+                        AddBoldToDescription(_pres, descriptions[1]);
+                    }
                 });
                 return cache;
             }
@@ -616,7 +628,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return $"{ACTIONLABEL_ROUND_START}_{round}";
         }
-        private static PageAction[] CopyFromStateTOQRInputActions(ChaChaPresentation pres, int qrIndex, int round)
+        private PageAction[] CopyFromStateTOQRInputActions(ChaChaPresentation pres, int qrIndex, int round)
         {
             uint[] state = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, (round * 4) - 1);
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
@@ -648,6 +660,17 @@ namespace Cryptool.Plugins.ChaCha
                 });
                 copyActions[0].Add(updateRoundCount);
                 copyActions[0].AddLabel(RoundStartLabel(round));
+            }
+            if(round == 2)
+            {
+                PageAction updateDescription = new PageAction(() =>
+                {
+                    AddBoldToDescription(descriptions[2]);
+                }, () =>
+                {
+                    RemoveLastFromDescription();
+                    MakeLastBoldInDescription();
+                });
             }
             int QR_ARROW_MAX_INDEX = 8;
             (int, int) calculateQRArrowIndex(int qrIndex_)
@@ -731,6 +754,15 @@ namespace Cryptool.Plugins.ChaCha
 
         private PageAction[] AddOriginalState(ChaChaPresentation pres, int keyblockNr)
         {
+            PageAction updateDescription = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(descriptions[3]);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
             PageAction showOriginalState = new PageAction(() =>
             {
                 ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
@@ -748,11 +780,20 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
                 ReplaceState(previousState);
             });
-            return new PageAction[] { showOriginalState, addStates };
+            return new PageAction[] { updateDescription, showOriginalState, addStates };
         }
 
-        private PageAction ConvertStateEntriesToLittleEndian(ChaChaPresentation pres, int keyblockNr)
+        private PageAction[] ConvertStateEntriesToLittleEndian(ChaChaPresentation pres, int keyblockNr)
         {
+            PageAction updateDescription = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(descriptions[4]);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
             uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
             string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
@@ -763,7 +804,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ReplaceState(previousState);
             });
-            return convert;
+            return new PageAction[] { updateDescription, convert };
         }
     }
     partial class Page
