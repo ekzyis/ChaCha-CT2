@@ -79,6 +79,19 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        private void InitNavigationPopupMenu()
+        {
+            PageButton_Start.Click += new RoutedEventHandler(MoveToPageClickWrapper(0));
+            PageButton_Overview.Click += new RoutedEventHandler(MoveToPageClickWrapper(1));
+            PageButton_StateMatrixInitialization.Click += new RoutedEventHandler(MoveToPageClickWrapper(2));
+            PageButton_KeystreamBlockGeneration_1.Click += new RoutedEventHandler(MoveToPageClickWrapper(3));
+        }
+
+        private void ToggleNavigationMenu(object sender, RoutedEventArgs e)
+        {
+            NavigationMenu.Visibility = NavigationMenu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
         private Slider CreateActionNavigationSlider(int totalActions)
         {
             Slider s = new Slider
@@ -243,6 +256,7 @@ namespace Cryptool.Plugins.ChaCha
             CollapseAllPagesExpect(0);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
+            InitNavigationPopupMenu();
         }
 
         private void InitExecutableVisualization()
@@ -255,6 +269,7 @@ namespace Cryptool.Plugins.ChaCha
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
+            InitNavigationPopupMenu();
         }
 
         private UIElement[] GetRawPages()

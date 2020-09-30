@@ -73,10 +73,10 @@
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
     <Canvas Margin="5" Panel.ZIndex="5">
-      <Button Height="20" Name="NavigationButton">
+      <Button Height="20" Name="NavigationButton" Click="ToggleNavigationMenu">
         Navigation
       </Button>
-      <Border Canvas.Top="20" BorderThickness="1.5" BorderBrush="Black" Width="600" Visibility="Visible" Name="NavigationMenu" Background="White">
+      <Border Canvas.Top="20" BorderThickness="1.5" BorderBrush="Black" Width="600" Visibility="Collapsed" Name="NavigationMenu" Background="White">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition/>
@@ -85,12 +85,12 @@
             <RowDefinition/>
             <RowDefinition/>
           </Grid.RowDefinitions>
-          <Button Grid.Row="0" Margin="5" Width="32" Height="18.75" HorizontalAlignment="Left">Start</Button>
-          <Button Grid.Row="1" Margin="5" Width="64" Height="18.75" HorizontalAlignment="Left">Overview</Button>
-          <Button Grid.Row="2" Margin="5" Width="160" Height="18.75" HorizontalAlignment="Left">State Matrix Initialization</Button>
+          <Button Grid.Row="0" Margin="5" Width="32" Height="18.75" HorizontalAlignment="Left" Name="PageButton_Start">Start</Button>
+          <Button Grid.Row="1" Margin="5" Width="64" Height="18.75" HorizontalAlignment="Left" Name="PageButton_Overview">Overview</Button>
+          <Button Grid.Row="2" Margin="5" Width="160" Height="18.75" HorizontalAlignment="Left" Name="PageButton_StateMatrixInitialization">State Matrix Initialization</Button>
           <StackPanel Grid.Row="3" Margin="5" Orientation="Horizontal">
             <TextBlock Width="160" Height="18.75" HorizontalAlignment="Center">Keystream Block Generation:</TextBlock>
-            <Button Margin="5,0,0,0" Width="32" Height="18.75">1</Button>
+            <Button Margin="5,0,0,0" Width="32" Height="18.75" Name="PageButton_KeystreamBlockGeneration_1">1</Button>
           </StackPanel>
         </Grid>
       </Border>
