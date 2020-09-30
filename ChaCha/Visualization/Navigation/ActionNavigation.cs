@@ -610,6 +610,11 @@ namespace Cryptool.Plugins.ChaCha
             tb.Text = text;
         }
 
+        public void Add(TextBox tb, string text)
+        {
+            tb.Text += text;
+        }
+
         public void Clear(params TextBox[] tbs)
         {
             foreach (TextBox tb in tbs)

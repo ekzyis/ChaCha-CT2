@@ -73,7 +73,7 @@ namespace Cryptool.Plugins.ChaCha
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
             pageNavBar.Children.Add(CreateNavBarLabel(_PAGELABELNAME, "Pages:"));
-            for (int i = 0; i < _pages.Count; ++i)
+            for (int i = 0; i < GetRawPages().Length; ++i)
             {
                 pageNavBar.Children.Add(CreatePageNavigationButton(i));
             }
@@ -234,7 +234,18 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         const int START_VISUALIZATION_ON_PAGE_INDEX = 0;
-        private void InitVisualization()
+        private void InitStaticVisualization()
+        {
+            // Static visualization means that only the first page is added.
+            // Other pages are added when execution has finished and thus all variables needed exist.
+            _pages.Clear();
+            AddPage(Page.LandingPage(this));
+            CollapseAllPagesExpect(0);
+            InitPageNavigationBar(CurrentPage);
+            InitActionNavigationBar(CurrentPage);
+        }
+
+        private void InitExecutableVisualization()
         {
             _pages.Clear();
             AddPage(Page.LandingPage(this));
@@ -246,17 +257,23 @@ namespace Cryptool.Plugins.ChaCha
             InitActionNavigationBar(CurrentPage);
         }
 
+        private UIElement[] GetRawPages()
+        {
+            return new UIElement[] { UILandingPage, UIWorkflowPage, UIStateMatrixPage, UIKeystreamBlockGenPage };
+        }
+
         // useful for development: setting pages visible for development purposes does not infer with execution
         private void CollapseAllPagesExpect(int pageIndex)
         {
-            for (int i = 0; i < _pages.Count; ++i)
+            UIElement[] pages = GetRawPages();
+            for (int i = 0; i < pages.Length; ++i)
             {
                 if (i != pageIndex)
                 {
-                    _pages[i].Visibility = Visibility.Collapsed;
+                    pages[i].Visibility = Visibility.Collapsed;
                 }
             }
-            _pages[pageIndex].Visibility = Visibility.Visible;
+            pages[pageIndex].Visibility = Visibility.Visible;
         }
 
         // Calls FinishPageAction if page action used navigation interface methods.
@@ -364,8 +381,7 @@ namespace Cryptool.Plugins.ChaCha
             get => _executionFinished;
             set
             {
-                // reload pages to use new variables
-                InitVisualization();
+                InitExecutableVisualization();
                 MovePages(START_VISUALIZATION_ON_PAGE_INDEX - CurrentPageIndex);
                 _executionFinished = value;
                 OnPropertyChanged("NextPageIsEnabled");

@@ -11,32 +11,36 @@ namespace Cryptool.Plugins.ChaCha
     class KeystreamBlockGenPage : Page
     {
         ChaChaPresentation _pres;
-        static string DESCRIPTION_1 = "To generate a keystream block, we apply the ChaCha Hash function to the state. "
-                    + "The ChaCha hash function consists of X rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.";
-        static string DESCRIPTION_2 = "The first round consists of 4 so called column rounds since we will first select all entries in a column as the input to the quarterround function. ";
-
+        List<string> descriptions = new List<string>();
 
         const string ACTIONLABEL_QR_START = "QUARTERROUND";
         const string ACTIONLABEL_ROUND_START = "ROUND";
 
+        string[] originalState;
+        bool versionIsDJB;
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres) : base(pageElement)
         {
             _pres = pres;
             Init();
             Cache = GenerateCache();
+            versionIsDJB = _pres.Version == ChaCha.Version.DJB;
+            originalState = new string[] { _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
+                    _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
+                    _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
+                    _pres.InitialCounterLittleEndian[0], versionIsDJB? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2] };
+            descriptions.Add( "To generate a keystream block, we apply the ChaCha Hash function to the state. "
+                    + $"The ChaCha hash function consists of {_pres.Rounds} rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.");
+            descriptions.Add("Every odd round consists of 4 so called column rounds since all entries in a column are selected as the input to the quarterround function. ");
+            descriptions.Add("Every even round consists of 4 so called diagonal rounds since all diagonal entries are selected as the input to the quarterround function. ");
+            descriptions.Add("After all rounds, we add the original state (the state before we applied the ChaCha Hash function) ...");
+            descriptions.Add("... and transform each 4 byte of the state into little-endian notation.");
         }
 
         private void Init()
         {
-            bool versionIsDJB = _pres.Version == ChaCha.Version.DJB;
             PageAction initAction = new PageAction(() =>
             {
-                AddToState(
-                    _pres.ConstantsLittleEndian[0], _pres.ConstantsLittleEndian[1], _pres.ConstantsLittleEndian[2], _pres.ConstantsLittleEndian[3],
-                    _pres.KeyLittleEndian[0], _pres.KeyLittleEndian[1], _pres.KeyLittleEndian[2], _pres.KeyLittleEndian[3],
-                    _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 4 : 0], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 5 : 1], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 6 : 2], _pres.KeyLittleEndian[_pres.InputKey.Length == 32 ? 7 : 3],
-                    _pres.InitialCounterLittleEndian[0], versionIsDJB ? _pres.InitialCounterLittleEndian[1] : _pres.IVLittleEndian[0], _pres.IVLittleEndian[versionIsDJB ? 0 : 1], _pres.IVLittleEndian[versionIsDJB ? 1 : 2]
-                    );
+                AddToState(originalState);
                 AssertStateAfterQuarterround(_pres, 0);
             }, () =>
             {
@@ -45,7 +49,7 @@ namespace Cryptool.Plugins.ChaCha
             AddInitAction(initAction);
             PageAction generalDescriptionAction = new PageAction(() =>
             {
-                AddBoldToDescription(DESCRIPTION_1);
+                AddBoldToDescription(descriptions[0]);
             }, () =>
             {
                 ClearDescription();
@@ -53,7 +57,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction firstColumnRoundDescriptionAction = new PageAction(() =>
             {
                 UnboldLastFromDescription();
-                AddBoldToDescription(DESCRIPTION_2);
+                AddBoldToDescription(descriptions[1]);
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -74,6 +78,8 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(ReplaceStateEntriesWithQROutput(_pres, qrIndex));
                 AddAction(ClearQRDetail(_pres, qrIndex));
             }
+            AddAction(AddOriginalState(_pres, 0));
+            AddAction(ConvertStateEntriesToLittleEndian(_pres, 0));
         }
 
         private ActionCache GenerateCache()
@@ -82,14 +88,12 @@ namespace Cryptool.Plugins.ChaCha
         }
         private ActionCache GenerateQuarterroundCache()
         {
+            Debug.Assert(Actions.Length != 0, $"Actions empty while generating cache. Did you initialize the actions?");
             CachePageAction GenerateQuarterroundCacheEntry(int qrIndex)
             {
                 CachePageAction cache = new CachePageAction();
                 cache.AddToExec(() =>
                 {
-                    ClearDescription(_pres);
-                    AddToDescription(_pres, DESCRIPTION_1);
-                    AddBoldToDescription(_pres, DESCRIPTION_2);
                     ClearQRDetail(_pres);
                     // update state matrix
                     TextBox[] stateTextBoxes = GetStateTextBoxes(_pres);
@@ -107,6 +111,18 @@ namespace Cryptool.Plugins.ChaCha
                     _pres.CurrentRoundIndex = CalculateRoundFromQRIndex(qrIndex);
                     _pres.Nav.Replace(_pres.CurrentRound, round.ToString());
                     HideAllQRArrowsExcept(_pres, ((qrIndex - 1) % 8) + 1);
+
+                    ClearDescription(_pres);
+                    AddToDescription(_pres, descriptions[0]);
+                    if (round >= 2)
+                    {
+                        AddToDescription(_pres, descriptions[1]);
+                        AddBoldToDescription(_pres, descriptions[2]);
+                    }
+                    else
+                    {
+                        AddBoldToDescription(_pres, descriptions[1]);
+                    }
                 });
                 return cache;
             }
@@ -118,11 +134,68 @@ namespace Cryptool.Plugins.ChaCha
             }
             return qrCache;
         }
+        private void AddToState(string[] state)
+        {
+            AddToState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+        }
         private void AddToState(
                 string state0, string state1, string state2, string state3,
                 string state4, string state5, string state6, string state7,
                 string state8, string state9, string state10, string state11,
                 string state12, string state13, string state14, string state15)
+        {
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen0, state0);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen1, state1);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen2, state2);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen3, state3);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen4, state4);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen5, state5);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen6, state6);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen7, state7);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen8, state8);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen9, state9);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen10, state10);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen11, state11);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen12, state12);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen13, state13);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen14, state14);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen15, state15);
+        }
+        private void ReplaceStateSecondaryRow(string[] state)
+        {
+            ReplaceStateSecondaryRow(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+        }
+        private void ReplaceStateSecondaryRow(string state0, string state1, string state2, string state3,
+                string state4, string state5, string state6, string state7,
+                string state8, string state9, string state10, string state11,
+                string state12, string state13, string state14, string state15)
+        {
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen0_1, state0);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen1_1, state1);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen2_1, state2);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen3_1, state3);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen4_1, state4);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen5_1, state5);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen6_1, state6);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen7_1, state7);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen8_1, state8);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen9_1, state9);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen10_1, state10);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen11_1, state11);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen12_1, state12);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen13_1, state13);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen14_1, state14);
+            _pres.Nav.Add(_pres.UIKeystreamBlockGen15_1, state15);
+        }
+            private void ReplaceState(string[] state)
+        {
+            ReplaceState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+        }
+        private void ReplaceState(
+           string state0, string state1, string state2, string state3,
+           string state4, string state5, string state6, string state7,
+           string state8, string state9, string state10, string state11,
+           string state12, string state13, string state14, string state15)
         {
             _pres.Nav.Replace(_pres.UIKeystreamBlockGen0, state0);
             _pres.Nav.Replace(_pres.UIKeystreamBlockGen1, state1);
@@ -159,6 +232,25 @@ namespace Cryptool.Plugins.ChaCha
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen13);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen14);
             _pres.Nav.Clear(_pres.UIKeystreamBlockGen15);
+        }
+        private void ClearStateSecondaryRow()
+        {
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen0_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen1_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen2_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen3_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen4_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen5_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen6_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen7_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen8_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen9_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen10_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen11_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen12_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen13_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen14_1);
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGen15_1);
         }
         private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
         {
@@ -536,7 +628,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return $"{ACTIONLABEL_ROUND_START}_{round}";
         }
-        private static PageAction[] CopyFromStateTOQRInputActions(ChaChaPresentation pres, int qrIndex, int round)
+        private PageAction[] CopyFromStateTOQRInputActions(ChaChaPresentation pres, int qrIndex, int round)
         {
             uint[] state = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, (round * 4) - 1);
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
@@ -568,6 +660,17 @@ namespace Cryptool.Plugins.ChaCha
                 });
                 copyActions[0].Add(updateRoundCount);
                 copyActions[0].AddLabel(RoundStartLabel(round));
+            }
+            if(round == 2)
+            {
+                PageAction updateDescription = new PageAction(() =>
+                {
+                    AddBoldToDescription(descriptions[2]);
+                }, () =>
+                {
+                    RemoveLastFromDescription();
+                    MakeLastBoldInDescription();
+                });
             }
             int QR_ARROW_MAX_INDEX = 8;
             (int, int) calculateQRArrowIndex(int qrIndex_)
@@ -623,6 +726,61 @@ namespace Cryptool.Plugins.ChaCha
                 AssertStateAfterQuarterround(pres, qrIndex);
             });
             return copyActions;
+        }
+
+        private PageAction[] AddOriginalState(ChaChaPresentation pres, int keyblockNr)
+        {
+            PageAction updateDescription = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(descriptions[3]);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
+            PageAction showOriginalState = new PageAction(() =>
+            {
+                ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
+            }, () =>
+            {
+                ClearStateSecondaryRow();
+            });
+            string[] previousState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, (keyblockNr + 1) * pres.Rounds * 4).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            PageAction addStates = new PageAction(() =>
+            {
+                ClearStateSecondaryRow();
+                ReplaceState(pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+            }, () =>
+            {
+                ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
+                ReplaceState(previousState);
+            });
+            return new PageAction[] { updateDescription, showOriginalState, addStates };
+        }
+
+        private PageAction[] ConvertStateEntriesToLittleEndian(ChaChaPresentation pres, int keyblockNr)
+        {
+            PageAction updateDescription = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(descriptions[4]);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
+            uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr);
+            string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
+            PageAction convert = new PageAction(() =>
+            {
+                ReplaceState(littleEndianState);
+            }, () =>
+            {
+                ReplaceState(previousState);
+            });
+            return new PageAction[] { updateDescription, convert };
         }
     }
     partial class Page
