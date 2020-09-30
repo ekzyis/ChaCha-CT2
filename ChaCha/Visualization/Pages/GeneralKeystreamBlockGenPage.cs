@@ -717,7 +717,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void AssertStateAfterQuarterround(ChaChaPresentation pres, int qrIndex)
         {
-            // Check that the state entries in the state matrix visualizatoin are the same as the actual values in the uint[] array
+            // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
             string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             string[] visualState = new string[16];
             for (int i = 0; i < 16; ++i)
