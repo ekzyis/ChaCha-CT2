@@ -381,7 +381,10 @@
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Generate Keystream Block</TextBox>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
+          <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Keystream Block Generation 1/</TextBox>
+          <TextBox FontSize="20" Text="{ Binding KeystreamBlocksNeeded }"/>
+        </StackPanel>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.34*"/>
