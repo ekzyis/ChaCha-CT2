@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.ChaCha
             pres = pres_;
             keyBlockNr = keyblockNr_;
             versionIsDJB = pres.Version == ChaCha.Version.DJB;
-            originalState = GetOriginalState(keyBlockNr);
+            originalState = GetOriginalState();
             Init();
             Cache = GenerateCache();
         }
@@ -69,10 +69,10 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private string[] GetOriginalState(ulong keyBlockNr)
+        private string[] GetOriginalState()
         {
             string[] state = GetTemplateState();
-            InsertCounter(state, keyBlockNr);
+            InsertCounter(state, keyBlockNr - 1);
             return state;
         }
 
