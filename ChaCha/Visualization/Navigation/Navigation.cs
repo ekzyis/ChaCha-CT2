@@ -41,44 +41,6 @@ namespace Cryptool.Plugins.ChaCha
             return tb;
         }
 
-        private static TextBlock CreateNavBarLabel(string bindingElementName, string text)
-        {
-            TextBlock tb = new TextBlock
-            {
-                Name = bindingElementName,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                FontSize = 10.0,
-                Margin = new Thickness(0, 0, 1, 0),
-                Text = text
-            };
-            return tb;
-        }
-
-        private readonly string _PAGELABELNAME = "UINavBarPageLabel";
-        private Button CreatePageNavigationButton(int index)
-        {
-            Button b = CreateNavigationButton();
-            b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
-            TextBlock tb = CreateNavigationTextBlock(index, CurrentPageIndex, _PAGELABELNAME);
-            b.Content = tb;
-            Binding binding = new Binding("NavigationEnabled");
-            b.SetBinding(Button.IsEnabledProperty, binding);
-            return b;
-        }
-
-        // this must be called after all pages have been added
-        private void InitPageNavigationBar(Page p)
-        {
-            StackPanel pageNavBar = p.PageNavigationBar;
-            pageNavBar.Children.Clear();
-            pageNavBar.Children.Add(CreateNavBarLabel(_PAGELABELNAME, "Pages:"));
-            for (int i = 0; i < GetRawPages().Length; ++i)
-            {
-                pageNavBar.Children.Add(CreatePageNavigationButton(i));
-            }
-        }
-
         private void InitNavigationPopupMenu()
         {
             PageButton_Start.Click += new RoutedEventHandler(MoveToPageClickWrapper(0));
@@ -254,7 +216,6 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             CollapseAllPagesExpect(0);
-            InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
             InitNavigationPopupMenu();
         }
@@ -267,7 +228,6 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.StateMatrixPage(this));
             AddPage(Page.KeystreamBlockGenPage(this));
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
-            InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
             InitNavigationPopupMenu();
         }
@@ -355,7 +315,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                InitPageNavigationBar(CurrentPage);
                 InitActionNavigationBar(CurrentPage);
             }
         }
