@@ -41,7 +41,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction initAction = new PageAction(() =>
             {
                 AddToState(originalState);
-                AssertStateAfterQuarterround(_pres, 0);
+                AssertInitialState(_pres);
             }, () =>
             {
                 ClearState();
@@ -97,7 +97,15 @@ namespace Cryptool.Plugins.ChaCha
                     ClearQRDetail(_pres);
                     // update state matrix
                     TextBox[] stateTextBoxes = GetStateTextBoxes(_pres);
-                    uint[] stateEntries = _pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1);
+                    uint[] stateEntries;
+                    if(qrIndex == 1)
+                    {
+                        stateEntries = _pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, 0);
+                    }
+                    else
+                    {
+                        stateEntries = _pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
+                    }
                     Debug.Assert(stateTextBoxes.Length == stateEntries.Length);
                     for (int x = 0; x < stateEntries.Length; ++x)
                     {
@@ -702,12 +710,24 @@ namespace Cryptool.Plugins.ChaCha
         private static void AssertStateAfterQuarterround(ChaChaPresentation pres, int qrIndex)
         {
             // Check that the state entries in the state matrix visualizatoin are the same as the actual values in the uint[] array
-            string[] expectedState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] expectedState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             string[] visualState = new string[16];
             for (int i = 0; i < 16; ++i)
             {
                 visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
                 Debug.Assert(expectedState[i] == visualState[i], $"Visual state after quarterround {qrIndex} execution does not match actual state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
+            }
+        }
+
+        private void AssertInitialState(ChaChaPresentation pres)
+        {
+            // Check that the state entries in the state matrix visualizatoin are the same as the actual values in the uint[] array
+            string[] expectedState = pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, 0).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] visualState = new string[16];
+            for (int i = 0; i < 16; ++i)
+            {
+                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
+                Debug.Assert(expectedState[i] == visualState[i], $"Visual init state does not match actual init state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
             }
         }
 

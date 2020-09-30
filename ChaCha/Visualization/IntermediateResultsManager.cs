@@ -23,6 +23,7 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint> QR_OUTPUT_B = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_C = new ResultType<uint>();
         public static readonly ResultType<uint> QR_OUTPUT_D = new ResultType<uint>();
+        public static readonly ResultType<uint[]> CHACHA_HASH_ORIGINAL_STATE = new ResultType<uint[]>();
         public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND = new ResultType<uint[]>();
         public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>();
         public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>();

@@ -362,7 +362,7 @@ namespace Cryptool.Plugins.ChaCha
             uint[] originalState = (uint[])(state.Clone());
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                _presentation.AddResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])(state.Clone()));
             });
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
