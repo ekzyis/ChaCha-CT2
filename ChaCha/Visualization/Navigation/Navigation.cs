@@ -25,22 +25,6 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private static TextBlock CreateNavigationTextBlock(int index, int activeIndex, string bindingElementName)
-        {
-            TextBlock tb = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center
-            };
-            Binding binding = new Binding {ElementName = bindingElementName, Path = new PropertyPath("FontSize")};
-            tb.SetBinding(TextBlock.FontSizeProperty, binding);
-            tb.Text = (index + 1).ToString();
-            if(activeIndex == index)
-            {
-                tb.FontWeight = FontWeights.Bold;
-            }
-            return tb;
-        }
-
         private List<Button> _pageButtons = new List<Button>();
         private void InitNavigationPopupMenu()
         {
