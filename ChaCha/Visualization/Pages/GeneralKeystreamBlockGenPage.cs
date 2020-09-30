@@ -117,7 +117,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(ReplaceStateEntriesWithQROutput(pres, qrIndex));
                 AddAction(ClearQRDetail(pres, qrIndex));
             }
-            AddAction(AddOriginalState(pres, 0));
+            AddAction(AddOriginalState(pres));
             AddAction(ConvertStateEntriesToLittleEndian(pres, 0));
         }
 
@@ -744,7 +744,7 @@ namespace Cryptool.Plugins.ChaCha
             return copyActions;
         }
 
-        private PageAction[] AddOriginalState(ChaChaPresentation pres, int keyblockNr)
+        private PageAction[] AddOriginalState(ChaChaPresentation pres)
         {
             PageAction showOriginalState = new PageAction(() =>
             {
