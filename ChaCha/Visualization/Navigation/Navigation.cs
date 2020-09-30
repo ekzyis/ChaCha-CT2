@@ -43,6 +43,7 @@ namespace Cryptool.Plugins.ChaCha
         private void InitNavigationPopupMenu()
         {
             int index = 0;
+            _pageButtons.Clear();
             void InitPageButton(Button b)
             {
                 b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
@@ -53,6 +54,7 @@ namespace Cryptool.Plugins.ChaCha
             InitPageButton(PageButton_Overview);
             InitPageButton(PageButton_StateMatrixInitialization);
             InitPageButton(PageButton_KeystreamBlockGeneration_1);
+            PageButtonPanel_KeystreamBlockGeneration.Children.Clear();
             for (int i = 1; i < KeystreamBlocksNeeded; ++i)
             {
                 Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
