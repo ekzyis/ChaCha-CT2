@@ -43,22 +43,26 @@ namespace Cryptool.Plugins.ChaCha
             if(versionIsDJB)
             {
                 // 64-bit counter, 64-bit IV
-                string counter = ChaChaPresentation.HexStringLittleEndian(counter64);
-                Debug.Assert(counter.Length == 16);
-                state[12] = counter.Substring(0, 8);
-                state[13] = counter.Substring(8);
-                Debug.Assert(pres.IVLittleEndian.Length == 2);
+                byte[] counter = ChaCha.GetBytes(counter64);
+                // counter as little-endian
+                Array.Reverse(counter);
+                string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
+                Debug.Assert(counterStr.Length == 16, $"Counter string is of size {counterStr.Length}. Expected: 16 (version DJB)");
+                state[12] = counterStr.Substring(0, 8);
+                state[13] = counterStr.Substring(8);
+                // Debug.Assert(pres.IVLittleEndian.Length == 2, $"IVLittleEndian array is of size {pres.IVLittleEndian.Length}. Expected: 2 (version DJB)");
                 state[14] = pres.IVLittleEndian[0];
                 state[15] = pres.IVLittleEndian[1];
             }
             else
             {
                 // 32-bit counter, 96-bit IV
-                uint counter32 = (uint)counter64;
-                string counter = ChaChaPresentation.HexStringLittleEndian(counter32);
-                Debug.Assert(counter.Length == 8);
-                state[12] = counter;
-                Debug.Assert(pres.IVLittleEndian.Length == 3);
+                byte[] counter = ChaCha.GetBytes((uint)counter64);
+                Array.Reverse(counter);
+                string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
+                Debug.Assert(counterStr.Length == 8, $"Counter string is of size {counterStr.Length}. Expected: 8 (version IETF)");
+                state[12] = counterStr;
+                Debug.Assert(pres.IVLittleEndian.Length == 3, $"IVLittleEndian array is of size {pres.IVLittleEndian.Length}. Expected: 3 (version IETF)");
                 state[13] = pres.IVLittleEndian[0];
                 state[14] = pres.IVLittleEndian[1];
                 state[15] = pres.IVLittleEndian[2];
