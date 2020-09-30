@@ -298,6 +298,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             byte[] dst = new byte[src.Length];
             int keystreamBlocksNeeded = (int)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
+            DispatchToPresentation(delegate
+            {
+                _presentation.KeystreamBlocksNeeded = keystreamBlocksNeeded;
+            });
             byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.

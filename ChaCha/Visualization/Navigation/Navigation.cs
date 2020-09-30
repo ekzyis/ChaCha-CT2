@@ -25,6 +25,20 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
+        private Button CreateKeystreamBlockGenButton(int keyblockNr)
+        {
+            Button b = new Button();
+            Binding widthBinding = new Binding() { ElementName = "PageButton_KeystreamBlockGeneration_1", Path = new PropertyPath("Width") };
+            b.SetBinding(Button.WidthProperty, widthBinding);
+            Binding heightBinding = new Binding() { ElementName = "PageButton_KeystreamBlockGeneration_1", Path = new PropertyPath("Height") };
+            b.SetBinding(Button.HeightProperty, heightBinding);
+            Binding marginBinding = new Binding() { ElementName = "PageButton_KeystreamBlockGeneration_1", Path = new PropertyPath("Margin") };
+            b.SetBinding(Button.MarginProperty, marginBinding);
+            b.Content = keyblockNr.ToString();
+            PageButtonPanel_KeystreamBlockGeneration.Children.Add(b);
+            return b;
+        }
+
         private List<Button> _pageButtons = new List<Button>();
         private void InitNavigationPopupMenu()
         {
@@ -39,6 +53,11 @@ namespace Cryptool.Plugins.ChaCha
             InitPageButton(PageButton_Overview);
             InitPageButton(PageButton_StateMatrixInitialization);
             InitPageButton(PageButton_KeystreamBlockGeneration_1);
+            for (int i = 1; i < KeystreamBlocksNeeded; ++i)
+            {
+                Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
+                InitPageButton(keystreamBlockGenButton);
+            }
             UpdatePageButtons(CurrentPageIndex);
         }
 

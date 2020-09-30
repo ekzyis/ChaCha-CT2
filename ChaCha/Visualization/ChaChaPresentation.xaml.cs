@@ -194,6 +194,7 @@ namespace Cryptool.Plugins.ChaCha
         #region Settings Variables
         public ChaCha.Version Version { get; set; }
         public int Rounds { get; set; }
+        public int KeystreamBlocksNeeded { get; set; }
         #endregion
 
         #region IntermediateResultsManager API
