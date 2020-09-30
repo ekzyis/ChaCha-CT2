@@ -59,7 +59,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
                 InitPageButton(keystreamBlockGenButton);
-                AddPage(new GeneralKeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i));
+                AddPage(new GeneralKeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i + 1));
             }
             UpdatePageButtons(CurrentPageIndex);
         }
