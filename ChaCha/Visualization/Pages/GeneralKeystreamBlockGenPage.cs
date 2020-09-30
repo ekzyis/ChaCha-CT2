@@ -113,12 +113,12 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(QRExecActions(2, qrIndex));
                 AddAction(QRExecActions(3, qrIndex));
                 AddAction(QRExecActions(4, qrIndex));
-                AddAction(QROutputActions(pres));
-                AddAction(ReplaceStateEntriesWithQROutput(pres, qrIndex));
-                AddAction(ClearQRDetail(pres, qrIndex));
+                AddAction(QROutputActions());
+                AddAction(ReplaceStateEntriesWithQROutput(qrIndex));
+                AddAction(ClearQRDetail(qrIndex));
             }
-            AddAction(AddOriginalState(pres));
-            AddAction(ConvertStateEntriesToLittleEndian(pres, 0));
+            AddAction(AddOriginalState());
+            AddAction(ConvertStateEntriesToLittleEndian());
         }
 
         private ActionCache GenerateCache()
@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.ChaCha
                 CachePageAction cache = new CachePageAction();
                 cache.AddToExec(() =>
                 {
-                    ClearQRDetail(pres);
+                    ClearQRDetail();
                     // update state matrix
                     TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
                     uint[] stateEntries = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1);
@@ -350,7 +350,7 @@ namespace Cryptool.Plugins.ChaCha
             ((TextBox)GetIndexElement(pres, "ArrowQRRound", 8)).Visibility = Visibility.Hidden;
             ((TextBox)GetIndexElement(pres, "ArrowQRRound", arrowIndex)).Visibility = Visibility.Visible;
         }
-        public static void ClearQRDetail(ChaChaPresentation pres)
+        public void ClearQRDetail()
         {
             pres.Nav.Clear(pres.QRInACell, pres.QRInBCell, pres.QRInCCell, pres.QRInDCell);
             pres.Nav.Clear(pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell);
@@ -370,7 +370,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((Shape)GetIndexElement(pres, "QRShiftCircle", i));
             }
         }
-        public static PageAction ClearQRDetail(ChaChaPresentation pres, int qrIndex)
+        public PageAction ClearQRDetail(int qrIndex)
         {
             string qrInA = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
             string qrInB = pres.GetHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
@@ -390,7 +390,7 @@ namespace Cryptool.Plugins.ChaCha
 
             return new PageAction(() =>
             {
-                ClearQRDetail(pres);
+                ClearQRDetail();
             }, () =>
             {
                 pres.Nav.Replace(pres.QRInA, qrInA);
@@ -415,7 +415,7 @@ namespace Cryptool.Plugins.ChaCha
             return (qrIndex - 1) * 4 + (actionIndex - 1);
         }
 
-        private static PageAction[] QROutputActions(ChaChaPresentation pres)
+        private PageAction[] QROutputActions()
         {
             return pres.Nav.CopyActions(
                 new Border[] { (Border)GetIndexElement(pres, "QRAddCell", 3), (Border)GetIndexElement(pres, "QRShiftCell", 4), (Border)GetIndexElement(pres, "QRAddCell", 4), (Border)GetIndexElement(pres, "QRShiftCell", 3) },
@@ -727,7 +727,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private PageAction[] ReplaceStateEntriesWithQROutput(ChaChaPresentation pres, int qrIndex)
+        private PageAction[] ReplaceStateEntriesWithQROutput(int qrIndex)
         {
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
             Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
@@ -744,7 +744,7 @@ namespace Cryptool.Plugins.ChaCha
             return copyActions;
         }
 
-        private PageAction[] AddOriginalState(ChaChaPresentation pres)
+        private PageAction[] AddOriginalState()
         {
             PageAction showOriginalState = new PageAction(() =>
             {
@@ -766,9 +766,9 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { showOriginalState, addStates };
         }
 
-        private PageAction[] ConvertStateEntriesToLittleEndian(ChaChaPresentation pres, int keyblockNr)
+        private PageAction[] ConvertStateEntriesToLittleEndian()
         {
-            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr);
+            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
             string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
             PageAction convert = new PageAction(() =>
