@@ -98,7 +98,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction initAction = new PageAction(() =>
             {
                 AddToState(originalState);
-                AssertStateAfterQuarterround(pres, 0);
+                AssertStateAfterQuarterround(0);
             }, () =>
             {
                 ClearState();
@@ -715,7 +715,7 @@ namespace Cryptool.Plugins.ChaCha
             return copyActions;
         }
 
-        private void AssertStateAfterQuarterround(ChaChaPresentation pres, int qrIndex)
+        private void AssertStateAfterQuarterround(int qrIndex)
         {
             // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
             string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex).Select(s => ChaChaPresentation.HexString(s)).ToArray();
@@ -739,7 +739,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, previousStateEntries, true);
             copyActions[2].AddToExec(() =>
             {
-                AssertStateAfterQuarterround(pres, qrIndex);
+                AssertStateAfterQuarterround(qrIndex);
             });
             return copyActions;
         }
