@@ -73,7 +73,7 @@
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
     <Canvas Margin="5" Panel.ZIndex="5">
-      <Button Height="20" Name="NavigationButton" Click="ToggleNavigationMenu">
+      <Button Height="20" Name="NavigationButton" Click="ToggleNavigationMenu" IsEnabled="{ Binding NavigationEnabled }">
         Navigation
       </Button>
       <Border Canvas.Top="20" BorderThickness="1.5" BorderBrush="Black" Width="600" Visibility="Collapsed" Name="NavigationMenu" Background="White">
