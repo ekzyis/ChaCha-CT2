@@ -22,7 +22,7 @@
 	<replacement key="$decrypted$" value="Entschlüsselter Geheimtext" />
     <replacement key="$key$" value="Schlüssel" />
     <replacement key="$plaintextvalue$" value="Franz jagt im komplett verwahrlosten Taxi quer durch Bayern." />
-	<replacement key="$iv" value="Initialisierungsvektor" />
+	<replacement key="$iv$" value="Initialisierungsvektor" />
 	<replacement key="$decode$" value="String-Decodierer" />
 	<replacement key="$encode$" value="String-Encodierer" />
   </replacements>
