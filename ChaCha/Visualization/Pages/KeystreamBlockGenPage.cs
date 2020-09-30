@@ -696,13 +696,6 @@ namespace Cryptool.Plugins.ChaCha
             copyActions[0].Add(updateQRArrow);
             copyActions[0].AddLabel(QuarterroundStartLabelWithRound(qrIndex, round));
             copyActions[0].AddLabel(QuarterroundStartLabelWithoutRound(qrIndex));
-            Border[] outerCells = GetStateOuterCells(pres);
-            Action markOuterCells = () => { pres.Nav.SetCopyBackground(outerCells[i], outerCells[j], outerCells[k], outerCells[l]); };
-            Action unmarkOuterCells = () => { pres.Nav.UnsetBackground(outerCells[i], outerCells[j], outerCells[k], outerCells[l]); };
-            copyActions[0].AddToExec(markOuterCells);
-            copyActions[0].AddToUndo(unmarkOuterCells);
-            copyActions[2].AddToExec(unmarkOuterCells);
-            copyActions[2].AddToUndo(markOuterCells);
             return copyActions;
         }
 
@@ -718,16 +711,6 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private static Border[] GetStateOuterCells(ChaChaPresentation pres)
-        {
-            List<Border> outerCells = new List<Border>();
-            for (int i = 0; i < 16; ++i)
-            {
-                outerCells.Add((Border)GetIndexElement(pres, "UIKeystreamBlockGenOuterCell", i));
-            }
-            return outerCells.ToArray();
-        }
-
         private static PageAction[] ReplaceStateEntriesWithQROutput(ChaChaPresentation pres, int qrIndex)
         {
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
@@ -738,17 +721,10 @@ namespace Cryptool.Plugins.ChaCha
             previousStateEntries[2] = pres.GetHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
             previousStateEntries[3] = pres.GetHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
             PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, previousStateEntries, true);
-            Border[] outerCells = GetStateOuterCells(pres);
-            Action markOuterCells = () => { pres.Nav.SetCopyBackground(outerCells[i], outerCells[j], outerCells[k], outerCells[l]); };
-            Action unmarkOuterCells = () => { pres.Nav.UnsetBackground(outerCells[i], outerCells[j], outerCells[k], outerCells[l]); };
-            copyActions[1].AddToExec(markOuterCells);
-            copyActions[1].AddToUndo(unmarkOuterCells);
             copyActions[2].AddToExec(() =>
             {
-                unmarkOuterCells();
                 AssertStateAfterQuarterround(pres, qrIndex);
             });
-            copyActions[2].AddToUndo(markOuterCells);
             return copyActions;
         }
 
