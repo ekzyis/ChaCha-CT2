@@ -757,7 +757,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction addStates = new PageAction(() =>
             {
                 ClearStateSecondaryRow();
-                ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+                ReplaceState(pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
                 ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
@@ -768,7 +768,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private PageAction[] ConvertStateEntriesToLittleEndian()
         {
-            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr);
+            uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
             string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
             PageAction convert = new PageAction(() =>
