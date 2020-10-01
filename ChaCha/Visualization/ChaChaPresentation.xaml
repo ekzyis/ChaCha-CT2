@@ -53,14 +53,14 @@
           <RowDefinition Height="8*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="1">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="4*"/>
-          </Grid.ColumnDefinitions>
-          <StackPanel Margin="1" Name="PageNavBar" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left">
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+          <StackPanel Margin="1" Name="PageNavBar" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
             <!-- Page click handlers are inserted here in code-behind -->
           </StackPanel>
-          <StackPanel Margin="1" Name="ActionNavBar" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+          <StackPanel Margin="1" Name="ActionNavBar" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
             <!-- Action click handlers are inserted here in code-behind -->
           </StackPanel>
         </Grid>
