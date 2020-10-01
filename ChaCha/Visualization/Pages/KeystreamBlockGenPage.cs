@@ -218,6 +218,7 @@ namespace Cryptool.Plugins.ChaCha
                     // update round indicator
                     int round = CalculateRoundFromQRIndex(qrIndex);
                     pres.CurrentRoundIndex = round;
+                    pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
                     HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
 
@@ -802,11 +803,13 @@ namespace Cryptool.Plugins.ChaCha
             }
             PageAction updateQRArrow = new PageAction(() =>
             {
+                pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                 (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
                 ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Hidden;
                 ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Visible;
             }, () =>
             {
+                pres.CurrentQuarterroundIndexTextBox = (qrIndex - 2) % 4 + 1;
                 if (qrIndex > 1)
                 {
                     (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
