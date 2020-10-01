@@ -226,6 +226,35 @@ namespace Cryptool.Plugins.ChaCha
             return current;
         }
 
+        private TextBox CreateQuarterroundTextBox()
+        {
+            TextBox current = CreateNavigationTextBox();
+            Binding actionIndexBinding = new Binding("CurrentQuarterroundIndexTextBox")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, 4);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string rawValue = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(rawValue, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        int value = int.Parse(rawValue);
+                        string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(value, CurrentRoundIndex);
+                        int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+                        MoveToActionAsync(qrActionIndex);
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+
         private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
         {
             // Assume that general page navigation bar has already been initialized
@@ -291,7 +320,7 @@ namespace Cryptool.Plugins.ChaCha
             Grid.SetRow(quarterroundLabel, 0);
             Grid.SetRow(quarterroundBottomRow, 1);
             Button previousQuarterround = CreatePrevNavigationButton();
-            TextBox currentQuarterround = CreateNavigationTextBox();
+            TextBox currentQuarterround = CreateQuarterroundTextBox();
             TextBlock delimiterQuarterround = new TextBlock() { Text = "/" };
             TextBlock totalQuarterRoundsLabel = new TextBlock() { Text = "4" };
             Button nextQuarterround = CreateNextNavigationButton();
@@ -478,6 +507,7 @@ namespace Cryptool.Plugins.ChaCha
         private int _currentActionIndexTextBox = 0;
         private int _currentKeystreamBlockTextBox = 1;
         private int _currentRoundIndexTextBox = 1;
+        private int _currentQuarterroundIndexTextBox = 1;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
@@ -551,6 +581,16 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _currentRoundIndexTextBox = value;
                 OnPropertyChanged("CurrentRoundIndexTextBox");
+            }
+        }
+
+        public int CurrentQuarterroundIndexTextBox
+        {
+            get => _currentQuarterroundIndexTextBox;
+            set
+            {
+                _currentQuarterroundIndexTextBox = value;
+                OnPropertyChanged("CurrentQuarterroundIndexTextBox");
             }
         }
 
