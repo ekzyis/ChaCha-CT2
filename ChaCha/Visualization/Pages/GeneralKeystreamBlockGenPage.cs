@@ -657,7 +657,6 @@ namespace Cryptool.Plugins.ChaCha
         }
         private PageAction[] CopyFromStateTOQRInputActions(int qrIndex, int round)
         {
-            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, (round * 4) - 1);
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
             Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
             PageAction[] copyActions = pres.Nav.CopyActions(stateCells,
