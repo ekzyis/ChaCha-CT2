@@ -160,6 +160,7 @@ namespace Cryptool.Plugins.ChaCha
             Button overview = CreatePageButton("Overview", pageIndex, 1, 64);
             Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 160);
             Button keystream = CreatePageButton("Keystream Generation", pageIndex, 3, 160);
+            if (pageIndex >= 3) keystream.FontWeight = FontWeights.Bold;
             pageNavBar.Children.Add(start);
             pageNavBar.Children.Add(overview);
             pageNavBar.Children.Add(stateMatrixInit);
