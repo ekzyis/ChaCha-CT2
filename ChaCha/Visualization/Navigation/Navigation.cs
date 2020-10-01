@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
@@ -312,10 +313,14 @@ namespace Cryptool.Plugins.ChaCha
             Grid.SetRow(quarterroundLabel, 0);
             Grid.SetRow(quarterroundBottomRow, 1);
             Button previousQuarterround = CreatePrevNavigationButton();
+            previousQuarterround.Click += PrevQuarterround_Click;
+            previousQuarterround.SetBinding(Button.IsEnabledProperty, new Binding("PrevQuarterroundIsEnabled"));
             TextBox currentQuarterround = CreateQuarterroundTextBox();
             TextBlock delimiterQuarterround = new TextBlock() { Text = "/" };
             TextBlock totalQuarterRoundsLabel = new TextBlock() { Text = "4" };
             Button nextQuarterround = CreateNextNavigationButton();
+            nextQuarterround.Click += NextQuarterround_Click;
+            nextQuarterround.SetBinding(Button.IsEnabledProperty, new Binding("NextQuarterroundIsEnabled"));
             quarterroundBottomRow.Children.Add(previousQuarterround);
             quarterroundBottomRow.Children.Add(currentQuarterround);
             quarterroundBottomRow.Children.Add(delimiterQuarterround);
@@ -583,6 +588,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _currentQuarterroundIndexTextBox = value;
                 OnPropertyChanged("CurrentQuarterroundIndexTextBox");
+                OnPropertyChanged("NextQuarterroundIsEnabled");
+                OnPropertyChanged("PrevQuarterroundIsEnabled");
             }
         }
 
@@ -635,6 +642,11 @@ namespace Cryptool.Plugins.ChaCha
         public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded;
 
         public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1;
+
+        public bool NextQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox != 4;
+
+        public bool PrevQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox > 1;
+
 
         private int _currentRoundIndex = 0;
         public int CurrentRoundIndex
@@ -897,6 +909,18 @@ namespace Cryptool.Plugins.ChaCha
         {
             int pageIndex = CurrentKeystreamBlockTextBox - 1;
             MoveToKeystreamPage(pageIndex);
+        }
+
+        private void PrevQuarterround_Click(object sender, RoutedEventArgs e)
+        {
+            int qrIndex = CurrentQuarterroundIndexTextBox - 1;
+            MoveToQuarterround(qrIndex);
+        }
+
+        private void NextQuarterround_Click(object sender, RoutedEventArgs e)
+        {
+            int qrIndex = CurrentQuarterroundIndexTextBox + 1;
+            MoveToQuarterround(qrIndex);
         }
 
         private void QR_Click(int qrLabelIndex)
