@@ -428,7 +428,7 @@ namespace Cryptool.Plugins.ChaCha
             for(int i = 1; i <= 8; ++i)
             {
                 StackPanel qrButton = (StackPanel)GetIndexElement(pres, "QRound_Button", i);
-                qrButton.Visibility = (round % 2 == 1 && i <= 4) || (round % 2 == 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
+                qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
