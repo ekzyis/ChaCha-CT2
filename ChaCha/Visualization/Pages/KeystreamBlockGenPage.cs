@@ -790,7 +790,7 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     pres.CurrentRoundIndex = round - 1;
                     pres.Nav.Replace(pres.CurrentRound, text);
-                    ShowQRButtons(pres, round - 1);
+                    ShowQRButtons(pres, round);
                 });
                 copyActions[0].Add(roundUpdate);
                 copyActions[0].AddLabel(RoundStartLabel(round));
