@@ -137,7 +137,6 @@ namespace Cryptool.Plugins.ChaCha
             return current;
         }
 
-        private List<Button> _pageButtons = new List<Button>();
         private Button CreatePageButton(string text, int currentPageIndex, int toPageIndex, int width)
         {
             Button b = new Button()
@@ -149,7 +148,6 @@ namespace Cryptool.Plugins.ChaCha
             // since each page has its own dedicated navigation bar, the button for the current page is always bold
             if (currentPageIndex == toPageIndex) b.FontWeight = FontWeights.Bold;
             b.Click += new RoutedEventHandler(MoveToPageClickWrapper(toPageIndex));
-            _pageButtons.Add(b);
             return b;
         }
 
@@ -158,7 +156,6 @@ namespace Cryptool.Plugins.ChaCha
             int pageIndex = _pages.FindIndex(p_ => p_ == p);
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
-            _pageButtons.Clear();
             Button start = CreatePageButton("Start", pageIndex, 0, 32);
             Button overview = CreatePageButton("Overview", pageIndex, 1, 64);
             Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 160);
