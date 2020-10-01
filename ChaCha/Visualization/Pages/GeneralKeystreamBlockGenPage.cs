@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Shapes;
 using System;
-using System.Security.RightsManagement;
 
 namespace Cryptool.Plugins.ChaCha
 {
