@@ -239,10 +239,14 @@ namespace Cryptool.Plugins.ChaCha
             Grid.SetRow(keystreamLabel, 0);
             Grid.SetRow(keystreamBlockBottomRow, 1);
             Button previousKeystreamBlock = CreatePrevNavigationButton();
+            previousKeystreamBlock.Click += PrevKeystreamBlock_Click;
+            previousKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("PrevKeystreamBlockIsEnabled"));
             TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox(totalKeystreamBlocks);
             TextBlock keystreamDelimiter = new TextBlock() { Text = "/" };
             TextBlock totalKeystreamBlockLabel = new TextBlock() { Text = totalKeystreamBlocks.ToString() };
             Button nextKeystreamBlock = CreateNextNavigationButton();
+            nextKeystreamBlock.Click += NextKeystreamBlock_Click;
+            nextKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("NextKeystreamBlockIsEnabled"));
             keystreamBlockBottomRow.Children.Add(previousKeystreamBlock);
             keystreamBlockBottomRow.Children.Add(currentKeystreamBlock);
             keystreamBlockBottomRow.Children.Add(keystreamDelimiter);
@@ -365,6 +369,11 @@ namespace Cryptool.Plugins.ChaCha
                     NextPage_Click(null, null);
                 }
             }
+        }
+
+        private void MoveToKeystreamPage(int n)
+        {
+            MoveToPage(2 + n);
         }
 
         private void MoveToPage(int n)
@@ -530,6 +539,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _currentKeystreamBlockTextBox = value;
                 OnPropertyChanged("CurrentKeystreamBlockTextBox");
+                OnPropertyChanged("PrevKeystreamBlockIsEnabled");
+                OnPropertyChanged("NextKeystreamBlockIsEnabled");
             }
         }
 
@@ -588,6 +599,10 @@ namespace Cryptool.Plugins.ChaCha
         public bool NextRoundIsEnabled => CurrentRoundIndex != 20;
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
+
+        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded;
+
+        public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1;
 
         private int _currentRoundIndex = 0;
         public int CurrentRoundIndex
@@ -822,6 +837,18 @@ namespace Cryptool.Plugins.ChaCha
             int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex + 1), CurrentActions) + 1;
             Debug.Assert(startIndex < endIndex, $"startIndex ({startIndex}) should be lower than endIndex ({endIndex}) when clicking on next round");
             MoveToActionAsync(endIndex);
+        }
+
+        private void NextKeystreamBlock_Click(object sender, RoutedEventArgs e)
+        {
+            int pageIndex = CurrentKeystreamBlockTextBox + 1;
+            MoveToKeystreamPage(pageIndex);
+        }
+
+        private void PrevKeystreamBlock_Click(object sender, RoutedEventArgs e)
+        {
+            int pageIndex = CurrentKeystreamBlockTextBox - 1;
+            MoveToKeystreamPage(pageIndex);
         }
 
         private void QR_Click(int qrLabelIndex)
