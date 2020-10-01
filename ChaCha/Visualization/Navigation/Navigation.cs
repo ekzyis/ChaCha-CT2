@@ -77,8 +77,15 @@ namespace Cryptool.Plugins.ChaCha
         private class InputActionIndexRule : ValidationRule
         {
             private int _maxActionIndex;
+            private int _minActionIndex;
             public InputActionIndexRule(int maxActionIndex)
             {
+                _maxActionIndex = maxActionIndex;
+            }
+
+            public InputActionIndexRule(int minActionIndex, int maxActionIndex)
+            {
+                _minActionIndex = minActionIndex;
                 _maxActionIndex = maxActionIndex;
             }
 
@@ -95,7 +102,7 @@ namespace Cryptool.Plugins.ChaCha
                     return new ValidationResult(false, $"Illegal characters or {e.Message}");
                 }
 
-                if ((input < 0) || (input > _maxActionIndex))
+                if ((input < _minActionIndex) || (input > _maxActionIndex))
                 {
                     return new ValidationResult(false,
                         $"Please enter an age in the range: {0}-{_maxActionIndex}.");
@@ -161,6 +168,36 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(keystream);
         }
 
+        private TextBox CreateKeystreamBlockTextBox(int totalKeystreamBlocks)
+        {
+            TextBox current = CreateNavigationTextBox();
+            Binding actionIndexBinding = new Binding("CurrentKeystreamBlock")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalKeystreamBlocks);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        // +2 because keystream pages start at index 3, so if we get the value 1
+                        // we want to go to page index 3 etc.
+                        MoveToPage(2 + int.Parse(value));
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+
+        public int CurrentKeystreamBlock { get; set; } = 1;
+
         private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
         {
             // Assume that general page navigation bar has already been initialized
@@ -174,7 +211,7 @@ namespace Cryptool.Plugins.ChaCha
             Grid.SetRow(keystreamLabel, 0);
             Grid.SetRow(keystreamBlockBottomRow, 1);
             Button previousKeystreamBlock = CreatePrevNavigationButton();
-            TextBox currentKeystreamBlock = CreateNavigationTextBox();
+            TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox(totalKeystreamBlocks);
             TextBlock keystreamDelimiter = new TextBlock() { Text = "/" };
             TextBlock totalKeystreamBlockLabel = new TextBlock() { Text = totalKeystreamBlocks.ToString() };
             Button nextKeystreamBlock = CreateNextNavigationButton();
@@ -319,7 +356,10 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
-            AddPage(Page.KeystreamBlockGenPage(this, 1));
+            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
+            {
+                AddPage(Page.KeystreamBlockGenPage(this, (ulong)i + 1));
+            }
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             for (int i = 0; i < _pages.Count; ++i)
             {
