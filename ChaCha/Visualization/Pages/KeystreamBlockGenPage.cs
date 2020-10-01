@@ -78,8 +78,8 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(ReplaceStateEntriesWithQROutput(_pres, qrIndex));
                 AddAction(ClearQRDetail(_pres, qrIndex));
             }
-            AddAction(AddOriginalState(_pres, 0));
-            AddAction(ConvertStateEntriesToLittleEndian(_pres, 0));
+            AddAction(AddOriginalState(_pres, 1));
+            AddAction(ConvertStateEntriesToLittleEndian(_pres, 1));
         }
 
         private ActionCache GenerateCache()
@@ -765,11 +765,11 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearStateSecondaryRow();
             });
-            string[] previousState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, (keyblockNr + 1) * pres.Rounds * 4).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] previousState = pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND, keyblockNr * pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction addStates = new PageAction(() =>
             {
                 ClearStateSecondaryRow();
-                ReplaceState(pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+                ReplaceState(pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
                 ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
@@ -789,7 +789,7 @@ namespace Cryptool.Plugins.ChaCha
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
             });
-            uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr);
+            uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, keyblockNr - 1);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
             string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
             PageAction convert = new PageAction(() =>
