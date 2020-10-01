@@ -27,13 +27,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private Button CreateKeystreamBlockGenButton(int keyblockNr)
         {
-            Button b = new Button();
-            Binding widthBinding = new Binding() { ElementName = "PageButton_KeystreamBlockGeneration_1", Path = new PropertyPath("Width") };
-            b.SetBinding(Button.WidthProperty, widthBinding);
-            Binding heightBinding = new Binding() { ElementName = "PageButton_KeystreamBlockGeneration_1", Path = new PropertyPath("Height") };
-            b.SetBinding(Button.HeightProperty, heightBinding);
-            Binding marginBinding = new Binding() { ElementName = "PageButton_KeystreamBlockGeneration_1", Path = new PropertyPath("Margin") };
-            b.SetBinding(Button.MarginProperty, marginBinding);
+            Button b = new Button() { Width = 32, Height = 18.75, Margin = new Thickness(5,0,0,0) };
             b.Content = keyblockNr.ToString();
             PageButtonPanel_KeystreamBlockGeneration.Children.Add(b);
             return b;
@@ -53,13 +47,12 @@ namespace Cryptool.Plugins.ChaCha
             InitPageButton(PageButton_Start);
             InitPageButton(PageButton_Overview);
             InitPageButton(PageButton_StateMatrixInitialization);
-            InitPageButton(PageButton_KeystreamBlockGeneration_1);
             PageButtonPanel_KeystreamBlockGeneration.Children.Clear();
-            for (int i = 1; i < KeystreamBlocksNeeded; ++i)
+            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
             {
                 Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
                 InitPageButton(keystreamBlockGenButton);
-                AddPage(new GeneralKeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i + 1));
+                AddPage(new KeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i + 1));
             }
             UpdatePageButtons(CurrentPageIndex);
         }
@@ -252,7 +245,6 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
-            AddPage(Page.KeystreamBlockGenPage(this));
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             InitActionNavigationBar(CurrentPage);
             InitNavigationPopupMenu();
