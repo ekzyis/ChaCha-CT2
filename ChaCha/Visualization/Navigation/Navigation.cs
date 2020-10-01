@@ -196,7 +196,6 @@ namespace Cryptool.Plugins.ChaCha
             return current;
         }
 
-        public int CurrentKeystreamBlock { get; set; } = 1;
 
         private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
         {
@@ -436,6 +435,8 @@ namespace Cryptool.Plugins.ChaCha
         // Prevents direct write-access to actual current action index value while still being able to read from it.
         private int _currentActionIndexTextBox = 0;
 
+        private int _currentKeystreamBlock = 1;
+
         private bool _executionFinished = false;
         private bool _inputValid = false;
 
@@ -447,12 +448,17 @@ namespace Cryptool.Plugins.ChaCha
                 if (value == _currentPageIndex) return;
                 _currentPageIndex = value;
                 CurrentActionIndex = 0;
+                if(_currentPageIndex >= 3)
+                {
+                    CurrentKeystreamBlock = _currentPageIndex - 2;
+                }
                 OnPropertyChanged("CurrentPageIndex");
                 OnPropertyChanged("CurrentPage");
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
+                OnPropertyChanged("CurrentKeystreamBlock");
                 InitActionNavigationBar(CurrentPage);
             }
         }
@@ -481,6 +487,16 @@ namespace Cryptool.Plugins.ChaCha
                 _currentActionIndexTextBox = value;
                 OnPropertyChanged("CurrentActionIndexTextBox");
 
+            }
+        }
+
+        public int CurrentKeystreamBlock
+        {
+            get => _currentKeystreamBlock;
+            set
+            {
+                _currentKeystreamBlock = value;
+                OnPropertyChanged("CurrentKeystreamBlock");
             }
         }
 
