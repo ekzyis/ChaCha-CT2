@@ -353,7 +353,7 @@
             <!-- Step description -->
             <RichTextBox Name="UIStateMatrixStepDescription"/>
             <!-- state parameters -->
-            <TextBox Grid.Row="1" HorizontalAlignment="Center">State Parameters</TextBox>
+            <TextBox Grid.Row="1" HorizontalAlignment="Center">State parameters</TextBox>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <TextBox>Constant:</TextBox>
               <TextBox Style="{StaticResource hexTextBox}" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
