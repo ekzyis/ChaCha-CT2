@@ -164,10 +164,6 @@ namespace Cryptool.Plugins.ChaCha
 
         private ActionCache GenerateCache()
         {
-            return GenerateQuarterroundCache();
-        }
-        private ActionCache GenerateQuarterroundCache()
-        {
             Debug.Assert(Actions.Length != 0, $"Actions empty while generating cache. Did you initialize the actions?");
             CachePageAction GenerateQuarterroundCacheEntry(int qrIndex)
             {
