@@ -76,21 +76,62 @@ namespace Cryptool.Plugins.ChaCha
             return state;
         }
 
-        private int MapIndex(int index_)
+        private int MapIndex(ResultType<uint[]> resultType, int i)
         {
-            return (int)((ulong)(pres.Rounds * 4) * (keyBlockNr - 1)) + index_;
+            int offset = 0;
+            switch (resultType.Name)
+            {
+                case "CHACHA_HASH_ORIGINAL_STATE":
+                case "CHACHA_HASH_ADD_ORIGINAL_STATE":
+                case "CHACHA_HASH_LITTLEENDIAN_STATE":
+                    // only executed once per keystream block generation thus no offset.
+                    offset = 0;
+                    break;
+                case "CHACHA_HASH_QUARTERROUND":
+                    // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
+                    offset = pres.Rounds * 4;
+                    break;
+            }
+            return (int)((ulong)offset * (keyBlockNr - 1)) + i;
+        }
+        private int MapIndex(ResultType<uint> resultType, int i)
+        {
+            int offset = 0;
+            switch (resultType.Name)
+            {
+                case "QR_INPUT_A":
+                case "QR_INPUT_B":
+                case "QR_INPUT_C":
+                case "QR_INPUT_D":
+                case "QR_OUTPUT_A":
+                case "QR_OUTPUT_B":
+                case "QR_OUTPUT_C":
+                case "QR_OUTPUT_D":
+                    // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
+                    offset = pres.Rounds * 4;
+                    break;
+                case "QR_ADD":
+                case "QR_XOR":
+                case "QR_SHIFT":
+                    // executed four times per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4 * 4
+                    offset = pres.Rounds * 4 * 4;
+                    break;
+            }
+            return (int)((ulong)offset * (keyBlockNr - 1)) + i;
         }
         private uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
         {
-            return pres.GetResult(resultType, MapIndex(index));
+            int mapIndex = MapIndex(resultType, index);
+            return pres.GetResult(resultType, mapIndex);
         }
         private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
         {
-            return pres.GetHexResult(resultType, MapIndex(i), j);
+            return pres.GetHexResult(resultType, MapIndex(resultType, i), j);
         }
         private string GetMappedHexResult(ResultType<uint> resultType, int index)
         {
-            return pres.GetHexResult(resultType, MapIndex(index));
+            int mapIndex = MapIndex(resultType, index);
+            return pres.GetHexResult(resultType, MapIndex(resultType, index));
         }
 
         private void Init()
@@ -98,7 +139,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction initAction = new PageAction(() =>
             {
                 AddToState(originalState);
-                AssertStateAfterQuarterround(0);
+                AssertInitialState();
             }, () =>
             {
                 ClearState();
@@ -136,7 +177,15 @@ namespace Cryptool.Plugins.ChaCha
                     ClearQRDetail();
                     // update state matrix
                     TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
-                    uint[] stateEntries = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1);
+                    uint[] stateEntries;
+                    if (qrIndex == 1)
+                    {
+                        stateEntries = pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1);
+                    }
+                    else
+                    {
+                        stateEntries = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
+                    }
                     Debug.Assert(stateTextBoxes.Length == stateEntries.Length);
                     for (int x = 0; x < stateEntries.Length; ++x)
                     {
@@ -634,8 +683,20 @@ namespace Cryptool.Plugins.ChaCha
                     return (-1, -1, -1, -1);
             }
         }
+       
         private static int CalculateRoundFromQRIndex(int qrIndex)
         {
+            /**
+            * Returns one-based round value (between 1 - 20) for one-based indices quarterround index (between 1 - 8).
+            * 
+            * Examples: 
+            *   Quarterround index 1 -> Round 1
+            *   Quarterround index 4 -> Round 1
+            *   Quarterround index 5 -> Round 2
+            *   Quarterround index 8 -> Round 2
+            *   Quarterround index 9 -> Round 3
+            *   Quarterround index 13 -> Round 4
+            */
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
         }
         public static string QuarterroundStartLabelWithoutRound(int qrIndex)
@@ -717,12 +778,24 @@ namespace Cryptool.Plugins.ChaCha
         private void AssertStateAfterQuarterround(int qrIndex)
         {
             // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
-            string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             string[] visualState = new string[16];
             for (int i = 0; i < 16; ++i)
             {
                 visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
                 Debug.Assert(expectedState[i] == visualState[i], $"Visual state after quarterround {qrIndex} execution does not match actual state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
+            }
+        }
+
+        private void AssertInitialState()
+        {
+            // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
+            string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] visualState = new string[16];
+            for (int i = 0; i < 16; ++i)
+            {
+                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
+                Debug.Assert(expectedState[i] == visualState[i], $"Visual init state does not match actual init state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
             }
         }
 
@@ -752,11 +825,11 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearStateSecondaryRow();
             });
-            string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction addStates = new PageAction(() =>
             {
                 ClearStateSecondaryRow();
-                ReplaceState(pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+                ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
                 ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
@@ -767,7 +840,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private PageAction[] ConvertStateEntriesToLittleEndian()
         {
-            uint[] state = pres.GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
+            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
             string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
             PageAction convert = new PageAction(() =>
