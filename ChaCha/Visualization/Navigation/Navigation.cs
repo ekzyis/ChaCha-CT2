@@ -197,6 +197,34 @@ namespace Cryptool.Plugins.ChaCha
         }
 
 
+        private TextBox CreateRoundTextBox(int totalRounds)
+        {
+            TextBox current = CreateNavigationTextBox();
+            Binding actionIndexBinding = new Binding("CurrentRoundIndex")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalRounds);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string rawValue = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(rawValue, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        int value = int.Parse(rawValue);
+                        int destination = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(value), CurrentActions) + 1;
+                        MoveToActionAsync(destination);
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+
         private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
         {
             // Assume that general page navigation bar has already been initialized
@@ -232,7 +260,7 @@ namespace Cryptool.Plugins.ChaCha
             Grid.SetRow(roundLabel, 0);
             Grid.SetRow(roundBottomRow, 1);
             Button previousRound = CreatePrevNavigationButton();
-            TextBox currentRound = CreateNavigationTextBox();
+            TextBox currentRound = CreateRoundTextBox(totalRounds);
             TextBlock delimiterRound = new TextBlock() { Text = "/" };
             TextBlock totalRoundsLabel = new TextBlock() { Text = totalRounds.ToString() };
             Button nextRound = CreateNextNavigationButton();
