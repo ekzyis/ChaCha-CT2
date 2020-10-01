@@ -196,7 +196,7 @@ namespace Cryptool.Plugins.ChaCha
                     UnmarkAllStateEntriesExcept(pres, i, j, k, l);
                     // update round indicator
                     int round = CalculateRoundFromQRIndex(qrIndex);
-                    pres.CurrentRoundIndex = CalculateRoundFromQRIndex(qrIndex);
+                    pres.CurrentRoundIndex = round;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
                     HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
                 });
