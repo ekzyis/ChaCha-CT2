@@ -161,34 +161,75 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(keystream);
         }
 
-        private void InitKeystreamNavigation(Page p)
+        private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
         {
             // Assume that general page navigation bar has already been initialized
             StackPanel pageNavBar = p.PageNavigationBar;
 
+            Grid keystreamBlockGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
+            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            TextBlock keystreamLabel = new TextBlock() { Text = "Keystream Block", HorizontalAlignment = HorizontalAlignment.Center };
+            StackPanel keystreamBlockBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
+            Grid.SetRow(keystreamLabel, 0);
+            Grid.SetRow(keystreamBlockBottomRow, 1);
             Button previousKeystreamBlock = CreatePrevNavigationButton();
             TextBox currentKeystreamBlock = CreateNavigationTextBox();
+            TextBlock keystreamDelimiter = new TextBlock() { Text = "/" };
+            TextBlock totalKeystreamBlockLabel = new TextBlock() { Text = totalKeystreamBlocks.ToString() };
             Button nextKeystreamBlock = CreateNextNavigationButton();
+            keystreamBlockBottomRow.Children.Add(previousKeystreamBlock);
+            keystreamBlockBottomRow.Children.Add(currentKeystreamBlock);
+            keystreamBlockBottomRow.Children.Add(keystreamDelimiter);
+            keystreamBlockBottomRow.Children.Add(totalKeystreamBlockLabel);
+            keystreamBlockBottomRow.Children.Add(nextKeystreamBlock);
+            keystreamBlockGrid.Children.Add(keystreamLabel);
+            keystreamBlockGrid.Children.Add(keystreamBlockBottomRow);
+            pageNavBar.Children.Add(keystreamBlockGrid);
 
+
+            Grid roundGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
+            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            TextBlock roundLabel = new TextBlock() { Text = "Round", HorizontalAlignment = HorizontalAlignment.Center };
+            StackPanel roundBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
+            Grid.SetRow(roundLabel, 0);
+            Grid.SetRow(roundBottomRow, 1);
             Button previousRound = CreatePrevNavigationButton();
             TextBox currentRound = CreateNavigationTextBox();
+            TextBlock delimiterRound = new TextBlock() { Text = "/" };
+            TextBlock totalRoundsLabel = new TextBlock() { Text = totalRounds.ToString() };
             Button nextRound = CreateNextNavigationButton();
+            roundBottomRow.Children.Add(previousRound);
+            roundBottomRow.Children.Add(currentRound);
+            roundBottomRow.Children.Add(delimiterRound);
+            roundBottomRow.Children.Add(totalRoundsLabel);
+            roundBottomRow.Children.Add(nextRound);
+            roundGrid.Children.Add(roundLabel);
+            roundGrid.Children.Add(roundBottomRow);
+            pageNavBar.Children.Add(roundGrid);
 
+
+            Grid quarterroundGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
+            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            TextBlock quarterroundLabel = new TextBlock() { Text = "Quarterround", HorizontalAlignment = HorizontalAlignment.Center };
+            StackPanel quarterroundBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
+            Grid.SetRow(quarterroundLabel, 0);
+            Grid.SetRow(quarterroundBottomRow, 1);
             Button previousQuarterround = CreatePrevNavigationButton();
             TextBox currentQuarterround = CreateNavigationTextBox();
+            TextBlock delimiterQuarterround = new TextBlock() { Text = "/" };
+            TextBlock totalQuarterRoundsLabel = new TextBlock() { Text = "4" };
             Button nextQuarterround = CreateNextNavigationButton();
-
-            pageNavBar.Children.Add(previousKeystreamBlock);
-            pageNavBar.Children.Add(currentKeystreamBlock);
-            pageNavBar.Children.Add(nextKeystreamBlock);
-
-            pageNavBar.Children.Add(previousRound);
-            pageNavBar.Children.Add(currentRound);
-            pageNavBar.Children.Add(nextRound);
-
-            pageNavBar.Children.Add(previousQuarterround);
-            pageNavBar.Children.Add(currentQuarterround);
-            pageNavBar.Children.Add(nextQuarterround);
+            quarterroundBottomRow.Children.Add(previousQuarterround);
+            quarterroundBottomRow.Children.Add(currentQuarterround);
+            quarterroundBottomRow.Children.Add(delimiterQuarterround);
+            quarterroundBottomRow.Children.Add(totalQuarterRoundsLabel);
+            quarterroundBottomRow.Children.Add(nextQuarterround);
+            quarterroundGrid.Children.Add(quarterroundLabel);
+            quarterroundGrid.Children.Add(quarterroundBottomRow);
+            pageNavBar.Children.Add(quarterroundGrid);
         }
 
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
@@ -284,7 +325,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 Page p = _pages[i];
                 InitPageNavigationBar(p);
-                if (i >= 3) InitKeystreamNavigation(p);
+                if (i >= 3) InitKeystreamNavigation(p, KeystreamBlocksNeeded, Rounds);
             }
             InitActionNavigationBar(CurrentPage);
         }
