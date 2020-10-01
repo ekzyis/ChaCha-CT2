@@ -171,7 +171,7 @@ namespace Cryptool.Plugins.ChaCha
         private TextBox CreateKeystreamBlockTextBox(int totalKeystreamBlocks)
         {
             TextBox current = CreateNavigationTextBox();
-            Binding actionIndexBinding = new Binding("CurrentKeystreamBlock")
+            Binding actionIndexBinding = new Binding("CurrentKeystreamBlockTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
             ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalKeystreamBlocks);
             actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
@@ -200,7 +200,7 @@ namespace Cryptool.Plugins.ChaCha
         private TextBox CreateRoundTextBox(int totalRounds)
         {
             TextBox current = CreateNavigationTextBox();
-            Binding actionIndexBinding = new Binding("CurrentRoundIndex")
+            Binding actionIndexBinding = new Binding("CurrentRoundIndexTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
             ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalRounds);
             actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
@@ -216,6 +216,7 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         int value = int.Parse(rawValue);
                         int destination = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(value), CurrentActions) + 1;
+                        CurrentRoundIndex = value;
                         MoveToActionAsync(destination);
                     }
                 }
@@ -462,8 +463,8 @@ namespace Cryptool.Plugins.ChaCha
         // action index value for TextBox.
         // Prevents direct write-access to actual current action index value while still being able to read from it.
         private int _currentActionIndexTextBox = 0;
-
-        private int _currentKeystreamBlock = 1;
+        private int _currentKeystreamBlockTextBox = 1;
+        private int _currentRoundIndexTextBox = 1;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
@@ -478,7 +479,7 @@ namespace Cryptool.Plugins.ChaCha
                 CurrentActionIndex = 0;
                 if(_currentPageIndex >= 3)
                 {
-                    CurrentKeystreamBlock = _currentPageIndex - 2;
+                    CurrentKeystreamBlockTextBox = _currentPageIndex - 2;
                 }
                 OnPropertyChanged("CurrentPageIndex");
                 OnPropertyChanged("CurrentPage");
@@ -518,13 +519,23 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public int CurrentKeystreamBlock
+        public int CurrentKeystreamBlockTextBox
         {
-            get => _currentKeystreamBlock;
+            get => _currentKeystreamBlockTextBox;
             set
             {
-                _currentKeystreamBlock = value;
-                OnPropertyChanged("CurrentKeystreamBlock");
+                _currentKeystreamBlockTextBox = value;
+                OnPropertyChanged("CurrentKeystreamBlockTextBox");
+            }
+        }
+
+        public int CurrentRoundIndexTextBox
+        {
+            get => _currentRoundIndexTextBox;
+            set
+            {
+                _currentRoundIndexTextBox = value;
+                OnPropertyChanged("CurrentRoundIndexTextBox");
             }
         }
 
@@ -584,6 +595,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentRoundIndex = value;
+                CurrentRoundIndexTextBox = value;
                 OnPropertyChanged("CurrentRoundIndex");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
