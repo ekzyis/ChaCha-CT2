@@ -384,7 +384,9 @@
           <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
-          <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Keystream Block Generation 1/</TextBox>
+          <TextBox FontSize="20">Keystream Block Generation</TextBox>
+          <TextBox FontSize="20" Name="KeystreamBlocksNeededTextBlock"/>
+          <TextBox FontSize="20">/</TextBox>
           <TextBox FontSize="20" Text="{ Binding KeystreamBlocksNeeded }"/>
         </StackPanel>
         <Grid Grid.Row="1">

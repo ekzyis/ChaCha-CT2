@@ -42,6 +42,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 AddToState(originalState);
                 AssertInitialState(_pres);
+                _pres.KeystreamBlocksNeededTextBlock.Text = "1";
             }, () =>
             {
                 ClearState();
