@@ -668,17 +668,18 @@ namespace Cryptool.Plugins.ChaCha
                 });
                 copyActions[0].Add(updateRoundCount);
                 copyActions[0].AddLabel(RoundStartLabel(round));
-            }
-            if(round == 2)
-            {
-                PageAction updateDescription = new PageAction(() =>
+                if (round == 2)
                 {
-                    AddBoldToDescription(descriptions[2]);
-                }, () =>
-                {
-                    RemoveLastFromDescription();
-                    MakeLastBoldInDescription();
-                });
+                    PageAction updateDescription = new PageAction(() =>
+                    {
+                        AddBoldToDescription(descriptions[2]);
+                    }, () =>
+                    {
+                        RemoveLastFromDescription();
+                        MakeLastBoldInDescription();
+                    });
+                    copyActions[0].Add(updateDescription);
+                }
             }
             int QR_ARROW_MAX_INDEX = 8;
             (int, int) calculateQRArrowIndex(int qrIndex_)
