@@ -261,10 +261,14 @@ namespace Cryptool.Plugins.ChaCha
             Grid.SetRow(roundLabel, 0);
             Grid.SetRow(roundBottomRow, 1);
             Button previousRound = CreatePrevNavigationButton();
+            previousRound.Click += PrevRound_Click;
+            previousRound.SetBinding(Button.IsEnabledProperty, new Binding("PrevRoundIsEnabled"));
             TextBox currentRound = CreateRoundTextBox(totalRounds);
             TextBlock delimiterRound = new TextBlock() { Text = "/" };
             TextBlock totalRoundsLabel = new TextBlock() { Text = totalRounds.ToString() };
             Button nextRound = CreateNextNavigationButton();
+            nextRound.Click += NextRound_Click;
+            nextRound.SetBinding(Button.IsEnabledProperty, new Binding("NextRoundIsEnabled"));
             roundBottomRow.Children.Add(previousRound);
             roundBottomRow.Children.Add(currentRound);
             roundBottomRow.Children.Add(delimiterRound);
