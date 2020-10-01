@@ -6,29 +6,36 @@ namespace Cryptool.Plugins.ChaCha
 {
     public class ResultType
     {
-        public static readonly ResultType<uint> QR_INPUT_A = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_INPUT_B = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_INPUT_C = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_INPUT_D = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_INPUT_X1 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_INPUT_X2 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_INPUT_X3 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_X1 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_X2 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_X3 = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_ADD = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_XOR = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_SHIFT = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_A = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_B = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_C = new ResultType<uint>();
-        public static readonly ResultType<uint> QR_OUTPUT_D = new ResultType<uint>();
-        public static readonly ResultType<uint[]> CHACHA_HASH_ORIGINAL_STATE = new ResultType<uint[]>();
-        public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND = new ResultType<uint[]>();
-        public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>();
-        public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>();
+        public static readonly ResultType<uint> QR_INPUT_A = new ResultType<uint>("QR_INPUT_A");
+        public static readonly ResultType<uint> QR_INPUT_B = new ResultType<uint>("QR_INPUT_B");
+        public static readonly ResultType<uint> QR_INPUT_C = new ResultType<uint>("QR_INPUT_C");
+        public static readonly ResultType<uint> QR_INPUT_D = new ResultType<uint>("QR_INPUT_D");
+        public static readonly ResultType<uint> QR_INPUT_X1 = new ResultType<uint>("QR_INPUT_X1");
+        public static readonly ResultType<uint> QR_INPUT_X2 = new ResultType<uint>("QR_INPUT_X2");
+        public static readonly ResultType<uint> QR_INPUT_X3 = new ResultType<uint>("QR_INPUT_X3");
+        public static readonly ResultType<uint> QR_OUTPUT_X1 = new ResultType<uint>("QR_OUTPUT_X1");
+        public static readonly ResultType<uint> QR_OUTPUT_X2 = new ResultType<uint>("QR_OUTPUT_X2");
+        public static readonly ResultType<uint> QR_OUTPUT_X3 = new ResultType<uint>("QR_OUTPUT_X3");
+        public static readonly ResultType<uint> QR_ADD = new ResultType<uint>("QR_ADD");
+        public static readonly ResultType<uint> QR_XOR = new ResultType<uint>("QR_XOR");
+        public static readonly ResultType<uint> QR_SHIFT = new ResultType<uint>("QR_SHIFT");
+        public static readonly ResultType<uint> QR_OUTPUT_A = new ResultType<uint>("QR_OUTPUT_A");
+        public static readonly ResultType<uint> QR_OUTPUT_B = new ResultType<uint>("QR_OUTPUT_B");
+        public static readonly ResultType<uint> QR_OUTPUT_C = new ResultType<uint>("QR_OUTPUT_C");
+        public static readonly ResultType<uint> QR_OUTPUT_D = new ResultType<uint>("QR_OUTPUT_D");
+        public static readonly ResultType<uint[]> CHACHA_HASH_ORIGINAL_STATE = new ResultType<uint[]>("CHACHA_HASH_ORIGINAL_STATE");
+        public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND = new ResultType<uint[]>("CHACHA_HASH_QUARTERROUND");
+        public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>("CHACHA_HASH_ADD_ORIGINAL_STATE");
+        public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>("CHACHA_HASH_LITTLEENDIAN_STATE");
     }
-    public class ResultType<T> { }
+    public class ResultType<T> {
+        public ResultType(string name)
+        {
+            this.Name = name;
+        }
+
+        public string Name { get;  }
+    }
     public class IntermediateResultsManager<T>
     {
        
