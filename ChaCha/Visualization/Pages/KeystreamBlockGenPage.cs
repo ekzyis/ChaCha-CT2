@@ -220,6 +220,7 @@ namespace Cryptool.Plugins.ChaCha
                     pres.CurrentRoundIndex = round;
                     pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
+                    ShowQRButtons(pres, round);
                     HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
 
                     ClearDescription(pres);
@@ -421,6 +422,16 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", k));
             pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", l));
         }
+
+        public static void ShowQRButtons(ChaChaPresentation pres, int round)
+        {
+            for(int i = 1; i <= 8; ++i)
+            {
+                StackPanel qrButton = (StackPanel)GetIndexElement(pres, "QRound_Button", i);
+                qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
         public static void HideAllQRArrowsExcept(ChaChaPresentation pres, int arrowIndex)
         {
             ((TextBox)GetIndexElement(pres, "ArrowQRRound", 1)).Visibility = Visibility.Hidden;
@@ -761,10 +772,11 @@ namespace Cryptool.Plugins.ChaCha
             if ((qrIndex - 1) % 4 == 0)
             {
                 // new round begins
-                PageAction updateRoundCount = new PageAction(() =>
+                PageAction roundUpdate = new PageAction(() =>
                 {
                     pres.CurrentRoundIndex = round;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
+                    ShowQRButtons(pres, round);
                 }, () =>
                 {
                     string text = "";
@@ -778,8 +790,9 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     pres.CurrentRoundIndex = round - 1;
                     pres.Nav.Replace(pres.CurrentRound, text);
+                    ShowQRButtons(pres, round - 1);
                 });
-                copyActions[0].Add(updateRoundCount);
+                copyActions[0].Add(roundUpdate);
                 copyActions[0].AddLabel(RoundStartLabel(round));
                 if (round == 2)
                 {
