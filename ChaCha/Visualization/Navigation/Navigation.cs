@@ -418,6 +418,22 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
 
+        private int _currentRoundIndex = 0;
+        public int CurrentRoundIndex
+        {
+            get
+            {
+                return _currentRoundIndex;
+            }
+            set
+            {
+                _currentRoundIndex = value;
+                OnPropertyChanged("CurrentRoundIndex");
+                OnPropertyChanged("NextRoundIsEnabled");
+                OnPropertyChanged("PrevRoundIsEnabled");
+            }
+        }
+
         public bool NavigationEnabled => InputValid && ExecutionFinished;
 
         private Button PrevButton()
@@ -706,7 +722,5 @@ namespace Cryptool.Plugins.ChaCha
         {
             QR_Click(8);
         }
-
-        public int CurrentRoundIndex { get; set; } = 0;
     }
 }
