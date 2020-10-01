@@ -185,9 +185,7 @@ namespace Cryptool.Plugins.ChaCha
                     ValidationResult result = inputActionIndexRule.Validate(value, null);
                     if (result == ValidationResult.ValidResult)
                     {
-                        // +2 because keystream pages start at index 3, so if we get the value 1
-                        // we want to go to page index 3 etc.
-                        MoveToPage(2 + int.Parse(value));
+                        MoveToKeystreamPage(int.Parse(value));
                     }
                 }
             }
@@ -214,10 +212,7 @@ namespace Cryptool.Plugins.ChaCha
                     ValidationResult result = inputActionIndexRule.Validate(rawValue, null);
                     if (result == ValidationResult.ValidResult)
                     {
-                        int value = int.Parse(rawValue);
-                        int destination = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(value), CurrentActions) + 1;
-                        CurrentRoundIndex = value;
-                        MoveToActionAsync(destination);
+                        MoveToRound(int.Parse(rawValue));
                     }
                 }
             }
@@ -243,10 +238,7 @@ namespace Cryptool.Plugins.ChaCha
                     ValidationResult result = inputActionIndexRule.Validate(rawValue, null);
                     if (result == ValidationResult.ValidResult)
                     {
-                        int value = int.Parse(rawValue);
-                        string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(value, CurrentRoundIndex);
-                        int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
-                        MoveToActionAsync(qrActionIndex);
+                        MoveToQuarterround(int.Parse(rawValue));
                     }
                 }
             }
@@ -746,6 +738,22 @@ namespace Cryptool.Plugins.ChaCha
             {
                 return CurrentPage.Cache;
             }
+        }
+
+
+        private void MoveToQuarterround(int n)
+        {
+            string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(n, CurrentRoundIndex);
+            int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+            CurrentQuarterroundIndexTextBox = n;
+            MoveToActionAsync(qrActionIndex);
+        }
+
+        private void MoveToRound(int n)
+        {
+            int destination = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(n), CurrentActions) + 1;
+            CurrentRoundIndex = n;
+            MoveToActionAsync(destination);
         }
 
         /**
