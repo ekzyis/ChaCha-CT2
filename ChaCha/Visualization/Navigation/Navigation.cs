@@ -25,43 +25,6 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private Button CreateKeystreamBlockGenButton(int keyblockNr)
-        {
-            Button b = new Button() { Width = 32, Height = 18.75, Margin = new Thickness(5,0,0,0) };
-            b.Content = keyblockNr.ToString();
-            PageButtonPanel_KeystreamBlockGeneration.Children.Add(b);
-            return b;
-        }
-
-        private List<Button> _pageButtons = new List<Button>();
-        private void InitNavigationPopupMenu()
-        {
-            int index = 0;
-            _pageButtons.Clear();
-            void InitPageButton(Button b)
-            {
-                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
-                _pageButtons.Add(b);
-                index++;
-            }
-            InitPageButton(PageButton_Start);
-            InitPageButton(PageButton_Overview);
-            InitPageButton(PageButton_StateMatrixInitialization);
-            PageButtonPanel_KeystreamBlockGeneration.Children.Clear();
-            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
-            {
-                Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
-                InitPageButton(keystreamBlockGenButton);
-                AddPage(new KeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i + 1));
-            }
-            UpdatePageButtons(CurrentPageIndex);
-        }
-
-        private void ToggleNavigationMenu(object sender, RoutedEventArgs e)
-        {
-            NavigationMenu.Visibility = NavigationMenu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        }
-
         private Slider CreateActionNavigationSlider(int totalActions)
         {
             Slider s = new Slider
@@ -145,6 +108,37 @@ namespace Cryptool.Plugins.ChaCha
             current.KeyDown += HandleKeyDown;
             return current;
         }
+
+        private List<Button> _pageButtons = new List<Button>();
+        private Button CreatePageButton(string text, int currentPageIndex, int toPageIndex, int width)
+        {
+            Button b = new Button()
+            {
+                Content = text,
+                Width = width,
+                Height = 18.75,
+            };
+            // since each page has its own dedicated navigation bar, the button for the current page is always bold
+            if (currentPageIndex == toPageIndex) b.FontWeight = FontWeights.Bold;
+            b.Click += new RoutedEventHandler(MoveToPageClickWrapper(toPageIndex));
+            _pageButtons.Add(b);
+            return b;
+        }
+
+        private void InitPageNavigationBar(Page p)
+        {
+            int pageIndex = _pages.FindIndex(p_ => p_ == p);
+            StackPanel pageNavBar = p.PageNavigationBar;
+            pageNavBar.Children.Clear();
+            _pageButtons.Clear();
+            Button start = CreatePageButton("Start", pageIndex, 0, 32);
+            Button overview = CreatePageButton("Overview", pageIndex, 1, 64);
+            Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 160);
+            pageNavBar.Children.Add(start);
+            pageNavBar.Children.Add(overview);
+            pageNavBar.Children.Add(stateMatrixInit);
+        }
+
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
         {
             actionNavBar.Children.Clear();
@@ -209,17 +203,6 @@ namespace Cryptool.Plugins.ChaCha
                     NextPage_Click(null, null);
                 }
             }
-            if (n != 0)
-            {
-                UpdatePageButtons(CurrentPageIndex);
-            }
-        }
-
-        private void UpdatePageButtons(int pageIndex)
-        {
-            // update font weight to indicate current page
-            _pageButtons.ForEach(b => b.FontWeight = FontWeights.Normal);
-            _pageButtons[pageIndex].FontWeight = FontWeights.Bold;
         }
 
         private void MoveToPage(int n)
@@ -235,8 +218,6 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             CollapseAllPagesExpect(0);
-            InitActionNavigationBar(CurrentPage);
-            InitNavigationPopupMenu();
         }
 
         private void InitExecutableVisualization()
@@ -246,8 +227,11 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
+            foreach(Page p in _pages)
+            {
+                InitPageNavigationBar(p);
+            }
             InitActionNavigationBar(CurrentPage);
-            InitNavigationPopupMenu();
         }
 
         private UIElement[] GetRawPages()
