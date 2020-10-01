@@ -76,7 +76,7 @@
       <Button Height="20" Name="NavigationButton" Click="ToggleNavigationMenu" IsEnabled="{ Binding NavigationEnabled }">
         Navigation
       </Button>
-      <Border Canvas.Top="20" BorderThickness="1.5" BorderBrush="Black" Width="600" Visibility="Visible" Name="NavigationMenu" Background="White">
+      <Border Canvas.Top="20" BorderThickness="1.5" BorderBrush="Black" Width="600" Visibility="Visible" Name="NavigationMenu" Opacity="0.8" Background="White">
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition/>
