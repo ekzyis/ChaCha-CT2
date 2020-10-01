@@ -916,4 +916,12 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { updateDescription, convert };
         }
     }
+
+    partial class Page
+    {
+        public static KeystreamBlockGenPage KeystreamBlockGenPage(ChaChaPresentation pres, ulong keyBlockNr)
+        {
+            return new KeystreamBlockGenPage(pres.UIKeystreamBlockGenPage, pres, keyBlockNr);
+        }
+    }
 }

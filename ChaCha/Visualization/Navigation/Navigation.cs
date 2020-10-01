@@ -25,6 +25,26 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
+        private static Button CreatePrevNavigationButton()
+        {
+            Button b = CreateNavigationButton();
+            b.Content = "<";
+            return b;
+        }
+
+        private static Button CreateNextNavigationButton()
+        {
+            Button b = CreateNavigationButton();
+            b.Content = ">";
+            return b;
+        }
+
+        private static TextBox CreateNavigationTextBox()
+        {
+            TextBox tb = new TextBox { Height = 18.75, Width = 24, Margin = new Thickness(1, 0, 1, 0) };
+            return tb;
+        }
+
         private Slider CreateActionNavigationSlider(int totalActions)
         {
             Slider s = new Slider
@@ -134,9 +154,41 @@ namespace Cryptool.Plugins.ChaCha
             Button start = CreatePageButton("Start", pageIndex, 0, 32);
             Button overview = CreatePageButton("Overview", pageIndex, 1, 64);
             Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 160);
+            Button keystream = CreatePageButton("Keystream Generation", pageIndex, 3, 160);
             pageNavBar.Children.Add(start);
             pageNavBar.Children.Add(overview);
             pageNavBar.Children.Add(stateMatrixInit);
+            pageNavBar.Children.Add(keystream);
+        }
+
+        private void InitKeystreamNavigation(Page p)
+        {
+            // Assume that general page navigation bar has already been initialized
+            StackPanel pageNavBar = p.PageNavigationBar;
+
+            Button previousKeystreamBlock = CreatePrevNavigationButton();
+            TextBox currentKeystreamBlock = CreateNavigationTextBox();
+            Button nextKeystreamBlock = CreateNextNavigationButton();
+
+            Button previousRound = CreatePrevNavigationButton();
+            TextBox currentRound = CreateNavigationTextBox();
+            Button nextRound = CreateNextNavigationButton();
+
+            Button previousQuarterround = CreatePrevNavigationButton();
+            TextBox currentQuarterround = CreateNavigationTextBox();
+            Button nextQuarterround = CreateNextNavigationButton();
+
+            pageNavBar.Children.Add(previousKeystreamBlock);
+            pageNavBar.Children.Add(currentKeystreamBlock);
+            pageNavBar.Children.Add(nextKeystreamBlock);
+
+            pageNavBar.Children.Add(previousRound);
+            pageNavBar.Children.Add(currentRound);
+            pageNavBar.Children.Add(nextRound);
+
+            pageNavBar.Children.Add(previousQuarterround);
+            pageNavBar.Children.Add(currentQuarterround);
+            pageNavBar.Children.Add(nextQuarterround);
         }
 
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
@@ -226,10 +278,13 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
+            AddPage(Page.KeystreamBlockGenPage(this, 1));
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
-            foreach(Page p in _pages)
+            for (int i = 0; i < _pages.Count; ++i)
             {
+                Page p = _pages[i];
                 InitPageNavigationBar(p);
+                if (i >= 3) InitKeystreamNavigation(p);
             }
             InitActionNavigationBar(CurrentPage);
         }
