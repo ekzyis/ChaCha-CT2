@@ -576,7 +576,7 @@
                   <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR1_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR1_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -586,7 +586,7 @@
                   <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR2_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR2_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -596,7 +596,7 @@
                   <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR3_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR3_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -606,7 +606,7 @@
                   <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR4_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR4_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -616,7 +616,7 @@
                   <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR5_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR5_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -626,7 +626,7 @@
                   <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR6_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR6_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -636,7 +636,7 @@
                   <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR7_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR7_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>
@@ -646,7 +646,7 @@
                   <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR8_Click" Content="Start"/>
+                  <Button Height="18.75" Margin="2" Click="QR8_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Content="End"/>
                 </StackPanel>
               </StackPanel>

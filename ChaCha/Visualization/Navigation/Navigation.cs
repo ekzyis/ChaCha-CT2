@@ -921,7 +921,7 @@ namespace Cryptool.Plugins.ChaCha
             MoveToQuarterround(qrIndex);
         }
 
-        private void QR_Click(int qrLabelIndex)
+        private void QR_Start_Click(int qrLabelIndex)
         {
             /*
              * We need to map the QR Label Index which is between 1 and 8 and is corresponds to the row of the pressed Quarterround button to
@@ -959,37 +959,37 @@ namespace Cryptool.Plugins.ChaCha
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
             MoveToActionAsync(qrActionIndex);
         }
-        private void QR1_Click(object sender, RoutedEventArgs e)
+        private void QR1_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(1);
+            QR_Start_Click(1);
         }
-        private void QR2_Click(object sender, RoutedEventArgs e)
+        private void QR2_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(2);
+            QR_Start_Click(2);
         }
-        private void QR3_Click(object sender, RoutedEventArgs e)
+        private void QR3_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(3);
+            QR_Start_Click(3);
         }
-        private void QR4_Click(object sender, RoutedEventArgs e)
+        private void QR4_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(4);
+            QR_Start_Click(4);
         }
-        private void QR5_Click(object sender, RoutedEventArgs e)
+        private void QR5_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(5);
+            QR_Start_Click(5);
         }
-        private void QR6_Click(object sender, RoutedEventArgs e)
+        private void QR6_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(6);
+            QR_Start_Click(6);
         }
-        private void QR7_Click(object sender, RoutedEventArgs e)
+        private void QR7_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(7);
+            QR_Start_Click(7);
         }
-        private void QR8_Click(object sender, RoutedEventArgs e)
+        private void QR8_Start_Click(object sender, RoutedEventArgs e)
         {
-            QR_Click(8);
+            QR_Start_Click(8);
         }
     }
 }
