@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
@@ -25,41 +26,24 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private Button CreateKeystreamBlockGenButton(int keyblockNr)
+        private static Button CreatePrevNavigationButton()
         {
-            Button b = new Button() { Width = 32, Height = 18.75, Margin = new Thickness(5,0,0,0) };
-            b.Content = keyblockNr.ToString();
-            PageButtonPanel_KeystreamBlockGeneration.Children.Add(b);
+            Button b = CreateNavigationButton();
+            b.Content = "<";
             return b;
         }
 
-        private List<Button> _pageButtons = new List<Button>();
-        private void InitNavigationPopupMenu()
+        private static Button CreateNextNavigationButton()
         {
-            int index = 0;
-            _pageButtons.Clear();
-            void InitPageButton(Button b)
-            {
-                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
-                _pageButtons.Add(b);
-                index++;
-            }
-            InitPageButton(PageButton_Start);
-            InitPageButton(PageButton_Overview);
-            InitPageButton(PageButton_StateMatrixInitialization);
-            PageButtonPanel_KeystreamBlockGeneration.Children.Clear();
-            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
-            {
-                Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
-                InitPageButton(keystreamBlockGenButton);
-                AddPage(new KeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i + 1));
-            }
-            UpdatePageButtons(CurrentPageIndex);
+            Button b = CreateNavigationButton();
+            b.Content = ">";
+            return b;
         }
 
-        private void ToggleNavigationMenu(object sender, RoutedEventArgs e)
+        private static TextBox CreateNavigationTextBox()
         {
-            NavigationMenu.Visibility = NavigationMenu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            TextBox tb = new TextBox { Height = 18.75, Width = 24, Margin = new Thickness(1, 0, 1, 0) };
+            return tb;
         }
 
         private Slider CreateActionNavigationSlider(int totalActions)
@@ -94,8 +78,15 @@ namespace Cryptool.Plugins.ChaCha
         private class InputActionIndexRule : ValidationRule
         {
             private int _maxActionIndex;
+            private int _minActionIndex;
             public InputActionIndexRule(int maxActionIndex)
             {
+                _maxActionIndex = maxActionIndex;
+            }
+
+            public InputActionIndexRule(int minActionIndex, int maxActionIndex)
+            {
+                _minActionIndex = minActionIndex;
                 _maxActionIndex = maxActionIndex;
             }
 
@@ -112,7 +103,7 @@ namespace Cryptool.Plugins.ChaCha
                     return new ValidationResult(false, $"Illegal characters or {e.Message}");
                 }
 
-                if ((input < 0) || (input > _maxActionIndex))
+                if ((input < _minActionIndex) || (input > _maxActionIndex))
                 {
                     return new ValidationResult(false,
                         $"Please enter an age in the range: {0}-{_maxActionIndex}.");
@@ -145,6 +136,199 @@ namespace Cryptool.Plugins.ChaCha
             current.KeyDown += HandleKeyDown;
             return current;
         }
+
+        private Button CreatePageButton(string text, int currentPageIndex, int toPageIndex, int width)
+        {
+            Button b = new Button()
+            {
+                Content = text,
+                Width = width,
+                Height = 18.75,
+            };
+            // since each page has its own dedicated navigation bar, the button for the current page is always bold
+            if (currentPageIndex == toPageIndex) b.FontWeight = FontWeights.Bold;
+            b.Click += new RoutedEventHandler(MoveToPageClickWrapper(toPageIndex));
+            return b;
+        }
+
+        private void InitPageNavigationBar(Page p)
+        {
+            int pageIndex = _pages.FindIndex(p_ => p_ == p);
+            StackPanel pageNavBar = p.PageNavigationBar;
+            pageNavBar.Children.Clear();
+            Button start = CreatePageButton("Start", pageIndex, 0, 32);
+            Button overview = CreatePageButton("Overview", pageIndex, 1, 64);
+            Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 160);
+            Button keystream = CreatePageButton("Keystream Generation", pageIndex, 3, 160);
+            if (pageIndex >= 3) keystream.FontWeight = FontWeights.Bold;
+            pageNavBar.Children.Add(start);
+            pageNavBar.Children.Add(overview);
+            pageNavBar.Children.Add(stateMatrixInit);
+            pageNavBar.Children.Add(keystream);
+        }
+
+        private TextBox CreateKeystreamBlockTextBox(int totalKeystreamBlocks)
+        {
+            TextBox current = CreateNavigationTextBox();
+            Binding actionIndexBinding = new Binding("CurrentKeystreamBlockTextBox")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalKeystreamBlocks);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        MoveToKeystreamPage(int.Parse(value));
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+
+
+        private TextBox CreateRoundTextBox(int totalRounds)
+        {
+            TextBox current = CreateNavigationTextBox();
+            Binding actionIndexBinding = new Binding("CurrentRoundIndexTextBox")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalRounds);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string rawValue = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(rawValue, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        MoveToRound(int.Parse(rawValue));
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+
+        private TextBox CreateQuarterroundTextBox()
+        {
+            TextBox current = CreateNavigationTextBox();
+            Binding actionIndexBinding = new Binding("CurrentQuarterroundIndexTextBox")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, 4);
+            actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
+            current.SetBinding(TextBox.TextProperty, actionIndexBinding);
+
+            void HandleKeyDown(object sender, KeyEventArgs e)
+            {
+                if (e.Key == Key.Return)
+                {
+                    string rawValue = ((TextBox)sender).Text;
+                    ValidationResult result = inputActionIndexRule.Validate(rawValue, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        MoveToQuarterround(int.Parse(rawValue));
+                    }
+                }
+            }
+
+            current.KeyDown += HandleKeyDown;
+            return current;
+        }
+
+        private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
+        {
+            // Assume that general page navigation bar has already been initialized
+            StackPanel pageNavBar = p.PageNavigationBar;
+
+            Grid keystreamBlockGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
+            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            TextBlock keystreamLabel = new TextBlock() { Text = "Keystream Block", HorizontalAlignment = HorizontalAlignment.Center };
+            StackPanel keystreamBlockBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
+            Grid.SetRow(keystreamLabel, 0);
+            Grid.SetRow(keystreamBlockBottomRow, 1);
+            Button previousKeystreamBlock = CreatePrevNavigationButton();
+            previousKeystreamBlock.Click += PrevKeystreamBlock_Click;
+            previousKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("PrevKeystreamBlockIsEnabled"));
+            TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox(totalKeystreamBlocks);
+            TextBlock keystreamDelimiter = new TextBlock() { Text = "/" };
+            TextBlock totalKeystreamBlockLabel = new TextBlock() { Text = totalKeystreamBlocks.ToString() };
+            Button nextKeystreamBlock = CreateNextNavigationButton();
+            nextKeystreamBlock.Click += NextKeystreamBlock_Click;
+            nextKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("NextKeystreamBlockIsEnabled"));
+            keystreamBlockBottomRow.Children.Add(previousKeystreamBlock);
+            keystreamBlockBottomRow.Children.Add(currentKeystreamBlock);
+            keystreamBlockBottomRow.Children.Add(keystreamDelimiter);
+            keystreamBlockBottomRow.Children.Add(totalKeystreamBlockLabel);
+            keystreamBlockBottomRow.Children.Add(nextKeystreamBlock);
+            keystreamBlockGrid.Children.Add(keystreamLabel);
+            keystreamBlockGrid.Children.Add(keystreamBlockBottomRow);
+            pageNavBar.Children.Add(keystreamBlockGrid);
+
+
+            Grid roundGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
+            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            TextBlock roundLabel = new TextBlock() { Text = "Round", HorizontalAlignment = HorizontalAlignment.Center };
+            StackPanel roundBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
+            Grid.SetRow(roundLabel, 0);
+            Grid.SetRow(roundBottomRow, 1);
+            Button previousRound = CreatePrevNavigationButton();
+            previousRound.Click += PrevRound_Click;
+            previousRound.SetBinding(Button.IsEnabledProperty, new Binding("PrevRoundIsEnabled"));
+            TextBox currentRound = CreateRoundTextBox(totalRounds);
+            TextBlock delimiterRound = new TextBlock() { Text = "/" };
+            TextBlock totalRoundsLabel = new TextBlock() { Text = totalRounds.ToString() };
+            Button nextRound = CreateNextNavigationButton();
+            nextRound.Click += NextRound_Click;
+            nextRound.SetBinding(Button.IsEnabledProperty, new Binding("NextRoundIsEnabled"));
+            roundBottomRow.Children.Add(previousRound);
+            roundBottomRow.Children.Add(currentRound);
+            roundBottomRow.Children.Add(delimiterRound);
+            roundBottomRow.Children.Add(totalRoundsLabel);
+            roundBottomRow.Children.Add(nextRound);
+            roundGrid.Children.Add(roundLabel);
+            roundGrid.Children.Add(roundBottomRow);
+            pageNavBar.Children.Add(roundGrid);
+
+
+            Grid quarterroundGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
+            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
+            TextBlock quarterroundLabel = new TextBlock() { Text = "Quarterround", HorizontalAlignment = HorizontalAlignment.Center };
+            StackPanel quarterroundBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
+            Grid.SetRow(quarterroundLabel, 0);
+            Grid.SetRow(quarterroundBottomRow, 1);
+            Button previousQuarterround = CreatePrevNavigationButton();
+            previousQuarterround.Click += PrevQuarterround_Click;
+            previousQuarterround.SetBinding(Button.IsEnabledProperty, new Binding("PrevQuarterroundIsEnabled"));
+            TextBox currentQuarterround = CreateQuarterroundTextBox();
+            TextBlock delimiterQuarterround = new TextBlock() { Text = "/" };
+            TextBlock totalQuarterRoundsLabel = new TextBlock() { Text = "4" };
+            Button nextQuarterround = CreateNextNavigationButton();
+            nextQuarterround.Click += NextQuarterround_Click;
+            nextQuarterround.SetBinding(Button.IsEnabledProperty, new Binding("NextQuarterroundIsEnabled"));
+            quarterroundBottomRow.Children.Add(previousQuarterround);
+            quarterroundBottomRow.Children.Add(currentQuarterround);
+            quarterroundBottomRow.Children.Add(delimiterQuarterround);
+            quarterroundBottomRow.Children.Add(totalQuarterRoundsLabel);
+            quarterroundBottomRow.Children.Add(nextQuarterround);
+            quarterroundGrid.Children.Add(quarterroundLabel);
+            quarterroundGrid.Children.Add(quarterroundBottomRow);
+            pageNavBar.Children.Add(quarterroundGrid);
+        }
+
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
         {
             actionNavBar.Children.Clear();
@@ -209,17 +393,11 @@ namespace Cryptool.Plugins.ChaCha
                     NextPage_Click(null, null);
                 }
             }
-            if (n != 0)
-            {
-                UpdatePageButtons(CurrentPageIndex);
-            }
         }
 
-        private void UpdatePageButtons(int pageIndex)
+        private void MoveToKeystreamPage(int n)
         {
-            // update font weight to indicate current page
-            _pageButtons.ForEach(b => b.FontWeight = FontWeights.Normal);
-            _pageButtons[pageIndex].FontWeight = FontWeights.Bold;
+            MoveToPage(2 + n);
         }
 
         private void MoveToPage(int n)
@@ -235,8 +413,6 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             CollapseAllPagesExpect(0);
-            InitActionNavigationBar(CurrentPage);
-            InitNavigationPopupMenu();
         }
 
         private void InitExecutableVisualization()
@@ -245,9 +421,18 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
+            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
+            {
+                AddPage(Page.KeystreamBlockGenPage(this, (ulong)i + 1));
+            }
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
+            for (int i = 0; i < _pages.Count; ++i)
+            {
+                Page p = _pages[i];
+                InitPageNavigationBar(p);
+                if (i >= 3) InitKeystreamNavigation(p, KeystreamBlocksNeeded, Rounds);
+            }
             InitActionNavigationBar(CurrentPage);
-            InitNavigationPopupMenu();
         }
 
         private UIElement[] GetRawPages()
@@ -315,6 +500,9 @@ namespace Cryptool.Plugins.ChaCha
         // action index value for TextBox.
         // Prevents direct write-access to actual current action index value while still being able to read from it.
         private int _currentActionIndexTextBox = 0;
+        private int _currentKeystreamBlockTextBox = 1;
+        private int _currentRoundIndexTextBox = 1;
+        private int _currentQuarterroundIndexTextBox = 1;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
@@ -327,12 +515,17 @@ namespace Cryptool.Plugins.ChaCha
                 if (value == _currentPageIndex) return;
                 _currentPageIndex = value;
                 CurrentActionIndex = 0;
+                if(_currentPageIndex >= 3)
+                {
+                    CurrentKeystreamBlockTextBox = _currentPageIndex - 2;
+                }
                 OnPropertyChanged("CurrentPageIndex");
                 OnPropertyChanged("CurrentPage");
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
+                OnPropertyChanged("CurrentKeystreamBlock");
                 InitActionNavigationBar(CurrentPage);
             }
         }
@@ -361,6 +554,40 @@ namespace Cryptool.Plugins.ChaCha
                 _currentActionIndexTextBox = value;
                 OnPropertyChanged("CurrentActionIndexTextBox");
 
+            }
+        }
+
+        public int CurrentKeystreamBlockTextBox
+        {
+            get => _currentKeystreamBlockTextBox;
+            set
+            {
+                _currentKeystreamBlockTextBox = value;
+                OnPropertyChanged("CurrentKeystreamBlockTextBox");
+                OnPropertyChanged("PrevKeystreamBlockIsEnabled");
+                OnPropertyChanged("NextKeystreamBlockIsEnabled");
+            }
+        }
+
+        public int CurrentRoundIndexTextBox
+        {
+            get => _currentRoundIndexTextBox;
+            set
+            {
+                _currentRoundIndexTextBox = value;
+                OnPropertyChanged("CurrentRoundIndexTextBox");
+            }
+        }
+
+        public int CurrentQuarterroundIndexTextBox
+        {
+            get => _currentQuarterroundIndexTextBox;
+            set
+            {
+                _currentQuarterroundIndexTextBox = value;
+                OnPropertyChanged("CurrentQuarterroundIndexTextBox");
+                OnPropertyChanged("NextQuarterroundIsEnabled");
+                OnPropertyChanged("PrevQuarterroundIsEnabled");
             }
         }
 
@@ -410,6 +637,15 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
 
+        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded;
+
+        public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1;
+
+        public bool NextQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox != 4;
+
+        public bool PrevQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox > 1;
+
+
         private int _currentRoundIndex = 0;
         public int CurrentRoundIndex
         {
@@ -420,6 +656,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _currentRoundIndex = value;
+                CurrentRoundIndexTextBox = value;
                 OnPropertyChanged("CurrentRoundIndex");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
@@ -511,6 +748,22 @@ namespace Cryptool.Plugins.ChaCha
             {
                 return CurrentPage.Cache;
             }
+        }
+
+
+        private void MoveToQuarterround(int n)
+        {
+            string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(n, CurrentRoundIndex);
+            int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+            CurrentQuarterroundIndexTextBox = n;
+            MoveToActionAsync(qrActionIndex);
+        }
+
+        private void MoveToRound(int n)
+        {
+            int destination = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(n), CurrentActions) + 1;
+            CurrentRoundIndex = n;
+            MoveToActionAsync(destination);
         }
 
         /**
@@ -642,6 +895,30 @@ namespace Cryptool.Plugins.ChaCha
             int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex + 1), CurrentActions) + 1;
             Debug.Assert(startIndex < endIndex, $"startIndex ({startIndex}) should be lower than endIndex ({endIndex}) when clicking on next round");
             MoveToActionAsync(endIndex);
+        }
+
+        private void NextKeystreamBlock_Click(object sender, RoutedEventArgs e)
+        {
+            int pageIndex = CurrentKeystreamBlockTextBox + 1;
+            MoveToKeystreamPage(pageIndex);
+        }
+
+        private void PrevKeystreamBlock_Click(object sender, RoutedEventArgs e)
+        {
+            int pageIndex = CurrentKeystreamBlockTextBox - 1;
+            MoveToKeystreamPage(pageIndex);
+        }
+
+        private void PrevQuarterround_Click(object sender, RoutedEventArgs e)
+        {
+            int qrIndex = CurrentQuarterroundIndexTextBox - 1;
+            MoveToQuarterround(qrIndex);
+        }
+
+        private void NextQuarterround_Click(object sender, RoutedEventArgs e)
+        {
+            int qrIndex = CurrentQuarterroundIndexTextBox + 1;
+            MoveToQuarterround(qrIndex);
         }
 
         private void QR_Click(int qrLabelIndex)

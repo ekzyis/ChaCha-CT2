@@ -218,6 +218,7 @@ namespace Cryptool.Plugins.ChaCha
                     // update round indicator
                     int round = CalculateRoundFromQRIndex(qrIndex);
                     pres.CurrentRoundIndex = round;
+                    pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
                     HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
 
@@ -741,7 +742,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         public static string QuarterroundStartLabelWithRound(int qrIndex, int round)
         {
-            // Creates a label with quarterround indicator between 1-8.
+            // Creates a label with quarterround indicator between 1-4.
             // For example, the label for the beginning of third quarterround in the secound round: *PREFIX*_3_2
             return $"{ACTIONLABEL_QR_START}_{((qrIndex - 1) % 4) + 1}_{round}";
         }
@@ -802,11 +803,13 @@ namespace Cryptool.Plugins.ChaCha
             }
             PageAction updateQRArrow = new PageAction(() =>
             {
+                pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                 (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
                 ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Hidden;
                 ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Visible;
             }, () =>
             {
+                pres.CurrentQuarterroundIndexTextBox = (qrIndex - 2) % 4 + 1;
                 if (qrIndex > 1)
                 {
                     (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
@@ -914,6 +917,14 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceState(previousState);
             });
             return new PageAction[] { updateDescription, convert };
+        }
+    }
+
+    partial class Page
+    {
+        public static KeystreamBlockGenPage KeystreamBlockGenPage(ChaChaPresentation pres, ulong keyBlockNr)
+        {
+            return new KeystreamBlockGenPage(pres.UIKeystreamBlockGenPage, pres, keyBlockNr);
         }
     }
 }
