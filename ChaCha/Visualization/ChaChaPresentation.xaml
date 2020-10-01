@@ -72,7 +72,31 @@
   </UserControl.Resources>
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
-      <!-- Landing page -->
+    <Canvas Margin="5" Panel.ZIndex="5">
+      <Button Height="20" Name="NavigationButton" Click="ToggleNavigationMenu" IsEnabled="{ Binding NavigationEnabled }">
+        Navigation
+      </Button>
+      <Border Canvas.Top="20" BorderThickness="1.5" BorderBrush="Black" Width="600" Visibility="Visible" Name="NavigationMenu" Opacity="0.8" Background="White">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+          </Grid.RowDefinitions>
+          <Button Grid.Row="0" Margin="5" Width="32" Height="18.75" HorizontalAlignment="Left" Name="PageButton_Start">Start</Button>
+          <Button Grid.Row="1" Margin="5" Width="64" Height="18.75" HorizontalAlignment="Left" Name="PageButton_Overview">Overview</Button>
+          <Button Grid.Row="2" Margin="5" Width="160" Height="18.75" HorizontalAlignment="Left" Name="PageButton_StateMatrixInitialization">State Matrix Initialization</Button>
+          <StackPanel Grid.Row="3" Margin="5" Orientation="Horizontal">
+            <TextBlock Width="160" Height="18.75" HorizontalAlignment="Center">Keystream Block Generation:</TextBlock>
+            <StackPanel Name="PageButtonPanel_KeystreamBlockGeneration" Orientation="Horizontal">
+            </StackPanel>
+          </StackPanel>
+        </Grid>
+      </Border>
+    </Canvas>
+    <!-- Landing page -->
     <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <ContentControl.Resources>
         <Style TargetType="TextBox">
@@ -102,11 +126,10 @@
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">ChaCha workflow</TextBox>
+        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Overview</TextBox>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="3*"/>
           </Grid.ColumnDefinitions>
           <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -156,7 +179,7 @@
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">State matrix</TextBox>
+        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">State Matrix Initialization</TextBox>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.34*"/>
@@ -328,7 +351,7 @@
             <!-- Step description -->
             <RichTextBox Name="UIStateMatrixStepDescription"/>
             <!-- state parameters -->
-            <TextBox Grid.Row="1" HorizontalAlignment="Center">State Parameters</TextBox>
+            <TextBox Grid.Row="1" HorizontalAlignment="Center">State parameters</TextBox>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
               <TextBox>Constant:</TextBox>
               <TextBox Style="{StaticResource hexTextBox}" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
@@ -358,7 +381,12 @@
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Generate Keystream Block</TextBox>
+        <StackPanel HorizontalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
+          <TextBox FontSize="20">Keystream Block Generation</TextBox>
+          <TextBox FontSize="20" Name="KeystreamBlocksNeededTextBlock"/>
+          <TextBox FontSize="20">/</TextBox>
+          <TextBox FontSize="20" Text="{ Binding KeystreamBlocksNeeded }"/>
+        </StackPanel>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.34*"/>

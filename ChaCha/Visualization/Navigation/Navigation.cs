@@ -25,58 +25,41 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private static TextBlock CreateNavigationTextBlock(int index, int activeIndex, string bindingElementName)
+        private Button CreateKeystreamBlockGenButton(int keyblockNr)
         {
-            TextBlock tb = new TextBlock
-            {
-                VerticalAlignment = VerticalAlignment.Center, HorizontalAlignment = HorizontalAlignment.Center
-            };
-            Binding binding = new Binding {ElementName = bindingElementName, Path = new PropertyPath("FontSize")};
-            tb.SetBinding(TextBlock.FontSizeProperty, binding);
-            tb.Text = (index + 1).ToString();
-            if(activeIndex == index)
-            {
-                tb.FontWeight = FontWeights.Bold;
-            }
-            return tb;
-        }
-
-        private static TextBlock CreateNavBarLabel(string bindingElementName, string text)
-        {
-            TextBlock tb = new TextBlock
-            {
-                Name = bindingElementName,
-                VerticalAlignment = VerticalAlignment.Center,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                FontSize = 10.0,
-                Margin = new Thickness(0, 0, 1, 0),
-                Text = text
-            };
-            return tb;
-        }
-
-        private readonly string _PAGELABELNAME = "UINavBarPageLabel";
-        private Button CreatePageNavigationButton(int index)
-        {
-            Button b = CreateNavigationButton();
-            b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
-            TextBlock tb = CreateNavigationTextBlock(index, CurrentPageIndex, _PAGELABELNAME);
-            b.Content = tb;
-            Binding binding = new Binding("NavigationEnabled");
-            b.SetBinding(Button.IsEnabledProperty, binding);
+            Button b = new Button() { Width = 32, Height = 18.75, Margin = new Thickness(5,0,0,0) };
+            b.Content = keyblockNr.ToString();
+            PageButtonPanel_KeystreamBlockGeneration.Children.Add(b);
             return b;
         }
 
-        // this must be called after all pages have been added
-        private void InitPageNavigationBar(Page p)
+        private List<Button> _pageButtons = new List<Button>();
+        private void InitNavigationPopupMenu()
         {
-            StackPanel pageNavBar = p.PageNavigationBar;
-            pageNavBar.Children.Clear();
-            pageNavBar.Children.Add(CreateNavBarLabel(_PAGELABELNAME, "Pages:"));
-            for (int i = 0; i < GetRawPages().Length; ++i)
+            int index = 0;
+            _pageButtons.Clear();
+            void InitPageButton(Button b)
             {
-                pageNavBar.Children.Add(CreatePageNavigationButton(i));
+                b.Click += new RoutedEventHandler(MoveToPageClickWrapper(index));
+                _pageButtons.Add(b);
+                index++;
             }
+            InitPageButton(PageButton_Start);
+            InitPageButton(PageButton_Overview);
+            InitPageButton(PageButton_StateMatrixInitialization);
+            PageButtonPanel_KeystreamBlockGeneration.Children.Clear();
+            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
+            {
+                Button keystreamBlockGenButton = CreateKeystreamBlockGenButton(i + 1);
+                InitPageButton(keystreamBlockGenButton);
+                AddPage(new KeystreamBlockGenPage(UIKeystreamBlockGenPage, this, (ulong)i + 1));
+            }
+            UpdatePageButtons(CurrentPageIndex);
+        }
+
+        private void ToggleNavigationMenu(object sender, RoutedEventArgs e)
+        {
+            NavigationMenu.Visibility = NavigationMenu.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private Slider CreateActionNavigationSlider(int totalActions)
@@ -226,6 +209,17 @@ namespace Cryptool.Plugins.ChaCha
                     NextPage_Click(null, null);
                 }
             }
+            if (n != 0)
+            {
+                UpdatePageButtons(CurrentPageIndex);
+            }
+        }
+
+        private void UpdatePageButtons(int pageIndex)
+        {
+            // update font weight to indicate current page
+            _pageButtons.ForEach(b => b.FontWeight = FontWeights.Normal);
+            _pageButtons[pageIndex].FontWeight = FontWeights.Bold;
         }
 
         private void MoveToPage(int n)
@@ -241,8 +235,8 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             CollapseAllPagesExpect(0);
-            InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
+            InitNavigationPopupMenu();
         }
 
         private void InitExecutableVisualization()
@@ -251,10 +245,9 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
-            AddPage(Page.KeystreamBlockGenPage(this));
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
-            InitPageNavigationBar(CurrentPage);
             InitActionNavigationBar(CurrentPage);
+            InitNavigationPopupMenu();
         }
 
         private UIElement[] GetRawPages()
@@ -340,7 +333,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                InitPageNavigationBar(CurrentPage);
                 InitActionNavigationBar(CurrentPage);
             }
         }
@@ -417,6 +409,22 @@ namespace Cryptool.Plugins.ChaCha
         public bool NextRoundIsEnabled => CurrentRoundIndex != 20;
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
+
+        private int _currentRoundIndex = 0;
+        public int CurrentRoundIndex
+        {
+            get
+            {
+                return _currentRoundIndex;
+            }
+            set
+            {
+                _currentRoundIndex = value;
+                OnPropertyChanged("CurrentRoundIndex");
+                OnPropertyChanged("NextRoundIsEnabled");
+                OnPropertyChanged("PrevRoundIsEnabled");
+            }
+        }
 
         public bool NavigationEnabled => InputValid && ExecutionFinished;
 
@@ -706,7 +714,5 @@ namespace Cryptool.Plugins.ChaCha
         {
             QR_Click(8);
         }
-
-        public int CurrentRoundIndex { get; set; } = 0;
     }
 }

@@ -298,6 +298,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             byte[] dst = new byte[src.Length];
             int keystreamBlocksNeeded = (int)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
+            DispatchToPresentation(delegate
+            {
+                _presentation.KeystreamBlocksNeeded = keystreamBlocksNeeded;
+            });
             byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.
@@ -358,7 +362,7 @@ namespace Cryptool.Plugins.ChaCha
             uint[] originalState = (uint[])(state.Clone());
             DispatchToPresentation(delegate
             {
-                _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
+                _presentation.AddResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])(state.Clone()));
             });
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {

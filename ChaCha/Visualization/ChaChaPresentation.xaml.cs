@@ -194,6 +194,19 @@ namespace Cryptool.Plugins.ChaCha
         #region Settings Variables
         public ChaCha.Version Version { get; set; }
         public int Rounds { get; set; }
+        private int _keystreamBlocksNeeded = -1;
+        public int KeystreamBlocksNeeded
+        {
+            get
+            {
+                return _keystreamBlocksNeeded;
+            }
+            set
+            {
+                _keystreamBlocksNeeded = value;
+                OnPropertyChanged("KeystreamBlocksNeeded");
+            }
+        }
         #endregion
 
         #region IntermediateResultsManager API
@@ -216,6 +229,14 @@ namespace Cryptool.Plugins.ChaCha
         public uint[] GetResult(ResultType<uint[]> type, int index)
         {
             return uint_array_resultsManager.Get(type, index);
+        }
+        public int GetSize(ResultType<uint[]> type)
+        {
+            return uint_array_resultsManager.GetList(type).Size();
+        }
+        public int GetSize(ResultType<uint> type)
+        {
+            return uint_resultsManager.GetList(type).Size();
         }
         public void ClearResults()
         {
@@ -262,6 +283,10 @@ namespace Cryptool.Plugins.ChaCha
             return sb.ToString();
         }
         public static string HexStringLittleEndian(uint u)
+        {
+            return HexStringLittleEndian(ChaCha.GetBytes(u));
+        }
+        public static string HexStringLittleEndian(ulong u)
         {
             return HexStringLittleEndian(ChaCha.GetBytes(u));
         }
