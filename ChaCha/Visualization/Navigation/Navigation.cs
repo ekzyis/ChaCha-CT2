@@ -1038,7 +1038,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void QR8_End_Click(object sender, RoutedEventArgs e)
         {
-            QR_Start_Click(8);
+            QR_End_Click(8);
         }
     }
 }
