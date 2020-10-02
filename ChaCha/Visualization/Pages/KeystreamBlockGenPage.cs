@@ -12,8 +12,9 @@ namespace Cryptool.Plugins.ChaCha
     {
         ChaChaPresentation pres;
 
-        const string ACTIONLABEL_QR_START = "QUARTERROUND";
+        const string ACTIONLABEL_QR_START = "QUARTERROUND_START";
         const string ACTIONLABEL_ROUND_START = "ROUND";
+        const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
 
         List<string> descriptions = new List<string>();
         private string[] originalState;
@@ -757,6 +758,12 @@ namespace Cryptool.Plugins.ChaCha
             // For example, the label for the beginning of third quarterround in the secound round: *PREFIX*_3_2
             return $"{ACTIONLABEL_QR_START}_{((qrIndex - 1) % 4) + 1}_{round}";
         }
+        public static string QuarterroundEndLabelWithRound(int qrIndex, int round)
+        {
+            // Creates a label with quarterround indicator between 1-4.
+            // For example, the label for the end of third quarterround in the secound round: *PREFIX*_3_2
+            return $"{ACTIONLABEL_QR_END}_{((qrIndex - 1) % 4) + 1}_{round}";
+        }
         public static string RoundStartLabel(int round)
         {
             return $"{ACTIONLABEL_ROUND_START}_{round}";
@@ -870,6 +877,7 @@ namespace Cryptool.Plugins.ChaCha
             previousStateEntries[2] = GetMappedHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
             previousStateEntries[3] = GetMappedHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
             PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell }, stateCells, previousStateEntries, true);
+            copyActions[1].AddLabel(QuarterroundEndLabelWithRound(qrIndex, CalculateRoundFromQRIndex(qrIndex)));
             copyActions[2].AddToExec(() =>
             {
                 AssertStateAfterQuarterround(qrIndex);

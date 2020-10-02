@@ -577,7 +577,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR1_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR1_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_2" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -587,7 +587,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR2_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR2_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_3" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -597,7 +597,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR3_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR3_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_4" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -607,7 +607,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR4_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR4_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -617,7 +617,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR5_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR5_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_6" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -627,7 +627,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR6_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR6_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_7" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -637,7 +637,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR7_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR7_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_8" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -647,7 +647,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR8_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Content="End"/>
+                  <Button Height="18.75" Margin="2" Click="QR8_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
             </Grid>

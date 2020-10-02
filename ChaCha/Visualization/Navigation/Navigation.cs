@@ -921,7 +921,7 @@ namespace Cryptool.Plugins.ChaCha
             MoveToQuarterround(qrIndex);
         }
 
-        private void QR_Start_Click(int qrLabelIndex)
+        private (int, int) GetQRSearchIndices(int qrLabelIndex)
         {
             /*
              * We need to map the QR Label Index which is between 1 and 8 and is corresponds to the row of the pressed Quarterround button to
@@ -931,7 +931,7 @@ namespace Cryptool.Plugins.ChaCha
              */
             int qrLabelSearchIndex = -1;
             int roundLabelSearchIndex = -1;
-            if(qrLabelIndex <= 4)
+            if (qrLabelIndex <= 4)
             {
                 qrLabelSearchIndex = qrLabelIndex;
                 if (CurrentRoundIndex % 2 == 1 || CurrentRoundIndex == 0)
@@ -943,7 +943,7 @@ namespace Cryptool.Plugins.ChaCha
                     roundLabelSearchIndex = CurrentRoundIndex - 1;
                 }
             }
-            if(qrLabelIndex > 4)
+            if (qrLabelIndex > 4)
             {
                 qrLabelSearchIndex = (qrLabelIndex - 1) % 4 + 1;
                 if (CurrentRoundIndex % 2 == 1 || CurrentRoundIndex == 0)
@@ -955,6 +955,13 @@ namespace Cryptool.Plugins.ChaCha
                     roundLabelSearchIndex = CurrentRoundIndex;
                 }
             }
+            return (qrLabelSearchIndex, roundLabelSearchIndex);
+        }
+
+        private void QR_Start_Click(int qrLabelIndex)
+        {
+            int qrLabelSearchIndex, roundLabelSearchIndex;
+            (qrLabelSearchIndex, roundLabelSearchIndex) = GetQRSearchIndices(qrLabelIndex);
             string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(qrLabelSearchIndex, roundLabelSearchIndex);
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
             MoveToActionAsync(qrActionIndex);
@@ -988,6 +995,48 @@ namespace Cryptool.Plugins.ChaCha
             QR_Start_Click(7);
         }
         private void QR8_Start_Click(object sender, RoutedEventArgs e)
+        {
+            QR_Start_Click(8);
+        }
+
+        private void QR_End_Click(int qrLabelIndex)
+        {
+            int qrLabelSearchIndex, roundLabelSearchIndex;
+            (qrLabelSearchIndex, roundLabelSearchIndex) = GetQRSearchIndices(qrLabelIndex);
+            string searchLabel = KeystreamBlockGenPage.QuarterroundEndLabelWithRound(qrLabelSearchIndex, roundLabelSearchIndex);
+            int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+            MoveToActionAsync(qrActionIndex);
+        }
+
+        private void QR1_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(1);
+        }
+        private void QR2_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(2);
+        }
+        private void QR3_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(3);
+        }
+        private void QR4_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(4);
+        }
+        private void QR5_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(5);
+        }
+        private void QR6_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(6);
+        }
+        private void QR7_End_Click(object sender, RoutedEventArgs e)
+        {
+            QR_End_Click(7);
+        }
+        private void QR8_End_Click(object sender, RoutedEventArgs e)
         {
             QR_Start_Click(8);
         }
