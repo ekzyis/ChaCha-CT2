@@ -322,16 +322,16 @@
               <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="150"/>
-              <ColumnDefinition Width="500"/>
+              <ColumnDefinition Width="250"/>
+              <ColumnDefinition Width="800"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Row="0" FontWeight="Bold">State parameters</TextBox>
-            <TextBox Grid.Row="1" Grid.Column="0">Constant:</TextBox>
-            <TextBox Margin="0,3,0,0" Grid.Row="1" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
-            <TextBox Grid.Row="2" Grid.Column="0">Key:</TextBox>
-            <TextBox Margin="0,3,0,0" Grid.Row="2" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-            <TextBox Grid.Row="3" Grid.Column="0">Initialization vector (IV):</TextBox>
-            <TextBox Margin="0,3,0,0"  Grid.Row="3" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
+            <TextBox FontSize="16" Grid.Row="0" FontWeight="Bold">State parameters</TextBox>
+            <TextBox FontSize="16" Grid.Row="1" Grid.Column="0">Constant:</TextBox>
+            <TextBox FontSize="16" Margin="0,3,0,0" Grid.Row="1" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
+            <TextBox FontSize="16" Grid.Row="2" Grid.Column="0">Key:</TextBox>
+            <TextBox FontSize="16" Margin="0,3,0,0" Grid.Row="2" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+            <TextBox FontSize="16" Grid.Row="3" Grid.Column="0">Initialization vector (IV):</TextBox>
+            <TextBox FontSize="16" Margin="0,3,0,0"  Grid.Row="3" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
           </Grid>
         </Grid>
       </Grid>
