@@ -155,8 +155,8 @@
           <RowDefinition Style="{ StaticResource title }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">State Matrix Initialization</TextBox>
-        <Grid Grid.Row="1">
+        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20" Text="State Matrix Initialization"/>
+          <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.34*"/>
             <ColumnDefinition Width="2*"/>
@@ -247,14 +247,10 @@
               <ColumnDefinition></ColumnDefinition>
               <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Row="0" Grid.Column="0">
-              Input:
-            </TextBox>
+            <TextBox Grid.Row="0" Grid.Column="0" Text="Input:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
-            <TextBox Grid.Row="1" Grid.Column="0">
-              Split into 4 byte chunks:
-            </TextBox>
-            <UniformGrid Grid.Column="1" Grid.Row="1" Rows="2" Columns="4">
+            <TextBox Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
+              <UniformGrid Grid.Column="1" Grid.Row="1" Rows="2" Columns="4">
               <Border Grid.Row="0" Grid.Column="0">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
               </Border>
@@ -280,9 +276,7 @@
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
               </Border>
             </UniformGrid>
-            <TextBox Grid.Row="2" Grid.Column="0">
-              Transform each chunk into little-endian:
-            </TextBox>
+            <TextBox Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:"/>
             <UniformGrid Grid.Row="2" Grid.Column="1" Rows="2" Columns="4">
               <Border Grid.Row="0" Grid.Column="0" Name="UITransformLittleEndian0Cell">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
@@ -325,12 +319,12 @@
               <ColumnDefinition Width="250"/>
               <ColumnDefinition Width="800"/>
             </Grid.ColumnDefinitions>
-            <TextBox FontSize="16" Grid.Row="0" FontWeight="Bold">State parameters</TextBox>
-            <TextBox FontSize="16" Grid.Row="1" Grid.Column="0">Constant:</TextBox>
+            <TextBox FontSize="16" Grid.Row="0" FontWeight="Bold" Text="State parameters"/>
+            <TextBox FontSize="16" Grid.Row="1" Grid.Column="0" Text="Constants"/>
             <TextBox FontSize="16" Margin="0,3,0,0" Grid.Row="1" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
-            <TextBox FontSize="16" Grid.Row="2" Grid.Column="0">Key:</TextBox>
+            <TextBox FontSize="16" Grid.Row="2" Grid.Column="0" Text="Key"/>
             <TextBox FontSize="16" Margin="0,3,0,0" Grid.Row="2" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-            <TextBox FontSize="16" Grid.Row="3" Grid.Column="0">Initialization vector (IV):</TextBox>
+            <TextBox FontSize="16" Grid.Row="3" Grid.Column="0" Text="Initialization vector (IV):"/>
             <TextBox FontSize="16" Margin="0,3,0,0"  Grid.Row="3" Grid.Column="1" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
           </Grid>
         </Grid>
