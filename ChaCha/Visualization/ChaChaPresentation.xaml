@@ -572,7 +572,7 @@
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_1" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_1" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -582,7 +582,7 @@
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_2" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -592,7 +592,7 @@
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_3" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_3" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -602,7 +602,7 @@
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_4" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_4" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -610,9 +610,9 @@
                   <Button Height="18.75" Margin="2" Click="QR4_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_5" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_5" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -620,9 +620,9 @@
                   <Button Height="18.75" Margin="2" Click="QR5_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_6" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_6" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_6" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -630,9 +630,9 @@
                   <Button Height="18.75" Margin="2" Click="QR6_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_7" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_7" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_7" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
@@ -640,9 +640,9 @@
                   <Button Height="18.75" Margin="2" Click="QR7_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_8" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_8" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_8" Visibility="Visible" Text="&#x1f81e;"/>
+                  <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x1f81e;"/>
                   <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
