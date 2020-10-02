@@ -133,17 +133,17 @@
             <List MarkerStyle="Decimal">
               <ListItem>
                 <Paragraph>
-                  Generate keystream blocks
+                  Initialize state matrix
                 </Paragraph>
               </ListItem>
               <ListItem>
                 <Paragraph>
-                  Chain keystream blocks
+                  Generate keystream
                 </Paragraph>
               </ListItem>
               <ListItem>
                 <Paragraph>
-                  XOR input with keystream
+                  Plaintext XOR keystream
                 </Paragraph>
               </ListItem>
             </List>
