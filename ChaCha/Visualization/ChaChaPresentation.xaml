@@ -19,10 +19,11 @@
       <Setter Property="FontFamily" Value="Courier New" />
       <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
-    
+
     <Style x:Key="hexLabel" TargetType="Label">
       <Setter Property="FontFamily" Value="Courier New" />
     </Style>
+
 
     <!-- (Rich)TextBox styles -->
     <Style x:Key="hexTextBox" TargetType="TextBox">
@@ -39,12 +40,18 @@
       <Setter Property="IsReadOnly" Value="True"/>
       <Setter Property="BorderThickness" Value="0"/>
     </Style>
+    <Style x:Key="titleText" TargetType="TextBox">
+      <Setter Property="FontSize" Value="20" />
+      <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
     
     <!-- RowDefinition styles -->
-    <Style x:Key="title" TargetType="RowDefinition">
+    <Style x:Key="titleRow" TargetType="RowDefinition">
       <Setter Property="Height" Value="35"/>
     </Style>
     
+
+
     <!-- Page template -->
     <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
       <Grid Margin="5">
@@ -99,10 +106,10 @@
       </ContentControl.Resources>
       <Grid>
         <Grid.RowDefinitions>
-          <RowDefinition Style="{ StaticResource title }" />
+          <RowDefinition Style="{ StaticResource titleRow }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20">Overview</TextBox>
+        <TextBox Grid.Row="0" Style="{ StaticResource titleText }">Overview</TextBox>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -152,10 +159,10 @@
           </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
-          <RowDefinition Style="{ StaticResource title }" />
+          <RowDefinition Style="{ StaticResource titleRow }" />
           <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" HorizontalAlignment="Center" FontSize="20" Text="State Matrix Initialization"/>
+        <TextBox Grid.Row="0" Style="{ StaticResource titleText }" Text="State Matrix Initialization"/>
           <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.34*"/>
@@ -339,14 +346,14 @@
           </Style>
         </Grid.Resources>
         <Grid.RowDefinitions>
-          <RowDefinition Style="{ StaticResource title }" />
+          <RowDefinition Style="{ StaticResource titleRow }" />
           <RowDefinition />
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" Grid.Row="0" Orientation="Horizontal">
-          <TextBox FontSize="20">Keystream Block Generation</TextBox>
-          <TextBox FontSize="20" Name="KeystreamBlocksNeededTextBlock"/>
-          <TextBox FontSize="20">/</TextBox>
-          <TextBox FontSize="20" Text="{ Binding KeystreamBlocksNeeded }"/>
+          <TextBox Style="{ StaticResource titleText }">Keystream Block Generation</TextBox>
+          <TextBox Style="{ StaticResource titleText }" Name="KeystreamBlocksNeededTextBlock"/>
+          <TextBox Style="{ StaticResource titleText }" Text="/"/>
+          <TextBox Style="{ StaticResource titleText }" Text="{ Binding KeystreamBlocksNeeded }"/>
         </StackPanel>
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
