@@ -429,7 +429,7 @@ namespace Cryptool.Plugins.ChaCha
             for(int i = 1; i <= 8; ++i)
             {
                 StackPanel qrButton = (StackPanel)GetIndexElement(pres, "QRound_Button", i);
-                qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
+                qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && round != 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
@@ -797,7 +797,7 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     pres.CurrentRoundIndex = round - 1;
                     pres.Nav.Replace(pres.CurrentRound, text);
-                    ShowQRButtons(pres, round);
+                    ShowQRButtons(pres, round - 1);
                 });
                 copyActions[0].Add(roundUpdate);
                 copyActions[0].AddLabel(RoundStartLabel(round));
