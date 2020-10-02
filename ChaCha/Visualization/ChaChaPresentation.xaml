@@ -290,7 +290,6 @@
               <Border Grid.Row="0" Grid.Column="3" Name="UITransformLittleEndian3Cell">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian3"/>
               </Border>
-
               <Border Grid.Row="1" Grid.Column="0" Name="UITransformLittleEndian4Cell">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian4"/>
               </Border>
