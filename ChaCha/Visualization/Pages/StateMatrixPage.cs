@@ -52,10 +52,10 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.UITransformChunk1, chunk1);
                 pres.Nav.Replace(pres.UITransformChunk2, chunk2);
                 pres.Nav.Replace(pres.UITransformChunk3, chunk3);
-                pres.Nav.Replace(pres.UITransformChunk3, chunk4);
-                pres.Nav.Replace(pres.UITransformChunk3, chunk5);
-                pres.Nav.Replace(pres.UITransformChunk3, chunk6);
-                pres.Nav.Replace(pres.UITransformChunk3, chunk7);
+                pres.Nav.Replace(pres.UITransformChunk4, chunk4);
+                pres.Nav.Replace(pres.UITransformChunk5, chunk5);
+                pres.Nav.Replace(pres.UITransformChunk6, chunk6);
+                pres.Nav.Replace(pres.UITransformChunk7, chunk7);
             }
             void ClearTransformChunk()
             {
