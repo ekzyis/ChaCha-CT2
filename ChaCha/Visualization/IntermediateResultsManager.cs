@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 
 namespace Cryptool.Plugins.ChaCha
@@ -28,17 +27,18 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>("CHACHA_HASH_ADD_ORIGINAL_STATE");
         public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>("CHACHA_HASH_LITTLEENDIAN_STATE");
     }
-    public class ResultType<T> {
+    public class ResultType<T>
+    {
         public ResultType(string name)
         {
             this.Name = name;
         }
 
-        public string Name { get;  }
+        public string Name { get; }
     }
     public class IntermediateResultsManager<T>
     {
-       
+
         public class IntermediateResultsList
         {
             private readonly List<T> _results;

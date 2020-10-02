@@ -1,10 +1,10 @@
-﻿using System.Diagnostics;
-using System.Linq;
-using System.Windows.Controls;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Shapes;
-using System;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -47,7 +47,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void InsertCounter(string[] state, ulong counter64)
         {
-            if(versionIsDJB)
+            if (versionIsDJB)
             {
                 // 64-bit counter, 64-bit IV
                 byte[] counter = ChaCha.GetBytes(counter64);
@@ -426,7 +426,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public static void ShowQRButtons(ChaChaPresentation pres, int round)
         {
-            for(int i = 1; i <= 8; ++i)
+            for (int i = 1; i <= 8; ++i)
             {
                 StackPanel qrButton = (StackPanel)GetIndexElement(pres, "QRound_Button", i);
                 qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && round != 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
@@ -729,7 +729,7 @@ namespace Cryptool.Plugins.ChaCha
                     return (-1, -1, -1, -1);
             }
         }
-       
+
         private static int CalculateRoundFromQRIndex(int qrIndex)
         {
             /**

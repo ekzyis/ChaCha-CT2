@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -11,8 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Navigation;
-using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -22,7 +19,7 @@ namespace Cryptool.Plugins.ChaCha
         private CancellationTokenSource actionNavigationTokenSource;
         private static Button CreateNavigationButton()
         {
-            Button b = new Button {Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0)};
+            Button b = new Button { Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0) };
             return b;
         }
 
@@ -60,12 +57,12 @@ namespace Cryptool.Plugins.ChaCha
                 VerticalAlignment = VerticalAlignment.Center,
                 AutoToolTipPlacement = AutoToolTipPlacement.BottomRight
             };
-            
+
             s.SetBinding(Slider.ValueProperty, new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay });
             void S_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
             {
                 // Only execute listener logic if value changed by user
-                if(s.IsFocused)
+                if (s.IsFocused)
                 {
                     int value = (int)s.Value;
                     // Console.WriteLine($"Slider value changed to {value}");
@@ -115,7 +112,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
             Binding actionIndexBinding = new Binding("CurrentActionIndexTextBox")
-                {Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged};
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
             ValidationRule inputActionIndexRule = new InputActionIndexRule(totalActions);
             actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
             current.SetBinding(TextBox.TextProperty, actionIndexBinding);
@@ -355,7 +352,7 @@ namespace Cryptool.Plugins.ChaCha
                 InitActionSliderNavigationBar(p.ActionNavigationBar, totalActions);
             }
         }
-       
+
         // List with pages in particular order to implement page navigation + their page actions
         private readonly List<Page> _pages = new List<Page>();
         private void AddPage(Page page)
@@ -515,7 +512,7 @@ namespace Cryptool.Plugins.ChaCha
                 if (value == _currentPageIndex) return;
                 _currentPageIndex = value;
                 CurrentActionIndex = 0;
-                if(_currentPageIndex >= 3)
+                if (_currentPageIndex >= 3)
                 {
                     CurrentKeystreamBlockTextBox = _currentPageIndex - 2;
                 }
@@ -780,7 +777,7 @@ namespace Cryptool.Plugins.ChaCha
             //   (go first to nearest cache entry in constant time and then from there to destination index)
             if (relative != 0)
             {
-                if(Cache.NotEmpty)
+                if (Cache.NotEmpty)
                 {
                     int closestCache = Cache.GetClosestCache(n);
                     int distanceCacheToDestination = Math.Abs(closestCache - n);
@@ -880,7 +877,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             int startIndex = CurrentActionIndex;
             int endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex), CurrentActions) + 1;
-            if(startIndex == endIndex)
+            if (startIndex == endIndex)
             {
                 // We are currently at the start of a round. Go to previous round.
                 endIndex = GetLabeledPageActionIndex(KeystreamBlockGenPage.RoundStartLabel(CurrentRoundIndex - 1), CurrentActions) + 1;

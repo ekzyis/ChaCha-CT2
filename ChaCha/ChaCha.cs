@@ -88,7 +88,8 @@ namespace Cryptool.Plugins.ChaCha
         public byte[] InputData
         {
             get { return this._inputData; }
-            set { 
+            set
+            {
                 this._inputData = value;
                 OnPropertyChanged("InputData");
             }
@@ -200,7 +201,7 @@ namespace Cryptool.Plugins.ChaCha
 
         /**
          * Starts ChaCha execution after validating input.
-         */ 
+         */
         private void ExecuteChaCha()
         {
             // clear all previous results (important if user started workflow, stopped and then restarted)
@@ -273,7 +274,7 @@ namespace Cryptool.Plugins.ChaCha
 
             add4ByteChunksToStateAsLittleEndian(constants);
             add4ByteChunksToStateAsLittleEndian(_inputKey);
-            if(_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_inputKey);
+            if (_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_inputKey);
             byte[] counter = Enumerable.Repeat<byte>(0, BITS_COUNTER / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);

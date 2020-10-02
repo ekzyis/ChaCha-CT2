@@ -36,7 +36,8 @@ namespace Cryptool.Plugins.ChaCha
                     // copy inline elements
                     Inline[] state = new Inline[tb.Inlines.Count];
                     tb.Inlines.CopyTo(state, 0);
-                    _undoActions[hash] = () => {
+                    _undoActions[hash] = () =>
+                    {
                         tb.Inlines.Clear();
                         foreach (Inline i in state)
                         {
@@ -185,7 +186,7 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Private and helper methods (methods which do not call SaveState)
-        #pragma warning disable IDE1006
+#pragma warning disable IDE1006
         private static void _RemoveLast(InlineCollection list)
         {
             list.Remove(list.LastInline);
@@ -226,7 +227,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private static void _MakeBoldLast(BlockCollection list)
         {
-            if (list.LastBlock != null) _ReplaceLast(list, MakeBold(new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) }) );
+            if (list.LastBlock != null) _ReplaceLast(list, MakeBold(new Run { Text = (((Run)((Paragraph)(list.LastBlock)).Inlines.LastInline).Text) }));
         }
         private static void _Add(BlockCollection list, Inline element)
         {
@@ -236,7 +237,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             list.Clear();
         }
-        #pragma warning restore IDE1006
+#pragma warning restore IDE1006
 
         private static Run MakeBold(Run r)
         {
@@ -296,14 +297,14 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void SetCopyBackground(params Border[] borders)
         {
-            foreach(Border b in borders)
+            foreach (Border b in borders)
             {
                 SetBackground(b, _copyBrush);
             }
         }
         public void UnsetBackground(params Border[] borders)
         {
-            foreach(Border b in borders)
+            foreach (Border b in borders)
             {
                 SetBackground(b, Brushes.White);
             }
@@ -498,7 +499,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public void Clear(params Border[] borders)
         {
-            foreach(Border b in borders)
+            foreach (Border b in borders)
             {
                 UnsetBackground(b);
                 UnmarkBorder(b);
@@ -530,14 +531,14 @@ namespace Cryptool.Plugins.ChaCha
         }
         public void SetShapeStroke(double stroke, params Shape[] shapes)
         {
-            foreach(Shape s in shapes)
+            foreach (Shape s in shapes)
             {
                 SetShapeStroke(s, stroke);
             }
         }
         public void MarkShape(params Shape[] shapes)
         {
-            foreach(Shape s in shapes)
+            foreach (Shape s in shapes)
             {
                 SetShapeStrokeColor(s, _markBrush);
                 SetShapeStroke(s, 2);

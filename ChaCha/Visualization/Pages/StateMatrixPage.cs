@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Windows.Controls;
-using System.Windows.Navigation;
+﻿using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -157,7 +155,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction keyChunksAction = new PageAction(() =>
             {
                 ReplaceTransformChunk(
-                    pres.KeyChunks[0],  pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
+                    pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
                     pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
             }, () =>
             {
@@ -283,7 +281,7 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction counterChunksAction = new PageAction(() =>
             {
-                if(versionIsDJB)
+                if (versionIsDJB)
                 {
                     ReplaceTransformChunk(pres.InitialCounterChunks[0], pres.InitialCounterChunks[1]);
                 }
@@ -297,7 +295,7 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction counterLittleEndianAction = new PageAction(() =>
             {
-                if(versionIsDJB)
+                if (versionIsDJB)
                 {
                     ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0], pres.InitialCounterLittleEndian[1]);
                 }
