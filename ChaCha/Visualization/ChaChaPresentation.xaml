@@ -90,12 +90,8 @@
         </Style>
       </ContentControl.Resources>
       <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBox Margin="10" FontSize="24" HorizontalAlignment="Center">
-          ChaCha Visualization
-        </TextBox>
-        <TextBox HorizontalAlignment="Center">
-          A stream cipher used in TLS by Daniel J. Bernstein
-        </TextBox>
+        <TextBox Style="{ StaticResource titleText }" FontSize="40" Margin="10" Text="ChaCha Visualization"/>
+        <TextBox  HorizontalAlignment="Center" FontSize="18" Text="A stream cipher used in TLS by Daniel J. Bernstein"/>
       </StackPanel>
     </ContentControl>
     <!-- ChaCha workflow page -->
