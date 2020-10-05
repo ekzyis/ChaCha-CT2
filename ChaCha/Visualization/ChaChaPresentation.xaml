@@ -700,7 +700,7 @@
             </Grid.RowDefinitions>
             <!-- Quarterround visualization -->
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-              <Viewbox Height="220">
+              <Viewbox Height="230">
                 <Canvas Width="1500" Height="220" Grid.Row="1">
                   <Canvas>
                     <!-- Input cells -->
