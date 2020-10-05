@@ -259,7 +259,7 @@
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
             <TextBox Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
-              <UniformGrid Grid.Column="1" Grid.Row="1" Rows="2" Columns="4">
+              <UniformGrid Grid.Column="1" Grid.Row="1" Rows="2" Columns="4" Margin="0,-20,0,0">
               <Border Grid.Row="0" Grid.Column="0">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
               </Border>
@@ -284,9 +284,9 @@
               <Border Grid.Row="1" Grid.Column="3">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
               </Border>
-            </UniformGrid>
+              </UniformGrid>
             <TextBox Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:"/>
-            <UniformGrid Grid.Row="2" Grid.Column="1" Rows="2" Columns="4">
+            <UniformGrid Grid.Row="2" Grid.Column="1" Rows="2" Columns="4" Margin="0,-20,0,0">
               <Border Grid.Row="0" Grid.Column="0" Name="UITransformLittleEndian0Cell">
                 <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
               </Border>
