@@ -247,18 +247,18 @@
             </Border>
           </Grid>
           <!-- little-endian transformation -->
-          <Grid Grid.Row="1" Grid.Column="0" Margin="5,10,-190,10">
+          <Grid Grid.Row="1" Grid.Column="0" Margin="5">
             <Grid.RowDefinitions>
               <RowDefinition></RowDefinition>
               <RowDefinition></RowDefinition>
               <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="0.38*"></ColumnDefinition>
+              <ColumnDefinition Width="0.34*"></ColumnDefinition>
               <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
-            <TextBox HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
+            <TextBox HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"  TextWrapping="Wrap" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
             <TextBox Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
             <Grid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="360">
               <Grid.ColumnDefinitions>
@@ -335,9 +335,9 @@
             </Grid>
           </Grid>
           <!-- Step description -->
-          <RichTextBox Style="{ StaticResource richText }" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
+          <RichTextBox Style="{ StaticResource richText }" Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
           <!-- state parameters -->
-          <Grid Margin="200,0,0,0" Grid.Row="1" Grid.Column="1" Height="200" HorizontalAlignment="Left">
+          <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" Height="200" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
               <RowDefinition/>
               <RowDefinition/>
