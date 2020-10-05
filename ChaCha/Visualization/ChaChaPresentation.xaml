@@ -259,7 +259,7 @@
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
             <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
             <TextBox Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
-            <Grid Grid.Row="1" Grid.Column="1" Margin="0,-20,0,0">
+            <Grid Grid.Row="1" Grid.Column="1">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -271,32 +271,32 @@
                 <RowDefinition/>
               </Grid.RowDefinitions>
               <Border Grid.Row="0" Grid.Column="0">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="1">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk1"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk1"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="2">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk2"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk2"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="3">
-                <TextBox VerticalAlignment="Center"  Style="{StaticResource hexTextBox}" Name="UITransformChunk3"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk3"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="0">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="1">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk5"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk5"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="2">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk6"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk6"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="3">
-                <TextBox VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
+                <TextBox Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
               </Border>
             </Grid>
             <TextBox Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Transform each chunk into little-endian:"/>
-            <Grid Grid.Row="2" Grid.Column="1" Margin="0,-20,0,0">
+            <Grid Grid.Row="2" Grid.Column="1">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -308,28 +308,28 @@
                 <RowDefinition/>
               </Grid.RowDefinitions>
               <Border Grid.Row="0" Grid.Column="0" Name="UITransformLittleEndian0Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="1" Name="UITransformLittleEndian1Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian1"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian1"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="2" Name="UITransformLittleEndian2Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian2"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian2"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="3" Name="UITransformLittleEndian3Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian3"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian3"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="0" Name="UITransformLittleEndian4Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian4"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian4"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="1" Name="UITransformLittleEndian5Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian5"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian5"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="2" Name="UITransformLittleEndian6Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian6"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian6"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="3" Name="UITransformLittleEndian7Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
+                <TextBox Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
               </Border>
             </Grid>
           </Grid>
