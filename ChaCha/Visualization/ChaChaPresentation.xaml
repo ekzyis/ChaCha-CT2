@@ -258,7 +258,14 @@
               <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
-            <TextBox HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"  TextWrapping="Wrap" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
+            <Grid HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="360">
+              <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+              </Grid.RowDefinitions>
+              <TextBox HorizontalAlignment="Center" Grid.Row="0" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
+              <TextBox HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
+            </Grid>
             <TextBox Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
             <Grid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="360">
               <Grid.ColumnDefinitions>

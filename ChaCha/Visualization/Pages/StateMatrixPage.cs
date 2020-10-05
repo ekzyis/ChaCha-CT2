@@ -38,22 +38,35 @@ namespace Cryptool.Plugins.ChaCha
             }
             void ReplaceTransformInput(string input)
             {
-                pres.Nav.Replace(pres.UITransformInput, input);
+                if (input.Length > 32)
+                {
+                    pres.Nav.Replace(pres.UITransformInput, input.Substring(0, 32));
+                    pres.Nav.Replace(pres.UITransformInput2, input.Substring(32));
+                }
+                else
+                {
+                    pres.Nav.Replace(pres.UITransformInput, input);
+                }
             }
             void ClearTransformInput()
             {
-                pres.Nav.Clear(pres.UITransformInput);
+                pres.Nav.Clear(pres.UITransformInput, pres.UITransformInput2);
             }
-            void ReplaceTransformChunk(string chunk0, string chunk1 = "", string chunk2 = "", string chunk3 = "", string chunk4 = "", string chunk5 = "", string chunk6 = "", string chunk7 = "")
+            void ReplaceTransformChunk(params string[] chunk)
             {
-                pres.Nav.Replace(pres.UITransformChunk0, chunk0);
-                pres.Nav.Replace(pres.UITransformChunk1, chunk1);
-                pres.Nav.Replace(pres.UITransformChunk2, chunk2);
-                pres.Nav.Replace(pres.UITransformChunk3, chunk3);
-                pres.Nav.Replace(pres.UITransformChunk4, chunk4);
-                pres.Nav.Replace(pres.UITransformChunk5, chunk5);
-                pres.Nav.Replace(pres.UITransformChunk6, chunk6);
-                pres.Nav.Replace(pres.UITransformChunk7, chunk7);
+                if (chunk.Length == 2)
+                {
+                    // use borders in center to center text
+                    pres.Nav.Replace(pres.UITransformChunk1, chunk[0]);
+                    pres.Nav.Replace(pres.UITransformChunk2, chunk[1]);
+                }
+                else
+                {
+                    for (int i = 0; i < chunk.Length; ++i)
+                    {
+                        pres.Nav.Replace((TextBox)pres.FindName($"UITransformChunk{i}"), chunk[i]);
+                    }
+                }
             }
             void ClearTransformChunk()
             {
@@ -66,16 +79,22 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear(pres.UITransformChunk6);
                 pres.Nav.Clear(pres.UITransformChunk7);
             }
-            void ReplaceTransformLittleEndian(string le0, string le1 = "", string le2 = "", string le3 = "", string le4 = "", string le5 = "", string le6 = "", string le7 = "")
+            void ReplaceTransformLittleEndian(params string[] le)
             {
-                pres.Nav.Replace(pres.UITransformLittleEndian0, le0);
-                pres.Nav.Replace(pres.UITransformLittleEndian1, le1);
-                pres.Nav.Replace(pres.UITransformLittleEndian2, le2);
-                pres.Nav.Replace(pres.UITransformLittleEndian3, le3);
-                pres.Nav.Replace(pres.UITransformLittleEndian4, le4);
-                pres.Nav.Replace(pres.UITransformLittleEndian5, le5);
-                pres.Nav.Replace(pres.UITransformLittleEndian6, le6);
-                pres.Nav.Replace(pres.UITransformLittleEndian7, le7);
+                // TODO create another grid with 3 rows to center IV in IETF version and add branch for le.Length == 3 (IV IETF) and le.Length == 1 (counter IETF) here
+                if (le.Length == 2)
+                {
+                    // use borders in center to center text
+                    pres.Nav.Replace(pres.UITransformLittleEndian1, le[0]);
+                    pres.Nav.Replace(pres.UITransformLittleEndian2, le[1]);
+                }
+                else
+                {
+                    for (int i = 0; i < le.Length; ++i)
+                    {
+                        pres.Nav.Replace((TextBox)pres.FindName($"UITransformLittleEndian{i}"), le[i]);
+                    }
+                }
             }
             void ClearTransformLittleEndian()
             {
@@ -243,9 +262,10 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction[] copyIVToStateActions = versionIsDJB ?
                 pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell },
+                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
                     new Border[] { pres.UIState14Cell, pres.UIState15Cell },
                     new string[] { "", "" })
+                // TODO create another grid with 3 rows to center IV in IETF version and update this code here
                 : pres.Nav.CopyActions(
                     new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
                     new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell },
@@ -309,9 +329,10 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction[] copyCounterToStateActions = versionIsDJB ?
                 pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell },
+                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
                     new Border[] { pres.UIState12Cell, pres.UIState13Cell },
                     new string[] { "", "" })
+                // TODO create another grid with 3 rows to center counter in IETF version and update this code here
                 : pres.Nav.CopyActions(
                     new Border[] { pres.UITransformLittleEndian0Cell },
                     new Border[] { pres.UIState12Cell },
