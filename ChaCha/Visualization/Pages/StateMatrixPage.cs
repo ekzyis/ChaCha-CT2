@@ -1,4 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Controls;
+using System.Windows.Navigation;
+using System.Xaml;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -107,6 +110,28 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear(pres.UITransformLittleEndian6);
                 pres.Nav.Clear(pres.UITransformLittleEndian7);
             }
+            PageAction[] InputAction(Border copyFrom)
+            {
+                string text = ((TextBox)copyFrom.Child).Text;
+                PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { copyFrom }, new Border[] { pres.UITransformInputCell }, new string[] { "" });
+                if (text.Length > 32)
+                {
+                    string t1 = text.Substring(0, 32);
+                    string t2 = text.Substring(32);
+                    copyActions[0].AddToExec(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
+                    copyActions[0].AddToUndo(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
+                    copyActions[1].AddToExec(() => {
+                        ReplaceTransformInput(text);
+                    });
+                    copyActions[1].AddToUndo(() =>
+                    {
+                        ClearTransformInput();
+                    });
+                    copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
+                    copyActions[2].AddToUndo(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
+                }
+                return copyActions;
+            }
             #region constants
             PageAction constantsStepDescriptionAction = new PageAction(() =>
             {
@@ -115,15 +140,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearDescription();
             });
-            PageAction constantsInputAction = new PageAction(() =>
-            {
-                UnboldLastFromDescription();
-                ReplaceTransformInput(pres.HexConstants);
-            }, () =>
-            {
-                MakeLastBoldInDescription();
-                ClearTransformInput();
-            });
+            PageAction[] constantsInputAction = InputAction(pres.UIConstantsCell);
             PageAction constantsChunksAction = new PageAction(() =>
             {
                 ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
@@ -151,6 +168,7 @@ namespace Cryptool.Plugins.ChaCha
             #region key
             PageAction keyStepDescriptionAction = new PageAction(() =>
             {
+                UnboldLastFromDescription();
                 AddBoldToDescription(STATE_MATRIX_DESCRIPTION_2);
                 ClearTransformInput();
                 ClearTransformChunk();
@@ -158,19 +176,12 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 RemoveLastFromDescription();
+                MakeLastBoldInDescription();
                 ReplaceTransformInput(pres.HexConstants);
                 ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
                 ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
             });
-            PageAction keyInputAction = new PageAction(() =>
-            {
-                UnboldLastFromDescription();
-                ReplaceTransformInput(pres.HexInputKey);
-            }, () =>
-            {
-                MakeLastBoldInDescription();
-                ClearTransformInput();
-            });
+            PageAction[] keyInputAction = InputAction(pres.UIInputKeyCell);
             PageAction keyChunksAction = new PageAction(() =>
             {
                 ReplaceTransformChunk(
@@ -202,6 +213,7 @@ namespace Cryptool.Plugins.ChaCha
             #region iv
             PageAction ivStepDescriptionAction = new PageAction(() =>
             {
+                UnboldLastFromDescription();
                 AddBoldToDescription(STATE_MATRIX_DESCRIPTION_3);
                 ClearTransformInput();
                 ClearTransformChunk();
@@ -209,21 +221,14 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 RemoveLastFromDescription();
+                MakeLastBoldInDescription();
                 ReplaceTransformInput(pres.HexInputKey);
                 ReplaceTransformChunk(pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
                     pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
                 ReplaceTransformLittleEndian(pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
                     pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
             });
-            PageAction ivInputAction = new PageAction(() =>
-            {
-                UnboldLastFromDescription();
-                ReplaceTransformInput(pres.HexInputIV);
-            }, () =>
-            {
-                MakeLastBoldInDescription();
-                ClearTransformInput();
-            });
+            PageAction[] ivInputAction = InputAction(pres.UIInputIVCell);
             void ReplaceTransformChunkIV()
             {
                 if (versionIsDJB)
@@ -279,6 +284,7 @@ namespace Cryptool.Plugins.ChaCha
             #region counter
             PageAction counterStepDescriptionAction = new PageAction(() =>
             {
+                UnboldLastFromDescription();
                 AddBoldToDescription(STATE_MATRIX_DESCRIPTION_4);
                 ClearTransformInput();
                 ClearTransformChunk();
@@ -286,17 +292,16 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 RemoveLastFromDescription();
+                MakeLastBoldInDescription();
                 ReplaceTransformInput(pres.HexInputIV);
                 ReplaceTransformChunkIV();
                 ReplaceTransformLittleEndianIV();
             });
             PageAction counterInputAction = new PageAction(() =>
             {
-                UnboldLastFromDescription();
                 ReplaceTransformInput(pres.HexInitialCounter);
             }, () =>
             {
-                MakeLastBoldInDescription();
                 ClearTransformInput();
             });
             PageAction counterChunksAction = new PageAction(() =>
@@ -344,6 +349,7 @@ namespace Cryptool.Plugins.ChaCha
             page.AddAction(copyCounterToStateActions);
             PageAction nextPageDesc = new PageAction(() =>
             {
+                UnboldLastFromDescription();
                 AddBoldToDescription(STATE_MATRIX_DESCRIPTION_5);
                 ClearTransformInput();
                 ClearTransformChunk();
@@ -351,6 +357,7 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 RemoveLastFromDescription();
+                MakeLastBoldInDescription();
                 ReplaceTransformInput(pres.HexInitialCounter);
                 if (versionIsDJB)
                 {

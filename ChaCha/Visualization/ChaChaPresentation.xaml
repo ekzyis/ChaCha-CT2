@@ -257,17 +257,21 @@
               <ColumnDefinition Width="0.34*"></ColumnDefinition>
               <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
-            <Grid HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" Width="360">
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1">
               <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
               </Grid.RowDefinitions>
-              <TextBox HorizontalAlignment="Center" Grid.Row="0" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
-              <TextBox HorizontalAlignment="Center" Grid.Row="1" TextWrapping="Wrap" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
+              <Border Grid.Row="0" Name="UITransformInputCell">
+                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
+              </Border>
+              <Border Grid.Row="1" Name="UITransformInputCell2">
+                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
+              </Border>
             </Grid>
-            <TextBox Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
-            <Grid HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="360">
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="360">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -303,8 +307,8 @@
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
               </Border>
             </Grid>
-            <TextBox Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Transform each chunk into little-endian:"/>
-            <Grid HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="360" Margin="0,-20,0,0">
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Transform each chunk into little-endian:"/>
+            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="360">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -344,24 +348,30 @@
           <!-- Step description -->
           <RichTextBox Style="{ StaticResource richText }" Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
           <!-- state parameters -->
-          <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" Height="200" HorizontalAlignment="Left">
+          <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" Height="260" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition/>
-              <RowDefinition/>
+              <RowDefinition Height="20"/>
+              <RowDefinition Height="1.6*"/>
+              <RowDefinition Height="1.6*"/>
+              <RowDefinition Height="1.6*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="180"/>
               <ColumnDefinition Width="800"/>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" FontWeight="Bold" Text="State parameters"/>
-            <TextBox Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
-            <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Grid.Row="1" Grid.Column="1" Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
-            <TextBox Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
-            <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Grid.Row="2" Grid.Column="1" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-            <TextBox Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" Text="Initialization vector (IV):"/>
-            <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Grid.Row="3" Grid.Column="1" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
+            <Border HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="UIConstantsCell">
+              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
+            </Border>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
+            <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
+              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+            </Border>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" Text="Initialization vector (IV):"/>
+            <Border HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell">
+              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
+            </Border>
           </Grid>
         </Grid>
       </Grid>
