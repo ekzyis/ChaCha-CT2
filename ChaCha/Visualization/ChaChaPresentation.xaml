@@ -334,7 +334,7 @@
             </Grid>
           </Grid>
           <!-- Step description -->
-          <RichTextBox Style="{ StaticResource richText }" Margin="200,0,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
+          <RichTextBox Style="{ StaticResource richText }" Margin="10,0,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
           <!-- state parameters -->
           <Grid Margin="200,0,0,0" Grid.Row="1" Grid.Column="1" Height="200" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
