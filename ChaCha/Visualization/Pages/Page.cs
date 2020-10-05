@@ -56,7 +56,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                 _page.ApplyTemplate();
+                _page.ApplyTemplate();
                 return (StackPanel)_page.Template.FindName("ActionNavBar", _page);
             }
         }

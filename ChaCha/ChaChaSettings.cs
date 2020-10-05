@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.ChaCha
             get { return rounds; }
             set
             {
-                switch(value)
+                switch (value)
                 {
                     case 0:
                     case 8:
@@ -57,7 +57,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _version = value;
-                switch(value)
+                switch (value)
                 {
                     case 0:
                         Version = ChaCha.Version.IETF;
