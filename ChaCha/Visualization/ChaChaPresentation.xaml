@@ -34,7 +34,7 @@
       <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Border}}}"/>
     </Style>
     <Style x:Key="hexCell" TargetType="TextBox" BasedOn="{ StaticResource hexTextBox }">
-      <Setter Property="FontSize" Value="26" />
+      <Setter Property="FontSize" Value="22" />
     </Style>
     <Style TargetType="RichTextBox">
       <Setter Property="IsReadOnly" Value="True"/>
