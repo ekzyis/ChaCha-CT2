@@ -162,7 +162,7 @@
       </Grid>
     </ContentControl>
     <!-- ChaCha State matrix page -->
-    <ContentControl Name="UIStateMatrixPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+    <ContentControl Name="UIStateMatrixPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
           <Style TargetType="TextBox">
@@ -498,7 +498,7 @@
       </Grid>
     </ContentControl>
     <!-- ChaCha Generate Keystream block page -->
-    <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
+    <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
           <Style TargetType="TextBox">
