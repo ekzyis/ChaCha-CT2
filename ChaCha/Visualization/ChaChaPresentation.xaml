@@ -63,6 +63,8 @@
     </Style>
     <Style x:Key="stateIndex" TargetType="TextBox" BasedOn="{ StaticResource text}">
       <Setter Property="FontSize" Value="16"/>
+      <!-- TODO Reenable after scaling has been fixed -->
+      <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
 
     <!-- RowDefinition styles -->
