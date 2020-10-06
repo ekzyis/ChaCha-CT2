@@ -111,7 +111,8 @@
       </ContentControl.Resources>
       <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBox Style="{ StaticResource titleText }" FontSize="40" Margin="10" Text="ChaCha Visualization"/>
-        <TextBox  HorizontalAlignment="Center" FontSize="18" Text="A stream cipher used in TLS by Daniel J. Bernstein"/>
+        <TextBox HorizontalAlignment="Center" FontSize="18" Text="A stream cipher used in TLS by Daniel J. Bernstein"/>
+        <TextBox HorizontalAlignment="Center" FontSize="18" Foreground="Red" Margin="20" Name="ErrorText" Text="Invalid input detected. See logging tab for more information." Visibility="Hidden"/>
       </StackPanel>
     </ContentControl>
     <!-- ChaCha workflow page -->
