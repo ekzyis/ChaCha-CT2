@@ -114,15 +114,35 @@ namespace Cryptool.Plugins.ChaCha
                 PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { copyFrom }, new Border[] { pres.UITransformInputCell }, new string[] { "" });
                 if (text.Length > 32)
                 {
-                    string t1 = text.Substring(0, 32);
-                    string t2 = text.Substring(32);
-                    copyActions[0].AddToExec(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
-                    copyActions[0].AddToUndo(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
                     copyActions[1].AddToExec(() => {
+                        pres.Nav.SetCopyBackground(pres.UITransformInputCell2);
                         ReplaceTransformInput(text);
                     });
                     copyActions[1].AddToUndo(() =>
                     {
+                        pres.Nav.UnsetBackground(pres.UITransformInputCell2);
+                        ClearTransformInput();
+                    });
+                    copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
+                    copyActions[2].AddToUndo(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
+                }
+                return copyActions;
+            }
+            PageAction[] KeyInputAction()
+            {
+                Border inputKeyCell = pres.UIInputKeyCell;
+                string text = ((TextBox)inputKeyCell.Child).Text;
+                PageAction[] copyActions = InputAction(inputKeyCell);
+                if(pres.InputKey.Length == 16)
+                {
+                    copyActions[1].AddToExec(() =>
+                    {
+                        pres.Nav.SetCopyBackground(pres.UITransformInputCell2);
+                        ReplaceTransformInput($"{text}{text}");
+                    });
+                    copyActions[1].AddToUndo(() =>
+                    {
+                        pres.Nav.UnsetBackground(pres.UITransformInputCell2);
                         ClearTransformInput();
                     });
                     copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
@@ -179,7 +199,7 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
                 ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
             });
-            PageAction[] keyInputAction = InputAction(pres.UIInputKeyCell);
+            PageAction[] keyInputAction = KeyInputAction();
             PageAction keyChunksAction = new PageAction(() =>
             {
                 ReplaceTransformChunk(
