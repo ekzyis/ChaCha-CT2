@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -370,6 +371,10 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         text = copyFromTextBox.Text;
                     }
+                    else if (copyFromBorder.Child is StackPanel copyFromStackPanel)
+                    {
+                        text = copyFromStackPanel.Children.OfType<TextBox>().First().Text;
+                    }
                     else
                     {
                         Debug.Assert(false, "Input type for CopyAction not supported.");
@@ -400,6 +405,10 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         Replace(copyToTextBox, text);
                     }
+                    else if (copyToBorder.Child is StackPanel copyToStackPanel)
+                    {
+                        Replace(copyToStackPanel.Children.OfType<TextBox>().First(), text);
+                    }
                     else
                     {
                         Debug.Assert(false, "Output type for CopyAction not supported.");
@@ -424,6 +433,10 @@ namespace Cryptool.Plugins.ChaCha
                     else if (copyToBorder.Child is TextBox copyFromTextBox)
                     {
                         Replace(copyFromTextBox, text);
+                    }
+                    else if (copyToBorder.Child is StackPanel copyFromStackPanel)
+                    {
+                        Replace(copyFromStackPanel.Children.OfType<TextBox>().First(), text);
                     }
                     else
                     {
@@ -622,6 +635,28 @@ namespace Cryptool.Plugins.ChaCha
             {
                 tb.Text = "";
             }
+        }
+        #endregion
+
+        #region StackPanel API
+        public void AddTextBox(StackPanel sp, string text, Style style = null)
+        {
+            TextBox tb = new TextBox() { Text = text };
+            if(style != null)
+            {
+                tb.Style = style;
+            }
+            Add(sp, tb);
+        }
+
+        public void Add(StackPanel sp, TextBox tb)
+        {
+            sp.Children.Add(tb);
+        }
+
+        public void RemoveLast(StackPanel sp)
+        {
+            sp.Children.RemoveAt(sp.Children.Count - 1);
         }
         #endregion
     }

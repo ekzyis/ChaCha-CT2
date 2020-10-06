@@ -201,6 +201,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     ClearQRDetail();
                     // update state matrix
+                    ClearState();
                     TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
                     uint[] stateEntries;
                     if (qrIndex == 1)
@@ -276,96 +277,71 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.Add(pres.UIKeystreamBlockGen14, state14);
             pres.Nav.Add(pres.UIKeystreamBlockGen15, state15);
         }
-        private void ReplaceStateSecondaryRow(string[] state)
+        private void ShowAddition()
         {
-            ReplaceStateSecondaryRow(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+            string[] add = originalState.Select(x => $"+{x}").ToArray();
+            for (int i = 0; i < add.Length; ++i)
+            {
+                TextBox tb = new TextBox() { Text = add[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
+                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+            }
         }
-        private void ReplaceStateSecondaryRow(string state0, string state1, string state2, string state3,
-                string state4, string state5, string state6, string state7,
-                string state8, string state9, string state10, string state11,
-                string state12, string state13, string state14, string state15)
+        private void ClearAddition()
         {
-            pres.Nav.Add(pres.UIKeystreamBlockGen0_1, state0);
-            pres.Nav.Add(pres.UIKeystreamBlockGen1_1, state1);
-            pres.Nav.Add(pres.UIKeystreamBlockGen2_1, state2);
-            pres.Nav.Add(pres.UIKeystreamBlockGen3_1, state3);
-            pres.Nav.Add(pres.UIKeystreamBlockGen4_1, state4);
-            pres.Nav.Add(pres.UIKeystreamBlockGen5_1, state5);
-            pres.Nav.Add(pres.UIKeystreamBlockGen6_1, state6);
-            pres.Nav.Add(pres.UIKeystreamBlockGen7_1, state7);
-            pres.Nav.Add(pres.UIKeystreamBlockGen8_1, state8);
-            pres.Nav.Add(pres.UIKeystreamBlockGen9_1, state9);
-            pres.Nav.Add(pres.UIKeystreamBlockGen10_1, state10);
-            pres.Nav.Add(pres.UIKeystreamBlockGen11_1, state11);
-            pres.Nav.Add(pres.UIKeystreamBlockGen12_1, state12);
-            pres.Nav.Add(pres.UIKeystreamBlockGen13_1, state13);
-            pres.Nav.Add(pres.UIKeystreamBlockGen14_1, state14);
-            pres.Nav.Add(pres.UIKeystreamBlockGen15_1, state15);
+            RemoveLastFromEachStateCellStackPanel();
         }
-        private void ReplaceState(string[] state)
+        private void ReplaceState(params string[] state)
         {
-            ReplaceState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
-        }
-        private void ReplaceState(
-           string state0, string state1, string state2, string state3,
-           string state4, string state5, string state6, string state7,
-           string state8, string state9, string state10, string state11,
-           string state12, string state13, string state14, string state15)
-        {
-            pres.Nav.Replace(pres.UIKeystreamBlockGen0, state0);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen1, state1);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen2, state2);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen3, state3);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen4, state4);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen5, state5);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen6, state6);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen7, state7);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen8, state8);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen9, state9);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen10, state10);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen11, state11);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen12, state12);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen13, state13);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen14, state14);
-            pres.Nav.Replace(pres.UIKeystreamBlockGen15, state15);
+            for (int i = 0; i < state.Length; ++i)
+            {
+                pres.Nav.Replace((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""), state[i]);
+            }
         }
         private void ClearState()
         {
-            pres.Nav.Clear(pres.UIKeystreamBlockGen0);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen2);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen3);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen4);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen5);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen6);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen7);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen8);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen9);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen10);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen11);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen12);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen13);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen14);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen15);
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
+                StackPanel sp = (StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, "");
+                while(sp.Children.Count > 1)
+                {
+                    pres.Nav.RemoveLast(sp);
+                }
+            }
+
         }
-        private void ClearStateSecondaryRow()
+        private void ShowAdditionResult()
         {
-            pres.Nav.Clear(pres.UIKeystreamBlockGen0_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen1_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen2_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen3_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen4_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen5_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen6_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen7_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen8_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen9_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen10_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen11_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen12_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen13_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen14_1);
-            pres.Nav.Clear(pres.UIKeystreamBlockGen15_1);
+            string[] result = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            for (int i = 0; i < result.Length; ++i)
+            {
+                TextBox tb = new TextBox() { Text = result[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
+                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+            }
+        }
+        private void ClearAdditionResult()
+        {
+            RemoveLastFromEachStateCellStackPanel();
+        }
+        private void ShowStateLittleEndianTransformResult()
+        {
+            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            for (int i = 0; i < littleEndianState.Length; ++i)
+            {
+                TextBox tb = new TextBox() { Text = littleEndianState[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
+                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+            }
+        }
+        private void ClearStateLittleEndianTransformResult()
+        {
+            RemoveLastFromEachStateCellStackPanel();
+        }
+        private void RemoveLastFromEachStateCellStackPanel()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.RemoveLast((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""));
+            }
         }
         private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
         {
@@ -901,19 +877,23 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction showOriginalState = new PageAction(() =>
             {
-                ReplaceStateSecondaryRow(originalState.Select(x => $"+{x}").ToArray());
+                ShowAddition();
+                ShowAdditionResult();
             }, () =>
             {
-                ClearStateSecondaryRow();
+                ClearAddition();
+                ClearAdditionResult();
             });
             string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction addStates = new PageAction(() =>
             {
-                ClearStateSecondaryRow();
+                ClearAddition();
+                ClearAdditionResult();
                 ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
-                ReplaceStateSecondaryRow(originalState.Select(x => $"+{x}").ToArray());
+                ShowAddition();
+                ShowAdditionResult();
                 ReplaceState(previousState);
             });
             return new PageAction[] { updateDescription, showOriginalState, addStates };
@@ -930,17 +910,26 @@ namespace Cryptool.Plugins.ChaCha
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
             });
+            PageAction showResult = new PageAction(() =>
+            {
+                ShowStateLittleEndianTransformResult();
+            }, () =>
+            {
+                ClearStateLittleEndianTransformResult();
+            });
             uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
-            string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
+            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction convert = new PageAction(() =>
             {
+                ClearStateLittleEndianTransformResult();
                 ReplaceState(littleEndianState);
             }, () =>
             {
                 ReplaceState(previousState);
+                ShowStateLittleEndianTransformResult();
             });
-            return new PageAction[] { updateDescription, convert };
+            return new PageAction[] { updateDescription, showResult, convert };
         }
     }
 

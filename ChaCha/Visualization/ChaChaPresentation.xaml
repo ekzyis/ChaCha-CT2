@@ -34,7 +34,7 @@
       <Setter Property="Background" Value="{Binding Path=Background, RelativeSource={RelativeSource AncestorType={x:Type Border}}}"/>
     </Style>
     <Style x:Key="hexCell" TargetType="TextBox" BasedOn="{ StaticResource hexTextBox }">
-      <Setter Property="FontSize" Value="26" />
+      <Setter Property="FontSize" Value="22" />
     </Style>
     <Style TargetType="RichTextBox">
       <Setter Property="IsReadOnly" Value="True"/>
@@ -545,10 +545,9 @@
                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_0">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_0_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel0">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -562,10 +561,9 @@
                 <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_1" >
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_1_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel1">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -579,10 +577,9 @@
                 <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_2">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_2_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel2">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -596,10 +593,9 @@
                 <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_3">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_3_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel3">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -614,10 +610,9 @@
                 <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_4">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_4_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel4">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -631,10 +626,9 @@
                 <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_5">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_5_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel5">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -648,10 +642,9 @@
                 <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_6">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_6_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel6">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -665,10 +658,9 @@
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_7">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_7_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel7">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -683,10 +675,9 @@
                 <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_8">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_8_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel8">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -700,10 +691,9 @@
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_9">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_9_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel9">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -717,10 +707,9 @@
                 <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_10">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_10_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel10">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -734,10 +723,9 @@
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_11">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_11_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel11">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -752,10 +740,9 @@
                 <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_12">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_12_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel12">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -769,10 +756,9 @@
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_13">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_13_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel13">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -786,10 +772,9 @@
                 <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_14">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_14_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel14">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -803,10 +788,9 @@
                 <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}">
                   <StackPanel VerticalAlignment="Center">
                     <Border Name="UIKeystreamBlockGenCell_15">
-                      <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
-                    </Border>
-                    <Border Name="UIKeystreamBlockGenCell_15_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}">
-                      <TextBox Margin="0,0,15,0" Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel15">
+                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
