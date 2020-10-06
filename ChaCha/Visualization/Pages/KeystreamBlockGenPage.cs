@@ -323,6 +323,19 @@ namespace Cryptool.Plugins.ChaCha
         {
             RemoveLastFromEachStateCellStackPanel();
         }
+        private void ShowStateLittleEndianTransformResult()
+        {
+            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            for (int i = 0; i < littleEndianState.Length; ++i)
+            {
+                TextBox tb = new TextBox() { Text = littleEndianState[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
+                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+            }
+        }
+        private void ClearStateLittleEndianTransformResult()
+        {
+            RemoveLastFromEachStateCellStackPanel();
+        }
         private void RemoveLastFromEachStateCellStackPanel()
         {
             for (int i = 0; i < 16; ++i)
@@ -897,17 +910,26 @@ namespace Cryptool.Plugins.ChaCha
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
             });
+            PageAction showResult = new PageAction(() =>
+            {
+                ShowStateLittleEndianTransformResult();
+            }, () =>
+            {
+                ClearStateLittleEndianTransformResult();
+            });
             uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
             string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
-            string[] littleEndianState = state.Select(s => ChaChaPresentation.HexStringLittleEndian(s)).ToArray();
+            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction convert = new PageAction(() =>
             {
+                ClearStateLittleEndianTransformResult();
                 ReplaceState(littleEndianState);
             }, () =>
             {
                 ReplaceState(previousState);
+                ShowStateLittleEndianTransformResult();
             });
-            return new PageAction[] { updateDescription, convert };
+            return new PageAction[] { updateDescription, showResult, convert };
         }
     }
 
