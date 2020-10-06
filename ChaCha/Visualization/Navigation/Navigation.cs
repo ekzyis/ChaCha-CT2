@@ -413,8 +413,13 @@ namespace Cryptool.Plugins.ChaCha
 
         private void InitExecutableVisualization()
         {
+
             if (!InputValid)
+            {
+                ErrorText.Visibility = Visibility.Visible;
                 return;
+            }
+            ErrorText.Visibility = Visibility.Hidden;
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
