@@ -276,11 +276,12 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.Add(pres.UIKeystreamBlockGen14, state14);
             pres.Nav.Add(pres.UIKeystreamBlockGen15, state15);
         }
-        private void ReplaceStateSecondaryRow(params string[] state)
+        private void ShowOriginalState()
         {
-            for (int i = 0; i < state.Length; ++i)
+            string[] add = originalState.Select(x => $"+{x}").ToArray();
+            for (int i = 0; i < add.Length; ++i)
             {
-                TextBox tb = new TextBox() { Text = state[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
+                TextBox tb = new TextBox() { Text = add[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
                 pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
             }
         }
@@ -298,7 +299,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
             }
         }
-        private void ClearStateSecondaryRow()
+        private void ClearOriginalState()
         {
             for (int i = 0; i < 16; ++i)
             {
@@ -839,19 +840,19 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction showOriginalState = new PageAction(() =>
             {
-                ReplaceStateSecondaryRow(originalState.Select(x => $"+{x}").ToArray());
+                ShowOriginalState();
             }, () =>
             {
-                ClearStateSecondaryRow();
+                ClearOriginalState();
             });
             string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction addStates = new PageAction(() =>
             {
-                ClearStateSecondaryRow();
+                ClearOriginalState();
                 ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
-                ReplaceStateSecondaryRow(originalState.Select(x => $"+{x}").ToArray());
+                ShowOriginalState();
                 ReplaceState(previousState);
             });
             return new PageAction[] { updateDescription, showOriginalState, addStates };
