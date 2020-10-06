@@ -182,7 +182,10 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(QRExecActions(4, qrIndex));
                 AddAction(QROutputActions());
                 AddAction(ReplaceStateEntriesWithQROutput(qrIndex));
-                AddAction(ClearQRDetail(qrIndex));
+                if(qrIndex != pres.Rounds * 4)
+                {
+                    AddAction(ClearQRDetail(qrIndex));
+                }
             }
             AddAction(AddOriginalState());
             AddAction(ConvertStateEntriesToLittleEndian());
