@@ -624,5 +624,17 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
         #endregion
+
+        #region StackPanel API
+        public void AddTextBox(StackPanel sp, string text)
+        {
+            sp.Children.Add(new TextBox() { Text = text });
+        }
+
+        public void RemoveLast(StackPanel sp)
+        {
+            sp.Children.RemoveAt(sp.Children.Count - 1);
+        }
+        #endregion
     }
 }
