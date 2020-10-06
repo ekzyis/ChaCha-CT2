@@ -646,6 +646,11 @@ namespace Cryptool.Plugins.ChaCha
             {
                 tb.Style = style;
             }
+            Add(sp, tb);
+        }
+
+        public void Add(StackPanel sp, TextBox tb)
+        {
             sp.Children.Add(tb);
         }
 

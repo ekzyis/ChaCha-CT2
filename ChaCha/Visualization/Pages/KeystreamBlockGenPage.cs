@@ -280,7 +280,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             for (int i = 0; i < state.Length; ++i)
             {
-                pres.Nav.AddTextBox((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), state[i], pres.FindResource("hexCell") as Style);
+                TextBox tb = new TextBox() { Text = state[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
+                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
             }
         }
         private void ReplaceState(params string[] state)
