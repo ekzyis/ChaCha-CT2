@@ -201,6 +201,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     ClearQRDetail();
                     // update state matrix
+                    ClearState();
                     TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
                     uint[] stateEntries;
                     if (qrIndex == 1)
@@ -301,7 +302,13 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 16; ++i)
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
+                StackPanel sp = (StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, "");
+                while(sp.Children.Count > 1)
+                {
+                    pres.Nav.RemoveLast(sp);
+                }
             }
+
         }
         private void ShowAdditionResult()
         {
