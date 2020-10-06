@@ -137,16 +137,13 @@ namespace Cryptool.Plugins.ChaCha
 
         private Button CreatePageButton(string text, int currentPageIndex, int toPageIndex, int width)
         {
-            Button b = new Button()
-            {
-                Content = text,
-                Width = width,
-                Height = 18.75,
-            };
+            Button b = CreateNavigationButton();
+            b.Content = text;
+            b.Width = width;
+            b.Margin = new Thickness(0);
             // since each page has its own dedicated navigation bar, the button for the current page is always bold
             if (currentPageIndex == toPageIndex) b.FontWeight = FontWeights.Bold;
             b.Click += new RoutedEventHandler(MoveToPageClickWrapper(toPageIndex));
-            b.SetBinding(Button.IsEnabledProperty, new Binding("NavigationEnabled"));
             return b;
         }
 
