@@ -901,7 +901,7 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction showOriginalState = new PageAction(() =>
             {
-                ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
+                ReplaceStateSecondaryRow(originalState.Select(x => $"+{x}").ToArray());
             }, () =>
             {
                 ClearStateSecondaryRow();
@@ -913,7 +913,7 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
-                ReplaceStateSecondaryRow(originalState.Select(x => $"+ {x}").ToArray());
+                ReplaceStateSecondaryRow(originalState.Select(x => $"+{x}").ToArray());
                 ReplaceState(previousState);
             });
             return new PageAction[] { updateDescription, showOriginalState, addStates };
