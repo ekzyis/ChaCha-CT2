@@ -20,6 +20,7 @@ namespace Cryptool.Plugins.ChaCha
         private static Button CreateNavigationButton()
         {
             Button b = new Button { Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0) };
+            b.SetBinding(Button.IsEnabledProperty, new Binding("NavigationEnabled"));
             return b;
         }
 
@@ -145,6 +146,7 @@ namespace Cryptool.Plugins.ChaCha
             // since each page has its own dedicated navigation bar, the button for the current page is always bold
             if (currentPageIndex == toPageIndex) b.FontWeight = FontWeights.Bold;
             b.Click += new RoutedEventHandler(MoveToPageClickWrapper(toPageIndex));
+            b.SetBinding(Button.IsEnabledProperty, new Binding("NavigationEnabled"));
             return b;
         }
 
@@ -628,21 +630,21 @@ namespace Cryptool.Plugins.ChaCha
         // For example, if there are two action frames, we start with currentActionIndex = 0 and increase it each click _after_ we have processed the index
         // to retrieve the actions we need to take. After two clicks, we are at currentActionIndex = 2 which is the first invalid index.
         public bool NextActionIsEnabled => CurrentPage.ActionFrames > 0 &&
-                                           CurrentActionIndex != CurrentPage.ActionFrames && ExecutionFinished;
+                                           CurrentActionIndex != CurrentPage.ActionFrames && NavigationEnabled;
 
-        public bool PrevActionIsEnabled => CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0;
+        public bool PrevActionIsEnabled => CurrentPage.ActionFrames > 0 && CurrentActionIndex != 0 && NavigationEnabled;
 
-        public bool NextRoundIsEnabled => CurrentRoundIndex != 20;
+        public bool NextRoundIsEnabled => CurrentRoundIndex != 20 && NavigationEnabled;
 
-        public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1;
+        public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1 && NavigationEnabled;
 
-        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded;
+        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded && NavigationEnabled;
 
-        public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1;
+        public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1 && NavigationEnabled;
 
-        public bool NextQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox != 4;
+        public bool NextQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox != 4 && NavigationEnabled;
 
-        public bool PrevQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox > 1;
+        public bool PrevQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox > 1 && NavigationEnabled;
 
 
         private int _currentRoundIndex = 0;
