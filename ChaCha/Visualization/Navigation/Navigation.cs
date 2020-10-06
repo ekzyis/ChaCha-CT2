@@ -409,6 +409,7 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Clear();
             AddPage(Page.LandingPage(this));
             CollapseAllPagesExpect(0);
+            InitPageNavigationBar(_pages[0]);
         }
 
         private void InitExecutableVisualization()
