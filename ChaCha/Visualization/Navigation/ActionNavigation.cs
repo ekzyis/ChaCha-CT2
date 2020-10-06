@@ -639,9 +639,14 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region StackPanel API
-        public void AddTextBox(StackPanel sp, string text)
+        public void AddTextBox(StackPanel sp, string text, Style style = null)
         {
-            sp.Children.Add(new TextBox() { Text = text });
+            TextBox tb = new TextBox() { Text = text };
+            if(style != null)
+            {
+                tb.Style = style;
+            }
+            sp.Children.Add(tb);
         }
 
         public void RemoveLast(StackPanel sp)
