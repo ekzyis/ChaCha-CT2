@@ -945,6 +945,7 @@ namespace Cryptool.Plugins.ChaCha
     {
         public static KeystreamBlockGenPage KeystreamBlockGenPage(ChaChaPresentation pres, ulong keyBlockNr)
         {
+            // using static function as factory to hide the name assigned to the KeystreamBlockGenPage ContentControl element in the XAML code
             return new KeystreamBlockGenPage(pres.UIKeystreamBlockGenPage, pres, keyBlockNr);
         }
     }
