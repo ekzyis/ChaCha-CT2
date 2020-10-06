@@ -276,7 +276,7 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.Add(pres.UIKeystreamBlockGen14, state14);
             pres.Nav.Add(pres.UIKeystreamBlockGen15, state15);
         }
-        private void ShowOriginalState()
+        private void ShowAddition()
         {
             string[] add = originalState.Select(x => $"+{x}").ToArray();
             for (int i = 0; i < add.Length; ++i)
@@ -284,6 +284,10 @@ namespace Cryptool.Plugins.ChaCha
                 TextBox tb = new TextBox() { Text = add[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
                 pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
             }
+        }
+        private void ClearAddition()
+        {
+            RemoveLastFromEachStateCellStackPanel();
         }
         private void ReplaceState(params string[] state)
         {
@@ -299,7 +303,20 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
             }
         }
-        private void ClearOriginalState()
+        private void ShowAdditionResult()
+        {
+            string[] result = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            for (int i = 0; i < result.Length; ++i)
+            {
+                TextBox tb = new TextBox() { Text = result[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
+                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+            }
+        }
+        private void ClearAdditionResult()
+        {
+            RemoveLastFromEachStateCellStackPanel();
+        }
+        private void RemoveLastFromEachStateCellStackPanel()
         {
             for (int i = 0; i < 16; ++i)
             {
@@ -840,19 +857,23 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction showOriginalState = new PageAction(() =>
             {
-                ShowOriginalState();
+                ShowAddition();
+                ShowAdditionResult();
             }, () =>
             {
-                ClearOriginalState();
+                ClearAddition();
+                ClearAdditionResult();
             });
             string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             PageAction addStates = new PageAction(() =>
             {
-                ClearOriginalState();
+                ClearAddition();
+                ClearAdditionResult();
                 ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
             }, () =>
             {
-                ShowOriginalState();
+                ShowAddition();
+                ShowAdditionResult();
                 ReplaceState(previousState);
             });
             return new PageAction[] { updateDescription, showOriginalState, addStates };
