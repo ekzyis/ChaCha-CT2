@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.WindowsRuntime;
+﻿using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows.Controls;
 using System.Windows.Navigation;
 using System.Xaml;
@@ -108,9 +109,12 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear(pres.UITransformLittleEndian6);
                 pres.Nav.Clear(pres.UITransformLittleEndian7);
             }
-            PageAction[] InputAction(Border copyFrom)
+            PageAction[] InputAction(Border copyFrom, string text = null)
             {
-                string text = ((TextBox)copyFrom.Child).Text;
+                if (text == null)
+                {
+                    text = ((TextBox)copyFrom.Child).Text;
+                }
                 PageAction[] copyActions = pres.Nav.CopyActions(new Border[] { copyFrom }, new Border[] { pres.UITransformInputCell }, new string[] { "" });
                 if (text.Length > 32)
                 {
@@ -131,8 +135,8 @@ namespace Cryptool.Plugins.ChaCha
             PageAction[] KeyInputAction()
             {
                 Border inputKeyCell = pres.UIInputKeyCell;
-                string text = ((TextBox)inputKeyCell.Child).Text;
-                PageAction[] copyActions = InputAction(inputKeyCell);
+                string text = pres.UIInputKey.Text;
+                PageAction[] copyActions = InputAction(inputKeyCell, text);
                 if(pres.InputKey.Length == 16)
                 {
                     copyActions[1].AddToExec(() =>

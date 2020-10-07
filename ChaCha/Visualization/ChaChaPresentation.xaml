@@ -480,14 +480,18 @@
               <ColumnDefinition Width="180"/>
               <ColumnDefinition Width="800"/>
             </Grid.ColumnDefinitions>
-            <TextBox Style="{ StaticResource text }" Grid.Row="0" FontWeight="Bold" Text="State parameters"/>
+            <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Zeige Diffusionsanzeige" Width="172" Name="ToggleShowDiffusion"/>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
             <Border HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="UIConstantsCell">
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
-              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+              <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+                <TextBox Visibility="Collapsed" Style="{StaticResource hexTextBox}" Margin="-120,10,0,0" FontSize="12" Text="0001000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100010001000100010001"/> 
+              </StackPanel>
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" Text="Initialization vector (IV):"/>
             <Border HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell">
