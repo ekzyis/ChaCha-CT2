@@ -18,6 +18,7 @@
     <Style x:Key="hex" TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Courier New" />
       <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="FontSize" Value="16" />
     </Style>
 
     <Style x:Key="hexLabel" TargetType="Label">
@@ -489,7 +490,8 @@
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
               <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+                <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+                <TextBlock Visibility="Collapsed" Style="{StaticResource hex}" Margin="2,3,0,0" Name="DiffusionKey"/>
                 <!-- Diffusion check boxes -->
                 <Grid Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Name="DiffusionGrid">
                   <!-- Diffusion grid will be initialized in code-behind -->

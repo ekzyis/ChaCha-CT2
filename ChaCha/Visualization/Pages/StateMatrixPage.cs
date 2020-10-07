@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,6 +17,8 @@ namespace Cryptool.Plugins.ChaCha
         }
         private int Bit(byte[] bytes, int bitIndex)
         {
+            Debug.Assert(0 <= bitIndex, $"bitindex ({bitIndex}) was lower than zero.");
+            Debug.Assert(bitIndex < 256, $"bitIndex ({bitIndex}) was higher than 255.");
             int byteIndex = bitIndex / 8;
             int bitIndexInByte = 7 - (bitIndex % 8);
             return Bit(bytes[byteIndex], bitIndexInByte);
@@ -1832,10 +1834,479 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
         #endregion
+
+        public int DKeyNibble(int nibbleIndex)
+        {
+            Debug.Assert(0 <= nibbleIndex, $"nibbleIndex ({nibbleIndex}) was lower than zero.");
+            Debug.Assert(nibbleIndex < 64, $"nibbleIndex ({nibbleIndex}) was higher than 63.");
+            // most significant bit
+            int msb = Bit(InputKey, nibbleIndex * 4);
+            int a = Bit(InputKey, (nibbleIndex * 4) + 1);
+            int b = Bit(InputKey, (nibbleIndex * 4) + 2);
+            // least significant bit
+            int lsb = Bit(InputKey, (nibbleIndex * 4) + 3);
+            return (msb << 3) + (a << 2) + (b << 1) + lsb;
+        }
+        public string DKeyNibbleHex(int nibbleIndex)
+        {
+            return DKeyNibble(nibbleIndex).ToString("X");
+        }
+        #region Diffusion Key Nibbles
+        public string DKeyNibbleHex0
+        {
+            get
+            {
+                return DKeyNibbleHex(0);
+            }
+        }
+        public string DKeyNibbleHex1
+        {
+            get
+            {
+                return DKeyNibbleHex(1);
+            }
+        }
+        public string DKeyNibbleHex2
+        {
+            get
+            {
+                return DKeyNibbleHex(2);
+            }
+        }
+        public string DKeyNibbleHex3
+        {
+            get
+            {
+                return DKeyNibbleHex(3);
+            }
+        }
+        public string DKeyNibbleHex4
+        {
+            get
+            {
+                return DKeyNibbleHex(4);
+            }
+        }
+        public string DKeyNibbleHex5
+        {
+            get
+            {
+                return DKeyNibbleHex(5);
+            }
+        }
+        public string DKeyNibbleHex6
+        {
+            get
+            {
+                return DKeyNibbleHex(6);
+            }
+        }
+        public string DKeyNibbleHex7
+        {
+            get
+            {
+                return DKeyNibbleHex(7);
+            }
+        }
+        public string DKeyNibbleHex8
+        {
+            get
+            {
+                return DKeyNibbleHex(8);
+            }
+        }
+        public string DKeyNibbleHex9
+        {
+            get
+            {
+                return DKeyNibbleHex(9);
+            }
+        }
+        public string DKeyNibbleHex10
+        {
+            get
+            {
+                return DKeyNibbleHex(10);
+            }
+        }
+        public string DKeyNibbleHex11
+        {
+            get
+            {
+                return DKeyNibbleHex(11);
+            }
+        }
+        public string DKeyNibbleHex12
+        {
+            get
+            {
+                return DKeyNibbleHex(12);
+            }
+        }
+        public string DKeyNibbleHex13
+        {
+            get
+            {
+                return DKeyNibbleHex(13);
+            }
+        }
+        public string DKeyNibbleHex14
+        {
+            get
+            {
+                return DKeyNibbleHex(14);
+            }
+        }
+        public string DKeyNibbleHex15
+        {
+            get
+            {
+                return DKeyNibbleHex(15);
+            }
+        }
+        public string DKeyNibbleHex16
+        {
+            get
+            {
+                return DKeyNibbleHex(16);
+            }
+        }
+        public string DKeyNibbleHex17
+        {
+            get
+            {
+                return DKeyNibbleHex(17);
+            }
+        }
+        public string DKeyNibbleHex18
+        {
+            get
+            {
+                return DKeyNibbleHex(18);
+            }
+        }
+        public string DKeyNibbleHex19
+        {
+            get
+            {
+                return DKeyNibbleHex(19);
+            }
+        }
+        public string DKeyNibbleHex20
+        {
+            get
+            {
+                return DKeyNibbleHex(20);
+            }
+        }
+        public string DKeyNibbleHex21
+        {
+            get
+            {
+                return DKeyNibbleHex(21);
+            }
+        }
+        public string DKeyNibbleHex22
+        {
+            get
+            {
+                return DKeyNibbleHex(22);
+            }
+        }
+        public string DKeyNibbleHex23
+        {
+            get
+            {
+                return DKeyNibbleHex(23);
+            }
+        }
+        public string DKeyNibbleHex24
+        {
+            get
+            {
+                return DKeyNibbleHex(24);
+            }
+        }
+        public string DKeyNibbleHex25
+        {
+            get
+            {
+                return DKeyNibbleHex(25);
+            }
+        }
+        public string DKeyNibbleHex26
+        {
+            get
+            {
+                return DKeyNibbleHex(26);
+            }
+        }
+        public string DKeyNibbleHex27
+        {
+            get
+            {
+                return DKeyNibbleHex(27);
+            }
+        }
+        public string DKeyNibbleHex28
+        {
+            get
+            {
+                return DKeyNibbleHex(28);
+            }
+        }
+        public string DKeyNibbleHex29
+        {
+            get
+            {
+                return DKeyNibbleHex(29);
+            }
+        }
+        public string DKeyNibbleHex30
+        {
+            get
+            {
+                return DKeyNibbleHex(30);
+            }
+        }
+        public string DKeyNibbleHex31
+        {
+            get
+            {
+                return DKeyNibbleHex(31);
+            }
+        }
+        public string DKeyNibbleHex32
+        {
+            get
+            {
+                return DKeyNibbleHex(32);
+            }
+        }
+        public string DKeyNibbleHex33
+        {
+            get
+            {
+                return DKeyNibbleHex(33);
+            }
+        }
+        public string DKeyNibbleHex34
+        {
+            get
+            {
+                return DKeyNibbleHex(34);
+            }
+        }
+        public string DKeyNibbleHex35
+        {
+            get
+            {
+                return DKeyNibbleHex(35);
+            }
+        }
+        public string DKeyNibbleHex36
+        {
+            get
+            {
+                return DKeyNibbleHex(36);
+            }
+        }
+        public string DKeyNibbleHex37
+        {
+            get
+            {
+                return DKeyNibbleHex(37);
+            }
+        }
+        public string DKeyNibbleHex38
+        {
+            get
+            {
+                return DKeyNibbleHex(38);
+            }
+        }
+        public string DKeyNibbleHex39
+        {
+            get
+            {
+                return DKeyNibbleHex(39);
+            }
+        }
+        public string DKeyNibbleHex40
+        {
+            get
+            {
+                return DKeyNibbleHex(40);
+            }
+        }
+        public string DKeyNibbleHex41
+        {
+            get
+            {
+                return DKeyNibbleHex(41);
+            }
+        }
+        public string DKeyNibbleHex42
+        {
+            get
+            {
+                return DKeyNibbleHex(42);
+            }
+        }
+        public string DKeyNibbleHex43
+        {
+            get
+            {
+                return DKeyNibbleHex(43);
+            }
+        }
+        public string DKeyNibbleHex44
+        {
+            get
+            {
+                return DKeyNibbleHex(44);
+            }
+        }
+        public string DKeyNibbleHex45
+        {
+            get
+            {
+                return DKeyNibbleHex(45);
+            }
+        }
+        public string DKeyNibbleHex46
+        {
+            get
+            {
+                return DKeyNibbleHex(46);
+            }
+        }
+        public string DKeyNibbleHex47
+        {
+            get
+            {
+                return DKeyNibbleHex(47);
+            }
+        }
+        public string DKeyNibbleHex48
+        {
+            get
+            {
+                return DKeyNibbleHex(48);
+            }
+        }
+        public string DKeyNibbleHex49
+        {
+            get
+            {
+                return DKeyNibbleHex(49);
+            }
+        }
+        public string DKeyNibbleHex50
+        {
+            get
+            {
+                return DKeyNibbleHex(50);
+            }
+        }
+        public string DKeyNibbleHex51
+        {
+            get
+            {
+                return DKeyNibbleHex(51);
+            }
+        }
+        public string DKeyNibbleHex52
+        {
+            get
+            {
+                return DKeyNibbleHex(52);
+            }
+        }
+        public string DKeyNibbleHex53
+        {
+            get
+            {
+                return DKeyNibbleHex(53);
+            }
+        }
+        public string DKeyNibbleHex54
+        {
+            get
+            {
+                return DKeyNibbleHex(54);
+            }
+        }
+        public string DKeyNibbleHex55
+        {
+            get
+            {
+                return DKeyNibbleHex(55);
+            }
+        }
+        public string DKeyNibbleHex56
+        {
+            get
+            {
+                return DKeyNibbleHex(56);
+            }
+        }
+        public string DKeyNibbleHex57
+        {
+            get
+            {
+                return DKeyNibbleHex(57);
+            }
+        }
+        public string DKeyNibbleHex58
+        {
+            get
+            {
+                return DKeyNibbleHex(58);
+            }
+        }
+        public string DKeyNibbleHex59
+        {
+            get
+            {
+                return DKeyNibbleHex(59);
+            }
+        }
+        public string DKeyNibbleHex60
+        {
+            get
+            {
+                return DKeyNibbleHex(60);
+            }
+        }
+        public string DKeyNibbleHex61
+        {
+            get
+            {
+                return DKeyNibbleHex(61);
+            }
+        }
+        public string DKeyNibbleHex62
+        {
+            get
+            {
+                return DKeyNibbleHex(62);
+            }
+        }
+        public string DKeyNibbleHex63
+        {
+            get
+            {
+                return DKeyNibbleHex(63);
+            }
+        }
+
+        #endregion
     }
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
+        private TextBlock diffusionKey;
         private Button toggleShowDiffusion;
         private Grid diffusionGrid;
 
@@ -1885,17 +2356,35 @@ namespace Cryptool.Plugins.ChaCha
         {
             toggleShowDiffusion = pres.ToggleShowDiffusion;
             diffusionGrid = pres.DiffusionGrid;
+            diffusionKey = pres.DiffusionKey;
             InitToggleDiffusionButton();
+            InitDiffusionKey();
             InitDiffusionGridLayout();
             InitDiffusionFlipBitButtons();
         }
         private void ToggleDiffusion(object sender, RoutedEventArgs e)
         {
-            diffusionGrid.Visibility = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            Visibility set = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            diffusionGrid.Visibility = set;
+            diffusionKey.Visibility = set;
         }
         private void InitToggleDiffusionButton()
         {
             toggleShowDiffusion.Click += ToggleDiffusion;
+        }
+        private TextBlock CreateDiffusionKeyNibbleTextBox(int nibbleIndex)
+        {
+            TextBlock tb = new TextBlock();
+            tb.SetBinding(TextBlock.TextProperty, new Binding($"DKeyNibbleHex{nibbleIndex}"));
+            return tb;
+        }
+        private void InitDiffusionKey()
+        {
+            for (int i = 0; i < (keyIs32Byte ? 32 : 16) * 2; ++i)
+            {
+                TextBlock nibbleBox = CreateDiffusionKeyNibbleTextBox(i);
+                diffusionKey.Inlines.Add(nibbleBox);
+            }
         }
         private void InitDiffusionGridLayout()
         {

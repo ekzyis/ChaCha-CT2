@@ -86,6 +86,10 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     OnPropertyChanged($"KeyBit{i}");
                 }
+                for(int i = 0; i < 64; ++i)
+                {
+                    OnPropertyChanged($"DKeyNibble{i}");
+                }
             }
         }
         public string HexInputKey
