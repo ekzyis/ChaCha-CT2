@@ -18,7 +18,7 @@ namespace Cryptool.Plugins.ChaCha
         private int Bit(byte[] bytes, int bitIndex)
         {
             int byteIndex = bitIndex / 8;
-            int bitIndexInByte = bitIndex % 8;
+            int bitIndexInByte = 7 - (bitIndex % 8);
             return Bit(bytes[byteIndex], bitIndexInByte);
         }
         #region KeyBits
