@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Navigation;
 using System.Xaml;
 
@@ -9,9 +11,11 @@ namespace Cryptool.Plugins.ChaCha
 {
     class StateMatrixPage : Page
     {
-        ChaChaPresentation pres;
+        private ChaChaPresentation pres;
+        private Button toggleShowDiffusion;
+        private Grid diffusionGrid;
 
-        List<string> descriptions = new List<string>();
+        private List<string> descriptions = new List<string>();
         private bool versionIsDJB;
         private bool keyIs32Byte;
         public StateMatrixPage(ContentControl pageElement, ChaChaPresentation pres_) : base(pageElement)
@@ -50,8 +54,63 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformLittleEndianIV();
             });
             AddAction(nextPageDesc);
+            InitDiffusion();
         }
 
+        private void InitDiffusion()
+        {
+            toggleShowDiffusion = pres.ToggleShowDiffusion;
+            diffusionGrid = pres.DiffusionGrid;
+            InitToggleDiffusionButton();
+            InitDiffusionGridLayout();
+            InitDiffusionFlipBitButtons();
+        }
+        private void ToggleDiffusion(object sender, RoutedEventArgs e)
+        {
+            diffusionGrid.Visibility = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+        private void InitToggleDiffusionButton()
+        {
+            toggleShowDiffusion.Click += ToggleDiffusion;
+        }
+        private void InitDiffusionGridLayout()
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                diffusionGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            diffusionGrid.RowDefinitions.Add(new RowDefinition());
+            if (keyIs32Byte)
+            {
+                diffusionGrid.RowDefinitions.Add(new RowDefinition());
+            }
+        }
+        private Button CreateDiffusionButton(int bitIndex)
+        {
+            Button b = new Button();
+            b.SetBinding(Button.ContentProperty, new Binding($"KeyBit{bitIndex}"));
+            return b;
+        }
+        private void InitDiffusionFlipBitButtons()
+        {
+            for (int i = 0; i < 128; ++i)
+            {
+                Button b = CreateDiffusionButton(i);
+                Grid.SetRow(b, 0);
+                Grid.SetColumn(b, i);
+                diffusionGrid.Children.Add(b);
+            }
+            if (keyIs32Byte)
+            {
+                for (int i = 128; i < 256; ++i)
+                {
+                    Button b = CreateDiffusionButton(i);
+                    Grid.SetRow(b, 1);
+                    Grid.SetColumn(b, i - 128);
+                    diffusionGrid.Children.Add(b);
+                }
+            }
+        }
         private void AddBoldToDescription(string descToAdd)
         {
             pres.Nav.AddBold(pres.UIStateMatrixStepDescription, descToAdd);
