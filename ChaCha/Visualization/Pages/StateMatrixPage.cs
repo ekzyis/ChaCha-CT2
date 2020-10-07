@@ -240,9 +240,13 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
-                ReplaceTransformInput(pres.HexInputIV);
-                ReplaceTransformChunkIV();
-                ReplaceTransformLittleEndianIV();
+                ReplaceTransformInput(pres.HexInputKey);
+                ReplaceTransformChunk(
+                   pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
+                   pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
+                ReplaceTransformLittleEndian(
+                    pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
+                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
             });
             PageAction counterInputAction = new PageAction(() =>
             {
@@ -251,7 +255,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearTransformInput();
             });
-            PageAction counterChunksAction = new PageAction(() =>
+            void ReplaceTransformChunkCounter()
             {
                 if (versionIsDJB)
                 {
@@ -261,11 +265,15 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     ReplaceTransformChunk(pres.InitialCounterChunks[0]);
                 }
+            }
+            PageAction counterChunksAction = new PageAction(() =>
+            {
+                ReplaceTransformChunkCounter();
             }, () =>
             {
                 ClearTransformChunk();
             });
-            PageAction counterLittleEndianAction = new PageAction(() =>
+            void ReplaceTransformLittleEndianCounter()
             {
                 if (versionIsDJB)
                 {
@@ -275,6 +283,10 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
                 }
+            }
+            PageAction counterLittleEndianAction = new PageAction(() =>
+            {
+                ReplaceTransformLittleEndianCounter();
             }, () =>
             {
                 ClearTransformLittleEndian();
@@ -307,11 +319,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
-                ReplaceTransformInput(pres.HexInputKey);
-                ReplaceTransformChunk(pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
-                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
-                ReplaceTransformLittleEndian(pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
-                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+                ReplaceTransformInput(pres.HexInitialCounter);
+                ReplaceTransformChunkCounter();
+                ReplaceTransformLittleEndianCounter();
             });
             PageAction[] ivInputAction = InputAction(pres.UIInputIVCell);
             void ReplaceTransformChunkIV()
@@ -378,23 +388,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
-                ReplaceTransformInput(pres.HexInitialCounter);
-                if (versionIsDJB)
-                {
-                    ReplaceTransformChunk(pres.InitialCounterChunks[0], pres.InitialCounterChunks[1]);
-                }
-                else
-                {
-                    ReplaceTransformChunk(pres.InitialCounterChunks[0]);
-                }
-                if (versionIsDJB)
-                {
-                    ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0], pres.InitialCounterLittleEndian[1]);
-                }
-                else
-                {
-                    ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
-                }
+                ReplaceTransformInput(pres.HexInputIV);
+                ReplaceTransformChunkIV();
+                ReplaceTransformLittleEndianIV();
             });
             page.AddAction(nextPageDesc);
 
