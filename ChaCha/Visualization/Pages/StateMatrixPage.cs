@@ -4,8 +4,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Navigation;
-using System.Xaml;
+using System.Windows.Media;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -2376,6 +2375,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             TextBlock tb = new TextBlock();
             tb.SetBinding(TextBlock.TextProperty, new Binding($"DKeyNibbleHex{nibbleIndex}"));
+            Trigger markNibble = new Trigger()
+            {
+                Property = TextBlock.IsMouseOverProperty,
+                Value = true
+            };
+            Setter setter = new Setter() { Property = TextBlock.ForegroundProperty, Value = Brushes.Red };
+            markNibble.Setters.Add(setter);
+            Style s = new Style();
+            s.Triggers.Add(markNibble);
+            tb.Style = s;
             return tb;
         }
         private void InitDiffusionKey()
