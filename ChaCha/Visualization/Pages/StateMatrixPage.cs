@@ -13,7 +13,7 @@ namespace Cryptool.Plugins.ChaCha
     {
         private int Bit(byte b, int bitIndex)
         {
-            return b & (1 << bitIndex);
+            return (b & (1 << bitIndex)) != 0 ? 1 : 0;
         }
         private int Bit(byte[] bytes, int bitIndex)
         {
