@@ -1896,40 +1896,33 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void InitDiffusionGridLayout()
         {
-            for (int i = 0; i < 128; ++i)
+            for (int i = 0; i < 64; ++i)
             {
                 diffusionGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
             diffusionGrid.RowDefinitions.Add(new RowDefinition());
+            diffusionGrid.RowDefinitions.Add(new RowDefinition());
             if (keyIs32Byte)
             {
+                diffusionGrid.RowDefinitions.Add(new RowDefinition());
                 diffusionGrid.RowDefinitions.Add(new RowDefinition());
             }
         }
         private Button CreateDiffusionButton(int bitIndex)
         {
-            Button b = new Button();
+            Button b = new Button() { Height = 16, FontSize = 10 };
             b.SetBinding(Button.ContentProperty, new Binding($"KeyBit{bitIndex}"));
+            b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
             return b;
         }
         private void InitDiffusionFlipBitButtons()
         {
-            for (int i = 0; i < 128; ++i)
+            for (int i = 0; i < (keyIs32Byte ? 256 : 128); ++i)
             {
                 Button b = CreateDiffusionButton(i);
-                Grid.SetRow(b, 0);
-                Grid.SetColumn(b, i);
+                Grid.SetRow(b, i / 64);
+                Grid.SetColumn(b, i % 64);
                 diffusionGrid.Children.Add(b);
-            }
-            if (keyIs32Byte)
-            {
-                for (int i = 128; i < 256; ++i)
-                {
-                    Button b = CreateDiffusionButton(i);
-                    Grid.SetRow(b, 1);
-                    Grid.SetColumn(b, i - 128);
-                    diffusionGrid.Children.Add(b);
-                }
             }
         }
         private void AddBoldToDescription(string descToAdd)

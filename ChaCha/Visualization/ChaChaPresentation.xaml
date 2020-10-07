@@ -473,12 +473,12 @@
             <Grid.RowDefinitions>
               <RowDefinition Height="20"/>
               <RowDefinition Height="1.6*"/>
-              <RowDefinition Height="1.6*"/>
+              <RowDefinition Height="4*"/>
               <RowDefinition Height="1.6*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="180"/>
-              <ColumnDefinition Width="800"/>
+              <ColumnDefinition Width="1*"/>
+              <ColumnDefinition Width="850"/>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
             <Button Grid.Row="0" Grid.Column="1" Content="Zeige Diffusionsanzeige" Width="172" Name="ToggleShowDiffusion"/>
@@ -496,7 +496,7 @@
                 </Grid>
               </StackPanel>
             </Border>
-            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" Text="Initialization vector (IV):"/>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):"/>
             <Border HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell">
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
             </Border>
