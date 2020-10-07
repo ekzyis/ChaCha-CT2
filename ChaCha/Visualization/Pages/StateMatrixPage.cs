@@ -24,6 +24,9 @@ namespace Cryptool.Plugins.ChaCha
         #region KeyBits
         // KeyBits for binding to the diffusion buttons.
         // Generated with following python script.
+        // The zero-th bit is the most significant bit since it belongs to the byte the most to the left in the visualization.
+        // I have chosen it this way since the byte array is in the same order as seen in the visualization.
+        // (The first byte of InputKey is the first byte seen in the visualization thus the most significant byte.)
         /*
         ```python
         for i in range(256):print("public int KeyBit{}".format(i))
@@ -1910,6 +1913,8 @@ namespace Cryptool.Plugins.ChaCha
         }
         private Button CreateDiffusionButton(int bitIndex)
         {
+            // Bit indices start at 0 on the most significant bit which is in the string representation in big endian notation.
+            // This means we start counting from zero at the left but the zero-th bit is - maybe a bit unintuitively - the most significant bit.
             Button b = new Button() { Height = 16, FontSize = 10 };
             b.SetBinding(Button.ContentProperty, new Binding($"KeyBit{bitIndex}"));
             b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
