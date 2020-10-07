@@ -82,6 +82,10 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("HexInputKey");
                 OnPropertyChanged("KeyChunks");
                 OnPropertyChanged("KeyLittleEndian");
+                for (int i = 0; i < 256; ++i)
+                {
+                    OnPropertyChanged($"KeyBit{i}");
+                }
             }
         }
         public string HexInputKey

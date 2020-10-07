@@ -9,6 +9,1827 @@ using System.Xaml;
 
 namespace Cryptool.Plugins.ChaCha
 {
+    partial class ChaChaPresentation
+    {
+        private int Bit(byte b, int bitIndex)
+        {
+            return b & (1 << bitIndex);
+        }
+        private int Bit(byte[] bytes, int bitIndex)
+        {
+            int byteIndex = bitIndex / 8;
+            int bitIndexInByte = bitIndex % 8;
+            return Bit(bytes[byteIndex], bitIndexInByte);
+        }
+        #region KeyBits
+        // KeyBits for binding to the diffusion buttons.
+        // Generated with following python script.
+        /*
+        ```python
+        for i in range(256):print("public int KeyBit{}".format(i))
+        print("{")
+        print("    get")
+        print("    {")
+        print("        return Bit(InputKey, {});".format(i))
+        print("    }")
+        print("}")
+        ```
+        */
+        // Can this already be considered meta-programming?
+        public int KeyBit0
+        {
+            get
+            {
+                return Bit(InputKey, 0);
+            }
+        }
+        public int KeyBit1
+        {
+            get
+            {
+                return Bit(InputKey, 1);
+            }
+        }
+        public int KeyBit2
+        {
+            get
+            {
+                return Bit(InputKey, 2);
+            }
+        }
+        public int KeyBit3
+        {
+            get
+            {
+                return Bit(InputKey, 3);
+            }
+        }
+        public int KeyBit4
+        {
+            get
+            {
+                return Bit(InputKey, 4);
+            }
+        }
+        public int KeyBit5
+        {
+            get
+            {
+                return Bit(InputKey, 5);
+            }
+        }
+        public int KeyBit6
+        {
+            get
+            {
+                return Bit(InputKey, 6);
+            }
+        }
+        public int KeyBit7
+        {
+            get
+            {
+                return Bit(InputKey, 7);
+            }
+        }
+        public int KeyBit8
+        {
+            get
+            {
+                return Bit(InputKey, 8);
+            }
+        }
+        public int KeyBit9
+        {
+            get
+            {
+                return Bit(InputKey, 9);
+            }
+        }
+        public int KeyBit10
+        {
+            get
+            {
+                return Bit(InputKey, 10);
+            }
+        }
+        public int KeyBit11
+        {
+            get
+            {
+                return Bit(InputKey, 11);
+            }
+        }
+        public int KeyBit12
+        {
+            get
+            {
+                return Bit(InputKey, 12);
+            }
+        }
+        public int KeyBit13
+        {
+            get
+            {
+                return Bit(InputKey, 13);
+            }
+        }
+        public int KeyBit14
+        {
+            get
+            {
+                return Bit(InputKey, 14);
+            }
+        }
+        public int KeyBit15
+        {
+            get
+            {
+                return Bit(InputKey, 15);
+            }
+        }
+        public int KeyBit16
+        {
+            get
+            {
+                return Bit(InputKey, 16);
+            }
+        }
+        public int KeyBit17
+        {
+            get
+            {
+                return Bit(InputKey, 17);
+            }
+        }
+        public int KeyBit18
+        {
+            get
+            {
+                return Bit(InputKey, 18);
+            }
+        }
+        public int KeyBit19
+        {
+            get
+            {
+                return Bit(InputKey, 19);
+            }
+        }
+        public int KeyBit20
+        {
+            get
+            {
+                return Bit(InputKey, 20);
+            }
+        }
+        public int KeyBit21
+        {
+            get
+            {
+                return Bit(InputKey, 21);
+            }
+        }
+        public int KeyBit22
+        {
+            get
+            {
+                return Bit(InputKey, 22);
+            }
+        }
+        public int KeyBit23
+        {
+            get
+            {
+                return Bit(InputKey, 23);
+            }
+        }
+        public int KeyBit24
+        {
+            get
+            {
+                return Bit(InputKey, 24);
+            }
+        }
+        public int KeyBit25
+        {
+            get
+            {
+                return Bit(InputKey, 25);
+            }
+        }
+        public int KeyBit26
+        {
+            get
+            {
+                return Bit(InputKey, 26);
+            }
+        }
+        public int KeyBit27
+        {
+            get
+            {
+                return Bit(InputKey, 27);
+            }
+        }
+        public int KeyBit28
+        {
+            get
+            {
+                return Bit(InputKey, 28);
+            }
+        }
+        public int KeyBit29
+        {
+            get
+            {
+                return Bit(InputKey, 29);
+            }
+        }
+        public int KeyBit30
+        {
+            get
+            {
+                return Bit(InputKey, 30);
+            }
+        }
+        public int KeyBit31
+        {
+            get
+            {
+                return Bit(InputKey, 31);
+            }
+        }
+        public int KeyBit32
+        {
+            get
+            {
+                return Bit(InputKey, 32);
+            }
+        }
+        public int KeyBit33
+        {
+            get
+            {
+                return Bit(InputKey, 33);
+            }
+        }
+        public int KeyBit34
+        {
+            get
+            {
+                return Bit(InputKey, 34);
+            }
+        }
+        public int KeyBit35
+        {
+            get
+            {
+                return Bit(InputKey, 35);
+            }
+        }
+        public int KeyBit36
+        {
+            get
+            {
+                return Bit(InputKey, 36);
+            }
+        }
+        public int KeyBit37
+        {
+            get
+            {
+                return Bit(InputKey, 37);
+            }
+        }
+        public int KeyBit38
+        {
+            get
+            {
+                return Bit(InputKey, 38);
+            }
+        }
+        public int KeyBit39
+        {
+            get
+            {
+                return Bit(InputKey, 39);
+            }
+        }
+        public int KeyBit40
+        {
+            get
+            {
+                return Bit(InputKey, 40);
+            }
+        }
+        public int KeyBit41
+        {
+            get
+            {
+                return Bit(InputKey, 41);
+            }
+        }
+        public int KeyBit42
+        {
+            get
+            {
+                return Bit(InputKey, 42);
+            }
+        }
+        public int KeyBit43
+        {
+            get
+            {
+                return Bit(InputKey, 43);
+            }
+        }
+        public int KeyBit44
+        {
+            get
+            {
+                return Bit(InputKey, 44);
+            }
+        }
+        public int KeyBit45
+        {
+            get
+            {
+                return Bit(InputKey, 45);
+            }
+        }
+        public int KeyBit46
+        {
+            get
+            {
+                return Bit(InputKey, 46);
+            }
+        }
+        public int KeyBit47
+        {
+            get
+            {
+                return Bit(InputKey, 47);
+            }
+        }
+        public int KeyBit48
+        {
+            get
+            {
+                return Bit(InputKey, 48);
+            }
+        }
+        public int KeyBit49
+        {
+            get
+            {
+                return Bit(InputKey, 49);
+            }
+        }
+        public int KeyBit50
+        {
+            get
+            {
+                return Bit(InputKey, 50);
+            }
+        }
+        public int KeyBit51
+        {
+            get
+            {
+                return Bit(InputKey, 51);
+            }
+        }
+        public int KeyBit52
+        {
+            get
+            {
+                return Bit(InputKey, 52);
+            }
+        }
+        public int KeyBit53
+        {
+            get
+            {
+                return Bit(InputKey, 53);
+            }
+        }
+        public int KeyBit54
+        {
+            get
+            {
+                return Bit(InputKey, 54);
+            }
+        }
+        public int KeyBit55
+        {
+            get
+            {
+                return Bit(InputKey, 55);
+            }
+        }
+        public int KeyBit56
+        {
+            get
+            {
+                return Bit(InputKey, 56);
+            }
+        }
+        public int KeyBit57
+        {
+            get
+            {
+                return Bit(InputKey, 57);
+            }
+        }
+        public int KeyBit58
+        {
+            get
+            {
+                return Bit(InputKey, 58);
+            }
+        }
+        public int KeyBit59
+        {
+            get
+            {
+                return Bit(InputKey, 59);
+            }
+        }
+        public int KeyBit60
+        {
+            get
+            {
+                return Bit(InputKey, 60);
+            }
+        }
+        public int KeyBit61
+        {
+            get
+            {
+                return Bit(InputKey, 61);
+            }
+        }
+        public int KeyBit62
+        {
+            get
+            {
+                return Bit(InputKey, 62);
+            }
+        }
+        public int KeyBit63
+        {
+            get
+            {
+                return Bit(InputKey, 63);
+            }
+        }
+        public int KeyBit64
+        {
+            get
+            {
+                return Bit(InputKey, 64);
+            }
+        }
+        public int KeyBit65
+        {
+            get
+            {
+                return Bit(InputKey, 65);
+            }
+        }
+        public int KeyBit66
+        {
+            get
+            {
+                return Bit(InputKey, 66);
+            }
+        }
+        public int KeyBit67
+        {
+            get
+            {
+                return Bit(InputKey, 67);
+            }
+        }
+        public int KeyBit68
+        {
+            get
+            {
+                return Bit(InputKey, 68);
+            }
+        }
+        public int KeyBit69
+        {
+            get
+            {
+                return Bit(InputKey, 69);
+            }
+        }
+        public int KeyBit70
+        {
+            get
+            {
+                return Bit(InputKey, 70);
+            }
+        }
+        public int KeyBit71
+        {
+            get
+            {
+                return Bit(InputKey, 71);
+            }
+        }
+        public int KeyBit72
+        {
+            get
+            {
+                return Bit(InputKey, 72);
+            }
+        }
+        public int KeyBit73
+        {
+            get
+            {
+                return Bit(InputKey, 73);
+            }
+        }
+        public int KeyBit74
+        {
+            get
+            {
+                return Bit(InputKey, 74);
+            }
+        }
+        public int KeyBit75
+        {
+            get
+            {
+                return Bit(InputKey, 75);
+            }
+        }
+        public int KeyBit76
+        {
+            get
+            {
+                return Bit(InputKey, 76);
+            }
+        }
+        public int KeyBit77
+        {
+            get
+            {
+                return Bit(InputKey, 77);
+            }
+        }
+        public int KeyBit78
+        {
+            get
+            {
+                return Bit(InputKey, 78);
+            }
+        }
+        public int KeyBit79
+        {
+            get
+            {
+                return Bit(InputKey, 79);
+            }
+        }
+        public int KeyBit80
+        {
+            get
+            {
+                return Bit(InputKey, 80);
+            }
+        }
+        public int KeyBit81
+        {
+            get
+            {
+                return Bit(InputKey, 81);
+            }
+        }
+        public int KeyBit82
+        {
+            get
+            {
+                return Bit(InputKey, 82);
+            }
+        }
+        public int KeyBit83
+        {
+            get
+            {
+                return Bit(InputKey, 83);
+            }
+        }
+        public int KeyBit84
+        {
+            get
+            {
+                return Bit(InputKey, 84);
+            }
+        }
+        public int KeyBit85
+        {
+            get
+            {
+                return Bit(InputKey, 85);
+            }
+        }
+        public int KeyBit86
+        {
+            get
+            {
+                return Bit(InputKey, 86);
+            }
+        }
+        public int KeyBit87
+        {
+            get
+            {
+                return Bit(InputKey, 87);
+            }
+        }
+        public int KeyBit88
+        {
+            get
+            {
+                return Bit(InputKey, 88);
+            }
+        }
+        public int KeyBit89
+        {
+            get
+            {
+                return Bit(InputKey, 89);
+            }
+        }
+        public int KeyBit90
+        {
+            get
+            {
+                return Bit(InputKey, 90);
+            }
+        }
+        public int KeyBit91
+        {
+            get
+            {
+                return Bit(InputKey, 91);
+            }
+        }
+        public int KeyBit92
+        {
+            get
+            {
+                return Bit(InputKey, 92);
+            }
+        }
+        public int KeyBit93
+        {
+            get
+            {
+                return Bit(InputKey, 93);
+            }
+        }
+        public int KeyBit94
+        {
+            get
+            {
+                return Bit(InputKey, 94);
+            }
+        }
+        public int KeyBit95
+        {
+            get
+            {
+                return Bit(InputKey, 95);
+            }
+        }
+        public int KeyBit96
+        {
+            get
+            {
+                return Bit(InputKey, 96);
+            }
+        }
+        public int KeyBit97
+        {
+            get
+            {
+                return Bit(InputKey, 97);
+            }
+        }
+        public int KeyBit98
+        {
+            get
+            {
+                return Bit(InputKey, 98);
+            }
+        }
+        public int KeyBit99
+        {
+            get
+            {
+                return Bit(InputKey, 99);
+            }
+        }
+        public int KeyBit100
+        {
+            get
+            {
+                return Bit(InputKey, 100);
+            }
+        }
+        public int KeyBit101
+        {
+            get
+            {
+                return Bit(InputKey, 101);
+            }
+        }
+        public int KeyBit102
+        {
+            get
+            {
+                return Bit(InputKey, 102);
+            }
+        }
+        public int KeyBit103
+        {
+            get
+            {
+                return Bit(InputKey, 103);
+            }
+        }
+        public int KeyBit104
+        {
+            get
+            {
+                return Bit(InputKey, 104);
+            }
+        }
+        public int KeyBit105
+        {
+            get
+            {
+                return Bit(InputKey, 105);
+            }
+        }
+        public int KeyBit106
+        {
+            get
+            {
+                return Bit(InputKey, 106);
+            }
+        }
+        public int KeyBit107
+        {
+            get
+            {
+                return Bit(InputKey, 107);
+            }
+        }
+        public int KeyBit108
+        {
+            get
+            {
+                return Bit(InputKey, 108);
+            }
+        }
+        public int KeyBit109
+        {
+            get
+            {
+                return Bit(InputKey, 109);
+            }
+        }
+        public int KeyBit110
+        {
+            get
+            {
+                return Bit(InputKey, 110);
+            }
+        }
+        public int KeyBit111
+        {
+            get
+            {
+                return Bit(InputKey, 111);
+            }
+        }
+        public int KeyBit112
+        {
+            get
+            {
+                return Bit(InputKey, 112);
+            }
+        }
+        public int KeyBit113
+        {
+            get
+            {
+                return Bit(InputKey, 113);
+            }
+        }
+        public int KeyBit114
+        {
+            get
+            {
+                return Bit(InputKey, 114);
+            }
+        }
+        public int KeyBit115
+        {
+            get
+            {
+                return Bit(InputKey, 115);
+            }
+        }
+        public int KeyBit116
+        {
+            get
+            {
+                return Bit(InputKey, 116);
+            }
+        }
+        public int KeyBit117
+        {
+            get
+            {
+                return Bit(InputKey, 117);
+            }
+        }
+        public int KeyBit118
+        {
+            get
+            {
+                return Bit(InputKey, 118);
+            }
+        }
+        public int KeyBit119
+        {
+            get
+            {
+                return Bit(InputKey, 119);
+            }
+        }
+        public int KeyBit120
+        {
+            get
+            {
+                return Bit(InputKey, 120);
+            }
+        }
+        public int KeyBit121
+        {
+            get
+            {
+                return Bit(InputKey, 121);
+            }
+        }
+        public int KeyBit122
+        {
+            get
+            {
+                return Bit(InputKey, 122);
+            }
+        }
+        public int KeyBit123
+        {
+            get
+            {
+                return Bit(InputKey, 123);
+            }
+        }
+        public int KeyBit124
+        {
+            get
+            {
+                return Bit(InputKey, 124);
+            }
+        }
+        public int KeyBit125
+        {
+            get
+            {
+                return Bit(InputKey, 125);
+            }
+        }
+        public int KeyBit126
+        {
+            get
+            {
+                return Bit(InputKey, 126);
+            }
+        }
+        public int KeyBit127
+        {
+            get
+            {
+                return Bit(InputKey, 127);
+            }
+        }
+        public int KeyBit128
+        {
+            get
+            {
+                return Bit(InputKey, 128);
+            }
+        }
+        public int KeyBit129
+        {
+            get
+            {
+                return Bit(InputKey, 129);
+            }
+        }
+        public int KeyBit130
+        {
+            get
+            {
+                return Bit(InputKey, 130);
+            }
+        }
+        public int KeyBit131
+        {
+            get
+            {
+                return Bit(InputKey, 131);
+            }
+        }
+        public int KeyBit132
+        {
+            get
+            {
+                return Bit(InputKey, 132);
+            }
+        }
+        public int KeyBit133
+        {
+            get
+            {
+                return Bit(InputKey, 133);
+            }
+        }
+        public int KeyBit134
+        {
+            get
+            {
+                return Bit(InputKey, 134);
+            }
+        }
+        public int KeyBit135
+        {
+            get
+            {
+                return Bit(InputKey, 135);
+            }
+        }
+        public int KeyBit136
+        {
+            get
+            {
+                return Bit(InputKey, 136);
+            }
+        }
+        public int KeyBit137
+        {
+            get
+            {
+                return Bit(InputKey, 137);
+            }
+        }
+        public int KeyBit138
+        {
+            get
+            {
+                return Bit(InputKey, 138);
+            }
+        }
+        public int KeyBit139
+        {
+            get
+            {
+                return Bit(InputKey, 139);
+            }
+        }
+        public int KeyBit140
+        {
+            get
+            {
+                return Bit(InputKey, 140);
+            }
+        }
+        public int KeyBit141
+        {
+            get
+            {
+                return Bit(InputKey, 141);
+            }
+        }
+        public int KeyBit142
+        {
+            get
+            {
+                return Bit(InputKey, 142);
+            }
+        }
+        public int KeyBit143
+        {
+            get
+            {
+                return Bit(InputKey, 143);
+            }
+        }
+        public int KeyBit144
+        {
+            get
+            {
+                return Bit(InputKey, 144);
+            }
+        }
+        public int KeyBit145
+        {
+            get
+            {
+                return Bit(InputKey, 145);
+            }
+        }
+        public int KeyBit146
+        {
+            get
+            {
+                return Bit(InputKey, 146);
+            }
+        }
+        public int KeyBit147
+        {
+            get
+            {
+                return Bit(InputKey, 147);
+            }
+        }
+        public int KeyBit148
+        {
+            get
+            {
+                return Bit(InputKey, 148);
+            }
+        }
+        public int KeyBit149
+        {
+            get
+            {
+                return Bit(InputKey, 149);
+            }
+        }
+        public int KeyBit150
+        {
+            get
+            {
+                return Bit(InputKey, 150);
+            }
+        }
+        public int KeyBit151
+        {
+            get
+            {
+                return Bit(InputKey, 151);
+            }
+        }
+        public int KeyBit152
+        {
+            get
+            {
+                return Bit(InputKey, 152);
+            }
+        }
+        public int KeyBit153
+        {
+            get
+            {
+                return Bit(InputKey, 153);
+            }
+        }
+        public int KeyBit154
+        {
+            get
+            {
+                return Bit(InputKey, 154);
+            }
+        }
+        public int KeyBit155
+        {
+            get
+            {
+                return Bit(InputKey, 155);
+            }
+        }
+        public int KeyBit156
+        {
+            get
+            {
+                return Bit(InputKey, 156);
+            }
+        }
+        public int KeyBit157
+        {
+            get
+            {
+                return Bit(InputKey, 157);
+            }
+        }
+        public int KeyBit158
+        {
+            get
+            {
+                return Bit(InputKey, 158);
+            }
+        }
+        public int KeyBit159
+        {
+            get
+            {
+                return Bit(InputKey, 159);
+            }
+        }
+        public int KeyBit160
+        {
+            get
+            {
+                return Bit(InputKey, 160);
+            }
+        }
+        public int KeyBit161
+        {
+            get
+            {
+                return Bit(InputKey, 161);
+            }
+        }
+        public int KeyBit162
+        {
+            get
+            {
+                return Bit(InputKey, 162);
+            }
+        }
+        public int KeyBit163
+        {
+            get
+            {
+                return Bit(InputKey, 163);
+            }
+        }
+        public int KeyBit164
+        {
+            get
+            {
+                return Bit(InputKey, 164);
+            }
+        }
+        public int KeyBit165
+        {
+            get
+            {
+                return Bit(InputKey, 165);
+            }
+        }
+        public int KeyBit166
+        {
+            get
+            {
+                return Bit(InputKey, 166);
+            }
+        }
+        public int KeyBit167
+        {
+            get
+            {
+                return Bit(InputKey, 167);
+            }
+        }
+        public int KeyBit168
+        {
+            get
+            {
+                return Bit(InputKey, 168);
+            }
+        }
+        public int KeyBit169
+        {
+            get
+            {
+                return Bit(InputKey, 169);
+            }
+        }
+        public int KeyBit170
+        {
+            get
+            {
+                return Bit(InputKey, 170);
+            }
+        }
+        public int KeyBit171
+        {
+            get
+            {
+                return Bit(InputKey, 171);
+            }
+        }
+        public int KeyBit172
+        {
+            get
+            {
+                return Bit(InputKey, 172);
+            }
+        }
+        public int KeyBit173
+        {
+            get
+            {
+                return Bit(InputKey, 173);
+            }
+        }
+        public int KeyBit174
+        {
+            get
+            {
+                return Bit(InputKey, 174);
+            }
+        }
+        public int KeyBit175
+        {
+            get
+            {
+                return Bit(InputKey, 175);
+            }
+        }
+        public int KeyBit176
+        {
+            get
+            {
+                return Bit(InputKey, 176);
+            }
+        }
+        public int KeyBit177
+        {
+            get
+            {
+                return Bit(InputKey, 177);
+            }
+        }
+        public int KeyBit178
+        {
+            get
+            {
+                return Bit(InputKey, 178);
+            }
+        }
+        public int KeyBit179
+        {
+            get
+            {
+                return Bit(InputKey, 179);
+            }
+        }
+        public int KeyBit180
+        {
+            get
+            {
+                return Bit(InputKey, 180);
+            }
+        }
+        public int KeyBit181
+        {
+            get
+            {
+                return Bit(InputKey, 181);
+            }
+        }
+        public int KeyBit182
+        {
+            get
+            {
+                return Bit(InputKey, 182);
+            }
+        }
+        public int KeyBit183
+        {
+            get
+            {
+                return Bit(InputKey, 183);
+            }
+        }
+        public int KeyBit184
+        {
+            get
+            {
+                return Bit(InputKey, 184);
+            }
+        }
+        public int KeyBit185
+        {
+            get
+            {
+                return Bit(InputKey, 185);
+            }
+        }
+        public int KeyBit186
+        {
+            get
+            {
+                return Bit(InputKey, 186);
+            }
+        }
+        public int KeyBit187
+        {
+            get
+            {
+                return Bit(InputKey, 187);
+            }
+        }
+        public int KeyBit188
+        {
+            get
+            {
+                return Bit(InputKey, 188);
+            }
+        }
+        public int KeyBit189
+        {
+            get
+            {
+                return Bit(InputKey, 189);
+            }
+        }
+        public int KeyBit190
+        {
+            get
+            {
+                return Bit(InputKey, 190);
+            }
+        }
+        public int KeyBit191
+        {
+            get
+            {
+                return Bit(InputKey, 191);
+            }
+        }
+        public int KeyBit192
+        {
+            get
+            {
+                return Bit(InputKey, 192);
+            }
+        }
+        public int KeyBit193
+        {
+            get
+            {
+                return Bit(InputKey, 193);
+            }
+        }
+        public int KeyBit194
+        {
+            get
+            {
+                return Bit(InputKey, 194);
+            }
+        }
+        public int KeyBit195
+        {
+            get
+            {
+                return Bit(InputKey, 195);
+            }
+        }
+        public int KeyBit196
+        {
+            get
+            {
+                return Bit(InputKey, 196);
+            }
+        }
+        public int KeyBit197
+        {
+            get
+            {
+                return Bit(InputKey, 197);
+            }
+        }
+        public int KeyBit198
+        {
+            get
+            {
+                return Bit(InputKey, 198);
+            }
+        }
+        public int KeyBit199
+        {
+            get
+            {
+                return Bit(InputKey, 199);
+            }
+        }
+        public int KeyBit200
+        {
+            get
+            {
+                return Bit(InputKey, 200);
+            }
+        }
+        public int KeyBit201
+        {
+            get
+            {
+                return Bit(InputKey, 201);
+            }
+        }
+        public int KeyBit202
+        {
+            get
+            {
+                return Bit(InputKey, 202);
+            }
+        }
+        public int KeyBit203
+        {
+            get
+            {
+                return Bit(InputKey, 203);
+            }
+        }
+        public int KeyBit204
+        {
+            get
+            {
+                return Bit(InputKey, 204);
+            }
+        }
+        public int KeyBit205
+        {
+            get
+            {
+                return Bit(InputKey, 205);
+            }
+        }
+        public int KeyBit206
+        {
+            get
+            {
+                return Bit(InputKey, 206);
+            }
+        }
+        public int KeyBit207
+        {
+            get
+            {
+                return Bit(InputKey, 207);
+            }
+        }
+        public int KeyBit208
+        {
+            get
+            {
+                return Bit(InputKey, 208);
+            }
+        }
+        public int KeyBit209
+        {
+            get
+            {
+                return Bit(InputKey, 209);
+            }
+        }
+        public int KeyBit210
+        {
+            get
+            {
+                return Bit(InputKey, 210);
+            }
+        }
+        public int KeyBit211
+        {
+            get
+            {
+                return Bit(InputKey, 211);
+            }
+        }
+        public int KeyBit212
+        {
+            get
+            {
+                return Bit(InputKey, 212);
+            }
+        }
+        public int KeyBit213
+        {
+            get
+            {
+                return Bit(InputKey, 213);
+            }
+        }
+        public int KeyBit214
+        {
+            get
+            {
+                return Bit(InputKey, 214);
+            }
+        }
+        public int KeyBit215
+        {
+            get
+            {
+                return Bit(InputKey, 215);
+            }
+        }
+        public int KeyBit216
+        {
+            get
+            {
+                return Bit(InputKey, 216);
+            }
+        }
+        public int KeyBit217
+        {
+            get
+            {
+                return Bit(InputKey, 217);
+            }
+        }
+        public int KeyBit218
+        {
+            get
+            {
+                return Bit(InputKey, 218);
+            }
+        }
+        public int KeyBit219
+        {
+            get
+            {
+                return Bit(InputKey, 219);
+            }
+        }
+        public int KeyBit220
+        {
+            get
+            {
+                return Bit(InputKey, 220);
+            }
+        }
+        public int KeyBit221
+        {
+            get
+            {
+                return Bit(InputKey, 221);
+            }
+        }
+        public int KeyBit222
+        {
+            get
+            {
+                return Bit(InputKey, 222);
+            }
+        }
+        public int KeyBit223
+        {
+            get
+            {
+                return Bit(InputKey, 223);
+            }
+        }
+        public int KeyBit224
+        {
+            get
+            {
+                return Bit(InputKey, 224);
+            }
+        }
+        public int KeyBit225
+        {
+            get
+            {
+                return Bit(InputKey, 225);
+            }
+        }
+        public int KeyBit226
+        {
+            get
+            {
+                return Bit(InputKey, 226);
+            }
+        }
+        public int KeyBit227
+        {
+            get
+            {
+                return Bit(InputKey, 227);
+            }
+        }
+        public int KeyBit228
+        {
+            get
+            {
+                return Bit(InputKey, 228);
+            }
+        }
+        public int KeyBit229
+        {
+            get
+            {
+                return Bit(InputKey, 229);
+            }
+        }
+        public int KeyBit230
+        {
+            get
+            {
+                return Bit(InputKey, 230);
+            }
+        }
+        public int KeyBit231
+        {
+            get
+            {
+                return Bit(InputKey, 231);
+            }
+        }
+        public int KeyBit232
+        {
+            get
+            {
+                return Bit(InputKey, 232);
+            }
+        }
+        public int KeyBit233
+        {
+            get
+            {
+                return Bit(InputKey, 233);
+            }
+        }
+        public int KeyBit234
+        {
+            get
+            {
+                return Bit(InputKey, 234);
+            }
+        }
+        public int KeyBit235
+        {
+            get
+            {
+                return Bit(InputKey, 235);
+            }
+        }
+        public int KeyBit236
+        {
+            get
+            {
+                return Bit(InputKey, 236);
+            }
+        }
+        public int KeyBit237
+        {
+            get
+            {
+                return Bit(InputKey, 237);
+            }
+        }
+        public int KeyBit238
+        {
+            get
+            {
+                return Bit(InputKey, 238);
+            }
+        }
+        public int KeyBit239
+        {
+            get
+            {
+                return Bit(InputKey, 239);
+            }
+        }
+        public int KeyBit240
+        {
+            get
+            {
+                return Bit(InputKey, 240);
+            }
+        }
+        public int KeyBit241
+        {
+            get
+            {
+                return Bit(InputKey, 241);
+            }
+        }
+        public int KeyBit242
+        {
+            get
+            {
+                return Bit(InputKey, 242);
+            }
+        }
+        public int KeyBit243
+        {
+            get
+            {
+                return Bit(InputKey, 243);
+            }
+        }
+        public int KeyBit244
+        {
+            get
+            {
+                return Bit(InputKey, 244);
+            }
+        }
+        public int KeyBit245
+        {
+            get
+            {
+                return Bit(InputKey, 245);
+            }
+        }
+        public int KeyBit246
+        {
+            get
+            {
+                return Bit(InputKey, 246);
+            }
+        }
+        public int KeyBit247
+        {
+            get
+            {
+                return Bit(InputKey, 247);
+            }
+        }
+        public int KeyBit248
+        {
+            get
+            {
+                return Bit(InputKey, 248);
+            }
+        }
+        public int KeyBit249
+        {
+            get
+            {
+                return Bit(InputKey, 249);
+            }
+        }
+        public int KeyBit250
+        {
+            get
+            {
+                return Bit(InputKey, 250);
+            }
+        }
+        public int KeyBit251
+        {
+            get
+            {
+                return Bit(InputKey, 251);
+            }
+        }
+        public int KeyBit252
+        {
+            get
+            {
+                return Bit(InputKey, 252);
+            }
+        }
+        public int KeyBit253
+        {
+            get
+            {
+                return Bit(InputKey, 253);
+            }
+        }
+        public int KeyBit254
+        {
+            get
+            {
+                return Bit(InputKey, 254);
+            }
+        }
+        public int KeyBit255
+        {
+            get
+            {
+                return Bit(InputKey, 255);
+            }
+        }
+        #endregion
+    }
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
