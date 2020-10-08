@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -48,6 +49,7 @@ namespace Cryptool.Plugins.ChaCha
         public void NotifyDiffusionBitChanged(int bitIndex)
         {
             OnPropertyChanged($"DKeyBit{bitIndex}");
+            OnPropertyChanged($"DKeyBit{bitIndex}Flipped");
             OnPropertyChanged($"DKeyNibble{bitIndex / 4}");
             OnPropertyChanged($"DKeyNibbleHex{bitIndex / 4}");
         }
@@ -1872,6 +1874,1801 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
+        #region Diffusion Key Bits Flipped
+        public bool DKeyBit0Flipped
+        {
+            get
+            {
+                return DKeyBit0 != Bit(InputKey, 0);
+            }
+        }
+        public bool DKeyBit1Flipped
+        {
+            get
+            {
+                return DKeyBit1 != Bit(InputKey, 1);
+            }
+        }
+        public bool DKeyBit2Flipped
+        {
+            get
+            {
+                return DKeyBit2 != Bit(InputKey, 2);
+            }
+        }
+        public bool DKeyBit3Flipped
+        {
+            get
+            {
+                return DKeyBit3 != Bit(InputKey, 3);
+            }
+        }
+        public bool DKeyBit4Flipped
+        {
+            get
+            {
+                return DKeyBit4 != Bit(InputKey, 4);
+            }
+        }
+        public bool DKeyBit5Flipped
+        {
+            get
+            {
+                return DKeyBit5 != Bit(InputKey, 5);
+            }
+        }
+        public bool DKeyBit6Flipped
+        {
+            get
+            {
+                return DKeyBit6 != Bit(InputKey, 6);
+            }
+        }
+        public bool DKeyBit7Flipped
+        {
+            get
+            {
+                return DKeyBit7 != Bit(InputKey, 7);
+            }
+        }
+        public bool DKeyBit8Flipped
+        {
+            get
+            {
+                return DKeyBit8 != Bit(InputKey, 8);
+            }
+        }
+        public bool DKeyBit9Flipped
+        {
+            get
+            {
+                return DKeyBit9 != Bit(InputKey, 9);
+            }
+        }
+        public bool DKeyBit10Flipped
+        {
+            get
+            {
+                return DKeyBit10 != Bit(InputKey, 10);
+            }
+        }
+        public bool DKeyBit11Flipped
+        {
+            get
+            {
+                return DKeyBit11 != Bit(InputKey, 11);
+            }
+        }
+        public bool DKeyBit12Flipped
+        {
+            get
+            {
+                return DKeyBit12 != Bit(InputKey, 12);
+            }
+        }
+        public bool DKeyBit13Flipped
+        {
+            get
+            {
+                return DKeyBit13 != Bit(InputKey, 13);
+            }
+        }
+        public bool DKeyBit14Flipped
+        {
+            get
+            {
+                return DKeyBit14 != Bit(InputKey, 14);
+            }
+        }
+        public bool DKeyBit15Flipped
+        {
+            get
+            {
+                return DKeyBit15 != Bit(InputKey, 15);
+            }
+        }
+        public bool DKeyBit16Flipped
+        {
+            get
+            {
+                return DKeyBit16 != Bit(InputKey, 16);
+            }
+        }
+        public bool DKeyBit17Flipped
+        {
+            get
+            {
+                return DKeyBit17 != Bit(InputKey, 17);
+            }
+        }
+        public bool DKeyBit18Flipped
+        {
+            get
+            {
+                return DKeyBit18 != Bit(InputKey, 18);
+            }
+        }
+        public bool DKeyBit19Flipped
+        {
+            get
+            {
+                return DKeyBit19 != Bit(InputKey, 19);
+            }
+        }
+        public bool DKeyBit20Flipped
+        {
+            get
+            {
+                return DKeyBit20 != Bit(InputKey, 20);
+            }
+        }
+        public bool DKeyBit21Flipped
+        {
+            get
+            {
+                return DKeyBit21 != Bit(InputKey, 21);
+            }
+        }
+        public bool DKeyBit22Flipped
+        {
+            get
+            {
+                return DKeyBit22 != Bit(InputKey, 22);
+            }
+        }
+        public bool DKeyBit23Flipped
+        {
+            get
+            {
+                return DKeyBit23 != Bit(InputKey, 23);
+            }
+        }
+        public bool DKeyBit24Flipped
+        {
+            get
+            {
+                return DKeyBit24 != Bit(InputKey, 24);
+            }
+        }
+        public bool DKeyBit25Flipped
+        {
+            get
+            {
+                return DKeyBit25 != Bit(InputKey, 25);
+            }
+        }
+        public bool DKeyBit26Flipped
+        {
+            get
+            {
+                return DKeyBit26 != Bit(InputKey, 26);
+            }
+        }
+        public bool DKeyBit27Flipped
+        {
+            get
+            {
+                return DKeyBit27 != Bit(InputKey, 27);
+            }
+        }
+        public bool DKeyBit28Flipped
+        {
+            get
+            {
+                return DKeyBit28 != Bit(InputKey, 28);
+            }
+        }
+        public bool DKeyBit29Flipped
+        {
+            get
+            {
+                return DKeyBit29 != Bit(InputKey, 29);
+            }
+        }
+        public bool DKeyBit30Flipped
+        {
+            get
+            {
+                return DKeyBit30 != Bit(InputKey, 30);
+            }
+        }
+        public bool DKeyBit31Flipped
+        {
+            get
+            {
+                return DKeyBit31 != Bit(InputKey, 31);
+            }
+        }
+        public bool DKeyBit32Flipped
+        {
+            get
+            {
+                return DKeyBit32 != Bit(InputKey, 32);
+            }
+        }
+        public bool DKeyBit33Flipped
+        {
+            get
+            {
+                return DKeyBit33 != Bit(InputKey, 33);
+            }
+        }
+        public bool DKeyBit34Flipped
+        {
+            get
+            {
+                return DKeyBit34 != Bit(InputKey, 34);
+            }
+        }
+        public bool DKeyBit35Flipped
+        {
+            get
+            {
+                return DKeyBit35 != Bit(InputKey, 35);
+            }
+        }
+        public bool DKeyBit36Flipped
+        {
+            get
+            {
+                return DKeyBit36 != Bit(InputKey, 36);
+            }
+        }
+        public bool DKeyBit37Flipped
+        {
+            get
+            {
+                return DKeyBit37 != Bit(InputKey, 37);
+            }
+        }
+        public bool DKeyBit38Flipped
+        {
+            get
+            {
+                return DKeyBit38 != Bit(InputKey, 38);
+            }
+        }
+        public bool DKeyBit39Flipped
+        {
+            get
+            {
+                return DKeyBit39 != Bit(InputKey, 39);
+            }
+        }
+        public bool DKeyBit40Flipped
+        {
+            get
+            {
+                return DKeyBit40 != Bit(InputKey, 40);
+            }
+        }
+        public bool DKeyBit41Flipped
+        {
+            get
+            {
+                return DKeyBit41 != Bit(InputKey, 41);
+            }
+        }
+        public bool DKeyBit42Flipped
+        {
+            get
+            {
+                return DKeyBit42 != Bit(InputKey, 42);
+            }
+        }
+        public bool DKeyBit43Flipped
+        {
+            get
+            {
+                return DKeyBit43 != Bit(InputKey, 43);
+            }
+        }
+        public bool DKeyBit44Flipped
+        {
+            get
+            {
+                return DKeyBit44 != Bit(InputKey, 44);
+            }
+        }
+        public bool DKeyBit45Flipped
+        {
+            get
+            {
+                return DKeyBit45 != Bit(InputKey, 45);
+            }
+        }
+        public bool DKeyBit46Flipped
+        {
+            get
+            {
+                return DKeyBit46 != Bit(InputKey, 46);
+            }
+        }
+        public bool DKeyBit47Flipped
+        {
+            get
+            {
+                return DKeyBit47 != Bit(InputKey, 47);
+            }
+        }
+        public bool DKeyBit48Flipped
+        {
+            get
+            {
+                return DKeyBit48 != Bit(InputKey, 48);
+            }
+        }
+        public bool DKeyBit49Flipped
+        {
+            get
+            {
+                return DKeyBit49 != Bit(InputKey, 49);
+            }
+        }
+        public bool DKeyBit50Flipped
+        {
+            get
+            {
+                return DKeyBit50 != Bit(InputKey, 50);
+            }
+        }
+        public bool DKeyBit51Flipped
+        {
+            get
+            {
+                return DKeyBit51 != Bit(InputKey, 51);
+            }
+        }
+        public bool DKeyBit52Flipped
+        {
+            get
+            {
+                return DKeyBit52 != Bit(InputKey, 52);
+            }
+        }
+        public bool DKeyBit53Flipped
+        {
+            get
+            {
+                return DKeyBit53 != Bit(InputKey, 53);
+            }
+        }
+        public bool DKeyBit54Flipped
+        {
+            get
+            {
+                return DKeyBit54 != Bit(InputKey, 54);
+            }
+        }
+        public bool DKeyBit55Flipped
+        {
+            get
+            {
+                return DKeyBit55 != Bit(InputKey, 55);
+            }
+        }
+        public bool DKeyBit56Flipped
+        {
+            get
+            {
+                return DKeyBit56 != Bit(InputKey, 56);
+            }
+        }
+        public bool DKeyBit57Flipped
+        {
+            get
+            {
+                return DKeyBit57 != Bit(InputKey, 57);
+            }
+        }
+        public bool DKeyBit58Flipped
+        {
+            get
+            {
+                return DKeyBit58 != Bit(InputKey, 58);
+            }
+        }
+        public bool DKeyBit59Flipped
+        {
+            get
+            {
+                return DKeyBit59 != Bit(InputKey, 59);
+            }
+        }
+        public bool DKeyBit60Flipped
+        {
+            get
+            {
+                return DKeyBit60 != Bit(InputKey, 60);
+            }
+        }
+        public bool DKeyBit61Flipped
+        {
+            get
+            {
+                return DKeyBit61 != Bit(InputKey, 61);
+            }
+        }
+        public bool DKeyBit62Flipped
+        {
+            get
+            {
+                return DKeyBit62 != Bit(InputKey, 62);
+            }
+        }
+        public bool DKeyBit63Flipped
+        {
+            get
+            {
+                return DKeyBit63 != Bit(InputKey, 63);
+            }
+        }
+        public bool DKeyBit64Flipped
+        {
+            get
+            {
+                return DKeyBit64 != Bit(InputKey, 64);
+            }
+        }
+        public bool DKeyBit65Flipped
+        {
+            get
+            {
+                return DKeyBit65 != Bit(InputKey, 65);
+            }
+        }
+        public bool DKeyBit66Flipped
+        {
+            get
+            {
+                return DKeyBit66 != Bit(InputKey, 66);
+            }
+        }
+        public bool DKeyBit67Flipped
+        {
+            get
+            {
+                return DKeyBit67 != Bit(InputKey, 67);
+            }
+        }
+        public bool DKeyBit68Flipped
+        {
+            get
+            {
+                return DKeyBit68 != Bit(InputKey, 68);
+            }
+        }
+        public bool DKeyBit69Flipped
+        {
+            get
+            {
+                return DKeyBit69 != Bit(InputKey, 69);
+            }
+        }
+        public bool DKeyBit70Flipped
+        {
+            get
+            {
+                return DKeyBit70 != Bit(InputKey, 70);
+            }
+        }
+        public bool DKeyBit71Flipped
+        {
+            get
+            {
+                return DKeyBit71 != Bit(InputKey, 71);
+            }
+        }
+        public bool DKeyBit72Flipped
+        {
+            get
+            {
+                return DKeyBit72 != Bit(InputKey, 72);
+            }
+        }
+        public bool DKeyBit73Flipped
+        {
+            get
+            {
+                return DKeyBit73 != Bit(InputKey, 73);
+            }
+        }
+        public bool DKeyBit74Flipped
+        {
+            get
+            {
+                return DKeyBit74 != Bit(InputKey, 74);
+            }
+        }
+        public bool DKeyBit75Flipped
+        {
+            get
+            {
+                return DKeyBit75 != Bit(InputKey, 75);
+            }
+        }
+        public bool DKeyBit76Flipped
+        {
+            get
+            {
+                return DKeyBit76 != Bit(InputKey, 76);
+            }
+        }
+        public bool DKeyBit77Flipped
+        {
+            get
+            {
+                return DKeyBit77 != Bit(InputKey, 77);
+            }
+        }
+        public bool DKeyBit78Flipped
+        {
+            get
+            {
+                return DKeyBit78 != Bit(InputKey, 78);
+            }
+        }
+        public bool DKeyBit79Flipped
+        {
+            get
+            {
+                return DKeyBit79 != Bit(InputKey, 79);
+            }
+        }
+        public bool DKeyBit80Flipped
+        {
+            get
+            {
+                return DKeyBit80 != Bit(InputKey, 80);
+            }
+        }
+        public bool DKeyBit81Flipped
+        {
+            get
+            {
+                return DKeyBit81 != Bit(InputKey, 81);
+            }
+        }
+        public bool DKeyBit82Flipped
+        {
+            get
+            {
+                return DKeyBit82 != Bit(InputKey, 82);
+            }
+        }
+        public bool DKeyBit83Flipped
+        {
+            get
+            {
+                return DKeyBit83 != Bit(InputKey, 83);
+            }
+        }
+        public bool DKeyBit84Flipped
+        {
+            get
+            {
+                return DKeyBit84 != Bit(InputKey, 84);
+            }
+        }
+        public bool DKeyBit85Flipped
+        {
+            get
+            {
+                return DKeyBit85 != Bit(InputKey, 85);
+            }
+        }
+        public bool DKeyBit86Flipped
+        {
+            get
+            {
+                return DKeyBit86 != Bit(InputKey, 86);
+            }
+        }
+        public bool DKeyBit87Flipped
+        {
+            get
+            {
+                return DKeyBit87 != Bit(InputKey, 87);
+            }
+        }
+        public bool DKeyBit88Flipped
+        {
+            get
+            {
+                return DKeyBit88 != Bit(InputKey, 88);
+            }
+        }
+        public bool DKeyBit89Flipped
+        {
+            get
+            {
+                return DKeyBit89 != Bit(InputKey, 89);
+            }
+        }
+        public bool DKeyBit90Flipped
+        {
+            get
+            {
+                return DKeyBit90 != Bit(InputKey, 90);
+            }
+        }
+        public bool DKeyBit91Flipped
+        {
+            get
+            {
+                return DKeyBit91 != Bit(InputKey, 91);
+            }
+        }
+        public bool DKeyBit92Flipped
+        {
+            get
+            {
+                return DKeyBit92 != Bit(InputKey, 92);
+            }
+        }
+        public bool DKeyBit93Flipped
+        {
+            get
+            {
+                return DKeyBit93 != Bit(InputKey, 93);
+            }
+        }
+        public bool DKeyBit94Flipped
+        {
+            get
+            {
+                return DKeyBit94 != Bit(InputKey, 94);
+            }
+        }
+        public bool DKeyBit95Flipped
+        {
+            get
+            {
+                return DKeyBit95 != Bit(InputKey, 95);
+            }
+        }
+        public bool DKeyBit96Flipped
+        {
+            get
+            {
+                return DKeyBit96 != Bit(InputKey, 96);
+            }
+        }
+        public bool DKeyBit97Flipped
+        {
+            get
+            {
+                return DKeyBit97 != Bit(InputKey, 97);
+            }
+        }
+        public bool DKeyBit98Flipped
+        {
+            get
+            {
+                return DKeyBit98 != Bit(InputKey, 98);
+            }
+        }
+        public bool DKeyBit99Flipped
+        {
+            get
+            {
+                return DKeyBit99 != Bit(InputKey, 99);
+            }
+        }
+        public bool DKeyBit100Flipped
+        {
+            get
+            {
+                return DKeyBit100 != Bit(InputKey, 100);
+            }
+        }
+        public bool DKeyBit101Flipped
+        {
+            get
+            {
+                return DKeyBit101 != Bit(InputKey, 101);
+            }
+        }
+        public bool DKeyBit102Flipped
+        {
+            get
+            {
+                return DKeyBit102 != Bit(InputKey, 102);
+            }
+        }
+        public bool DKeyBit103Flipped
+        {
+            get
+            {
+                return DKeyBit103 != Bit(InputKey, 103);
+            }
+        }
+        public bool DKeyBit104Flipped
+        {
+            get
+            {
+                return DKeyBit104 != Bit(InputKey, 104);
+            }
+        }
+        public bool DKeyBit105Flipped
+        {
+            get
+            {
+                return DKeyBit105 != Bit(InputKey, 105);
+            }
+        }
+        public bool DKeyBit106Flipped
+        {
+            get
+            {
+                return DKeyBit106 != Bit(InputKey, 106);
+            }
+        }
+        public bool DKeyBit107Flipped
+        {
+            get
+            {
+                return DKeyBit107 != Bit(InputKey, 107);
+            }
+        }
+        public bool DKeyBit108Flipped
+        {
+            get
+            {
+                return DKeyBit108 != Bit(InputKey, 108);
+            }
+        }
+        public bool DKeyBit109Flipped
+        {
+            get
+            {
+                return DKeyBit109 != Bit(InputKey, 109);
+            }
+        }
+        public bool DKeyBit110Flipped
+        {
+            get
+            {
+                return DKeyBit110 != Bit(InputKey, 110);
+            }
+        }
+        public bool DKeyBit111Flipped
+        {
+            get
+            {
+                return DKeyBit111 != Bit(InputKey, 111);
+            }
+        }
+        public bool DKeyBit112Flipped
+        {
+            get
+            {
+                return DKeyBit112 != Bit(InputKey, 112);
+            }
+        }
+        public bool DKeyBit113Flipped
+        {
+            get
+            {
+                return DKeyBit113 != Bit(InputKey, 113);
+            }
+        }
+        public bool DKeyBit114Flipped
+        {
+            get
+            {
+                return DKeyBit114 != Bit(InputKey, 114);
+            }
+        }
+        public bool DKeyBit115Flipped
+        {
+            get
+            {
+                return DKeyBit115 != Bit(InputKey, 115);
+            }
+        }
+        public bool DKeyBit116Flipped
+        {
+            get
+            {
+                return DKeyBit116 != Bit(InputKey, 116);
+            }
+        }
+        public bool DKeyBit117Flipped
+        {
+            get
+            {
+                return DKeyBit117 != Bit(InputKey, 117);
+            }
+        }
+        public bool DKeyBit118Flipped
+        {
+            get
+            {
+                return DKeyBit118 != Bit(InputKey, 118);
+            }
+        }
+        public bool DKeyBit119Flipped
+        {
+            get
+            {
+                return DKeyBit119 != Bit(InputKey, 119);
+            }
+        }
+        public bool DKeyBit120Flipped
+        {
+            get
+            {
+                return DKeyBit120 != Bit(InputKey, 120);
+            }
+        }
+        public bool DKeyBit121Flipped
+        {
+            get
+            {
+                return DKeyBit121 != Bit(InputKey, 121);
+            }
+        }
+        public bool DKeyBit122Flipped
+        {
+            get
+            {
+                return DKeyBit122 != Bit(InputKey, 122);
+            }
+        }
+        public bool DKeyBit123Flipped
+        {
+            get
+            {
+                return DKeyBit123 != Bit(InputKey, 123);
+            }
+        }
+        public bool DKeyBit124Flipped
+        {
+            get
+            {
+                return DKeyBit124 != Bit(InputKey, 124);
+            }
+        }
+        public bool DKeyBit125Flipped
+        {
+            get
+            {
+                return DKeyBit125 != Bit(InputKey, 125);
+            }
+        }
+        public bool DKeyBit126Flipped
+        {
+            get
+            {
+                return DKeyBit126 != Bit(InputKey, 126);
+            }
+        }
+        public bool DKeyBit127Flipped
+        {
+            get
+            {
+                return DKeyBit127 != Bit(InputKey, 127);
+            }
+        }
+        public bool DKeyBit128Flipped
+        {
+            get
+            {
+                return DKeyBit128 != Bit(InputKey, 128);
+            }
+        }
+        public bool DKeyBit129Flipped
+        {
+            get
+            {
+                return DKeyBit129 != Bit(InputKey, 129);
+            }
+        }
+        public bool DKeyBit130Flipped
+        {
+            get
+            {
+                return DKeyBit130 != Bit(InputKey, 130);
+            }
+        }
+        public bool DKeyBit131Flipped
+        {
+            get
+            {
+                return DKeyBit131 != Bit(InputKey, 131);
+            }
+        }
+        public bool DKeyBit132Flipped
+        {
+            get
+            {
+                return DKeyBit132 != Bit(InputKey, 132);
+            }
+        }
+        public bool DKeyBit133Flipped
+        {
+            get
+            {
+                return DKeyBit133 != Bit(InputKey, 133);
+            }
+        }
+        public bool DKeyBit134Flipped
+        {
+            get
+            {
+                return DKeyBit134 != Bit(InputKey, 134);
+            }
+        }
+        public bool DKeyBit135Flipped
+        {
+            get
+            {
+                return DKeyBit135 != Bit(InputKey, 135);
+            }
+        }
+        public bool DKeyBit136Flipped
+        {
+            get
+            {
+                return DKeyBit136 != Bit(InputKey, 136);
+            }
+        }
+        public bool DKeyBit137Flipped
+        {
+            get
+            {
+                return DKeyBit137 != Bit(InputKey, 137);
+            }
+        }
+        public bool DKeyBit138Flipped
+        {
+            get
+            {
+                return DKeyBit138 != Bit(InputKey, 138);
+            }
+        }
+        public bool DKeyBit139Flipped
+        {
+            get
+            {
+                return DKeyBit139 != Bit(InputKey, 139);
+            }
+        }
+        public bool DKeyBit140Flipped
+        {
+            get
+            {
+                return DKeyBit140 != Bit(InputKey, 140);
+            }
+        }
+        public bool DKeyBit141Flipped
+        {
+            get
+            {
+                return DKeyBit141 != Bit(InputKey, 141);
+            }
+        }
+        public bool DKeyBit142Flipped
+        {
+            get
+            {
+                return DKeyBit142 != Bit(InputKey, 142);
+            }
+        }
+        public bool DKeyBit143Flipped
+        {
+            get
+            {
+                return DKeyBit143 != Bit(InputKey, 143);
+            }
+        }
+        public bool DKeyBit144Flipped
+        {
+            get
+            {
+                return DKeyBit144 != Bit(InputKey, 144);
+            }
+        }
+        public bool DKeyBit145Flipped
+        {
+            get
+            {
+                return DKeyBit145 != Bit(InputKey, 145);
+            }
+        }
+        public bool DKeyBit146Flipped
+        {
+            get
+            {
+                return DKeyBit146 != Bit(InputKey, 146);
+            }
+        }
+        public bool DKeyBit147Flipped
+        {
+            get
+            {
+                return DKeyBit147 != Bit(InputKey, 147);
+            }
+        }
+        public bool DKeyBit148Flipped
+        {
+            get
+            {
+                return DKeyBit148 != Bit(InputKey, 148);
+            }
+        }
+        public bool DKeyBit149Flipped
+        {
+            get
+            {
+                return DKeyBit149 != Bit(InputKey, 149);
+            }
+        }
+        public bool DKeyBit150Flipped
+        {
+            get
+            {
+                return DKeyBit150 != Bit(InputKey, 150);
+            }
+        }
+        public bool DKeyBit151Flipped
+        {
+            get
+            {
+                return DKeyBit151 != Bit(InputKey, 151);
+            }
+        }
+        public bool DKeyBit152Flipped
+        {
+            get
+            {
+                return DKeyBit152 != Bit(InputKey, 152);
+            }
+        }
+        public bool DKeyBit153Flipped
+        {
+            get
+            {
+                return DKeyBit153 != Bit(InputKey, 153);
+            }
+        }
+        public bool DKeyBit154Flipped
+        {
+            get
+            {
+                return DKeyBit154 != Bit(InputKey, 154);
+            }
+        }
+        public bool DKeyBit155Flipped
+        {
+            get
+            {
+                return DKeyBit155 != Bit(InputKey, 155);
+            }
+        }
+        public bool DKeyBit156Flipped
+        {
+            get
+            {
+                return DKeyBit156 != Bit(InputKey, 156);
+            }
+        }
+        public bool DKeyBit157Flipped
+        {
+            get
+            {
+                return DKeyBit157 != Bit(InputKey, 157);
+            }
+        }
+        public bool DKeyBit158Flipped
+        {
+            get
+            {
+                return DKeyBit158 != Bit(InputKey, 158);
+            }
+        }
+        public bool DKeyBit159Flipped
+        {
+            get
+            {
+                return DKeyBit159 != Bit(InputKey, 159);
+            }
+        }
+        public bool DKeyBit160Flipped
+        {
+            get
+            {
+                return DKeyBit160 != Bit(InputKey, 160);
+            }
+        }
+        public bool DKeyBit161Flipped
+        {
+            get
+            {
+                return DKeyBit161 != Bit(InputKey, 161);
+            }
+        }
+        public bool DKeyBit162Flipped
+        {
+            get
+            {
+                return DKeyBit162 != Bit(InputKey, 162);
+            }
+        }
+        public bool DKeyBit163Flipped
+        {
+            get
+            {
+                return DKeyBit163 != Bit(InputKey, 163);
+            }
+        }
+        public bool DKeyBit164Flipped
+        {
+            get
+            {
+                return DKeyBit164 != Bit(InputKey, 164);
+            }
+        }
+        public bool DKeyBit165Flipped
+        {
+            get
+            {
+                return DKeyBit165 != Bit(InputKey, 165);
+            }
+        }
+        public bool DKeyBit166Flipped
+        {
+            get
+            {
+                return DKeyBit166 != Bit(InputKey, 166);
+            }
+        }
+        public bool DKeyBit167Flipped
+        {
+            get
+            {
+                return DKeyBit167 != Bit(InputKey, 167);
+            }
+        }
+        public bool DKeyBit168Flipped
+        {
+            get
+            {
+                return DKeyBit168 != Bit(InputKey, 168);
+            }
+        }
+        public bool DKeyBit169Flipped
+        {
+            get
+            {
+                return DKeyBit169 != Bit(InputKey, 169);
+            }
+        }
+        public bool DKeyBit170Flipped
+        {
+            get
+            {
+                return DKeyBit170 != Bit(InputKey, 170);
+            }
+        }
+        public bool DKeyBit171Flipped
+        {
+            get
+            {
+                return DKeyBit171 != Bit(InputKey, 171);
+            }
+        }
+        public bool DKeyBit172Flipped
+        {
+            get
+            {
+                return DKeyBit172 != Bit(InputKey, 172);
+            }
+        }
+        public bool DKeyBit173Flipped
+        {
+            get
+            {
+                return DKeyBit173 != Bit(InputKey, 173);
+            }
+        }
+        public bool DKeyBit174Flipped
+        {
+            get
+            {
+                return DKeyBit174 != Bit(InputKey, 174);
+            }
+        }
+        public bool DKeyBit175Flipped
+        {
+            get
+            {
+                return DKeyBit175 != Bit(InputKey, 175);
+            }
+        }
+        public bool DKeyBit176Flipped
+        {
+            get
+            {
+                return DKeyBit176 != Bit(InputKey, 176);
+            }
+        }
+        public bool DKeyBit177Flipped
+        {
+            get
+            {
+                return DKeyBit177 != Bit(InputKey, 177);
+            }
+        }
+        public bool DKeyBit178Flipped
+        {
+            get
+            {
+                return DKeyBit178 != Bit(InputKey, 178);
+            }
+        }
+        public bool DKeyBit179Flipped
+        {
+            get
+            {
+                return DKeyBit179 != Bit(InputKey, 179);
+            }
+        }
+        public bool DKeyBit180Flipped
+        {
+            get
+            {
+                return DKeyBit180 != Bit(InputKey, 180);
+            }
+        }
+        public bool DKeyBit181Flipped
+        {
+            get
+            {
+                return DKeyBit181 != Bit(InputKey, 181);
+            }
+        }
+        public bool DKeyBit182Flipped
+        {
+            get
+            {
+                return DKeyBit182 != Bit(InputKey, 182);
+            }
+        }
+        public bool DKeyBit183Flipped
+        {
+            get
+            {
+                return DKeyBit183 != Bit(InputKey, 183);
+            }
+        }
+        public bool DKeyBit184Flipped
+        {
+            get
+            {
+                return DKeyBit184 != Bit(InputKey, 184);
+            }
+        }
+        public bool DKeyBit185Flipped
+        {
+            get
+            {
+                return DKeyBit185 != Bit(InputKey, 185);
+            }
+        }
+        public bool DKeyBit186Flipped
+        {
+            get
+            {
+                return DKeyBit186 != Bit(InputKey, 186);
+            }
+        }
+        public bool DKeyBit187Flipped
+        {
+            get
+            {
+                return DKeyBit187 != Bit(InputKey, 187);
+            }
+        }
+        public bool DKeyBit188Flipped
+        {
+            get
+            {
+                return DKeyBit188 != Bit(InputKey, 188);
+            }
+        }
+        public bool DKeyBit189Flipped
+        {
+            get
+            {
+                return DKeyBit189 != Bit(InputKey, 189);
+            }
+        }
+        public bool DKeyBit190Flipped
+        {
+            get
+            {
+                return DKeyBit190 != Bit(InputKey, 190);
+            }
+        }
+        public bool DKeyBit191Flipped
+        {
+            get
+            {
+                return DKeyBit191 != Bit(InputKey, 191);
+            }
+        }
+        public bool DKeyBit192Flipped
+        {
+            get
+            {
+                return DKeyBit192 != Bit(InputKey, 192);
+            }
+        }
+        public bool DKeyBit193Flipped
+        {
+            get
+            {
+                return DKeyBit193 != Bit(InputKey, 193);
+            }
+        }
+        public bool DKeyBit194Flipped
+        {
+            get
+            {
+                return DKeyBit194 != Bit(InputKey, 194);
+            }
+        }
+        public bool DKeyBit195Flipped
+        {
+            get
+            {
+                return DKeyBit195 != Bit(InputKey, 195);
+            }
+        }
+        public bool DKeyBit196Flipped
+        {
+            get
+            {
+                return DKeyBit196 != Bit(InputKey, 196);
+            }
+        }
+        public bool DKeyBit197Flipped
+        {
+            get
+            {
+                return DKeyBit197 != Bit(InputKey, 197);
+            }
+        }
+        public bool DKeyBit198Flipped
+        {
+            get
+            {
+                return DKeyBit198 != Bit(InputKey, 198);
+            }
+        }
+        public bool DKeyBit199Flipped
+        {
+            get
+            {
+                return DKeyBit199 != Bit(InputKey, 199);
+            }
+        }
+        public bool DKeyBit200Flipped
+        {
+            get
+            {
+                return DKeyBit200 != Bit(InputKey, 200);
+            }
+        }
+        public bool DKeyBit201Flipped
+        {
+            get
+            {
+                return DKeyBit201 != Bit(InputKey, 201);
+            }
+        }
+        public bool DKeyBit202Flipped
+        {
+            get
+            {
+                return DKeyBit202 != Bit(InputKey, 202);
+            }
+        }
+        public bool DKeyBit203Flipped
+        {
+            get
+            {
+                return DKeyBit203 != Bit(InputKey, 203);
+            }
+        }
+        public bool DKeyBit204Flipped
+        {
+            get
+            {
+                return DKeyBit204 != Bit(InputKey, 204);
+            }
+        }
+        public bool DKeyBit205Flipped
+        {
+            get
+            {
+                return DKeyBit205 != Bit(InputKey, 205);
+            }
+        }
+        public bool DKeyBit206Flipped
+        {
+            get
+            {
+                return DKeyBit206 != Bit(InputKey, 206);
+            }
+        }
+        public bool DKeyBit207Flipped
+        {
+            get
+            {
+                return DKeyBit207 != Bit(InputKey, 207);
+            }
+        }
+        public bool DKeyBit208Flipped
+        {
+            get
+            {
+                return DKeyBit208 != Bit(InputKey, 208);
+            }
+        }
+        public bool DKeyBit209Flipped
+        {
+            get
+            {
+                return DKeyBit209 != Bit(InputKey, 209);
+            }
+        }
+        public bool DKeyBit210Flipped
+        {
+            get
+            {
+                return DKeyBit210 != Bit(InputKey, 210);
+            }
+        }
+        public bool DKeyBit211Flipped
+        {
+            get
+            {
+                return DKeyBit211 != Bit(InputKey, 211);
+            }
+        }
+        public bool DKeyBit212Flipped
+        {
+            get
+            {
+                return DKeyBit212 != Bit(InputKey, 212);
+            }
+        }
+        public bool DKeyBit213Flipped
+        {
+            get
+            {
+                return DKeyBit213 != Bit(InputKey, 213);
+            }
+        }
+        public bool DKeyBit214Flipped
+        {
+            get
+            {
+                return DKeyBit214 != Bit(InputKey, 214);
+            }
+        }
+        public bool DKeyBit215Flipped
+        {
+            get
+            {
+                return DKeyBit215 != Bit(InputKey, 215);
+            }
+        }
+        public bool DKeyBit216Flipped
+        {
+            get
+            {
+                return DKeyBit216 != Bit(InputKey, 216);
+            }
+        }
+        public bool DKeyBit217Flipped
+        {
+            get
+            {
+                return DKeyBit217 != Bit(InputKey, 217);
+            }
+        }
+        public bool DKeyBit218Flipped
+        {
+            get
+            {
+                return DKeyBit218 != Bit(InputKey, 218);
+            }
+        }
+        public bool DKeyBit219Flipped
+        {
+            get
+            {
+                return DKeyBit219 != Bit(InputKey, 219);
+            }
+        }
+        public bool DKeyBit220Flipped
+        {
+            get
+            {
+                return DKeyBit220 != Bit(InputKey, 220);
+            }
+        }
+        public bool DKeyBit221Flipped
+        {
+            get
+            {
+                return DKeyBit221 != Bit(InputKey, 221);
+            }
+        }
+        public bool DKeyBit222Flipped
+        {
+            get
+            {
+                return DKeyBit222 != Bit(InputKey, 222);
+            }
+        }
+        public bool DKeyBit223Flipped
+        {
+            get
+            {
+                return DKeyBit223 != Bit(InputKey, 223);
+            }
+        }
+        public bool DKeyBit224Flipped
+        {
+            get
+            {
+                return DKeyBit224 != Bit(InputKey, 224);
+            }
+        }
+        public bool DKeyBit225Flipped
+        {
+            get
+            {
+                return DKeyBit225 != Bit(InputKey, 225);
+            }
+        }
+        public bool DKeyBit226Flipped
+        {
+            get
+            {
+                return DKeyBit226 != Bit(InputKey, 226);
+            }
+        }
+        public bool DKeyBit227Flipped
+        {
+            get
+            {
+                return DKeyBit227 != Bit(InputKey, 227);
+            }
+        }
+        public bool DKeyBit228Flipped
+        {
+            get
+            {
+                return DKeyBit228 != Bit(InputKey, 228);
+            }
+        }
+        public bool DKeyBit229Flipped
+        {
+            get
+            {
+                return DKeyBit229 != Bit(InputKey, 229);
+            }
+        }
+        public bool DKeyBit230Flipped
+        {
+            get
+            {
+                return DKeyBit230 != Bit(InputKey, 230);
+            }
+        }
+        public bool DKeyBit231Flipped
+        {
+            get
+            {
+                return DKeyBit231 != Bit(InputKey, 231);
+            }
+        }
+        public bool DKeyBit232Flipped
+        {
+            get
+            {
+                return DKeyBit232 != Bit(InputKey, 232);
+            }
+        }
+        public bool DKeyBit233Flipped
+        {
+            get
+            {
+                return DKeyBit233 != Bit(InputKey, 233);
+            }
+        }
+        public bool DKeyBit234Flipped
+        {
+            get
+            {
+                return DKeyBit234 != Bit(InputKey, 234);
+            }
+        }
+        public bool DKeyBit235Flipped
+        {
+            get
+            {
+                return DKeyBit235 != Bit(InputKey, 235);
+            }
+        }
+        public bool DKeyBit236Flipped
+        {
+            get
+            {
+                return DKeyBit236 != Bit(InputKey, 236);
+            }
+        }
+        public bool DKeyBit237Flipped
+        {
+            get
+            {
+                return DKeyBit237 != Bit(InputKey, 237);
+            }
+        }
+        public bool DKeyBit238Flipped
+        {
+            get
+            {
+                return DKeyBit238 != Bit(InputKey, 238);
+            }
+        }
+        public bool DKeyBit239Flipped
+        {
+            get
+            {
+                return DKeyBit239 != Bit(InputKey, 239);
+            }
+        }
+        public bool DKeyBit240Flipped
+        {
+            get
+            {
+                return DKeyBit240 != Bit(InputKey, 240);
+            }
+        }
+        public bool DKeyBit241Flipped
+        {
+            get
+            {
+                return DKeyBit241 != Bit(InputKey, 241);
+            }
+        }
+        public bool DKeyBit242Flipped
+        {
+            get
+            {
+                return DKeyBit242 != Bit(InputKey, 242);
+            }
+        }
+        public bool DKeyBit243Flipped
+        {
+            get
+            {
+                return DKeyBit243 != Bit(InputKey, 243);
+            }
+        }
+        public bool DKeyBit244Flipped
+        {
+            get
+            {
+                return DKeyBit244 != Bit(InputKey, 244);
+            }
+        }
+        public bool DKeyBit245Flipped
+        {
+            get
+            {
+                return DKeyBit245 != Bit(InputKey, 245);
+            }
+        }
+        public bool DKeyBit246Flipped
+        {
+            get
+            {
+                return DKeyBit246 != Bit(InputKey, 246);
+            }
+        }
+        public bool DKeyBit247Flipped
+        {
+            get
+            {
+                return DKeyBit247 != Bit(InputKey, 247);
+            }
+        }
+        public bool DKeyBit248Flipped
+        {
+            get
+            {
+                return DKeyBit248 != Bit(InputKey, 248);
+            }
+        }
+        public bool DKeyBit249Flipped
+        {
+            get
+            {
+                return DKeyBit249 != Bit(InputKey, 249);
+            }
+        }
+        public bool DKeyBit250Flipped
+        {
+            get
+            {
+                return DKeyBit250 != Bit(InputKey, 250);
+            }
+        }
+        public bool DKeyBit251Flipped
+        {
+            get
+            {
+                return DKeyBit251 != Bit(InputKey, 251);
+            }
+        }
+        public bool DKeyBit252Flipped
+        {
+            get
+            {
+                return DKeyBit252 != Bit(InputKey, 252);
+            }
+        }
+        public bool DKeyBit253Flipped
+        {
+            get
+            {
+                return DKeyBit253 != Bit(InputKey, 253);
+            }
+        }
+        public bool DKeyBit254Flipped
+        {
+            get
+            {
+                return DKeyBit254 != Bit(InputKey, 254);
+            }
+        }
+        public bool DKeyBit255Flipped
+        {
+            get
+            {
+                return DKeyBit255 != Bit(InputKey, 255);
+            }
+        }
+        #endregion
+
         public int DKeyNibble(int nibbleIndex)
         {
             Debug.Assert(0 <= nibbleIndex, $"nibbleIndex ({nibbleIndex}) was lower than zero.");
@@ -2469,12 +4266,25 @@ namespace Cryptool.Plugins.ChaCha
                 pres.SetDKeyBit(bitIndex);
             }
         }
+        class BoolToForegroundConverter : IValueConverter
+        {
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return (bool)value == true ? Brushes.Red : Brushes.Black;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return value != Brushes.Black;
+            }
+        }
         private Button CreateDiffusionButton(int bitIndex)
         {
             // Bit indices start at 0 on the most significant bit which is in the string representation in big endian notation.
             // This means we start counting from zero at the left but the zero-th bit is - maybe a bit unintuitively - the most significant bit.
             Button b = new Button() { Height = 16, FontSize = 10 };
             b.SetBinding(Button.ContentProperty, new Binding($"DKeyBit{bitIndex}"));
+            b.SetBinding(Button.ForegroundProperty, new Binding($"DKeyBit{bitIndex}Flipped") { Converter = new BoolToForegroundConverter() });
             b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
             b.Name = $"DKeyBit{bitIndex}Button";
             b.Click += (obj, e) => FlipDiffusionBit(bitIndex);
