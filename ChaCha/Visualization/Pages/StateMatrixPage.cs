@@ -224,6 +224,10 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.UITransformInput, input);
             }
         }
+        private void ReplaceTransformInputConstants()
+        {
+            ReplaceTransformInput(pres.HexInitialCounter);
+        }
         private void ClearTransformInput()
         {
             pres.Nav.Clear(pres.UITransformInput, pres.UITransformInput2);
@@ -245,6 +249,12 @@ namespace Cryptool.Plugins.ChaCha
                     pres.Nav.Replace((TextBox)pres.FindName($"UITransformChunk{i}"), chunk[i]);
                 }
             }
+        }
+        private void ReplaceTransformChunkKey()
+        {
+            ReplaceTransformChunk(
+                    pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
+                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
         }
         private void ClearTransformChunk()
         {
@@ -328,6 +338,35 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ReplaceTransformLittleEndian(pres.IVLittleEndian[0], pres.IVLittleEndian[1], pres.IVLittleEndian[2]);
             }
+        }
+        private void ReplaceTransformChunkConstants()
+        {
+            ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
+        }
+        private void ReplaceTransformLittleEndianConstants()
+        {
+            ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
+        }
+        private void AddKeyStepBoldToDescription()
+        {
+            AddBoldToDescription(descriptions[1]);
+        }
+        private void ReplaceTransformLittleEndianKey()
+        {
+            ReplaceTransformLittleEndian(
+                   pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
+                   pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+        }
+        private void AddIVStepBoldToDescription()
+        {
+            AddBoldToDescription(descriptions[3]);
+        }
+        private PageAction[] CopyKeyToStateActions()
+        {
+            return pres.Nav.CopyActions(
+                new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell, pres.UITransformLittleEndian4Cell, pres.UITransformLittleEndian5Cell, pres.UITransformLittleEndian6Cell, pres.UITransformLittleEndian7Cell },
+                new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell },
+                new string[] { "", "", "", "", "", "", "", "" });
         }
         private PageAction[] InputAction(Border copyFrom, string text = null)
         {
@@ -420,35 +459,88 @@ namespace Cryptool.Plugins.ChaCha
                 }
             });
         }
-
+        private void AddCounterStepBoldToDescription()
+        {
+            AddBoldToDescription(descriptions[2]);
+        }
+        private void ReplaceTransformInputKey()
+        {
+            ReplaceTransformInput(pres.HexInputKey);
+        }
+        private void ReplaceTransformInputCounter()
+        {
+            ReplaceTransformInput(pres.HexInitialCounter);
+        }
+        private PageAction[] CopyCounterToStateActions()
+        {
+            return versionIsDJB ?
+                pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UIState12Cell, pres.UIState13Cell },
+                    new string[] { "", "" })
+                // TODO create another grid with 3 rows to center counter in IETF version and update this code here
+                : pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian0Cell },
+                    new Border[] { pres.UIState12Cell },
+                    new string[] { "" });
+        }
+        private PageAction[] CopyIVToStateActions()
+        {
+            return versionIsDJB ?
+                pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UIState14Cell, pres.UIState15Cell },
+                    new string[] { "", "" })
+                // TODO create another grid with 3 rows to center IV in IETF version and update this code here
+                : pres.Nav.CopyActions(
+                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell },
+                    new string[] { "", "", "" });
+        }
+        private void AddConstantsStepBoldToDescription()
+        {
+            AddBoldToDescription(descriptions[0]);
+        }
+        private PageAction[] IVInputAction()
+        {
+            return InputAction(pres.UIInputIVCell);
+        }
+        private PageAction[] ConstantsInputAction()
+        {
+            return InputAction(pres.UIConstantsCell);
+        }
+        private PageAction[] CopyConstantsToStateActions()
+        {
+            return pres.Nav.CopyActions(
+                new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell },
+                new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell },
+                new string[] { "", "", "", "" });
+        }
         private void AddConstantsActions()
         {
             PageAction constantsStepDescriptionAction = new PageAction(() =>
             {
-                AddBoldToDescription(descriptions[0]);
+                AddConstantsStepBoldToDescription();
             }, () =>
             {
                 ClearDescription();
             });
-            PageAction[] constantsInputAction = InputAction(pres.UIConstantsCell);
+            PageAction[] constantsInputAction = ConstantsInputAction();
             PageAction constantsChunksAction = new PageAction(() =>
             {
-                ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
+                ReplaceTransformChunkConstants();
             }, () =>
             {
                 ClearTransformChunk();
             });
             PageAction constantsLittleEndianAction = new PageAction(() =>
             {
-                ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
+                ReplaceTransformLittleEndianConstants();
             }, () =>
             {
                 ClearTransformLittleEndian();
             });
-            PageAction[] copyConstantsToStateActions = pres.Nav.CopyActions(
-                new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell },
-                new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell },
-                new string[] { "", "", "", "" });
+            PageAction[] copyConstantsToStateActions = CopyConstantsToStateActions();
             AddAction(constantsStepDescriptionAction);
             AddAction(constantsInputAction);
             AddAction(constantsChunksAction);
@@ -460,7 +552,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction keyStepDescriptionAction = new PageAction(() =>
             {
                 UnboldLastFromDescription();
-                AddBoldToDescription(descriptions[1]);
+                AddKeyStepBoldToDescription();
                 ClearTransformInput();
                 ClearTransformChunk();
                 ClearTransformLittleEndian();
@@ -468,33 +560,26 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
-                ReplaceTransformInput(pres.HexConstants);
-                ReplaceTransformChunk(pres.ConstantsChunks[0], pres.ConstantsChunks[1], pres.ConstantsChunks[2], pres.ConstantsChunks[3]);
-                ReplaceTransformLittleEndian(pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3]);
+                ReplaceTransformInputConstants();
+                ReplaceTransformChunkConstants();
+                ReplaceTransformLittleEndianConstants();
             });
             PageAction[] keyInputAction = KeyInputAction();
             PageAction keyChunksAction = new PageAction(() =>
             {
-                ReplaceTransformChunk(
-                    pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
-                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
+                ReplaceTransformChunkKey();
             }, () =>
             {
                 ClearTransformChunk();
             });
             PageAction keyLittleEndianAction = new PageAction(() =>
             {
-                ReplaceTransformLittleEndian(
-                    pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
-                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+                ReplaceTransformLittleEndianKey();
             }, () =>
             {
                 ClearTransformLittleEndian();
             });
-            PageAction[] copyKeyToStateActions = pres.Nav.CopyActions(
-                new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell, pres.UITransformLittleEndian4Cell, pres.UITransformLittleEndian5Cell, pres.UITransformLittleEndian6Cell, pres.UITransformLittleEndian7Cell },
-                new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell },
-                new string[] { "", "", "", "", "", "", "", "" });
+            PageAction[] copyKeyToStateActions = CopyKeyToStateActions();
             AddAction(keyStepDescriptionAction);
             AddAction(keyInputAction);
             AddAction(keyChunksAction);
@@ -506,7 +591,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction counterStepDescriptionAction = new PageAction(() =>
             {
                 UnboldLastFromDescription();
-                AddBoldToDescription(descriptions[2]);
+                AddCounterStepBoldToDescription();
                 ClearTransformInput();
                 ClearTransformChunk();
                 ClearTransformLittleEndian();
@@ -514,22 +599,17 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
-                ReplaceTransformInput(pres.HexInputKey);
-                ReplaceTransformChunk(
-                    pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
-                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
-                ReplaceTransformLittleEndian(
-                    pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
-                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+                ReplaceTransformInputKey();
+                ReplaceTransformChunkKey();
+                ReplaceTransformLittleEndianKey();
             });
             PageAction counterInputAction = new PageAction(() =>
             {
-                ReplaceTransformInput(pres.HexInitialCounter);
+                ReplaceTransformInputCounter();
             }, () =>
             {
                 ClearTransformInput();
-            });
-                
+            }); 
             PageAction counterChunksAction = new PageAction(() =>
             {
                 ReplaceTransformChunkCounter();
@@ -537,7 +617,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearTransformChunk();
             });
-                
             PageAction counterLittleEndianAction = new PageAction(() =>
             {
                 ReplaceTransformLittleEndianCounter();
@@ -545,16 +624,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearTransformLittleEndian();
             });
-            PageAction[] copyCounterToStateActions = versionIsDJB ?
-                pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
-                    new Border[] { pres.UIState12Cell, pres.UIState13Cell },
-                    new string[] { "", "" })
-                // TODO create another grid with 3 rows to center counter in IETF version and update this code here
-                : pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian0Cell },
-                    new Border[] { pres.UIState12Cell },
-                    new string[] { "" });
+            PageAction[] copyCounterToStateActions = CopyCounterToStateActions();
             AddAction(counterStepDescriptionAction);
             AddAction(counterInputAction);
             AddAction(counterChunksAction);
@@ -566,7 +636,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction ivStepDescriptionAction = new PageAction(() =>
             {
                 UnboldLastFromDescription();
-                AddBoldToDescription(descriptions[3]);
+                AddIVStepBoldToDescription();
                 ClearTransformInput();
                 ClearTransformChunk();
                 ClearTransformLittleEndian();
@@ -574,11 +644,11 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
-                ReplaceTransformInput(pres.HexInitialCounter);
+                ReplaceTransformInputCounter();
                 ReplaceTransformChunkCounter();
                 ReplaceTransformLittleEndianCounter();
             });
-            PageAction[] ivInputAction = InputAction(pres.UIInputIVCell);
+            PageAction[] ivInputAction = IVInputAction();
             PageAction ivChunksAction = new PageAction(() =>
             {
                 ReplaceTransformChunkIV();
@@ -586,7 +656,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearTransformChunk();
             });
-                
             PageAction ivLittleEndianAction = new PageAction(() =>
             {
                 ReplaceTransformLittleEndianIV();
@@ -594,16 +663,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearTransformLittleEndian();
             });
-            PageAction[] copyIVToStateActions = versionIsDJB ?
-                pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
-                    new Border[] { pres.UIState14Cell, pres.UIState15Cell },
-                    new string[] { "", "" })
-                // TODO create another grid with 3 rows to center IV in IETF version and update this code here
-                : pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
-                    new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell },
-                    new string[] { "", "", "" });
+            PageAction[] copyIVToStateActions = CopyIVToStateActions();
             AddAction(ivStepDescriptionAction);
             AddAction(ivInputAction);
             AddAction(ivChunksAction);
