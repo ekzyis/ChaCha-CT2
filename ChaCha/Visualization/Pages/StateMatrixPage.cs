@@ -10,6 +10,23 @@ namespace Cryptool.Plugins.ChaCha
 {
     partial class ChaChaPresentation
     {
+        private byte[] _diffusionKey;
+        public byte[] DiffusionKey {
+            get {
+                return _diffusionKey;
+            }
+            set {
+                _diffusionKey = value;
+                for (int i = 0; i < 256; ++i)
+                {
+                    OnPropertyChanged($"DKeyBit{i}");
+                }
+                for (int i = 0; i < 64; ++i)
+                {
+                    OnPropertyChanged($"DKeyNibble{i}");
+                }
+            }
+        }
         private int Bit(byte b, int bitIndex)
         {
             return (b & (1 << bitIndex)) != 0 ? 1 : 0;
@@ -22,1814 +39,1807 @@ namespace Cryptool.Plugins.ChaCha
             int bitIndexInByte = 7 - (bitIndex % 8);
             return Bit(bytes[byteIndex], bitIndexInByte);
         }
-        #region KeyBits
+        private int DKeyBit(int bitIndex)
+        {
+            return Bit(DiffusionKey, bitIndex);
+        }
+        #region Diffusion Key Bits
         // KeyBits for binding to the diffusion buttons.
-        // Generated with following python script.
+        // Generated with a python script (... Can this already be considered meta-programming?)
         // The zero-th bit is the most significant bit since it belongs to the byte the most to the left in the visualization.
         // I have chosen it this way since the byte array is in the same order as seen in the visualization.
         // (The first byte of InputKey is the first byte seen in the visualization thus the most significant byte.)
-        /*
-        ```python
-        for i in range(256):print("public int KeyBit{}".format(i))
-        print("{")
-        print("    get")
-        print("    {")
-        print("        return Bit(InputKey, {});".format(i))
-        print("    }")
-        print("}")
-        ```
-        */
-        // Can this already be considered meta-programming?
-        public int KeyBit0
+        // 
+        public int DKeyBit0
         {
             get
             {
-                return Bit(InputKey, 0);
+                return DKeyBit(0);
             }
         }
-        public int KeyBit1
+        public int DKeyBit1
         {
             get
             {
-                return Bit(InputKey, 1);
+                return DKeyBit(1);
             }
         }
-        public int KeyBit2
+        public int DKeyBit2
         {
             get
             {
-                return Bit(InputKey, 2);
+                return DKeyBit(2);
             }
         }
-        public int KeyBit3
+        public int DKeyBit3
         {
             get
             {
-                return Bit(InputKey, 3);
+                return DKeyBit(3);
             }
         }
-        public int KeyBit4
+        public int DKeyBit4
         {
             get
             {
-                return Bit(InputKey, 4);
+                return DKeyBit(4);
             }
         }
-        public int KeyBit5
+        public int DKeyBit5
         {
             get
             {
-                return Bit(InputKey, 5);
+                return DKeyBit(5);
             }
         }
-        public int KeyBit6
+        public int DKeyBit6
         {
             get
             {
-                return Bit(InputKey, 6);
+                return DKeyBit(6);
             }
         }
-        public int KeyBit7
+        public int DKeyBit7
         {
             get
             {
-                return Bit(InputKey, 7);
+                return DKeyBit(7);
             }
         }
-        public int KeyBit8
+        public int DKeyBit8
         {
             get
             {
-                return Bit(InputKey, 8);
+                return DKeyBit(8);
             }
         }
-        public int KeyBit9
+        public int DKeyBit9
         {
             get
             {
-                return Bit(InputKey, 9);
+                return DKeyBit(9);
             }
         }
-        public int KeyBit10
+        public int DKeyBit10
         {
             get
             {
-                return Bit(InputKey, 10);
+                return DKeyBit(10);
             }
         }
-        public int KeyBit11
+        public int DKeyBit11
         {
             get
             {
-                return Bit(InputKey, 11);
+                return DKeyBit(11);
             }
         }
-        public int KeyBit12
+        public int DKeyBit12
         {
             get
             {
-                return Bit(InputKey, 12);
+                return DKeyBit(12);
             }
         }
-        public int KeyBit13
+        public int DKeyBit13
         {
             get
             {
-                return Bit(InputKey, 13);
+                return DKeyBit(13);
             }
         }
-        public int KeyBit14
+        public int DKeyBit14
         {
             get
             {
-                return Bit(InputKey, 14);
+                return DKeyBit(14);
             }
         }
-        public int KeyBit15
+        public int DKeyBit15
         {
             get
             {
-                return Bit(InputKey, 15);
+                return DKeyBit(15);
             }
         }
-        public int KeyBit16
+        public int DKeyBit16
         {
             get
             {
-                return Bit(InputKey, 16);
+                return DKeyBit(16);
             }
         }
-        public int KeyBit17
+        public int DKeyBit17
         {
             get
             {
-                return Bit(InputKey, 17);
+                return DKeyBit(17);
             }
         }
-        public int KeyBit18
+        public int DKeyBit18
         {
             get
             {
-                return Bit(InputKey, 18);
+                return DKeyBit(18);
             }
         }
-        public int KeyBit19
+        public int DKeyBit19
         {
             get
             {
-                return Bit(InputKey, 19);
+                return DKeyBit(19);
             }
         }
-        public int KeyBit20
+        public int DKeyBit20
         {
             get
             {
-                return Bit(InputKey, 20);
+                return DKeyBit(20);
             }
         }
-        public int KeyBit21
+        public int DKeyBit21
         {
             get
             {
-                return Bit(InputKey, 21);
+                return DKeyBit(21);
             }
         }
-        public int KeyBit22
+        public int DKeyBit22
         {
             get
             {
-                return Bit(InputKey, 22);
+                return DKeyBit(22);
             }
         }
-        public int KeyBit23
+        public int DKeyBit23
         {
             get
             {
-                return Bit(InputKey, 23);
+                return DKeyBit(23);
             }
         }
-        public int KeyBit24
+        public int DKeyBit24
         {
             get
             {
-                return Bit(InputKey, 24);
+                return DKeyBit(24);
             }
         }
-        public int KeyBit25
+        public int DKeyBit25
         {
             get
             {
-                return Bit(InputKey, 25);
+                return DKeyBit(25);
             }
         }
-        public int KeyBit26
+        public int DKeyBit26
         {
             get
             {
-                return Bit(InputKey, 26);
+                return DKeyBit(26);
             }
         }
-        public int KeyBit27
+        public int DKeyBit27
         {
             get
             {
-                return Bit(InputKey, 27);
+                return DKeyBit(27);
             }
         }
-        public int KeyBit28
+        public int DKeyBit28
         {
             get
             {
-                return Bit(InputKey, 28);
+                return DKeyBit(28);
             }
         }
-        public int KeyBit29
+        public int DKeyBit29
         {
             get
             {
-                return Bit(InputKey, 29);
+                return DKeyBit(29);
             }
         }
-        public int KeyBit30
+        public int DKeyBit30
         {
             get
             {
-                return Bit(InputKey, 30);
+                return DKeyBit(30);
             }
         }
-        public int KeyBit31
+        public int DKeyBit31
         {
             get
             {
-                return Bit(InputKey, 31);
+                return DKeyBit(31);
             }
         }
-        public int KeyBit32
+        public int DKeyBit32
         {
             get
             {
-                return Bit(InputKey, 32);
+                return DKeyBit(32);
             }
         }
-        public int KeyBit33
+        public int DKeyBit33
         {
             get
             {
-                return Bit(InputKey, 33);
+                return DKeyBit(33);
             }
         }
-        public int KeyBit34
+        public int DKeyBit34
         {
             get
             {
-                return Bit(InputKey, 34);
+                return DKeyBit(34);
             }
         }
-        public int KeyBit35
+        public int DKeyBit35
         {
             get
             {
-                return Bit(InputKey, 35);
+                return DKeyBit(35);
             }
         }
-        public int KeyBit36
+        public int DKeyBit36
         {
             get
             {
-                return Bit(InputKey, 36);
+                return DKeyBit(36);
             }
         }
-        public int KeyBit37
+        public int DKeyBit37
         {
             get
             {
-                return Bit(InputKey, 37);
+                return DKeyBit(37);
             }
         }
-        public int KeyBit38
+        public int DKeyBit38
         {
             get
             {
-                return Bit(InputKey, 38);
+                return DKeyBit(38);
             }
         }
-        public int KeyBit39
+        public int DKeyBit39
         {
             get
             {
-                return Bit(InputKey, 39);
+                return DKeyBit(39);
             }
         }
-        public int KeyBit40
+        public int DKeyBit40
         {
             get
             {
-                return Bit(InputKey, 40);
+                return DKeyBit(40);
             }
         }
-        public int KeyBit41
+        public int DKeyBit41
         {
             get
             {
-                return Bit(InputKey, 41);
+                return DKeyBit(41);
             }
         }
-        public int KeyBit42
+        public int DKeyBit42
         {
             get
             {
-                return Bit(InputKey, 42);
+                return DKeyBit(42);
             }
         }
-        public int KeyBit43
+        public int DKeyBit43
         {
             get
             {
-                return Bit(InputKey, 43);
+                return DKeyBit(43);
             }
         }
-        public int KeyBit44
+        public int DKeyBit44
         {
             get
             {
-                return Bit(InputKey, 44);
+                return DKeyBit(44);
             }
         }
-        public int KeyBit45
+        public int DKeyBit45
         {
             get
             {
-                return Bit(InputKey, 45);
+                return DKeyBit(45);
             }
         }
-        public int KeyBit46
+        public int DKeyBit46
         {
             get
             {
-                return Bit(InputKey, 46);
+                return DKeyBit(46);
             }
         }
-        public int KeyBit47
+        public int DKeyBit47
         {
             get
             {
-                return Bit(InputKey, 47);
+                return DKeyBit(47);
             }
         }
-        public int KeyBit48
+        public int DKeyBit48
         {
             get
             {
-                return Bit(InputKey, 48);
+                return DKeyBit(48);
             }
         }
-        public int KeyBit49
+        public int DKeyBit49
         {
             get
             {
-                return Bit(InputKey, 49);
+                return DKeyBit(49);
             }
         }
-        public int KeyBit50
+        public int DKeyBit50
         {
             get
             {
-                return Bit(InputKey, 50);
+                return DKeyBit(50);
             }
         }
-        public int KeyBit51
+        public int DKeyBit51
         {
             get
             {
-                return Bit(InputKey, 51);
+                return DKeyBit(51);
             }
         }
-        public int KeyBit52
+        public int DKeyBit52
         {
             get
             {
-                return Bit(InputKey, 52);
+                return DKeyBit(52);
             }
         }
-        public int KeyBit53
+        public int DKeyBit53
         {
             get
             {
-                return Bit(InputKey, 53);
+                return DKeyBit(53);
             }
         }
-        public int KeyBit54
+        public int DKeyBit54
         {
             get
             {
-                return Bit(InputKey, 54);
+                return DKeyBit(54);
             }
         }
-        public int KeyBit55
+        public int DKeyBit55
         {
             get
             {
-                return Bit(InputKey, 55);
+                return DKeyBit(55);
             }
         }
-        public int KeyBit56
+        public int DKeyBit56
         {
             get
             {
-                return Bit(InputKey, 56);
+                return DKeyBit(56);
             }
         }
-        public int KeyBit57
+        public int DKeyBit57
         {
             get
             {
-                return Bit(InputKey, 57);
+                return DKeyBit(57);
             }
         }
-        public int KeyBit58
+        public int DKeyBit58
         {
             get
             {
-                return Bit(InputKey, 58);
+                return DKeyBit(58);
             }
         }
-        public int KeyBit59
+        public int DKeyBit59
         {
             get
             {
-                return Bit(InputKey, 59);
+                return DKeyBit(59);
             }
         }
-        public int KeyBit60
+        public int DKeyBit60
         {
             get
             {
-                return Bit(InputKey, 60);
+                return DKeyBit(60);
             }
         }
-        public int KeyBit61
+        public int DKeyBit61
         {
             get
             {
-                return Bit(InputKey, 61);
+                return DKeyBit(61);
             }
         }
-        public int KeyBit62
+        public int DKeyBit62
         {
             get
             {
-                return Bit(InputKey, 62);
+                return DKeyBit(62);
             }
         }
-        public int KeyBit63
+        public int DKeyBit63
         {
             get
             {
-                return Bit(InputKey, 63);
+                return DKeyBit(63);
             }
         }
-        public int KeyBit64
+        public int DKeyBit64
         {
             get
             {
-                return Bit(InputKey, 64);
+                return DKeyBit(64);
             }
         }
-        public int KeyBit65
+        public int DKeyBit65
         {
             get
             {
-                return Bit(InputKey, 65);
+                return DKeyBit(65);
             }
         }
-        public int KeyBit66
+        public int DKeyBit66
         {
             get
             {
-                return Bit(InputKey, 66);
+                return DKeyBit(66);
             }
         }
-        public int KeyBit67
+        public int DKeyBit67
         {
             get
             {
-                return Bit(InputKey, 67);
+                return DKeyBit(67);
             }
         }
-        public int KeyBit68
+        public int DKeyBit68
         {
             get
             {
-                return Bit(InputKey, 68);
+                return DKeyBit(68);
             }
         }
-        public int KeyBit69
+        public int DKeyBit69
         {
             get
             {
-                return Bit(InputKey, 69);
+                return DKeyBit(69);
             }
         }
-        public int KeyBit70
+        public int DKeyBit70
         {
             get
             {
-                return Bit(InputKey, 70);
+                return DKeyBit(70);
             }
         }
-        public int KeyBit71
+        public int DKeyBit71
         {
             get
             {
-                return Bit(InputKey, 71);
+                return DKeyBit(71);
             }
         }
-        public int KeyBit72
+        public int DKeyBit72
         {
             get
             {
-                return Bit(InputKey, 72);
+                return DKeyBit(72);
             }
         }
-        public int KeyBit73
+        public int DKeyBit73
         {
             get
             {
-                return Bit(InputKey, 73);
+                return DKeyBit(73);
             }
         }
-        public int KeyBit74
+        public int DKeyBit74
         {
             get
             {
-                return Bit(InputKey, 74);
+                return DKeyBit(74);
             }
         }
-        public int KeyBit75
+        public int DKeyBit75
         {
             get
             {
-                return Bit(InputKey, 75);
+                return DKeyBit(75);
             }
         }
-        public int KeyBit76
+        public int DKeyBit76
         {
             get
             {
-                return Bit(InputKey, 76);
+                return DKeyBit(76);
             }
         }
-        public int KeyBit77
+        public int DKeyBit77
         {
             get
             {
-                return Bit(InputKey, 77);
+                return DKeyBit(77);
             }
         }
-        public int KeyBit78
+        public int DKeyBit78
         {
             get
             {
-                return Bit(InputKey, 78);
+                return DKeyBit(78);
             }
         }
-        public int KeyBit79
+        public int DKeyBit79
         {
             get
             {
-                return Bit(InputKey, 79);
+                return DKeyBit(79);
             }
         }
-        public int KeyBit80
+        public int DKeyBit80
         {
             get
             {
-                return Bit(InputKey, 80);
+                return DKeyBit(80);
             }
         }
-        public int KeyBit81
+        public int DKeyBit81
         {
             get
             {
-                return Bit(InputKey, 81);
+                return DKeyBit(81);
             }
         }
-        public int KeyBit82
+        public int DKeyBit82
         {
             get
             {
-                return Bit(InputKey, 82);
+                return DKeyBit(82);
             }
         }
-        public int KeyBit83
+        public int DKeyBit83
         {
             get
             {
-                return Bit(InputKey, 83);
+                return DKeyBit(83);
             }
         }
-        public int KeyBit84
+        public int DKeyBit84
         {
             get
             {
-                return Bit(InputKey, 84);
+                return DKeyBit(84);
             }
         }
-        public int KeyBit85
+        public int DKeyBit85
         {
             get
             {
-                return Bit(InputKey, 85);
+                return DKeyBit(85);
             }
         }
-        public int KeyBit86
+        public int DKeyBit86
         {
             get
             {
-                return Bit(InputKey, 86);
+                return DKeyBit(86);
             }
         }
-        public int KeyBit87
+        public int DKeyBit87
         {
             get
             {
-                return Bit(InputKey, 87);
+                return DKeyBit(87);
             }
         }
-        public int KeyBit88
+        public int DKeyBit88
         {
             get
             {
-                return Bit(InputKey, 88);
+                return DKeyBit(88);
             }
         }
-        public int KeyBit89
+        public int DKeyBit89
         {
             get
             {
-                return Bit(InputKey, 89);
+                return DKeyBit(89);
             }
         }
-        public int KeyBit90
+        public int DKeyBit90
         {
             get
             {
-                return Bit(InputKey, 90);
+                return DKeyBit(90);
             }
         }
-        public int KeyBit91
+        public int DKeyBit91
         {
             get
             {
-                return Bit(InputKey, 91);
+                return DKeyBit(91);
             }
         }
-        public int KeyBit92
+        public int DKeyBit92
         {
             get
             {
-                return Bit(InputKey, 92);
+                return DKeyBit(92);
             }
         }
-        public int KeyBit93
+        public int DKeyBit93
         {
             get
             {
-                return Bit(InputKey, 93);
+                return DKeyBit(93);
             }
         }
-        public int KeyBit94
+        public int DKeyBit94
         {
             get
             {
-                return Bit(InputKey, 94);
+                return DKeyBit(94);
             }
         }
-        public int KeyBit95
+        public int DKeyBit95
         {
             get
             {
-                return Bit(InputKey, 95);
+                return DKeyBit(95);
             }
         }
-        public int KeyBit96
+        public int DKeyBit96
         {
             get
             {
-                return Bit(InputKey, 96);
+                return DKeyBit(96);
             }
         }
-        public int KeyBit97
+        public int DKeyBit97
         {
             get
             {
-                return Bit(InputKey, 97);
+                return DKeyBit(97);
             }
         }
-        public int KeyBit98
+        public int DKeyBit98
         {
             get
             {
-                return Bit(InputKey, 98);
+                return DKeyBit(98);
             }
         }
-        public int KeyBit99
+        public int DKeyBit99
         {
             get
             {
-                return Bit(InputKey, 99);
+                return DKeyBit(99);
             }
         }
-        public int KeyBit100
+        public int DKeyBit100
         {
             get
             {
-                return Bit(InputKey, 100);
+                return DKeyBit(100);
             }
         }
-        public int KeyBit101
+        public int DKeyBit101
         {
             get
             {
-                return Bit(InputKey, 101);
+                return DKeyBit(101);
             }
         }
-        public int KeyBit102
+        public int DKeyBit102
         {
             get
             {
-                return Bit(InputKey, 102);
+                return DKeyBit(102);
             }
         }
-        public int KeyBit103
+        public int DKeyBit103
         {
             get
             {
-                return Bit(InputKey, 103);
+                return DKeyBit(103);
             }
         }
-        public int KeyBit104
+        public int DKeyBit104
         {
             get
             {
-                return Bit(InputKey, 104);
+                return DKeyBit(104);
             }
         }
-        public int KeyBit105
+        public int DKeyBit105
         {
             get
             {
-                return Bit(InputKey, 105);
+                return DKeyBit(105);
             }
         }
-        public int KeyBit106
+        public int DKeyBit106
         {
             get
             {
-                return Bit(InputKey, 106);
+                return DKeyBit(106);
             }
         }
-        public int KeyBit107
+        public int DKeyBit107
         {
             get
             {
-                return Bit(InputKey, 107);
+                return DKeyBit(107);
             }
         }
-        public int KeyBit108
+        public int DKeyBit108
         {
             get
             {
-                return Bit(InputKey, 108);
+                return DKeyBit(108);
             }
         }
-        public int KeyBit109
+        public int DKeyBit109
         {
             get
             {
-                return Bit(InputKey, 109);
+                return DKeyBit(109);
             }
         }
-        public int KeyBit110
+        public int DKeyBit110
         {
             get
             {
-                return Bit(InputKey, 110);
+                return DKeyBit(110);
             }
         }
-        public int KeyBit111
+        public int DKeyBit111
         {
             get
             {
-                return Bit(InputKey, 111);
+                return DKeyBit(111);
             }
         }
-        public int KeyBit112
+        public int DKeyBit112
         {
             get
             {
-                return Bit(InputKey, 112);
+                return DKeyBit(112);
             }
         }
-        public int KeyBit113
+        public int DKeyBit113
         {
             get
             {
-                return Bit(InputKey, 113);
+                return DKeyBit(113);
             }
         }
-        public int KeyBit114
+        public int DKeyBit114
         {
             get
             {
-                return Bit(InputKey, 114);
+                return DKeyBit(114);
             }
         }
-        public int KeyBit115
+        public int DKeyBit115
         {
             get
             {
-                return Bit(InputKey, 115);
+                return DKeyBit(115);
             }
         }
-        public int KeyBit116
+        public int DKeyBit116
         {
             get
             {
-                return Bit(InputKey, 116);
+                return DKeyBit(116);
             }
         }
-        public int KeyBit117
+        public int DKeyBit117
         {
             get
             {
-                return Bit(InputKey, 117);
+                return DKeyBit(117);
             }
         }
-        public int KeyBit118
+        public int DKeyBit118
         {
             get
             {
-                return Bit(InputKey, 118);
+                return DKeyBit(118);
             }
         }
-        public int KeyBit119
+        public int DKeyBit119
         {
             get
             {
-                return Bit(InputKey, 119);
+                return DKeyBit(119);
             }
         }
-        public int KeyBit120
+        public int DKeyBit120
         {
             get
             {
-                return Bit(InputKey, 120);
+                return DKeyBit(120);
             }
         }
-        public int KeyBit121
+        public int DKeyBit121
         {
             get
             {
-                return Bit(InputKey, 121);
+                return DKeyBit(121);
             }
         }
-        public int KeyBit122
+        public int DKeyBit122
         {
             get
             {
-                return Bit(InputKey, 122);
+                return DKeyBit(122);
             }
         }
-        public int KeyBit123
+        public int DKeyBit123
         {
             get
             {
-                return Bit(InputKey, 123);
+                return DKeyBit(123);
             }
         }
-        public int KeyBit124
+        public int DKeyBit124
         {
             get
             {
-                return Bit(InputKey, 124);
+                return DKeyBit(124);
             }
         }
-        public int KeyBit125
+        public int DKeyBit125
         {
             get
             {
-                return Bit(InputKey, 125);
+                return DKeyBit(125);
             }
         }
-        public int KeyBit126
+        public int DKeyBit126
         {
             get
             {
-                return Bit(InputKey, 126);
+                return DKeyBit(126);
             }
         }
-        public int KeyBit127
+        public int DKeyBit127
         {
             get
             {
-                return Bit(InputKey, 127);
+                return DKeyBit(127);
             }
         }
-        public int KeyBit128
+        public int DKeyBit128
         {
             get
             {
-                return Bit(InputKey, 128);
+                return DKeyBit(128);
             }
         }
-        public int KeyBit129
+        public int DKeyBit129
         {
             get
             {
-                return Bit(InputKey, 129);
+                return DKeyBit(129);
             }
         }
-        public int KeyBit130
+        public int DKeyBit130
         {
             get
             {
-                return Bit(InputKey, 130);
+                return DKeyBit(130);
             }
         }
-        public int KeyBit131
+        public int DKeyBit131
         {
             get
             {
-                return Bit(InputKey, 131);
+                return DKeyBit(131);
             }
         }
-        public int KeyBit132
+        public int DKeyBit132
         {
             get
             {
-                return Bit(InputKey, 132);
+                return DKeyBit(132);
             }
         }
-        public int KeyBit133
+        public int DKeyBit133
         {
             get
             {
-                return Bit(InputKey, 133);
+                return DKeyBit(133);
             }
         }
-        public int KeyBit134
+        public int DKeyBit134
         {
             get
             {
-                return Bit(InputKey, 134);
+                return DKeyBit(134);
             }
         }
-        public int KeyBit135
+        public int DKeyBit135
         {
             get
             {
-                return Bit(InputKey, 135);
+                return DKeyBit(135);
             }
         }
-        public int KeyBit136
+        public int DKeyBit136
         {
             get
             {
-                return Bit(InputKey, 136);
+                return DKeyBit(136);
             }
         }
-        public int KeyBit137
+        public int DKeyBit137
         {
             get
             {
-                return Bit(InputKey, 137);
+                return DKeyBit(137);
             }
         }
-        public int KeyBit138
+        public int DKeyBit138
         {
             get
             {
-                return Bit(InputKey, 138);
+                return DKeyBit(138);
             }
         }
-        public int KeyBit139
+        public int DKeyBit139
         {
             get
             {
-                return Bit(InputKey, 139);
+                return DKeyBit(139);
             }
         }
-        public int KeyBit140
+        public int DKeyBit140
         {
             get
             {
-                return Bit(InputKey, 140);
+                return DKeyBit(140);
             }
         }
-        public int KeyBit141
+        public int DKeyBit141
         {
             get
             {
-                return Bit(InputKey, 141);
+                return DKeyBit(141);
             }
         }
-        public int KeyBit142
+        public int DKeyBit142
         {
             get
             {
-                return Bit(InputKey, 142);
+                return DKeyBit(142);
             }
         }
-        public int KeyBit143
+        public int DKeyBit143
         {
             get
             {
-                return Bit(InputKey, 143);
+                return DKeyBit(143);
             }
         }
-        public int KeyBit144
+        public int DKeyBit144
         {
             get
             {
-                return Bit(InputKey, 144);
+                return DKeyBit(144);
             }
         }
-        public int KeyBit145
+        public int DKeyBit145
         {
             get
             {
-                return Bit(InputKey, 145);
+                return DKeyBit(145);
             }
         }
-        public int KeyBit146
+        public int DKeyBit146
         {
             get
             {
-                return Bit(InputKey, 146);
+                return DKeyBit(146);
             }
         }
-        public int KeyBit147
+        public int DKeyBit147
         {
             get
             {
-                return Bit(InputKey, 147);
+                return DKeyBit(147);
             }
         }
-        public int KeyBit148
+        public int DKeyBit148
         {
             get
             {
-                return Bit(InputKey, 148);
+                return DKeyBit(148);
             }
         }
-        public int KeyBit149
+        public int DKeyBit149
         {
             get
             {
-                return Bit(InputKey, 149);
+                return DKeyBit(149);
             }
         }
-        public int KeyBit150
+        public int DKeyBit150
         {
             get
             {
-                return Bit(InputKey, 150);
+                return DKeyBit(150);
             }
         }
-        public int KeyBit151
+        public int DKeyBit151
         {
             get
             {
-                return Bit(InputKey, 151);
+                return DKeyBit(151);
             }
         }
-        public int KeyBit152
+        public int DKeyBit152
         {
             get
             {
-                return Bit(InputKey, 152);
+                return DKeyBit(152);
             }
         }
-        public int KeyBit153
+        public int DKeyBit153
         {
             get
             {
-                return Bit(InputKey, 153);
+                return DKeyBit(153);
             }
         }
-        public int KeyBit154
+        public int DKeyBit154
         {
             get
             {
-                return Bit(InputKey, 154);
+                return DKeyBit(154);
             }
         }
-        public int KeyBit155
+        public int DKeyBit155
         {
             get
             {
-                return Bit(InputKey, 155);
+                return DKeyBit(155);
             }
         }
-        public int KeyBit156
+        public int DKeyBit156
         {
             get
             {
-                return Bit(InputKey, 156);
+                return DKeyBit(156);
             }
         }
-        public int KeyBit157
+        public int DKeyBit157
         {
             get
             {
-                return Bit(InputKey, 157);
+                return DKeyBit(157);
             }
         }
-        public int KeyBit158
+        public int DKeyBit158
         {
             get
             {
-                return Bit(InputKey, 158);
+                return DKeyBit(158);
             }
         }
-        public int KeyBit159
+        public int DKeyBit159
         {
             get
             {
-                return Bit(InputKey, 159);
+                return DKeyBit(159);
             }
         }
-        public int KeyBit160
+        public int DKeyBit160
         {
             get
             {
-                return Bit(InputKey, 160);
+                return DKeyBit(160);
             }
         }
-        public int KeyBit161
+        public int DKeyBit161
         {
             get
             {
-                return Bit(InputKey, 161);
+                return DKeyBit(161);
             }
         }
-        public int KeyBit162
+        public int DKeyBit162
         {
             get
             {
-                return Bit(InputKey, 162);
+                return DKeyBit(162);
             }
         }
-        public int KeyBit163
+        public int DKeyBit163
         {
             get
             {
-                return Bit(InputKey, 163);
+                return DKeyBit(163);
             }
         }
-        public int KeyBit164
+        public int DKeyBit164
         {
             get
             {
-                return Bit(InputKey, 164);
+                return DKeyBit(164);
             }
         }
-        public int KeyBit165
+        public int DKeyBit165
         {
             get
             {
-                return Bit(InputKey, 165);
+                return DKeyBit(165);
             }
         }
-        public int KeyBit166
+        public int DKeyBit166
         {
             get
             {
-                return Bit(InputKey, 166);
+                return DKeyBit(166);
             }
         }
-        public int KeyBit167
+        public int DKeyBit167
         {
             get
             {
-                return Bit(InputKey, 167);
+                return DKeyBit(167);
             }
         }
-        public int KeyBit168
+        public int DKeyBit168
         {
             get
             {
-                return Bit(InputKey, 168);
+                return DKeyBit(168);
             }
         }
-        public int KeyBit169
+        public int DKeyBit169
         {
             get
             {
-                return Bit(InputKey, 169);
+                return DKeyBit(169);
             }
         }
-        public int KeyBit170
+        public int DKeyBit170
         {
             get
             {
-                return Bit(InputKey, 170);
+                return DKeyBit(170);
             }
         }
-        public int KeyBit171
+        public int DKeyBit171
         {
             get
             {
-                return Bit(InputKey, 171);
+                return DKeyBit(171);
             }
         }
-        public int KeyBit172
+        public int DKeyBit172
         {
             get
             {
-                return Bit(InputKey, 172);
+                return DKeyBit(172);
             }
         }
-        public int KeyBit173
+        public int DKeyBit173
         {
             get
             {
-                return Bit(InputKey, 173);
+                return DKeyBit(173);
             }
         }
-        public int KeyBit174
+        public int DKeyBit174
         {
             get
             {
-                return Bit(InputKey, 174);
+                return DKeyBit(174);
             }
         }
-        public int KeyBit175
+        public int DKeyBit175
         {
             get
             {
-                return Bit(InputKey, 175);
+                return DKeyBit(175);
             }
         }
-        public int KeyBit176
+        public int DKeyBit176
         {
             get
             {
-                return Bit(InputKey, 176);
+                return DKeyBit(176);
             }
         }
-        public int KeyBit177
+        public int DKeyBit177
         {
             get
             {
-                return Bit(InputKey, 177);
+                return DKeyBit(177);
             }
         }
-        public int KeyBit178
+        public int DKeyBit178
         {
             get
             {
-                return Bit(InputKey, 178);
+                return DKeyBit(178);
             }
         }
-        public int KeyBit179
+        public int DKeyBit179
         {
             get
             {
-                return Bit(InputKey, 179);
+                return DKeyBit(179);
             }
         }
-        public int KeyBit180
+        public int DKeyBit180
         {
             get
             {
-                return Bit(InputKey, 180);
+                return DKeyBit(180);
             }
         }
-        public int KeyBit181
+        public int DKeyBit181
         {
             get
             {
-                return Bit(InputKey, 181);
+                return DKeyBit(181);
             }
         }
-        public int KeyBit182
+        public int DKeyBit182
         {
             get
             {
-                return Bit(InputKey, 182);
+                return DKeyBit(182);
             }
         }
-        public int KeyBit183
+        public int DKeyBit183
         {
             get
             {
-                return Bit(InputKey, 183);
+                return DKeyBit(183);
             }
         }
-        public int KeyBit184
+        public int DKeyBit184
         {
             get
             {
-                return Bit(InputKey, 184);
+                return DKeyBit(184);
             }
         }
-        public int KeyBit185
+        public int DKeyBit185
         {
             get
             {
-                return Bit(InputKey, 185);
+                return DKeyBit(185);
             }
         }
-        public int KeyBit186
+        public int DKeyBit186
         {
             get
             {
-                return Bit(InputKey, 186);
+                return DKeyBit(186);
             }
         }
-        public int KeyBit187
+        public int DKeyBit187
         {
             get
             {
-                return Bit(InputKey, 187);
+                return DKeyBit(187);
             }
         }
-        public int KeyBit188
+        public int DKeyBit188
         {
             get
             {
-                return Bit(InputKey, 188);
+                return DKeyBit(188);
             }
         }
-        public int KeyBit189
+        public int DKeyBit189
         {
             get
             {
-                return Bit(InputKey, 189);
+                return DKeyBit(189);
             }
         }
-        public int KeyBit190
+        public int DKeyBit190
         {
             get
             {
-                return Bit(InputKey, 190);
+                return DKeyBit(190);
             }
         }
-        public int KeyBit191
+        public int DKeyBit191
         {
             get
             {
-                return Bit(InputKey, 191);
+                return DKeyBit(191);
             }
         }
-        public int KeyBit192
+        public int DKeyBit192
         {
             get
             {
-                return Bit(InputKey, 192);
+                return DKeyBit(192);
             }
         }
-        public int KeyBit193
+        public int DKeyBit193
         {
             get
             {
-                return Bit(InputKey, 193);
+                return DKeyBit(193);
             }
         }
-        public int KeyBit194
+        public int DKeyBit194
         {
             get
             {
-                return Bit(InputKey, 194);
+                return DKeyBit(194);
             }
         }
-        public int KeyBit195
+        public int DKeyBit195
         {
             get
             {
-                return Bit(InputKey, 195);
+                return DKeyBit(195);
             }
         }
-        public int KeyBit196
+        public int DKeyBit196
         {
             get
             {
-                return Bit(InputKey, 196);
+                return DKeyBit(196);
             }
         }
-        public int KeyBit197
+        public int DKeyBit197
         {
             get
             {
-                return Bit(InputKey, 197);
+                return DKeyBit(197);
             }
         }
-        public int KeyBit198
+        public int DKeyBit198
         {
             get
             {
-                return Bit(InputKey, 198);
+                return DKeyBit(198);
             }
         }
-        public int KeyBit199
+        public int DKeyBit199
         {
             get
             {
-                return Bit(InputKey, 199);
+                return DKeyBit(199);
             }
         }
-        public int KeyBit200
+        public int DKeyBit200
         {
             get
             {
-                return Bit(InputKey, 200);
+                return DKeyBit(200);
             }
         }
-        public int KeyBit201
+        public int DKeyBit201
         {
             get
             {
-                return Bit(InputKey, 201);
+                return DKeyBit(201);
             }
         }
-        public int KeyBit202
+        public int DKeyBit202
         {
             get
             {
-                return Bit(InputKey, 202);
+                return DKeyBit(202);
             }
         }
-        public int KeyBit203
+        public int DKeyBit203
         {
             get
             {
-                return Bit(InputKey, 203);
+                return DKeyBit(203);
             }
         }
-        public int KeyBit204
+        public int DKeyBit204
         {
             get
             {
-                return Bit(InputKey, 204);
+                return DKeyBit(204);
             }
         }
-        public int KeyBit205
+        public int DKeyBit205
         {
             get
             {
-                return Bit(InputKey, 205);
+                return DKeyBit(205);
             }
         }
-        public int KeyBit206
+        public int DKeyBit206
         {
             get
             {
-                return Bit(InputKey, 206);
+                return DKeyBit(206);
             }
         }
-        public int KeyBit207
+        public int DKeyBit207
         {
             get
             {
-                return Bit(InputKey, 207);
+                return DKeyBit(207);
             }
         }
-        public int KeyBit208
+        public int DKeyBit208
         {
             get
             {
-                return Bit(InputKey, 208);
+                return DKeyBit(208);
             }
         }
-        public int KeyBit209
+        public int DKeyBit209
         {
             get
             {
-                return Bit(InputKey, 209);
+                return DKeyBit(209);
             }
         }
-        public int KeyBit210
+        public int DKeyBit210
         {
             get
             {
-                return Bit(InputKey, 210);
+                return DKeyBit(210);
             }
         }
-        public int KeyBit211
+        public int DKeyBit211
         {
             get
             {
-                return Bit(InputKey, 211);
+                return DKeyBit(211);
             }
         }
-        public int KeyBit212
+        public int DKeyBit212
         {
             get
             {
-                return Bit(InputKey, 212);
+                return DKeyBit(212);
             }
         }
-        public int KeyBit213
+        public int DKeyBit213
         {
             get
             {
-                return Bit(InputKey, 213);
+                return DKeyBit(213);
             }
         }
-        public int KeyBit214
+        public int DKeyBit214
         {
             get
             {
-                return Bit(InputKey, 214);
+                return DKeyBit(214);
             }
         }
-        public int KeyBit215
+        public int DKeyBit215
         {
             get
             {
-                return Bit(InputKey, 215);
+                return DKeyBit(215);
             }
         }
-        public int KeyBit216
+        public int DKeyBit216
         {
             get
             {
-                return Bit(InputKey, 216);
+                return DKeyBit(216);
             }
         }
-        public int KeyBit217
+        public int DKeyBit217
         {
             get
             {
-                return Bit(InputKey, 217);
+                return DKeyBit(217);
             }
         }
-        public int KeyBit218
+        public int DKeyBit218
         {
             get
             {
-                return Bit(InputKey, 218);
+                return DKeyBit(218);
             }
         }
-        public int KeyBit219
+        public int DKeyBit219
         {
             get
             {
-                return Bit(InputKey, 219);
+                return DKeyBit(219);
             }
         }
-        public int KeyBit220
+        public int DKeyBit220
         {
             get
             {
-                return Bit(InputKey, 220);
+                return DKeyBit(220);
             }
         }
-        public int KeyBit221
+        public int DKeyBit221
         {
             get
             {
-                return Bit(InputKey, 221);
+                return DKeyBit(221);
             }
         }
-        public int KeyBit222
+        public int DKeyBit222
         {
             get
             {
-                return Bit(InputKey, 222);
+                return DKeyBit(222);
             }
         }
-        public int KeyBit223
+        public int DKeyBit223
         {
             get
             {
-                return Bit(InputKey, 223);
+                return DKeyBit(223);
             }
         }
-        public int KeyBit224
+        public int DKeyBit224
         {
             get
             {
-                return Bit(InputKey, 224);
+                return DKeyBit(224);
             }
         }
-        public int KeyBit225
+        public int DKeyBit225
         {
             get
             {
-                return Bit(InputKey, 225);
+                return DKeyBit(225);
             }
         }
-        public int KeyBit226
+        public int DKeyBit226
         {
             get
             {
-                return Bit(InputKey, 226);
+                return DKeyBit(226);
             }
         }
-        public int KeyBit227
+        public int DKeyBit227
         {
             get
             {
-                return Bit(InputKey, 227);
+                return DKeyBit(227);
             }
         }
-        public int KeyBit228
+        public int DKeyBit228
         {
             get
             {
-                return Bit(InputKey, 228);
+                return DKeyBit(228);
             }
         }
-        public int KeyBit229
+        public int DKeyBit229
         {
             get
             {
-                return Bit(InputKey, 229);
+                return DKeyBit(229);
             }
         }
-        public int KeyBit230
+        public int DKeyBit230
         {
             get
             {
-                return Bit(InputKey, 230);
+                return DKeyBit(230);
             }
         }
-        public int KeyBit231
+        public int DKeyBit231
         {
             get
             {
-                return Bit(InputKey, 231);
+                return DKeyBit(231);
             }
         }
-        public int KeyBit232
+        public int DKeyBit232
         {
             get
             {
-                return Bit(InputKey, 232);
+                return DKeyBit(232);
             }
         }
-        public int KeyBit233
+        public int DKeyBit233
         {
             get
             {
-                return Bit(InputKey, 233);
+                return DKeyBit(233);
             }
         }
-        public int KeyBit234
+        public int DKeyBit234
         {
             get
             {
-                return Bit(InputKey, 234);
+                return DKeyBit(234);
             }
         }
-        public int KeyBit235
+        public int DKeyBit235
         {
             get
             {
-                return Bit(InputKey, 235);
+                return DKeyBit(235);
             }
         }
-        public int KeyBit236
+        public int DKeyBit236
         {
             get
             {
-                return Bit(InputKey, 236);
+                return DKeyBit(236);
             }
         }
-        public int KeyBit237
+        public int DKeyBit237
         {
             get
             {
-                return Bit(InputKey, 237);
+                return DKeyBit(237);
             }
         }
-        public int KeyBit238
+        public int DKeyBit238
         {
             get
             {
-                return Bit(InputKey, 238);
+                return DKeyBit(238);
             }
         }
-        public int KeyBit239
+        public int DKeyBit239
         {
             get
             {
-                return Bit(InputKey, 239);
+                return DKeyBit(239);
             }
         }
-        public int KeyBit240
+        public int DKeyBit240
         {
             get
             {
-                return Bit(InputKey, 240);
+                return DKeyBit(240);
             }
         }
-        public int KeyBit241
+        public int DKeyBit241
         {
             get
             {
-                return Bit(InputKey, 241);
+                return DKeyBit(241);
             }
         }
-        public int KeyBit242
+        public int DKeyBit242
         {
             get
             {
-                return Bit(InputKey, 242);
+                return DKeyBit(242);
             }
         }
-        public int KeyBit243
+        public int DKeyBit243
         {
             get
             {
-                return Bit(InputKey, 243);
+                return DKeyBit(243);
             }
         }
-        public int KeyBit244
+        public int DKeyBit244
         {
             get
             {
-                return Bit(InputKey, 244);
+                return DKeyBit(244);
             }
         }
-        public int KeyBit245
+        public int DKeyBit245
         {
             get
             {
-                return Bit(InputKey, 245);
+                return DKeyBit(245);
             }
         }
-        public int KeyBit246
+        public int DKeyBit246
         {
             get
             {
-                return Bit(InputKey, 246);
+                return DKeyBit(246);
             }
         }
-        public int KeyBit247
+        public int DKeyBit247
         {
             get
             {
-                return Bit(InputKey, 247);
+                return DKeyBit(247);
             }
         }
-        public int KeyBit248
+        public int DKeyBit248
         {
             get
             {
-                return Bit(InputKey, 248);
+                return DKeyBit(248);
             }
         }
-        public int KeyBit249
+        public int DKeyBit249
         {
             get
             {
-                return Bit(InputKey, 249);
+                return DKeyBit(249);
             }
         }
-        public int KeyBit250
+        public int DKeyBit250
         {
             get
             {
-                return Bit(InputKey, 250);
+                return DKeyBit(250);
             }
         }
-        public int KeyBit251
+        public int DKeyBit251
         {
             get
             {
-                return Bit(InputKey, 251);
+                return DKeyBit(251);
             }
         }
-        public int KeyBit252
+        public int DKeyBit252
         {
             get
             {
-                return Bit(InputKey, 252);
+                return DKeyBit(252);
             }
         }
-        public int KeyBit253
+        public int DKeyBit253
         {
             get
             {
-                return Bit(InputKey, 253);
+                return DKeyBit(253);
             }
         }
-        public int KeyBit254
+        public int DKeyBit254
         {
             get
             {
-                return Bit(InputKey, 254);
+                return DKeyBit(254);
             }
         }
-        public int KeyBit255
+        public int DKeyBit255
         {
             get
             {
-                return Bit(InputKey, 255);
+                return DKeyBit(255);
             }
         }
         #endregion
@@ -1839,11 +1849,11 @@ namespace Cryptool.Plugins.ChaCha
             Debug.Assert(0 <= nibbleIndex, $"nibbleIndex ({nibbleIndex}) was lower than zero.");
             Debug.Assert(nibbleIndex < 64, $"nibbleIndex ({nibbleIndex}) was higher than 63.");
             // most significant bit
-            int msb = Bit(InputKey, nibbleIndex * 4);
-            int a = Bit(InputKey, (nibbleIndex * 4) + 1);
-            int b = Bit(InputKey, (nibbleIndex * 4) + 2);
+            int msb = Bit(DiffusionKey, nibbleIndex * 4);
+            int a = Bit(DiffusionKey, (nibbleIndex * 4) + 1);
+            int b = Bit(DiffusionKey, (nibbleIndex * 4) + 2);
             // least significant bit
-            int lsb = Bit(InputKey, (nibbleIndex * 4) + 3);
+            int lsb = Bit(DiffusionKey, (nibbleIndex * 4) + 3);
             return (msb << 3) + (a << 2) + (b << 1) + lsb;
         }
         public string DKeyNibbleHex(int nibbleIndex)
@@ -2305,7 +2315,7 @@ namespace Cryptool.Plugins.ChaCha
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
-        private TextBlock diffusionKey;
+        private TextBlock diffusionKeyTextBlock;
         private Button toggleShowDiffusion;
         private Grid diffusionGrid;
 
@@ -2355,7 +2365,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             toggleShowDiffusion = pres.ToggleShowDiffusion;
             diffusionGrid = pres.DiffusionGrid;
-            diffusionKey = pres.DiffusionKey;
+            diffusionKeyTextBlock = pres.DiffusionKeyTextBlock;
+            pres.DiffusionKey = (byte[])pres.InputKey.Clone();
             InitToggleDiffusionButton();
             InitDiffusionKey();
             InitDiffusionGridLayout();
@@ -2365,7 +2376,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             Visibility set = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
             diffusionGrid.Visibility = set;
-            diffusionKey.Visibility = set;
+            diffusionKeyTextBlock.Visibility = set;
         }
         private void InitToggleDiffusionButton()
         {
@@ -2385,7 +2396,7 @@ namespace Cryptool.Plugins.ChaCha
             onHover.Setters.Add(markNibble);
 
             DataTrigger onButtonHover = new DataTrigger() {
-                Binding = new Binding() { ElementName = $"KeyBit{nibbleIndex}Button", Path = new PropertyPath("IsMouseOver") },
+                Binding = new Binding() { ElementName = $"DKeyBit{nibbleIndex}Button", Path = new PropertyPath("IsMouseOver") },
                 Value = true
             };
             onButtonHover.Setters.Add(markNibble);
@@ -2401,7 +2412,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < (keyIs32Byte ? 32 : 16) * 2; ++i)
             {
                 TextBlock nibbleBox = CreateDiffusionKeyNibbleTextBox(i);
-                diffusionKey.Inlines.Add(nibbleBox);
+                diffusionKeyTextBlock.Inlines.Add(nibbleBox);
             }
         }
         private void InitDiffusionGridLayout()
@@ -2423,9 +2434,9 @@ namespace Cryptool.Plugins.ChaCha
             // Bit indices start at 0 on the most significant bit which is in the string representation in big endian notation.
             // This means we start counting from zero at the left but the zero-th bit is - maybe a bit unintuitively - the most significant bit.
             Button b = new Button() { Height = 16, FontSize = 10 };
-            b.SetBinding(Button.ContentProperty, new Binding($"KeyBit{bitIndex}"));
+            b.SetBinding(Button.ContentProperty, new Binding($"DKeyBit{bitIndex}"));
             b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
-            b.Name = $"KeyBit{bitIndex}Button";
+            b.Name = $"DKeyBit{bitIndex}Button";
             return b;
         }
         private void InitDiffusionFlipBitButtons()

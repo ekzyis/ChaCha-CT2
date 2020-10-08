@@ -491,7 +491,7 @@
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
               <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-                <TextBlock Visibility="Collapsed" Style="{StaticResource hex}" Margin="2,13,0,0" Name="DiffusionKey"/>
+                <TextBlock Visibility="Collapsed" Style="{StaticResource hex}" Margin="2,13,0,0" Name="DiffusionKeyTextBlock"/>
                 <!-- Diffusion check boxes -->
                 <Grid Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Name="DiffusionGrid">
                   <!-- Diffusion grid will be initialized in code-behind -->
