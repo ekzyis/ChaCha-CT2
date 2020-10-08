@@ -21,10 +21,12 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 0; i < 256; ++i)
                 {
                     OnPropertyChanged($"DKeyBit{i}");
+                    OnPropertyChanged($"DKeyBit{i}Flipped");
                 }
                 for (int i = 0; i < 64; ++i)
                 {
                     OnPropertyChanged($"DKeyNibble{i}");
+                    OnPropertyChanged($"DKeyNibble{i}Flipped");
                     OnPropertyChanged($"DKeyNibbleHex{i}");
                 }
             }
