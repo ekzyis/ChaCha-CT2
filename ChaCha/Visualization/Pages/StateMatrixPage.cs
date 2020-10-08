@@ -48,8 +48,8 @@ namespace Cryptool.Plugins.ChaCha
         public void NotifyDiffusionBitChanged(int bitIndex)
         {
             OnPropertyChanged($"DKeyBit{bitIndex}");
-            OnPropertyChanged($"DKeyNibble{bitIndex * 4}");
-            OnPropertyChanged($"DKeyNibbleHex{bitIndex * 4}");
+            OnPropertyChanged($"DKeyNibble{bitIndex / 4}");
+            OnPropertyChanged($"DKeyNibbleHex{bitIndex / 4}");
         }
         public void SetDKeyBit(int bitIndex)
         {
