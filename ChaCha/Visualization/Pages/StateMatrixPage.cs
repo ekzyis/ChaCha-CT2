@@ -35,11 +35,30 @@ namespace Cryptool.Plugins.ChaCha
         {
             Debug.Assert(0 <= bitIndex, $"bitindex ({bitIndex}) was lower than zero.");
             Debug.Assert(bitIndex < 256, $"bitIndex ({bitIndex}) was higher than 255.");
-            int byteIndex = bitIndex / 8;
-            int bitIndexInByte = 7 - (bitIndex % 8);
+            (int byteIndex, int bitIndexInByte) = GetByteArrayIndices(bitIndex);
             return Bit(bytes[byteIndex], bitIndexInByte);
         }
-        private int DKeyBit(int bitIndex)
+        private (int, int) GetByteArrayIndices(int bitIndex)
+        {
+            int byteIndex = bitIndex / 8;
+            int bitIndexInByte = 7 - (bitIndex % 8);
+            return (byteIndex, bitIndexInByte);
+        }
+        public void SetDKeyBit(int bitIndex)
+        {
+            Debug.Assert(0 <= bitIndex, $"bitindex ({bitIndex}) was lower than zero.");
+            Debug.Assert(bitIndex < 256, $"bitIndex ({bitIndex}) was higher than 255.");
+            (int byteIndex, int bitIndexInByte) = GetByteArrayIndices(bitIndex);
+            DiffusionKey[byteIndex] = (byte)(DiffusionKey[byteIndex] | (1 << bitIndexInByte));
+        }
+        public void UnsetDKeyBit(int bitIndex)
+        {
+            Debug.Assert(0 <= bitIndex, $"bitindex ({bitIndex}) was lower than zero.");
+            Debug.Assert(bitIndex < 256, $"bitIndex ({bitIndex}) was higher than 255.");
+            (int byteIndex, int bitIndexInByte) = GetByteArrayIndices(bitIndex);
+            DiffusionKey[byteIndex] = (byte)(DiffusionKey[byteIndex] & ~(1 << bitIndexInByte));
+        }
+        public int DKeyBit(int bitIndex)
         {
             return Bit(DiffusionKey, bitIndex);
         }
@@ -2429,6 +2448,18 @@ namespace Cryptool.Plugins.ChaCha
                 diffusionGrid.RowDefinitions.Add(new RowDefinition());
             }
         }
+        private void FlipDiffusionBit(int bitIndex)
+        {
+            int bit = pres.DKeyBit(bitIndex);
+            if(bit == 1)
+            {
+                pres.UnsetDKeyBit(bitIndex);
+            }
+            else
+            {
+                pres.SetDKeyBit(bitIndex);
+            }
+        }
         private Button CreateDiffusionButton(int bitIndex)
         {
             // Bit indices start at 0 on the most significant bit which is in the string representation in big endian notation.
@@ -2437,6 +2468,7 @@ namespace Cryptool.Plugins.ChaCha
             b.SetBinding(Button.ContentProperty, new Binding($"DKeyBit{bitIndex}"));
             b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
             b.Name = $"DKeyBit{bitIndex}Button";
+            b.Click += (obj, e) => FlipDiffusionBit(bitIndex);
             return b;
         }
         private void InitDiffusionFlipBitButtons()
