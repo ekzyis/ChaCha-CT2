@@ -45,12 +45,19 @@ namespace Cryptool.Plugins.ChaCha
             int bitIndexInByte = 7 - (bitIndex % 8);
             return (byteIndex, bitIndexInByte);
         }
+        public void NotifyDiffusionBitChanged(int bitIndex)
+        {
+            OnPropertyChanged($"DKeyBit{bitIndex}");
+            OnPropertyChanged($"DKeyNibble{bitIndex * 4}");
+            OnPropertyChanged($"DKeyNibbleHex{bitIndex * 4}");
+        }
         public void SetDKeyBit(int bitIndex)
         {
             Debug.Assert(0 <= bitIndex, $"bitindex ({bitIndex}) was lower than zero.");
             Debug.Assert(bitIndex < 256, $"bitIndex ({bitIndex}) was higher than 255.");
             (int byteIndex, int bitIndexInByte) = GetByteArrayIndices(bitIndex);
             DiffusionKey[byteIndex] = (byte)(DiffusionKey[byteIndex] | (1 << bitIndexInByte));
+            NotifyDiffusionBitChanged(bitIndex);
         }
         public void UnsetDKeyBit(int bitIndex)
         {
@@ -58,6 +65,7 @@ namespace Cryptool.Plugins.ChaCha
             Debug.Assert(bitIndex < 256, $"bitIndex ({bitIndex}) was higher than 255.");
             (int byteIndex, int bitIndexInByte) = GetByteArrayIndices(bitIndex);
             DiffusionKey[byteIndex] = (byte)(DiffusionKey[byteIndex] & ~(1 << bitIndexInByte));
+            NotifyDiffusionBitChanged(bitIndex);
         }
         public int DKeyBit(int bitIndex)
         {
