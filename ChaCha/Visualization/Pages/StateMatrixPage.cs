@@ -51,6 +51,7 @@ namespace Cryptool.Plugins.ChaCha
             OnPropertyChanged($"DKeyBit{bitIndex}");
             OnPropertyChanged($"DKeyBit{bitIndex}Flipped");
             OnPropertyChanged($"DKeyNibble{bitIndex / 4}");
+            OnPropertyChanged($"DKeyNibble{bitIndex / 4}Flipped");
             OnPropertyChanged($"DKeyNibbleHex{bitIndex / 4}");
         }
         public void SetDKeyBit(int bitIndex)
@@ -4136,6 +4137,457 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #endregion
+
+        #region Diffusion Key Nibbles Flipped
+        public bool DKeyNibble0Flipped
+        {
+            get
+            {
+                return DKeyBit0Flipped || DKeyBit1Flipped || DKeyBit2Flipped || DKeyBit3Flipped;
+            }
+        }
+        public bool DKeyNibble1Flipped
+        {
+            get
+            {
+                return DKeyBit4Flipped || DKeyBit5Flipped || DKeyBit6Flipped || DKeyBit7Flipped;
+            }
+        }
+        public bool DKeyNibble2Flipped
+        {
+            get
+            {
+                return DKeyBit8Flipped || DKeyBit9Flipped || DKeyBit10Flipped || DKeyBit11Flipped;
+            }
+        }
+        public bool DKeyNibble3Flipped
+        {
+            get
+            {
+                return DKeyBit12Flipped || DKeyBit13Flipped || DKeyBit14Flipped || DKeyBit15Flipped;
+            }
+        }
+        public bool DKeyNibble4Flipped
+        {
+            get
+            {
+                return DKeyBit16Flipped || DKeyBit17Flipped || DKeyBit18Flipped || DKeyBit19Flipped;
+            }
+        }
+        public bool DKeyNibble5Flipped
+        {
+            get
+            {
+                return DKeyBit20Flipped || DKeyBit21Flipped || DKeyBit22Flipped || DKeyBit23Flipped;
+            }
+        }
+        public bool DKeyNibble6Flipped
+        {
+            get
+            {
+                return DKeyBit24Flipped || DKeyBit25Flipped || DKeyBit26Flipped || DKeyBit27Flipped;
+            }
+        }
+        public bool DKeyNibble7Flipped
+        {
+            get
+            {
+                return DKeyBit28Flipped || DKeyBit29Flipped || DKeyBit30Flipped || DKeyBit31Flipped;
+            }
+        }
+        public bool DKeyNibble8Flipped
+        {
+            get
+            {
+                return DKeyBit32Flipped || DKeyBit33Flipped || DKeyBit34Flipped || DKeyBit35Flipped;
+            }
+        }
+        public bool DKeyNibble9Flipped
+        {
+            get
+            {
+                return DKeyBit36Flipped || DKeyBit37Flipped || DKeyBit38Flipped || DKeyBit39Flipped;
+            }
+        }
+        public bool DKeyNibble10Flipped
+        {
+            get
+            {
+                return DKeyBit40Flipped || DKeyBit41Flipped || DKeyBit42Flipped || DKeyBit43Flipped;
+            }
+        }
+        public bool DKeyNibble11Flipped
+        {
+            get
+            {
+                return DKeyBit44Flipped || DKeyBit45Flipped || DKeyBit46Flipped || DKeyBit47Flipped;
+            }
+        }
+        public bool DKeyNibble12Flipped
+        {
+            get
+            {
+                return DKeyBit48Flipped || DKeyBit49Flipped || DKeyBit50Flipped || DKeyBit51Flipped;
+            }
+        }
+        public bool DKeyNibble13Flipped
+        {
+            get
+            {
+                return DKeyBit52Flipped || DKeyBit53Flipped || DKeyBit54Flipped || DKeyBit55Flipped;
+            }
+        }
+        public bool DKeyNibble14Flipped
+        {
+            get
+            {
+                return DKeyBit56Flipped || DKeyBit57Flipped || DKeyBit58Flipped || DKeyBit59Flipped;
+            }
+        }
+        public bool DKeyNibble15Flipped
+        {
+            get
+            {
+                return DKeyBit60Flipped || DKeyBit61Flipped || DKeyBit62Flipped || DKeyBit63Flipped;
+            }
+        }
+        public bool DKeyNibble16Flipped
+        {
+            get
+            {
+                return DKeyBit64Flipped || DKeyBit65Flipped || DKeyBit66Flipped || DKeyBit67Flipped;
+            }
+        }
+        public bool DKeyNibble17Flipped
+        {
+            get
+            {
+                return DKeyBit68Flipped || DKeyBit69Flipped || DKeyBit70Flipped || DKeyBit71Flipped;
+            }
+        }
+        public bool DKeyNibble18Flipped
+        {
+            get
+            {
+                return DKeyBit72Flipped || DKeyBit73Flipped || DKeyBit74Flipped || DKeyBit75Flipped;
+            }
+        }
+        public bool DKeyNibble19Flipped
+        {
+            get
+            {
+                return DKeyBit76Flipped || DKeyBit77Flipped || DKeyBit78Flipped || DKeyBit79Flipped;
+            }
+        }
+        public bool DKeyNibble20Flipped
+        {
+            get
+            {
+                return DKeyBit80Flipped || DKeyBit81Flipped || DKeyBit82Flipped || DKeyBit83Flipped;
+            }
+        }
+        public bool DKeyNibble21Flipped
+        {
+            get
+            {
+                return DKeyBit84Flipped || DKeyBit85Flipped || DKeyBit86Flipped || DKeyBit87Flipped;
+            }
+        }
+        public bool DKeyNibble22Flipped
+        {
+            get
+            {
+                return DKeyBit88Flipped || DKeyBit89Flipped || DKeyBit90Flipped || DKeyBit91Flipped;
+            }
+        }
+        public bool DKeyNibble23Flipped
+        {
+            get
+            {
+                return DKeyBit92Flipped || DKeyBit93Flipped || DKeyBit94Flipped || DKeyBit95Flipped;
+            }
+        }
+        public bool DKeyNibble24Flipped
+        {
+            get
+            {
+                return DKeyBit96Flipped || DKeyBit97Flipped || DKeyBit98Flipped || DKeyBit99Flipped;
+            }
+        }
+        public bool DKeyNibble25Flipped
+        {
+            get
+            {
+                return DKeyBit100Flipped || DKeyBit101Flipped || DKeyBit102Flipped || DKeyBit103Flipped;
+            }
+        }
+        public bool DKeyNibble26Flipped
+        {
+            get
+            {
+                return DKeyBit104Flipped || DKeyBit105Flipped || DKeyBit106Flipped || DKeyBit107Flipped;
+            }
+        }
+        public bool DKeyNibble27Flipped
+        {
+            get
+            {
+                return DKeyBit108Flipped || DKeyBit109Flipped || DKeyBit110Flipped || DKeyBit111Flipped;
+            }
+        }
+        public bool DKeyNibble28Flipped
+        {
+            get
+            {
+                return DKeyBit112Flipped || DKeyBit113Flipped || DKeyBit114Flipped || DKeyBit115Flipped;
+            }
+        }
+        public bool DKeyNibble29Flipped
+        {
+            get
+            {
+                return DKeyBit116Flipped || DKeyBit117Flipped || DKeyBit118Flipped || DKeyBit119Flipped;
+            }
+        }
+        public bool DKeyNibble30Flipped
+        {
+            get
+            {
+                return DKeyBit120Flipped || DKeyBit121Flipped || DKeyBit122Flipped || DKeyBit123Flipped;
+            }
+        }
+        public bool DKeyNibble31Flipped
+        {
+            get
+            {
+                return DKeyBit124Flipped || DKeyBit125Flipped || DKeyBit126Flipped || DKeyBit127Flipped;
+            }
+        }
+        public bool DKeyNibble32Flipped
+        {
+            get
+            {
+                return DKeyBit128Flipped || DKeyBit129Flipped || DKeyBit130Flipped || DKeyBit131Flipped;
+            }
+        }
+        public bool DKeyNibble33Flipped
+        {
+            get
+            {
+                return DKeyBit132Flipped || DKeyBit133Flipped || DKeyBit134Flipped || DKeyBit135Flipped;
+            }
+        }
+        public bool DKeyNibble34Flipped
+        {
+            get
+            {
+                return DKeyBit136Flipped || DKeyBit137Flipped || DKeyBit138Flipped || DKeyBit139Flipped;
+            }
+        }
+        public bool DKeyNibble35Flipped
+        {
+            get
+            {
+                return DKeyBit140Flipped || DKeyBit141Flipped || DKeyBit142Flipped || DKeyBit143Flipped;
+            }
+        }
+        public bool DKeyNibble36Flipped
+        {
+            get
+            {
+                return DKeyBit144Flipped || DKeyBit145Flipped || DKeyBit146Flipped || DKeyBit147Flipped;
+            }
+        }
+        public bool DKeyNibble37Flipped
+        {
+            get
+            {
+                return DKeyBit148Flipped || DKeyBit149Flipped || DKeyBit150Flipped || DKeyBit151Flipped;
+            }
+        }
+        public bool DKeyNibble38Flipped
+        {
+            get
+            {
+                return DKeyBit152Flipped || DKeyBit153Flipped || DKeyBit154Flipped || DKeyBit155Flipped;
+            }
+        }
+        public bool DKeyNibble39Flipped
+        {
+            get
+            {
+                return DKeyBit156Flipped || DKeyBit157Flipped || DKeyBit158Flipped || DKeyBit159Flipped;
+            }
+        }
+        public bool DKeyNibble40Flipped
+        {
+            get
+            {
+                return DKeyBit160Flipped || DKeyBit161Flipped || DKeyBit162Flipped || DKeyBit163Flipped;
+            }
+        }
+        public bool DKeyNibble41Flipped
+        {
+            get
+            {
+                return DKeyBit164Flipped || DKeyBit165Flipped || DKeyBit166Flipped || DKeyBit167Flipped;
+            }
+        }
+        public bool DKeyNibble42Flipped
+        {
+            get
+            {
+                return DKeyBit168Flipped || DKeyBit169Flipped || DKeyBit170Flipped || DKeyBit171Flipped;
+            }
+        }
+        public bool DKeyNibble43Flipped
+        {
+            get
+            {
+                return DKeyBit172Flipped || DKeyBit173Flipped || DKeyBit174Flipped || DKeyBit175Flipped;
+            }
+        }
+        public bool DKeyNibble44Flipped
+        {
+            get
+            {
+                return DKeyBit176Flipped || DKeyBit177Flipped || DKeyBit178Flipped || DKeyBit179Flipped;
+            }
+        }
+        public bool DKeyNibble45Flipped
+        {
+            get
+            {
+                return DKeyBit180Flipped || DKeyBit181Flipped || DKeyBit182Flipped || DKeyBit183Flipped;
+            }
+        }
+        public bool DKeyNibble46Flipped
+        {
+            get
+            {
+                return DKeyBit184Flipped || DKeyBit185Flipped || DKeyBit186Flipped || DKeyBit187Flipped;
+            }
+        }
+        public bool DKeyNibble47Flipped
+        {
+            get
+            {
+                return DKeyBit188Flipped || DKeyBit189Flipped || DKeyBit190Flipped || DKeyBit191Flipped;
+            }
+        }
+        public bool DKeyNibble48Flipped
+        {
+            get
+            {
+                return DKeyBit192Flipped || DKeyBit193Flipped || DKeyBit194Flipped || DKeyBit195Flipped;
+            }
+        }
+        public bool DKeyNibble49Flipped
+        {
+            get
+            {
+                return DKeyBit196Flipped || DKeyBit197Flipped || DKeyBit198Flipped || DKeyBit199Flipped;
+            }
+        }
+        public bool DKeyNibble50Flipped
+        {
+            get
+            {
+                return DKeyBit200Flipped || DKeyBit201Flipped || DKeyBit202Flipped || DKeyBit203Flipped;
+            }
+        }
+        public bool DKeyNibble51Flipped
+        {
+            get
+            {
+                return DKeyBit204Flipped || DKeyBit205Flipped || DKeyBit206Flipped || DKeyBit207Flipped;
+            }
+        }
+        public bool DKeyNibble52Flipped
+        {
+            get
+            {
+                return DKeyBit208Flipped || DKeyBit209Flipped || DKeyBit210Flipped || DKeyBit211Flipped;
+            }
+        }
+        public bool DKeyNibble53Flipped
+        {
+            get
+            {
+                return DKeyBit212Flipped || DKeyBit213Flipped || DKeyBit214Flipped || DKeyBit215Flipped;
+            }
+        }
+        public bool DKeyNibble54Flipped
+        {
+            get
+            {
+                return DKeyBit216Flipped || DKeyBit217Flipped || DKeyBit218Flipped || DKeyBit219Flipped;
+            }
+        }
+        public bool DKeyNibble55Flipped
+        {
+            get
+            {
+                return DKeyBit220Flipped || DKeyBit221Flipped || DKeyBit222Flipped || DKeyBit223Flipped;
+            }
+        }
+        public bool DKeyNibble56Flipped
+        {
+            get
+            {
+                return DKeyBit224Flipped || DKeyBit225Flipped || DKeyBit226Flipped || DKeyBit227Flipped;
+            }
+        }
+        public bool DKeyNibble57Flipped
+        {
+            get
+            {
+                return DKeyBit228Flipped || DKeyBit229Flipped || DKeyBit230Flipped || DKeyBit231Flipped;
+            }
+        }
+        public bool DKeyNibble58Flipped
+        {
+            get
+            {
+                return DKeyBit232Flipped || DKeyBit233Flipped || DKeyBit234Flipped || DKeyBit235Flipped;
+            }
+        }
+        public bool DKeyNibble59Flipped
+        {
+            get
+            {
+                return DKeyBit236Flipped || DKeyBit237Flipped || DKeyBit238Flipped || DKeyBit239Flipped;
+            }
+        }
+        public bool DKeyNibble60Flipped
+        {
+            get
+            {
+                return DKeyBit240Flipped || DKeyBit241Flipped || DKeyBit242Flipped || DKeyBit243Flipped;
+            }
+        }
+        public bool DKeyNibble61Flipped
+        {
+            get
+            {
+                return DKeyBit244Flipped || DKeyBit245Flipped || DKeyBit246Flipped || DKeyBit247Flipped;
+            }
+        }
+        public bool DKeyNibble62Flipped
+        {
+            get
+            {
+                return DKeyBit248Flipped || DKeyBit249Flipped || DKeyBit250Flipped || DKeyBit251Flipped;
+            }
+        }
+        public bool DKeyNibble63Flipped
+        {
+            get
+            {
+                return DKeyBit252Flipped || DKeyBit253Flipped || DKeyBit254Flipped || DKeyBit255Flipped;
+            }
+        }
+        #endregion
     }
     class StateMatrixPage : Page
     {
@@ -4211,6 +4663,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             TextBlock tb = new TextBlock();
             tb.SetBinding(TextBlock.TextProperty, new Binding($"DKeyNibbleHex{nibbleIndex}"));
+            tb.SetBinding(TextBlock.ForegroundProperty, new Binding($"DKeyNibble{nibbleIndex}Flipped") { Converter = new BoolToForegroundConverter() });
 
             Setter markNibble = new Setter() { Property = TextBlock.ForegroundProperty, Value = Brushes.Red };
             Trigger onHover = new Trigger()
