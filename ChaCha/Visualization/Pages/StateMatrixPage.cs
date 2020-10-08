@@ -2375,15 +2375,24 @@ namespace Cryptool.Plugins.ChaCha
         {
             TextBlock tb = new TextBlock();
             tb.SetBinding(TextBlock.TextProperty, new Binding($"DKeyNibbleHex{nibbleIndex}"));
-            Trigger markNibble = new Trigger()
+
+            Setter markNibble = new Setter() { Property = TextBlock.ForegroundProperty, Value = Brushes.Red };
+            Trigger onHover = new Trigger()
             {
                 Property = TextBlock.IsMouseOverProperty,
                 Value = true
             };
-            Setter setter = new Setter() { Property = TextBlock.ForegroundProperty, Value = Brushes.Red };
-            markNibble.Setters.Add(setter);
+            onHover.Setters.Add(markNibble);
+
+            DataTrigger onButtonHover = new DataTrigger() {
+                Binding = new Binding() { ElementName = $"KeyBit{nibbleIndex}Button", Path = new PropertyPath("IsMouseOver") },
+                Value = true
+            };
+            onButtonHover.Setters.Add(markNibble);
+
             Style s = new Style();
-            s.Triggers.Add(markNibble);
+            s.Triggers.Add(onHover);
+            s.Triggers.Add(onButtonHover);
             tb.Style = s;
             return tb;
         }
@@ -2416,6 +2425,7 @@ namespace Cryptool.Plugins.ChaCha
             Button b = new Button() { Height = 16, FontSize = 10 };
             b.SetBinding(Button.ContentProperty, new Binding($"KeyBit{bitIndex}"));
             b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
+            b.Name = $"KeyBit{bitIndex}Button";
             return b;
         }
         private void InitDiffusionFlipBitButtons()
