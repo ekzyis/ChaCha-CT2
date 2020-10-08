@@ -24,6 +24,7 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 0; i < 64; ++i)
                 {
                     OnPropertyChanged($"DKeyNibble{i}");
+                    OnPropertyChanged($"DKeyNibbleHex{i}");
                 }
             }
         }
