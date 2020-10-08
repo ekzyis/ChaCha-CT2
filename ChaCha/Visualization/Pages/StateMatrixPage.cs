@@ -4594,6 +4594,7 @@ namespace Cryptool.Plugins.ChaCha
         private ChaChaPresentation pres;
         private TextBlock diffusionKeyTextBlock;
         private Button toggleShowDiffusion;
+        private Button resetDiffusion;
         private Grid diffusionGrid;
 
         private List<string> descriptions = new List<string>();
@@ -4643,21 +4644,31 @@ namespace Cryptool.Plugins.ChaCha
             toggleShowDiffusion = pres.ToggleShowDiffusion;
             diffusionGrid = pres.DiffusionGrid;
             diffusionKeyTextBlock = pres.DiffusionKeyTextBlock;
+            resetDiffusion = pres.ResetDiffusion;
             pres.DiffusionKey = (byte[])pres.InputKey.Clone();
-            InitToggleDiffusionButton();
+
+            InitDiffusionButtons();
             InitDiffusionKey();
             InitDiffusionGridLayout();
             InitDiffusionFlipBitButtons();
         }
         private void ToggleDiffusion(object sender, RoutedEventArgs e)
         {
-            Visibility set = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            diffusionGrid.Visibility = set;
-            diffusionKeyTextBlock.Visibility = set;
+            Visibility collapseToggle = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            Visibility hiddenToggle = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+            diffusionGrid.Visibility = collapseToggle;
+            diffusionKeyTextBlock.Visibility = collapseToggle;
+            resetDiffusion.Visibility = hiddenToggle;
+            toggleShowDiffusion.Content = $"{(collapseToggle == Visibility.Visible ? "Verstecke" : "Zeige")} Diffusionsanzeige";
         }
-        private void InitToggleDiffusionButton()
+        private void ResetDiffusion(object sender, RoutedEventArgs e)
+        {
+            pres.DiffusionKey = (byte[])pres.InputKey.Clone();
+        }
+        private void InitDiffusionButtons()
         {
             toggleShowDiffusion.Click += ToggleDiffusion;
+            resetDiffusion.Click += ResetDiffusion;
         }
         private TextBlock CreateDiffusionKeyNibbleTextBox(int nibbleIndex)
         {

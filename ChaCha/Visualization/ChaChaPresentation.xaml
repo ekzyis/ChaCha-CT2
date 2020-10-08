@@ -482,7 +482,10 @@
               <ColumnDefinition Width="850"/>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
-            <Button Grid.Row="0" Grid.Column="1" Content="Zeige Diffusionsanzeige" Width="172" Name="ToggleShowDiffusion"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
+              <Button Content="Zeige Diffusionsanzeige" Width="172" Name="ToggleShowDiffusion"/>
+              <Button Content="Reset flipped bits" Width="172" Name="ResetDiffusion" Visibility="Hidden"/>
+            </StackPanel>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
             <Border HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="UIConstantsCell">
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
