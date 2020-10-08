@@ -247,13 +247,13 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region FrameworkElement API
-        public void Show(FrameworkElement element)
+        public void Show(params FrameworkElement[] elements)
         {
-            element.Visibility = Visibility.Visible;
+            foreach (FrameworkElement element in elements) element.Visibility = Visibility.Visible;
         }
-        public void Collapse(FrameworkElement element)
+        public void Collapse(params FrameworkElement[] elements)
         {
-            element.Visibility = Visibility.Collapsed;
+            foreach(FrameworkElement element in elements) element.Visibility = Visibility.Collapsed;
         }
         public void Hide(FrameworkElement element)
         {
@@ -635,9 +635,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             rtb.Document = doc;
         }
-        public void ClearDocument(RichTextBox rtb)
+        public void ClearDocument(params RichTextBox[] rtbs)
         {
-            rtb.Document.Blocks.Clear();
+            foreach(RichTextBox rtb in rtbs) rtb.Document.Blocks.Clear();
         }
         #endregion
 

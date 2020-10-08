@@ -227,6 +227,8 @@ namespace Cryptool.Plugins.ChaCha
         private void ClearTransformInput()
         {
             pres.Nav.Clear(pres.UITransformInput, pres.UITransformInput2);
+            pres.Nav.ClearDocument(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
+            pres.Nav.Collapse(pres.UITransformInputCell, pres.UITransformInputCell2);
         }
         private void ReplaceTransformChunk(params string[] chunk)
         {
