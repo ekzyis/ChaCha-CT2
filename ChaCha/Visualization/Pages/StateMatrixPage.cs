@@ -4220,15 +4220,17 @@ namespace Cryptool.Plugins.ChaCha
             };
             onHover.Setters.Add(markNibble);
 
+            /*
             DataTrigger onButtonHover = new DataTrigger() {
                 Binding = new Binding() { ElementName = $"DKeyBit{nibbleIndex}Button", Path = new PropertyPath("IsMouseOver") },
                 Value = true
             };
             onButtonHover.Setters.Add(markNibble);
+            */
 
             Style s = new Style();
             s.Triggers.Add(onHover);
-            s.Triggers.Add(onButtonHover);
+            //s.Triggers.Add(onButtonHover);
             tb.Style = s;
             return tb;
         }
