@@ -4,14 +4,16 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Navigation;
 
 namespace Cryptool.Plugins.ChaCha
 {
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
-        private TextBlock diffusionKeyTextBlock;
+        private RichTextBox diffusionKeyText;
         private Button toggleShowDiffusion;
         private Button resetDiffusion;
         private Grid diffusionGrid;
@@ -62,7 +64,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             toggleShowDiffusion = pres.ToggleShowDiffusion;
             diffusionGrid = pres.DiffusionGrid;
-            diffusionKeyTextBlock = pres.DiffusionKeyTextBlock;
+            diffusionKeyText = pres.DiffusionKeyTextBlock;
             resetDiffusion = pres.ResetDiffusion;
             pres.DiffusionKey = (byte[])pres.InputKey.Clone();
 
@@ -115,11 +117,15 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void InitDiffusionKey()
         {
+            FlowDocument doc = new FlowDocument();
+            Paragraph para = new Paragraph();
             for (int i = 0; i < (keyIs32Byte ? 32 : 16) * 2; ++i)
             {
                 TextBlock nibbleBox = CreateDiffusionKeyNibbleTextBox(i);
-                diffusionKeyTextBlock.Inlines.Add(nibbleBox);
+                para.Inlines.Add(nibbleBox);
             }
+            doc.Blocks.Add(para);
+            diffusionKeyText.Document = doc;
         }
         private void InitDiffusionGridLayout()
         {

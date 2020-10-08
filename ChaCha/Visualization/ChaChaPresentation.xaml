@@ -45,6 +45,7 @@
       <Setter Property="FontFamily" Value="Courier New" />
       <Setter Property="IsReadOnly" Value="True"/>
       <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="FontSize" Value="16" />
     </Style>
     <Style x:Key="titleText" TargetType="TextBox">
       <Setter Property="FontSize" Value="25" />
@@ -494,9 +495,9 @@
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
               <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-                <TextBlock Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Style="{StaticResource hex}" Margin="2,13,0,0" Name="DiffusionKeyTextBlock"/>
+                <RichTextBox Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="DiffusionKeyTextBlock"/>
                 <!-- Diffusion check boxes -->
-                <Grid Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Name="DiffusionGrid">
+                <Grid Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Name="DiffusionGrid">
                   <!-- Diffusion grid will be initialized in code-behind -->
                 </Grid>
               </StackPanel>
