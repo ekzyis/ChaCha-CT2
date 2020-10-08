@@ -97,6 +97,8 @@
         </Grid>
       </Grid>
     </ControlTemplate>
+    <local:BooleanToVisibilityHiddenConverter x:Key="HiddenIfFalseConverter"/>
+    <local:BooleanToVisibilityCollapsedConverter x:Key="CollapsedIfFalseConverter"/>
   </UserControl.Resources>
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
@@ -482,7 +484,7 @@
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
             <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
               <Button Content="Zeige Diffusionsanzeige" Width="172" Name="ToggleShowDiffusion"/>
-              <Button Content="Reset flipped bits" Width="172" Name="ResetDiffusion" Visibility="Hidden"/>
+              <Button Content="Reset flipped bits" Width="172" Name="ResetDiffusion" Visibility="{ Binding ShowDiffusion, Converter={StaticResource HiddenIfFalseConverter}}"/>
             </StackPanel>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
             <Border HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="UIConstantsCell">
@@ -492,9 +494,9 @@
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
               <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-                <TextBlock Visibility="Collapsed" Style="{StaticResource hex}" Margin="2,13,0,0" Name="DiffusionKeyTextBlock"/>
+                <TextBlock Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Style="{StaticResource hex}" Margin="2,13,0,0" Name="DiffusionKeyTextBlock"/>
                 <!-- Diffusion check boxes -->
-                <Grid Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Name="DiffusionGrid">
+                <Grid Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" VerticalAlignment="Center" HorizontalAlignment="Center" Name="DiffusionGrid">
                   <!-- Diffusion grid will be initialized in code-behind -->
                 </Grid>
               </StackPanel>

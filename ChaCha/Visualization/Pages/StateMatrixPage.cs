@@ -9,8 +9,48 @@ using System.Windows.Media;
 
 namespace Cryptool.Plugins.ChaCha
 {
+    public abstract class BooleanToVisibilityConverter : IValueConverter
+    {
+        // Visibility if boolean is false
+        Visibility off;
+        public BooleanToVisibilityConverter(Visibility off)
+        {
+            this.off = off;
+        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value == true ? Visibility.Visible : off;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (Visibility)value != off;
+        }
+    }
+    public class BooleanToVisibilityHiddenConverter : BooleanToVisibilityConverter
+    {
+        public BooleanToVisibilityHiddenConverter() : base(Visibility.Hidden) { }
+    }
+    public class BooleanToVisibilityCollapsedConverter : BooleanToVisibilityConverter
+    {
+        public BooleanToVisibilityCollapsedConverter() : base(Visibility.Collapsed) { }
+    }
     partial class ChaChaPresentation
     {
+        private bool _showDiffusion = false;
+        public bool ShowDiffusion
+        {
+            get
+            {
+                return _showDiffusion;
+            }
+            set
+            {
+                _showDiffusion = value;
+                OnPropertyChanged("ShowDiffusion");
+            }
+        }
+
         private byte[] _diffusionKey;
         public byte[] DiffusionKey {
             get {
@@ -4656,12 +4696,8 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ToggleDiffusion(object sender, RoutedEventArgs e)
         {
-            Visibility collapseToggle = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-            Visibility hiddenToggle = diffusionGrid.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-            diffusionGrid.Visibility = collapseToggle;
-            diffusionKeyTextBlock.Visibility = collapseToggle;
-            resetDiffusion.Visibility = hiddenToggle;
-            toggleShowDiffusion.Content = $"{(collapseToggle == Visibility.Visible ? "Verstecke" : "Zeige")} Diffusionsanzeige";
+            pres.ShowDiffusion = !pres.ShowDiffusion;
+            toggleShowDiffusion.Content = $"{(pres.ShowDiffusion == true ? "Verstecke" : "Zeige")} Diffusionsanzeige";
         }
         private void ResetDiffusion(object sender, RoutedEventArgs e)
         {
