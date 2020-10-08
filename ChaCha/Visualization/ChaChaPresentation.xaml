@@ -392,6 +392,12 @@
               <Border Grid.Row="1" Name="UITransformInputCell2">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
               </Border>
+              <Border Grid.Row="0" Name="UITransformInputDiffusionCell" Visibility="Collapsed" Background="{Binding ElementName=UITransformInputCell, Path=Background}">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformInputDiffusion" Background="{Binding ElementName=UITransformInputCell, Path=Background}"/>
+              </Border>
+              <Border Grid.Row="1" Name="UITransformInputDiffusionCell2" Visibility="Collapsed" Background="{Binding ElementName=UITransformInputCell2, Path=Background}">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformInputDiffusion2" Background="{Binding ElementName=UITransformInputCell2, Path=Background}"/>
+              </Border>
             </Grid>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
             <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="360">

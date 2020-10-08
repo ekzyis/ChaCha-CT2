@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -115,7 +116,7 @@ namespace Cryptool.Plugins.ChaCha
             tb.Style = s;
             return tb;
         }
-        private void InitDiffusionKey()
+        private FlowDocument GetDiffusionKeyFlowDocument()
         {
             FlowDocument doc = new FlowDocument();
             Paragraph para = new Paragraph();
@@ -125,7 +126,11 @@ namespace Cryptool.Plugins.ChaCha
                 para.Inlines.Add(nibbleBox);
             }
             doc.Blocks.Add(para);
-            diffusionKeyText.Document = doc;
+            return doc;
+        }
+        private void InitDiffusionKey()
+        {
+            diffusionKeyText.Document = GetDiffusionKeyFlowDocument();
         }
         private void InitDiffusionGridLayout()
         {
@@ -365,7 +370,53 @@ namespace Cryptool.Plugins.ChaCha
                 copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
                 copyActions[2].AddToUndo(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
             }
+            copyActions[1].Add(AddTransformInputDiffusion());
             return copyActions;
+        }
+        private PageAction AddTransformInputDiffusion()
+        {
+            return new PageAction(() =>
+            {
+                if(pres.ShowDiffusion)
+                {
+                    FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
+                    FlowDocument dKeyRow1 = fullDKey;
+                    FlowDocument dKeyRow2 = fullDKey;
+                    if(pres.InputKey.Length == 32)
+                    {
+                        // split diffusion key into two rows
+                        Paragraph fullDKeyParagraph = (Paragraph)fullDKey.Blocks.FirstBlock;
+                        Console.WriteLine($"full inlines count: {fullDKeyParagraph.Inlines.Count}");
+                        dKeyRow1 = new FlowDocument() { TextAlignment = TextAlignment.Center };
+                        Paragraph dKeyRow1Paragraph = new Paragraph();
+                        // first 32 nibbles
+                        dKeyRow1Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
+                        Console.WriteLine($"full inlines count: {fullDKeyParagraph.Inlines.Count}");
+                        dKeyRow1.Blocks.Add(dKeyRow1Paragraph);
+                        Console.WriteLine($"row1 inlines count: {dKeyRow1Paragraph.Inlines.Count}");
+                        dKeyRow2 = new FlowDocument() { TextAlignment = TextAlignment.Center };
+                        Paragraph dKeyRow2Paragraph = new Paragraph();
+                        // last 32 nibbles
+                        dKeyRow2Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
+                        Console.WriteLine($"full inlines count: {fullDKeyParagraph.Inlines.Count}");
+                        dKeyRow2.Blocks.Add(dKeyRow2Paragraph);
+                        Console.WriteLine($"row2 inlines count: {dKeyRow2Paragraph.Inlines.Count}");
+                    }
+                    pres.Nav.SetDocument(pres.UITransformInputDiffusion, dKeyRow1);
+                    pres.Nav.SetDocument(pres.UITransformInputDiffusion2, dKeyRow2);
+                    pres.Nav.Show(pres.UITransformInputDiffusionCell);
+                    pres.Nav.Show(pres.UITransformInputDiffusionCell2);
+                }
+            }, () =>
+            {
+                if (pres.ShowDiffusion)
+                {
+                    pres.Nav.Collapse(pres.UITransformInputDiffusionCell);
+                    pres.Nav.Collapse(pres.UITransformInputDiffusionCell2);
+                    pres.Nav.ClearDocument(pres.UITransformInputDiffusion);
+                    pres.Nav.ClearDocument(pres.UITransformInputDiffusion2);
+                }
+            });
         }
 
         private void AddConstantsActions()

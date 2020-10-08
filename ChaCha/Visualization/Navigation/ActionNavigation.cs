@@ -246,6 +246,21 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
+        #region FrameworkElement API
+        public void Show(FrameworkElement element)
+        {
+            element.Visibility = Visibility.Visible;
+        }
+        public void Collapse(FrameworkElement element)
+        {
+            element.Visibility = Visibility.Collapsed;
+        }
+        public void Hide(FrameworkElement element)
+        {
+            element.Visibility = Visibility.Hidden;
+        }
+        #endregion
+
         #region TextBlock API
         public void RemoveLast(TextBlock tb)
         {
@@ -615,6 +630,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             _Clear(rtb.Document.Blocks);
             Add(rtb, text);
+        }
+        public void SetDocument(RichTextBox rtb, FlowDocument doc)
+        {
+            rtb.Document = doc;
+        }
+        public void ClearDocument(RichTextBox rtb)
+        {
+            rtb.Document.Blocks.Clear();
         }
         #endregion
 
