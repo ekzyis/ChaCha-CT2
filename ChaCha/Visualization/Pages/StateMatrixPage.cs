@@ -634,7 +634,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres.Nav.Clear(pres.UITransformInput, pres.UITransformInput2);
             pres.Nav.ClearDocument(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
-            pres.Nav.Collapse(pres.UITransformInputCell, pres.UITransformInputCell2);
+            pres.Nav.Collapse(pres.UITransformInputDiffusionCell, pres.UITransformInputDiffusionCell2);
         }
         #endregion
 
