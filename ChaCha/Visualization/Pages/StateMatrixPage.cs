@@ -119,7 +119,7 @@ namespace Cryptool.Plugins.ChaCha
         private PageAction[] CopyConstantsToStateActions()
         {
             return pres.Nav.CopyActions(
-                new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell },
+                new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2, pres.UITransformLittleEndianCell3 },
                 new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell },
                 new string[] { "", "", "", "" });
         }
@@ -221,7 +221,7 @@ namespace Cryptool.Plugins.ChaCha
         private PageAction[] CopyKeyToStateActions()
         {
             return pres.Nav.CopyActions(
-                new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell, pres.UITransformLittleEndian3Cell, pres.UITransformLittleEndian4Cell, pres.UITransformLittleEndian5Cell, pres.UITransformLittleEndian6Cell, pres.UITransformLittleEndian7Cell },
+                new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2, pres.UITransformLittleEndianCell3, pres.UITransformLittleEndianCell4, pres.UITransformLittleEndianCell5, pres.UITransformLittleEndianCell6, pres.UITransformLittleEndianCell7 },
                 new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell },
                 new string[] { "", "", "", "", "", "", "", "" });
         }
@@ -307,12 +307,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             return versionIsDJB ?
                 pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2 },
                     new Border[] { pres.UIState12Cell, pres.UIState13Cell },
                     new string[] { "", "" })
                 // TODO create another grid with 3 rows to center counter in IETF version and update this code here
                 : pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian0Cell },
+                    new Border[] { pres.UITransformLittleEndianCell0 },
                     new Border[] { pres.UIState12Cell },
                     new string[] { "" });
         }
@@ -392,12 +392,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             return versionIsDJB ?
                 pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2 },
                     new Border[] { pres.UIState14Cell, pres.UIState15Cell },
                     new string[] { "", "" })
                 // TODO create another grid with 3 rows to center IV in IETF version and update this code here
                 : pres.Nav.CopyActions(
-                    new Border[] { pres.UITransformLittleEndian0Cell, pres.UITransformLittleEndian1Cell, pres.UITransformLittleEndian2Cell },
+                    new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2 },
                     new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell },
                     new string[] { "", "", "" });
         }
