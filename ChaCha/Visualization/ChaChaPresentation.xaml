@@ -438,7 +438,7 @@
               <Border Grid.Row="1" Grid.Column="0">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
               </Border>
-              <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
+              <Border Grid.Row="1" Grid.Column="0" Visibility="Collapsed">
                 <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion4"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="1">
