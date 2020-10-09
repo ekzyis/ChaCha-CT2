@@ -47,6 +47,9 @@
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="FontSize" Value="16" />
     </Style>
+    <Style x:Key="hexRichTextBoxCell" TargetType="RichTextBox" BasedOn="{ StaticResource hexRichTextBox }">
+      <Setter Property="FontSize" Value="22"/>
+    </Style>
     <Style x:Key="titleText" TargetType="TextBox">
       <Setter Property="FontSize" Value="25" />
       <Setter Property="HorizontalAlignment" Value="Center" />
@@ -204,7 +207,7 @@
                   <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <!-- Row 0 -->
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState0Cell">
+                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell0">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState0"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -214,7 +217,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState1Cell">
+                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell1">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState1"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -224,7 +227,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState2Cell">
+                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell2">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState2"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -234,7 +237,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState3Cell">
+                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell3">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState3"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -245,7 +248,7 @@
                   </Canvas>
                 </Border>
                 <!-- Row 1 -->
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState4Cell">
+                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell4">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState4"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -255,7 +258,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState5Cell">
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell5">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState5"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -265,7 +268,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState6Cell">
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell6">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState6"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -275,7 +278,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState7Cell">
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell7">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState7"/>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -286,7 +289,7 @@
                   </Canvas>
                 </Border>
                 <!-- Row 2 -->
-                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState8Cell">
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell8">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState8"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -296,7 +299,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState9Cell">
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell9">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState9"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -306,7 +309,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState10Cell">
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell10">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState10"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -316,7 +319,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState11Cell">
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell11">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState11"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -327,7 +330,7 @@
                   </Canvas>
                 </Border>
                 <!-- Row 3 -->
-                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState12Cell">
+                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell12">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState12"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -337,7 +340,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState13Cell">
+                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell13">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState13"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -347,7 +350,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState14Cell">
+                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell14">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState14"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -357,7 +360,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState15Cell">
+                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell15">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState15"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="4" BorderBrush="Black" BorderThickness="1,0,0,1">

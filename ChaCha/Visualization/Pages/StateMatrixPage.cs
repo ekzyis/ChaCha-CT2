@@ -120,7 +120,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return pres.Nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2, pres.UITransformLittleEndianCell3 },
-                new Border[] { pres.UIState0Cell, pres.UIState1Cell, pres.UIState2Cell, pres.UIState3Cell },
+                new Border[] { pres.UIStateCell0, pres.UIStateCell1, pres.UIStateCell2, pres.UIStateCell3 },
                 new string[] { "", "", "", "" });
         }
         #endregion
@@ -222,7 +222,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return pres.Nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2, pres.UITransformLittleEndianCell3, pres.UITransformLittleEndianCell4, pres.UITransformLittleEndianCell5, pres.UITransformLittleEndianCell6, pres.UITransformLittleEndianCell7 },
-                new Border[] { pres.UIState4Cell, pres.UIState5Cell, pres.UIState6Cell, pres.UIState7Cell, pres.UIState8Cell, pres.UIState9Cell, pres.UIState10Cell, pres.UIState11Cell },
+                new Border[] { pres.UIStateCell4, pres.UIStateCell5, pres.UIStateCell6, pres.UIStateCell7, pres.UIStateCell8, pres.UIStateCell9, pres.UIStateCell10, pres.UIStateCell11 },
                 new string[] { "", "", "", "", "", "", "", "" });
         }
         #endregion
@@ -308,12 +308,12 @@ namespace Cryptool.Plugins.ChaCha
             return versionIsDJB ?
                 pres.Nav.CopyActions(
                     new Border[] { pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2 },
-                    new Border[] { pres.UIState12Cell, pres.UIState13Cell },
+                    new Border[] { pres.UIStateCell12, pres.UIStateCell13 },
                     new string[] { "", "" })
                 // TODO create another grid with 3 rows to center counter in IETF version and update this code here
                 : pres.Nav.CopyActions(
                     new Border[] { pres.UITransformLittleEndianCell0 },
-                    new Border[] { pres.UIState12Cell },
+                    new Border[] { pres.UIStateCell12 },
                     new string[] { "" });
         }
         #endregion
@@ -393,12 +393,12 @@ namespace Cryptool.Plugins.ChaCha
             return versionIsDJB ?
                 pres.Nav.CopyActions(
                     new Border[] { pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2 },
-                    new Border[] { pres.UIState14Cell, pres.UIState15Cell },
+                    new Border[] { pres.UIStateCell14, pres.UIStateCell15 },
                     new string[] { "", "" })
                 // TODO create another grid with 3 rows to center IV in IETF version and update this code here
                 : pres.Nav.CopyActions(
                     new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2 },
-                    new Border[] { pres.UIState13Cell, pres.UIState14Cell, pres.UIState15Cell },
+                    new Border[] { pres.UIStateCell13, pres.UIStateCell14, pres.UIStateCell15 },
                     new string[] { "", "", "" });
         }
         #endregion
