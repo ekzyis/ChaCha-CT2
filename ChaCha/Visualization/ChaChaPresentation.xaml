@@ -414,26 +414,50 @@
               <Border Grid.Row="0" Grid.Column="0">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
               </Border>
+              <Border Grid.Row="0" Grid.Column="0" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion0"/>
+              </Border>
               <Border Grid.Row="0" Grid.Column="1">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk1"/>
+              </Border>
+              <Border Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion1"/>
               </Border>
               <Border Grid.Row="0" Grid.Column="2">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk2"/>
               </Border>
+              <Border Grid.Row="0" Grid.Column="2" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion2"/>
+              </Border>
               <Border Grid.Row="0" Grid.Column="3">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk3"/>
+              </Border>
+              <Border Grid.Row="0" Grid.Column="3" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion3"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="0">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
               </Border>
+              <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion4"/>
+              </Border>
               <Border Grid.Row="1" Grid.Column="1">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk5"/>
+              </Border>
+              <Border Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion5"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="2">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk6"/>
               </Border>
+              <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion6"/>
+              </Border>
               <Border Grid.Row="1" Grid.Column="3">
                 <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
+              </Border>
+              <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed">
+                <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion7"/>
               </Border>
             </Grid>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Transform each chunk into little-endian:"/>

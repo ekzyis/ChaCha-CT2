@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Cryptool.Plugins.Chacha.Extensions;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -193,13 +196,17 @@ namespace Cryptool.Plugins.ChaCha
         {
             // Ternary operator must return something thus wrapping function into action. (Guess I really wanted a one-liner for this and not if-else.)
             // https://stackoverflow.com/questions/5490095/method-call-using-ternary-operator
-            (pres.ShowDiffusion ? new Action(AddTransformInputDiffusion) : new Action(() => ReplaceTransformInput(pres.HexInputKey)))();
+            (pres.ShowDiffusion ? new Action(ReplaceTransformInputDiffusion) : new Action(() => ReplaceTransformInput(pres.HexInputKey)))();
         }
         private void ReplaceTransformChunkKey()
         {
             ReplaceTransformChunk(
                     pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
                     pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
+            if (pres.ShowDiffusion)
+            {
+                ReplaceTransformChunkDiffusion();
+            }
         }
         private void ReplaceTransformLittleEndianKey()
         {
@@ -393,25 +400,14 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Diffusion
-        private void AddTransformInputDiffusion()
+        private void ReplaceTransformInputDiffusion()
         {
             FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
             FlowDocument dKeyRow1 = fullDKey;
             FlowDocument dKeyRow2 = fullDKey;
             if (pres.InputKey.Length == 32)
             {
-                // split diffusion key into two rows
-                Paragraph fullDKeyParagraph = (Paragraph)fullDKey.Blocks.FirstBlock;
-                dKeyRow1 = new FlowDocument() { TextAlignment = TextAlignment.Center };
-                Paragraph dKeyRow1Paragraph = new Paragraph();
-                // first 32 nibbles
-                dKeyRow1Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
-                dKeyRow1.Blocks.Add(dKeyRow1Paragraph);
-                dKeyRow2 = new FlowDocument() { TextAlignment = TextAlignment.Center };
-                Paragraph dKeyRow2Paragraph = new Paragraph();
-                // last 32 nibbles
-                dKeyRow2Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
-                dKeyRow2.Blocks.Add(dKeyRow2Paragraph);
+                (dKeyRow1, dKeyRow2, _) = SplitDocument(fullDKey, 2);
             }
             pres.Nav.SetDocument(pres.UITransformInputDiffusion, dKeyRow1);
             pres.Nav.SetDocument(pres.UITransformInputDiffusion2, dKeyRow2);
@@ -429,7 +425,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if (pres.ShowDiffusion)
                 {
-                    AddTransformInputDiffusion();
+                    ReplaceTransformInputDiffusion();
                 }
             }, () =>
             {
@@ -438,6 +434,32 @@ namespace Cryptool.Plugins.ChaCha
                     ClearTransformInputDiffusion();
                 }
             });
+        }
+        private void ReplaceTransformChunkDiffusion()
+        {
+            FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
+            FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
+            for (int i = 0; i < 8; ++i)
+            {
+                pres.Nav.SetDocument((RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}"), chunkDocs[i]);
+            }
+        }
+        private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
+        {
+            FlowDocument[] split = new FlowDocument[n];
+            Debug.Assert(fullFd.Blocks.Count == 1, $"SplitDocument: FlowDocument block count mismatch. Expected: 1, Actual: {fullFd.Blocks.Count}");
+            Debug.Assert(n % 2 == 0, $"SplitDocument: odd n are not supported. Got {n}");
+            Paragraph fullP = (Paragraph)fullFd.Blocks.FirstBlock;
+            int totalInlinesCount = fullP.Inlines.Count;
+            for(int i = 0; i < n; ++i)
+            {
+                Paragraph splitP = new Paragraph();
+                splitP.Inlines.AddRange(fullP.Inlines.ToArray().Take(totalInlinesCount / n));
+                FlowDocument splitFd = new FlowDocument() { TextAlignment = TextAlignment.Center };
+                splitFd.Blocks.Add(splitP);
+                split[i] = splitFd;
+            }
+            return split;
         }
         private void InitDiffusion()
         {

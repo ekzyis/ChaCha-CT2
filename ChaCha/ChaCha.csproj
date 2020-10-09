@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="ChaCha.cs" />
     <Compile Include="Visualization\Diffusion.cs" />
+    <Compile Include="Visualization\Extensions.cs" />
     <Compile Include="Visualization\Navigation\ActionNavigation.cs" />
     <Compile Include="Visualization\ChaChaPresentation.xaml.cs">
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>
