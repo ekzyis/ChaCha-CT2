@@ -213,6 +213,10 @@ namespace Cryptool.Plugins.ChaCha
             ReplaceTransformLittleEndian(
                    pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+            if(pres.ShowDiffusion)
+            {
+                ReplaceTransformLittleEndianDiffusion();
+            }
         }
         private PageAction[] CopyKeyToStateActions()
         {
@@ -402,7 +406,7 @@ namespace Cryptool.Plugins.ChaCha
         #region Diffusion
         private void ReplaceTransformInputDiffusion()
         {
-            FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
+            FlowDocument fullDKey = GetDiffusionKey();
             FlowDocument dKeyRow1 = fullDKey;
             FlowDocument dKeyRow2 = fullDKey;
             if (pres.InputKey.Length == 32)
@@ -437,7 +441,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceTransformChunkDiffusion()
         {
-            FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
+            FlowDocument fullDKey = GetDiffusionKey();
             FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
             for (int i = 0; i < 8; ++i)
             {
@@ -446,6 +450,12 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
                 pres.Nav.Show(diffusionChunkCell);
             }
+        }
+        private void ReplaceTransformLittleEndianDiffusion()
+        {
+            FlowDocument fullDKey = GetDiffusionKey();
+            FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
+
         }
         private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
         {
@@ -491,7 +501,7 @@ namespace Cryptool.Plugins.ChaCha
             toggleShowDiffusion.Click += ToggleDiffusion;
             resetDiffusion.Click += ResetDiffusion;
         }
-        private TextBlock CreateDiffusionKeyNibbleTextBox(int nibbleIndex)
+        private TextBlock GetDiffusionKeyNibble(int nibbleIndex)
         {
             TextBlock tb = new TextBlock();
             tb.SetBinding(TextBlock.TextProperty, new Binding($"DKeyNibbleHex{nibbleIndex}"));
@@ -519,13 +529,13 @@ namespace Cryptool.Plugins.ChaCha
             tb.Style = s;
             return tb;
         }
-        private FlowDocument GetDiffusionKeyFlowDocument()
+        private FlowDocument GetDiffusionKey()
         {
             FlowDocument doc = new FlowDocument();
             Paragraph para = new Paragraph();
             for (int i = 0; i < (keyIs32Byte ? 32 : 16) * 2; ++i)
             {
-                TextBlock nibbleBox = CreateDiffusionKeyNibbleTextBox(i);
+                TextBlock nibbleBox = GetDiffusionKeyNibble(i);
                 para.Inlines.Add(nibbleBox);
             }
             doc.Blocks.Add(para);
@@ -533,7 +543,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void InitDiffusionKey()
         {
-            diffusionKeyText.Document = GetDiffusionKeyFlowDocument();
+            diffusionKeyText.Document = GetDiffusionKey();
         }
         private void InitDiffusionGridLayout()
         {
