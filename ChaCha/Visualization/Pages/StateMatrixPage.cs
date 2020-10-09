@@ -751,6 +751,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 8; ++i)
             {
                 pres.Nav.Clear((TextBox)pres.FindName($"UITransformLittleEndian{i}"));
+                pres.Nav.UnsetBackground((Border)pres.FindName($"UITransformLittleEndianCell{i}"));
                 RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianDiffusion{i}");
                 pres.Nav.ClearDocument(diffusionChunk);
                 pres.Nav.Collapse((Border)diffusionChunk.Parent);
