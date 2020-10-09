@@ -100,6 +100,7 @@
     </ControlTemplate>
     <local:BooleanToVisibilityHiddenConverter x:Key="HiddenIfFalseConverter"/>
     <local:BooleanToVisibilityCollapsedConverter x:Key="CollapsedIfFalseConverter"/>
+    <local:BooleanOrToVisibilityCollapsedConverter x:Key="CollapsedIfAllFalse"/>
   </UserControl.Resources>
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
@@ -549,7 +550,14 @@
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
               <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-                <RichTextBox Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Visibility="{ Binding DiffusionActive, Converter={StaticResource CollapsedIfFalseConverter}}" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="DiffusionKeyTextBlock"/>
+                <RichTextBox Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="DiffusionKeyTextBlock">
+                  <RichTextBox.Visibility>
+                    <MultiBinding Converter="{ StaticResource CollapsedIfAllFalse }">
+                      <Binding Path="DiffusionActive"/>
+                      <Binding Path="ShowDiffusion"/>
+                    </MultiBinding>
+                  </RichTextBox.Visibility>
+                </RichTextBox>
                 <!-- Diffusion check boxes -->
                 <Grid Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Name="DiffusionGrid">
                   <!-- Diffusion grid will be initialized in code-behind -->

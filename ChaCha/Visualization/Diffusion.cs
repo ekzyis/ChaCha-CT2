@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Cryptool.PluginBase.Miscellaneous;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Markup;
 
 namespace Cryptool.Plugins.ChaCha
 {
-
+    #region Converters
     public abstract class BooleanToVisibilityConverter : IValueConverter
     {
         // Visibility if boolean is false
@@ -34,6 +36,101 @@ namespace Cryptool.Plugins.ChaCha
     {
         public BooleanToVisibilityCollapsedConverter() : base(Visibility.Collapsed) { }
     }
+
+    public abstract class BooleanOrToVisibilityConverter : IMultiValueConverter
+    {
+        // Visibility if boolean is false
+        private readonly Visibility off;
+
+        public bool IsInverted { get; set; }
+
+        public BooleanOrToVisibilityConverter(Visibility off)
+        {
+            this.off = off;
+            IsInverted = false;
+        }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool flag = values.OfType<IConvertible>().Any(System.Convert.ToBoolean);
+            if (IsInverted) flag = !flag;
+            return flag ? Visibility.Visible : this.off;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class BooleanOrToVisibilityHiddenConverter : BooleanOrToVisibilityConverter
+    {
+        public BooleanOrToVisibilityHiddenConverter() : base(Visibility.Hidden) { }
+    }
+    public class BooleanOrToVisibilityCollapsedConverter : BooleanOrToVisibilityConverter
+    {
+        public BooleanOrToVisibilityCollapsedConverter() : base(Visibility.Collapsed) { }
+    }
+
+    public abstract class BooleanAndToVisibilityConverter : IMultiValueConverter
+    {
+        // Visibility if boolean is false
+        private readonly Visibility off;
+
+        public bool IsInverted { get; set; }
+
+        public BooleanAndToVisibilityConverter(Visibility off)
+        {
+            this.off = off;
+            IsInverted = false;
+        }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool flag = values.OfType<IConvertible>().All(System.Convert.ToBoolean);
+            if (IsInverted) flag = !flag;
+            return flag ? Visibility.Visible : this.off;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class BooleanAndToVisibilityHiddenConverter : BooleanAndToVisibilityConverter
+    {
+        public BooleanAndToVisibilityHiddenConverter() : base(Visibility.Hidden) { }
+    }
+    public class BooleanAndToVisibilityCollapsedConverter : BooleanAndToVisibilityConverter
+    {
+        public BooleanAndToVisibilityCollapsedConverter() : base(Visibility.Collapsed) { }
+    }
+
+    public class BooleanAndConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return values.OfType<IConvertible>().All(System.Convert.ToBoolean);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+    public class BooleanOrConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return values.OfType<IConvertible>().Any(System.Convert.ToBoolean);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+    #endregion
+
     partial class ChaChaPresentation
     {
         private bool _showDiffusion = false;
