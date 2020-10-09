@@ -220,10 +220,12 @@ namespace Cryptool.Plugins.ChaCha
         }
         private PageAction[] CopyKeyToStateActions()
         {
-            return pres.Nav.CopyActions(
+            PageAction[] copyActions = pres.Nav.CopyActions(
                 new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2, pres.UITransformLittleEndianCell3, pres.UITransformLittleEndianCell4, pres.UITransformLittleEndianCell5, pres.UITransformLittleEndianCell6, pres.UITransformLittleEndianCell7 },
                 new Border[] { pres.UIStateCell4, pres.UIStateCell5, pres.UIStateCell6, pres.UIStateCell7, pres.UIStateCell8, pres.UIStateCell9, pres.UIStateCell10, pres.UIStateCell11 },
                 new string[] { "", "", "", "", "", "", "", "" });
+            copyActions = AddCopyDiffusionKeyToStateActions(copyActions);
+            return copyActions;
         }
         #endregion
 
@@ -462,6 +464,36 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
                 pres.Nav.Show(diffusionChunkCell);
             }
+        }
+        private PageAction[] AddCopyDiffusionKeyToStateActions(PageAction[] copyKeyToStateActions)
+        {
+            FlowDocument fullDKeyLittleEndian = GetDiffusionKeyLittleEndian();
+            FlowDocument[] chunkDocs = SplitDocument(fullDKeyLittleEndian, 8);
+            PageAction addDKeyToState = new PageAction(() =>
+            {
+                Console.WriteLine("Exec AddDKeyToState");
+                if (!pres.DiffusionActive) return;
+                for (int i = 4; i < 12; ++i)
+                {
+                    RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
+                    Border diffusionStateCell = (Border)diffusionState.Parent;
+                    pres.Nav.SetDocument(diffusionState, chunkDocs[i - 4]);
+                    pres.Nav.Show(diffusionStateCell);
+                }
+            }, () =>
+            {
+                Console.WriteLine("Undo AddDKeyToState");
+                if (!pres.DiffusionActive) return;
+                for (int i = 4; i < 12; ++i)
+                {
+                    RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
+                    Border diffusionStateCell = (Border)diffusionState.Parent;
+                    pres.Nav.ClearDocument(diffusionState);
+                    pres.Nav.Collapse(diffusionStateCell);
+                }
+            });
+            copyKeyToStateActions[1].Add(addDKeyToState);
+            return copyKeyToStateActions;
         }
         private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
         {
