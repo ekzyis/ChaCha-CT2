@@ -182,6 +182,7 @@ namespace Cryptool.Plugins.ChaCha
                     OnPropertyChanged($"DKeyNibble{i}Flipped");
                     OnPropertyChanged($"DKeyNibbleHex{i}");
                 }
+                OnPropertyChanged("DiffusionActive");
             }
         }
         private int Bit(byte b, int bitIndex)
