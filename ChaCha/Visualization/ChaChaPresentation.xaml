@@ -324,7 +324,13 @@
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState9"/>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion9" Background="{ Binding ElementName=UIStateCell9, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Name="UIStateDiffusion9"/>
+                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Name="UIStateDiffusion9">
+                    <FlowDocument>
+                      <Paragraph>
+                        TEST
+                      </Paragraph>
+                    </FlowDocument>
+                  </RichTextBox>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>

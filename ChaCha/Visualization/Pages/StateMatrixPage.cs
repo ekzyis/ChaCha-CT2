@@ -467,11 +467,10 @@ namespace Cryptool.Plugins.ChaCha
         }
         private PageAction[] AddCopyDiffusionKeyToStateActions(PageAction[] copyKeyToStateActions)
         {
-            FlowDocument fullDKeyLittleEndian = GetDiffusionKeyLittleEndian();
-            FlowDocument[] chunkDocs = SplitDocument(fullDKeyLittleEndian, 8);
             PageAction addDKeyToState = new PageAction(() =>
             {
-                Console.WriteLine("Exec AddDKeyToState");
+                FlowDocument fullDKeyLittleEndian = GetDiffusionKeyLittleEndian();
+                FlowDocument[] chunkDocs = SplitDocument(fullDKeyLittleEndian, 8);
                 if (!pres.DiffusionActive) return;
                 for (int i = 4; i < 12; ++i)
                 {
@@ -482,7 +481,6 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }, () =>
             {
-                Console.WriteLine("Undo AddDKeyToState");
                 if (!pres.DiffusionActive) return;
                 for (int i = 4; i < 12; ++i)
                 {
