@@ -441,7 +441,10 @@ namespace Cryptool.Plugins.ChaCha
             FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
             for (int i = 0; i < 8; ++i)
             {
-                pres.Nav.SetDocument((RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}"), chunkDocs[i]);
+                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}");
+                Border diffusionChunkCell = (Border)diffusionChunk.Parent;
+                pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
+                pres.Nav.Show(diffusionChunkCell);
             }
         }
         private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
