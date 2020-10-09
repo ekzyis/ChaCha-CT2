@@ -515,7 +515,7 @@
                 <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion6" Background="{Binding ElementName=UITransformLittleEndian6, Path=Background}"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="3" Name="UITransformLittleEndian7Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
+                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
               </Border>
               <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian7Cell, Path=Background}">
                 <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion7" Background="{Binding ElementName=UITransformLittleEndian7, Path=Background}"/>
