@@ -453,9 +453,15 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceTransformLittleEndianDiffusion()
         {
-            FlowDocument fullDKey = GetDiffusionKey();
-            FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
-
+            FlowDocument fullDKeyLittleEndian = GetDiffusionKeyLittleEndian();
+            FlowDocument[] chunkDocs = SplitDocument(fullDKeyLittleEndian, 8);
+            for (int i = 0; i < 8; ++i)
+            {
+                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianDiffusion{i}");
+                Border diffusionChunkCell = (Border)diffusionChunk.Parent;
+                pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
+                pres.Nav.Show(diffusionChunkCell);
+            }
         }
         private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
         {
@@ -537,6 +543,23 @@ namespace Cryptool.Plugins.ChaCha
             {
                 TextBlock nibbleBox = GetDiffusionKeyNibble(i);
                 para.Inlines.Add(nibbleBox);
+            }
+            doc.Blocks.Add(para);
+            return doc;
+        }
+        private FlowDocument GetDiffusionKeyLittleEndian()
+        {
+            FlowDocument doc = new FlowDocument();
+            Paragraph para = new Paragraph();
+            for (int i = 0; i < (keyIs32Byte ? 32 : 16) * 2; i+=8)
+            {
+                for (int j = i + 7; j >= i; j-=2)
+                {
+                    TextBlock nibble2 = GetDiffusionKeyNibble(j);
+                    TextBlock nibble1 = GetDiffusionKeyNibble(j-1);
+                    para.Inlines.Add(nibble1);
+                    para.Inlines.Add(nibble2);
+                }
             }
             doc.Blocks.Add(para);
             return doc;
