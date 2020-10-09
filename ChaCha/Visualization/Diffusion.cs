@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
@@ -47,6 +48,20 @@ namespace Cryptool.Plugins.ChaCha
                 _showDiffusion = value;
                 OnPropertyChanged("ShowDiffusion");
             }
+        }
+
+        public bool DiffusionActive
+        {
+            get
+            {
+                return AtLeastOneBitFlipped();
+            }
+        }
+
+        public bool AtLeastOneBitFlipped()
+        {
+            if (DiffusionKey == null || InputKey == null) return false;
+            return Enumerable.Range(0, 256).Any(i => DKeyBit(i) != KeyBit(i));
         }
 
         private byte[] _diffusionKey;
@@ -96,6 +111,7 @@ namespace Cryptool.Plugins.ChaCha
             OnPropertyChanged($"DKeyNibble{bitIndex / 4}");
             OnPropertyChanged($"DKeyNibble{bitIndex / 4}Flipped");
             OnPropertyChanged($"DKeyNibbleHex{bitIndex / 4}");
+            OnPropertyChanged($"DiffusionActive");
         }
         public void SetDKeyBit(int bitIndex)
         {

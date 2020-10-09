@@ -196,14 +196,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             // Ternary operator must return something thus wrapping function into action. (Guess I really wanted a one-liner for this and not if-else.)
             // https://stackoverflow.com/questions/5490095/method-call-using-ternary-operator
-            (pres.ShowDiffusion ? new Action(ReplaceTransformInputDiffusion) : new Action(() => ReplaceTransformInput(pres.HexInputKey)))();
+            (pres.DiffusionActive ? new Action(ReplaceTransformInputDiffusion) : new Action(() => ReplaceTransformInput(pres.HexInputKey)))();
         }
         private void ReplaceTransformChunkKey()
         {
             ReplaceTransformChunk(
                     pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
                     pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
-            if (pres.ShowDiffusion)
+            if (pres.DiffusionActive)
             {
                 ReplaceTransformChunkDiffusion();
             }
@@ -213,7 +213,7 @@ namespace Cryptool.Plugins.ChaCha
             ReplaceTransformLittleEndian(
                    pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
                    pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
-            if(pres.ShowDiffusion)
+            if(pres.DiffusionActive)
             {
                 ReplaceTransformLittleEndianDiffusion();
             }
@@ -427,13 +427,13 @@ namespace Cryptool.Plugins.ChaCha
         {
             return new PageAction(() =>
             {
-                if (pres.ShowDiffusion)
+                if (pres.DiffusionActive)
                 {
                     ReplaceTransformInputDiffusion();
                 }
             }, () =>
             {
-                if (pres.ShowDiffusion)
+                if (pres.DiffusionActive)
                 {
                     ClearTransformInputDiffusion();
                 }
@@ -493,7 +493,7 @@ namespace Cryptool.Plugins.ChaCha
             InitDiffusionGridLayout();
             InitDiffusionFlipBitButtons();
         }
-        private void ToggleDiffusion(object sender, RoutedEventArgs e)
+        private void ToggleShowDiffusion(object sender, RoutedEventArgs e)
         {
             pres.ShowDiffusion = !pres.ShowDiffusion;
             toggleShowDiffusion.Content = $"{(pres.ShowDiffusion == true ? "Verstecke" : "Zeige")} Diffusionsanzeige";
@@ -504,7 +504,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void InitDiffusionButtons()
         {
-            toggleShowDiffusion.Click += ToggleDiffusion;
+            toggleShowDiffusion.Click += ToggleShowDiffusion;
             resetDiffusion.Click += ResetDiffusion;
         }
         private TextBlock GetDiffusionKeyNibble(int nibbleIndex)
