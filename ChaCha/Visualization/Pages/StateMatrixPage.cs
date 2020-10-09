@@ -685,14 +685,13 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ClearTransformChunk()
         {
-            pres.Nav.Clear(pres.UITransformChunk0);
-            pres.Nav.Clear(pres.UITransformChunk1);
-            pres.Nav.Clear(pres.UITransformChunk2);
-            pres.Nav.Clear(pres.UITransformChunk3);
-            pres.Nav.Clear(pres.UITransformChunk4);
-            pres.Nav.Clear(pres.UITransformChunk5);
-            pres.Nav.Clear(pres.UITransformChunk6);
-            pres.Nav.Clear(pres.UITransformChunk7);
+            for(int i = 0; i < 8; ++i)
+            {
+                pres.Nav.Clear((TextBox)pres.FindName($"UITransformChunk{i}"));
+                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}");
+                pres.Nav.ClearDocument(diffusionChunk);
+                pres.Nav.Collapse((Border)diffusionChunk.Parent);
+            }
         }
         #endregion TransformChunk
 
