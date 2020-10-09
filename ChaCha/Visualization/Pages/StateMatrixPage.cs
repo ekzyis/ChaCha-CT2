@@ -186,12 +186,14 @@ namespace Cryptool.Plugins.ChaCha
                 copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
                 copyActions[2].AddToUndo(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
             }
-            copyActions[1].Add(AddTransformInputDiffusion());
+            copyActions[1].Add(TransformInputDiffusionAction());
             return copyActions;
         }
         private void ReplaceTransformInputKey()
         {
-            ReplaceTransformInput(pres.HexInputKey);
+            // Ternary operator must return something thus wrapping function into action. (Guess I really wanted a one-liner for this and not if-else.)
+            // https://stackoverflow.com/questions/5490095/method-call-using-ternary-operator
+            (pres.ShowDiffusion ? new Action(AddTransformInputDiffusion) : new Action(() => ReplaceTransformInput(pres.HexInputKey)))();
         }
         private void ReplaceTransformChunkKey()
         {
@@ -391,48 +393,49 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Diffusion
-        private PageAction AddTransformInputDiffusion()
+        private void AddTransformInputDiffusion()
+        {
+            FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
+            FlowDocument dKeyRow1 = fullDKey;
+            FlowDocument dKeyRow2 = fullDKey;
+            if (pres.InputKey.Length == 32)
+            {
+                // split diffusion key into two rows
+                Paragraph fullDKeyParagraph = (Paragraph)fullDKey.Blocks.FirstBlock;
+                dKeyRow1 = new FlowDocument() { TextAlignment = TextAlignment.Center };
+                Paragraph dKeyRow1Paragraph = new Paragraph();
+                // first 32 nibbles
+                dKeyRow1Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
+                dKeyRow1.Blocks.Add(dKeyRow1Paragraph);
+                dKeyRow2 = new FlowDocument() { TextAlignment = TextAlignment.Center };
+                Paragraph dKeyRow2Paragraph = new Paragraph();
+                // last 32 nibbles
+                dKeyRow2Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
+                dKeyRow2.Blocks.Add(dKeyRow2Paragraph);
+            }
+            pres.Nav.SetDocument(pres.UITransformInputDiffusion, dKeyRow1);
+            pres.Nav.SetDocument(pres.UITransformInputDiffusion2, dKeyRow2);
+            pres.Nav.Show(pres.UITransformInputDiffusionCell);
+            pres.Nav.Show(pres.UITransformInputDiffusionCell2);
+        }
+        private void ClearTransformInputDiffusion()
+        {
+            pres.Nav.Collapse(pres.UITransformInputDiffusionCell, pres.UITransformInputDiffusionCell2);
+            pres.Nav.ClearDocument(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
+        }
+        private PageAction TransformInputDiffusionAction()
         {
             return new PageAction(() =>
             {
                 if (pres.ShowDiffusion)
                 {
-                    FlowDocument fullDKey = GetDiffusionKeyFlowDocument();
-                    FlowDocument dKeyRow1 = fullDKey;
-                    FlowDocument dKeyRow2 = fullDKey;
-                    if (pres.InputKey.Length == 32)
-                    {
-                        // split diffusion key into two rows
-                        Paragraph fullDKeyParagraph = (Paragraph)fullDKey.Blocks.FirstBlock;
-                        Console.WriteLine($"full inlines count: {fullDKeyParagraph.Inlines.Count}");
-                        dKeyRow1 = new FlowDocument() { TextAlignment = TextAlignment.Center };
-                        Paragraph dKeyRow1Paragraph = new Paragraph();
-                        // first 32 nibbles
-                        dKeyRow1Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
-                        Console.WriteLine($"full inlines count: {fullDKeyParagraph.Inlines.Count}");
-                        dKeyRow1.Blocks.Add(dKeyRow1Paragraph);
-                        Console.WriteLine($"row1 inlines count: {dKeyRow1Paragraph.Inlines.Count}");
-                        dKeyRow2 = new FlowDocument() { TextAlignment = TextAlignment.Center };
-                        Paragraph dKeyRow2Paragraph = new Paragraph();
-                        // last 32 nibbles
-                        dKeyRow2Paragraph.Inlines.AddRange(fullDKeyParagraph.Inlines.ToArray().Take(32));
-                        Console.WriteLine($"full inlines count: {fullDKeyParagraph.Inlines.Count}");
-                        dKeyRow2.Blocks.Add(dKeyRow2Paragraph);
-                        Console.WriteLine($"row2 inlines count: {dKeyRow2Paragraph.Inlines.Count}");
-                    }
-                    pres.Nav.SetDocument(pres.UITransformInputDiffusion, dKeyRow1);
-                    pres.Nav.SetDocument(pres.UITransformInputDiffusion2, dKeyRow2);
-                    pres.Nav.Show(pres.UITransformInputDiffusionCell);
-                    pres.Nav.Show(pres.UITransformInputDiffusionCell2);
+                    AddTransformInputDiffusion();
                 }
             }, () =>
             {
                 if (pres.ShowDiffusion)
                 {
-                    pres.Nav.Collapse(pres.UITransformInputDiffusionCell);
-                    pres.Nav.Collapse(pres.UITransformInputDiffusionCell2);
-                    pres.Nav.ClearDocument(pres.UITransformInputDiffusion);
-                    pres.Nav.ClearDocument(pres.UITransformInputDiffusion2);
+                    ClearTransformInputDiffusion();
                 }
             });
         }
