@@ -748,14 +748,13 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ClearTransformLittleEndian()
         {
-            pres.Nav.Clear(pres.UITransformLittleEndian0);
-            pres.Nav.Clear(pres.UITransformLittleEndian1);
-            pres.Nav.Clear(pres.UITransformLittleEndian2);
-            pres.Nav.Clear(pres.UITransformLittleEndian3);
-            pres.Nav.Clear(pres.UITransformLittleEndian4);
-            pres.Nav.Clear(pres.UITransformLittleEndian5);
-            pres.Nav.Clear(pres.UITransformLittleEndian6);
-            pres.Nav.Clear(pres.UITransformLittleEndian7);
+            for (int i = 0; i < 8; ++i)
+            {
+                pres.Nav.Clear((TextBox)pres.FindName($"UITransformLittleEndian{i}"));
+                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianDiffusion{i}");
+                pres.Nav.ClearDocument(diffusionChunk);
+                pres.Nav.Collapse((Border)diffusionChunk.Parent);
+            }
         }
         #endregion
             
