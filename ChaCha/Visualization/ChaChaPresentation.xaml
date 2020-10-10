@@ -206,6 +206,13 @@
                   <RowDefinition></RowDefinition>
                   <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
+                <Grid.Resources>
+                  <Style TargetType="StackPanel">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="Orientation" Value="Vertical"/>
+                  </Style>
+                </Grid.Resources>
                 <!-- Row 0 -->
                 <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell0">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState0"/>
@@ -248,11 +255,15 @@
                   </Canvas>
                 </Border>
                 <!-- Row 1 -->
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell4">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState4"/>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="0" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion4" Background="{ Binding ElementName=UIStateCell4, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Name="UIStateDiffusion4"/>
+                <Border BorderBrush="Black" Grid.Row="1" Grid.Column="0" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell4">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState4"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion4" Background="{ Binding ElementName=UIStateCell4, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Name="UIStateDiffusion4"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -261,11 +272,16 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell5">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState5"/>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="1" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion5" Background="{ Binding ElementName=UIStateCell5, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Name="UIStateDiffusion5"/>
+
+                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell5">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState5"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion5" Background="{ Binding ElementName=UIStateCell5, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Name="UIStateDiffusion5"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -274,11 +290,16 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell6">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState6"/>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion6" Background="{ Binding ElementName=UIStateCell6, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Name="UIStateDiffusion6"/>
+
+                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell6">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState6"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion6" Background="{ Binding ElementName=UIStateCell6, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Name="UIStateDiffusion6"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -287,11 +308,16 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell7">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState7"/>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion7" Background="{ Binding ElementName=UIStateCell7, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Name="UIStateDiffusion7"/>
+
+                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell7">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState7"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion7" Background="{ Binding ElementName=UIStateCell7, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Name="UIStateDiffusion7"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -300,12 +326,17 @@
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 2 -->
-                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell8">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState8"/>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="0" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion8" Background="{ Binding ElementName=UIStateCell8, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Name="UIStateDiffusion8"/>
+                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell8">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState8"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion8" Background="{ Binding ElementName=UIStateCell8, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Name="UIStateDiffusion8"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -315,11 +346,15 @@
                   </Canvas>
                 </Border>
 
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell9">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState9"/>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="1" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion9" Background="{ Binding ElementName=UIStateCell9, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Name="UIStateDiffusion9"/>
+                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell9">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState9"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion9" Background="{ Binding ElementName=UIStateCell9, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Name="UIStateDiffusion9"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -328,11 +363,16 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell10">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState10"/>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="2" Visibility="Collapsed"  BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion10" Background="{ Binding ElementName=UIStateCell10, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Name="UIStateDiffusion10"/>
+
+                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell10">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState10"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion10" Background="{ Binding ElementName=UIStateCell10, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Name="UIStateDiffusion10"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -341,11 +381,16 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell11">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState11"/>
-                </Border>
-                <Border Grid.Row="2" Grid.Column="3" Visibility="Collapsed" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCellDiffusion11" Background="{ Binding ElementName=UIStateCell11, Path=Background }">
-                  <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Name="UIStateDiffusion11"/>
+
+                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                  <StackPanel>
+                    <Border Name="UIStateCell11">
+                      <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState11"/>
+                    </Border>
+                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion11" Background="{ Binding ElementName=UIStateCell11, Path=Background }">
+                      <RichTextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Name="UIStateDiffusion11"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -354,6 +399,7 @@
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 3 -->
                 <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIStateCell12">
                   <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState12"/>
