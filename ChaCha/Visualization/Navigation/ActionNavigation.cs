@@ -543,6 +543,14 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     Clear(tbox);
                 }
+                else if (b.Child is StackPanel sp)
+                {
+                    Clear(sp);
+                }
+                else
+                {
+                    Debug.Assert(false, "Child Clear Border not supported.");
+                }
             }
         }
 
@@ -671,15 +679,20 @@ namespace Cryptool.Plugins.ChaCha
             }
             Add(sp, tb);
         }
-
         public void Add(StackPanel sp, TextBox tb)
         {
             sp.Children.Add(tb);
         }
-
         public void RemoveLast(StackPanel sp)
         {
             sp.Children.RemoveAt(sp.Children.Count - 1);
+        }
+        public void Clear(StackPanel sp)
+        {
+            TextBox[] tbChilds = sp.Children.OfType<TextBox>().ToArray();
+            Clear(tbChilds);
+            RichTextBox[] rtbChilds = sp.Children.OfType<RichTextBox>().ToArray();
+            Clear(rtbChilds);
         }
         #endregion
     }
