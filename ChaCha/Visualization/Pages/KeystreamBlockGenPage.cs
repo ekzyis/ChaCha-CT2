@@ -36,137 +36,6 @@ namespace Cryptool.Plugins.ChaCha
             Cache = GenerateCache();
         }
 
-        private string[] GetTemplateState()
-        {
-            return new string[] {
-                pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3],
-                pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
-                pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 4 : 0], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 5 : 1], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 6 : 2], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 7 : 3],
-                "", "", "", "" };
-        }
-        private string[] GetTemplateDiffusionState()
-        {
-            byte[] dkey = pres.DiffusionKey;
-            byte[] key = pres.InputKey;
-            string[] dkeyLe = pres.DiffusionKeyLittleEndian;
-            string[] keyLe = pres.KeyLittleEndian;
-            Debug.Assert(dkey.Length == key.Length, $"DiffusionKey ({dkey.Length}) has not same length as Input Key ({key.Length})");
-            Debug.Assert(dkeyLe.Length == keyLe.Length, $"DiffusionKeyLittleEndian ({dkeyLe.Length}) has not same length as KeyLittleEndian ({keyLe.Length})");
-            int dkeyLength = dkey.Length;
-            string[] templateState = GetTemplateState();
-            templateState[4] = dkeyLe[0];
-            templateState[5] = dkeyLe[1];
-            templateState[6] = dkeyLe[2];
-            templateState[7] = dkeyLe[3];
-            templateState[8] = dkeyLe[dkeyLength == 32 ? 4 : 0];
-            templateState[9] = dkeyLe[dkeyLength == 32 ? 5 : 1];
-            templateState[10] = dkeyLe[dkeyLength == 32 ? 6 : 2];
-            templateState[11] = dkeyLe[dkeyLength == 32 ? 7 : 3];
-            return templateState;
-        }
-
-        private void InsertCounter(string[] state, ulong counter64)
-        {
-            if (versionIsDJB)
-            {
-                // 64-bit counter, 64-bit IV
-                byte[] counter = ChaCha.GetBytes(counter64);
-                // counter as little-endian
-                Array.Reverse(counter);
-                string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
-                Debug.Assert(counterStr.Length == 16, $"Counter string is of size {counterStr.Length}. Expected: 16 (version DJB)");
-                state[12] = counterStr.Substring(0, 8);
-                state[13] = counterStr.Substring(8);
-                // Debug.Assert(pres.IVLittleEndian.Length == 2, $"IVLittleEndian array is of size {pres.IVLittleEndian.Length}. Expected: 2 (version DJB)");
-                state[14] = pres.IVLittleEndian[0];
-                state[15] = pres.IVLittleEndian[1];
-            }
-            else
-            {
-                // 32-bit counter, 96-bit IV
-                byte[] counter = ChaCha.GetBytes((uint)counter64);
-                Array.Reverse(counter);
-                string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
-                Debug.Assert(counterStr.Length == 8, $"Counter string is of size {counterStr.Length}. Expected: 8 (version IETF)");
-                state[12] = counterStr;
-                Debug.Assert(pres.IVLittleEndian.Length == 3, $"IVLittleEndian array is of size {pres.IVLittleEndian.Length}. Expected: 3 (version IETF)");
-                state[13] = pres.IVLittleEndian[0];
-                state[14] = pres.IVLittleEndian[1];
-                state[15] = pres.IVLittleEndian[2];
-            }
-        }
-
-        private string[] GetOriginalState()
-        {
-            string[] state = GetTemplateState();
-            InsertCounter(state, keyBlockNr - 1);
-            return state;
-        }
-        private string[] GetDiffusionOriginalState()
-        {
-            string[] dKeyOriginalState = GetTemplateDiffusionState();
-            InsertCounter(dKeyOriginalState, keyBlockNr - 1);
-            return dKeyOriginalState;
-        }
-
-        private int MapIndex(ResultType<uint[]> resultType, int i)
-        {
-            int offset = 0;
-            switch (resultType.Name)
-            {
-                case "CHACHA_HASH_ORIGINAL_STATE":
-                case "CHACHA_HASH_ADD_ORIGINAL_STATE":
-                case "CHACHA_HASH_LITTLEENDIAN_STATE":
-                    // only executed once per keystream block generation thus no offset.
-                    offset = 0;
-                    break;
-                case "CHACHA_HASH_QUARTERROUND":
-                    // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
-                    offset = pres.Rounds * 4;
-                    break;
-            }
-            return (int)((ulong)offset * (keyBlockNr - 1)) + i;
-        }
-        private int MapIndex(ResultType<uint> resultType, int i)
-        {
-            int offset = 0;
-            switch (resultType.Name)
-            {
-                case "QR_INPUT_A":
-                case "QR_INPUT_B":
-                case "QR_INPUT_C":
-                case "QR_INPUT_D":
-                case "QR_OUTPUT_A":
-                case "QR_OUTPUT_B":
-                case "QR_OUTPUT_C":
-                case "QR_OUTPUT_D":
-                    // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
-                    offset = pres.Rounds * 4;
-                    break;
-                case "QR_ADD":
-                case "QR_XOR":
-                case "QR_SHIFT":
-                    // executed four times per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4 * 4
-                    offset = pres.Rounds * 4 * 4;
-                    break;
-            }
-            return (int)((ulong)offset * (keyBlockNr - 1)) + i;
-        }
-        private uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
-        {
-            int mapIndex = MapIndex(resultType, index);
-            return pres.GetResult(resultType, mapIndex);
-        }
-        private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
-        {
-            return pres.GetHexResult(resultType, MapIndex(resultType, i), j);
-        }
-        private string GetMappedHexResult(ResultType<uint> resultType, int index)
-        {
-            int mapIndex = MapIndex(resultType, index);
-            return pres.GetHexResult(resultType, MapIndex(resultType, index));
-        }
-
         private void Init()
         {
             PageAction initAction = new PageAction(() =>
@@ -209,7 +78,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(QRExecActions(4, qrIndex));
                 AddAction(QROutputActions());
                 AddAction(ReplaceStateEntriesWithQROutput(qrIndex));
-                if(qrIndex != pres.Rounds * 4)
+                if (qrIndex != pres.Rounds * 4)
                 {
                     AddAction(ClearQRDetail(qrIndex));
                 }
@@ -218,11 +87,6 @@ namespace Cryptool.Plugins.ChaCha
             AddAction(ConvertStateEntriesToLittleEndian());
         }
 
-        private void AddOriginalDiffusionToState()
-        {
-            string[] diffusionOriginalState = GetDiffusionOriginalState();
-            AddDiffusionToState(diffusionOriginalState);
-        }
         private ActionCache GenerateCache()
         {
             Debug.Assert(Actions.Length != 0, $"Actions empty while generating cache. Did you initialize the actions?");
@@ -282,10 +146,88 @@ namespace Cryptool.Plugins.ChaCha
             }
             return qrCache;
         }
+
+        #region State methods
+        private string[] GetTemplateState()
+        {
+            return new string[] {
+                pres.ConstantsLittleEndian[0], pres.ConstantsLittleEndian[1], pres.ConstantsLittleEndian[2], pres.ConstantsLittleEndian[3],
+                pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
+                pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 4 : 0], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 5 : 1], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 6 : 2], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 7 : 3],
+                "", "", "", "" };
+        }
+        private string[] GetTemplateDiffusionState()
+        {
+            byte[] dkey = pres.DiffusionKey;
+            byte[] key = pres.InputKey;
+            string[] dkeyLe = pres.DiffusionKeyLittleEndian;
+            string[] keyLe = pres.KeyLittleEndian;
+            Debug.Assert(dkey.Length == key.Length, $"DiffusionKey ({dkey.Length}) has not same length as Input Key ({key.Length})");
+            Debug.Assert(dkeyLe.Length == keyLe.Length, $"DiffusionKeyLittleEndian ({dkeyLe.Length}) has not same length as KeyLittleEndian ({keyLe.Length})");
+            int dkeyLength = dkey.Length;
+            string[] templateState = GetTemplateState();
+            templateState[4] = dkeyLe[0];
+            templateState[5] = dkeyLe[1];
+            templateState[6] = dkeyLe[2];
+            templateState[7] = dkeyLe[3];
+            templateState[8] = dkeyLe[dkeyLength == 32 ? 4 : 0];
+            templateState[9] = dkeyLe[dkeyLength == 32 ? 5 : 1];
+            templateState[10] = dkeyLe[dkeyLength == 32 ? 6 : 2];
+            templateState[11] = dkeyLe[dkeyLength == 32 ? 7 : 3];
+            return templateState;
+        }
+        private void InsertCounter(string[] state, ulong counter64)
+        {
+            if (versionIsDJB)
+            {
+                // 64-bit counter, 64-bit IV
+                byte[] counter = ChaCha.GetBytes(counter64);
+                // counter as little-endian
+                Array.Reverse(counter);
+                string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
+                Debug.Assert(counterStr.Length == 16, $"Counter string is of size {counterStr.Length}. Expected: 16 (version DJB)");
+                state[12] = counterStr.Substring(0, 8);
+                state[13] = counterStr.Substring(8);
+                // Debug.Assert(pres.IVLittleEndian.Length == 2, $"IVLittleEndian array is of size {pres.IVLittleEndian.Length}. Expected: 2 (version DJB)");
+                state[14] = pres.IVLittleEndian[0];
+                state[15] = pres.IVLittleEndian[1];
+            }
+            else
+            {
+                // 32-bit counter, 96-bit IV
+                byte[] counter = ChaCha.GetBytes((uint)counter64);
+                Array.Reverse(counter);
+                string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
+                Debug.Assert(counterStr.Length == 8, $"Counter string is of size {counterStr.Length}. Expected: 8 (version IETF)");
+                state[12] = counterStr;
+                Debug.Assert(pres.IVLittleEndian.Length == 3, $"IVLittleEndian array is of size {pres.IVLittleEndian.Length}. Expected: 3 (version IETF)");
+                state[13] = pres.IVLittleEndian[0];
+                state[14] = pres.IVLittleEndian[1];
+                state[15] = pres.IVLittleEndian[2];
+            }
+        }
+
+        private string[] GetOriginalState()
+        {
+            string[] state = GetTemplateState();
+            InsertCounter(state, keyBlockNr - 1);
+            return state;
+        }
+        private string[] GetDiffusionOriginalState()
+        {
+            string[] dKeyOriginalState = GetTemplateDiffusionState();
+            InsertCounter(dKeyOriginalState, keyBlockNr - 1);
+            return dKeyOriginalState;
+        }
+        private void AddOriginalDiffusionToState()
+        {
+            string[] diffusionOriginalState = GetDiffusionOriginalState();
+            AddDiffusionToState(diffusionOriginalState);
+        }
         private void AddToState(string[] state)
         {
             Debug.Assert(state.Length == 16, $"AddToState: given array is not of length 16");
-            for(int i = 0; i < 16; ++i)
+            for (int i = 0; i < 16; ++i)
             {
                 pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""), state[i]);
             }
@@ -328,7 +270,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""));
                 pres.Nav.Collapse((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
                 StackPanel sp = (StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, "");
-                while(sp.Children.Count > 1)
+                while (sp.Children.Count > 1)
                 {
                     pres.Nav.RemoveLast(sp);
                 }
@@ -368,45 +310,6 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.RemoveLast((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""));
             }
         }
-        private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
-        {
-            _pres.Nav.AddBold(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
-        }
-        private void AddBoldToDescription(string descToAdd)
-        {
-            AddBoldToDescription(pres, descToAdd);
-        }
-        private static void AddToDescription(ChaChaPresentation _pres, string descToAdd)
-        {
-            _pres.Nav.Add(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
-        }
-        private static void ClearDescription(ChaChaPresentation _pres)
-        {
-            _pres.Nav.Clear(_pres.UIKeystreamBlockGenStepDescription);
-        }
-        private void ClearDescription()
-        {
-            ClearDescription(pres);
-        }
-        private void UnboldLastFromDescription()
-        {
-
-            pres.Nav.UnboldLast(pres.UIKeystreamBlockGenStepDescription);
-        }
-        void MakeLastBoldInDescription()
-        {
-            pres.Nav.MakeBoldLast(pres.UIKeystreamBlockGenStepDescription);
-        }
-        void RemoveLastFromDescription()
-        {
-            pres.Nav.RemoveLast(pres.UIKeystreamBlockGenStepDescription);
-        }
-
-        public static object GetIndexElement(ChaChaPresentation pres, string nameId, int index, string delimiter = "_")
-        {
-            return pres.FindName(string.Format("{0}{1}{2}", nameId, delimiter, index));
-        }
-
         public static Border GetStateCell(ChaChaPresentation pres, int stateIndex)
         {
             return (Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", stateIndex);
@@ -427,7 +330,86 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", k));
             pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", l));
         }
+        private void AssertInitialState()
+        {
+            // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
+            string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] visualState = new string[16];
+            for (int i = 0; i < 16; ++i)
+            {
+                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
+                Debug.Assert(expectedState[i] == visualState[i], $"Visual init state does not match actual init state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
+            }
+        }
+        private PageAction[] AddOriginalState()
+        {
+            PageAction updateDescription = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(descriptions[3]);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
+            PageAction showOriginalState = new PageAction(() =>
+            {
+                ShowAddition();
+                ShowAdditionResult();
+            }, () =>
+            {
+                ClearAddition();
+                ClearAdditionResult();
+            });
+            string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            PageAction addStates = new PageAction(() =>
+            {
+                ClearAddition();
+                ClearAdditionResult();
+                ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+            }, () =>
+            {
+                ShowAddition();
+                ShowAdditionResult();
+                ReplaceState(previousState);
+            });
+            return new PageAction[] { updateDescription, showOriginalState, addStates };
+        }
+        private PageAction[] ConvertStateEntriesToLittleEndian()
+        {
+            PageAction updateDescription = new PageAction(() =>
+            {
+                UnboldLastFromDescription();
+                AddBoldToDescription(descriptions[4]);
+            }, () =>
+            {
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
+            });
+            PageAction showResult = new PageAction(() =>
+            {
+                ShowStateLittleEndianTransformResult();
+            }, () =>
+            {
+                ClearStateLittleEndianTransformResult();
+            });
+            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
+            string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            PageAction convert = new PageAction(() =>
+            {
+                ClearStateLittleEndianTransformResult();
+                ReplaceState(littleEndianState);
+            }, () =>
+            {
+                ReplaceState(previousState);
+                ShowStateLittleEndianTransformResult();
+            });
+            return new PageAction[] { updateDescription, showResult, convert };
+        }
+        #endregion
 
+        #region QR Visualization
         public static void ShowQRButtons(ChaChaPresentation pres, int round)
         {
             for (int i = 1; i <= 8; ++i)
@@ -436,7 +418,6 @@ namespace Cryptool.Plugins.ChaCha
                 qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && round != 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
-
         public static void HideAllQRArrowsExcept(ChaChaPresentation pres, int arrowIndex)
         {
             ((TextBox)GetIndexElement(pres, "ArrowQRRound", 1)).Visibility = Visibility.Hidden;
@@ -508,12 +489,6 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QROutD, qrOutD);
             });
         }
-
-        private static int ResultIndex(int actionIndex, int qrIndex)
-        {
-            return (qrIndex - 1) * 4 + (actionIndex - 1);
-        }
-
         private PageAction[] QROutputActions()
         {
             return pres.Nav.CopyActions(
@@ -523,7 +498,6 @@ namespace Cryptool.Plugins.ChaCha
                 new string[] { "", "", "", "" }
                 );
         }
-
         // TODO: Following three functions are very similar and can be refactored into one function
         private PageAction[] ExecAddActions(int actionIndex, int qrIndex)
         {
@@ -677,7 +651,6 @@ namespace Cryptool.Plugins.ChaCha
             });
             return new PageAction[] { mark, exec, unmark };
         }
-
         private void AssertQRExecActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
         {
             int resultIndex = ResultIndex(actionIndex, qrIndex);
@@ -691,7 +664,6 @@ namespace Cryptool.Plugins.ChaCha
             Debug.Assert(xor == expectedXor, $"Visual value after XOR execution does not match actual value! expected {expectedXor}, got {xor}");
             Debug.Assert(shift == expectedShift, $"Visual value after SHIFT execution does not match actual value! expected {expectedShift}, got {shift}");
         }
-
         private PageAction[] QRExecActions(int actionIndex, int qrIndex)
         {
             List<PageAction> actions = new List<PageAction>();
@@ -707,7 +679,6 @@ namespace Cryptool.Plugins.ChaCha
             actions.AddRange(execShift);
             return actions.ToArray();
         }
-
         private static (int, int, int, int) GetStateIndicesFromQRIndex(int qrIndex)
         {
             switch (((qrIndex - 1) % 8) + 1)
@@ -733,7 +704,6 @@ namespace Cryptool.Plugins.ChaCha
                     return (-1, -1, -1, -1);
             }
         }
-
         private static int CalculateRoundFromQRIndex(int qrIndex)
         {
             /**
@@ -748,29 +718,6 @@ namespace Cryptool.Plugins.ChaCha
             *   Quarterround index 13 -> Round 4
             */
             return (int)Math.Floor((double)(qrIndex - 1) / 4) + 1;
-        }
-        public static string QuarterroundStartLabelWithoutRound(int qrIndex)
-        {
-            // Creates a label where the quarterround indicator is continuous.
-            // For example, the label for the beginning of the third quarterround in the second round: *PREFIX*_7
-            // ( 7 because 1,2,3,4 (first round) 5,6,7 (second round) )
-            return $"{ACTIONLABEL_QR_START}_{qrIndex}";
-        }
-        public static string QuarterroundStartLabelWithRound(int qrIndex, int round)
-        {
-            // Creates a label with quarterround indicator between 1-4.
-            // For example, the label for the beginning of third quarterround in the secound round: *PREFIX*_3_2
-            return $"{ACTIONLABEL_QR_START}_{((qrIndex - 1) % 4) + 1}_{round}";
-        }
-        public static string QuarterroundEndLabelWithRound(int qrIndex, int round)
-        {
-            // Creates a label with quarterround indicator between 1-4.
-            // For example, the label for the end of third quarterround in the secound round: *PREFIX*_3_2
-            return $"{ACTIONLABEL_QR_END}_{((qrIndex - 1) % 4) + 1}_{round}";
-        }
-        public static string RoundStartLabel(int round)
-        {
-            return $"{ACTIONLABEL_ROUND_START}_{round}";
         }
         private PageAction[] CopyFromStateTOQRInputActions(int qrIndex, int round)
         {
@@ -846,7 +793,6 @@ namespace Cryptool.Plugins.ChaCha
             copyActions[0].AddLabel(QuarterroundStartLabelWithoutRound(qrIndex));
             return copyActions;
         }
-
         private void AssertStateAfterQuarterround(int qrIndex)
         {
             // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
@@ -858,19 +804,6 @@ namespace Cryptool.Plugins.ChaCha
                 Debug.Assert(expectedState[i] == visualState[i], $"Visual state after quarterround {qrIndex} execution does not match actual state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
             }
         }
-
-        private void AssertInitialState()
-        {
-            // Check that the state entries in the state matrix visualization are the same as the actual values in the uint[] array
-            string[] expectedState = GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
-            string[] visualState = new string[16];
-            for (int i = 0; i < 16; ++i)
-            {
-                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
-                Debug.Assert(expectedState[i] == visualState[i], $"Visual init state does not match actual init state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
-            }
-        }
-
         private PageAction[] ReplaceStateEntriesWithQROutput(int qrIndex)
         {
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
@@ -888,74 +821,138 @@ namespace Cryptool.Plugins.ChaCha
             });
             return copyActions;
         }
+        #endregion
 
-        private PageAction[] AddOriginalState()
+        #region Intermediate Result
+        private int MapIndex(ResultType<uint[]> resultType, int i)
         {
-            PageAction updateDescription = new PageAction(() =>
+            int offset = 0;
+            switch (resultType.Name)
             {
-                UnboldLastFromDescription();
-                AddBoldToDescription(descriptions[3]);
-            }, () =>
-            {
-                RemoveLastFromDescription();
-                MakeLastBoldInDescription();
-            });
-            PageAction showOriginalState = new PageAction(() =>
-            {
-                ShowAddition();
-                ShowAdditionResult();
-            }, () =>
-            {
-                ClearAddition();
-                ClearAdditionResult();
-            });
-            string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
-            PageAction addStates = new PageAction(() =>
-            {
-                ClearAddition();
-                ClearAdditionResult();
-                ReplaceState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
-            }, () =>
-            {
-                ShowAddition();
-                ShowAdditionResult();
-                ReplaceState(previousState);
-            });
-            return new PageAction[] { updateDescription, showOriginalState, addStates };
+                case "CHACHA_HASH_ORIGINAL_STATE":
+                case "CHACHA_HASH_ADD_ORIGINAL_STATE":
+                case "CHACHA_HASH_LITTLEENDIAN_STATE":
+                    // only executed once per keystream block generation thus no offset.
+                    offset = 0;
+                    break;
+                case "CHACHA_HASH_QUARTERROUND":
+                    // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
+                    offset = pres.Rounds * 4;
+                    break;
+            }
+            return (int)((ulong)offset * (keyBlockNr - 1)) + i;
         }
+        private int MapIndex(ResultType<uint> resultType, int i)
+        {
+            int offset = 0;
+            switch (resultType.Name)
+            {
+                case "QR_INPUT_A":
+                case "QR_INPUT_B":
+                case "QR_INPUT_C":
+                case "QR_INPUT_D":
+                case "QR_OUTPUT_A":
+                case "QR_OUTPUT_B":
+                case "QR_OUTPUT_C":
+                case "QR_OUTPUT_D":
+                    // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
+                    offset = pres.Rounds * 4;
+                    break;
+                case "QR_ADD":
+                case "QR_XOR":
+                case "QR_SHIFT":
+                    // executed four times per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4 * 4
+                    offset = pres.Rounds * 4 * 4;
+                    break;
+            }
+            return (int)((ulong)offset * (keyBlockNr - 1)) + i;
+        }
+        private uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
+        {
+            int mapIndex = MapIndex(resultType, index);
+            return pres.GetResult(resultType, mapIndex);
+        }
+        private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
+        {
+            return pres.GetHexResult(resultType, MapIndex(resultType, i), j);
+        }
+        private string GetMappedHexResult(ResultType<uint> resultType, int index)
+        {
+            int mapIndex = MapIndex(resultType, index);
+            return pres.GetHexResult(resultType, MapIndex(resultType, index));
+        }
+        private static int ResultIndex(int actionIndex, int qrIndex)
+        {
+            return (qrIndex - 1) * 4 + (actionIndex - 1);
+        }
+        #endregion
 
-        private PageAction[] ConvertStateEntriesToLittleEndian()
+        #region Low Level API
+        private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
         {
-            PageAction updateDescription = new PageAction(() =>
-            {
-                UnboldLastFromDescription();
-                AddBoldToDescription(descriptions[4]);
-            }, () =>
-            {
-                RemoveLastFromDescription();
-                MakeLastBoldInDescription();
-            });
-            PageAction showResult = new PageAction(() =>
-            {
-                ShowStateLittleEndianTransformResult();
-            }, () =>
-            {
-                ClearStateLittleEndianTransformResult();
-            });
-            uint[] state = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1);
-            string[] previousState = state.Select(u => ChaChaPresentation.HexString(u)).ToArray();
-            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
-            PageAction convert = new PageAction(() =>
-            {
-                ClearStateLittleEndianTransformResult();
-                ReplaceState(littleEndianState);
-            }, () =>
-            {
-                ReplaceState(previousState);
-                ShowStateLittleEndianTransformResult();
-            });
-            return new PageAction[] { updateDescription, showResult, convert };
+            _pres.Nav.AddBold(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
         }
+        private void AddBoldToDescription(string descToAdd)
+        {
+            AddBoldToDescription(pres, descToAdd);
+        }
+        private static void AddToDescription(ChaChaPresentation _pres, string descToAdd)
+        {
+            _pres.Nav.Add(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
+        }
+        private static void ClearDescription(ChaChaPresentation _pres)
+        {
+            _pres.Nav.Clear(_pres.UIKeystreamBlockGenStepDescription);
+        }
+        private void ClearDescription()
+        {
+            ClearDescription(pres);
+        }
+        private void UnboldLastFromDescription()
+        {
+
+            pres.Nav.UnboldLast(pres.UIKeystreamBlockGenStepDescription);
+        }
+        void MakeLastBoldInDescription()
+        {
+            pres.Nav.MakeBoldLast(pres.UIKeystreamBlockGenStepDescription);
+        }
+        void RemoveLastFromDescription()
+        {
+            pres.Nav.RemoveLast(pres.UIKeystreamBlockGenStepDescription);
+        }
+        public static object GetIndexElement(ChaChaPresentation pres, string nameId, int index, string delimiter = "_")
+        {
+            return pres.FindName(string.Format("{0}{1}{2}", nameId, delimiter, index));
+        }
+        #endregion
+
+        #region Labels
+        public static string QuarterroundStartLabelWithoutRound(int qrIndex)
+        {
+            // Creates a label where the quarterround indicator is continuous.
+            // For example, the label for the beginning of the third quarterround in the second round: *PREFIX*_7
+            // ( 7 because 1,2,3,4 (first round) 5,6,7 (second round) )
+            return $"{ACTIONLABEL_QR_START}_{qrIndex}";
+        }
+        public static string QuarterroundStartLabelWithRound(int qrIndex, int round)
+        {
+            // Creates a label with quarterround indicator between 1-4.
+            // For example, the label for the beginning of third quarterround in the secound round: *PREFIX*_3_2
+            return $"{ACTIONLABEL_QR_START}_{((qrIndex - 1) % 4) + 1}_{round}";
+        }
+        public static string QuarterroundEndLabelWithRound(int qrIndex, int round)
+        {
+            // Creates a label with quarterround indicator between 1-4.
+            // For example, the label for the end of third quarterround in the secound round: *PREFIX*_3_2
+            return $"{ACTIONLABEL_QR_END}_{((qrIndex - 1) % 4) + 1}_{round}";
+        }
+        public static string RoundStartLabel(int round)
+        {
+            return $"{ACTIONLABEL_ROUND_START}_{round}";
+        }
+        #endregion
+
     }
 
     partial class Page
