@@ -1226,23 +1226,41 @@
               <Viewbox Height="230">
                 <Viewbox.Resources>
                   <Style x:Key="hexQRCell" TargetType="TextBox" BasedOn="{ StaticResource hexCell }">
-                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontSize" Value="12"/>
+                  </Style>
+                  <Style x:Key="diffusionValue" TargetType="RichTextBox" BasedOn="{ StaticResource diffusionValue}">
+                    <Setter Property="FontSize" Value="12"/>
+                  </Style>
+                  <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Vertical"/>
                   </Style>
                 </Viewbox.Resources>
                 <Canvas Width="1500" Height="220" Grid.Row="1">
                   <Canvas>
                     <!-- Input cells -->
                     <Border Width="65" Height="40" Name="QRInACell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="0">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInADiffusion" Background="{ Binding ElementName=QRInACell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInBCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="60">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInBDiffusion" Background="{ Binding ElementName=QRInBCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInCCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="120">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInCDiffusion" Background="{ Binding ElementName=QRInCCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInDCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="180">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInDDiffusion" Background="{ Binding ElementName=QRInDCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <!-- Output cells -->
                     <Border Width="65" Height="40" Name="QROutACell" Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="0">

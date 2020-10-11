@@ -83,7 +83,12 @@ namespace Cryptool.Plugins.ChaCha
             for (int qrIndex = 1; qrIndex <= pres.Rounds * 4; ++qrIndex)
             {
                 int round = CalculateRoundFromQRIndex(qrIndex);
-                AddAction(CopyFromStateTOQRInputActions(qrIndex, round));
+                PageAction[] copyFromStateToQRInputActions = CopyFromStateTOQRInputActions(qrIndex, round);
+                if(pres.DiffusionActive)
+                {
+                    copyFromStateToQRInputActions[1].Add(UpdateDiffusionQRInputAction(qrIndex));
+                }
+                AddAction(copyFromStateToQRInputActions);
                 AddAction(QRExecActions(1, qrIndex));
                 AddAction(QRExecActions(2, qrIndex));
                 AddAction(QRExecActions(3, qrIndex));
@@ -92,7 +97,7 @@ namespace Cryptool.Plugins.ChaCha
                 PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
                 if(pres.DiffusionActive)
                 {
-                    updateStateAfterQR[1].Add(UpdateDiffusionStateEntries(qrIndex));
+                    updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
                 }
                 AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
@@ -125,7 +130,7 @@ namespace Cryptool.Plugins.ChaCha
                         uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
-                            InsertDiffusionValue(x, diffusionStateEntries[x]);
+                            InsertDiffusionStateValue(x, diffusionStateEntries[x]);
                         }
                     }
                     
@@ -408,6 +413,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             return (RichTextBox[])GetIndexElements("UIKeystreamBlockGenDiffusion", 0, 16, "");
         }
+        public Border GetDiffusionStateCell(int stateIndex)
+        {
+            return (Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", stateIndex);
+        }
         private string[] GetTemplateDiffusionState()
         {
             byte[] dkey = pres.DiffusionKey;
@@ -454,12 +463,20 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", i));
             }
         }
-        private void InsertDiffusionValue(int stateIndex, uint diffusionValue)
+        private void InsertDiffusionStateValue(int stateIndex, uint diffusionValue)
         {
             RichTextBox diffusionStateBox = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", stateIndex, "");
             string normalValue = GetCurrentStateValue(stateIndex);
             pres.Nav.SetDocument(diffusionStateBox, MarkDifferenceRed(ChaChaPresentation.HexString(diffusionValue), normalValue));
             pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", stateIndex));
+        }
+        private void InsertDiffusionValue(RichTextBox diffusionTextBox, uint diffusionValue, uint normalValue)
+        {
+            InsertDiffusionValue(diffusionTextBox, ChaChaPresentation.HexString(diffusionValue), ChaChaPresentation.HexString(normalValue));
+        }
+        private void InsertDiffusionValue(RichTextBox diffusionTextBox, string diffusionValue, string normalValue)
+        {
+            pres.Nav.SetDocument(diffusionTextBox, MarkDifferenceRed(diffusionValue, normalValue));
         }
         private FlowDocument MarkDifferenceRed(string diffusionValue, string normalValue)
         {
@@ -479,7 +496,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return new TextBlock() { Text = d.ToString(), Foreground = d != v ? Brushes.Red : Brushes.Black };
         }
-        private PageAction UpdateDiffusionStateEntries(int qrIndex)
+        private PageAction UpdateDiffusionStateAction(int qrIndex)
         {
             return new PageAction(() =>
             {
@@ -502,6 +519,35 @@ namespace Cryptool.Plugins.ChaCha
                 newDiffusionState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex);
             }
             AddDiffusionToState(newDiffusionState);
+        }
+        private PageAction UpdateDiffusionQRInputAction(int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+                UpdateDiffusionQRInput(qrIndex);
+            }, () =>
+            {
+                ResetDiffusionQRInput();
+            });
+        }
+        private void UpdateDiffusionQRInput(int qrIndex)
+        {
+            string qrInA = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
+            string qrInADiffusion = pres.GetHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
+            string qrInB = pres.GetHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
+            string qrInBDiffusion = pres.GetHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
+            string qrInC = pres.GetHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
+            string qrInCDiffusion = pres.GetHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
+            string qrInD = pres.GetHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
+            string qrInDDiffusion = pres.GetHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
+            InsertDiffusionValue(pres.QRInADiffusion, qrInADiffusion, qrInA);
+            InsertDiffusionValue(pres.QRInBDiffusion, qrInBDiffusion, qrInB);
+            InsertDiffusionValue(pres.QRInCDiffusion, qrInCDiffusion, qrInC);
+            InsertDiffusionValue(pres.QRInDDiffusion, qrInDDiffusion, qrInD);
+        }
+        private void ResetDiffusionQRInput()
+        {
+            pres.Nav.ClearDocument(pres.QRInADiffusion, pres.QRInBDiffusion, pres.QRInCDiffusion, pres.QRInDDiffusion);
         }
         #endregion
 
