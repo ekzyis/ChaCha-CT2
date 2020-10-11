@@ -44,6 +44,26 @@ namespace Cryptool.Plugins.ChaCha
                 pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 4 : 0], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 5 : 1], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 6 : 2], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 7 : 3],
                 "", "", "", "" };
         }
+        private string[] GetTemplateDiffusionState()
+        {
+            byte[] dkey = pres.DiffusionKey;
+            byte[] key = pres.InputKey;
+            string[] dkeyLe = pres.DiffusionKeyLittleEndian;
+            string[] keyLe = pres.KeyLittleEndian;
+            Debug.Assert(dkey.Length == key.Length, $"DiffusionKey ({dkey.Length}) has not same length as Input Key ({key.Length})");
+            Debug.Assert(dkeyLe.Length == keyLe.Length, $"DiffusionKeyLittleEndian ({dkeyLe.Length}) has not same length as KeyLittleEndian ({keyLe.Length})");
+            int dkeyLength = dkeyLe.Length;
+            string[] templateState = GetTemplateState();
+            templateState[4] = dkeyLe[0];
+            templateState[5] = dkeyLe[1];
+            templateState[6] = dkeyLe[2];
+            templateState[7] = dkeyLe[3];
+            templateState[8] = dkeyLe[dkeyLength == 32 ? 4 : 0];
+            templateState[9] = dkeyLe[dkeyLength == 32 ? 5 : 1];
+            templateState[10] = dkeyLe[dkeyLength == 32 ? 6 : 2];
+            templateState[11] = dkeyLe[dkeyLength == 32 ? 7 : 3];
+            return templateState;
+        }
 
         private void InsertCounter(string[] state, ulong counter64)
         {
@@ -81,6 +101,12 @@ namespace Cryptool.Plugins.ChaCha
             string[] state = GetTemplateState();
             InsertCounter(state, keyBlockNr - 1);
             return state;
+        }
+        private string[] GetDiffusionOriginalState()
+        {
+            string[] dKeyOriginalState = GetTemplateDiffusionState();
+            InsertCounter(dKeyOriginalState, keyBlockNr - 1);
+            return dKeyOriginalState;
         }
 
         private int MapIndex(ResultType<uint[]> resultType, int i)
@@ -146,6 +172,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction initAction = new PageAction(() =>
             {
                 AddToState(originalState);
+                AddOriginalDiffusionToState();
                 AssertInitialState();
                 pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
             }, () =>
@@ -191,6 +218,11 @@ namespace Cryptool.Plugins.ChaCha
             AddAction(ConvertStateEntriesToLittleEndian());
         }
 
+        private void AddOriginalDiffusionToState()
+        {
+            string[] diffusionOriginalState = GetDiffusionOriginalState();
+            AddDiffusionToState(diffusionOriginalState);
+        }
         private ActionCache GenerateCache()
         {
             Debug.Assert(Actions.Length != 0, $"Actions empty while generating cache. Did you initialize the actions?");
@@ -252,30 +284,21 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void AddToState(string[] state)
         {
-            AddToState(state[0], state[1], state[2], state[3], state[4], state[5], state[6], state[7], state[8], state[9], state[10], state[11], state[12], state[13], state[14], state[15]);
+            Debug.Assert(state.Length == 16, $"AddToState: given array is not of length 16");
+            for(int i = 0; i < 16; ++i)
+            {
+                pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""), state[i]);
+            }
         }
-        private void AddToState(
-                string state0, string state1, string state2, string state3,
-                string state4, string state5, string state6, string state7,
-                string state8, string state9, string state10, string state11,
-                string state12, string state13, string state14, string state15)
+        private void AddDiffusionToState(params string[] diffusionState)
         {
-            pres.Nav.Add(pres.UIKeystreamBlockGen0, state0);
-            pres.Nav.Add(pres.UIKeystreamBlockGen1, state1);
-            pres.Nav.Add(pres.UIKeystreamBlockGen2, state2);
-            pres.Nav.Add(pres.UIKeystreamBlockGen3, state3);
-            pres.Nav.Add(pres.UIKeystreamBlockGen4, state4);
-            pres.Nav.Add(pres.UIKeystreamBlockGen5, state5);
-            pres.Nav.Add(pres.UIKeystreamBlockGen6, state6);
-            pres.Nav.Add(pres.UIKeystreamBlockGen7, state7);
-            pres.Nav.Add(pres.UIKeystreamBlockGen8, state8);
-            pres.Nav.Add(pres.UIKeystreamBlockGen9, state9);
-            pres.Nav.Add(pres.UIKeystreamBlockGen10, state10);
-            pres.Nav.Add(pres.UIKeystreamBlockGen11, state11);
-            pres.Nav.Add(pres.UIKeystreamBlockGen12, state12);
-            pres.Nav.Add(pres.UIKeystreamBlockGen13, state13);
-            pres.Nav.Add(pres.UIKeystreamBlockGen14, state14);
-            pres.Nav.Add(pres.UIKeystreamBlockGen15, state15);
+            if (!pres.DiffusionActive) return;
+            Debug.Assert(diffusionState.Length == 16, $"AddDiffusionToState: given array is not of length 16");
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""), diffusionState[i]);
+                pres.Nav.Show((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
+            }
         }
         private void ShowAddition()
         {
@@ -302,6 +325,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 16; ++i)
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
+                pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""));
                 StackPanel sp = (StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, "");
                 while(sp.Children.Count > 1)
                 {

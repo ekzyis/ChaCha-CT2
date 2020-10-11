@@ -183,6 +183,14 @@ namespace Cryptool.Plugins.ChaCha
                     OnPropertyChanged($"DKeyNibbleHex{i}");
                 }
                 OnPropertyChanged("DiffusionActive");
+                OnPropertyChanged("DiffusionKeyLittleEndian");
+            }
+        }
+        public string[] DiffusionKeyLittleEndian
+        {
+            get
+            {
+                return Chunkify(HexStringLittleEndian(_diffusionKey), 8).Split(' ');
             }
         }
         private int Bit(byte b, int bitIndex)
