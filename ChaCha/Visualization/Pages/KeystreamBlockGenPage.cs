@@ -126,8 +126,8 @@ namespace Cryptool.Plugins.ChaCha
                     pres.CurrentRoundIndex = round;
                     pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
-                    ShowQRButtons(pres, round);
-                    HideAllQRArrowsExcept(pres, ((qrIndex - 1) % 8) + 1);
+                    ShowQRButtons(round);
+                    HideAllQRArrowsExcept(((qrIndex - 1) % 8) + 1);
 
                     ClearDescription(pres);
                     AddToDescription(pres, descriptions[0]);
@@ -155,7 +155,7 @@ namespace Cryptool.Plugins.ChaCha
         #region State methods
         private string[] GetCurrentState()
         {
-            return GetStateTextBoxes(pres).Select(tb => tb.Text).ToArray();
+            return GetStateTextBoxes().Select(tb => tb.Text).ToArray();
         }
         private string[] GetTemplateState()
         {
@@ -208,7 +208,7 @@ namespace Cryptool.Plugins.ChaCha
             Debug.Assert(state.Length == 16, $"AddToState: given array is not of length 16");
             for (int i = 0; i < 16; ++i)
             {
-                pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""), state[i]);
+                pres.Nav.Add((TextBox)GetIndexElement("UIKeystreamBlockGen", i, ""), state[i]);
             }
         }
         
@@ -218,7 +218,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < add.Length; ++i)
             {
                 TextBox tb = new TextBox() { Text = add[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
-                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+                pres.Nav.Add((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""), tb);
             }
         }
         private void ClearAddition()
@@ -229,17 +229,17 @@ namespace Cryptool.Plugins.ChaCha
         {
             for (int i = 0; i < state.Length; ++i)
             {
-                pres.Nav.Replace((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""), state[i]);
+                pres.Nav.Replace((TextBox)GetIndexElement("UIKeystreamBlockGen", i, ""), state[i]);
             }
         }
         private void ClearState()
         {
             for (int i = 0; i < 16; ++i)
             {
-                pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
-                pres.Nav.ClearDocument((RichTextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""));
-                pres.Nav.Collapse((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
-                StackPanel sp = (StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, "");
+                pres.Nav.Clear((TextBox)GetIndexElement("UIKeystreamBlockGen", i, ""));
+                pres.Nav.ClearDocument((RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, ""));
+                pres.Nav.Collapse((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", i));
+                StackPanel sp = (StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, "");
                 while (sp.Children.Count > 1)
                 {
                     pres.Nav.RemoveLast(sp);
@@ -253,7 +253,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < result.Length; ++i)
             {
                 TextBox tb = new TextBox() { Text = result[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
-                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+                pres.Nav.Add((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""), tb);
             }
         }
         private void ClearAdditionResult()
@@ -266,7 +266,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < littleEndianState.Length; ++i)
             {
                 TextBox tb = new TextBox() { Text = littleEndianState[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
-                pres.Nav.Add((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""), tb);
+                pres.Nav.Add((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""), tb);
             }
         }
         private void ClearStateLittleEndianTransformResult()
@@ -277,28 +277,28 @@ namespace Cryptool.Plugins.ChaCha
         {
             for (int i = 0; i < 16; ++i)
             {
-                pres.Nav.RemoveLast((StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, ""));
+                pres.Nav.RemoveLast((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""));
             }
         }
-        public static Border GetStateCell(ChaChaPresentation pres, int stateIndex)
+        public Border GetStateCell(int stateIndex)
         {
-            return (Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", stateIndex);
+            return (Border)GetIndexElement("UIKeystreamBlockGenCell", stateIndex);
         }
 
-        public static TextBox[] GetStateTextBoxes(ChaChaPresentation pres)
+        public TextBox[] GetStateTextBoxes()
         {
-            return Enumerable.Range(0, 16).Select(i => (TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).ToArray();
+            return Enumerable.Range(0, 16).Select(i => (TextBox)GetIndexElement("UIKeystreamBlockGen", i, "")).ToArray();
         }
-        public static void UnmarkAllStateEntriesExcept(ChaChaPresentation pres, int i, int j, int k, int l)
+        public void UnmarkAllStateEntriesExcept(ChaChaPresentation pres, int i, int j, int k, int l)
         {
             for (int x = 0; x < 16; ++x)
             {
-                pres.Nav.UnsetBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", x));
+                pres.Nav.UnsetBackground((Border)GetIndexElement("UIKeystreamBlockGenCell", x));
             }
-            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", i));
-            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", j));
-            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", k));
-            pres.Nav.SetCopyBackground((Border)GetIndexElement(pres, "UIKeystreamBlockGenCell", l));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement("UIKeystreamBlockGenCell", i));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement("UIKeystreamBlockGenCell", j));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement("UIKeystreamBlockGenCell", k));
+            pres.Nav.SetCopyBackground((Border)GetIndexElement("UIKeystreamBlockGenCell", l));
         }
         private void AssertInitialState()
         {
@@ -307,7 +307,7 @@ namespace Cryptool.Plugins.ChaCha
             string[] visualState = new string[16];
             for (int i = 0; i < 16; ++i)
             {
-                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
+                visualState[i] = ((TextBox)GetIndexElement("UIKeystreamBlockGen", i, "")).Text;
                 Debug.Assert(expectedState[i] == visualState[i], $"Visual init state does not match actual init state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
             }
         }
@@ -413,14 +413,13 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void AddDiffusionToState(params string[] diffusionState)
         {
-            if (!pres.DiffusionActive) return;
             Debug.Assert(diffusionState.Length == 16, $"AddDiffusionToState: given array is not of length 16");
             string[] currentState = GetCurrentState();
             for (int i = 0; i < 16; ++i)
             {
-                RichTextBox diffusionValue = (RichTextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, "");
+                RichTextBox diffusionValue = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, "");
                 pres.Nav.SetDocument(diffusionValue, MarkDifferenceRed(diffusionState[i], currentState[i]));
-                pres.Nav.Show((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
+                pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", i));
             }
         }
         private FlowDocument MarkDifferenceRed(string diffusionValue, string normalValue)
@@ -444,25 +443,25 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region QR Visualization
-        public static void ShowQRButtons(ChaChaPresentation pres, int round)
+        public void ShowQRButtons(int round)
         {
             for (int i = 1; i <= 8; ++i)
             {
-                StackPanel qrButton = (StackPanel)GetIndexElement(pres, "QRound_Button", i);
+                StackPanel qrButton = (StackPanel)GetIndexElement("QRound_Button", i);
                 qrButton.Visibility = ((round % 2 == 1 || round == 0) && i <= 4) || (round % 2 == 0 && round != 0 && i > 4) ? Visibility.Visible : Visibility.Collapsed;
             }
         }
-        public static void HideAllQRArrowsExcept(ChaChaPresentation pres, int arrowIndex)
+        public void HideAllQRArrowsExcept(int arrowIndex)
         {
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 1)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 2)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 3)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 4)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 5)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 6)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 7)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", 8)).Visibility = Visibility.Hidden;
-            ((TextBox)GetIndexElement(pres, "ArrowQRRound", arrowIndex)).Visibility = Visibility.Visible;
+            ((TextBox)GetIndexElement("ArrowQRRound", 1)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 2)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 3)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 4)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 5)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 6)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 7)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", 8)).Visibility = Visibility.Hidden;
+            ((TextBox)GetIndexElement("ArrowQRRound", arrowIndex)).Visibility = Visibility.Visible;
         }
         public void ClearQRDetail()
         {
@@ -471,17 +470,17 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.Clear(pres.QROutputPath_A, pres.QROutputPath_B, pres.QROutputPath_C, pres.QROutputPath_D);
             for (int i = 1; i <= 4; ++i)
             {
-                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRAddPath", i));
-                pres.Nav.Clear((Border)GetIndexElement(pres, "QRAddCell", i));
-                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRAddCircle", i));
+                pres.Nav.Clear((Shape)GetIndexElement("QRAddPath", i));
+                pres.Nav.Clear((Border)GetIndexElement("QRAddCell", i));
+                pres.Nav.Clear((Shape)GetIndexElement("QRAddCircle", i));
 
-                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRXORPath", i));
-                pres.Nav.Clear((Border)GetIndexElement(pres, "QRXORCell", i));
-                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRXORCircle", i));
+                pres.Nav.Clear((Shape)GetIndexElement("QRXORPath", i));
+                pres.Nav.Clear((Border)GetIndexElement("QRXORCell", i));
+                pres.Nav.Clear((Shape)GetIndexElement("QRXORCircle", i));
 
-                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRShiftPath", i));
-                pres.Nav.Clear((Border)GetIndexElement(pres, "QRShiftCell", i));
-                pres.Nav.Clear((Shape)GetIndexElement(pres, "QRShiftCircle", i));
+                pres.Nav.Clear((Shape)GetIndexElement("QRShiftPath", i));
+                pres.Nav.Clear((Border)GetIndexElement("QRShiftCell", i));
+                pres.Nav.Clear((Shape)GetIndexElement("QRShiftCircle", i));
             }
         }
         public PageAction ClearQRDetail(int qrIndex)
@@ -513,9 +512,9 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QRInD, qrInD);
                 for (int i = 1; i <= 4; ++i)
                 {
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRAdd", i), qrDetailValues[i - 1, 0]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRXOR", i), qrDetailValues[i - 1, 1]);
-                    pres.Nav.Replace((TextBox)GetIndexElement(pres, "QRShift", i), qrDetailValues[i - 1, 2]);
+                    pres.Nav.Replace((TextBox)GetIndexElement("QRAdd", i), qrDetailValues[i - 1, 0]);
+                    pres.Nav.Replace((TextBox)GetIndexElement("QRXOR", i), qrDetailValues[i - 1, 1]);
+                    pres.Nav.Replace((TextBox)GetIndexElement("QRShift", i), qrDetailValues[i - 1, 2]);
                 }
                 pres.Nav.Replace(pres.QROutA, qrOutA);
                 pres.Nav.Replace(pres.QROutB, qrOutB);
@@ -526,7 +525,7 @@ namespace Cryptool.Plugins.ChaCha
         private PageAction[] QROutputActions()
         {
             return pres.Nav.CopyActions(
-                new Border[] { (Border)GetIndexElement(pres, "QRAddCell", 3), (Border)GetIndexElement(pres, "QRShiftCell", 4), (Border)GetIndexElement(pres, "QRAddCell", 4), (Border)GetIndexElement(pres, "QRShiftCell", 3) },
+                new Border[] { (Border)GetIndexElement("QRAddCell", 3), (Border)GetIndexElement("QRShiftCell", 4), (Border)GetIndexElement("QRAddCell", 4), (Border)GetIndexElement("QRShiftCell", 3) },
                 new Shape[] { pres.QROutputPath_A, pres.QROutputPath_B, pres.QROutputPath_C, pres.QROutputPath_D },
                 new Border[] { pres.QROutACell, pres.QROutBCell, pres.QROutCCell, pres.QROutDCell },
                 new string[] { "", "", "", "" }
@@ -555,10 +554,10 @@ namespace Cryptool.Plugins.ChaCha
             }
             Border input1, input2;
             (input1, input2) = GetInputs(actionIndex);
-            Border addCell = (Border)GetIndexElement(pres, "QRAddCell", actionIndex);
-            Shape addPath = (Shape)GetIndexElement(pres, "QRAddPath", actionIndex);
-            Shape addCircle = (Shape)GetIndexElement(pres, "QRAddCircle", actionIndex);
-            TextBox addBox = (TextBox)GetIndexElement(pres, "QRAdd", actionIndex);
+            Border addCell = (Border)GetIndexElement("QRAddCell", actionIndex);
+            Shape addPath = (Shape)GetIndexElement("QRAddPath", actionIndex);
+            Shape addCircle = (Shape)GetIndexElement("QRAddCircle", actionIndex);
+            TextBox addBox = (TextBox)GetIndexElement("QRAdd", actionIndex);
             void Mark()
             {
                 pres.Nav.MarkShape(addPath, addCircle);
@@ -612,10 +611,10 @@ namespace Cryptool.Plugins.ChaCha
             }
             Border input1, input2;
             (input1, input2) = GetInputs(actionIndex);
-            Border xorCell = (Border)GetIndexElement(pres, "QRXORCell", actionIndex);
-            Shape xorPath = (Shape)GetIndexElement(pres, "QRXORPath", actionIndex);
-            Shape xorCircle = (Shape)GetIndexElement(pres, "QRXORCircle", actionIndex);
-            TextBox xorBox = (TextBox)GetIndexElement(pres, "QRXOR", actionIndex);
+            Border xorCell = (Border)GetIndexElement("QRXORCell", actionIndex);
+            Shape xorPath = (Shape)GetIndexElement("QRXORPath", actionIndex);
+            Shape xorCircle = (Shape)GetIndexElement("QRXORCircle", actionIndex);
+            TextBox xorBox = (TextBox)GetIndexElement("QRXOR", actionIndex);
             void Mark()
             {
                 pres.Nav.MarkShape(xorPath, xorCircle);
@@ -649,11 +648,11 @@ namespace Cryptool.Plugins.ChaCha
         }
         private PageAction[] ExecShiftActions(int actionIndex, int qrIndex)
         {
-            Border input = (Border)GetIndexElement(pres, "QRXORCell", actionIndex);
-            Border shiftCell = (Border)GetIndexElement(pres, "QRShiftCell", actionIndex);
-            Shape shiftPath = (Shape)GetIndexElement(pres, "QRShiftPath", actionIndex);
-            Shape shiftCircle = (Shape)GetIndexElement(pres, "QRShiftCircle", actionIndex);
-            TextBox shiftBox = (TextBox)GetIndexElement(pres, "QRShift", actionIndex);
+            Border input = (Border)GetIndexElement("QRXORCell", actionIndex);
+            Border shiftCell = (Border)GetIndexElement("QRShiftCell", actionIndex);
+            Shape shiftPath = (Shape)GetIndexElement("QRShiftPath", actionIndex);
+            Shape shiftCircle = (Shape)GetIndexElement("QRShiftCircle", actionIndex);
+            TextBox shiftBox = (TextBox)GetIndexElement("QRShift", actionIndex);
             void Mark()
             {
                 pres.Nav.MarkShape(shiftPath, shiftCircle);
@@ -688,11 +687,11 @@ namespace Cryptool.Plugins.ChaCha
         private void AssertQRExecActions(ChaChaPresentation pres, int actionIndex, int qrIndex)
         {
             int resultIndex = ResultIndex(actionIndex, qrIndex);
-            string add = ((TextBox)GetIndexElement(pres, "QRAdd", actionIndex)).Text;
+            string add = ((TextBox)GetIndexElement("QRAdd", actionIndex)).Text;
             string expectedAdd = GetMappedHexResult(ResultType.QR_ADD, resultIndex);
-            string xor = ((TextBox)GetIndexElement(pres, "QRXOR", actionIndex)).Text;
+            string xor = ((TextBox)GetIndexElement("QRXOR", actionIndex)).Text;
             string expectedXor = GetMappedHexResult(ResultType.QR_XOR, resultIndex);
-            string shift = ((TextBox)GetIndexElement(pres, "QRShift", actionIndex)).Text;
+            string shift = ((TextBox)GetIndexElement("QRShift", actionIndex)).Text;
             string expectedShift = GetMappedHexResult(ResultType.QR_SHIFT, resultIndex);
             Debug.Assert(add == expectedAdd, $"Visual value after ADD execution does not match actual value! expected {expectedAdd}, got {add}");
             Debug.Assert(xor == expectedXor, $"Visual value after XOR execution does not match actual value! expected {expectedXor}, got {xor}");
@@ -756,7 +755,7 @@ namespace Cryptool.Plugins.ChaCha
         private PageAction[] CopyFromStateTOQRInputActions(int qrIndex, int round)
         {
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
-            Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
+            Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
             PageAction[] copyActions = pres.Nav.CopyActions(stateCells,
                 new Border[] { pres.QRInACell, pres.QRInBCell, pres.QRInCCell, pres.QRInDCell },
                 new string[] { "", "", "", "" }
@@ -768,7 +767,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     pres.CurrentRoundIndex = round;
                     pres.Nav.Replace(pres.CurrentRound, round.ToString());
-                    ShowQRButtons(pres, round);
+                    ShowQRButtons(round);
                 }, () =>
                 {
                     string text = "";
@@ -782,7 +781,7 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     pres.CurrentRoundIndex = round - 1;
                     pres.Nav.Replace(pres.CurrentRound, text);
-                    ShowQRButtons(pres, round - 1);
+                    ShowQRButtons(round - 1);
                 });
                 copyActions[0].Add(roundUpdate);
                 copyActions[0].AddLabel(RoundStartLabel(round));
@@ -810,16 +809,16 @@ namespace Cryptool.Plugins.ChaCha
             {
                 pres.CurrentQuarterroundIndexTextBox = (qrIndex - 1) % 4 + 1;
                 (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
-                ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Hidden;
-                ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Visible;
+                ((TextBox)GetIndexElement("ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Hidden;
+                ((TextBox)GetIndexElement("ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Visible;
             }, () =>
             {
                 pres.CurrentQuarterroundIndexTextBox = (qrIndex - 2) % 4 + 1;
                 if (qrIndex > 1)
                 {
                     (int qrArrowIndex, int qrPrevArrowIndex) = calculateQRArrowIndex(qrIndex);
-                    ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Visible;
-                    ((TextBox)GetIndexElement(pres, "ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Hidden;
+                    ((TextBox)GetIndexElement("ArrowQRRound", qrPrevArrowIndex)).Visibility = Visibility.Visible;
+                    ((TextBox)GetIndexElement("ArrowQRRound", qrArrowIndex)).Visibility = Visibility.Hidden;
                 }
             });
             copyActions[0].Add(updateQRArrow);
@@ -834,14 +833,14 @@ namespace Cryptool.Plugins.ChaCha
             string[] visualState = new string[16];
             for (int i = 0; i < 16; ++i)
             {
-                visualState[i] = ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text;
+                visualState[i] = ((TextBox)GetIndexElement("UIKeystreamBlockGen", i, "")).Text;
                 Debug.Assert(expectedState[i] == visualState[i], $"Visual state after quarterround {qrIndex} execution does not match actual state! expected {expectedState[i]} at index {i}, but got {visualState[i]}");
             }
         }
         private PageAction[] ReplaceStateEntriesWithQROutput(int qrIndex)
         {
             (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
-            Border[] stateCells = new Border[] { GetStateCell(pres, i), GetStateCell(pres, j), GetStateCell(pres, k), GetStateCell(pres, l) };
+            Border[] stateCells = new Border[] { GetStateCell(i), GetStateCell(j), GetStateCell(k), GetStateCell(l) };
             string[] previousStateEntries = new string[4];
             previousStateEntries[0] = GetMappedHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
             previousStateEntries[1] = GetMappedHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
@@ -912,10 +911,9 @@ namespace Cryptool.Plugins.ChaCha
         }
         private string GetMappedHexResult(ResultType<uint> resultType, int index)
         {
-            int mapIndex = MapIndex(resultType, index);
             return pres.GetHexResult(resultType, MapIndex(resultType, index));
         }
-        private static int ResultIndex(int actionIndex, int qrIndex)
+        private int ResultIndex(int actionIndex, int qrIndex)
         {
             return (qrIndex - 1) * 4 + (actionIndex - 1);
         }
@@ -947,15 +945,15 @@ namespace Cryptool.Plugins.ChaCha
 
             pres.Nav.UnboldLast(pres.UIKeystreamBlockGenStepDescription);
         }
-        void MakeLastBoldInDescription()
+        private void MakeLastBoldInDescription()
         {
             pres.Nav.MakeBoldLast(pres.UIKeystreamBlockGenStepDescription);
         }
-        void RemoveLastFromDescription()
+        private void RemoveLastFromDescription()
         {
             pres.Nav.RemoveLast(pres.UIKeystreamBlockGenStepDescription);
         }
-        public static object GetIndexElement(ChaChaPresentation pres, string nameId, int index, string delimiter = "_")
+        private object GetIndexElement(string nameId, int index, string delimiter = "_")
         {
             return pres.FindName(string.Format("{0}{1}{2}", nameId, delimiter, index));
         }
