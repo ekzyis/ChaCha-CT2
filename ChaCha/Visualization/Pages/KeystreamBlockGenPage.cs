@@ -549,6 +549,61 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres.Nav.ClearDocument(pres.QRInADiffusion, pres.QRInBDiffusion, pres.QRInCDiffusion, pres.QRInDDiffusion);
         }
+        private PageAction ExecAddActionsDiffusion(int actionIndex, int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+                if(pres.DiffusionActive)
+                {
+
+                    string diffusionValue = GetMappedHexResult(ResultType.QR_ADD_DIFFUSION, ResultIndex(actionIndex, qrIndex));
+                    string normalValue = GetMappedHexResult(ResultType.QR_ADD, ResultIndex(actionIndex, qrIndex));
+                    InsertDiffusionValue((RichTextBox)GetIndexElement("QRAddDiffusion", actionIndex), diffusionValue, normalValue);
+                }
+            }, () =>
+            {
+                if(pres.DiffusionActive)
+                {
+                    pres.Nav.Clear((RichTextBox)GetIndexElement("QRAddDiffusion", actionIndex));
+                }
+            });
+        }
+        private PageAction ExecXORActionsDiffusion(int actionIndex, int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+                if(pres.DiffusionActive)
+                {
+                    string diffusionValue = GetMappedHexResult(ResultType.QR_XOR_DIFFUSION, ResultIndex(actionIndex, qrIndex));
+                    string normalValue = GetMappedHexResult(ResultType.QR_XOR, ResultIndex(actionIndex, qrIndex));
+                    InsertDiffusionValue((RichTextBox)GetIndexElement("QRXORDiffusion", actionIndex), diffusionValue, normalValue);
+                }
+            }, () =>
+            {
+                if(pres.DiffusionActive)
+                {
+                    pres.Nav.Clear((RichTextBox)GetIndexElement("QRXORDiffusion", actionIndex));
+                }
+            });
+        }
+        private PageAction ExecShiftActionsDiffusion(int actionIndex, int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+                if(pres.DiffusionActive)
+                {
+                    string diffusionValue = GetMappedHexResult(ResultType.QR_SHIFT_DIFFUSION, ResultIndex(actionIndex, qrIndex));
+                    string normalValue = GetMappedHexResult(ResultType.QR_SHIFT, ResultIndex(actionIndex, qrIndex));
+                    InsertDiffusionValue((RichTextBox)GetIndexElement("QRShiftDiffusion", actionIndex), diffusionValue, normalValue);
+                }
+            }, () =>
+            {
+                if(pres.DiffusionActive)
+                {
+                    pres.Nav.Clear((RichTextBox)GetIndexElement("QRShiftDiffusion", actionIndex));
+                }
+            });
+        }
         #endregion
 
         #region QR Visualization
@@ -810,8 +865,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             List<PageAction> actions = new List<PageAction>();
             PageAction[] execAdd = ExecAddActions(actionIndex, qrIndex);
+            execAdd[1].Add(ExecAddActionsDiffusion(actionIndex, qrIndex));
             PageAction[] execXOR = ExecXORActions(actionIndex, qrIndex);
+            execXOR[1].Add(ExecXORActionsDiffusion(actionIndex, qrIndex));
             PageAction[] execShift = ExecShiftActions(actionIndex, qrIndex);
+            execShift[1].Add(ExecShiftActionsDiffusion(actionIndex, qrIndex));
             execShift[2].AddToExec(() =>
             {
                 AssertQRExecActions(pres, actionIndex, qrIndex);

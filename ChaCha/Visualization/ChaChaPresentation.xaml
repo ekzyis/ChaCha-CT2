@@ -1370,7 +1370,10 @@
                           <Canvas Grid.Row="1" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_1" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_1" Background="{ Binding ElementName=QRAddCell_1, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_1" Fill="White">
                               <Path.Data>
@@ -1382,7 +1385,10 @@
                           <Canvas Grid.Row="4" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_1" Background="{ Binding ElementName=QRXORCell_1, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_1, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_1">
@@ -1410,7 +1416,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="16" Foreground="{ Binding ElementName=QRShiftCircle_1, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_1" Background="{ Binding ElementName=QRShiftCell_1, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
@@ -1437,7 +1446,10 @@
                           <Canvas Grid.Row="3" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_2" Background="{ Binding ElementName=QRAddCell_2, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_2" Fill="White">
                               <Path.Data>
@@ -1450,7 +1462,10 @@
                           <Canvas Grid.Row="2" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_2" Background="{ Binding ElementName=QRXORCell_2, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_2">
@@ -1476,7 +1491,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="12" Foreground="{ Binding ElementName=QRShiftCircle_2, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_2" Background="{ Binding ElementName=QRShiftCell_2, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
@@ -1503,7 +1521,10 @@
                           <Canvas Grid.Row="1" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_3" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_3" Background="{ Binding ElementName=QRAddCell_3, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_3" Fill="White">
                               <Path.Data>
@@ -1516,7 +1537,10 @@
                           <Canvas Grid.Row="4" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_3" Background="{ Binding ElementName=QRXORCell_3, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_3">
@@ -1544,7 +1568,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="8" Foreground="{ Binding ElementName=QRShiftCircle_3, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_3" Background="{ Binding ElementName=QRShiftCell_3, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
@@ -1571,7 +1598,10 @@
                           <Canvas Grid.Row="3" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_4" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_4" Background="{ Binding ElementName=QRAddCell_4, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_4" Fill="White">
                               <Path.Data>
@@ -1584,7 +1614,10 @@
                           <Canvas Grid.Row="2" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_4" Background="{ Binding ElementName=QRXORCell_4, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_4, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_4">
@@ -1610,7 +1643,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="7" Foreground="{ Binding ElementName=QRShiftCircle_4, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_4" Background="{ Binding ElementName=QRShiftCell_4, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
