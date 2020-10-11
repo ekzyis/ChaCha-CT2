@@ -156,26 +156,6 @@ namespace Cryptool.Plugins.ChaCha
                 pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 4 : 0], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 5 : 1], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 6 : 2], pres.KeyLittleEndian[pres.InputKey.Length == 32 ? 7 : 3],
                 "", "", "", "" };
         }
-        private string[] GetTemplateDiffusionState()
-        {
-            byte[] dkey = pres.DiffusionKey;
-            byte[] key = pres.InputKey;
-            string[] dkeyLe = pres.DiffusionKeyLittleEndian;
-            string[] keyLe = pres.KeyLittleEndian;
-            Debug.Assert(dkey.Length == key.Length, $"DiffusionKey ({dkey.Length}) has not same length as Input Key ({key.Length})");
-            Debug.Assert(dkeyLe.Length == keyLe.Length, $"DiffusionKeyLittleEndian ({dkeyLe.Length}) has not same length as KeyLittleEndian ({keyLe.Length})");
-            int dkeyLength = dkey.Length;
-            string[] templateState = GetTemplateState();
-            templateState[4] = dkeyLe[0];
-            templateState[5] = dkeyLe[1];
-            templateState[6] = dkeyLe[2];
-            templateState[7] = dkeyLe[3];
-            templateState[8] = dkeyLe[dkeyLength == 32 ? 4 : 0];
-            templateState[9] = dkeyLe[dkeyLength == 32 ? 5 : 1];
-            templateState[10] = dkeyLe[dkeyLength == 32 ? 6 : 2];
-            templateState[11] = dkeyLe[dkeyLength == 32 ? 7 : 3];
-            return templateState;
-        }
         private void InsertCounter(string[] state, ulong counter64)
         {
             if (versionIsDJB)
@@ -213,17 +193,7 @@ namespace Cryptool.Plugins.ChaCha
             InsertCounter(state, keyBlockNr - 1);
             return state;
         }
-        private string[] GetDiffusionOriginalState()
-        {
-            string[] dKeyOriginalState = GetTemplateDiffusionState();
-            InsertCounter(dKeyOriginalState, keyBlockNr - 1);
-            return dKeyOriginalState;
-        }
-        private void AddOriginalDiffusionToState()
-        {
-            string[] diffusionOriginalState = GetDiffusionOriginalState();
-            AddDiffusionToState(diffusionOriginalState);
-        }
+        
         private void AddToState(string[] state)
         {
             Debug.Assert(state.Length == 16, $"AddToState: given array is not of length 16");
@@ -232,16 +202,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""), state[i]);
             }
         }
-        private void AddDiffusionToState(params string[] diffusionState)
-        {
-            if (!pres.DiffusionActive) return;
-            Debug.Assert(diffusionState.Length == 16, $"AddDiffusionToState: given array is not of length 16");
-            for (int i = 0; i < 16; ++i)
-            {
-                pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""), diffusionState[i]);
-                pres.Nav.Show((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
-            }
-        }
+        
         private void ShowAddition()
         {
             string[] add = originalState.Select(x => $"+{x}").ToArray();
@@ -406,6 +367,50 @@ namespace Cryptool.Plugins.ChaCha
                 ShowStateLittleEndianTransformResult();
             });
             return new PageAction[] { updateDescription, showResult, convert };
+        }
+        #endregion
+
+        #region Diffusion methods
+        private string[] GetTemplateDiffusionState()
+        {
+            byte[] dkey = pres.DiffusionKey;
+            byte[] key = pres.InputKey;
+            string[] dkeyLe = pres.DiffusionKeyLittleEndian;
+            string[] keyLe = pres.KeyLittleEndian;
+            Debug.Assert(dkey.Length == key.Length, $"DiffusionKey ({dkey.Length}) has not same length as Input Key ({key.Length})");
+            Debug.Assert(dkeyLe.Length == keyLe.Length, $"DiffusionKeyLittleEndian ({dkeyLe.Length}) has not same length as KeyLittleEndian ({keyLe.Length})");
+            int dkeyLength = dkey.Length;
+            string[] templateState = GetTemplateState();
+            templateState[4] = dkeyLe[0];
+            templateState[5] = dkeyLe[1];
+            templateState[6] = dkeyLe[2];
+            templateState[7] = dkeyLe[3];
+            templateState[8] = dkeyLe[dkeyLength == 32 ? 4 : 0];
+            templateState[9] = dkeyLe[dkeyLength == 32 ? 5 : 1];
+            templateState[10] = dkeyLe[dkeyLength == 32 ? 6 : 2];
+            templateState[11] = dkeyLe[dkeyLength == 32 ? 7 : 3];
+            return templateState;
+        }
+        private string[] GetDiffusionOriginalState()
+        {
+            string[] dKeyOriginalState = GetTemplateDiffusionState();
+            InsertCounter(dKeyOriginalState, keyBlockNr - 1);
+            return dKeyOriginalState;
+        }
+        private void AddOriginalDiffusionToState()
+        {
+            string[] diffusionOriginalState = GetDiffusionOriginalState();
+            AddDiffusionToState(diffusionOriginalState);
+        }
+        private void AddDiffusionToState(params string[] diffusionState)
+        {
+            if (!pres.DiffusionActive) return;
+            Debug.Assert(diffusionState.Length == 16, $"AddDiffusionToState: given array is not of length 16");
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""), diffusionState[i]);
+                pres.Nav.Show((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
+            }
         }
         #endregion
 
