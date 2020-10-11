@@ -510,7 +510,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             else
             {
-                newDiffusionState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex);
+                newDiffusionState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 1);
             }
             AddDiffusionToState(newDiffusionState);
         }
