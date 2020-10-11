@@ -423,7 +423,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private FlowDocument MarkDifferenceRed(string diffusionValue, string normalValue)
         {
-            FlowDocument fd = new FlowDocument();
+            FlowDocument fd = new FlowDocument() { TextAlignment = TextAlignment.Center };
             Paragraph p = new Paragraph();
             Debug.Assert(diffusionValue.Length == normalValue.Length, $"MarkDifferenceRed: string lengths do not match. Got {diffusionValue.Length} and {normalValue.Length}");
             for(int i = 0; i < diffusionValue.Length; ++i)
