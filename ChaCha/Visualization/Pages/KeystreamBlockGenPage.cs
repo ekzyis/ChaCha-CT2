@@ -52,7 +52,7 @@ namespace Cryptool.Plugins.ChaCha
             string[] keyLe = pres.KeyLittleEndian;
             Debug.Assert(dkey.Length == key.Length, $"DiffusionKey ({dkey.Length}) has not same length as Input Key ({key.Length})");
             Debug.Assert(dkeyLe.Length == keyLe.Length, $"DiffusionKeyLittleEndian ({dkeyLe.Length}) has not same length as KeyLittleEndian ({keyLe.Length})");
-            int dkeyLength = dkeyLe.Length;
+            int dkeyLength = dkey.Length;
             string[] templateState = GetTemplateState();
             templateState[4] = dkeyLe[0];
             templateState[5] = dkeyLe[1];
