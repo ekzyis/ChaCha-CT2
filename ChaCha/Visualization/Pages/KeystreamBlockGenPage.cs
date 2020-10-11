@@ -84,10 +84,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 int round = CalculateRoundFromQRIndex(qrIndex);
                 PageAction[] copyFromStateToQRInputActions = CopyFromStateTOQRInputActions(qrIndex, round);
-                if(pres.DiffusionActive)
-                {
-                    copyFromStateToQRInputActions[1].Add(UpdateDiffusionQRInputAction(qrIndex));
-                }
+                copyFromStateToQRInputActions[1].Add(UpdateDiffusionQRInputAction(qrIndex));
                 AddAction(copyFromStateToQRInputActions);
                 AddAction(QRExecActions(1, qrIndex));
                 AddAction(QRExecActions(2, qrIndex));
@@ -95,10 +92,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(QRExecActions(4, qrIndex));
                 AddAction(QROutputActions());
                 PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
-                if(pres.DiffusionActive)
-                {
-                    updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
-                }
+                updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
                 AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
                 {
@@ -524,10 +518,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             return new PageAction(() =>
             {
-                UpdateDiffusionQRInput(qrIndex);
+                if(pres.DiffusionActive)
+                {
+                    UpdateDiffusionQRInput(qrIndex);
+                }
             }, () =>
             {
-                ResetDiffusionQRInput();
+                if(pres.DiffusionActive)
+                {
+                    ResetDiffusionQRInput();
+                }
             });
         }
         private void UpdateDiffusionQRInput(int qrIndex)
