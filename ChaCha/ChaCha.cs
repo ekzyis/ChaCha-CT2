@@ -17,6 +17,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -48,6 +49,10 @@ namespace Cryptool.Plugins.ChaCha
         private int BITS_IV;
         // initial counter value (for keystream blocks) (depends on version)
         private uint INITIAL_COUNTER;
+
+        // is currently executing for diffusion?
+        private bool _diffusion = false;
+        private byte[] _diffusionKey;
         public class Version
         {
             public static readonly Version IETF = new Version("IETF", 32, 96, 1);
@@ -68,6 +73,7 @@ namespace Cryptool.Plugins.ChaCha
         public ChaCha()
         {
             settings = new ChaChaSettings();
+            _presentation = new ChaChaPresentation(this);
         }
 
         #region ICrypComponent I/O
@@ -131,7 +137,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region IPlugin Members (Settings & Presentation)
         private readonly ChaChaSettings settings;
-        private readonly ChaChaPresentation _presentation = new ChaChaPresentation();
+        private readonly ChaChaPresentation _presentation;
         /// <summary>
         /// Provide plugin-related parameters (per instance) or return null.
         /// </summary>
@@ -207,7 +213,14 @@ namespace Cryptool.Plugins.ChaCha
             // clear all previous results (important if user started workflow, stopped and then restarted)
             DispatchToPresentation(delegate
             {
-                _presentation.ClearResults();
+                if (!_diffusion)
+                {
+                    _presentation.ClearAllResults();
+                }
+                else
+                {
+                    _presentation.ClearDiffusionResults();
+                }
                 _presentation.Version = settings.Version;
                 _presentation.Rounds = settings.Rounds;
             });
@@ -216,7 +229,7 @@ namespace Cryptool.Plugins.ChaCha
             BITS_IV = settings.Version.BitsIV;
             INITIAL_COUNTER = settings.Version.InitialCounter;
 
-            GuiLogMessage("Executing ChaCha", NotificationLevel.Info);
+            GuiLogMessage(_diffusion ? "Executing ChaCha (Diffusion)" : "Executing ChaCha", NotificationLevel.Info);
             GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, BITS_IV / 8, BITS_COUNTER / 8), NotificationLevel.Info);
             GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
 
@@ -228,7 +241,17 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             // set values needed to enable navigation since now all values needed for visualization are set.
-            DispatchToPresentation(delegate { _presentation.InputValid = inputValid; _presentation.ExecutionFinished = true; });
+            if(!_diffusion) DispatchToPresentation(delegate { _presentation.InputValid = inputValid; _presentation.ExecutionFinished = true; });
+        }
+
+        public void ExecuteChaChaWithDiffusionKey(byte[] diffusionKey)
+        {
+            _diffusion = true;
+            _diffusionKey = diffusionKey;
+            Debug.Assert(diffusionKey.Length == InputKey.Length, $"Diffusion key length ({diffusionKey.Length}) does not match input key length ({InputKey.Length})");
+            ExecuteChaCha();
+            _diffusionKey = null;
+            _diffusion = false;
         }
 
         /**
@@ -273,21 +296,24 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             add4ByteChunksToStateAsLittleEndian(constants);
-            add4ByteChunksToStateAsLittleEndian(_inputKey);
-            if (_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_inputKey);
+            add4ByteChunksToStateAsLittleEndian(_diffusion ? _diffusionKey : _inputKey);
+            if (_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_diffusion ? _diffusionKey : _inputKey);
             byte[] counter = Enumerable.Repeat<byte>(0, BITS_COUNTER / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
 
-            DispatchToPresentation(delegate
+            if(!_diffusion)
             {
-                // set state params
-                _presentation.Constants = constants;
-                _presentation.InputKey = _inputKey;
-                _presentation.InputIV = _inputIV;
-                _presentation.InputData = _inputData;
-                _presentation.InitialCounter = counter;
-            });
+                DispatchToPresentation(delegate
+                {
+                    // set state params
+                    _presentation.Constants = constants;
+                    _presentation.InputKey = _inputKey;
+                    _presentation.InputIV = _inputIV;
+                    _presentation.InputData = _inputData;
+                    _presentation.InitialCounter = counter;
+                });
+            }
         }
 
         /**
@@ -299,10 +325,13 @@ namespace Cryptool.Plugins.ChaCha
         {
             byte[] dst = new byte[src.Length];
             int keystreamBlocksNeeded = (int)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
-            DispatchToPresentation(delegate
+            if (!_diffusion)
             {
-                _presentation.KeystreamBlocksNeeded = keystreamBlocksNeeded;
-            });
+                DispatchToPresentation(delegate
+                {
+                    _presentation.KeystreamBlocksNeeded = keystreamBlocksNeeded;
+                });
+            }
             byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.
@@ -361,64 +390,34 @@ namespace Cryptool.Plugins.ChaCha
         public uint[] ChaChaHash(uint[] state)
         {
             uint[] originalState = (uint[])(state.Clone());
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])(state.Clone()));
-            });
+            DispatchResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])state.Clone());
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
                 state = QuarterroundState(state, 0, 4, 8, 12);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 state = QuarterroundState(state, 1, 5, 9, 13);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 state = QuarterroundState(state, 2, 6, 10, 14);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 state = QuarterroundState(state, 3, 7, 11, 15);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 // diagonal round
                 state = QuarterroundState(state, 0, 5, 10, 15);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 state = QuarterroundState(state, 1, 6, 11, 12);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 state = QuarterroundState(state, 2, 7, 8, 13);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 state = QuarterroundState(state, 3, 4, 9, 14);
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])(state.Clone()));
-                });
+                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
             }
             // add the original state
             for (int i = 0; i < state.Length; ++i)
             {
                 state[i] += originalState[i];
             }
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (uint[])(state.Clone()));
-            });
+            DispatchResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (uint[])state.Clone());
             // each 4 byte chunk as little-endian
             for (int i = 0; i < state.Length; ++i)
             {
@@ -426,10 +425,7 @@ namespace Cryptool.Plugins.ChaCha
                 Array.Reverse(b);
                 state[i] = ToUInt32(b, 0);
             }
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (uint[])(state.Clone()));
-            });
+            DispatchResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (uint[])state.Clone());
             return state;
         }
 
@@ -447,52 +443,34 @@ namespace Cryptool.Plugins.ChaCha
          */
         public (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ResultType.QR_INPUT_A, a);
-                _presentation.AddResult(ResultType.QR_INPUT_B, b);
-                _presentation.AddResult(ResultType.QR_INPUT_C, c);
-                _presentation.AddResult(ResultType.QR_INPUT_D, d);
-            });
+            DispatchResult(ResultType.QR_INPUT_A, a);
+            DispatchResult(ResultType.QR_INPUT_B, b);
+            DispatchResult(ResultType.QR_INPUT_C, c);
+            DispatchResult(ResultType.QR_INPUT_D, d);
             (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
             {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.QR_INPUT_X1, x1);
-                    _presentation.AddResult(ResultType.QR_INPUT_X2, x2);
-                    _presentation.AddResult(ResultType.QR_INPUT_X3, x3);
-                });
+                DispatchResult(ResultType.QR_INPUT_X1, x1);
+                DispatchResult(ResultType.QR_INPUT_X2, x2);
+                DispatchResult(ResultType.QR_INPUT_X3, x3);
                 x1 += x2; // x1 = x1 + x2
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.QR_ADD, x1);
-                });
+                DispatchResult(ResultType.QR_ADD, x1);
                 x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.QR_XOR, x3);
-                });
+                DispatchResult(ResultType.QR_XOR, x3);
                 x3 = RotateLeft(x3, shift); // x3 = x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(ResultType.QR_SHIFT, x3);
-                    _presentation.AddResult(ResultType.QR_OUTPUT_X1, x1);
-                    _presentation.AddResult(ResultType.QR_OUTPUT_X2, x2);
-                    _presentation.AddResult(ResultType.QR_OUTPUT_X3, x3);
-                });
+                DispatchResult(ResultType.QR_SHIFT, x3);
+                DispatchResult(ResultType.QR_OUTPUT_X1, x1);
+                DispatchResult(ResultType.QR_OUTPUT_X2, x2);
+                DispatchResult(ResultType.QR_OUTPUT_X3, x3);
                 return (x1, x2, x3);
             }
             (a, b, d) = quarterroundStep(a, b, d, 16);
             (c, d, b) = quarterroundStep(c, d, b, 12);
             (a, b, d) = quarterroundStep(a, b, d, 8);
             (c, d, b) = quarterroundStep(c, d, b, 7);
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(ResultType.QR_OUTPUT_A, a);
-                _presentation.AddResult(ResultType.QR_OUTPUT_B, b);
-                _presentation.AddResult(ResultType.QR_OUTPUT_C, c);
-                _presentation.AddResult(ResultType.QR_OUTPUT_D, d);
-            });
+            DispatchResult(ResultType.QR_OUTPUT_A, a);
+            DispatchResult(ResultType.QR_OUTPUT_B, b);
+            DispatchResult(ResultType.QR_OUTPUT_C, c);
+            DispatchResult(ResultType.QR_OUTPUT_D, d);
             return (a, b, c, d);
         }
 
@@ -524,6 +502,49 @@ namespace Cryptool.Plugins.ChaCha
         private void DispatchToPresentation(SendOrPostCallback callback)
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, callback, null);
+        }
+        private void DispatchResult(ResultType<uint> type, uint result)
+        {
+            DispatchToPresentation(delegate
+            {
+                if (_diffusion)
+                {
+                    DispatchDiffusionResult(type, result);
+                }
+                else {
+                    _presentation.AddResult(type, result);
+                }
+            });
+        }
+        private void DispatchResult(ResultType<uint[]> type, uint[] result)
+        {
+            DispatchToPresentation(delegate
+            {
+                if (_diffusion)
+                {
+                    DispatchDiffusionResult(type, result);
+                }
+                else
+                {
+                    _presentation.AddResult(type, result);
+                }
+            });
+        }
+        private void DispatchDiffusionResult(ResultType<uint> type, uint result)
+        {
+            ResultType<uint> diffusionResultType = ResultType.GetDiffusionResultType(type);
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(diffusionResultType, result);
+            });
+        }
+        private void DispatchDiffusionResult(ResultType<uint[]> type, uint[] result)
+        {
+            ResultType<uint[]> diffusionResultType = ResultType.GetDiffusionResultType(type);
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(diffusionResultType, result);
+            });
         }
 
         /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/

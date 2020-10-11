@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -26,7 +28,122 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND = new ResultType<uint[]>("CHACHA_HASH_QUARTERROUND");
         public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>("CHACHA_HASH_ADD_ORIGINAL_STATE");
         public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>("CHACHA_HASH_LITTLEENDIAN_STATE");
+
+        public static readonly ResultType<uint> QR_INPUT_A_DIFFUSION = new ResultType<uint>("QR_INPUT_A_DIFFUSION");
+        public static readonly ResultType<uint> QR_INPUT_B_DIFFUSION = new ResultType<uint>("QR_INPUT_B_DIFFUSION");
+        public static readonly ResultType<uint> QR_INPUT_C_DIFFUSION = new ResultType<uint>("QR_INPUT_C_DIFFUSION");
+        public static readonly ResultType<uint> QR_INPUT_D_DIFFUSION = new ResultType<uint>("QR_INPUT_D_DIFFUSION");
+        public static readonly ResultType<uint> QR_INPUT_X1_DIFFUSION = new ResultType<uint>("QR_INPUT_X1_DIFFUSION");
+        public static readonly ResultType<uint> QR_INPUT_X2_DIFFUSION = new ResultType<uint>("QR_INPUT_X2_DIFFUSION");
+        public static readonly ResultType<uint> QR_INPUT_X3_DIFFUSION = new ResultType<uint>("QR_INPUT_X3_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_X1_DIFFUSION = new ResultType<uint>("QR_OUTPUT_X1_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_X2_DIFFUSION = new ResultType<uint>("QR_OUTPUT_X2_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_X3_DIFFUSION = new ResultType<uint>("QR_OUTPUT_X3_DIFFUSION");
+        public static readonly ResultType<uint> QR_ADD_DIFFUSION = new ResultType<uint>("QR_ADD_DIFFUSION");
+        public static readonly ResultType<uint> QR_XOR_DIFFUSION = new ResultType<uint>("QR_XOR_DIFFUSION");
+        public static readonly ResultType<uint> QR_SHIFT_DIFFUSION = new ResultType<uint>("QR_SHIFT_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_A_DIFFUSION = new ResultType<uint>("QR_OUTPUT_A_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_B_DIFFUSION = new ResultType<uint>("QR_OUTPUT_B_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_C_DIFFUSION = new ResultType<uint>("QR_OUTPUT_C_DIFFUSION");
+        public static readonly ResultType<uint> QR_OUTPUT_D_DIFFUSION = new ResultType<uint>("QR_OUTPUT_D_DIFFUSION");
+        public static readonly ResultType<uint[]> CHACHA_HASH_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_ORIGINAL_STATE_DIFFUSION");
+        public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_QUARTERROUND_DIFFUSION");
+        public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION");
+        public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION");
+        public static ResultType<uint> GetDiffusionResultType(ResultType<uint> resultType)
+        {
+            if (resultType == QR_INPUT_A)
+            {
+                return QR_INPUT_A_DIFFUSION;
+            }
+            else if (resultType == QR_INPUT_B)
+            {
+                return QR_INPUT_B_DIFFUSION;
+            }
+            else if (resultType == QR_INPUT_C)
+            {
+                return QR_INPUT_C_DIFFUSION;
+            }
+            else if (resultType == QR_INPUT_D)
+            {
+                return QR_INPUT_D_DIFFUSION;
+            }
+            else if (resultType == QR_INPUT_X1)
+            {
+                return QR_INPUT_X1_DIFFUSION;
+            }
+            else if (resultType == QR_INPUT_X2)
+            {
+                return QR_INPUT_X2_DIFFUSION;
+            }
+            else if (resultType == QR_INPUT_X3)
+            {
+                return QR_INPUT_X3_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_A)
+            {
+                return QR_OUTPUT_A_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_B)
+            {
+                return QR_OUTPUT_B_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_C)
+            {
+                return QR_OUTPUT_C_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_D)
+            {
+                return QR_OUTPUT_D_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_X1)
+            {
+                return QR_OUTPUT_X1_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_X2)
+            {
+                return QR_OUTPUT_X2_DIFFUSION;
+            }
+            else if (resultType == QR_OUTPUT_X3)
+            {
+                return QR_OUTPUT_X3_DIFFUSION;
+            }
+            else if (resultType == QR_ADD)
+            {
+                return QR_ADD_DIFFUSION;
+            }
+            else if (resultType == QR_SHIFT)
+            {
+                return QR_SHIFT_DIFFUSION;
+            }
+            else if (resultType == QR_XOR)
+            {
+                return QR_XOR_DIFFUSION;
+            }
+            throw new InvalidOperationException($"No matching diffusion ResultType<uint> found for type {resultType.Name}.");
+        }
+        public static ResultType<uint[]> GetDiffusionResultType(ResultType<uint[]> resultType)
+        {
+            if (resultType == CHACHA_HASH_ORIGINAL_STATE)
+            {
+                return CHACHA_HASH_ORIGINAL_STATE_DIFFUSION;
+            }
+            else if (resultType == CHACHA_HASH_QUARTERROUND)
+            {
+                return CHACHA_HASH_QUARTERROUND_DIFFUSION;
+            }
+            else if (resultType == CHACHA_HASH_ADD_ORIGINAL_STATE)
+            {
+                return CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION;
+            }
+            else if (resultType == CHACHA_HASH_LITTLEENDIAN_STATE)
+            {
+                return CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION;
+            }
+            throw new InvalidOperationException($"No matching diffusion ResultType<uint[]> found for type {resultType.Name}");
+        }
     }
+
     public class ResultType<T>
     {
         public ResultType(string name)
@@ -42,7 +159,6 @@ namespace Cryptool.Plugins.ChaCha
         public class IntermediateResultsList
         {
             private readonly List<T> _results;
-            private ResultType<T> type;
 
             public IntermediateResultsList(ResultType<T> type)
             {
@@ -86,6 +202,13 @@ namespace Cryptool.Plugins.ChaCha
             foreach (IntermediateResultsList r in _intermediateResultsList)
             {
                 r.Clear();
+            }
+        }
+        public void ClearDiffusionResults()
+        {
+            foreach (IntermediateResultsList r in _intermediateResultsList)
+            {
+                if(r.Type.Name.EndsWith("DIFFUSION")) r.Clear();
             }
         }
         public void AddResult(ResultType<T> type, T result)

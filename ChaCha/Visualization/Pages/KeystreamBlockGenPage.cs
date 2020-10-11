@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -46,7 +47,13 @@ namespace Cryptool.Plugins.ChaCha
                 // Hotfix for ClearDescription changing top margin for some reason. It is executed when hitting an cache action so we just call it here straightaway.
                 ClearDescription(pres);
                 AddToState(originalState);
-                AddOriginalDiffusionToState();
+
+                if(pres.DiffusionActive)
+                {
+                    InitDiffusionResults();
+                    AddOriginalDiffusionToState();
+                }
+
                 AssertInitialState();
                 pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
             }, () =>
@@ -103,21 +110,20 @@ namespace Cryptool.Plugins.ChaCha
                     ClearQRDetail();
                     // update state matrix
                     ClearState();
-                    TextBox[] stateTextBoxes = GetStateTextBoxes(pres);
-                    uint[] stateEntries;
-                    if (qrIndex == 1)
-                    {
-                        stateEntries = pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1);
-                    }
-                    else
-                    {
-                        stateEntries = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
-                    }
-                    Debug.Assert(stateTextBoxes.Length == stateEntries.Length);
+                    uint[] stateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
                     for (int x = 0; x < stateEntries.Length; ++x)
                     {
-                        stateTextBoxes[x].Text = ChaChaPresentation.HexString(stateEntries[x]);
+                        InsertStateValue(x, stateEntries[x]);
                     }
+                    if (pres.DiffusionActive)
+                    {
+                        uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, (int)keyBlockNr - 1);
+                        for (int x = 0; x < diffusionStateEntries.Length; ++x)
+                        {
+                            InsertDiffusionValue(x, diffusionStateEntries[x]);
+                        }
+                    }
+                    
                     // highlight corresponding state entries which will be copied into QR detail in next action
                     (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
                     UnmarkAllStateEntriesExcept(pres, i, j, k, l);
@@ -155,7 +161,16 @@ namespace Cryptool.Plugins.ChaCha
         #region State methods
         private string[] GetCurrentState()
         {
-            return GetStateTextBoxes().Select(tb => tb.Text).ToArray();
+            return GetStateInputs().Select(tb => tb.Text).ToArray();
+        }
+        private string GetCurrentStateValue(int index)
+        {
+            return GetCurrentState()[index];
+        }
+        private void InsertStateValue(int stateIndex, uint value)
+        {
+            TextBox stateBox = (TextBox)GetIndexElement("UIKeystreamBlockGen", stateIndex, "");
+            stateBox.Text = ChaChaPresentation.HexString(value);
         }
         private string[] GetTemplateState()
         {
@@ -285,9 +300,9 @@ namespace Cryptool.Plugins.ChaCha
             return (Border)GetIndexElement("UIKeystreamBlockGenCell", stateIndex);
         }
 
-        public TextBox[] GetStateTextBoxes()
+        public TextBox[] GetStateInputs()
         {
-            return Enumerable.Range(0, 16).Select(i => (TextBox)GetIndexElement("UIKeystreamBlockGen", i, "")).ToArray();
+            return (TextBox[])GetIndexElements("UIKeystreamBlockGen", 0, 16, "");
         }
         public void UnmarkAllStateEntriesExcept(ChaChaPresentation pres, int i, int j, int k, int l)
         {
@@ -380,6 +395,14 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Diffusion methods
+        private void InitDiffusionResults()
+        {
+            pres.InitDiffusionResults();
+        }
+        public RichTextBox[] GetDiffusionStateInputs()
+        {
+            return (RichTextBox[])GetIndexElements("UIKeystreamBlockGenDiffusion", 0, 16, "");
+        }
         private string[] GetTemplateDiffusionState()
         {
             byte[] dkey = pres.DiffusionKey;
@@ -421,6 +444,13 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.SetDocument(diffusionValue, MarkDifferenceRed(diffusionState[i], currentState[i]));
                 pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", i));
             }
+        }
+        private void InsertDiffusionValue(int stateIndex, uint diffusionValue)
+        {
+            RichTextBox diffusionStateBox = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", stateIndex, "");
+            string normalValue = GetCurrentStateValue(stateIndex);
+            pres.Nav.SetDocument(diffusionStateBox, MarkDifferenceRed(ChaChaPresentation.HexString(diffusionValue), normalValue));
+            pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", stateIndex));
         }
         private FlowDocument MarkDifferenceRed(string diffusionValue, string normalValue)
         {
@@ -956,6 +986,23 @@ namespace Cryptool.Plugins.ChaCha
         private object GetIndexElement(string nameId, int index, string delimiter = "_")
         {
             return pres.FindName(string.Format("{0}{1}{2}", nameId, delimiter, index));
+        }
+        private FrameworkElement[] GetIndexElements(string nameId, int start, int count, string delimiter = "_")
+        {
+            return Enumerable.Range(start, count).Select(i => (TextBox)GetIndexElement(nameId, i, delimiter)).ToArray();
+        }
+        private int GetElementIndexFromName(FrameworkElement element)
+        {
+            if (element.Name == null) throw new InvalidOperationException("Name of given element must not be null");
+            Match match = Regex.Match(element.Name, @"[0-9]+$");
+            if(match.Success)
+            {
+                return int.Parse(match.Value);
+            }
+            else
+            {
+                throw new InvalidOperationException("No index found within name of given element.");
+            }
         }
         #endregion
 

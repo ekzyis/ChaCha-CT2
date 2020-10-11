@@ -133,6 +133,11 @@ namespace Cryptool.Plugins.ChaCha
 
     partial class ChaChaPresentation
     {
+        public void InitDiffusionResults()
+        {
+            _chacha.ExecuteChaChaWithDiffusionKey(_diffusionKey);
+        }
+
         private bool _showDiffusion = false;
         public bool ShowDiffusion
         {
@@ -243,6 +248,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return Bit(InputKey, bitIndex);
         }
+
         #region Diffusion Key Bits
         // KeyBits for binding to the diffusion buttons.
         // Generated with a python script (... Can this already be considered meta-programming?)
@@ -3855,6 +3861,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             return DKeyNibble(nibbleIndex).ToString("X");
         }
+
         #region Diffusion Key Nibbles
         public string DKeyNibbleHex0
         {
