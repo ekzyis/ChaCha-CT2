@@ -72,6 +72,12 @@
       <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
 
+    <Style x:Key="diffusionValueCell" TargetType="Border">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Visibility" Value="Collapsed"/>
+      <Setter Property="Margin" Value="0,10,0,0"/>
+    </Style>
+
     <!-- RowDefinition styles -->
     <Style x:Key="titleRow" TargetType="RowDefinition">
       <Setter Property="Height" Value="35"/>
@@ -279,7 +285,7 @@
                     <Border Name="UIStateCell4">
                       <TextBox Name="UIState4"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion4" Background="{ Binding ElementName=UIStateCell4, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion4" Background="{ Binding ElementName=UIStateCell4, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Name="UIStateDiffusion4"/>
                     </Border>
                   </StackPanel>
@@ -297,7 +303,7 @@
                     <Border Name="UIStateCell5">
                       <TextBox Name="UIState5"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion5" Background="{ Binding ElementName=UIStateCell5, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion5" Background="{ Binding ElementName=UIStateCell5, Path=Background }">
                       <RichTextBox  Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Name="UIStateDiffusion5"/>
                     </Border>
                   </StackPanel>
@@ -315,7 +321,7 @@
                     <Border Name="UIStateCell6">
                       <TextBox Name="UIState6"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion6" Background="{ Binding ElementName=UIStateCell6, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion6" Background="{ Binding ElementName=UIStateCell6, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Name="UIStateDiffusion6"/>
                     </Border>
                   </StackPanel>
@@ -333,7 +339,7 @@
                     <Border Name="UIStateCell7">
                       <TextBox Name="UIState7"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion7" Background="{ Binding ElementName=UIStateCell7, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion7" Background="{ Binding ElementName=UIStateCell7, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Name="UIStateDiffusion7"/>
                     </Border>
                   </StackPanel>
@@ -352,7 +358,7 @@
                     <Border Name="UIStateCell8">
                       <TextBox Name="UIState8"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion8" Background="{ Binding ElementName=UIStateCell8, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion8" Background="{ Binding ElementName=UIStateCell8, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Name="UIStateDiffusion8"/>
                     </Border>
                   </StackPanel>
@@ -370,7 +376,7 @@
                     <Border Name="UIStateCell9">
                       <TextBox Name="UIState9"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion9" Background="{ Binding ElementName=UIStateCell9, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion9" Background="{ Binding ElementName=UIStateCell9, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Name="UIStateDiffusion9"/>
                     </Border>
                   </StackPanel>
@@ -388,7 +394,7 @@
                     <Border Name="UIStateCell10">
                       <TextBox Name="UIState10"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion10" Background="{ Binding ElementName=UIStateCell10, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion10" Background="{ Binding ElementName=UIStateCell10, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Name="UIStateDiffusion10"/>
                     </Border>
                   </StackPanel>
@@ -406,7 +412,7 @@
                     <Border Name="UIStateCell11">
                       <TextBox Name="UIState11"/>
                     </Border>
-                    <Border Visibility="Collapsed" Name="UIStateCellDiffusion11" Background="{ Binding ElementName=UIStateCell11, Path=Background }">
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion11" Background="{ Binding ElementName=UIStateCell11, Path=Background }">
                       <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Name="UIStateDiffusion11"/>
                     </Border>
                   </StackPanel>
@@ -758,10 +764,6 @@
               </Style>
               <Style x:Key="valueCell" TargetType="Border">
                 <Setter Property="BorderThickness" Value="0"/>
-              </Style>
-              <Style x:Key="diffusionValueCell" TargetType="Border" BasedOn="{StaticResource valueCell}">
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Visibility" Value="Collapsed"/>
               </Style>
               <Style x:Key="canvasStateIndex" TargetType="Canvas">
                 <Setter Property="Canvas.Top" Value="90"/>
