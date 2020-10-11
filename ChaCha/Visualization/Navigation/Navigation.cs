@@ -863,7 +863,7 @@ namespace Cryptool.Plugins.ChaCha
                     await ClearActionBuffer();
                     await delayTask;
                 }
-                catch (TaskCanceledException e)
+                catch (TaskCanceledException)
                 {
                     break;
                 }
