@@ -89,7 +89,12 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(QRExecActions(3, qrIndex));
                 AddAction(QRExecActions(4, qrIndex));
                 AddAction(QROutputActions());
-                AddAction(ReplaceStateEntriesWithQROutput(qrIndex));
+                PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
+                if(pres.DiffusionActive)
+                {
+                    updateStateAfterQR[1].Add(UpdateDiffusionStateEntries(qrIndex));
+                }
+                AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
                 {
                     AddAction(ClearQRDetail(qrIndex));
@@ -117,7 +122,7 @@ namespace Cryptool.Plugins.ChaCha
                     }
                     if (pres.DiffusionActive)
                     {
-                        uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : pres.GetResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, (int)keyBlockNr - 1);
+                        uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
                             InsertDiffusionValue(x, diffusionStateEntries[x]);
@@ -434,6 +439,10 @@ namespace Cryptool.Plugins.ChaCha
             string[] diffusionOriginalState = GetDiffusionOriginalState();
             AddDiffusionToState(diffusionOriginalState);
         }
+        private void AddDiffusionToState(params uint[] newDiffusionState)
+        {
+            AddDiffusionToState(newDiffusionState.Select(u => ChaChaPresentation.HexString(u)).ToArray());
+        }
         private void AddDiffusionToState(params string[] diffusionState)
         {
             Debug.Assert(diffusionState.Length == 16, $"AddDiffusionToState: given array is not of length 16");
@@ -469,6 +478,30 @@ namespace Cryptool.Plugins.ChaCha
         private TextBlock RedIfDifferent(char d, char v)
         {
             return new TextBlock() { Text = d.ToString(), Foreground = d != v ? Brushes.Red : Brushes.Black };
+        }
+        private PageAction UpdateDiffusionStateEntries(int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+                UpdateDiffusionState(qrIndex);
+            }, () =>
+            {
+                UpdateDiffusionState(qrIndex - 1);
+            });
+        }
+        private void UpdateDiffusionState(int qrIndex)
+        {
+            uint[] newDiffusionState;
+            if (qrIndex == 0)
+            {
+                // 0 means before first quarterround started
+                newDiffusionState = GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1);
+            }
+            else
+            {
+                newDiffusionState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex);
+            }
+            AddDiffusionToState(newDiffusionState);
         }
         #endregion
 
@@ -890,7 +923,8 @@ namespace Cryptool.Plugins.ChaCha
         private int MapIndex(ResultType<uint[]> resultType, int i)
         {
             int offset = 0;
-            switch (resultType.Name)
+            string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
+            switch (name)
             {
                 case "CHACHA_HASH_ORIGINAL_STATE":
                 case "CHACHA_HASH_ADD_ORIGINAL_STATE":
@@ -908,7 +942,8 @@ namespace Cryptool.Plugins.ChaCha
         private int MapIndex(ResultType<uint> resultType, int i)
         {
             int offset = 0;
-            switch (resultType.Name)
+            string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
+            switch (name)
             {
                 case "QR_INPUT_A":
                 case "QR_INPUT_B":
