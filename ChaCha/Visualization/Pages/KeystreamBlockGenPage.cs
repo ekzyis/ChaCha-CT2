@@ -155,7 +155,7 @@ namespace Cryptool.Plugins.ChaCha
         #region State methods
         private string[] GetCurrentState()
         {
-            return Enumerable.Range(0, 16).Select(i => ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text).ToArray();
+            return GetStateTextBoxes(pres).Select(tb => tb.Text).ToArray();
         }
         private string[] GetTemplateState()
         {
