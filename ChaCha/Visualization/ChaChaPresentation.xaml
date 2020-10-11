@@ -793,7 +793,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_0">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -813,7 +813,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_1">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -833,7 +833,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_2">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -853,7 +853,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_3">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -874,7 +874,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_4">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -894,7 +894,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_5">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -914,7 +914,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_6">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -934,7 +934,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_7">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -955,7 +955,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_8">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -975,7 +975,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_9">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -995,7 +995,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_10">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -1015,7 +1015,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_11">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -1036,7 +1036,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_12">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -1056,7 +1056,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_13">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -1076,7 +1076,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_14">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>
@@ -1096,7 +1096,7 @@
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_15">
-                      <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGenDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                      <RichTextBox Style="{StaticResource hexRichTextBoxCell}" Name="UIKeystreamBlockGenDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
                     </Border>
                   </StackPanel>
                 </Border>

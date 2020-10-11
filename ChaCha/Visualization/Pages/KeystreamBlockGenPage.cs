@@ -4,6 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaCha
@@ -148,6 +151,10 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region State methods
+        private string[] GetCurrentState()
+        {
+            return Enumerable.Range(0, 16).Select(i => ((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, "")).Text).ToArray();
+        }
         private string[] GetTemplateState()
         {
             return new string[] {
@@ -228,7 +235,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 16; ++i)
             {
                 pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGen", i, ""));
-                pres.Nav.Clear((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""));
+                pres.Nav.ClearDocument((RichTextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""));
                 pres.Nav.Collapse((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
                 StackPanel sp = (StackPanel)GetIndexElement(pres, "UIKeystreamBlockGenPanel", i, "");
                 while (sp.Children.Count > 1)
@@ -406,11 +413,31 @@ namespace Cryptool.Plugins.ChaCha
         {
             if (!pres.DiffusionActive) return;
             Debug.Assert(diffusionState.Length == 16, $"AddDiffusionToState: given array is not of length 16");
+            string[] currentState = GetCurrentState();
             for (int i = 0; i < 16; ++i)
             {
-                pres.Nav.Add((TextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, ""), diffusionState[i]);
+                RichTextBox diffusionValue = (RichTextBox)GetIndexElement(pres, "UIKeystreamBlockGenDiffusion", i, "");
+                pres.Nav.SetDocument(diffusionValue, MarkDifferenceRed(diffusionState[i], currentState[i]));
                 pres.Nav.Show((Border)GetIndexElement(pres, "UIKeystreamBlockGenCellDiffusion", i));
             }
+        }
+        private FlowDocument MarkDifferenceRed(string diffusionValue, string normalValue)
+        {
+            FlowDocument fd = new FlowDocument();
+            Paragraph p = new Paragraph();
+            Debug.Assert(diffusionValue.Length == normalValue.Length, $"MarkDifferenceRed: string lengths do not match. Got {diffusionValue.Length} and {normalValue.Length}");
+            for(int i = 0; i < diffusionValue.Length; ++i)
+            {
+                char d = diffusionValue[i];
+                char v = normalValue[i];
+                p.Inlines.Add(RedIfDifferent(d, v));
+            }
+            fd.Blocks.Add(p);
+            return fd;
+        }
+        private TextBlock RedIfDifferent(char d, char v)
+        {
+            return new TextBlock() { Text = d.ToString(), Foreground = d != v ? Brushes.Red : Brushes.Black };
         }
         #endregion
 
