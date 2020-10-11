@@ -43,6 +43,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             PageAction initAction = new PageAction(() =>
             {
+                // Hotfix for ClearDescription changing top margin for some reason. It is executed when hitting an cache action so we just call it here straightaway.
+                ClearDescription(pres);
                 AddToState(originalState);
                 AddOriginalDiffusionToState();
                 AssertInitialState();
