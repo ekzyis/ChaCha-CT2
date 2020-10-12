@@ -146,7 +146,7 @@ namespace Cryptool.Plugins.ChaCha
                     
                     // highlight corresponding state entries which will be copied into QR detail in next action
                     (int i, int j, int k, int l) = GetStateIndicesFromQRIndex(qrIndex);
-                    UnmarkAllStateEntriesExcept(pres, i, j, k, l);
+                    UnmarkAllStateEntriesExcept(i, j, k, l);
                     // update round indicator
                     int round = CalculateRoundFromQRIndex(qrIndex);
                     pres.CurrentRoundIndex = round;
@@ -346,7 +346,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             return GetIndexElements<TextBox>("UIKeystreamBlockGen", 0, 16, "");
         }
-        public void UnmarkAllStateEntriesExcept(ChaChaPresentation pres, int i, int j, int k, int l)
+
+        public void UnmarkAllStateEntriesExcept(int i, int j, int k, int l)
         {
             for (int x = 0; x < 16; ++x)
             {
