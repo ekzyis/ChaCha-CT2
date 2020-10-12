@@ -311,19 +311,16 @@ namespace Cryptool.Plugins.ChaCha
             string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
             for (int i = 0; i < littleEndianState.Length; ++i)
             {
-                TextBox tb = new TextBox() { Text = littleEndianState[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
-                pres.Nav.Add((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""), tb);
+                TextBox tb = (TextBox) GetIndexElement("UIKeystreamBlockGenLittleEndian", i, "");
+                pres.Nav.Replace(tb, littleEndianState[i]);
             }
         }
         private void ClearStateLittleEndianTransformResult()
         {
-            RemoveLastFromEachStateCellStackPanel();
-        }
-        private void RemoveLastFromEachStateCellStackPanel()
-        {
             for (int i = 0; i < 16; ++i)
             {
-                pres.Nav.RemoveLast((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""));
+                TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenLittleEndian", i, "");
+                pres.Nav.ClearAndCollapse(tb);
             }
         }
         public Border GetStateCell(int stateIndex)
