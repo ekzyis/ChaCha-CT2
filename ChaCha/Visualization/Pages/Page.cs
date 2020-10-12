@@ -79,5 +79,11 @@ namespace Cryptool.Plugins.ChaCha
                 _pageActions.Insert(insertIndex + 1, a);
             }
         }
+
+        public void RemoveActionRange(string label, int count)
+        {
+            int insertIndex = _pageActions.FindIndex(a => a.Labels.Any(l => l == label));
+            _pageActions.RemoveRange(insertIndex + 1, count);
+        }
     }
 }

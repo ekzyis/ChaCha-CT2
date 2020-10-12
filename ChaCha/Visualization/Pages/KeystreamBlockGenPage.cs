@@ -69,7 +69,12 @@ namespace Cryptool.Plugins.ChaCha
 
         public override void TearDown()
         {
-            // TODO undo Setup
+            ClearState();
+            if (pres.DiffusionActive)
+            {
+                RemoveActionRange(ACTIONLABEL_ADDITION, AddOriginalStateDiffusion().Length);
+                RemoveActionRange(ACTIONLABEL_LITTLE_ENDIAN, ConvertStateEntriesToLittleEndianDiffusion().Length);
+            }
         }
 
         private void Init()
