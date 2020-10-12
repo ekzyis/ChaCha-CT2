@@ -1739,7 +1739,7 @@
                             <Border Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_3" Background="{ Binding ElementName=QRShiftCell_3, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_3" Background="{ Binding ElementName=QRShiftCell_3, Path=Background}"/>
                               </StackPanel>
                             </Border>
                           </Canvas>
