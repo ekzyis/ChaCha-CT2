@@ -133,9 +133,10 @@ namespace Cryptool.Plugins.ChaCha
                     if (pres.DiffusionActive)
                     {
                         uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
+                        uint[] normalStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
-                            InsertDiffusionStateValue(x, diffusionStateEntries[x]);
+                            InsertDiffusionStateValue(x, diffusionStateEntries[x], normalStateEntries[x]);
                         }
                     }
                     
@@ -483,12 +484,10 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.SetDocumentAndShow(diffusionStateBox, MarkDifferenceRed(diffusionState[i], currentState[i]));
             }
         }
-        private void InsertDiffusionStateValue(int stateIndex, uint diffusionValue)
+        private void InsertDiffusionStateValue(int stateIndex, uint diffusionValue, uint normalValue)
         {
             RichTextBox diffusionStateBox = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", stateIndex, "");
-            string normalValue = GetCurrentStateValue(stateIndex);
-            pres.Nav.SetDocument(diffusionStateBox, MarkDifferenceRed(ChaChaPresentation.HexString(diffusionValue), normalValue));
-            pres.Nav.Show(diffusionStateBox);
+            InsertDiffusionValue(diffusionStateBox, diffusionValue, normalValue);
         }
         private void InsertDiffusionValue(RichTextBox diffusionTextBox, uint diffusionValue, uint normalValue)
         {
