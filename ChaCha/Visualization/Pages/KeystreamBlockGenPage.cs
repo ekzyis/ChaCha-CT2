@@ -20,6 +20,7 @@ namespace Cryptool.Plugins.ChaCha
         private const string ACTIONLABEL_ROUND_START = "ROUND";
         private const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
         private const string ACTIONLABEL_ADDITION = "ADDITION";
+        private const string ACTIONLABEL_LITTLE_ENDIAN = "LITTLE_ENDIAN";
 
         private int ADDITION_DIFFUSION_FONTSIZE = 12;
 
@@ -60,6 +61,7 @@ namespace Cryptool.Plugins.ChaCha
             if (pres.DiffusionActive)
             {
                 InsertAction(ACTIONLABEL_ADDITION, AddOriginalStateDiffusion());
+                InsertAction(ACTIONLABEL_LITTLE_ENDIAN, ConvertStateEntriesToLittleEndianDiffusion());
             }
         }
 
@@ -415,7 +417,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ReplaceState(previousState);
                 ShowStateLittleEndianTransformResult();
-            });
+            }, ACTIONLABEL_LITTLE_ENDIAN);
             return new PageAction[] { updateDescription, showResult, convert };
         }
         #endregion
@@ -727,6 +729,47 @@ namespace Cryptool.Plugins.ChaCha
                 AddDiffusionToState(previousState);
             });
             return new PageAction[] { showOriginalDiffusionState, addDiffusionStates };
+        }
+
+        private void ShowStateLittleEndianTransformResultDiffusion()
+        {
+            string[] normalLittleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            string[] diffusionLittleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            for (int i = 0; i < diffusionLittleEndianState.Length; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenLittleEndianDiffusion", i, "");
+                InsertDiffusionValue(rtb, diffusionLittleEndianState[i], normalLittleEndianState[i]);
+            }
+        }
+        private void ClearStateLittleEndianTransformResultDiffusion()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenLittleEndianDiffusion", i, "");
+                pres.Nav.ClearAndCollapse(rtb);
+            }
+        }
+        private PageAction[] ConvertStateEntriesToLittleEndianDiffusion()
+        {
+            PageAction showResult = new PageAction(() =>
+            {
+                ShowStateLittleEndianTransformResultDiffusion();
+            }, () =>
+            {
+                ClearStateLittleEndianTransformResultDiffusion();
+            });
+            string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            string[] littleEndianState = GetMappedResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION, (int)keyBlockNr - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            PageAction convert = new PageAction(() =>
+            {
+                ClearStateLittleEndianTransformResultDiffusion();
+                AddDiffusionToState(littleEndianState);
+            }, () =>
+            {
+                AddDiffusionToState(previousState);
+                ShowStateLittleEndianTransformResult();
+            });
+            return new PageAction[] { showResult, convert };
         }
         #endregion
 
