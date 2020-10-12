@@ -1179,7 +1179,12 @@ namespace Cryptool.Plugins.ChaCha
         }
         private object GetIndexElement(string nameId, int index, string delimiter = "_")
         {
-            return pres.FindName(string.Format("{0}{1}{2}", nameId, delimiter, index));
+            object element = pres.FindName($"{nameId}{delimiter}{index}");
+            if (element == null)
+            {
+                throw new ArgumentException($"No element found with name {nameId}{delimiter}{index}");
+            }
+            return element;
         }
         private FrameworkElement[] GetIndexElements(string nameId, int start, int count, string delimiter = "_")
         {
