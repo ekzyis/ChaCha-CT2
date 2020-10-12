@@ -790,7 +790,13 @@
                 <Setter Property="Visibility" Value="Collapsed"/>
                 <Setter Property="TextDecorations" Value="OverLine"/>
               </Style>
-              <Style x:Key="littleEndianResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource additionResultDiffusion}"/>
+              <Style x:Key="littleEndianResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource diffusionValue}">
+                <Style.Resources>
+                  <Style TargetType="TextBlock">
+                    <Setter Property="TextDecorations" Value="OverLine"/>
+                  </Style>
+                </Style.Resources>
+              </Style>
             </Grid.Resources>
             <Border BorderBrush="Black" BorderThickness="0,1,1,0">
               <Grid>
@@ -822,7 +828,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -850,7 +856,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -878,7 +884,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -906,7 +912,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -935,7 +941,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -963,7 +969,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -991,7 +997,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1019,7 +1025,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1048,7 +1054,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1076,7 +1082,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1104,7 +1110,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1132,7 +1138,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1161,7 +1167,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1189,7 +1195,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1217,7 +1223,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
@@ -1245,7 +1251,7 @@
                         <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
                         <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
-                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
