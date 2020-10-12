@@ -1178,8 +1178,8 @@
                     <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_14">
                       <StackPanel Name="UIKeystreamBlockGenPanel14">
                         <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
-                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlocKGenAddition14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
-                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlocKGenAdditionResult14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_14">
