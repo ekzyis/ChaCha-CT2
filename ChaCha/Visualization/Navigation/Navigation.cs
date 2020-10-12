@@ -372,9 +372,11 @@ namespace Cryptool.Plugins.ChaCha
 
         private void TearDownPage(Page p)
         {
+            StopActionBufferHandler();
+            // undo all actions
+            MoveToAction(0);
             p.TearDown();
             p.Visibility = Visibility.Collapsed;
-            StopActionBufferHandler();
         }
 
         private void MovePages(int n)

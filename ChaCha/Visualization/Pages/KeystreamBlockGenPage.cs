@@ -69,7 +69,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public override void TearDown()
         {
-            ClearState();
+            // TODO undo Setup
         }
 
         private void Init()
