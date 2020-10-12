@@ -466,9 +466,9 @@ namespace Cryptool.Plugins.ChaCha
             string[] currentState = GetCurrentState();
             for (int i = 0; i < 16; ++i)
             {
-                RichTextBox diffusionValue = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, "");
-                pres.Nav.SetDocument(diffusionValue, MarkDifferenceRed(diffusionState[i], currentState[i]));
-                pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", i));
+                RichTextBox diffusionStateBox = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, "");
+                pres.Nav.SetDocument(diffusionStateBox, MarkDifferenceRed(diffusionState[i], currentState[i]));
+                pres.Nav.Show(diffusionStateBox);
             }
         }
         private void InsertDiffusionStateValue(int stateIndex, uint diffusionValue)
@@ -476,7 +476,7 @@ namespace Cryptool.Plugins.ChaCha
             RichTextBox diffusionStateBox = (RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", stateIndex, "");
             string normalValue = GetCurrentStateValue(stateIndex);
             pres.Nav.SetDocument(diffusionStateBox, MarkDifferenceRed(ChaChaPresentation.HexString(diffusionValue), normalValue));
-            pres.Nav.Show((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", stateIndex));
+            pres.Nav.Show(diffusionStateBox);
         }
         private void InsertDiffusionValue(RichTextBox diffusionTextBox, uint diffusionValue, uint normalValue)
         {

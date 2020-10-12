@@ -50,6 +50,7 @@
     <Style x:Key="diffusionValue" TargetType="RichTextBox" BasedOn="{ StaticResource hexRichTextBox }">
       <Setter Property="FontSize" Value="22"/>
       <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
     <Style x:Key="titleText" TargetType="TextBox">
       <Setter Property="FontSize" Value="25" />
@@ -75,7 +76,6 @@
 
     <Style x:Key="diffusionValueCell" TargetType="Border">
       <Setter Property="BorderThickness" Value="0"/>
-      <Setter Property="Visibility" Value="Collapsed"/>
       <Setter Property="Margin" Value="0,0,0,0"/>
     </Style>
 
