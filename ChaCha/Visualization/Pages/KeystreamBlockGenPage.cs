@@ -508,10 +508,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             return new PageAction(() =>
             {
-                UpdateDiffusionState(qrIndex);
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionState(qrIndex);
+                }
             }, () =>
             {
-                UpdateDiffusionState(qrIndex - 1);
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionState(qrIndex - 1);
+                }
             });
         }
         private void UpdateDiffusionState(int qrIndex)
