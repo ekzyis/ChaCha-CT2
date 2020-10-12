@@ -238,13 +238,19 @@ namespace Cryptool.Plugins.ChaCha
             string[] add = originalState.Select(x => $"+{x}").ToArray();
             for (int i = 0; i < add.Length; ++i)
             {
-                TextBox tb = new TextBox() { Text = add[i], Style = pres.FindResource("hexCell") as Style, Margin = new Thickness(-15, 0, 0, 0) };
-                pres.Nav.Add((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""), tb);
+                TextBox tb = (TextBox) GetIndexElement("UIKeystreamBlockGenAddition", i, "");
+                pres.Nav.Replace(tb, add[i]);
+                pres.Nav.Show(tb);
             }
         }
         private void ClearAddition()
         {
-            RemoveLastFromEachStateCellStackPanel();
+            for (int i = 0; i < 16; ++i)
+            {
+                TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAddition", i, "");
+                pres.Nav.Clear(tb);
+                pres.Nav.Collapse(tb);
+            }
         }
         private void ReplaceState(params string[] state)
         {
@@ -273,13 +279,19 @@ namespace Cryptool.Plugins.ChaCha
             string[] result = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray();
             for (int i = 0; i < result.Length; ++i)
             {
-                TextBox tb = new TextBox() { Text = result[i], Style = pres.FindResource("hexCell") as Style, TextDecorations = TextDecorations.OverLine };
-                pres.Nav.Add((StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, ""), tb);
+                TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
+                pres.Nav.Replace(tb, result[i]);
+                pres.Nav.Show(tb);
             }
         }
         private void ClearAdditionResult()
         {
-            RemoveLastFromEachStateCellStackPanel();
+            for (int i = 0; i < 16; ++i)
+            {
+                TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
+                pres.Nav.Clear(tb);
+                pres.Nav.Collapse(tb);
+            }
         }
         private void ShowStateLittleEndianTransformResult()
         {
