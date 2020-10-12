@@ -366,6 +366,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 StartActionBufferHandler(50);
             }
+            InitActionNavigationBar(p);
             p.Visibility = Visibility.Visible;
         }
 
@@ -526,7 +527,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
                 OnPropertyChanged("CurrentKeystreamBlock");
-                InitActionNavigationBar(CurrentPage);
             }
         }
         public int CurrentActionIndex
