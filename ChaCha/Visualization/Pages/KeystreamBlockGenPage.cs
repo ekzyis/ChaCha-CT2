@@ -239,6 +239,11 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < add.Length; ++i)
             {
                 TextBox tb = (TextBox) GetIndexElement("UIKeystreamBlockGenAddition", i, "");
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.SetFontSize(tb, 12);
+                    pres.Nav.ResetMargin(tb);
+                }
                 pres.Nav.Replace(tb, add[i]);
                 pres.Nav.Show(tb);
             }
@@ -276,6 +281,10 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < result.Length; ++i)
             {
                 TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.SetFontSize(tb, 12);
+                }
                 pres.Nav.Replace(tb, result[i]);
                 pres.Nav.Show(tb);
             }

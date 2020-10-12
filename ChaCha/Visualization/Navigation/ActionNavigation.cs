@@ -259,6 +259,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             element.Visibility = Visibility.Hidden;
         }
+        public void ResetMargin(params FrameworkElement[] tbs)
+        {
+            tbs[0].Margin = new Thickness(0);
+        }
         #endregion
 
         #region TextBlock API
@@ -674,6 +678,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             Clear(tbs);
             Collapse(tbs);
+        }
+
+        public void SetFontSize(TextBox tb, double size)
+        {
+            tb.FontSize = size;
         }
         #endregion
 
