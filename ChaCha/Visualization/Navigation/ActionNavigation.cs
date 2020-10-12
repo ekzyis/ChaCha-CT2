@@ -268,9 +268,12 @@ namespace Cryptool.Plugins.ChaCha
             c.FontSize = size;
         }
 
-        public void SetStyle(FrameworkElement element, Style s)
+        public void SetFontSize(double size, params Control[] cs)
         {
-            element.Style = s;
+            foreach (Control c in cs)
+            {
+                SetFontSize(c, size);
+            }
         }
         #endregion
 
