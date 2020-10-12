@@ -731,7 +731,7 @@ namespace Cryptool.Plugins.ChaCha
                 ShowAdditionDiffusion();
                 ShowAdditionResultDiffusion();
                 AddDiffusionToState(previousState);
-            }, ACTIONLABEL_ADDITION);
+            });
             return new PageAction[] { showOriginalDiffusionState, addDiffusionStates };
         }
         #endregion
