@@ -49,7 +49,7 @@ namespace Cryptool.Plugins.ChaCha
         public override void Setup()
         {
             // Hotfix for ClearDescription changing top margin for some reason. It is executed when hitting an cache action so we just call it here straightaway.
-            ClearDescription(pres);
+            ClearDescription();
             AddToState(originalState);
 
             if (pres.DiffusionActive)
@@ -155,16 +155,16 @@ namespace Cryptool.Plugins.ChaCha
                     ShowQRButtons(round);
                     HideAllQRArrowsExcept(((qrIndex - 1) % 8) + 1);
 
-                    ClearDescription(pres);
-                    AddToDescription(pres, descriptions[0]);
+                    ClearDescription();
+                    AddToDescription(descriptions[0]);
                     if (round >= 2)
                     {
-                        AddToDescription(pres, descriptions[1]);
-                        AddBoldToDescription(pres, descriptions[2]);
+                        AddToDescription(descriptions[1]);
+                        AddBoldToDescription(descriptions[2]);
                     }
                     else
                     {
-                        AddBoldToDescription(pres, descriptions[1]);
+                        AddBoldToDescription(descriptions[1]);
                     }
                 });
                 return cache;
@@ -1307,25 +1307,17 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Low Level API
-        private static void AddBoldToDescription(ChaChaPresentation _pres, string descToAdd)
-        {
-            _pres.Nav.AddBold(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
-        }
         private void AddBoldToDescription(string descToAdd)
         {
-            AddBoldToDescription(pres, descToAdd);
+            pres.Nav.AddBold(pres.UIKeystreamBlockGenStepDescription, descToAdd);
         }
-        private static void AddToDescription(ChaChaPresentation _pres, string descToAdd)
+        private void AddToDescription(string descToAdd)
         {
-            _pres.Nav.Add(_pres.UIKeystreamBlockGenStepDescription, descToAdd);
-        }
-        private static void ClearDescription(ChaChaPresentation _pres)
-        {
-            _pres.Nav.Clear(_pres.UIKeystreamBlockGenStepDescription);
+            pres.Nav.Add(pres.UIKeystreamBlockGenStepDescription, descToAdd);
         }
         private void ClearDescription()
         {
-            ClearDescription(pres);
+            pres.Nav.Clear(pres.UIKeystreamBlockGenStepDescription);
         }
         private void UnboldLastFromDescription()
         {
