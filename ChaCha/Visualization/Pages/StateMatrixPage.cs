@@ -423,7 +423,7 @@ namespace Cryptool.Plugins.ChaCha
         private void ClearTransformInputDiffusion()
         {
             pres.Nav.Collapse(pres.UITransformInputDiffusionCell, pres.UITransformInputDiffusionCell2);
-            pres.Nav.ClearDocument(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
+            pres.Nav.Clear(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
         }
         private PageAction TransformInputDiffusionAction()
         {
@@ -486,7 +486,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
                     Border diffusionStateCell = (Border)diffusionState.Parent;
-                    pres.Nav.ClearDocument(diffusionState);
+                    pres.Nav.Clear(diffusionState);
                     pres.Nav.Collapse(diffusionStateCell);
                 }
             });
@@ -724,7 +724,7 @@ namespace Cryptool.Plugins.ChaCha
         private void ClearTransformInput()
         {
             pres.Nav.Clear(pres.UITransformInput, pres.UITransformInput2);
-            pres.Nav.ClearDocument(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
+            pres.Nav.Clear(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
             pres.Nav.Collapse(pres.UITransformInputDiffusionCell, pres.UITransformInputDiffusionCell2);
         }
         #endregion
@@ -752,7 +752,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 pres.Nav.Clear((TextBox)pres.FindName($"UITransformChunk{i}"));
                 RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}");
-                pres.Nav.ClearDocument(diffusionChunk);
+                pres.Nav.Clear(diffusionChunk);
                 pres.Nav.Collapse((Border)diffusionChunk.Parent);
             }
         }
@@ -783,7 +783,7 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((TextBox)pres.FindName($"UITransformLittleEndian{i}"));
                 pres.Nav.UnsetBackground((Border)pres.FindName($"UITransformLittleEndianCell{i}"));
                 RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianDiffusion{i}");
-                pres.Nav.ClearDocument(diffusionChunk);
+                pres.Nav.Clear(diffusionChunk);
                 pres.Nav.Collapse((Border)diffusionChunk.Parent);
             }
         }

@@ -563,11 +563,11 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ResetDiffusionQRInput()
         {
-            pres.Nav.ClearDocument(pres.QRInADiffusion, pres.QRInBDiffusion, pres.QRInCDiffusion, pres.QRInDDiffusion);
+            pres.Nav.Clear(pres.QRInADiffusion, pres.QRInBDiffusion, pres.QRInCDiffusion, pres.QRInDDiffusion);
         }
         private void ResetDiffusionQROutput()
         {
-            pres.Nav.ClearDocument(pres.QROutADiffusion, pres.QROutBDiffusion, pres.QROutCDiffusion, pres.QROutDDiffusion);
+            pres.Nav.Clear(pres.QROutADiffusion, pres.QROutBDiffusion, pres.QROutCDiffusion, pres.QROutDDiffusion);
         }
         private PageAction ExecAddActionsDiffusion(int actionIndex, int qrIndex)
         {

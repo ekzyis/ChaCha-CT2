@@ -639,15 +639,11 @@ namespace Cryptool.Plugins.ChaCha
             _Clear(rtb.Document.Blocks);
             Add(rtb, text);
         }
+
         public void SetDocument(RichTextBox rtb, FlowDocument doc)
         {
             rtb.Document = doc;
         }
-        public void ClearDocument(params RichTextBox[] rtbs)
-        {
-            foreach(RichTextBox rtb in rtbs) rtb.Document.Blocks.Clear();
-        }
-
         public void ClearAndCollapse(params RichTextBox[] rtbs)
         {
             Clear(rtbs);
