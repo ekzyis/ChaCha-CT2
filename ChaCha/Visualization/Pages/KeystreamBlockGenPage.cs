@@ -254,8 +254,7 @@ namespace Cryptool.Plugins.ChaCha
                     pres.Nav.SetFontSize(tb, ADDITION_DIFFUSION_FONTSIZE);
                     pres.Nav.ResetMargin(tb);
                 }
-                pres.Nav.Replace(tb, add[i]);
-                pres.Nav.Show(tb);
+                pres.Nav.ReplaceAndShow(tb, add[i]);
             }
         }
         private void ClearAddition()
@@ -294,8 +293,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     pres.Nav.SetFontSize(tb, ADDITION_DIFFUSION_FONTSIZE);
                 }
-                pres.Nav.Replace(tb, result[i]);
-                pres.Nav.Show(tb);
+                pres.Nav.ReplaceAndShow(tb, result[i]);
             }
         }
         private void ClearAdditionResult()
