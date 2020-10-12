@@ -16,9 +16,10 @@ namespace Cryptool.Plugins.ChaCha
     {
         ChaChaPresentation pres;
 
-        const string ACTIONLABEL_QR_START = "QUARTERROUND_START";
-        const string ACTIONLABEL_ROUND_START = "ROUND";
-        const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
+        private const string ACTIONLABEL_QR_START = "QUARTERROUND_START";
+        private const string ACTIONLABEL_ROUND_START = "ROUND";
+        private const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
+        private const string ACTIONLABEL_ADDITION = "ADDITION";
 
         private int ADDITION_DIFFUSION_FONTSIZE = 12;
 
@@ -56,6 +57,10 @@ namespace Cryptool.Plugins.ChaCha
 
             AssertInitialState();
             pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
+            if (pres.DiffusionActive)
+            {
+                InsertAction(ACTIONLABEL_ADDITION, AddOriginalStateDiffusion());
+            }
         }
 
         public override void TearDown()
@@ -383,7 +388,7 @@ namespace Cryptool.Plugins.ChaCha
                 ShowAddition();
                 ShowAdditionResult();
                 ReplaceState(previousState);
-            });
+            }, ACTIONLABEL_ADDITION);
             return new PageAction[] { updateDescription, showOriginalState, addStates };
         }
         private PageAction[] ConvertStateEntriesToLittleEndian()
@@ -665,6 +670,70 @@ namespace Cryptool.Plugins.ChaCha
             InsertDiffusionValue(pres.QROutBDiffusion, qrOutBDiffusion, qrOutB);
             InsertDiffusionValue(pres.QROutCDiffusion, qrOutCDiffusion, qrOutC);
             InsertDiffusionValue(pres.QROutDDiffusion, qrOutDDiffusion, qrOutD);
+        }
+
+        private void ShowAdditionDiffusion()
+        {
+            string[] normalAdd = originalState.Select(x => $"+{x}").ToArray();
+            string[] diffusionAdd = GetDiffusionOriginalState().Select(x => $"+{x}").ToArray();
+            for (int i = 0; i < diffusionAdd.Length; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, "");
+                InsertDiffusionValue(rtb, diffusionAdd[i], normalAdd[i]);
+                pres.Nav.SetFontSize(rtb, ADDITION_DIFFUSION_FONTSIZE);
+            }
+        }
+        private void ClearAdditionDiffusion()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, "");
+                pres.Nav.ClearAndCollapse(rtb);
+            }
+        }
+        private void ShowAdditionResultDiffusion()
+        {
+            string[] normalResults = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            string[] diffusionResults = GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray();
+            for (int i = 0; i < diffusionResults.Length; ++i)
+            {
+                RichTextBox rtb = (RichTextBox) GetIndexElement("UIKeystreamBlockGenAdditionResultDiffusion", i, "");
+                InsertDiffusionValue(rtb, diffusionResults[i], normalResults[i]);
+                pres.Nav.SetFontSize(rtb, ADDITION_DIFFUSION_FONTSIZE);
+            }
+        }
+        private void ClearAdditionResultDiffusion()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionResultDiffusion", i, "");
+                pres.Nav.ClearAndCollapse(rtb);
+            }
+        }
+        private PageAction[] AddOriginalStateDiffusion()
+        {
+            PageAction showOriginalDiffusionState = new PageAction(() =>
+            {
+                ShowAdditionDiffusion();
+                ShowAdditionResultDiffusion();
+            }, () =>
+            {
+                ClearAdditionDiffusion();
+                ClearAdditionResultDiffusion();
+            });
+            string[] previousState = GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, pres.Rounds * 4 - 1).Select(s => ChaChaPresentation.HexString(s)).ToArray();
+            PageAction addDiffusionStates = new PageAction(() =>
+            {
+                ClearAdditionDiffusion();
+                ClearAdditionResultDiffusion();
+                AddDiffusionToState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+            }, () =>
+            {
+                ShowAdditionDiffusion();
+                ShowAdditionResultDiffusion();
+                AddDiffusionToState(previousState);
+            }, ACTIONLABEL_ADDITION);
+            return new PageAction[] { showOriginalDiffusionState, addDiffusionStates };
         }
         #endregion
 

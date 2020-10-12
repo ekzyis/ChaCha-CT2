@@ -246,7 +246,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
-        #region FrameworkElement API
+        #region Generic API (FrameworkElement, Control, ...)
         public void Show(params FrameworkElement[] elements)
         {
             foreach (FrameworkElement element in elements) element.Visibility = Visibility.Visible;
@@ -262,6 +262,10 @@ namespace Cryptool.Plugins.ChaCha
         public void ResetMargin(params FrameworkElement[] tbs)
         {
             tbs[0].Margin = new Thickness(0);
+        }
+        public void SetFontSize(Control c, double size)
+        {
+            c.FontSize = size;
         }
         #endregion
 
@@ -684,11 +688,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             Clear(tbs);
             Collapse(tbs);
-        }
-
-        public void SetFontSize(TextBox tb, double size)
-        {
-            tb.FontSize = size;
         }
         #endregion
 
