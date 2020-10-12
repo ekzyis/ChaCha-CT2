@@ -20,6 +20,8 @@ namespace Cryptool.Plugins.ChaCha
         const string ACTIONLABEL_ROUND_START = "ROUND";
         const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
 
+        private int ADDITION_DIFFUSION_FONTSIZE = 12;
+
         List<string> descriptions = new List<string>();
         private string[] originalState;
         private bool versionIsDJB;
@@ -241,7 +243,7 @@ namespace Cryptool.Plugins.ChaCha
                 TextBox tb = (TextBox) GetIndexElement("UIKeystreamBlockGenAddition", i, "");
                 if (pres.DiffusionActive)
                 {
-                    pres.Nav.SetFontSize(tb, 12);
+                    pres.Nav.SetFontSize(tb, ADDITION_DIFFUSION_FONTSIZE);
                     pres.Nav.ResetMargin(tb);
                 }
                 pres.Nav.Replace(tb, add[i]);
@@ -283,7 +285,7 @@ namespace Cryptool.Plugins.ChaCha
                 TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
                 if (pres.DiffusionActive)
                 {
-                    pres.Nav.SetFontSize(tb, 12);
+                    pres.Nav.SetFontSize(tb, ADDITION_DIFFUSION_FONTSIZE);
                 }
                 pres.Nav.Replace(tb, result[i]);
                 pres.Nav.Show(tb);
