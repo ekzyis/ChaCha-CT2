@@ -320,7 +320,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public TextBox[] GetStateInputs()
         {
-            return (TextBox[])GetIndexElements("UIKeystreamBlockGen", 0, 16, "");
+            return GetIndexElements<TextBox>("UIKeystreamBlockGen", 0, 16, "");
         }
         public void UnmarkAllStateEntriesExcept(ChaChaPresentation pres, int i, int j, int k, int l)
         {
@@ -419,7 +419,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         public RichTextBox[] GetDiffusionStateInputs()
         {
-            return (RichTextBox[])GetIndexElements("UIKeystreamBlockGenDiffusion", 0, 16, "");
+            return GetIndexElements<RichTextBox>("UIKeystreamBlockGenDiffusion", 0, 16, "");
         }
         public Border GetDiffusionStateCell(int stateIndex)
         {
@@ -1186,9 +1186,9 @@ namespace Cryptool.Plugins.ChaCha
             }
             return element;
         }
-        private FrameworkElement[] GetIndexElements(string nameId, int start, int count, string delimiter = "_")
+        private T[] GetIndexElements<T>(string nameId, int start, int count, string delimiter = "_")
         {
-            return Enumerable.Range(start, count).Select(i => (TextBox)GetIndexElement(nameId, i, delimiter)).ToArray();
+            return Enumerable.Range(start, count).Select(i => (T)GetIndexElement(nameId, i, delimiter)).ToArray();
         }
         private int GetElementIndexFromName(FrameworkElement element)
         {
