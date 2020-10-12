@@ -648,6 +648,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             rtb.Document = doc;
         }
+
+        public void SetDocumentAndShow(RichTextBox rtb, FlowDocument doc)
+        {
+            SetDocument(rtb, doc);
+            Show(rtb);
+        }
         public void ClearAndCollapse(params RichTextBox[] rtbs)
         {
             Clear(rtbs);
