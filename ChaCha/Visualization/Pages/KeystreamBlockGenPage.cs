@@ -264,13 +264,9 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 16; ++i)
             {
                 pres.Nav.Clear((TextBox)GetIndexElement("UIKeystreamBlockGen", i, ""));
-                pres.Nav.ClearDocument((RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, ""));
-                pres.Nav.Collapse((Border)GetIndexElement("UIKeystreamBlockGenCellDiffusion", i));
-                StackPanel sp = (StackPanel)GetIndexElement("UIKeystreamBlockGenPanel", i, "");
-                while (sp.Children.Count > 1)
-                {
-                    pres.Nav.RemoveLast(sp);
-                }
+                pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenAddition", i, ""));
+                pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, ""));
             }
 
         }

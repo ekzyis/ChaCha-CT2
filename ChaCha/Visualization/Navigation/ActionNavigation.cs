@@ -647,6 +647,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach(RichTextBox rtb in rtbs) rtb.Document.Blocks.Clear();
         }
+
+        public void ClearAndCollapse(params RichTextBox[] rtbs)
+        {
+            Clear(rtbs);
+            Collapse(rtbs);
+        }
         #endregion
 
         #region TextBox API
@@ -666,6 +672,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 tb.Text = "";
             }
+        }
+
+        public void ClearAndCollapse(params TextBox[] tbs)
+        {
+            Clear(tbs);
+            Collapse(tbs);
         }
         #endregion
 
