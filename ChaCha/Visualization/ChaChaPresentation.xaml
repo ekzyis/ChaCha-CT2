@@ -1383,7 +1383,7 @@
                   <Style x:Key="hexQRCell" TargetType="TextBox" BasedOn="{ StaticResource hexCell }">
                     <Setter Property="FontSize" Value="12"/>
                   </Style>
-                  <Style x:Key="diffusionValue" TargetType="RichTextBox" BasedOn="{ StaticResource diffusionValue}">
+                  <Style x:Key="diffusionQRValue" TargetType="RichTextBox" BasedOn="{ StaticResource diffusionValue}">
                     <Setter Property="Margin" Value="0,5,0,0"/>
                     <Setter Property="FontSize" Value="11"/>
                     <Setter Property="FontFamily" Value="Courier New" />
@@ -1399,50 +1399,50 @@
                     <Border Width="65" Height="40" Name="QRInACell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="0">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInADiffusion" Background="{ Binding ElementName=QRInACell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInADiffusion" Background="{ Binding ElementName=QRInACell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInBCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="60">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInBDiffusion" Background="{ Binding ElementName=QRInBCell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInBDiffusion" Background="{ Binding ElementName=QRInBCell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInCCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="120">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInCDiffusion" Background="{ Binding ElementName=QRInCCell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInCDiffusion" Background="{ Binding ElementName=QRInCCell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInDCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="180">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QRInDDiffusion" Background="{ Binding ElementName=QRInDCell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInDDiffusion" Background="{ Binding ElementName=QRInDCell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <!-- Output cells -->
                     <Border Width="65" Height="40" Name="QROutACell" Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="0">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QROutA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QROutADiffusion" Background="{ Binding ElementName=QROutACell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutADiffusion" Background="{ Binding ElementName=QROutACell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QROutBCell" Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="60">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QROutB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QROutBDiffusion" Background="{ Binding ElementName=QROutBCell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutBDiffusion" Background="{ Binding ElementName=QROutBCell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QROutCCell" Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="120">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QROutC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QROutCDiffusion" Background="{ Binding ElementName=QROutCCell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutCDiffusion" Background="{ Binding ElementName=QROutCCell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QROutDCell" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="180">
                       <StackPanel>
                         <TextBox Style="{StaticResource hexQRCell}" Name="QROutD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <RichTextBox Style="{StaticResource diffusionValue}" Name="QROutDDiffusion" Background="{ Binding ElementName=QROutDCell, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutDDiffusion" Background="{ Binding ElementName=QROutDCell, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <!-- General paths (unnamed) -->
@@ -1539,7 +1539,7 @@
                             <Border Name="QRAddCell_1" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_1" Background="{ Binding ElementName=QRAddCell_1, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_1" Background="{ Binding ElementName=QRAddCell_1, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_1" Fill="White">
@@ -1554,7 +1554,7 @@
                             <Border Name="QRXORCell_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_1" Background="{ Binding ElementName=QRXORCell_1, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_1" Background="{ Binding ElementName=QRXORCell_1, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_1, Path=Stroke}" Text="XOR"/>
@@ -1585,7 +1585,7 @@
                             <Border Name="QRShiftCell_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_1" Background="{ Binding ElementName=QRShiftCell_1, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_1" Background="{ Binding ElementName=QRShiftCell_1, Path=Background}"/>
                               </StackPanel>
                             </Border>
                           </Canvas>
@@ -1615,7 +1615,7 @@
                             <Border Name="QRAddCell_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_2" Background="{ Binding ElementName=QRAddCell_2, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_2" Background="{ Binding ElementName=QRAddCell_2, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_2" Fill="White">
@@ -1631,7 +1631,7 @@
                             <Border Name="QRXORCell_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_2" Background="{ Binding ElementName=QRXORCell_2, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_2" Background="{ Binding ElementName=QRXORCell_2, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" Text="XOR"/>
@@ -1660,7 +1660,7 @@
                             <Border Name="QRShiftCell_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_2" Background="{ Binding ElementName=QRShiftCell_2, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_2" Background="{ Binding ElementName=QRShiftCell_2, Path=Background}"/>
                               </StackPanel>
                             </Border>
                           </Canvas>
@@ -1690,7 +1690,7 @@
                             <Border Name="QRAddCell_3" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_3" Background="{ Binding ElementName=QRAddCell_3, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_3" Background="{ Binding ElementName=QRAddCell_3, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_3" Fill="White">
@@ -1706,7 +1706,7 @@
                             <Border Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_3" Background="{ Binding ElementName=QRXORCell_3, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_3" Background="{ Binding ElementName=QRXORCell_3, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" Text="XOR"/>
@@ -1767,7 +1767,7 @@
                             <Border Name="QRAddCell_4" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRAddDiffusion_4" Background="{ Binding ElementName=QRAddCell_4, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_4" Background="{ Binding ElementName=QRAddCell_4, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_4" Fill="White">
@@ -1783,7 +1783,7 @@
                             <Border Name="QRXORCell_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRXORDiffusion_4" Background="{ Binding ElementName=QRXORCell_4, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_4" Background="{ Binding ElementName=QRXORCell_4, Path=Background}"/>
                               </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_4, Path=Stroke}" Text="XOR"/>
@@ -1812,7 +1812,7 @@
                             <Border Name="QRShiftCell_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
                               <StackPanel>
                                 <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                                <RichTextBox Style="{StaticResource diffusionValue}" Name="QRShiftDiffusion_4" Background="{ Binding ElementName=QRShiftCell_4, Path=Background}"/>
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_4" Background="{ Binding ElementName=QRShiftCell_4, Path=Background}"/>
                               </StackPanel>
                             </Border>
                           </Canvas>
