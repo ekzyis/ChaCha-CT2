@@ -21,11 +21,6 @@
       <Setter Property="FontSize" Value="16" />
     </Style>
 
-    <!-- Label styles -->
-    <Style x:Key="hexLabel" TargetType="Label">
-      <Setter Property="FontFamily" Value="Courier New" />
-    </Style>
-
     <!-- (Rich)TextBox styles -->
     <Style x:Key="hexTextBox" TargetType="TextBox">
       <Setter Property="FontFamily" Value="Courier New" />
