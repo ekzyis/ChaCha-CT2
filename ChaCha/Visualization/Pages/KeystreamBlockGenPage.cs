@@ -303,8 +303,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 16; ++i)
             {
                 TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
-                pres.Nav.Clear(tb);
-                pres.Nav.Collapse(tb);
+                pres.Nav.ClearAndCollapse(tb);
             }
         }
         private void ShowStateLittleEndianTransformResult()
