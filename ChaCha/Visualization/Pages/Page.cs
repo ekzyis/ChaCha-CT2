@@ -19,25 +19,17 @@ namespace Cryptool.Plugins.ChaCha
         // the visual tree element which contains the page - the Visibility of this element will be set to Collapsed / Visible when going to next / previous page.
         private readonly ContentControl _page;
         private readonly List<PageAction> _pageActions = new List<PageAction>();
-        private readonly List<PageAction> _pageInitActions = new List<PageAction>();
 
         public ActionCache Cache { get; protected set; }
         public int ActionFrames => _pageActions.Count;
 
         public PageAction[] Actions => _pageActions.ToArray();
-
         public void AddAction(params PageAction[] pageActions)
         {
             foreach (PageAction pageAction in pageActions)
             {
                 _pageActions.Add(pageAction);
             }
-        }
-        public PageAction[] InitActions => _pageInitActions.ToArray();
-
-        public void AddInitAction(PageAction pageAction)
-        {
-            _pageInitActions.Add(pageAction);
         }
         public Visibility Visibility
         {
@@ -60,5 +52,13 @@ namespace Cryptool.Plugins.ChaCha
                 return (StackPanel)_page.Template.FindName("ActionNavBar", _page);
             }
         }
+
+        // Initialize a page before entering.
+        // Can be used to setup things using variables which weren't available during instance creation.
+        public virtual void Setup() { }
+
+        // Reset a page before leaving.
+        // This should undo the changes `Setup` applied to the page.
+        public virtual void TearDown() { }
     }
 }

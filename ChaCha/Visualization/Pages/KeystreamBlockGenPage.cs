@@ -42,27 +42,29 @@ namespace Cryptool.Plugins.ChaCha
             Cache = GenerateCache();
         }
 
+        public override void Setup()
+        {
+            // Hotfix for ClearDescription changing top margin for some reason. It is executed when hitting an cache action so we just call it here straightaway.
+            ClearDescription(pres);
+            AddToState(originalState);
+
+            if (pres.DiffusionActive)
+            {
+                InitDiffusionResults();
+                AddOriginalDiffusionToState();
+            }
+
+            AssertInitialState();
+            pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
+        }
+
+        public override void TearDown()
+        {
+            ClearState();
+        }
+
         private void Init()
         {
-            PageAction initAction = new PageAction(() =>
-            {
-                // Hotfix for ClearDescription changing top margin for some reason. It is executed when hitting an cache action so we just call it here straightaway.
-                ClearDescription(pres);
-                AddToState(originalState);
-
-                if(pres.DiffusionActive)
-                {
-                    InitDiffusionResults();
-                    AddOriginalDiffusionToState();
-                }
-
-                AssertInitialState();
-                pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
-            }, () =>
-            {
-                ClearState();
-            });
-            AddInitAction(initAction);
             PageAction generalDescriptionAction = new PageAction(() =>
             {
                 AddBoldToDescription(descriptions[0]);
