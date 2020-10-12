@@ -776,7 +776,7 @@
                 <Setter Property="HorizontalAlignment" Value="Center"/>
               </Style>
               <Style x:Key="additionResult" TargetType="TextBox" BasedOn="{StaticResource addition}">
-                <Setter Property="TextDecorations" Value="Overline"/>
+                <Setter Property="TextDecorations" Value="OverLine"/>
               </Style>
               <Style x:Key="additionDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource diffusionValue}">
                 <Setter Property="FontSize" Value="12"/>
@@ -786,7 +786,7 @@
               <Style x:Key="additionResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource additionDiffusion}">
                 <Style.Resources>
                   <Style TargetType="TextBox">
-                    <Setter Property="TextDecorations" Value="Overline"/>
+                    <Setter Property="TextDecorations" Value="OverLine"/>
                   </Style>
                 </Style.Resources>
               </Style>
