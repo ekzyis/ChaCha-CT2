@@ -865,6 +865,8 @@
                     <Border Style="{StaticResource valueCell}"  Name="UIKeystreamBlockGenCell_3">
                       <StackPanel Name="UIKeystreamBlockGenPanel3">
                         <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
                       </StackPanel>
                     </Border>
                     <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_3">
