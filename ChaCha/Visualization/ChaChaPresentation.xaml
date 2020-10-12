@@ -771,11 +771,12 @@
                 <Setter Property="Canvas.Left" Value="163"/>
               </Style>
               <Style x:Key="addition" TargetType="TextBox" BasedOn="{StaticResource hexCell}">
-                <Setter Property="FontSize" Value="12"/>
                 <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Margin" Value="-15,0,0,0"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
               </Style>
               <Style x:Key="additionResult" TargetType="TextBox" BasedOn="{StaticResource addition}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
                 <Setter Property="TextDecorations" Value="OverLine"/>
               </Style>
               <Style x:Key="additionDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource diffusionValue}">
