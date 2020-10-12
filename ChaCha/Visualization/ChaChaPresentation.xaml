@@ -781,7 +781,7 @@
               </Style>
               <Style x:Key="additionResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource additionDiffusion}">
                 <Style.Resources>
-                  <Style TargetType="TextBox">
+                  <Style TargetType="TextBlock">
                     <Setter Property="TextDecorations" Value="OverLine"/>
                   </Style>
                 </Style.Resources>
