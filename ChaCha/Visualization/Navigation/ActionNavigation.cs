@@ -689,6 +689,12 @@ namespace Cryptool.Plugins.ChaCha
             Clear(tbs);
             Collapse(tbs);
         }
+
+        public void ReplaceAndShow(TextBox tb, string text)
+        {
+            Replace(tb, text);
+            Show(tb);
+        }
         #endregion
 
         #region StackPanel API

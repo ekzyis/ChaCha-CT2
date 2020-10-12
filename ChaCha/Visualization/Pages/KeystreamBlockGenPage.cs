@@ -312,7 +312,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < littleEndianState.Length; ++i)
             {
                 TextBox tb = (TextBox) GetIndexElement("UIKeystreamBlockGenLittleEndian", i, "");
-                pres.Nav.Replace(tb, littleEndianState[i]);
+                pres.Nav.ReplaceAndShow(tb, littleEndianState[i]);
             }
         }
         private void ClearStateLittleEndianTransformResult()
