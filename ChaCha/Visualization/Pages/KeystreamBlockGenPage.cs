@@ -767,7 +767,7 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 AddDiffusionToState(previousState);
-                ShowStateLittleEndianTransformResult();
+                ShowStateLittleEndianTransformResultDiffusion();
             });
             return new PageAction[] { showResult, convert };
         }
