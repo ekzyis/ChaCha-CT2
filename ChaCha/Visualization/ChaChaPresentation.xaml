@@ -775,9 +775,6 @@
                 <Setter Property="TextDecorations" Value="OverLine"/>
               </Style>
               <Style x:Key="additionDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource diffusionValue}">
-                <Setter Property="FontSize" Value="12"/>
-                <Setter Property="Visibility" Value="Collapsed"/>
-                <Setter Property="HorizontalAlignment" Value="Center"/>
               </Style>
               <Style x:Key="additionResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource additionDiffusion}">
                 <Style.Resources>

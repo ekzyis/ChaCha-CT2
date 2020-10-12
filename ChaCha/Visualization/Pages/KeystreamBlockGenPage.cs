@@ -22,7 +22,7 @@ namespace Cryptool.Plugins.ChaCha
         private const string ACTIONLABEL_ADDITION = "ADDITION";
         private const string ACTIONLABEL_LITTLE_ENDIAN = "LITTLE_ENDIAN";
 
-        private int ADDITION_DIFFUSION_FONTSIZE = 12;
+        private int DIFFUSION_FONTSIZE_UPDATE= 10;
 
         List<string> descriptions = new List<string>();
         private string[] originalState;
@@ -177,6 +177,25 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #region State methods
+
+        private void ShrinkStateEntries()
+        {
+            TextBox[] diffusionTextBoxes = GetStateInputs();
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.SetFontSize(diffusionTextBoxes[i], DIFFUSION_FONTSIZE_UPDATE);
+            }
+        }
+
+        private void UndoShrinkStateEntries()
+        {
+            TextBox[] stateBoxes = GetStateInputs();
+            Style defaultStateEntryStyle = pres.FindResource("hexCell") as Style;
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.SetStyle(stateBoxes[i], defaultStateEntryStyle);
+            }
+        }
         private string[] GetCurrentState()
         {
             return GetStateInputs().Select(tb => tb.Text).ToArray();
@@ -250,13 +269,12 @@ namespace Cryptool.Plugins.ChaCha
             string[] add = originalState.Select(x => $"+{x}").ToArray();
             for (int i = 0; i < add.Length; ++i)
             {
-                TextBox tb = (TextBox) GetIndexElement("UIKeystreamBlockGenAddition", i, "");
-                if (pres.DiffusionActive)
-                {
-                    pres.Nav.SetFontSize(tb, ADDITION_DIFFUSION_FONTSIZE);
-                    pres.Nav.ResetMargin(tb);
-                }
-                pres.Nav.ReplaceAndShow(tb, add[i]);
+                TextBox additionBox = (TextBox) GetIndexElement("UIKeystreamBlockGenAddition", i, "");
+                pres.Nav.ReplaceAndShow(additionBox, add[i]);
+            }
+            if (pres.DiffusionActive)
+            {
+                ShrinkDiffusionStateBoxes();
             }
         }
         private void ClearAddition()
@@ -265,6 +283,10 @@ namespace Cryptool.Plugins.ChaCha
             {
                 TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAddition", i, "");
                 pres.Nav.ClearAndCollapse(tb);
+            }
+            if (pres.DiffusionActive)
+            {
+                UndoShrinkDiffusionStateBoxes();
             }
         }
         private void ReplaceState(params string[] state)
@@ -291,11 +313,11 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < result.Length; ++i)
             {
                 TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
-                if (pres.DiffusionActive)
-                {
-                    pres.Nav.SetFontSize(tb, ADDITION_DIFFUSION_FONTSIZE);
-                }
                 pres.Nav.ReplaceAndShow(tb, result[i]);
+            }
+            if (pres.DiffusionActive)
+            {
+                ShrinkDiffusionStateBoxes();
             }
         }
         private void ClearAdditionResult()
@@ -304,6 +326,10 @@ namespace Cryptool.Plugins.ChaCha
             {
                 TextBox tb = (TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, "");
                 pres.Nav.ClearAndCollapse(tb);
+            }
+            if (pres.DiffusionActive)
+            {
+                UndoShrinkDiffusionStateBoxes();
             }
         }
         private void ShowStateLittleEndianTransformResult()
@@ -423,6 +449,25 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Diffusion methods
+
+        private void UndoShrinkDiffusionStateBoxes()
+        {
+            RichTextBox[] diffusionTextBoxes = GetDiffusionStateInputs();
+            Style diffusionTextBoxDefaultStyle = pres.FindResource("diffusionValue") as Style;
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.SetStyle(diffusionTextBoxes[i], diffusionTextBoxDefaultStyle);
+            }
+        }
+
+        private void ShrinkDiffusionStateBoxes()
+        {
+            RichTextBox[] diffusionTextBoxes = GetDiffusionStateInputs();
+            for (int i = 0; i < 16; ++i)
+            {
+                pres.Nav.SetFontSize(diffusionTextBoxes[i], DIFFUSION_FONTSIZE_UPDATE);
+            }
+        }
         private void InitDiffusionResults()
         {
             pres.InitDiffusionResults();
@@ -673,10 +718,10 @@ namespace Cryptool.Plugins.ChaCha
             string[] diffusionAdd = GetDiffusionOriginalState().Select(x => $"+{x}").ToArray();
             for (int i = 0; i < diffusionAdd.Length; ++i)
             {
-                RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, "");
+                RichTextBox rtb = (RichTextBox) GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, "");
                 InsertDiffusionValue(rtb, diffusionAdd[i], normalAdd[i]);
-                pres.Nav.SetFontSize(rtb, ADDITION_DIFFUSION_FONTSIZE);
             }
+            ShrinkStateEntries();
         }
         private void ClearAdditionDiffusion()
         {
@@ -685,6 +730,7 @@ namespace Cryptool.Plugins.ChaCha
                 RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, "");
                 pres.Nav.ClearAndCollapse(rtb);
             }
+            UndoShrinkStateEntries();
         }
         private void ShowAdditionResultDiffusion()
         {
@@ -694,8 +740,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 RichTextBox rtb = (RichTextBox) GetIndexElement("UIKeystreamBlockGenAdditionResultDiffusion", i, "");
                 InsertDiffusionValue(rtb, diffusionResults[i], normalResults[i]);
-                pres.Nav.SetFontSize(rtb, ADDITION_DIFFUSION_FONTSIZE);
             }
+            ShrinkStateEntries();
         }
         private void ClearAdditionResultDiffusion()
         {
@@ -704,6 +750,7 @@ namespace Cryptool.Plugins.ChaCha
                 RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionResultDiffusion", i, "");
                 pres.Nav.ClearAndCollapse(rtb);
             }
+            UndoShrinkStateEntries();
         }
         private PageAction[] AddOriginalStateDiffusion()
         {
@@ -740,6 +787,7 @@ namespace Cryptool.Plugins.ChaCha
                 RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenLittleEndianDiffusion", i, "");
                 InsertDiffusionValue(rtb, diffusionLittleEndianState[i], normalLittleEndianState[i]);
             }
+            ShrinkStateEntries();
         }
         private void ClearStateLittleEndianTransformResultDiffusion()
         {
@@ -748,6 +796,7 @@ namespace Cryptool.Plugins.ChaCha
                 RichTextBox rtb = (RichTextBox)GetIndexElement("UIKeystreamBlockGenLittleEndianDiffusion", i, "");
                 pres.Nav.ClearAndCollapse(rtb);
             }
+            UndoShrinkStateEntries();
         }
         private PageAction[] ConvertStateEntriesToLittleEndianDiffusion()
         {

@@ -267,6 +267,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             c.FontSize = size;
         }
+
+        public void SetStyle(FrameworkElement element, Style s)
+        {
+            element.Style = s;
+        }
         #endregion
 
         #region TextBlock API
