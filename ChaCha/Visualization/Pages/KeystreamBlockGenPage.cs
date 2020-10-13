@@ -113,7 +113,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(qrOutputActions);
                 PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
                 updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
-                updateStateAfterQR[1].Add(UpdateDiffusionFlippedBitsCount(qrIndex));
+                updateStateAfterQR[1].Add(UpdateDiffusionFlippedBitsCountAction(qrIndex));
                 AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
                 {
@@ -147,6 +147,8 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
                         }
+
+                        UpdateDiffusionFlippedBitsCount(qrIndex);
                     }
                     
                     // highlight corresponding state entries which will be copied into QR detail in next action
@@ -574,21 +576,24 @@ namespace Cryptool.Plugins.ChaCha
             });
         }
 
-        private PageAction UpdateDiffusionFlippedBitsCount(int qrIndex)
+        private void UpdateDiffusionFlippedBitsCount(int qrIndex)
+        {
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.CHACHA_HASH_FLIPPED_BITS, qrIndex - 1);
+        }
+        private PageAction UpdateDiffusionFlippedBitsCountAction(int qrIndex)
         {
             return new PageAction(() =>
             {
+
                 if (pres.DiffusionActive)
                 {
-                    pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.CHACHA_HASH_FLIPPED_BITS, qrIndex - 1);
+                    UpdateDiffusionFlippedBitsCount(qrIndex);
                 }
             }, () =>
             {
                 if (pres.DiffusionActive)
                 {
-                    if (qrIndex > 1)
-                        pres.DiffusionFlippedBitsAbsolute =
-                            GetMappedResult(ResultType.CHACHA_HASH_FLIPPED_BITS, qrIndex - 2);
+                    if (qrIndex > 1) UpdateDiffusionFlippedBitsCount(qrIndex - 1);
                     else pres.DiffusionFlippedBitsAbsolute = 0;
                 }
             });
