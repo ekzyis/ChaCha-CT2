@@ -17,9 +17,13 @@ namespace Cryptool.Plugins.ChaCha
     {
         public ActionNavigation Nav = new ActionNavigation();
         private CancellationTokenSource actionNavigationTokenSource;
+
+        private const int NAVIGATION_BAR_HEIGHT = 24;
+        private const int NAVIGATION_BAR_FONTSIZE = 16;
+        private static FontStyle NAVIGATION_BAR_BUTTON_FONTSTYLE = FontStyles.Italic;
         private static Button CreateNavigationButton()
         {
-            Button b = new Button { Height = 18.75, Width = 32, Margin = new Thickness(1, 0, 1, 0) };
+            Button b = new Button { FontSize = NAVIGATION_BAR_FONTSIZE, FontStyle = NAVIGATION_BAR_BUTTON_FONTSTYLE, Height = NAVIGATION_BAR_HEIGHT, Width = 32, Margin = new Thickness(1, 0, 1, 0) };
             b.SetBinding(Button.IsEnabledProperty, new Binding("NavigationEnabled"));
             return b;
         }
@@ -27,20 +31,22 @@ namespace Cryptool.Plugins.ChaCha
         private static Button CreatePrevNavigationButton()
         {
             Button b = CreateNavigationButton();
-            b.Content = "<";
+            b.Content = "\uD83E\uDC60";
+            b.FontStyle = FontStyles.Normal;
             return b;
         }
 
         private static Button CreateNextNavigationButton()
         {
             Button b = CreateNavigationButton();
-            b.Content = ">";
+            b.Content = "\uD83E\uDC62";
+            b.FontStyle = FontStyles.Normal;
             return b;
         }
 
         private static TextBox CreateNavigationTextBox()
         {
-            TextBox tb = new TextBox { Height = 18.75, Width = 24, Margin = new Thickness(1, 0, 1, 0) };
+            TextBox tb = new TextBox { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Width = 24, Margin = new Thickness(1, 0, 1, 0) };
             return tb;
         }
 
@@ -111,7 +117,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private TextBox CreateCurrentActionIndexTextBox(int totalActions)
         {
-            TextBox current = new TextBox { VerticalAlignment = VerticalAlignment.Center, Width = 30 };
+            TextBox current = new TextBox { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, VerticalAlignment = VerticalAlignment.Center, Width = 30 };
             Binding actionIndexBinding = new Binding("CurrentActionIndexTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
             ValidationRule inputActionIndexRule = new InputActionIndexRule(totalActions);
@@ -141,6 +147,7 @@ namespace Cryptool.Plugins.ChaCha
             b.Content = text;
             b.Width = width;
             b.Margin = new Thickness(0);
+            b.Height = NAVIGATION_BAR_HEIGHT;
             // since each page has its own dedicated navigation bar, the button for the current page is always bold
             if (currentPageIndex == toPageIndex) b.FontWeight = FontWeights.Bold;
             b.Click += new RoutedEventHandler(MoveToPageClickWrapper(toPageIndex));
@@ -152,10 +159,10 @@ namespace Cryptool.Plugins.ChaCha
             int pageIndex = _pages.FindIndex(p_ => p_ == p);
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
-            Button start = CreatePageButton("Start", pageIndex, 0, 32);
-            Button overview = CreatePageButton("Overview", pageIndex, 1, 64);
-            Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 160);
-            Button keystream = CreatePageButton("Keystream Generation", pageIndex, 3, 160);
+            Button start = CreatePageButton("Start", pageIndex, 0, 64);
+            Button overview = CreatePageButton("Overview", pageIndex, 1, 128);
+            Button stateMatrixInit = CreatePageButton("State Matrix Initialization", pageIndex, 2, 320);
+            Button keystream = CreatePageButton("Keystream Generation", pageIndex, 3, 320);
             if (pageIndex >= 3) keystream.FontWeight = FontWeights.Bold;
             pageNavBar.Children.Add(start);
             pageNavBar.Children.Add(overview);
@@ -247,10 +254,10 @@ namespace Cryptool.Plugins.ChaCha
             // Assume that general page navigation bar has already been initialized
             StackPanel pageNavBar = p.PageNavigationBar;
 
-            Grid keystreamBlockGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
-            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
-            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
-            TextBlock keystreamLabel = new TextBlock() { Text = "Keystream Block", HorizontalAlignment = HorizontalAlignment.Center };
+            Grid keystreamBlockGrid = new Grid() { Margin = new Thickness(0, -18, 0, 0) };
+            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(NAVIGATION_BAR_HEIGHT - 5) });
+            keystreamBlockGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(NAVIGATION_BAR_HEIGHT) });
+            TextBlock keystreamLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE - 2, Height = NAVIGATION_BAR_HEIGHT - 5, Text = "Keystream Block", HorizontalAlignment = HorizontalAlignment.Center };
             StackPanel keystreamBlockBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
             Grid.SetRow(keystreamLabel, 0);
             Grid.SetRow(keystreamBlockBottomRow, 1);
@@ -258,8 +265,8 @@ namespace Cryptool.Plugins.ChaCha
             previousKeystreamBlock.Click += PrevKeystreamBlock_Click;
             previousKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("PrevKeystreamBlockIsEnabled"));
             TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox(totalKeystreamBlocks);
-            TextBlock keystreamDelimiter = new TextBlock() { Text = "/" };
-            TextBlock totalKeystreamBlockLabel = new TextBlock() { Text = totalKeystreamBlocks.ToString() };
+            TextBlock keystreamDelimiter = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = "/" };
+            TextBlock totalKeystreamBlockLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = totalKeystreamBlocks.ToString() };
             Button nextKeystreamBlock = CreateNextNavigationButton();
             nextKeystreamBlock.Click += NextKeystreamBlock_Click;
             nextKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("NextKeystreamBlockIsEnabled"));
@@ -273,10 +280,10 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(keystreamBlockGrid);
 
 
-            Grid roundGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
-            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
-            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
-            TextBlock roundLabel = new TextBlock() { Text = "Round", HorizontalAlignment = HorizontalAlignment.Center };
+            Grid roundGrid = new Grid() { Margin = new Thickness(0, -18, 0, 0) };
+            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(NAVIGATION_BAR_HEIGHT - 5) });
+            roundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(NAVIGATION_BAR_HEIGHT) });
+            TextBlock roundLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE - 2, Height = NAVIGATION_BAR_HEIGHT - 5, Text = "Round", HorizontalAlignment = HorizontalAlignment.Center };
             StackPanel roundBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
             Grid.SetRow(roundLabel, 0);
             Grid.SetRow(roundBottomRow, 1);
@@ -284,8 +291,8 @@ namespace Cryptool.Plugins.ChaCha
             previousRound.Click += PrevRound_Click;
             previousRound.SetBinding(Button.IsEnabledProperty, new Binding("PrevRoundIsEnabled"));
             TextBox currentRound = CreateRoundTextBox(totalRounds);
-            TextBlock delimiterRound = new TextBlock() { Text = "/" };
-            TextBlock totalRoundsLabel = new TextBlock() { Text = totalRounds.ToString() };
+            TextBlock delimiterRound = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = "/" };
+            TextBlock totalRoundsLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = totalRounds.ToString() };
             Button nextRound = CreateNextNavigationButton();
             nextRound.Click += NextRound_Click;
             nextRound.SetBinding(Button.IsEnabledProperty, new Binding("NextRoundIsEnabled"));
@@ -299,10 +306,10 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(roundGrid);
 
 
-            Grid quarterroundGrid = new Grid() { Margin = new Thickness(0, -15, 0, 0) };
-            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
-            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(18.75) });
-            TextBlock quarterroundLabel = new TextBlock() { Text = "Quarterround", HorizontalAlignment = HorizontalAlignment.Center };
+            Grid quarterroundGrid = new Grid() { Margin = new Thickness(0, -18, 0, 0) };
+            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(NAVIGATION_BAR_HEIGHT - 5) });
+            quarterroundGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(NAVIGATION_BAR_HEIGHT) });
+            TextBlock quarterroundLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE - 2, Height = NAVIGATION_BAR_HEIGHT - 5, Text = "Quarterround", HorizontalAlignment = HorizontalAlignment.Center };
             StackPanel quarterroundBottomRow = new StackPanel() { Orientation = Orientation.Horizontal };
             Grid.SetRow(quarterroundLabel, 0);
             Grid.SetRow(quarterroundBottomRow, 1);
@@ -310,8 +317,8 @@ namespace Cryptool.Plugins.ChaCha
             previousQuarterround.Click += PrevQuarterround_Click;
             previousQuarterround.SetBinding(Button.IsEnabledProperty, new Binding("PrevQuarterroundIsEnabled"));
             TextBox currentQuarterround = CreateQuarterroundTextBox();
-            TextBlock delimiterQuarterround = new TextBlock() { Text = "/" };
-            TextBlock totalQuarterRoundsLabel = new TextBlock() { Text = "4" };
+            TextBlock delimiterQuarterround = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = "/" };
+            TextBlock totalQuarterRoundsLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = "4" };
             Button nextQuarterround = CreateNextNavigationButton();
             nextQuarterround.Click += NextQuarterround_Click;
             nextQuarterround.SetBinding(Button.IsEnabledProperty, new Binding("NextQuarterroundIsEnabled"));
@@ -330,8 +337,8 @@ namespace Cryptool.Plugins.ChaCha
             actionNavBar.Children.Clear();
             Slider actionSlider = CreateActionNavigationSlider(totalActions);
             TextBox current = CreateCurrentActionIndexTextBox(totalActions);
-            TextBlock delimiter = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = "/" };
-            TextBlock total = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
+            TextBlock delimiter = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, VerticalAlignment = VerticalAlignment.Center, Text = "/" };
+            TextBlock total = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, VerticalAlignment = VerticalAlignment.Center, Text = totalActions.ToString() };
             actionNavBar.Children.Add(PrevButton());
             actionNavBar.Children.Add(actionSlider);
             Button next = NextButton();
@@ -672,7 +679,8 @@ namespace Cryptool.Plugins.ChaCha
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("PrevActionIsEnabled"));
             b.Click += (sender, e) => MoveActionsAsync(-1);
-            b.Content = "<";
+            b.Content = "\uD83E\uDC60";
+            b.FontStyle = FontStyles.Normal;
             return b;
         }
 
@@ -681,7 +689,8 @@ namespace Cryptool.Plugins.ChaCha
             Button b = CreateNavigationButton();
             b.SetBinding(Button.IsEnabledProperty, new Binding("NextActionIsEnabled"));
             b.Click += (sender, e) => MoveActionsAsync(1);
-            b.Content = ">";
+            b.Content = "\uD83E\uDC62";
+            b.FontStyle = FontStyles.Normal;
             return b;
         }
 
