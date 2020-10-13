@@ -1369,12 +1369,24 @@
                   <Button Height="18.75" Margin="2" Click="QR8_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-                <TextBox Text="Flipped bits:"/>
-                <TextBox Text="{ Binding DiffusionFlippedBitsAbsolute }"/>
-                <TextBox Text="("/>
-                <TextBox Text="{ Binding DiffusionFlippedBitsRelative, Mode=OneWay }"/>
-                <TextBox Text="%)"/>
+              <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+                <StackPanel.Resources>
+                  <Style TargetType="TextBox">
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="IsReadOnly" Value="True"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                  </Style>
+                </StackPanel.Resources>
+                <StackPanel Orientation="Horizontal">
+                  <TextBox Text="Flipped bits:"/>
+                  <TextBox Text="{ Binding DiffusionFlippedBitsAbsolute }"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <TextBox Text="("/>
+                  <TextBox Text="{ Binding DiffusionFlippedBitsRelative, Mode=OneWay }"/>
+                  <TextBox Text="% )"/>
+                </StackPanel>
               </StackPanel>
             </Grid>
           </Grid>
