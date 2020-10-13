@@ -1,5 +1,5 @@
-﻿using Cryptool.PluginBase.Miscellaneous;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
@@ -131,12 +131,55 @@ namespace Cryptool.Plugins.ChaCha
     }
     #endregion
 
+    public class Diffusion
+    {
+        public static uint CalculateFlippedBits(IReadOnlyCollection<uint> normalState, IReadOnlyCollection<uint> diffusionState)
+        {
+            uint count = 0;
+            for (int i = 0; i < 16; ++i)
+            {
+                count += BitFlips(normalState.ElementAt(i), diffusionState.ElementAt(i));
+            }
+
+            return count;
+        }
+
+        public static uint BitFlips(uint a, uint b)
+        {
+            uint count = 0;
+            for (int i = 0; i < 32; ++i)
+            {
+                if (((a >> i) & 1) != ((b >> i) & 1))
+                {
+                    count++;
+                }
+            }
+            return count;
+        }
+    }
+
     partial class ChaChaPresentation
     {
         public void InitDiffusionResults()
         {
             _chacha.ExecuteChaChaWithDiffusionKey(_diffusionKey);
         }
+
+        private uint _diffusionFlippedBitsAbsolute = 0;
+        public uint DiffusionFlippedBitsAbsolute {
+            get
+            {
+                return _diffusionFlippedBitsAbsolute;
+            }
+            set
+            {
+                _diffusionFlippedBitsAbsolute = value;
+                OnPropertyChanged("DiffusionFlippedBitsAbsolute");
+                OnPropertyChanged("DiffusionFlippedBitsRelative");
+            }
+        }
+
+        public double DiffusionFlippedBitsRelative => (double) _diffusionFlippedBitsAbsolute / (16 * 32);
 
         private bool _showDiffusion = false;
         public bool ShowDiffusion

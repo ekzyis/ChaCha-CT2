@@ -1277,6 +1277,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
               </Grid.RowDefinitions>
               <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Margin="3" Height="18.75" Width="18.75" Click="PrevRound_Click" IsEnabled="{ Binding PrevRoundIsEnabled }">
@@ -1367,6 +1368,13 @@
                   <Button Height="18.75" Margin="2" Click="QR8_Start_Click" Content="Start"/>
                   <Button Height="18.75" Margin="2" Click="QR8_End_Click" Content="End"/>
                 </StackPanel>
+              </StackPanel>
+              <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+                <TextBox Text="Flipped bits:"/>
+                <TextBox Text="{ Binding DiffusionFlippedBitsAbsolute }"/>
+                <TextBox Text="("/>
+                <TextBox Text="{ Binding DiffusionFlippedBitsRelative, Mode=OneWay }"/>
+                <TextBox Text="%)"/>
               </StackPanel>
             </Grid>
           </Grid>

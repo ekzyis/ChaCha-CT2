@@ -50,6 +50,8 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint[]> CHACHA_HASH_QUARTERROUND_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_QUARTERROUND_DIFFUSION");
         public static readonly ResultType<uint[]> CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION");
         public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION");
+
+        public static readonly ResultType<uint> CHACHA_HASH_FLIPPED_BITS = new ResultType<uint>("CHACHA_HASH_FLIPPED_BITS");
         public static ResultType<uint> GetDiffusionResultType(ResultType<uint> resultType)
         {
             if (resultType == QR_INPUT_A)
@@ -119,6 +121,10 @@ namespace Cryptool.Plugins.ChaCha
             else if (resultType == QR_XOR)
             {
                 return QR_XOR_DIFFUSION;
+            }
+            else if (resultType == CHACHA_HASH_FLIPPED_BITS)
+            {
+                return CHACHA_HASH_FLIPPED_BITS;
             }
             throw new InvalidOperationException($"No matching diffusion ResultType<uint> found for type {resultType.Name}.");
         }

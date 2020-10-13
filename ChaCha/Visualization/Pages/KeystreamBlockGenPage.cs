@@ -113,6 +113,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(qrOutputActions);
                 PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
                 updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
+                updateStateAfterQR[1].Add(UpdateDiffusionFlippedBitsCount(qrIndex));
                 AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
                 {
@@ -569,6 +570,26 @@ namespace Cryptool.Plugins.ChaCha
                 if (pres.DiffusionActive)
                 {
                     UpdateDiffusionState(qrIndex - 1);
+                }
+            });
+        }
+
+        private PageAction UpdateDiffusionFlippedBitsCount(int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.CHACHA_HASH_FLIPPED_BITS, qrIndex - 1);
+                }
+            }, () =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    if (qrIndex > 1)
+                        pres.DiffusionFlippedBitsAbsolute =
+                            GetMappedResult(ResultType.CHACHA_HASH_FLIPPED_BITS, qrIndex - 2);
+                    else pres.DiffusionFlippedBitsAbsolute = 0;
                 }
             });
         }
@@ -1280,6 +1301,7 @@ namespace Cryptool.Plugins.ChaCha
                 case "QR_OUTPUT_B":
                 case "QR_OUTPUT_C":
                 case "QR_OUTPUT_D":
+                case "CHACHA_HASH_FLIPPED_BITS":
                     // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
                     offset = pres.Rounds * 4;
                     break;
@@ -1296,6 +1318,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             int mapIndex = MapIndex(resultType, index);
             return pres.GetResult(resultType, mapIndex);
+        }
+
+        private uint GetMappedResult(ResultType<uint> resultType, int index)
+        {
+            return pres.GetResult(resultType, MapIndex(resultType, index));
         }
         private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
         {
