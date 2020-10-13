@@ -359,18 +359,24 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
-        // Initializes page by wrapping the init action functions with the navigation interface methods and calling them.
-        private void InitPage(Page p)
+        private void SetupPage(Page p)
         {
-            foreach (PageAction pageAction in p.InitActions)
-            {
-                pageAction.Exec();
-            }
-
+            p.Setup();
             if (p.ActionFrames > 0)
             {
                 StartActionBufferHandler(50);
             }
+            InitActionNavigationBar(p);
+            p.Visibility = Visibility.Visible;
+        }
+
+        private void TearDownPage(Page p)
+        {
+            StopActionBufferHandler();
+            // undo all actions
+            MoveToAction(0);
+            p.TearDown();
+            p.Visibility = Visibility.Collapsed;
         }
 
         private void MovePages(int n)
@@ -471,22 +477,15 @@ namespace Cryptool.Plugins.ChaCha
 
         private void PrevPage_Click(object sender, RoutedEventArgs e)
         {
-            StopActionBufferHandler();
-            CurrentPage.Visibility = Visibility.Collapsed;
-            ResetPageActions();
+            TearDownPage(CurrentPage);
             CurrentPageIndex--;
-            CurrentPage.Visibility = Visibility.Visible;
-            InitPage(CurrentPage);
+            SetupPage(CurrentPage);
         }
         private void NextPage_Click(object sender, RoutedEventArgs e)
         {
-            StopActionBufferHandler();
-            CurrentPage.Visibility = Visibility.Collapsed;
-            ResetPageActions();
+            TearDownPage(CurrentPage);
             CurrentPageIndex++;
-            CurrentPage.Visibility = Visibility.Visible;
-            InitPage(CurrentPage);
-
+            SetupPage(CurrentPage);
         }
 
         private Action<object, RoutedEventArgs> MoveToPageClickWrapper(int n)
@@ -530,7 +529,6 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
                 OnPropertyChanged("CurrentKeystreamBlock");
-                InitActionNavigationBar(CurrentPage);
             }
         }
         public int CurrentActionIndex
@@ -685,18 +683,6 @@ namespace Cryptool.Plugins.ChaCha
             b.Click += (sender, e) => MoveActionsAsync(1);
             b.Content = ">";
             return b;
-        }
-
-        private void ResetPageActions()
-        {
-            MoveToAction(0);
-            Debug.Assert(CurrentActionIndex == 0);
-            // Also undo init actions.
-            // Reverse because order (may) matter. Undoing should be done in a FIFO queue!
-            foreach (PageAction pageAction in CurrentPage.InitActions.Reverse())
-            {
-                pageAction.Undo();
-            }
         }
 
         /**
@@ -863,7 +849,7 @@ namespace Cryptool.Plugins.ChaCha
                     await ClearActionBuffer();
                     await delayTask;
                 }
-                catch (TaskCanceledException e)
+                catch (TaskCanceledException)
                 {
                     break;
                 }

@@ -18,12 +18,8 @@
     <Style x:Key="hex" TargetType="TextBlock">
       <Setter Property="FontFamily" Value="Courier New" />
       <Setter Property="TextWrapping" Value="Wrap" />
+      <Setter Property="FontSize" Value="16" />
     </Style>
-
-    <Style x:Key="hexLabel" TargetType="Label">
-      <Setter Property="FontFamily" Value="Courier New" />
-    </Style>
-
 
     <!-- (Rich)TextBox styles -->
     <Style x:Key="hexTextBox" TargetType="TextBox">
@@ -44,6 +40,12 @@
       <Setter Property="FontFamily" Value="Courier New" />
       <Setter Property="IsReadOnly" Value="True"/>
       <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="FontSize" Value="16" />
+    </Style>
+    <Style x:Key="diffusionValue" TargetType="RichTextBox" BasedOn="{ StaticResource hexRichTextBox }">
+      <Setter Property="FontSize" Value="22"/>
+      <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
     <Style x:Key="titleText" TargetType="TextBox">
       <Setter Property="FontSize" Value="25" />
@@ -67,12 +69,15 @@
       <Setter Property="Visibility" Value="Collapsed"/>
     </Style>
 
+    <Style x:Key="diffusionValueCell" TargetType="Border">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="Margin" Value="0,0,0,0"/>
+    </Style>
+
     <!-- RowDefinition styles -->
     <Style x:Key="titleRow" TargetType="RowDefinition">
       <Setter Property="Height" Value="35"/>
     </Style>
-    
-
 
     <!-- Page template -->
     <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
@@ -98,6 +103,9 @@
         </Grid>
       </Grid>
     </ControlTemplate>
+    <local:BooleanToVisibilityHiddenConverter x:Key="HiddenIfFalseConverter"/>
+    <local:BooleanToVisibilityCollapsedConverter x:Key="CollapsedIfFalseConverter"/>
+    <local:BooleanOrToVisibilityCollapsedConverter x:Key="CollapsedIfAllFalse"/>
   </UserControl.Resources>
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
@@ -200,121 +208,210 @@
                   <RowDefinition></RowDefinition>
                   <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
+                <Grid.Resources>
+                  <Style TargetType="StackPanel">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="Orientation" Value="Vertical"/>
+                  </Style>
+                  <Style TargetType="TextBox" BasedOn="{ StaticResource hexCell }">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                  </Style>
+                  <Style TargetType="RichTextBox">
+                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                  </Style>
+                  <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                  </Style>
+                  <Style x:Key="stateCell" TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="1,0,0,1"/>
+                  </Style>
+                </Grid.Resources>
                 <!-- Row 0 -->
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState0Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState0"/>
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="0" Name="UIStateCell0">
+                  <TextBox Name="UIState0"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="0">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="0"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState1Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState1"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="1" Name="UIStateCell1">
+                  <TextBox Name="UIState1"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="1">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="1"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState2Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState2"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="2" Name="UIStateCell2">
+                  <TextBox Name="UIState2"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="2">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="2"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState3Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState3"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="3" Name="UIStateCell3">
+                  <TextBox Name="UIState3"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="3">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="3"/>
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 1 -->
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState4Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState4"/>
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="0">
+                  <StackPanel>
+                    <Border Name="UIStateCell4">
+                      <TextBox Name="UIState4"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion4" Background="{ Binding ElementName=UIStateCell4, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Name="UIStateDiffusion4"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="0">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="4"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState5Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState5"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="1">
+                  <StackPanel>
+                    <Border Name="UIStateCell5">
+                      <TextBox Name="UIState5"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion5" Background="{ Binding ElementName=UIStateCell5, Path=Background }">
+                      <RichTextBox  Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Name="UIStateDiffusion5"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="1">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="5"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState6Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState6"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="2">
+                  <StackPanel>
+                    <Border Name="UIStateCell6">
+                      <TextBox Name="UIState6"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion6" Background="{ Binding ElementName=UIStateCell6, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Name="UIStateDiffusion6"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="2">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="6"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState7Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState7"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="3">
+                  <StackPanel>
+                    <Border Name="UIStateCell7">
+                      <TextBox Name="UIState7"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion7" Background="{ Binding ElementName=UIStateCell7, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Name="UIStateDiffusion7"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="3">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="7"/>
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 2 -->
-                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState8Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState8"/>
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="0">
+                  <StackPanel>
+                    <Border Name="UIStateCell8">
+                      <TextBox Name="UIState8"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion8" Background="{ Binding ElementName=UIStateCell8, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Name="UIStateDiffusion8"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="0">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="8"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState9Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState9"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="1">
+                  <StackPanel>
+                    <Border Name="UIStateCell9">
+                      <TextBox Name="UIState9"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion9" Background="{ Binding ElementName=UIStateCell9, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Name="UIStateDiffusion9"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="1">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="163">
                       <TextBox Style="{StaticResource stateIndex}" Text="9"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState10Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState10"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="2">
+                  <StackPanel>
+                    <Border Name="UIStateCell10">
+                      <TextBox Name="UIState10"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion10" Background="{ Binding ElementName=UIStateCell10, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Name="UIStateDiffusion10"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="2">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="156">
                       <TextBox Style="{StaticResource stateIndex}" Text="10"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState11Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState11"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="3">
+                  <StackPanel>
+                    <Border Name="UIStateCell11">
+                      <TextBox Name="UIState11"/>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIStateCellDiffusion11" Background="{ Binding ElementName=UIStateCell11, Path=Background }">
+                      <RichTextBox Style="{StaticResource diffusionValue}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Name="UIStateDiffusion11"/>
+                    </Border>
+                  </StackPanel>
                 </Border>
                 <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -323,19 +420,21 @@
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 3 -->
-                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState12Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState12"/>
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="0" Name="UIStateCell12">
+                  <TextBox Name="UIState12"/>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="0">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="156">
                       <TextBox Style="{StaticResource stateIndex}" Text="12"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState13Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState13"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="1" Name="UIStateCell13">
+                  <TextBox Name="UIState13"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
                   <Canvas>
@@ -344,20 +443,22 @@
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState14Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState14"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="2" Name="UIStateCell14">
+                  <TextBox Name="UIState14"/>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="2">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="156">
                       <TextBox Style="{StaticResource stateIndex}" Text="14"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIState15Cell">
-                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource hexCell}" Name="UIState15"/>
+
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="3" Name="UIStateCell15">
+                  <TextBox Name="UIState15"/>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="4" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="4">
                   <Canvas>
                     <Canvas Canvas.Top="90" Canvas.Left="156">
                       <TextBox Style="{StaticResource stateIndex}" Text="15"/>
@@ -378,93 +479,190 @@
               <ColumnDefinition Width="0.34*"></ColumnDefinition>
               <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <Grid.Resources>
+              <Style TargetType="StackPanel">
+                <Setter Property="Orientation" Value="Vertical"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+              </Style>
+            </Grid.Resources>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1">
-              <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-              </Grid.RowDefinitions>
-              <Border Grid.Row="0" Name="UITransformInputCell">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
-              </Border>
-              <Border Grid.Row="1" Name="UITransformInputCell2">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
-              </Border>
-            </Grid>
+            <StackPanel Grid.Row="0" Grid.Column="1">
+              <Grid Margin="5"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Name="UITransformInputCell">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
+                </Border>
+                <Border Grid.Row="1" Name="UITransformInputCell2">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
+                </Border>
+              </Grid>
+              <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Name="UITransformInputDiffusionCell" Visibility="Collapsed" Background="{Binding ElementName=UITransformInputCell, Path=Background}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformInputDiffusion" Background="{Binding ElementName=UITransformInputCell, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="1" Name="UITransformInputDiffusionCell2" Visibility="Collapsed" Background="{Binding ElementName=UITransformInputCell2, Path=Background}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformInputDiffusion2" Background="{Binding ElementName=UITransformInputCell2, Path=Background}"/>
+                </Border>
+              </Grid>
+            </StackPanel>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" Width="360">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-              </Grid.RowDefinitions>
-              <Border Grid.Row="0" Grid.Column="0">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
-              </Border>
-              <Border Grid.Row="0" Grid.Column="1">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk1"/>
-              </Border>
-              <Border Grid.Row="0" Grid.Column="2">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk2"/>
-              </Border>
-              <Border Grid.Row="0" Grid.Column="3">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk3"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="0">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="1">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk5"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="2">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk6"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="3">
-                <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
-              </Border>
-            </Grid>
+            <StackPanel Grid.Row="1" Grid.Column="1">
+              <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk0"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk1"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk2"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk3"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk4"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk5"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk6"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformChunk7"/>
+                </Border>
+              </Grid>
+              <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion0"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion1"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion2"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion3"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion4"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion5"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion6"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion7"/>
+                </Border>
+              </Grid>
+            </StackPanel>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" TextWrapping="Wrap" Text="Transform each chunk into little-endian:"/>
-            <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="360">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-              </Grid.ColumnDefinitions>
-              <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-              </Grid.RowDefinitions>
-              <Border Grid.Row="0" Grid.Column="0" Name="UITransformLittleEndian0Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
-              </Border>
-              <Border Grid.Row="0" Grid.Column="1" Name="UITransformLittleEndian1Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian1"/>
-              </Border>
-              <Border Grid.Row="0" Grid.Column="2" Name="UITransformLittleEndian2Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian2"/>
-              </Border>
-              <Border Grid.Row="0" Grid.Column="3" Name="UITransformLittleEndian3Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian3"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="0" Name="UITransformLittleEndian4Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian4"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="1" Name="UITransformLittleEndian5Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian5"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="2" Name="UITransformLittleEndian6Cell">
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian6"/>
-              </Border>
-              <Border Grid.Row="1" Grid.Column="3" Name="UITransformLittleEndian7Cell">
-                <TextBox VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
-              </Border>
-            </Grid>
+            <StackPanel Grid.Row="2" Grid.Column="1">
+              <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="360">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" Name="UITransformLittleEndianCell0">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian0"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" Name="UITransformLittleEndianCell1">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian1"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" Name="UITransformLittleEndianCell2">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian2"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3" Name="UITransformLittleEndianCell3">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian3"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Name="UITransformLittleEndianCell4">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian4"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Name="UITransformLittleEndianCell5">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian5"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" Name="UITransformLittleEndianCell6">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian6"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" Name="UITransformLittleEndianCell7">
+                  <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Style="{ StaticResource hexTextBox}" Name="UITransformLittleEndian7"/>
+                </Border>
+              </Grid>
+              <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Width="360">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                  <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Grid.Column="0" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian0Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell0">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion0" Background="{Binding ElementName=UITransformLittleEndian0, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian1Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell1">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion1" Background="{Binding ElementName=UITransformLittleEndian1, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian2Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell2">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion2" Background="{Binding ElementName=UITransformLittleEndian2, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian3Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell3">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion3" Background="{Binding ElementName=UITransformLittleEndian3, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="0" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian4Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell4">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion4" Background="{Binding ElementName=UITransformLittleEndian4, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian5Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell5">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion5" Background="{Binding ElementName=UITransformLittleEndian5, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian6Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell6">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion6" Background="{Binding ElementName=UITransformLittleEndian6, Path=Background}"/>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian7Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell7">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion7" Background="{Binding ElementName=UITransformLittleEndian7, Path=Background}"/>
+                </Border>
+              </Grid>
+            </StackPanel>
           </Grid>
           <!-- Step description -->
           <RichTextBox Style="{ StaticResource richText }" Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
@@ -473,23 +671,41 @@
             <Grid.RowDefinitions>
               <RowDefinition Height="20"/>
               <RowDefinition Height="1.6*"/>
-              <RowDefinition Height="1.6*"/>
+              <RowDefinition Height="4*"/>
               <RowDefinition Height="1.6*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="180"/>
-              <ColumnDefinition Width="800"/>
+              <ColumnDefinition Width="1*"/>
+              <ColumnDefinition Width="850"/>
             </Grid.ColumnDefinitions>
-            <TextBox Style="{ StaticResource text }" Grid.Row="0" FontWeight="Bold" Text="State parameters"/>
+            <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
+              <Button Content="Zeige Diffusionsanzeige" Width="172" Name="ToggleShowDiffusion"/>
+              <Button Content="Reset flipped bits" Width="172" Name="ResetDiffusion" Visibility="{ Binding ShowDiffusion, Converter={StaticResource HiddenIfFalseConverter}}"/>
+            </StackPanel>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
             <Border HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1" Name="UIConstantsCell">
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstant"/>
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" Name="UIInputKeyCell">
-              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+              <StackPanel HorizontalAlignment="Center">
+                <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+                <RichTextBox Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="DiffusionKeyTextBlock">
+                  <RichTextBox.Visibility>
+                    <MultiBinding Converter="{ StaticResource CollapsedIfAllFalse }">
+                      <Binding Path="DiffusionActive"/>
+                      <Binding Path="ShowDiffusion"/>
+                    </MultiBinding>
+                  </RichTextBox.Visibility>
+                </RichTextBox>
+                <!-- Diffusion check boxes -->
+                <Grid Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Name="DiffusionGrid">
+                  <!-- Diffusion grid will be initialized in code-behind -->
+                </Grid>
+              </StackPanel>
             </Border>
-            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" Text="Initialization vector (IV):"/>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):"/>
             <Border HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell">
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
             </Border>
@@ -528,6 +744,62 @@
           </Grid.RowDefinitions>
           <!-- State matrix -->
           <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.Resources>
+              <Style TargetType="TextBox" BasedOn="{StaticResource hexCell}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+              </Style>
+              <Style TargetType="StackPanel">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="Orientation" Value="Vertical"/>
+              </Style>
+              <Style TargetType="Border">
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="BorderThickness" Value="1,0,0,1"/>
+              </Style>
+              <Style x:Key="valueCell" TargetType="Border">
+                <Setter Property="BorderThickness" Value="0"/>
+              </Style>
+              <Style x:Key="canvasStateIndex" TargetType="Canvas">
+                <Setter Property="Canvas.Top" Value="90"/>
+                <Setter Property="Canvas.Left" Value="163"/>
+              </Style>
+              <Style x:Key="addition" TargetType="TextBox" BasedOn="{StaticResource hexCell}">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="Margin" Value="-12,0,0,0"/>
+              </Style>
+              <Style x:Key="additionResult" TargetType="TextBox" BasedOn="{StaticResource addition}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Setter Property="TextDecorations" Value="OverLine"/>
+              </Style>
+              <Style x:Key="additionDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource diffusionValue}">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="Margin" Value="-12,0,0,0"/>
+              </Style>
+              <Style x:Key="additionResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource additionDiffusion}">
+                <Setter Property="Margin" Value="0,0,0,0"/>
+                <Style.Resources>
+                  <Style TargetType="TextBlock">
+                    <Setter Property="TextDecorations" Value="OverLine"/>
+                  </Style>
+                </Style.Resources>
+              </Style>
+              <Style x:Key="littleEndianResult" TargetType="TextBox" BasedOn="{StaticResource hexCell}">
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="Visibility" Value="Collapsed"/>
+                <Setter Property="TextDecorations" Value="OverLine"/>
+              </Style>
+              <Style x:Key="littleEndianResultDiffusion" TargetType="RichTextBox" BasedOn="{StaticResource diffusionValue}">
+                <Setter Property="FontSize" Value="22"/>
+                <Style.Resources>
+                  <Style TargetType="TextBlock">
+                    <Setter Property="TextDecorations" Value="OverLine"/>
+                  </Style>
+                </Style.Resources>
+              </Style>
+            </Grid.Resources>
             <Border BorderBrush="Black" BorderThickness="0,1,1,0">
               <Grid>
                 <Grid.ColumnDefinitions>
@@ -543,261 +815,452 @@
                   <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <!-- Row 0 -->
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_0">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel0">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                <Border Grid.Row="0" Grid.Column="0" Name="UIKeystreamBlockGenOuterCell_0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_0">
+                      <StackPanel Name="UIKeystreamBlockGenPanel0">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_0">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion0" Background="{ Binding ElementName=UIKeystreamBlockGenCell_0, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="0">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="0"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_1" >
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel1">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+
+                <Border Grid.Row="0" Grid.Column="1" Name="UIKeystreamBlockGenOuterCell_1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_1">
+                      <StackPanel Name="UIKeystreamBlockGenPanel1">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_1">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion1" Background="{ Binding ElementName=UIKeystreamBlockGenCell_1, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="1">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="1"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_2">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel2">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+
+                <Border Grid.Row="0" Grid.Column="2" Name="UIKeystreamBlockGenOuterCell_2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_2">
+                      <StackPanel Name="UIKeystreamBlockGenPanel2">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_2">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion2" Background="{ Binding ElementName=UIKeystreamBlockGenCell_2, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="2">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="2"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_3">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel3">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+
+                <Border Grid.Row="0" Grid.Column="3" Name="UIKeystreamBlockGenOuterCell_3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}"  Name="UIKeystreamBlockGenCell_3">
+                      <StackPanel Name="UIKeystreamBlockGenPanel3">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_3">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion3" Background="{ Binding ElementName=UIKeystreamBlockGenCell_3, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="0" Grid.Column="3">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="3"/>
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 1 -->
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_4">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel4">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                <Border Grid.Row="1" Grid.Column="0" Name="UIKeystreamBlockGenOuterCell_4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_4">
+                      <StackPanel Name="UIKeystreamBlockGenPanel4">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_4">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion4" Background="{ Binding ElementName=UIKeystreamBlockGenCell_4, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="0">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="4"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_5">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel5">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+
+                <Border Grid.Row="1" Grid.Column="1" Name="UIKeystreamBlockGenOuterCell_5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_5">
+                      <StackPanel Name="UIKeystreamBlockGenPanel5">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_5">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion5" Background="{ Binding ElementName=UIKeystreamBlockGenCell_5, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="1">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="5"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_6">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel6">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+
+                <Border Grid.Row="1" Grid.Column="2" Name="UIKeystreamBlockGenOuterCell_6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_6">
+                      <StackPanel Name="UIKeystreamBlockGenPanel6">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_6">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion6" Background="{ Binding ElementName=UIKeystreamBlockGenCell_6, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="2">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="6"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_7">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel7">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+
+                <Border Grid.Row="1" Grid.Column="3" Name="UIKeystreamBlockGenOuterCell_7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_7">
+                      <StackPanel Name="UIKeystreamBlockGenPanel7">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_7">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion7" Background="{ Binding ElementName=UIKeystreamBlockGenCell_7, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="1" Grid.Column="3">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="7"/>
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 2 -->
-                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_8">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel8">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                <Border Grid.Row="2" Grid.Column="0" Name="UIKeystreamBlockGenOuterCell_8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_8">
+                      <StackPanel Name="UIKeystreamBlockGenPanel8">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_8">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion8" Background="{ Binding ElementName=UIKeystreamBlockGenCell_8, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="0">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="8"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_9">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel9">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+
+                <Border Grid.Row="2" Grid.Column="1" Name="UIKeystreamBlockGenOuterCell_9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_9">
+                      <StackPanel Name="UIKeystreamBlockGenPanel9">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_9">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion9" Background="{ Binding ElementName=UIKeystreamBlockGenCell_9, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="1">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="163">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="9"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_10">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel10">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+
+                <Border Grid.Row="2" Grid.Column="2" Name="UIKeystreamBlockGenOuterCell_10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_10">
+                      <StackPanel Name="UIKeystreamBlockGenPanel10">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_10">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion10" Background="{ Binding ElementName=UIKeystreamBlockGenCell_10, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="2">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="156">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="10"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_11">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel11">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+
+                <Border Grid.Row="2" Grid.Column="3" Name="UIKeystreamBlockGenOuterCell_11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_11">
+                      <StackPanel Name="UIKeystreamBlockGenPanel11">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_11">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion11" Background="{ Binding ElementName=UIKeystreamBlockGenCell_11, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="2" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="2" Grid.Column="3">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="156">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="11"/>
                     </Canvas>
                   </Canvas>
                 </Border>
+
                 <!-- Row 3 -->
-                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_12">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel12">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                <Border Grid.Row="3" Grid.Column="0" Name="UIKeystreamBlockGenOuterCell_12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_12">
+                      <StackPanel Name="UIKeystreamBlockGenPanel12">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_12">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion12" Background="{ Binding ElementName=UIKeystreamBlockGenCell_12, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="0">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="156">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="12"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_13">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel13">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+
+                <Border Grid.Row="3" Grid.Column="1" Name="UIKeystreamBlockGenOuterCell_13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_13">
+                      <StackPanel Name="UIKeystreamBlockGenPanel13">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_13">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion13" Background="{ Binding ElementName=UIKeystreamBlockGenCell_13, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="1">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="156">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="13"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_14">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel14">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+
+                <Border Grid.Row="3" Grid.Column="2" Name="UIKeystreamBlockGenOuterCell_14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_14">
+                      <StackPanel Name="UIKeystreamBlockGenPanel14">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_14">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion14" Background="{ Binding ElementName=UIKeystreamBlockGenCell_14, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="2" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="2">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="156">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="14"/>
                     </Canvas>
                   </Canvas>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1" Name="UIKeystreamBlockGenOuterCell_15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}">
-                  <StackPanel VerticalAlignment="Center">
-                    <Border Name="UIKeystreamBlockGenCell_15">
-                      <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Vertical" Name="UIKeystreamBlockGenPanel15">
-                        <TextBox Style="{StaticResource hexCell}" HorizontalAlignment="Center" VerticalAlignment="Center" Name="UIKeystreamBlockGen15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+
+                <Border Grid.Row="3" Grid.Column="3" Name="UIKeystreamBlockGenOuterCell_15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}">
+                  <StackPanel>
+                    <Border Style="{StaticResource valueCell}" Name="UIKeystreamBlockGenCell_15">
+                      <StackPanel Name="UIKeystreamBlockGenPanel15">
+                        <TextBox Style="{StaticResource hexCell}" Name="UIKeystreamBlockGen15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <TextBox Style="{StaticResource addition}" Name="UIKeystreamBlockGenAddition15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <TextBox Style="{StaticResource additionResult}" Name="UIKeystreamBlockGenAdditionResult15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <TextBox Style="{StaticResource littleEndianResult}" Name="UIKeystreamBlockGenLittleEndian15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                      </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource diffusionValueCell}" Name="UIKeystreamBlockGenCellDiffusion_15">
+                      <StackPanel>
+                        <RichTextBox Style="{StaticResource diffusionValue}" Name="UIKeystreamBlockGenDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionDiffusion}" Name="UIKeystreamBlockGenAdditionDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource additionResultDiffusion}" Name="UIKeystreamBlockGenAdditionResultDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
+                        <RichTextBox Style="{StaticResource littleEndianResultDiffusion}" Name="UIKeystreamBlockGenLittleEndianDiffusion15" Background="{ Binding ElementName=UIKeystreamBlockGenCell_15, Path=Background}"/>
                       </StackPanel>
                     </Border>
                   </StackPanel>
                 </Border>
-                <Border Grid.Row="3" Grid.Column="3" BorderBrush="Black" BorderThickness="1,0,0,1">
+                <Border Grid.Row="3" Grid.Column="3">
                   <Canvas>
-                    <Canvas Canvas.Top="90" Canvas.Left="156">
+                    <Canvas Style="{StaticResource canvasStateIndex}">
                       <TextBox Style="{StaticResource stateIndex}" Text="15"/>
                     </Canvas>
                   </Canvas>
@@ -848,7 +1311,7 @@
               <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_3" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
                   <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14" >Quarterround(2, 6, 10, 14)</TextBox>
+                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(2, 6, 10, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                   <Button Height="18.75" Margin="2" Click="QR3_Start_Click" Content="Start"/>
@@ -920,36 +1383,69 @@
               <Viewbox Height="230">
                 <Viewbox.Resources>
                   <Style x:Key="hexQRCell" TargetType="TextBox" BasedOn="{ StaticResource hexCell }">
-                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="FontSize" Value="12"/>
+                  </Style>
+                  <Style x:Key="diffusionQRValue" TargetType="RichTextBox" BasedOn="{ StaticResource diffusionValue}">
+                    <Setter Property="Margin" Value="0,5,0,0"/>
+                    <Setter Property="FontSize" Value="11"/>
+                    <Setter Property="FontFamily" Value="Courier New" />
+                  </Style>
+                  <Style TargetType="StackPanel">
+                    <Setter Property="Orientation" Value="Vertical"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
                   </Style>
                 </Viewbox.Resources>
                 <Canvas Width="1500" Height="220" Grid.Row="1">
                   <Canvas>
                     <!-- Input cells -->
                     <Border Width="65" Height="40" Name="QRInACell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="0">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInADiffusion" Background="{ Binding ElementName=QRInACell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInBCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="60">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInBDiffusion" Background="{ Binding ElementName=QRInBCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInCCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="120">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInCDiffusion" Background="{ Binding ElementName=QRInCCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QRInDCell" BorderBrush="Black" BorderThickness="1" Canvas.Left="00" Canvas.Top="180">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QRInD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRInDDiffusion" Background="{ Binding ElementName=QRInDCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <!-- Output cells -->
                     <Border Width="65" Height="40" Name="QROutACell" Grid.Row="0" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="0">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QROutA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QROutA" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutADiffusion" Background="{ Binding ElementName=QROutACell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QROutBCell" Grid.Row="1" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="60">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QROutB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QROutB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutBDiffusion" Background="{ Binding ElementName=QROutBCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QROutCCell" Grid.Row="2" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="120">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QROutC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QROutC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutCDiffusion" Background="{ Binding ElementName=QROutCCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <Border Width="65" Height="40" Name="QROutDCell" Grid.Row="3" Grid.Column="10" BorderBrush="Black" BorderThickness="1" Canvas.Left="1435" Canvas.Top="180">
-                      <TextBox Style="{StaticResource hexQRCell}" Name="QROutD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                      <StackPanel>
+                        <TextBox Style="{StaticResource hexQRCell}" Name="QROutD" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QROutDDiffusion" Background="{ Binding ElementName=QROutDCell, Path=Background}"/>
+                      </StackPanel>
                     </Border>
                     <!-- General paths (unnamed) -->
                     <Path Stroke="Black" StrokeThickness="1" Data="M 0,20 h 1370"
@@ -1043,7 +1539,10 @@
                           <Canvas Grid.Row="1" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_1" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_1" Background="{ Binding ElementName=QRAddCell_1, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_1" Fill="White">
                               <Path.Data>
@@ -1055,7 +1554,10 @@
                           <Canvas Grid.Row="4" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_1" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_1" Background="{ Binding ElementName=QRXORCell_1, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_1, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_1">
@@ -1083,7 +1585,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="16" Foreground="{ Binding ElementName=QRShiftCircle_1, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_1" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_1" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_1" Background="{ Binding ElementName=QRShiftCell_1, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
@@ -1110,7 +1615,10 @@
                           <Canvas Grid.Row="3" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_2" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_2" Background="{ Binding ElementName=QRAddCell_2, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_2" Fill="White">
                               <Path.Data>
@@ -1123,7 +1631,10 @@
                           <Canvas Grid.Row="2" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_2" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_2" Background="{ Binding ElementName=QRXORCell_2, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="15" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_2">
@@ -1149,7 +1660,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="64" Text="12" Foreground="{ Binding ElementName=QRShiftCircle_2, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_2" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_2" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_2" Background="{ Binding ElementName=QRShiftCell_2, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
@@ -1176,7 +1690,10 @@
                           <Canvas Grid.Row="1" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_3" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_3" Background="{ Binding ElementName=QRAddCell_3, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_3" Fill="White">
                               <Path.Data>
@@ -1189,7 +1706,10 @@
                           <Canvas Grid.Row="4" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_3" Background="{ Binding ElementName=QRXORCell_3, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_3">
@@ -1217,7 +1737,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="8" Foreground="{ Binding ElementName=QRShiftCircle_3, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_3" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_3" Background="{ Binding ElementName=QRShiftCell_3, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>
@@ -1244,7 +1767,10 @@
                           <Canvas Grid.Row="3" Grid.Column="0">
                             <Rectangle Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRAddCell_4" Canvas.Top="10" Canvas.Left="40" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRAdd_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRAddDiffusion_4" Background="{ Binding ElementName=QRAddCell_4, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRAddCircle_4" Fill="White">
                               <Path.Data>
@@ -1257,7 +1783,10 @@
                           <Canvas Grid.Row="2" Grid.Column="1">
                             <Rectangle Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRXORCell_4" Canvas.Top="10" Canvas.Left="55" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_4" Background="{ Binding ElementName=QRXORCell_4, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                             <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="10" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_4, Path=Stroke}" Text="XOR"/>
                             <Path Stroke="Black" StrokeThickness="1" Name="QRXORCircle_4">
@@ -1283,7 +1812,10 @@
                             <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="7" Foreground="{ Binding ElementName=QRShiftCircle_4, Path=Stroke}"/>
                             <Rectangle Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" Fill="White"/>
                             <Border Name="QRShiftCell_4" Canvas.Top="10" Canvas.Left="75" Width="65" Height="40" BorderBrush="Black" BorderThickness="1">
-                              <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                              <StackPanel>
+                                <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_4" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_4" Background="{ Binding ElementName=QRShiftCell_4, Path=Background}"/>
+                              </StackPanel>
                             </Border>
                           </Canvas>
                         </Grid>

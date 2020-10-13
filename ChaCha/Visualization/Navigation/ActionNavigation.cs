@@ -246,6 +246,37 @@ namespace Cryptool.Plugins.ChaCha
         }
         #endregion
 
+        #region Generic API (FrameworkElement, Control, ...)
+        public void Show(params FrameworkElement[] elements)
+        {
+            foreach (FrameworkElement element in elements) element.Visibility = Visibility.Visible;
+        }
+        public void Collapse(params FrameworkElement[] elements)
+        {
+            foreach(FrameworkElement element in elements) element.Visibility = Visibility.Collapsed;
+        }
+        public void Hide(FrameworkElement element)
+        {
+            element.Visibility = Visibility.Hidden;
+        }
+        public void ResetMargin(params FrameworkElement[] tbs)
+        {
+            tbs[0].Margin = new Thickness(0);
+        }
+        public void SetFontSize(Control c, double size)
+        {
+            c.FontSize = size;
+        }
+
+        public void SetFontSize(double size, params Control[] cs)
+        {
+            foreach (Control c in cs)
+            {
+                SetFontSize(c, size);
+            }
+        }
+        #endregion
+
         #region TextBlock API
         public void RemoveLast(TextBlock tb)
         {
@@ -528,6 +559,14 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     Clear(tbox);
                 }
+                else if (b.Child is StackPanel sp)
+                {
+                    Clear(sp);
+                }
+                else
+                {
+                    Debug.Assert(false, "Child Clear Border not supported.");
+                }
             }
         }
 
@@ -616,6 +655,22 @@ namespace Cryptool.Plugins.ChaCha
             _Clear(rtb.Document.Blocks);
             Add(rtb, text);
         }
+
+        public void SetDocument(RichTextBox rtb, FlowDocument doc)
+        {
+            rtb.Document = doc;
+        }
+
+        public void SetDocumentAndShow(RichTextBox rtb, FlowDocument doc)
+        {
+            SetDocument(rtb, doc);
+            Show(rtb);
+        }
+        public void ClearAndCollapse(params RichTextBox[] rtbs)
+        {
+            Clear(rtbs);
+            Collapse(rtbs);
+        }
         #endregion
 
         #region TextBox API
@@ -636,6 +691,18 @@ namespace Cryptool.Plugins.ChaCha
                 tb.Text = "";
             }
         }
+
+        public void ClearAndCollapse(params TextBox[] tbs)
+        {
+            Clear(tbs);
+            Collapse(tbs);
+        }
+
+        public void ReplaceAndShow(TextBox tb, string text)
+        {
+            Replace(tb, text);
+            Show(tb);
+        }
         #endregion
 
         #region StackPanel API
@@ -648,15 +715,20 @@ namespace Cryptool.Plugins.ChaCha
             }
             Add(sp, tb);
         }
-
         public void Add(StackPanel sp, TextBox tb)
         {
             sp.Children.Add(tb);
         }
-
         public void RemoveLast(StackPanel sp)
         {
             sp.Children.RemoveAt(sp.Children.Count - 1);
+        }
+        public void Clear(StackPanel sp)
+        {
+            TextBox[] tbChilds = sp.Children.OfType<TextBox>().ToArray();
+            Clear(tbChilds);
+            RichTextBox[] rtbChilds = sp.Children.OfType<RichTextBox>().ToArray();
+            Clear(rtbChilds);
         }
         #endregion
     }

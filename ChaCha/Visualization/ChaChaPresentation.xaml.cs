@@ -13,10 +13,12 @@ namespace Cryptool.Plugins.ChaCha
     {
         private readonly IntermediateResultsManager<uint> uint_resultsManager;
         private readonly IntermediateResultsManager<uint[]> uint_array_resultsManager;
-        public ChaChaPresentation()
+        private readonly ChaCha _chacha;
+        public ChaChaPresentation(ChaCha chacha)
         {
             uint_resultsManager = new IntermediateResultsManager<uint>();
             uint_array_resultsManager = new IntermediateResultsManager<uint[]>();
+            _chacha = chacha;
             InitializeComponent();
             InitStaticVisualization();
             DataContext = this;
@@ -238,10 +240,15 @@ namespace Cryptool.Plugins.ChaCha
         {
             return uint_resultsManager.GetList(type).Size();
         }
-        public void ClearResults()
+        public void ClearAllResults()
         {
             uint_resultsManager.Clear();
             uint_array_resultsManager.Clear();
+        }
+        public void ClearDiffusionResults()
+        {
+            uint_resultsManager.ClearDiffusionResults();
+            uint_array_resultsManager.ClearDiffusionResults();
         }
         #endregion
 
