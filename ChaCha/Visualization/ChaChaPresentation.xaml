@@ -735,8 +735,8 @@
         <Grid Grid.Row="1">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.34*"/>
-            <ColumnDefinition Width="0.4*"/>
-            <ColumnDefinition Width="1.6*"/>
+            <ColumnDefinition Width="0.485*"/>
+            <ColumnDefinition Width="1.515*"/>
           </Grid.ColumnDefinitions>
           <Grid.RowDefinitions>
             <RowDefinition/>
@@ -1270,7 +1270,7 @@
           </Grid>
           <!-- Step indicator -->
           <Grid Grid.Column="1" Grid.Row="0" Margin="20,0,0,0">
-            <Grid Margin="0,0,0,40">
+            <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="0.75*"/>
                 <RowDefinition/>
@@ -1279,105 +1279,131 @@
                 <RowDefinition/>
                 <RowDefinition/>
               </Grid.RowDefinitions>
-              <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Margin="3" Height="18.75" Width="18.75" Click="PrevRound_Click" IsEnabled="{ Binding PrevRoundIsEnabled }">
-                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="&lt;"/>
-                </Button>
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center">Round:</TextBox>
-                <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Name="CurrentRound" Text="-"/>
-                <Button Margin="3" Height="18.75" Width="18.75" Click="NextRound_Click" IsEnabled="{ Binding NextRoundIsEnabled }">
-                  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="&gt;"/>
-                </Button>
+              <Grid.Resources>
+                <Style TargetType="TextBox">
+                  <Setter Property="FontSize" Value="18"/>
+                  <Setter Property="IsReadOnly" Value="True"/>
+                  <Setter Property="BorderThickness" Value="0"/>
+                  <Setter Property="HorizontalAlignment" Value="Center"/>
+                  <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="TextBlock">
+                  <Setter Property="FontSize" Value="18"/>
+                  <Setter Property="HorizontalAlignment" Value="Center"/>
+                  <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style x:Key="roundButton" TargetType="Button">
+                  <Setter Property="Height" Value="26"/>
+                  <Setter Property="FontSize" Value="16"/>
+                  <Setter Property="Width" Value="22"/>
+                  <Setter Property="Margin" Value="3"/>
+                </Style>
+                <Style x:Key="qrButton" TargetType="Button">
+                  <Setter Property="Height" Value="24"/>
+                  <Setter Property="FontSize" Value="16"/>
+                  <Setter Property="Width" Value="40"/>
+                  <Setter Property="Margin" Value="2"></Setter>
+                  <Setter Property="FontStyle" Value="Italic"/>
+                </Style> 
+                <Style TargetType="StackPanel">
+                  <Setter Property="HorizontalAlignment" Value="Center"/>
+                  <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style x:Key="ArrowQRHead" TargetType="TextBox">
+                  <Setter Property="FontSize" Value="18"/>
+                  <Setter Property="Text" Value="&#x2bc8;"/>
+                  <Setter Property="Visibility" Value="Hidden"/>
+                  <Setter Property="IsReadOnly" Value="True"/>
+                  <Setter Property="BorderThickness" Value="0"/>
+                </Style> 
+              </Grid.Resources>
+              <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Style="{StaticResource roundButton}" Click="PrevRound_Click" IsEnabled="{ Binding PrevRoundIsEnabled }" Content="&#x1f860;"/>
+                <TextBox>Round:</TextBox>
+                <TextBox Name="CurrentRound" Text="-"/>
+                <Button Style="{StaticResource roundButton}" Click="NextRound_Click" IsEnabled="{ Binding NextRoundIsEnabled }" Content="&#x1f862;"/>
               </StackPanel>
-              <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_1" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_1">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_1" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(0, 4, 8, 12)</TextBox>
+                  <TextBox Name="ArrowQRRound_1" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR1_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR1_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR1_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR1_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_2" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_2">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_2" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(1, 5, 9, 13)</TextBox>
+                  <TextBox Name="ArrowQRRound_2" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR2_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR2_End_Click" Content="End"/>
+                <StackPanel Orientation="Horizontal" >
+                  <Button Style="{StaticResource qrButton}" Click="QR2_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR2_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_3" HorizontalAlignment="Center" VerticalAlignment="Center">
+              <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_3">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_3" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(2, 6, 10, 14)</TextBox>
+                  <TextBox Name="ArrowQRRound_3" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR3_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR3_End_Click" Content="End"/>
-                </StackPanel>
-              </StackPanel>
-              <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_4" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_4" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(3, 7, 11, 15)</TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR4_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR4_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR3_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR3_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+              <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_4">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_5" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(0, 5, 10, 15)</TextBox>
+                  <TextBox Name="ArrowQRRound_4" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR5_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR5_End_Click" Content="End"/>
-                </StackPanel>
-              </StackPanel>
-              <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_6" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_6" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(1, 6, 11, 12)</TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR6_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR6_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR4_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR4_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_7" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+              <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_5" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_7" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(2, 7, 8, 13)</TextBox>
+                  <TextBox Name="ArrowQRRound_5" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR7_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR7_End_Click" Content="End"/>
-                </StackPanel>
-              </StackPanel>
-              <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_8" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
                 <StackPanel Orientation="Horizontal">
-                  <TextBox Name="ArrowQRRound_8" Visibility="Hidden" Text="&#x1f81e;"/>
-                  <TextBox Style="{ StaticResource text }" FontSize="14">Quarterround(3, 4, 9, 14)</TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Height="18.75" Margin="2" Click="QR8_Start_Click" Content="Start"/>
-                  <Button Height="18.75" Margin="2" Click="QR8_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR5_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR5_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="5" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-                <StackPanel.Resources>
-                  <Style TargetType="TextBox">
-                    <Setter Property="TextWrapping" Value="Wrap"/>
-                    <Setter Property="FontSize" Value="18"/>
-                    <Setter Property="IsReadOnly" Value="True"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                  </Style>
-                </StackPanel.Resources>
+              <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_6" Visibility="Hidden">
+                <StackPanel Orientation="Horizontal">
+                  <TextBox Name="ArrowQRRound_6" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <Button Style="{StaticResource qrButton}" Click="QR6_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR6_End_Click" Content="End"/>
+                </StackPanel>
+              </StackPanel>
+              <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_7" Visibility="Hidden">
+                <StackPanel Orientation="Horizontal">
+                  <TextBox Name="ArrowQRRound_7" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <Button Style="{StaticResource qrButton}" Click="QR7_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR7_End_Click" Content="End"/>
+                </StackPanel>
+              </StackPanel>
+              <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_8" Visibility="Hidden">
+                <StackPanel Orientation="Horizontal">
+                  <TextBox Name="ArrowQRRound_8" Style="{StaticResource ArrowQRHead}"/>
+                  <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                  <Button Style="{StaticResource qrButton}" Click="QR8_Start_Click" Content="Start"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR8_End_Click" Content="End"/>
+                </StackPanel>
+              </StackPanel>
+              <StackPanel Grid.Row="5" Orientation="Vertical" Visibility="Visible">
                 <StackPanel Orientation="Horizontal">
                   <TextBox Text="Flipped bits:"/>
                   <TextBox Text="{ Binding DiffusionFlippedBitsAbsolute }"/>
