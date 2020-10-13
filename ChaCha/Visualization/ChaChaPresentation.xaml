@@ -175,7 +175,7 @@
                         <Paragraph>Key</Paragraph>
                       </ListItem>
                       <ListItem>
-                        <Paragraph>Counter</Paragraph>
+                        <Paragraph>Keystream block counter</Paragraph>
                       </ListItem>
                       <ListItem>
                         <Paragraph>Initialization vector</Paragraph>
