@@ -142,10 +142,9 @@ namespace Cryptool.Plugins.ChaCha
                     if (pres.DiffusionActive)
                     {
                         uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
-                        uint[] normalStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
-                            InsertDiffusionStateValue(x, diffusionStateEntries[x], normalStateEntries[x]);
+                            InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
                         }
                     }
                     
