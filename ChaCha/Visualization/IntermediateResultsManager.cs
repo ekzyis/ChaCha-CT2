@@ -214,7 +214,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (IntermediateResultsList r in _intermediateResultsList)
             {
-                if(r.Type.Name.EndsWith("DIFFUSION")) r.Clear();
+                if(r.Type.Name.EndsWith("DIFFUSION") || r.Type.Name == "CHACHA_HASH_FLIPPED_BITS") r.Clear();
             }
         }
         public void AddResult(ResultType<T> type, T result)
