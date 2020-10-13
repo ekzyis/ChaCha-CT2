@@ -995,8 +995,41 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QROutB, qrOutB);
                 pres.Nav.Replace(pres.QROutC, qrOutC);
                 pres.Nav.Replace(pres.QROutD, qrOutD);
+                if (pres.DiffusionActive)
+                {
+                    string qrInADiffusion = pres.GetHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
+                    string qrInBDiffusion = pres.GetHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
+                    string qrInCDiffusion = pres.GetHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
+                    string qrInDDiffusion = pres.GetHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
+                    string[,] qrDetailValuesDiffusion = new string[4, 3];
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        qrDetailValuesDiffusion[i, 0] = pres.GetHexResult(ResultType.QR_ADD_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 1] = pres.GetHexResult(ResultType.QR_XOR_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT_DIFFUSION, i + (qrIndex - 1) * 4);
+                    }
+                    string qrOutADiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_A_DIFFUSION, qrIndex - 1);
+                    string qrOutBDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_B_DIFFUSION, qrIndex - 1);
+                    string qrOutCDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_C_DIFFUSION, qrIndex - 1);
+                    string qrOutDDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_D_DIFFUSION, qrIndex - 1);
+                    InsertDiffusionValue(pres.QRInADiffusion, qrInADiffusion, qrInA);
+                    InsertDiffusionValue(pres.QRInBDiffusion, qrInBDiffusion, qrInB);
+                    InsertDiffusionValue(pres.QRInCDiffusion, qrInCDiffusion, qrInC);
+                    InsertDiffusionValue(pres.QRInDDiffusion, qrInDDiffusion, qrInD);
+                    for (int i = 1; i <= 4; ++i)
+                    {
+                        InsertDiffusionValue((RichTextBox)GetIndexElement("QRAddDiffusion", i), qrDetailValuesDiffusion[i - 1, 0], qrDetailValues[i - 1, 0]);
+                        InsertDiffusionValue((RichTextBox)GetIndexElement("QRXORDiffusion", i), qrDetailValuesDiffusion[i - 1, 1], qrDetailValues[i - 1, 1]);
+                        InsertDiffusionValue((RichTextBox)GetIndexElement("QRShiftDiffusion", i), qrDetailValuesDiffusion[i - 1, 2], qrDetailValues[i - 1, 2]);
+                    }
+                    InsertDiffusionValue(pres.QROutADiffusion, qrOutADiffusion, qrOutA);
+                    InsertDiffusionValue(pres.QROutBDiffusion, qrOutBDiffusion, qrOutB);
+                    InsertDiffusionValue(pres.QROutCDiffusion, qrOutCDiffusion, qrOutC);
+                    InsertDiffusionValue(pres.QROutDDiffusion, qrOutDDiffusion, qrOutD);
+                }
             });
         }
+
         private PageAction[] QROutputActions()
         {
             return pres.Nav.CopyActions(
