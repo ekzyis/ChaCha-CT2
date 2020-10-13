@@ -216,6 +216,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             uint_resultsManager.AddResult(type, result);
         }
+        public uint GetResult(ResultType<uint> type, int index)
+        {
+            return uint_resultsManager.Get(type, index);
+        }
         public string GetHexResult(ResultType<uint> type, int index)
         {
             return HexString(uint_resultsManager.Get(type, index));

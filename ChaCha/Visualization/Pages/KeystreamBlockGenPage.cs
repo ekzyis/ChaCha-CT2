@@ -56,6 +56,11 @@ namespace Cryptool.Plugins.ChaCha
             {
                 InitDiffusionResults();
                 AddOriginalDiffusionToState();
+                UpdateDiffusionOriginalStateFlippedBitsCount();
+            }
+            else
+            {
+                HideDiffusionFlipBitsStats();
             }
 
             AssertInitialState();
@@ -113,6 +118,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(qrOutputActions);
                 PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
                 updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
+                updateStateAfterQR[1].Add(UpdateDiffusionQRFlippedBitsCountAction(qrIndex));
                 AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
                 {
@@ -145,6 +151,15 @@ namespace Cryptool.Plugins.ChaCha
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
                             InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
+                        }
+
+                        if (qrIndex == 1)
+                        {
+                            UpdateDiffusionOriginalStateFlippedBitsCount();
+                        }
+                        else
+                        {
+                            UpdateDiffusionQRFlippedBitsCount(qrIndex - 1);
                         }
                     }
                     
@@ -425,6 +440,7 @@ namespace Cryptool.Plugins.ChaCha
                 ShowAdditionResult();
                 ReplaceState(previousState);
             }, ACTIONLABEL_ADDITION);
+            addStates.Add(UpdateDiffusionAddOriginalStateFlippedBitsCountAction());
             return new PageAction[] { updateDescription, showOriginalState, addStates };
         }
         private PageAction[] ConvertStateEntriesToLittleEndian()
@@ -457,6 +473,7 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceState(previousState);
                 ShowStateLittleEndianTransformResult();
             }, ACTIONLABEL_LITTLE_ENDIAN);
+            convert.Add(UpdateDiffusionLittleEndianStateFlippedBitsCountAction());
             return new PageAction[] { updateDescription, showResult, convert };
         }
         #endregion
@@ -572,6 +589,88 @@ namespace Cryptool.Plugins.ChaCha
                 }
             });
         }
+
+        private void UpdateDiffusionQRFlippedBitsCount(int qrIndex)
+        {
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_QR, qrIndex - 1);
+        }
+        private PageAction UpdateDiffusionQRFlippedBitsCountAction(int qrIndex)
+        {
+            return new PageAction(() =>
+            {
+
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionQRFlippedBitsCount(qrIndex);
+                }
+            }, () =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    if (qrIndex > 1) UpdateDiffusionQRFlippedBitsCount(qrIndex - 1);
+                    else UpdateDiffusionOriginalStateFlippedBitsCount();
+                }
+            });
+        }
+
+        private void HideDiffusionFlipBitsStats()
+        {
+            pres.DiffusionFlippedBitsAbsolute = 0;
+            pres.Nav.Collapse(pres.FlipBitsStatistic);
+        }
+
+        private void UpdateDiffusionOriginalStateFlippedBitsCount()
+        { 
+            pres.Nav.Show(pres.FlipBitsStatistic);
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_ORIGINAL_STATE, (int)keyBlockNr - 1);
+        }
+
+        private void UpdateDiffusionAddOriginalStateFlippedBitsCount()
+        {
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_ADD_ORIGINAL_STATE, (int) keyBlockNr - 1);
+        }
+        private PageAction UpdateDiffusionAddOriginalStateFlippedBitsCountAction()
+        {
+            return new PageAction(() =>
+            {
+
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionAddOriginalStateFlippedBitsCount();
+                }
+            }, () =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionOriginalStateFlippedBitsCount();
+                }
+            });
+        }
+
+        private void UpdateDiffusionLittleEndianStateFlippedBitsCount()
+        {
+            pres.DiffusionFlippedBitsAbsolute =
+                GetMappedResult(ResultType.FLIPPED_BITS_LITTLEENDIAN_STATE, (int) keyBlockNr - 1);
+        }
+
+        private PageAction UpdateDiffusionLittleEndianStateFlippedBitsCountAction()
+        {
+            return new PageAction(() =>
+            {
+
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionLittleEndianStateFlippedBitsCount();
+                }
+            }, () =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionAddOriginalStateFlippedBitsCount();
+                }
+            });
+        }
+
         private void UpdateDiffusionState(int qrIndex)
         {
             uint[] newDiffusionState;
@@ -907,8 +1006,41 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QROutB, qrOutB);
                 pres.Nav.Replace(pres.QROutC, qrOutC);
                 pres.Nav.Replace(pres.QROutD, qrOutD);
+                if (pres.DiffusionActive)
+                {
+                    string qrInADiffusion = pres.GetHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
+                    string qrInBDiffusion = pres.GetHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
+                    string qrInCDiffusion = pres.GetHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
+                    string qrInDDiffusion = pres.GetHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
+                    string[,] qrDetailValuesDiffusion = new string[4, 3];
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        qrDetailValuesDiffusion[i, 0] = pres.GetHexResult(ResultType.QR_ADD_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 1] = pres.GetHexResult(ResultType.QR_XOR_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT_DIFFUSION, i + (qrIndex - 1) * 4);
+                    }
+                    string qrOutADiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_A_DIFFUSION, qrIndex - 1);
+                    string qrOutBDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_B_DIFFUSION, qrIndex - 1);
+                    string qrOutCDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_C_DIFFUSION, qrIndex - 1);
+                    string qrOutDDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_D_DIFFUSION, qrIndex - 1);
+                    InsertDiffusionValue(pres.QRInADiffusion, qrInADiffusion, qrInA);
+                    InsertDiffusionValue(pres.QRInBDiffusion, qrInBDiffusion, qrInB);
+                    InsertDiffusionValue(pres.QRInCDiffusion, qrInCDiffusion, qrInC);
+                    InsertDiffusionValue(pres.QRInDDiffusion, qrInDDiffusion, qrInD);
+                    for (int i = 1; i <= 4; ++i)
+                    {
+                        InsertDiffusionValue((RichTextBox)GetIndexElement("QRAddDiffusion", i), qrDetailValuesDiffusion[i - 1, 0], qrDetailValues[i - 1, 0]);
+                        InsertDiffusionValue((RichTextBox)GetIndexElement("QRXORDiffusion", i), qrDetailValuesDiffusion[i - 1, 1], qrDetailValues[i - 1, 1]);
+                        InsertDiffusionValue((RichTextBox)GetIndexElement("QRShiftDiffusion", i), qrDetailValuesDiffusion[i - 1, 2], qrDetailValues[i - 1, 2]);
+                    }
+                    InsertDiffusionValue(pres.QROutADiffusion, qrOutADiffusion, qrOutA);
+                    InsertDiffusionValue(pres.QROutBDiffusion, qrOutBDiffusion, qrOutB);
+                    InsertDiffusionValue(pres.QROutCDiffusion, qrOutCDiffusion, qrOutC);
+                    InsertDiffusionValue(pres.QROutDDiffusion, qrOutDDiffusion, qrOutD);
+                }
             });
         }
+
         private PageAction[] QROutputActions()
         {
             return pres.Nav.CopyActions(
@@ -1272,6 +1404,12 @@ namespace Cryptool.Plugins.ChaCha
             string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
             switch (name)
             {
+                case "FLIPPED_BITS_ORIGINAL_STATE":
+                case "FLIPPED_BITS_ADD_ORIGINAL_STATE":
+                case "FLIPPED_BITS_LITTLEENDIAN_STATE":
+                    // only executed once per keystream block generation thus no offset.
+                    offset = 0;
+                    break;
                 case "QR_INPUT_A":
                 case "QR_INPUT_B":
                 case "QR_INPUT_C":
@@ -1280,6 +1418,7 @@ namespace Cryptool.Plugins.ChaCha
                 case "QR_OUTPUT_B":
                 case "QR_OUTPUT_C":
                 case "QR_OUTPUT_D":
+                case "FLIPPED_BITS_QR":
                     // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
                     offset = pres.Rounds * 4;
                     break;
@@ -1296,6 +1435,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             int mapIndex = MapIndex(resultType, index);
             return pres.GetResult(resultType, mapIndex);
+        }
+
+        private uint GetMappedResult(ResultType<uint> resultType, int index)
+        {
+            return pres.GetResult(resultType, MapIndex(resultType, index));
         }
         private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
         {
