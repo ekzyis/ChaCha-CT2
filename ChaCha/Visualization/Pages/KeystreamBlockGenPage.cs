@@ -58,6 +58,10 @@ namespace Cryptool.Plugins.ChaCha
                 AddOriginalDiffusionToState();
                 UpdateDiffusionOriginalStateFlippedBitsCount();
             }
+            else
+            {
+                HideDiffusionFlipBitsStats();
+            }
 
             AssertInitialState();
             pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
@@ -609,8 +613,15 @@ namespace Cryptool.Plugins.ChaCha
             });
         }
 
-        private void UpdateDiffusionOriginalStateFlippedBitsCount()
+        private void HideDiffusionFlipBitsStats()
         {
+            pres.DiffusionFlippedBitsAbsolute = 0;
+            pres.Nav.Collapse(pres.FlipBitsStatistic);
+        }
+
+        private void UpdateDiffusionOriginalStateFlippedBitsCount()
+        { 
+            pres.Nav.Show(pres.FlipBitsStatistic);
             pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_ORIGINAL_STATE, (int)keyBlockNr - 1);
         }
 

@@ -1403,7 +1403,7 @@
                   <Button Style="{StaticResource qrButton}" Click="QR8_End_Click" Content="End"/>
                 </StackPanel>
               </StackPanel>
-              <StackPanel Grid.Row="5" Orientation="Vertical" Visibility="Visible">
+              <StackPanel Grid.Row="5" Orientation="Vertical" Name="FlipBitsStatistic" Visibility="Collapsed">
                 <StackPanel Orientation="Horizontal">
                   <TextBox Text="Flipped bits:"/>
                   <TextBox Text="{ Binding DiffusionFlippedBitsAbsolute }"/>
