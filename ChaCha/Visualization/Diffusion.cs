@@ -179,7 +179,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public double DiffusionFlippedBitsRelative => (double) _diffusionFlippedBitsAbsolute / (16 * 32);
+        public double DiffusionFlippedBitsRelative => (double) _diffusionFlippedBitsAbsolute / (16 * 32) * 100;
 
         private bool _showDiffusion = false;
         public bool ShowDiffusion
