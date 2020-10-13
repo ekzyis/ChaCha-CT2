@@ -398,29 +398,29 @@ namespace Cryptool.Plugins.ChaCha
                 state = QuarterroundState(state, 0, 4, 8, 12);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 // state is the diffusion state because we are in diffusion mode and thus currently calculating the diffusion state
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8);
                 state = QuarterroundState(state, 1, 5, 9, 13);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 1);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 1);
                 state = QuarterroundState(state, 2, 6, 10, 14);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 2);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 2);
                 state = QuarterroundState(state, 3, 7, 11, 15);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 3);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 3);
                 // diagonal round
                 state = QuarterroundState(state, 0, 5, 10, 15);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 4);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 4);
                 state = QuarterroundState(state, 1, 6, 11, 12);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 5);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 5);
                 state = QuarterroundState(state, 2, 7, 8, 13);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 6);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 6);
                 state = QuarterroundState(state, 3, 4, 9, 14);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchFlippedBitsResult(state, i*8 + 7);
+                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 7);
             }
             // add the original state
             for (int i = 0; i < state.Length; ++i)
@@ -548,11 +548,11 @@ namespace Cryptool.Plugins.ChaCha
             return (uint[])Presentation.Dispatcher.Invoke(getResult, null);
 
         }
-        private void DispatchFlippedBitsResult(uint[] diffusionState, int index)
+        private void DispatchQRFlippedBitsResult(uint[] diffusionState, int index)
         {
             uint[] normalState = GetResult(ResultType.CHACHA_HASH_QUARTERROUND, index);
             uint flippedBitsCount = Diffusion.CalculateFlippedBits(normalState, diffusionState);
-            DispatchResult(ResultType.CHACHA_HASH_FLIPPED_BITS, flippedBitsCount);
+            DispatchResult(ResultType.FLIPPED_BITS_QR, flippedBitsCount);
         }
         private void DispatchDiffusionResult(ResultType<uint> type, uint result)
         {

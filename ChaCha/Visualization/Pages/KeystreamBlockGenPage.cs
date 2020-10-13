@@ -578,7 +578,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void UpdateDiffusionFlippedBitsCount(int qrIndex)
         {
-            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.CHACHA_HASH_FLIPPED_BITS, qrIndex - 1);
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_QR, qrIndex - 1);
         }
         private PageAction UpdateDiffusionFlippedBitsCountAction(int qrIndex)
         {
@@ -1306,7 +1306,7 @@ namespace Cryptool.Plugins.ChaCha
                 case "QR_OUTPUT_B":
                 case "QR_OUTPUT_C":
                 case "QR_OUTPUT_D":
-                case "CHACHA_HASH_FLIPPED_BITS":
+                case "FLIPPED_BITS_QR":
                     // executed once per quarterround and each round has four quarterrounds thus offset is ROUNDS * 4
                     offset = pres.Rounds * 4;
                     break;
