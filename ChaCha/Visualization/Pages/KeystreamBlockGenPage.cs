@@ -56,6 +56,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 InitDiffusionResults();
                 AddOriginalDiffusionToState();
+                UpdateDiffusionOriginalStateFlippedBitsCount();
             }
 
             AssertInitialState();
@@ -113,7 +114,7 @@ namespace Cryptool.Plugins.ChaCha
                 AddAction(qrOutputActions);
                 PageAction[] updateStateAfterQR = ReplaceStateEntriesWithQROutput(qrIndex);
                 updateStateAfterQR[1].Add(UpdateDiffusionStateAction(qrIndex));
-                updateStateAfterQR[1].Add(UpdateDiffusionFlippedBitsCountAction(qrIndex));
+                updateStateAfterQR[1].Add(UpdateDiffusionQRFlippedBitsCountAction(qrIndex));
                 AddAction(updateStateAfterQR);
                 if (qrIndex != pres.Rounds * 4)
                 {
@@ -147,8 +148,7 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
                         }
-
-                        UpdateDiffusionFlippedBitsCount(qrIndex);
+                        UpdateDiffusionQRFlippedBitsCount(qrIndex);
                     }
                     
                     // highlight corresponding state entries which will be copied into QR detail in next action
@@ -428,6 +428,7 @@ namespace Cryptool.Plugins.ChaCha
                 ShowAdditionResult();
                 ReplaceState(previousState);
             }, ACTIONLABEL_ADDITION);
+            addStates.Add(UpdateDiffusionAddOriginalStateFlippedBitsCountAction());
             return new PageAction[] { updateDescription, showOriginalState, addStates };
         }
         private PageAction[] ConvertStateEntriesToLittleEndian()
@@ -460,6 +461,7 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceState(previousState);
                 ShowStateLittleEndianTransformResult();
             }, ACTIONLABEL_LITTLE_ENDIAN);
+            convert.Add(UpdateDiffusionLittleEndianStateFlippedBitsCountAction());
             return new PageAction[] { updateDescription, showResult, convert };
         }
         #endregion
@@ -576,28 +578,80 @@ namespace Cryptool.Plugins.ChaCha
             });
         }
 
-        private void UpdateDiffusionFlippedBitsCount(int qrIndex)
+        private void UpdateDiffusionQRFlippedBitsCount(int qrIndex)
         {
             pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_QR, qrIndex - 1);
         }
-        private PageAction UpdateDiffusionFlippedBitsCountAction(int qrIndex)
+        private PageAction UpdateDiffusionQRFlippedBitsCountAction(int qrIndex)
         {
             return new PageAction(() =>
             {
 
                 if (pres.DiffusionActive)
                 {
-                    UpdateDiffusionFlippedBitsCount(qrIndex);
+                    UpdateDiffusionQRFlippedBitsCount(qrIndex);
                 }
             }, () =>
             {
                 if (pres.DiffusionActive)
                 {
-                    if (qrIndex > 1) UpdateDiffusionFlippedBitsCount(qrIndex - 1);
-                    else pres.DiffusionFlippedBitsAbsolute = 0;
+                    if (qrIndex > 1) UpdateDiffusionQRFlippedBitsCount(qrIndex - 1);
+                    else UpdateDiffusionOriginalStateFlippedBitsCount();
                 }
             });
         }
+
+        private void UpdateDiffusionOriginalStateFlippedBitsCount()
+        {
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_ORIGINAL_STATE, (int)keyBlockNr - 1);
+        }
+
+        private void UpdateDiffusionAddOriginalStateFlippedBitsCount()
+        {
+            pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_ADD_ORIGINAL_STATE, (int) keyBlockNr - 1);
+        }
+        private PageAction UpdateDiffusionAddOriginalStateFlippedBitsCountAction()
+        {
+            return new PageAction(() =>
+            {
+
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionAddOriginalStateFlippedBitsCount();
+                }
+            }, () =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionOriginalStateFlippedBitsCount();
+                }
+            });
+        }
+
+        private void UpdateDiffusionLittleEndianStateFlippedBitsCount()
+        {
+            pres.DiffusionFlippedBitsAbsolute =
+                GetMappedResult(ResultType.FLIPPED_BITS_LITTLEENDIAN_STATE, (int) keyBlockNr - 1);
+        }
+
+        private PageAction UpdateDiffusionLittleEndianStateFlippedBitsCountAction()
+        {
+            return new PageAction(() =>
+            {
+
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionLittleEndianStateFlippedBitsCount();
+                }
+            }, () =>
+            {
+                if (pres.DiffusionActive)
+                {
+                    UpdateDiffusionAddOriginalStateFlippedBitsCount();
+                }
+            });
+        }
+
         private void UpdateDiffusionState(int qrIndex)
         {
             uint[] newDiffusionState;
@@ -1298,6 +1352,12 @@ namespace Cryptool.Plugins.ChaCha
             string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
             switch (name)
             {
+                case "FLIPPED_BITS_ORIGINAL_STATE":
+                case "FLIPPED_BITS_ADD_ORIGINAL_STATE":
+                case "FLIPPED_BITS_LITTLEENDIAN_STATE":
+                    // only executed once per keystream block generation thus no offset.
+                    offset = 0;
+                    break;
                 case "QR_INPUT_A":
                 case "QR_INPUT_B":
                 case "QR_INPUT_C":

@@ -52,6 +52,9 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint[]> CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION = new ResultType<uint[]>("CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION");
 
         public static readonly ResultType<uint> FLIPPED_BITS_QR = new ResultType<uint>("FLIPPED_BITS_QR");
+        public static readonly ResultType<uint> FLIPPED_BITS_ORIGINAL_STATE = new ResultType<uint>("FLIPPED_BITS_ORIGINAL_STATE");
+        public static readonly ResultType<uint> FLIPPED_BITS_ADD_ORIGINAL_STATE = new ResultType<uint>("FLIPPED_BITS_ADD_ORIGINAL_STATE");
+        public static readonly ResultType<uint> FLIPPED_BITS_LITTLEENDIAN_STATE = new ResultType<uint>("FLIPPED_BITS_LITTLEENDIAN_STATE");
         public static ResultType<uint> GetDiffusionResultType(ResultType<uint> resultType)
         {
             if (resultType == QR_INPUT_A)
@@ -122,9 +125,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 return QR_XOR_DIFFUSION;
             }
-            else if (resultType == FLIPPED_BITS_QR)
+            else if (resultType.Name.StartsWith("FLIPPED_BITS"))
             {
-                return FLIPPED_BITS_QR;
+                return resultType;
             }
             throw new InvalidOperationException($"No matching diffusion ResultType<uint> found for type {resultType.Name}.");
         }
@@ -214,7 +217,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             foreach (IntermediateResultsList r in _intermediateResultsList)
             {
-                if(r.Type.Name.EndsWith("DIFFUSION") || r.Type.Name == ResultType.FLIPPED_BITS_QR.Name) r.Clear();
+                if(r.Type.Name.EndsWith("DIFFUSION") || r.Type.Name.StartsWith("FLIPPED_BITS")) r.Clear();
             }
         }
         public void AddResult(ResultType<T> type, T result)

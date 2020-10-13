@@ -251,6 +251,8 @@ namespace Cryptool.Plugins.ChaCha
             _diffusionKey = diffusionKey;
             Debug.Assert(diffusionKey.Length == InputKey.Length, $"Diffusion key length ({diffusionKey.Length}) does not match input key length ({InputKey.Length})");
             ExecuteChaCha();
+            _dispatchAddedStateFlippedBitsResult = 0;
+            _dispatchLittleEndianStateFlippedBitsResult = 0;
             _diffusionKey = null;
             _diffusion = false;
         }
@@ -367,6 +369,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             uint[] state = (uint[])(initialState.Clone());
             SetCounterToState(state, n);
+            if(_diffusion) DispatchOriginalStateFlippedBitsResult(state, n - INITIAL_COUNTER);
             // hash state block
             uint[] hash = ChaChaHash(state);
             // convert the hashed uint state array into an array of bytes
@@ -428,6 +431,7 @@ namespace Cryptool.Plugins.ChaCha
                 state[i] += originalState[i];
             }
             DispatchResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (uint[])state.Clone());
+            if (_diffusion) DispatchAddedStateFlippedBitsResult(state);
             // each 4 byte chunk as little-endian
             for (int i = 0; i < state.Length; ++i)
             {
@@ -436,6 +440,7 @@ namespace Cryptool.Plugins.ChaCha
                 state[i] = ToUInt32(b, 0);
             }
             DispatchResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (uint[])state.Clone());
+            if (_diffusion) DispatchLittleEndianStateFlippedBitsResult(state);
             return state;
         }
 
@@ -548,12 +553,49 @@ namespace Cryptool.Plugins.ChaCha
             return (uint[])Presentation.Dispatcher.Invoke(getResult, null);
 
         }
+
         private void DispatchQRFlippedBitsResult(uint[] diffusionState, int index)
         {
             uint[] normalState = GetResult(ResultType.CHACHA_HASH_QUARTERROUND, index);
             uint flippedBitsCount = Diffusion.CalculateFlippedBits(normalState, diffusionState);
             DispatchResult(ResultType.FLIPPED_BITS_QR, flippedBitsCount);
         }
+
+        private void DispatchOriginalStateFlippedBitsResult(uint[] originalDiffusionState, ulong keystreamBlock)
+        {
+            // TODO ChaCha supports a 64-bit counter but IntermediateResultsManager uses only a 32-bit integer for indexing.
+            //   => This will most likely break for long messages!
+            uint[] normalOriginalState = GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keystreamBlock);
+            uint flippedBitsCount = Diffusion.CalculateFlippedBits(normalOriginalState, originalDiffusionState);
+            DispatchResult(ResultType.FLIPPED_BITS_ORIGINAL_STATE, flippedBitsCount);
+        }
+
+        private void DispatchAddedStateFlippedBitsResult(uint[] addedDiffusionState, ulong keystreamBlock)
+        {
+            uint[] addedNormalState = GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keystreamBlock);
+            uint flippedBitsCount = Diffusion.CalculateFlippedBits(addedNormalState, addedDiffusionState);
+            DispatchResult(ResultType.FLIPPED_BITS_ADD_ORIGINAL_STATE, flippedBitsCount);
+        }
+        private ulong _dispatchAddedStateFlippedBitsResult = 0;
+        private void DispatchAddedStateFlippedBitsResult(uint[] originalDiffusionState)
+        {
+            DispatchAddedStateFlippedBitsResult(originalDiffusionState, _dispatchAddedStateFlippedBitsResult);
+            _dispatchAddedStateFlippedBitsResult++;
+        }
+
+        private void DispatchLittleEndianStateFlippedBitsResult(uint[] littleEndianDiffusionState, ulong keystreamBlock)
+        {
+            uint[] littleEndianNormalState = GetResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keystreamBlock);
+            uint flippedBitsCount = Diffusion.CalculateFlippedBits(littleEndianNormalState, littleEndianDiffusionState);
+            DispatchResult(ResultType.FLIPPED_BITS_LITTLEENDIAN_STATE, flippedBitsCount);
+        }
+        private ulong _dispatchLittleEndianStateFlippedBitsResult = 0;
+        private void DispatchLittleEndianStateFlippedBitsResult(uint[] originalDiffusionState)
+        {
+            DispatchLittleEndianStateFlippedBitsResult(originalDiffusionState, _dispatchLittleEndianStateFlippedBitsResult);
+            _dispatchLittleEndianStateFlippedBitsResult++;
+        }
+
         private void DispatchDiffusionResult(ResultType<uint> type, uint result)
         {
             ResultType<uint> diffusionResultType = ResultType.GetDiffusionResultType(type);
