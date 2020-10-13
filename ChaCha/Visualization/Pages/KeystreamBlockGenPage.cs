@@ -148,7 +148,15 @@ namespace Cryptool.Plugins.ChaCha
                         {
                             InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
                         }
-                        UpdateDiffusionQRFlippedBitsCount(qrIndex);
+
+                        if (qrIndex == 1)
+                        {
+                            UpdateDiffusionOriginalStateFlippedBitsCount();
+                        }
+                        else
+                        {
+                            UpdateDiffusionQRFlippedBitsCount(qrIndex - 1);
+                        }
                     }
                     
                     // highlight corresponding state entries which will be copied into QR detail in next action
