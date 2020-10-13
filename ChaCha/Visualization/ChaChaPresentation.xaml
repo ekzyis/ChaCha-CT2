@@ -268,7 +268,7 @@
               </TableRowGroup>
               <TableRowGroup>
                 <TableRow>
-                  <TableCell>
+                  <TableCell ColumnSpan="2">
                     <Paragraph>
                       Applying the ChaCha hash function to the 512 bit state would then return a keystream block.
                     </Paragraph>
@@ -288,10 +288,13 @@
                       </ListItem>
                       <ListItem>
                         <Paragraph>
-                          Plaintext XOR keystream
+                          M XOR Keystream
                         </Paragraph>
                       </ListItem>
                     </List>
+                    <Paragraph>
+                      <Italic>Remark: Due to XOR being the inverse function to itself, decryption works exactly the same.</Italic>
+                    </Paragraph>
                   </TableCell>
                 </TableRow>
               </TableRowGroup>
