@@ -307,29 +307,14 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.UIState11, key7);
                 if(pres.DiffusionActive)
                 {
-                    string dkey0 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion0);
-                    string dkey1 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion1);
-                    string dkey2 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion2);
-                    string dkey3 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion3);
-                    string dkey4 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion4);
-                    string dkey5 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion5);
-                    string dkey6 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion6);
-                    string dkey7 = pres.Nav.GetText(pres.UITransformLittleEndianKeyDiffusion7);
-                    pres.Nav.Add(pres.UIStateDiffusion4, dkey0);
-                    pres.Nav.Add(pres.UIStateDiffusion5, dkey1);
-                    pres.Nav.Add(pres.UIStateDiffusion6, dkey2);
-                    pres.Nav.Add(pres.UIStateDiffusion7, dkey3);
-                    pres.Nav.Add(pres.UIStateDiffusion8, dkey4);
-                    pres.Nav.Add(pres.UIStateDiffusion9, dkey5);
-                    pres.Nav.Add(pres.UIStateDiffusion10, dkey6);
-                    pres.Nav.Add(pres.UIStateDiffusion11, dkey7);
+                    InsertDiffusionKeyIntoState();
                 }
             }, () =>
             {
                 pres.Nav.Clear(pres.UIState4, pres.UIState5, pres.UIState6, pres.UIState7, pres.UIState8, pres.UIState9, pres.UIState10, pres.UIState11);
                 if(pres.DiffusionActive)
                 {
-                    pres.Nav.Clear(pres.UIStateDiffusion4, pres.UIStateDiffusion5, pres.UIStateDiffusion6, pres.UIStateDiffusion7, pres.UIStateDiffusion8, pres.UIStateDiffusion9, pres.UIStateDiffusion10, pres.UIStateDiffusion11);
+                    ClearDiffusionKeyFromState();
                 }
             });
         }
@@ -538,6 +523,26 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Diffusion
+
+        private void InsertDiffusionKeyIntoState()
+        {
+            FlowDocument fullDKey = GetDiffusionKeyLittleEndian();
+            FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
+            for(int i = 4; i < 12; ++i)
+            {
+                RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
+                pres.Nav.SetDocumentAndShow(diffusionState, chunkDocs[i - 4]);
+            }
+        }
+
+        private void ClearDiffusionKeyFromState()
+        {
+            for (int i = 4; i < 12; ++i)
+            {
+                RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
+                pres.Nav.ClearAndCollapse(diffusionState);
+            }
+        }
 
         private void ReplaceTransformInputKeyDiffusion()
         {
