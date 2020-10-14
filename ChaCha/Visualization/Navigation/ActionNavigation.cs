@@ -530,6 +530,12 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { mark, copy, unmark };
         }
 
+        public PageAction[] CopyActions(FrameworkElement[] copyFrom, FrameworkElement[] copyTo, string[] previousToValue, bool replace = false)
+        {
+            Border[] copyFromBorders = copyFrom.Select(element => (Border)element.Parent).ToArray();
+            Border[] copyToBorders = copyTo.Select(element => (Border)element.Parent).ToArray();
+            return CopyActions(copyFromBorders, copyToBorders, previousToValue, replace);
+        }
         public PageAction[] CopyActions(Border[] copyFrom, Shape[] paths, Border[] copyTo, string[] previousToValue, bool replace = false)
         {
             PageAction[] copyActions = CopyActions(copyFrom, copyTo, previousToValue, replace);
@@ -680,6 +686,21 @@ namespace Cryptool.Plugins.ChaCha
             rtb.Document = doc;
         }
 
+        public void CopyReplace(RichTextBox rtb, FlowDocument doc)
+        {
+            SetDocument(rtb, doc);
+            SetCopyBackground(rtb);
+        }
+
+        public void CopyClear(params RichTextBox[] rtbs)
+        {
+            foreach(RichTextBox rtb in rtbs)
+            {
+                Clear(rtb);
+                UnsetBackground(rtb);
+            }
+        }
+
         public void SetDocumentAndShow(RichTextBox rtb, FlowDocument doc)
         {
             SetDocument(rtb, doc);
@@ -698,6 +719,19 @@ namespace Cryptool.Plugins.ChaCha
             tb.Text = text;
         }
 
+        public void CopyReplace(TextBox tb, string text)
+        {
+            Replace(tb, text);
+            SetCopyBackground(tb);
+        }
+        public void CopyClear(params TextBox[] tbs)
+        {
+            foreach(TextBox tb in tbs)
+            {
+                Clear(tb);
+                UnsetBackground(tb);
+            }
+        }
         public void Add(TextBox tb, string text)
         {
             tb.Text += text;
