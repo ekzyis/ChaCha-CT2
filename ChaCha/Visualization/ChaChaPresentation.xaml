@@ -935,7 +935,7 @@
           <!-- Step description -->
           <RichTextBox Style="{ StaticResource richText }" Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
           <!-- state parameters -->
-          <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" Height="260" HorizontalAlignment="Left">
+          <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
               <RowDefinition Height="20"/>
               <RowDefinition Height="1.6*"/>
@@ -957,9 +957,14 @@
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
             <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1">
-              <StackPanel HorizontalAlignment="Center">
-                <TextBox Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
-                <RichTextBox Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="UIInputDiffusionKey">
+              <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid.RowDefinitions>
+                  <RowDefinition/>
+                  <RowDefinition/>
+                  <RowDefinition Height="3*"/>
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+                <RichTextBox Grid.Row="1" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="UIInputDiffusionKey">
                   <RichTextBox.Visibility>
                     <MultiBinding Converter="{ StaticResource CollapsedIfAllFalse }">
                       <Binding Path="DiffusionActive"/>
@@ -968,10 +973,10 @@
                   </RichTextBox.Visibility>
                 </RichTextBox>
                 <!-- Diffusion check boxes -->
-                <Grid Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Name="DiffusionGrid">
+                <Grid Grid.Row="2" Visibility="{ Binding ShowDiffusion, Converter={StaticResource CollapsedIfFalseConverter}}" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Name="DiffusionGrid">
                   <!-- Diffusion grid will be initialized in code-behind -->
                 </Grid>
-              </StackPanel>
+              </Grid>
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):"/>
             <Border HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell">

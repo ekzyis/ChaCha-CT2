@@ -827,7 +827,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             // Bit indices start at 0 on the most significant bit which is in the string representation in big endian notation.
             // This means we start counting from zero at the left but the zero-th bit is - maybe a bit unintuitively - the most significant bit.
-            Button b = new Button() { Height = 16, FontSize = 10 };
+            Button b = new Button() { Height = 24, FontSize = 10 };
             b.SetBinding(Button.ContentProperty, new Binding($"DKeyBit{bitIndex}"));
             b.SetBinding(Button.ForegroundProperty, new Binding($"DKeyBit{bitIndex}Flipped") { Converter = new BoolToForegroundConverter() });
             b.Margin = new Thickness(bitIndex % 4 == 0 ? 3 : 0, 0, 0, 3);
