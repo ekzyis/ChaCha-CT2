@@ -713,7 +713,7 @@ namespace Cryptool.Plugins.ChaCha
         private void ToggleShowDiffusion(object sender, RoutedEventArgs e)
         {
             pres.ShowDiffusion = !pres.ShowDiffusion;
-            toggleShowDiffusion.Content = $"{(pres.ShowDiffusion == true ? "Verstecke" : "Zeige")} Diffusionsanzeige";
+            toggleShowDiffusion.Content = $"{(pres.ShowDiffusion == true ? "Hide" : "Show")} Diffusion display";
         }
         private void ResetDiffusion(object sender, RoutedEventArgs e)
         {
