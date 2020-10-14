@@ -224,7 +224,7 @@ namespace Cryptool.Plugins.ChaCha
                 new Border[] { pres.UITransformLittleEndianCell0, pres.UITransformLittleEndianCell1, pres.UITransformLittleEndianCell2, pres.UITransformLittleEndianCell3, pres.UITransformLittleEndianCell4, pres.UITransformLittleEndianCell5, pres.UITransformLittleEndianCell6, pres.UITransformLittleEndianCell7 },
                 new Border[] { pres.UIStateCell4, pres.UIStateCell5, pres.UIStateCell6, pres.UIStateCell7, pres.UIStateCell8, pres.UIStateCell9, pres.UIStateCell10, pres.UIStateCell11 },
                 new string[] { "", "", "", "", "", "", "", "" });
-            copyActions = AddCopyDiffusionKeyToStateActions(copyActions);
+            copyActions[1].Add(AddCopyDiffusionKeyToStateActions());
             return copyActions;
         }
         #endregion
@@ -465,13 +465,13 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Show(diffusionChunkCell);
             }
         }
-        private PageAction[] AddCopyDiffusionKeyToStateActions(PageAction[] copyKeyToStateActions)
+        private PageAction AddCopyDiffusionKeyToStateActions()
         {
             PageAction addDKeyToState = new PageAction(() =>
             {
+                if (!pres.DiffusionActive) return;
                 FlowDocument fullDKeyLittleEndian = GetDiffusionKeyLittleEndian();
                 FlowDocument[] chunkDocs = SplitDocument(fullDKeyLittleEndian, 8);
-                if (!pres.DiffusionActive) return;
                 for (int i = 4; i < 12; ++i)
                 {
                     RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
@@ -490,8 +490,7 @@ namespace Cryptool.Plugins.ChaCha
                     pres.Nav.Collapse(diffusionStateCell);
                 }
             });
-            copyKeyToStateActions[1].Add(addDKeyToState);
-            return copyKeyToStateActions;
+            return addDKeyToState;
         }
         private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
         {
