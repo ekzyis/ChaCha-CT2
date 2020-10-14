@@ -198,41 +198,34 @@ namespace Cryptool.Plugins.ChaCha
             PageAction unmark = new PageAction(() =>
             {
                 pres.Nav.UnsetBackground(pres.UIInputKey);
-                if (pres.InputKey.Length == 16)
+                pres.Nav.UnsetBackground(pres.UITransformInputKey);
+                if (pres.InputKey.Length == 32)
                 {
-                    pres.Nav.UnsetBackground(pres.UITransformInputKey);
-                    if (pres.DiffusionActive)
-                    {
-                        pres.Nav.UnsetBackground(pres.UITransformInputKeyDiffusion);
-                    }
-                }
-                else
-                {
-                    pres.Nav.UnsetBackground(pres.UITransformInputKey);
                     pres.Nav.UnsetBackground(pres.UITransformInputKey2);
-                    if (pres.DiffusionActive)
+                }
+                if(pres.DiffusionActive)
+                {
+                    pres.Nav.UnsetBackground(pres.UIInputDiffusionKey);
+                    pres.Nav.UnsetBackground(pres.UITransformInputKeyDiffusion);
+                    if (pres.InputKey.Length == 32)
                     {
-                        pres.Nav.UnsetBackground(pres.UITransformInputKeyDiffusion);
                         pres.Nav.UnsetBackground(pres.UITransformInputKeyDiffusion2);
                     }
                 }
             }, () =>
             {
-                if (pres.InputKey.Length == 16)
+                pres.Nav.SetCopyBackground(pres.UIInputKey);
+                pres.Nav.SetCopyBackground(pres.UITransformInputKey);
+                if (pres.InputKey.Length == 32)
                 {
-                    pres.Nav.SetCopyBackground(pres.UITransformInputKey);
-                    if (pres.DiffusionActive)
-                    {
-                        pres.Nav.SetCopyBackground(pres.UITransformInputKeyDiffusion);
-                    }
-                }
-                else
-                {
-                    pres.Nav.SetCopyBackground(pres.UITransformInputKey);
                     pres.Nav.SetCopyBackground(pres.UITransformInputKey2);
-                    if (pres.DiffusionActive)
+                }
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.SetCopyBackground(pres.UIInputDiffusionKey);
+                    pres.Nav.SetCopyBackground(pres.UITransformInputKeyDiffusion);
+                    if (pres.InputKey.Length == 32)
                     {
-                        pres.Nav.SetCopyBackground(pres.UITransformInputKeyDiffusion);
                         pres.Nav.SetCopyBackground(pres.UITransformInputKeyDiffusion2);
                     }
                 }
@@ -376,7 +369,9 @@ namespace Cryptool.Plugins.ChaCha
                 new TextBox[] { pres.UITransformLittleEndianKey0, pres.UITransformLittleEndianKey1, pres.UITransformLittleEndianKey2, pres.UITransformLittleEndianKey3, pres.UITransformLittleEndianKey4, pres.UITransformLittleEndianKey5, pres.UITransformLittleEndianKey6, pres.UITransformLittleEndianKey7 },
                 new TextBox[] { pres.UIState4, pres.UIState5, pres.UIState6, pres.UIState7, pres.UIState8, pres.UIState9, pres.UIState10, pres.UIState11 },
                 new string[] { "", "", "", "", "", "", "", "" });
-            copyActions[1].Add(AddCopyDiffusionKeyToStateActions());
+            copyActions[0].Add(MarkCopyDiffusionKeyToStateAction());
+            copyActions[1].Add(ExecCopyDiffusionKeyToStateAction());
+            copyActions[2].Add(UnmarkCopyDiffusionKeyToStateAction());
             return copyActions;
         }
         #endregion
@@ -573,15 +568,15 @@ namespace Cryptool.Plugins.ChaCha
             FlowDocument fullDKey = GetDiffusionKey();
             if (pres.InputKey.Length == 16)
             {
-                pres.Nav.SetDocument(pres.UITransformInputKeyDiffusion, fullDKey);
+                pres.Nav.SetDocumentAndShow(pres.UITransformInputKeyDiffusion, fullDKey);
             }
             else
             {
                 FlowDocument dKeyRow1;
                 FlowDocument dKeyRow2;
                 (dKeyRow1, dKeyRow2, _) = SplitDocument(fullDKey, 2);
-                pres.Nav.SetDocument(pres.UITransformInputKeyDiffusion, dKeyRow1);
-                pres.Nav.SetDocument(pres.UITransformInputKeyDiffusion2, dKeyRow2);
+                pres.Nav.SetDocumentAndShow(pres.UITransformInputKeyDiffusion, dKeyRow1);
+                pres.Nav.SetDocumentAndShow(pres.UITransformInputKeyDiffusion2, dKeyRow2);
             }
         }
 
@@ -597,7 +592,7 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 8; ++i)
             {
                 RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkKeyDiffusion{i}");
-                pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
+                pres.Nav.SetDocumentAndShow(diffusionChunk, chunkDocs[i]);
             }
         }
         private void ReplaceTransformLittleEndianDiffusion()
@@ -606,10 +601,8 @@ namespace Cryptool.Plugins.ChaCha
             FlowDocument[] chunkDocs = SplitDocument(fullDKeyLittleEndian, 8);
             for (int i = 0; i < 8; ++i)
             {
-                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianDiffusion{i}");
-                Border diffusionChunkCell = (Border)diffusionChunk.Parent;
-                pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
-                pres.Nav.Show(diffusionChunkCell);
+                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianKeyDiffusion{i}");
+                pres.Nav.SetDocumentAndShow(diffusionChunk, chunkDocs[i]);
             }
         }
 
@@ -618,7 +611,29 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.Clear(pres.UITransformLittleEndianKeyDiffusion0, pres.UITransformLittleEndianKeyDiffusion1, pres.UITransformLittleEndianKeyDiffusion2, pres.UITransformLittleEndianKeyDiffusion3, pres.UITransformLittleEndianKeyDiffusion4, pres.UITransformLittleEndianKeyDiffusion5, pres.UITransformLittleEndianKeyDiffusion6, pres.UITransformLittleEndianKeyDiffusion7);
         }
 
-        private PageAction AddCopyDiffusionKeyToStateActions()
+        private PageAction MarkCopyDiffusionKeyToStateAction()
+        {
+            PageAction markDKeyToState = new PageAction(() =>
+            {
+                if (!pres.DiffusionActive) return;
+                for (int i = 0; i < 8; ++i)
+                {
+                    RichTextBox diffusionLittleEndian = (RichTextBox)pres.FindName($"UITransformLittleEndianKeyDiffusion{i}");
+                    pres.Nav.SetCopyBackground(diffusionLittleEndian);
+                }
+            }, () =>
+            {
+                if (!pres.DiffusionActive) return;
+                for (int i = 0; i < 8; ++i)
+                {
+                    RichTextBox diffusionLittleEndian = (RichTextBox)pres.FindName($"UITransformLittleEndianKeyDiffusion{i}");
+                    pres.Nav.UnsetBackground(diffusionLittleEndian);
+                }
+            });
+            return markDKeyToState;
+        }
+
+        private PageAction ExecCopyDiffusionKeyToStateAction()
         {
             PageAction addDKeyToState = new PageAction(() =>
             {
@@ -642,6 +657,29 @@ namespace Cryptool.Plugins.ChaCha
             });
             return addDKeyToState;
         }
+
+        private PageAction UnmarkCopyDiffusionKeyToStateAction()
+        {
+            PageAction markDKeyToState = new PageAction(() =>
+            {
+                if (!pres.DiffusionActive) return;
+                for (int i = 0; i < 8; ++i)
+                {
+                    RichTextBox diffusionLittleEndian = (RichTextBox)pres.FindName($"UITransformLittleEndianKeyDiffusion{i}");
+                    pres.Nav.UnsetBackground(diffusionLittleEndian);
+                }
+            }, () =>
+            {
+                if (!pres.DiffusionActive) return;
+                for (int i = 0; i < 8; ++i)
+                {
+                    RichTextBox diffusionLittleEndian = (RichTextBox)pres.FindName($"UITransformLittleEndianKeyDiffusion{i}");
+                    pres.Nav.SetCopyBackground(diffusionLittleEndian);
+                }
+            });
+            return markDKeyToState;
+        }
+
         private FlowDocument[] SplitDocument(FlowDocument fullFd, int n)
         {
             FlowDocument[] split = new FlowDocument[n];
