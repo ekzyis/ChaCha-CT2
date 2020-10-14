@@ -275,6 +275,25 @@ namespace Cryptool.Plugins.ChaCha
                 SetFontSize(c, size);
             }
         }
+
+        public void SetBackground(Control c, Brush background)
+        {
+            c.Background = background;
+        }
+        public void SetCopyBackground(params Control[] controls)
+        {
+            foreach (Control c in controls)
+            {
+                SetBackground(c, _copyBrush);
+            }
+        }
+        public void UnsetBackground(params Control[] controls)
+        {
+            foreach (Control c in controls)
+            {
+                SetBackground(c, Brushes.White);
+            }
+        }
         #endregion
 
         #region TextBlock API

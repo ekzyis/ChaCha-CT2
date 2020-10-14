@@ -410,7 +410,7 @@
                 </Border>
 
                 <!-- Row 1 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="0">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Grid.Row="1" Grid.Column="0">
                   <StackPanel>
                     <Border Name="UIStateCell4">
                       <TextBox Name="UIState4"/>
@@ -428,7 +428,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="1">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Grid.Row="1" Grid.Column="1">
                   <StackPanel>
                     <Border Name="UIStateCell5">
                       <TextBox Name="UIState5"/>
@@ -446,7 +446,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="2">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Grid.Row="1" Grid.Column="2">
                   <StackPanel>
                     <Border Name="UIStateCell6">
                       <TextBox Name="UIState6"/>
@@ -464,7 +464,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="3">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Grid.Row="1" Grid.Column="3">
                   <StackPanel>
                     <Border Name="UIStateCell7">
                       <TextBox Name="UIState7"/>
@@ -483,7 +483,7 @@
                 </Border>
 
                 <!-- Row 2 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="0">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Grid.Row="2" Grid.Column="0">
                   <StackPanel>
                     <Border Name="UIStateCell8">
                       <TextBox Name="UIState8"/>
@@ -501,7 +501,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="1">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Grid.Row="2" Grid.Column="1">
                   <StackPanel>
                     <Border Name="UIStateCell9">
                       <TextBox Name="UIState9"/>
@@ -519,7 +519,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="2">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Grid.Row="2" Grid.Column="2">
                   <StackPanel>
                     <Border Name="UIStateCell10">
                       <TextBox Name="UIState10"/>
@@ -537,7 +537,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="3">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Grid.Row="2" Grid.Column="3">
                   <StackPanel>
                     <Border Name="UIStateCell11">
                       <TextBox Name="UIState11"/>
@@ -556,7 +556,7 @@
                 </Border>
 
                 <!-- Row 3 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="0" Name="UIStateCell12">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell12, Path=Background }" Grid.Row="3" Grid.Column="0" Name="UIStateCell12">
                   <TextBox Name="UIState12"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="0">
@@ -622,28 +622,28 @@
             </Grid.Resources>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
             <StackPanel Grid.Row="0" Grid.Column="1">
-              <Grid Margin="5"  VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+              <Grid Margin="5" Background="{Binding ElementName=UITransformInput, Path=Background}" VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
                 <Grid.RowDefinitions>
                   <RowDefinition/>
                   <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Name="UITransformInputCell">
+                <Border Grid.Row="0" Name="UITransformInputCell" Background="{Binding ElementName=UITransformInput, Path=Background}">
                   <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput"/>
                 </Border>
-                <Border Grid.Row="1" Name="UITransformInputCell2">
-                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Name="UITransformInput2"/>
+                <Border Grid.Row="1" Name="UITransformInputCell2" Visibility="{ Binding ElementName=UITransformInput2, Path=Visibility }" Background="{Binding ElementName=UITransformInput2, Path=Background}">
+                  <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Visibility="Collapsed" Name="UITransformInput2"/>
                 </Border>
               </Grid>
-              <Grid Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Width="360">
+              <Grid Margin="5" VerticalAlignment="Center" Background="{ Binding ElementName=UITransformInputDiffusion }" Visibility="{ Binding ElementName=UITransformInputDiffusion, Path=Visibility }" HorizontalAlignment="Center" Width="360">
                 <Grid.RowDefinitions>
                   <RowDefinition/>
                   <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Name="UITransformInputDiffusionCell" Visibility="Collapsed" Background="{Binding ElementName=UITransformInputCell, Path=Background}">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformInputDiffusion" Background="{Binding ElementName=UITransformInputCell, Path=Background}"/>
+                <Border Grid.Row="0" Visibility="{ Binding ElementName=UITransformInputDiffusion, Path=Visibility}" Background="{Binding ElementName=UITransformInputDiffusion, Path=Background}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Visibility="Collapsed" Name="UITransformInputDiffusion"/>
                 </Border>
-                <Border Grid.Row="1" Name="UITransformInputDiffusionCell2" Visibility="Collapsed" Background="{Binding ElementName=UITransformInputCell2, Path=Background}">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformInputDiffusion2" Background="{Binding ElementName=UITransformInputCell2, Path=Background}"/>
+                <Border Grid.Row="1" Visibility="{ Binding ElementName=UITransformInputDiffusion2, Path=Visibility }" Background="{Binding ElementName=UITransformInputDiffusion2, Path=Background}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Visibility="Collapsed" Name="UITransformInputDiffusion2"/>
                 </Border>
               </Grid>
             </StackPanel>
@@ -696,29 +696,29 @@
                   <RowDefinition/>
                   <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion0"/>
+                <Border Grid.Row="0" Grid.Column="0" Visibility="{ Binding ElementName=UITransformChunkDiffusion0, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion0" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion1"/>
+                <Border Grid.Row="0" Grid.Column="1" Visibility="{ Binding ElementName=UITransformChunkDiffusion1, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion1" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion2"/>
+                <Border Grid.Row="0" Grid.Column="2" Visibility="{ Binding ElementName=UITransformChunkDiffusion2, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion2" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion3"/>
+                <Border Grid.Row="0" Grid.Column="3" Visibility="{ Binding ElementName=UITransformChunkDiffusion3, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion3" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="0" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion4"/>
+                <Border Grid.Row="1" Grid.Column="0" Visibility="{ Binding ElementName=UITransformChunkDiffusion4, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion4" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion5"/>
+                <Border Grid.Row="1" Grid.Column="1" Visibility="{ Binding ElementName=UITransformChunkDiffusion5, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion5" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion6"/>
+                <Border Grid.Row="1" Grid.Column="2" Visibility="{ Binding ElementName=UITransformChunkDiffusion6, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion6" Visibility="Collapsed"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion7"/>
+                <Border Grid.Row="1" Grid.Column="3" Visibility="{ Binding ElementName=UITransformChunkDiffusion1, Path=Visibility}">
+                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformChunkDiffusion7" Visibility="Collapsed"/>
                 </Border>
               </Grid>
             </StackPanel>
@@ -771,29 +771,29 @@
                   <RowDefinition/>
                   <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" Grid.Column="0" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian0Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell0">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion0" Background="{Binding ElementName=UITransformLittleEndian0, Path=Background}"/>
+                <Border Grid.Row="0" Grid.Column="0" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion0, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian0, Path=Background}" Name="UITransformLittleEndianDiffusionCell0">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion0" Background="{Binding ElementName=UITransformLittleEndian0, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="1" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian1Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell1">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion1" Background="{Binding ElementName=UITransformLittleEndian1, Path=Background}"/>
+                <Border Grid.Row="0" Grid.Column="1" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion1, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian1, Path=Background}" Name="UITransformLittleEndianDiffusionCell1">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion1" Background="{Binding ElementName=UITransformLittleEndian1, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="2" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian2Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell2">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion2" Background="{Binding ElementName=UITransformLittleEndian2, Path=Background}"/>
+                <Border Grid.Row="0" Grid.Column="2" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion2, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian2, Path=Background}" Name="UITransformLittleEndianDiffusionCell2">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion2" Background="{Binding ElementName=UITransformLittleEndian2, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="0" Grid.Column="3" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian3Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell3">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion3" Background="{Binding ElementName=UITransformLittleEndian3, Path=Background}"/>
+                <Border Grid.Row="0" Grid.Column="3" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion3, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian3, Path=Background}" Name="UITransformLittleEndianDiffusionCell3">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion3" Background="{Binding ElementName=UITransformLittleEndian3, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="0" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian4Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell4">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion4" Background="{Binding ElementName=UITransformLittleEndian4, Path=Background}"/>
+                <Border Grid.Row="1" Grid.Column="0" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion4, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian4, Path=Background}" Name="UITransformLittleEndianDiffusionCell4">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion4" Background="{Binding ElementName=UITransformLittleEndian4, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="1" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian5Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell5">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion5" Background="{Binding ElementName=UITransformLittleEndian5, Path=Background}"/>
+                <Border Grid.Row="1" Grid.Column="1" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion5, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian5, Path=Background}" Name="UITransformLittleEndianDiffusionCell5">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion5" Background="{Binding ElementName=UITransformLittleEndian5, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="2" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian6Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell6">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion6" Background="{Binding ElementName=UITransformLittleEndian6, Path=Background}"/>
+                <Border Grid.Row="1" Grid.Column="2" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion6, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian6, Path=Background}" Name="UITransformLittleEndianDiffusionCell6">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion6" Background="{Binding ElementName=UITransformLittleEndian6, Path=Background}"/>
                 </Border>
-                <Border Grid.Row="1" Grid.Column="3" Visibility="Collapsed" Background="{Binding ElementName=UITransformLittleEndian7Cell, Path=Background}" Name="UITransformLittleEndianDiffusionCell7">
-                  <RichTextBox HorizontalAlignment="Center" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion7" Background="{Binding ElementName=UITransformLittleEndian7, Path=Background}"/>
+                <Border Grid.Row="1" Grid.Column="3" Visibility="{ Binding ElementName=UITransformLittleEndianDiffusion7, Path=Visibility }" Background="{Binding ElementName=UITransformLittleEndian7, Path=Background}" Name="UITransformLittleEndianDiffusionCell7">
+                  <RichTextBox HorizontalAlignment="Center" Visibility="Collapsed" Style="{StaticResource hexRichTextBox}" Name="UITransformLittleEndianDiffusion7" Background="{Binding ElementName=UITransformLittleEndian7, Path=Background}"/>
                 </Border>
               </Grid>
             </StackPanel>
