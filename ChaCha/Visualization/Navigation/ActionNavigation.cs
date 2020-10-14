@@ -280,6 +280,13 @@ namespace Cryptool.Plugins.ChaCha
         {
             c.Background = background;
         }
+        public void SetBackground(Brush background, params Control[] cs)
+        {
+            foreach(Control c in cs)
+            {
+                SetBackground(c, background);
+            }
+        }
         public void SetCopyBackground(params Control[] controls)
         {
             foreach (Control c in controls)
@@ -699,6 +706,12 @@ namespace Cryptool.Plugins.ChaCha
                 Clear(rtb);
                 UnsetBackground(rtb);
             }
+        }
+
+        public string GetText(RichTextBox rtb)
+        {
+            TextRange textRange = new TextRange(rtb.Document.ContentStart, rtb.Document.ContentEnd);
+            return textRange.Text;
         }
 
         public void SetDocumentAndShow(RichTextBox rtb, FlowDocument doc)
