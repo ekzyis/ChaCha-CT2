@@ -117,7 +117,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private TextBox CreateCurrentActionIndexTextBox(int totalActions)
         {
-            TextBox current = new TextBox { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, VerticalAlignment = VerticalAlignment.Center, Width = 30 };
+            TextBox current = new TextBox { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, VerticalAlignment = VerticalAlignment.Center, Width = 40 };
             Binding actionIndexBinding = new Binding("CurrentActionIndexTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
             ValidationRule inputActionIndexRule = new InputActionIndexRule(totalActions);
