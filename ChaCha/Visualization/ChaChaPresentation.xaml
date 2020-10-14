@@ -410,7 +410,7 @@
                 </Border>
 
                 <!-- Row 1 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="0">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Grid.Row="1" Grid.Column="0">
                   <StackPanel>
                     <Border Name="UIStateCell4">
                       <TextBox Name="UIState4"/>
@@ -428,7 +428,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="1">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Grid.Row="1" Grid.Column="1">
                   <StackPanel>
                     <Border Name="UIStateCell5">
                       <TextBox Name="UIState5"/>
@@ -446,7 +446,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="2">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Grid.Row="1" Grid.Column="2">
                   <StackPanel>
                     <Border Name="UIStateCell6">
                       <TextBox Name="UIState6"/>
@@ -464,7 +464,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="3">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Grid.Row="1" Grid.Column="3">
                   <StackPanel>
                     <Border Name="UIStateCell7">
                       <TextBox Name="UIState7"/>
@@ -483,7 +483,7 @@
                 </Border>
 
                 <!-- Row 2 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="0">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Grid.Row="2" Grid.Column="0">
                   <StackPanel>
                     <Border Name="UIStateCell8">
                       <TextBox Name="UIState8"/>
@@ -501,7 +501,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="1">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Grid.Row="2" Grid.Column="1">
                   <StackPanel>
                     <Border Name="UIStateCell9">
                       <TextBox Name="UIState9"/>
@@ -519,7 +519,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="2">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Grid.Row="2" Grid.Column="2">
                   <StackPanel>
                     <Border Name="UIStateCell10">
                       <TextBox Name="UIState10"/>
@@ -537,7 +537,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="3">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Grid.Row="2" Grid.Column="3">
                   <StackPanel>
                     <Border Name="UIStateCell11">
                       <TextBox Name="UIState11"/>
@@ -556,7 +556,7 @@
                 </Border>
 
                 <!-- Row 3 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="0" Name="UIStateCell12">
+                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell12, Path=Background }" Grid.Row="3" Grid.Column="0" Name="UIStateCell12">
                   <TextBox Name="UIState12"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="0">
