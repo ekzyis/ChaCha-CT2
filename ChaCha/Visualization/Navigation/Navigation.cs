@@ -330,6 +330,12 @@ namespace Cryptool.Plugins.ChaCha
             quarterroundGrid.Children.Add(quarterroundLabel);
             quarterroundGrid.Children.Add(quarterroundBottomRow);
             pageNavBar.Children.Add(quarterroundGrid);
+
+            Button goToAddition = CreateNavigationButton();
+            goToAddition.Content = "Add Original State";
+            goToAddition.Width = 148;
+            goToAddition.Click += GoToAddition;
+            pageNavBar.Children.Add(goToAddition);
         }
 
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
@@ -739,6 +745,13 @@ namespace Cryptool.Plugins.ChaCha
             CurrentActionIndex = n;
             _moveToActionIndicesStack.Clear();
             // Console.WriteLine("Cleared action stack");
+        }
+
+        private void GoToAddition(object sender, RoutedEventArgs e)
+        {
+            string searchLabel = KeystreamBlockGenPage.ACTIONLABEL_ADDITION_START;
+            int additionActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+            MoveToActionAsync(additionActionIndex);
         }
 
         private ActionCache Cache
