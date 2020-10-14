@@ -475,9 +475,7 @@ namespace Cryptool.Plugins.ChaCha
                 for (int i = 4; i < 12; ++i)
                 {
                     RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
-                    Border diffusionStateCell = (Border)diffusionState.Parent;
-                    pres.Nav.SetDocument(diffusionState, chunkDocs[i - 4]);
-                    pres.Nav.Show(diffusionStateCell);
+                    pres.Nav.SetDocumentAndShow(diffusionState, chunkDocs[i - 4]);
                 }
             }, () =>
             {
@@ -486,8 +484,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     RichTextBox diffusionState = (RichTextBox)pres.FindName($"UIStateDiffusion{i}");
                     Border diffusionStateCell = (Border)diffusionState.Parent;
-                    pres.Nav.Clear(diffusionState);
-                    pres.Nav.Collapse(diffusionStateCell);
+                    pres.Nav.ClearAndCollapse(diffusionState);
                 }
             });
             return addDKeyToState;
