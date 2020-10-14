@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cryptool.Plugins.ChaCha"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="1026" d:DesignWidth="1800"
              MinHeight="400" MinWidth="700"
@@ -364,7 +365,7 @@
                   </Style>
                 </Grid.Resources>
                 <!-- Row 0 -->
-                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="0" Name="UIStateCell0">
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="0" Name="UIStateCell0" Background="Bisque">
                   <TextBox Name="UIState0"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="0">
@@ -375,7 +376,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="1" Name="UIStateCell1">
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="1" Name="UIStateCell1" Background="Bisque">
                   <TextBox Name="UIState1"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="1">
@@ -386,7 +387,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="2" Name="UIStateCell2">
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="2" Name="UIStateCell2" Background="Bisque">
                   <TextBox Name="UIState2"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="2">
@@ -397,7 +398,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="3" Name="UIStateCell3">
+                <Border Style="{StaticResource stateCell}" Grid.Row="0" Grid.Column="3" Name="UIStateCell3" Background="Bisque">
                   <TextBox Name="UIState3"/>
                 </Border>
                 <Border Grid.Row="0" Grid.Column="3">
@@ -409,7 +410,7 @@
                 </Border>
 
                 <!-- Row 1 -->
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell4, Path=Background }" Grid.Row="1" Grid.Column="0">
+                <Border Style="{StaticResource stateCell}"  Grid.Row="1" Grid.Column="0" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell4">
                       <TextBox Name="UIState4"/>
@@ -427,7 +428,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell5, Path=Background }" Grid.Row="1" Grid.Column="1">
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="1" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell5">
                       <TextBox Name="UIState5"/>
@@ -445,7 +446,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell6, Path=Background }" Grid.Row="1" Grid.Column="2">
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="2" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell6">
                       <TextBox Name="UIState6"/>
@@ -463,7 +464,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell7, Path=Background }" Grid.Row="1" Grid.Column="3">
+                <Border Style="{StaticResource stateCell}" Grid.Row="1" Grid.Column="3" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell7">
                       <TextBox Name="UIState7"/>
@@ -482,7 +483,7 @@
                 </Border>
 
                 <!-- Row 2 -->
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell8, Path=Background }" Grid.Row="2" Grid.Column="0">
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="0" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell8">
                       <TextBox Name="UIState8"/>
@@ -500,7 +501,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell9, Path=Background }" Grid.Row="2" Grid.Column="1">
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="1" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell9">
                       <TextBox Name="UIState9"/>
@@ -518,7 +519,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell10, Path=Background }" Grid.Row="2" Grid.Column="2">
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="2" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell10">
                       <TextBox Name="UIState10"/>
@@ -536,7 +537,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell11, Path=Background }" Grid.Row="2" Grid.Column="3">
+                <Border Style="{StaticResource stateCell}" Grid.Row="2" Grid.Column="3" Background="LightCoral">
                   <StackPanel>
                     <Border Name="UIStateCell11">
                       <TextBox Name="UIState11"/>
@@ -555,7 +556,7 @@
                 </Border>
 
                 <!-- Row 3 -->
-                <Border Style="{StaticResource stateCell}" Background="{ Binding ElementName=UIStateCell12, Path=Background }" Grid.Row="3" Grid.Column="0" Name="UIStateCell12">
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="0" Name="UIStateCell12" Background="SkyBlue">
                   <TextBox Name="UIState12"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="0">
@@ -566,7 +567,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="1" Name="UIStateCell13">
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="1" Name="UIStateCell13" Background="SkyBlue">
                   <TextBox Name="UIState13"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1,0,0,1">
@@ -577,7 +578,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="2" Name="UIStateCell14">
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="2" Name="UIStateCell14" Background="PaleGreen">
                   <TextBox Name="UIState14"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="2">
@@ -588,7 +589,7 @@
                   </Canvas>
                 </Border>
 
-                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="3" Name="UIStateCell15">
+                <Border Style="{StaticResource stateCell}" Grid.Row="3" Grid.Column="3" Name="UIStateCell15" Background="PaleGreen">
                   <TextBox Name="UIState15"/>
                 </Border>
                 <Border Grid.Row="3" Grid.Column="4">
@@ -943,26 +944,26 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="1*"/>
-              <ColumnDefinition Width="850"/>
+              <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
             <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
               <Button FontStyle="Italic" Content="Show diffusion display" Width="172" Name="ToggleShowDiffusion"/>
               <Button FontStyle="Italic" Content="Reset flipped bits" Width="172" Name="ResetDiffusion" Visibility="{ Binding ShowDiffusion, Converter={StaticResource HiddenIfFalseConverter}}"/>
             </StackPanel>
-            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="1" Grid.Column="0" Text="Constants"/>
-            <Border HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
-              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0"  Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstants"/>
+            <TextBox Style="{ StaticResource text }" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Background="Bisque" Text="Constants"/>
+            <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="1">
+              <TextBox HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,0,0,0"  Text="{ Binding HexConstants, Mode=OneWay }" Name="UIConstants" VerticalAlignment="Center" Background="Bisque" />
             </Border>
-            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key"/>
-            <Border HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1">
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="2" Grid.Column="0" Text="Key" Background="LightCoral"/>
+            <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="2" Grid.Column="1" >
               <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                   <RowDefinition/>
                   <RowDefinition/>
                   <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey"/>
+                <TextBox Grid.Row="0" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey" Background="LightCoral"/>
                 <RichTextBox Grid.Row="1" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="UIInputDiffusionKey">
                   <RichTextBox.Visibility>
                     <MultiBinding Converter="{ StaticResource CollapsedIfAllFalse }">
@@ -977,9 +978,9 @@
                 </Grid>
               </Grid>
             </Border>
-            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):"/>
-            <Border HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell">
-              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV"/>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):" Background="PaleGreen"/>
+            <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell" >
+              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV" Background="PaleGreen"/>
             </Border>
           </Grid>
         </Grid>
