@@ -167,16 +167,16 @@
                 <TableRow>
                   <TableCell>
                     <List MarkerStyle="Decimal" TextAlignment="Left">
-                      <ListItem>
+                      <ListItem Background="Bisque">
                         <Paragraph>Constants (nothing-up-my-sleeves numbers)</Paragraph>
                       </ListItem>
-                      <ListItem>
+                      <ListItem Background="LightCoral">
                         <Paragraph>Key</Paragraph>
                       </ListItem>
-                      <ListItem>
+                      <ListItem Background="SkyBlue">
                         <Paragraph>Keystream block counter</Paragraph>
                       </ListItem>
-                      <ListItem>
+                      <ListItem Background="PaleGreen">
                         <Paragraph>Initialization vector</Paragraph>
                       </ListItem>
                     </List>
@@ -198,58 +198,58 @@
                       </Table.Columns>
                       <TableRowGroup>
                         <TableRow>
-                          <TableCell>
+                          <TableCell Background="Bisque">
                             <Paragraph>CONSTANT</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="Bisque">
                             <Paragraph>CONSTANT</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="Bisque">
                             <Paragraph>CONSTANT</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="Bisque">
                             <Paragraph>CONSTANT</Paragraph>
                           </TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell>
+                          <TableCell Background="LightCoral">
                             <Paragraph>KEY</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="LightCoral">
                             <Paragraph>KEY</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="LightCoral">
                             <Paragraph>KEY</Paragraph>
                           </TableCell>
-                          <TableCell>
-                            <Paragraph>KEY</Paragraph>
-                          </TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>
-                            <Paragraph>KEY</Paragraph>
-                          </TableCell>
-                          <TableCell>
-                            <Paragraph>KEY</Paragraph>
-                          </TableCell>
-                          <TableCell>
-                            <Paragraph>KEY</Paragraph>
-                          </TableCell>
-                          <TableCell>
+                          <TableCell Background="LightCoral">
                             <Paragraph>KEY</Paragraph>
                           </TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell>
+                            <Paragraph Background="LightCoral">KEY</Paragraph>
+                          </TableCell>
+                          <TableCell>
+                            <Paragraph Background="LightCoral">KEY</Paragraph>
+                          </TableCell>
+                          <TableCell>
+                            <Paragraph Background="LightCoral">KEY</Paragraph>
+                          </TableCell>
+                          <TableCell>
+                            <Paragraph Background="LightCoral">KEY</Paragraph>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell Background="SkyBlue">
                             <Paragraph>COUNTER</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="SkyBlue">
                             <Paragraph>COUNTER</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="PaleGreen">
                             <Paragraph>IV</Paragraph>
                           </TableCell>
-                          <TableCell>
+                          <TableCell Background="PaleGreen">
                             <Paragraph>IV</Paragraph>
                           </TableCell>
                         </TableRow>
