@@ -787,6 +787,8 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void InitDiffusionGridLayout()
         {
+            diffusionGrid.ColumnDefinitions.Clear();
+            diffusionGrid.RowDefinitions.Clear();
             for (int i = 0; i < 64; ++i)
             {
                 diffusionGrid.ColumnDefinitions.Add(new ColumnDefinition());
