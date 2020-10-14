@@ -124,7 +124,7 @@
       </StackPanel>
     </ContentControl>
     <!-- ChaCha Overview page -->
-    <ContentControl Name="UIWorkflowPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
+    <ContentControl Name="UIWorkflowPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <ContentControl.Resources>
         <Style TargetType="TextBox">
           <Setter Property="IsReadOnly" Value="True"/>
@@ -304,7 +304,7 @@
       </Grid>
     </ContentControl>
     <!-- ChaCha State matrix page -->
-    <ContentControl Name="UIStateMatrixPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
+    <ContentControl Name="UIStateMatrixPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
           <Style TargetType="TextBox">
