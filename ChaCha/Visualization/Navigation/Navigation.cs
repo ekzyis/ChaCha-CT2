@@ -332,10 +332,16 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(quarterroundGrid);
 
             Button goToAddition = CreateNavigationButton();
-            goToAddition.Content = "Add Original State";
-            goToAddition.Width = 148;
+            goToAddition.Content = "Original State Addition";
+            goToAddition.Width = 196;
             goToAddition.Click += GoToAddition;
             pageNavBar.Children.Add(goToAddition);
+
+            Button goToLittleEndian = CreateNavigationButton();
+            goToLittleEndian.Content = "Little-endian";
+            goToLittleEndian.Width = 148;
+            goToLittleEndian.Click += GoToLittleEndian;
+            pageNavBar.Children.Add(goToLittleEndian);
         }
 
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
@@ -747,11 +753,20 @@ namespace Cryptool.Plugins.ChaCha
             // Console.WriteLine("Cleared action stack");
         }
 
+        private void GoToLabeledAction(string actionLabel)
+        {
+            int additionActionIndex = GetLabeledPageActionIndex(actionLabel, CurrentActions) + 1;
+            MoveToActionAsync(additionActionIndex);
+        }
+
         private void GoToAddition(object sender, RoutedEventArgs e)
         {
-            string searchLabel = KeystreamBlockGenPage.ACTIONLABEL_ADDITION_START;
-            int additionActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
-            MoveToActionAsync(additionActionIndex);
+            GoToLabeledAction(KeystreamBlockGenPage.ACTIONLABEL_ADDITION_START);
+        }
+
+        private void GoToLittleEndian(object sender, RoutedEventArgs e)
+        {
+            GoToLabeledAction(KeystreamBlockGenPage.ACTIONLABEL_LITTLE_ENDIAN_START);
         }
 
         private ActionCache Cache
