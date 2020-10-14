@@ -30,7 +30,7 @@
 	<replacement key="$decrypted$" value="Entschlüsselter Geheimtext" />
     <replacement key="$key$" value="Schlüssel" />
     <replacement key="$plaintextvalue$" value="Franz jagt im komplett verwahrlosten Taxi quer durch Bayern." />
-	<replacement key="$iv$" value="Initialisierungsvektor" />
+	<replacement key="$iv$" value="Initialisierungsvektor (IV)" />
 	<replacement key="$decode$" value="String-Decodierer" />
 	<replacement key="$encode$" value="String-Encodierer" />
 	<replacement key="$chacha_enc$" value="ChaCha (Verschlüsselung)" />
@@ -43,7 +43,7 @@
     <replacement key="$decrypted$" value="Decrypted ciphertext" />
 	<replacement key="$key$" value="Key" />
     <replacement key="$plaintextvalue$" value="The quick brown fox jumps over the lazy dog." />
-	<replacement key="$iv$" value="Initialization vector" />
+	<replacement key="$iv$" value="Initialization vector (IV)" />
 	<replacement key="$decode$" value="String decoder" />
 	<replacement key="$encode$" value="String encoder" />
 	<replacement key="$chacha_enc$" value="ChaCha (Encryption)" />
