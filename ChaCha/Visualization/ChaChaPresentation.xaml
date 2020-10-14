@@ -702,7 +702,7 @@
                 <RowDefinition/>
               </Grid.RowDefinitions>
               <Border Style="{StaticResource TransformBox}" Grid.Row="0" Grid.Column="0">
-                <TextBox Style="{StaticResource TransformValue}" Name="UITransformChunk0" Text="FF"/>
+                <TextBox Style="{StaticResource TransformValue}" Name="UITransformChunk0"/>
               </Border>
               <Border Style="{StaticResource TransformBox}" Grid.Row="0" Grid.Column="1">
                 <TextBox Style="{StaticResource TransformValue}" Name="UITransformChunk1"/>
