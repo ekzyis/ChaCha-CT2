@@ -622,7 +622,7 @@
               <Style x:Key="TransformBox" TargetType="Border">
                 <Setter Property="VerticalAlignment" Value="Center"/>
                 <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="Height" Value="40"/>
+                <Setter Property="Height" Value="20"/>
                 <Setter Property="Visibility" Value="{Binding RelativeSource={RelativeSource Self}, Path=Child.Visibility}"/>
                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=Child.Background}"/>
               </Style>
@@ -637,6 +637,7 @@
               <Style x:Key="TransformGrid" TargetType="Grid">
                 <Setter Property="Margin" Value="5"/>
                 <Setter Property="Width" Value="360"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
               </Style>
               <Style x:Key="TransformDesc" TargetType="TextBox" BasedOn="{StaticResource text}">
                 <Setter Property="VerticalAlignment" Value="Center"/>
@@ -700,7 +701,7 @@
                 <RowDefinition/>
               </Grid.RowDefinitions>
               <Border Style="{StaticResource TransformBox}" Grid.Row="0" Grid.Column="0">
-                <TextBox Style="{StaticResource TransformValue}" Name="UITransformChunk0"/>
+                <TextBox Style="{StaticResource TransformValue}" Name="UITransformChunk0" Text="FF"/>
               </Border>
               <Border Style="{StaticResource TransformBox}" Grid.Row="0" Grid.Column="1">
                 <TextBox Style="{StaticResource TransformValue}" Name="UITransformChunk1"/>
@@ -726,7 +727,7 @@
             </Grid>
             <!--#endregion-->
             <!--#region TransformChunks Key, DiffusionKey -->
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
               <!--#region TransformChunks Key -->
               <Grid Style="{StaticResource TransformGrid}">
                 <Grid.ColumnDefinitions>
@@ -810,7 +811,7 @@
             <!--#region TransformLittleEndian -->
             <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:"/>
             <!--#region TransformLittleEndian Constants, Counter, IV -->
-            <Grid Style="{StaticResource TransformGrid}" Grid.Row="1" Grid.Column="1">
+            <Grid Style="{StaticResource TransformGrid}" Grid.Row="2" Grid.Column="1">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -848,7 +849,7 @@
             </Grid>
             <!--#endregion-->
             <!--#region TransformLittleEndian Key, DiffusionKey -->
-            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
               <!--#region TransformLittleEndian Key -->
               <Grid Style="{StaticResource TransformGrid}">
                 <Grid.ColumnDefinitions>

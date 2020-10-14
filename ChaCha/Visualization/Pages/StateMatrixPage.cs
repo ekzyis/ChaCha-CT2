@@ -106,7 +106,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceTransformInputConstants()
         {
-            ReplaceTransformInput(pres.HexInitialCounter);
+            ReplaceTransformInput(pres.HexConstants);
         }
         private void ReplaceTransformChunkConstants()
         {
@@ -149,14 +149,14 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformChunkKey();
             }, () =>
             {
-                ClearTransformChunk();
+                ClearTransformChunkKey();
             });
             PageAction keyLittleEndianAction = new PageAction(() =>
             {
                 ReplaceTransformLittleEndianKey();
             }, () =>
             {
-                ClearTransformLittleEndian();
+                ClearTransformLittleEndianKey();
             });
             PageAction[] copyKeyToStateActions = CopyKeyToStateActions();
             AddAction(keyStepDescriptionAction);
@@ -188,51 +188,16 @@ namespace Cryptool.Plugins.ChaCha
             });
             PageAction copy = new PageAction(() =>
             {
-                string keyText = pres.UIInputKey.Text;
-                if (pres.InputKey.Length == 16)
-                {
-                    Debug.Assert(keyText.Length == 32);
-                    pres.Nav.CopyReplace(pres.UITransformInputKey, keyText);
-                    if(pres.DiffusionActive)
-                    {
-                        pres.Nav.CopyReplace(pres.UITransformInputKeyDiffusion, GetDiffusionKey());
-                    }
-                }
-                else if(pres.InputKey.Length == 32)
-                {
-                    Debug.Assert(keyText.Length == 64);
-                    pres.Nav.CopyReplace(pres.UITransformInputKey, keyText.Substring(0, 32));
-                    pres.Nav.CopyReplace(pres.UITransformInputKey2, keyText.Substring(32));
-                    if (pres.DiffusionActive)
-                    {
-                        ReplaceTransformInputDiffusion();
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("KeyInputAction: key was neither 16 byte nor 32 byte. This should not happen!");
-                }
+                ReplaceTransformInputKey();
+                MarkTransformInputKey();
             }, () =>
             {
-                if (pres.InputKey.Length == 16)
-                {
-                    pres.Nav.CopyClear(pres.UITransformInputKey);
-                    if (pres.DiffusionActive)
-                    {
-                        pres.Nav.CopyClear(pres.UITransformInputKeyDiffusion);
-                    }
-                }
-                else if (pres.InputKey.Length == 32)
-                {
-                    pres.Nav.CopyClear(pres.UITransformInputKey, pres.UITransformInputKey2);
-                    if (pres.DiffusionActive)
-                    {
-                        pres.Nav.CopyClear(pres.UITransformInputKeyDiffusion, pres.UITransformInputKeyDiffusion2);
-                    }
-                }
+                ClearTransformInputKey();
+                UnmarkTransformInputKey();
             });
             PageAction unmark = new PageAction(() =>
             {
+                pres.Nav.UnsetBackground(pres.UIInputKey);
                 if (pres.InputKey.Length == 16)
                 {
                     pres.Nav.UnsetBackground(pres.UITransformInputKey);
@@ -275,46 +240,140 @@ namespace Cryptool.Plugins.ChaCha
             return new PageAction[] { mark, copy, unmark };
         }
 
-        private void ReplaceTransformInputDiffusion()
+        private void UnmarkTransformInputKey()
         {
-            FlowDocument fullDKey = GetDiffusionKey();
-            FlowDocument dKeyRow1 = fullDKey;
-            FlowDocument dKeyRow2 = fullDKey;
-            (dKeyRow1, dKeyRow2, _) = SplitDocument(fullDKey, 2);
-            pres.Nav.CopyReplace(pres.UITransformInputKeyDiffusion, dKeyRow1);
-            pres.Nav.CopyReplace(pres.UITransformInputKeyDiffusion2, dKeyRow2);
+            if (pres.InputKey.Length == 16)
+            {
+                pres.Nav.UnsetBackground(pres.UITransformInputKey);
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.UnsetBackground(pres.UITransformInputKeyDiffusion);
+                }
+            }
+            else if (pres.InputKey.Length == 32)
+            {
+                pres.Nav.UnsetBackground(pres.UITransformInputKey, pres.UITransformInputKey2);
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.UnsetBackground(pres.UITransformInputKeyDiffusion, pres.UITransformInputKeyDiffusion2);
+                }
+            }
+        }
+
+        private void ClearTransformInputKey()
+        {
+            if (pres.InputKey.Length == 16)
+            {
+                pres.Nav.Clear(pres.UITransformInputKey);
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.Clear(pres.UITransformInputKeyDiffusion);
+                }
+            }
+            else if (pres.InputKey.Length == 32)
+            {
+                pres.Nav.Clear(pres.UITransformInputKey, pres.UITransformInputKey2);
+                if (pres.DiffusionActive)
+                {
+                    pres.Nav.Clear(pres.UITransformInputKeyDiffusion, pres.UITransformInputKeyDiffusion2);
+                }
+            }
         }
 
         private void ReplaceTransformInputKey()
         {
-            // Ternary operator must return something thus wrapping function into action. (Guess I really wanted a one-liner for this and not if-else.)
-            // https://stackoverflow.com/questions/5490095/method-call-using-ternary-operator
-            (pres.DiffusionActive ? new Action(ReplaceTransformInputDiffusion) : new Action(() => ReplaceTransformInput(pres.HexInputKey)))();
+            string keyText = pres.UIInputKey.Text;
+            if (pres.InputKey.Length == 16)
+            {
+                Debug.Assert(keyText.Length == 32);
+                pres.Nav.Replace(pres.UITransformInputKey, keyText);
+            }
+            else if (pres.InputKey.Length == 32)
+            {
+                Debug.Assert(keyText.Length == 64);
+                pres.Nav.Replace(pres.UITransformInputKey, keyText.Substring(0, 32));
+                pres.Nav.Replace(pres.UITransformInputKey2, keyText.Substring(32));
+            }
+            else
+            {
+                throw new InvalidOperationException("KeyInputAction: key was neither 16 byte nor 32 byte. This should not happen!");
+            }
+            if (pres.DiffusionActive)
+            {
+                ReplaceTransformInputKeyDiffusion();
+            }
         }
+
+        private void MarkTransformInputKey()
+        {
+            pres.Nav.SetCopyBackground(pres.UITransformInputKey);
+            if (pres.InputKey.Length == 32)
+            {
+                pres.Nav.SetCopyBackground(pres.UITransformInputKey2);
+            }
+            if (pres.DiffusionActive)
+            {
+                MarkTransformInputKeyDiffusion();
+            }
+        }
+
         private void ReplaceTransformChunkKey()
         {
-            ReplaceTransformChunk(
-                    pres.KeyChunks[0], pres.KeyChunks[1], pres.KeyChunks[2], pres.KeyChunks[3],
-                    pres.KeyChunks[keyIs32Byte ? 4 : 0], pres.KeyChunks[keyIs32Byte ? 5 : 1], pres.KeyChunks[keyIs32Byte ? 6 : 2], pres.KeyChunks[keyIs32Byte ? 7 : 3]);
-            if (pres.DiffusionActive)
+            pres.Nav.Replace(pres.UITransformChunkKey0, pres.KeyChunks[0]);
+            pres.Nav.Replace(pres.UITransformChunkKey1, pres.KeyChunks[1]);
+            pres.Nav.Replace(pres.UITransformChunkKey2, pres.KeyChunks[2]);
+            pres.Nav.Replace(pres.UITransformChunkKey3, pres.KeyChunks[3]);
+            pres.Nav.Replace(pres.UITransformChunkKey4, pres.KeyChunks[keyIs32Byte ? 4 : 0]);
+            pres.Nav.Replace(pres.UITransformChunkKey5, pres.KeyChunks[keyIs32Byte ? 5 : 1]);
+            pres.Nav.Replace(pres.UITransformChunkKey6, pres.KeyChunks[keyIs32Byte ? 6 : 2]);
+            pres.Nav.Replace(pres.UITransformChunkKey7, pres.KeyChunks[keyIs32Byte ? 7: 3]);
+
+            if(pres.DiffusionActive)
             {
                 ReplaceTransformChunkDiffusion();
             }
         }
+
+        private void ClearTransformChunkKey()
+        {
+            pres.Nav.Clear(pres.UITransformChunkKey0, pres.UITransformChunkKey1, pres.UITransformChunkKey2, pres.UITransformChunkKey3, pres.UITransformChunkKey4, pres.UITransformChunkKey5, pres.UITransformChunkKey6, pres.UITransformChunkKey7);
+
+            if (pres.DiffusionActive)
+            {
+                ClearTransformChunkKeyDiffusion();
+            }
+        }
+
         private void ReplaceTransformLittleEndianKey()
         {
-            ReplaceTransformLittleEndian(
-                   pres.KeyLittleEndian[0], pres.KeyLittleEndian[1], pres.KeyLittleEndian[2], pres.KeyLittleEndian[3],
-                   pres.KeyLittleEndian[keyIs32Byte ? 4 : 0], pres.KeyLittleEndian[keyIs32Byte ? 5 : 1], pres.KeyLittleEndian[keyIs32Byte ? 6 : 2], pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
-            if(pres.DiffusionActive)
+            pres.Nav.Replace(pres.UITransformLittleEndianKey0, pres.KeyLittleEndian[0]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey1, pres.KeyLittleEndian[1]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey2, pres.KeyLittleEndian[2]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey3, pres.KeyLittleEndian[3]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey4, pres.KeyLittleEndian[keyIs32Byte ? 4 : 0]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey5, pres.KeyLittleEndian[keyIs32Byte ? 5 : 1]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey6, pres.KeyLittleEndian[keyIs32Byte ? 6 : 2]);
+            pres.Nav.Replace(pres.UITransformLittleEndianKey7, pres.KeyLittleEndian[keyIs32Byte ? 7 : 3]);
+
+            if (pres.DiffusionActive)
             {
                 ReplaceTransformLittleEndianDiffusion();
+            }
+        }
+
+        private void ClearTransformLittleEndianKey()
+        {
+            pres.Nav.Clear(pres.UITransformLittleEndianKey0, pres.UITransformLittleEndianKey1, pres.UITransformLittleEndianKey2, pres.UITransformLittleEndianKey3, pres.UITransformLittleEndianKey4, pres.UITransformLittleEndianKey5, pres.UITransformLittleEndianKey6, pres.UITransformLittleEndianKey7);
+
+            if (pres.DiffusionActive)
+            {
+                ClearTransformLittleEndianDiffusion();
             }
         }
         private PageAction[] CopyKeyToStateActions()
         {
             PageAction[] copyActions = pres.Nav.CopyActions(
-                new TextBox[] { pres.UITransformLittleEndian0, pres.UITransformLittleEndian1, pres.UITransformLittleEndian2, pres.UITransformLittleEndian3, pres.UITransformLittleEndian4, pres.UITransformLittleEndian5, pres.UITransformLittleEndian6, pres.UITransformLittleEndian7 },
+                new TextBox[] { pres.UITransformLittleEndianKey0, pres.UITransformLittleEndianKey1, pres.UITransformLittleEndianKey2, pres.UITransformLittleEndianKey3, pres.UITransformLittleEndianKey4, pres.UITransformLittleEndianKey5, pres.UITransformLittleEndianKey6, pres.UITransformLittleEndianKey7 },
                 new TextBox[] { pres.UIState4, pres.UIState5, pres.UIState6, pres.UIState7, pres.UIState8, pres.UIState9, pres.UIState10, pres.UIState11 },
                 new string[] { "", "", "", "", "", "", "", "" });
             copyActions[1].Add(AddCopyDiffusionKeyToStateActions());
@@ -329,9 +388,9 @@ namespace Cryptool.Plugins.ChaCha
             {
                 UnboldLastFromDescription();
                 AddCounterStepBoldToDescription();
-                ClearTransformInput();
-                ClearTransformChunk();
-                ClearTransformLittleEndian();
+                ClearTransformInputKey();
+                ClearTransformChunkKey();
+                ClearTransformLittleEndianKey();
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -499,16 +558,46 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Diffusion
+        private void MarkTransformInputKeyDiffusion()
+        {
+            pres.Nav.SetCopyBackground(pres.UITransformInputKeyDiffusion);
+
+            if (pres.InputKey.Length == 32)
+            {
+                pres.Nav.SetCopyBackground(pres.UITransformInputKeyDiffusion2);
+            }
+        }
+
+        private void ReplaceTransformInputKeyDiffusion()
+        {
+            FlowDocument fullDKey = GetDiffusionKey();
+            if (pres.InputKey.Length == 16)
+            {
+                pres.Nav.SetDocument(pres.UITransformInputKeyDiffusion, fullDKey);
+            }
+            else
+            {
+                FlowDocument dKeyRow1;
+                FlowDocument dKeyRow2;
+                (dKeyRow1, dKeyRow2, _) = SplitDocument(fullDKey, 2);
+                pres.Nav.SetDocument(pres.UITransformInputKeyDiffusion, dKeyRow1);
+                pres.Nav.SetDocument(pres.UITransformInputKeyDiffusion2, dKeyRow2);
+            }
+        }
+
+        private void ClearTransformChunkKeyDiffusion()
+        {
+            pres.Nav.Clear(pres.UITransformChunkKeyDiffusion0, pres.UITransformChunkKeyDiffusion1, pres.UITransformChunkKeyDiffusion2, pres.UITransformChunkKeyDiffusion3, pres.UITransformChunkKeyDiffusion4, pres.UITransformChunkKeyDiffusion5, pres.UITransformChunkKeyDiffusion6, pres.UITransformChunkKeyDiffusion7);
+        }
+
         private void ReplaceTransformChunkDiffusion()
         {
             FlowDocument fullDKey = GetDiffusionKey();
             FlowDocument[] chunkDocs = SplitDocument(fullDKey, 8);
             for (int i = 0; i < 8; ++i)
             {
-                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}");
-                Border diffusionChunkCell = (Border)diffusionChunk.Parent;
+                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkKeyDiffusion{i}");
                 pres.Nav.SetDocument(diffusionChunk, chunkDocs[i]);
-                pres.Nav.Show(diffusionChunkCell);
             }
         }
         private void ReplaceTransformLittleEndianDiffusion()
@@ -523,6 +612,12 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Show(diffusionChunkCell);
             }
         }
+
+        private void ClearTransformLittleEndianDiffusion()
+        {
+            pres.Nav.Clear(pres.UITransformLittleEndianKeyDiffusion0, pres.UITransformLittleEndianKeyDiffusion1, pres.UITransformLittleEndianKeyDiffusion2, pres.UITransformLittleEndianKeyDiffusion3, pres.UITransformLittleEndianKeyDiffusion4, pres.UITransformLittleEndianKeyDiffusion5, pres.UITransformLittleEndianKeyDiffusion6, pres.UITransformLittleEndianKeyDiffusion7);
+        }
+
         private PageAction AddCopyDiffusionKeyToStateActions()
         {
             PageAction addDKeyToState = new PageAction(() =>
@@ -776,9 +871,6 @@ namespace Cryptool.Plugins.ChaCha
             for(int i = 0; i < 8; ++i)
             {
                 pres.Nav.Clear((TextBox)pres.FindName($"UITransformChunk{i}"));
-                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformChunkDiffusion{i}");
-                pres.Nav.Clear(diffusionChunk);
-                pres.Nav.Collapse((Border)diffusionChunk.Parent);
             }
         }
         #endregion TransformChunk
@@ -806,10 +898,6 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 8; ++i)
             {
                 pres.Nav.Clear((TextBox)pres.FindName($"UITransformLittleEndian{i}"));
-                pres.Nav.UnsetBackground((Border)pres.FindName($"UITransformLittleEndianCell{i}"));
-                RichTextBox diffusionChunk = (RichTextBox)pres.FindName($"UITransformLittleEndianDiffusion{i}");
-                pres.Nav.Clear(diffusionChunk);
-                pres.Nav.Collapse((Border)diffusionChunk.Parent);
             }
         }
         #endregion
