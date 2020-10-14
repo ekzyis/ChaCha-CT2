@@ -178,16 +178,16 @@ namespace Cryptool.Plugins.ChaCha
             {
                 copyActions[1].AddToExec(() =>
                 {
-                    pres.Nav.SetCopyBackground(pres.UITransformInputCell2);
+                    pres.Nav.SetCopyBackground(pres.UITransformInput);
                     ReplaceTransformInput($"{text}{text}");
                 });
                 copyActions[1].AddToUndo(() =>
                 {
-                    pres.Nav.UnsetBackground(pres.UITransformInputCell2);
+                    pres.Nav.UnsetBackground(pres.UITransformInput);
                     ClearTransformInput();
                 });
-                copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInputCell2); });
-                copyActions[2].AddToUndo(() => { pres.Nav.SetCopyBackground(pres.UITransformInputCell2); });
+                copyActions[2].AddToExec(() => { pres.Nav.UnsetBackground(pres.UITransformInput); });
+                copyActions[2].AddToUndo(() => { pres.Nav.SetCopyBackground(pres.UITransformInput); });
             }
             copyActions[1].Add(TransformInputDiffusionAction());
             return copyActions;
@@ -415,15 +415,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 (dKeyRow1, dKeyRow2, _) = SplitDocument(fullDKey, 2);
             }
-            pres.Nav.SetDocument(pres.UITransformInputDiffusion, dKeyRow1);
-            pres.Nav.SetDocument(pres.UITransformInputDiffusion2, dKeyRow2);
-            pres.Nav.Show(pres.UITransformInputDiffusionCell);
-            pres.Nav.Show(pres.UITransformInputDiffusionCell2);
+            pres.Nav.SetDocumentAndShow(pres.UITransformInputDiffusion, dKeyRow1);
+            pres.Nav.SetDocumentAndShow(pres.UITransformInputDiffusion2, dKeyRow2);
         }
         private void ClearTransformInputDiffusion()
         {
-            pres.Nav.Collapse(pres.UITransformInputDiffusionCell, pres.UITransformInputDiffusionCell2);
-            pres.Nav.Clear(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
+            pres.Nav.ClearAndCollapse(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion);
         }
         private PageAction TransformInputDiffusionAction()
         {
@@ -724,8 +721,7 @@ namespace Cryptool.Plugins.ChaCha
         private void ClearTransformInput()
         {
             pres.Nav.Clear(pres.UITransformInput, pres.UITransformInput2);
-            pres.Nav.Clear(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
-            pres.Nav.Collapse(pres.UITransformInputDiffusionCell, pres.UITransformInputDiffusionCell2);
+            pres.Nav.ClearAndCollapse(pres.UITransformInputDiffusion, pres.UITransformInputDiffusion2);
         }
         #endregion
 
