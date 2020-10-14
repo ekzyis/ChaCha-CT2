@@ -148,8 +148,7 @@
                 <TableRow>
                   <TableCell ColumnSpan="2">
                     <Paragraph>
-                      ChaCha is a
-                      <Bold>stream cipher</Bold> .
+                      ChaCha is a stream cipher.
                       <LineBreak/> This means it generates a pseudorandom stream of bits (keystream) of at least the size of the input message. It then encrypts the input message by performing a XOR bitwise operation on both bit streams.
                       <!-- Picture of plaintext XOR keystream -->
                     </Paragraph>
