@@ -647,7 +647,7 @@
             </Grid.Resources>
 
             <!--#region  TransformInput -->
-            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="0" Grid.Column="0" Text="Input:"/>
+            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="0" Grid.Column="0" Text="Original value:"/>
             <!--#region TransformInput Constants, Counter, IV -->
             <Border Style="{StaticResource TransformBox}" Grid.Row="0" Grid.Column="1">
               <TextBox Style="{StaticResource TransformValue}" Name="UITransformInput"/>
