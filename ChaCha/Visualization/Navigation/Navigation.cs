@@ -950,6 +950,12 @@ namespace Cryptool.Plugins.ChaCha
 
         private void NextQuarterround_Click(object sender, RoutedEventArgs e)
         {
+            if(CurrentQuarterroundIndexTextBox == 0)
+            {
+                // we are in no round yet. Behave as if clicked on next round.
+                NextRound_Click(null, null);
+                return;
+            }
             int qrIndex = CurrentQuarterroundIndexTextBox + 1;
             if(qrIndex == 5)
             {
