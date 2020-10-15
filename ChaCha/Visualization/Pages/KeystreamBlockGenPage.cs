@@ -319,7 +319,13 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((TextBox)GetIndexElement("UIKeystreamBlockGen", i, ""));
                 pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenAddition", i, ""));
                 pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, ""));
+                pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenLittleEndian", i, ""));
                 pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionResultDiffusion", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenLittleEndianDiffusion", i, ""));
+                SetFontSizeToDiffusionStateEntries(DIFFUSION_DEFAULT_FONTSIZE);
+                SetFontSizeToStateEntries(DIFFUSION_DEFAULT_FONTSIZE);
             }
 
         }
