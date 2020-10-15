@@ -523,8 +523,8 @@ namespace Cryptool.Plugins.ChaCha
         // Prevents direct write-access to actual current action index value while still being able to read from it.
         private int _currentActionIndexTextBox = 0;
         private int _currentKeystreamBlockTextBox = 1;
-        private int _currentRoundIndexTextBox = 1;
-        private int _currentQuarterroundIndexTextBox = 1;
+        private int _currentRoundIndexTextBox = 0;
+        private int _currentQuarterroundIndexTextBox = 0;
 
         private bool _executionFinished = false;
         private bool _inputValid = false;
