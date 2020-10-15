@@ -662,9 +662,9 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1 && NavigationEnabled;
 
-        public bool NextQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox != 4 && NavigationEnabled;
+        public bool NextQuarterroundIsEnabled => (NextRoundIsEnabled || CurrentQuarterroundIndexTextBox != 4) && NavigationEnabled;
 
-        public bool PrevQuarterroundIsEnabled => CurrentQuarterroundIndexTextBox > 1 && NavigationEnabled;
+        public bool PrevQuarterroundIsEnabled => (PrevRoundIsEnabled || CurrentQuarterroundIndexTextBox > 1) && NavigationEnabled;
 
 
         private int _currentRoundIndex = 0;
@@ -939,12 +939,23 @@ namespace Cryptool.Plugins.ChaCha
         private void PrevQuarterround_Click(object sender, RoutedEventArgs e)
         {
             int qrIndex = CurrentQuarterroundIndexTextBox - 1;
+            if (qrIndex == 0)
+            {
+                string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(4, CurrentRoundIndex - 1);
+                GoToLabeledAction(searchLabel);
+                return;
+            }
             MoveToQuarterround(qrIndex);
         }
 
         private void NextQuarterround_Click(object sender, RoutedEventArgs e)
         {
             int qrIndex = CurrentQuarterroundIndexTextBox + 1;
+            if(qrIndex == 5)
+            {
+                NextRound_Click(null, null);
+                return;
+            }
             MoveToQuarterround(qrIndex);
         }
 
