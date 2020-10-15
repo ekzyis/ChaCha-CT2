@@ -1543,6 +1543,15 @@
           </Grid>
           <!-- Step indicator -->
           <Grid Grid.Column="1" Grid.Row="0" Margin="20,0,0,0">
+            <TextBox VerticalAlignment="Center" FontSize="20" FontStyle="Normal"  Margin="-15,0,0,50">
+              <TextBox.LayoutTransform>
+                <TransformGroup>
+                  <RotateTransform Angle="90"/>
+                  <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                </TransformGroup>
+              </TextBox.LayoutTransform>
+              CHACHA HASH FUNCTION
+            </TextBox>
             <Grid>
               <Grid.RowDefinitions>
                 <RowDefinition Height="0.75*"/>
@@ -1699,6 +1708,15 @@
             </Grid.RowDefinitions>
             <!-- Quarterround visualization -->
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+              <TextBox VerticalAlignment="Center" FontSize="20">
+                <TextBox.LayoutTransform>
+                  <TransformGroup>
+                    <RotateTransform Angle="90"/>
+                    <ScaleTransform ScaleX="-1" ScaleY="-1"/>
+                  </TransformGroup>
+                </TextBox.LayoutTransform>
+                QUARTERROUND FUNCTION
+              </TextBox>
               <Viewbox Height="230">
                 <Viewbox.Resources>
                   <Style x:Key="hexQRCell" TargetType="TextBox" BasedOn="{ StaticResource hexCell }">
