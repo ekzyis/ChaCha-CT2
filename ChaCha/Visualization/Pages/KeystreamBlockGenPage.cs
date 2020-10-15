@@ -202,8 +202,12 @@ namespace Cryptool.Plugins.ChaCha
         #region State methods
         private void SetFontSizeToStateEntries(double size)
         {
-            TextBox[] diffusionTextBoxes = GetStateInputs();
-            pres.Nav.SetFontSize(size, diffusionTextBoxes);
+            TextBox[] stateTextBoxes = GetStateInputs();
+            TextBox[] additionTextBoxes = GetIndexElements<TextBox>("UIKeystreamBlockGenAddition", 0, 16, "");
+            TextBox[] additionResultTextBoxes = GetIndexElements<TextBox>("UIKeystreamBlockGenAdditionResult", 0, 16, "");
+            pres.Nav.SetFontSize(size, stateTextBoxes);
+            pres.Nav.SetFontSize(size, additionTextBoxes);
+            pres.Nav.SetFontSize(size, additionResultTextBoxes);
         }
 
         private string[] GetCurrentState()
@@ -315,7 +319,13 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear((TextBox)GetIndexElement("UIKeystreamBlockGen", i, ""));
                 pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenAddition", i, ""));
                 pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenAdditionResult", i, ""));
+                pres.Nav.ClearAndCollapse((TextBox)GetIndexElement("UIKeystreamBlockGenLittleEndian", i, ""));
                 pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenDiffusion", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionDiffusion", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenAdditionResultDiffusion", i, ""));
+                pres.Nav.ClearAndCollapse((RichTextBox)GetIndexElement("UIKeystreamBlockGenLittleEndianDiffusion", i, ""));
+                SetFontSizeToDiffusionStateEntries(DIFFUSION_DEFAULT_FONTSIZE);
+                SetFontSizeToStateEntries(DIFFUSION_DEFAULT_FONTSIZE);
             }
 
         }
@@ -485,7 +495,11 @@ namespace Cryptool.Plugins.ChaCha
         private void SetFontSizeToDiffusionStateEntries(double size)
         {
             RichTextBox[] diffusionTextBoxes = GetDiffusionStateInputs();
+            RichTextBox[] additionTextBoxes = GetIndexElements<RichTextBox>("UIKeystreamBlockGenAdditionDiffusion", 0, 16, "");
+            RichTextBox[] additionResultTextBoxes = GetIndexElements<RichTextBox>("UIKeystreamBlockGenAdditionResultDiffusion", 0, 16, "");
             pres.Nav.SetFontSize(size, diffusionTextBoxes);
+            pres.Nav.SetFontSize(size, additionTextBoxes);
+            pres.Nav.SetFontSize(size, additionResultTextBoxes);
         }
         private void InitDiffusionResults()
         {
