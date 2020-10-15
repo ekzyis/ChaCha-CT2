@@ -169,16 +169,16 @@
                   <TableCell>
                     <List MarkerStyle="Decimal" TextAlignment="Left">
                       <ListItem Background="Bisque">
-                        <Paragraph>Constants (nothing-up-my-sleeves numbers)</Paragraph>
+                        <Paragraph>Constants (nothing-up-my-sleeves numbers) (128-bit)</Paragraph>
                       </ListItem>
                       <ListItem Background="LightCoral">
-                        <Paragraph>Key</Paragraph>
+                        <Paragraph>Key (128-bit or 256-bit. At 128-bit key will be expanded into a 256-bit key.)</Paragraph>
                       </ListItem>
                       <ListItem Background="SkyBlue">
-                        <Paragraph>Keystream block counter</Paragraph>
+                        <Paragraph>Keystream block counter (64-bit)</Paragraph>
                       </ListItem>
                       <ListItem Background="PaleGreen">
-                        <Paragraph>Initialization vector</Paragraph>
+                        <Paragraph>Initialization vector (64-bit)</Paragraph>
                       </ListItem>
                     </List>
                   </TableCell>
