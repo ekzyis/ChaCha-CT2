@@ -109,7 +109,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public override void Setup()
         {
-            InitCounterInputValidator();
+            InitCounterInput();
         }
 
         #region Constants
@@ -466,7 +466,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private void InitCounterInputValidator()
+        private void InitCounterInput()
         {
             ValidationRule counterInputValidationRule = new CounterInputValidationRule(versionIsDJB ? ulong.MaxValue : uint.MaxValue);
             Binding counterInputBinding = new Binding("InputCounter")
