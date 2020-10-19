@@ -1004,8 +1004,21 @@
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Text="Counter:" Background="SkyBlue"/>
             <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Name="UIInputCounterCell" >
               <StackPanel Orientation="Horizontal">
-                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" IsReadOnly="False" Margin="0,3,0,0" Text="{ Binding HexInitialCounter, Mode=OneWay }" Name="UICounter" Background="SkyBlue"/>
-                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="You can input here your own counter in hexadecimal if you like."/> 
+                <!-- Code-behind adds binding to Text property of UICounter with validation -->
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" IsReadOnly="False" Margin="0,3,0,0" Name="UICounter" Background="SkyBlue"/>
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="(You can input here your own counter in hexadecimal if you like.)"/>
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Name="CounterValidationError" Foreground="Red">
+                  <TextBox.Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource text}">
+                      <Setter Property="Text" Value="" />
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding ElementName=UICounter, Path=(Validation.HasError)}" Value="True">
+                          <Setter Property="Text" Value="{Binding ElementName=UICounter, Path=(Validation.Errors)[0].ErrorContent}" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </TextBox.Style>
+                </TextBox>
               </StackPanel>
             </Border>
           </Grid>

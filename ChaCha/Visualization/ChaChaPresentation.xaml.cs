@@ -164,6 +164,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _initialCounter = value;
+                _inputCounter = ChaCha.ToUInt64(value, 0);
                 OnPropertyChanged("InitialCounter");
                 OnPropertyChanged("HexInitialCounter");
                 OnPropertyChanged("InitialCounterChunks");
@@ -189,6 +190,20 @@ namespace Cryptool.Plugins.ChaCha
             get
             {
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8).Split(' ');
+            }
+        }
+
+        private ulong _inputCounter;
+        public ulong InputCounter
+        {
+            get
+            {
+                return _inputCounter;
+            }
+            set
+            {
+                _inputCounter = value;
+                OnPropertyChanged("InputCounter");
             }
         }
         #endregion

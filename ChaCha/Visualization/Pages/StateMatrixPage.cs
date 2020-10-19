@@ -3,17 +3,47 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Cryptool.Plugins.Chacha.Extensions;
 
 namespace Cryptool.Plugins.ChaCha
 {
+
+    public class CounterInputValidationRule: ValidationRule
+    {
+        private ulong _maxCounter;
+        public CounterInputValidationRule(ulong maxCounter)
+        {
+            _maxCounter = maxCounter;
+        }
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string inputText = (string)value;
+            ulong inputCounter = 0;
+
+            try
+            {
+                inputCounter = ulong.Parse(inputText, NumberStyles.HexNumber);
+            }
+            catch (Exception e)
+            {
+                return new ValidationResult(false, $"{e.Message}");
+            }
+
+            if (inputCounter > _maxCounter)
+            {
+                return new ValidationResult(false,
+                    $"Counter must be in range 0-{_maxCounter}.");
+            }
+            return ValidationResult.ValidResult;
+        }
+    }
+
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
@@ -62,6 +92,7 @@ namespace Cryptool.Plugins.ChaCha
             });
             AddAction(nextPageDesc);
             InitDiffusion();
+            InitCounterInputValidator();
         }
 
         #region Constants
@@ -417,6 +448,16 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
             }
         }
+
+        private void InitCounterInputValidator()
+        {
+            ValidationRule counterInputValidationRule = new CounterInputValidationRule((ulong)(versionIsDJB ? Math.Pow(2, 64) - 1 : Math.Pow(2, 32) - 1));
+            Binding counterInputBinding = new Binding("InputCounter")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            counterInputBinding.ValidationRules.Add(counterInputValidationRule);
+            pres.UICounter.SetBinding(TextBox.TextProperty, counterInputBinding);
+        }
+
         #endregion
 
         #region IV

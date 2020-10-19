@@ -685,6 +685,15 @@ namespace Cryptool.Plugins.ChaCha
             return BitConverter.ToUInt32(b, startIndex);
         }
 
+        public static ulong ToUInt64(byte[] b, int startIndex)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(b);
+            }
+            return BitConverter.ToUInt64(b, startIndex);
+        }
+
         /**
         * Circular bit shift to the left. 
         */
