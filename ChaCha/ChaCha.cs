@@ -367,7 +367,8 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            for (ulong i = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
+            ulong startIndex = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : INITIAL_COUNTER;
+            for (ulong i = startIndex; i < keystreamBlocksNeeded + startIndex; i++)
             {
                 byte[] keyblock = GenerateKeystreamBlock(i);
                 if (ExecUserKeystreamBlock) break;
