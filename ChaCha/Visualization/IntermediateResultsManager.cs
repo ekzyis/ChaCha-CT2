@@ -234,9 +234,16 @@ namespace Cryptool.Plugins.ChaCha
             IntermediateResultsList list = GetList(type);
             if (list == null)
             {
-                throw new ArgumentException($"InterimResultList of type {type.Name}, index {index} does not exist");
+                throw new ArgumentException($"InterimResultList of type {type.Name} does not exist");
             }
-            return list.Get(index);
+            try
+            {
+                return list.Get(index);
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+                throw new ArgumentException($"Index {index} of InterimResultList of type {type.Name} does not exist");
+            }
         }
     }
 }
