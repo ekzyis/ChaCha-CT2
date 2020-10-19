@@ -337,7 +337,8 @@
             <RowDefinition/>
             <RowDefinition/>
           </Grid.RowDefinitions>
-          <!-- State matrix -->
+
+          <!--#region State matrix -->
           <Grid Grid.Row="0" Grid.Column="0">
             <Border BorderBrush="Black" BorderThickness="0,1,1,0">
               <Grid>
@@ -613,7 +614,9 @@
               </Grid>
             </Border>
           </Grid>
-          <!-- Transformation -->
+          <!--#endregion-->
+
+          <!--#region Transformation -->
           <Grid Grid.Row="1" Grid.Column="0" Margin="5">
             <Grid.RowDefinitions>
               <RowDefinition></RowDefinition>
@@ -943,9 +946,13 @@
             <!--#endregion-->
 
           </Grid>
-          <!-- Step description -->
+          <!--#endregion -->
+
+          <!--#region Description -->
           <RichTextBox Style="{ StaticResource richText }" Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
-          <!-- state parameters -->
+          <!--#endregion-->
+
+          <!--#region State parameters -->
           <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
             <Grid.RowDefinitions>
               <RowDefinition Height="20"/>
@@ -994,6 +1001,8 @@
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV" Background="PaleGreen"/>
             </Border>
           </Grid>
+          <!--#endregion-->
+
         </Grid>
       </Grid>
     </ContentControl>
