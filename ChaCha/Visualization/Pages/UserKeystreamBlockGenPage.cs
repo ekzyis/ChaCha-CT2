@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Diagnostics;
+using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -32,30 +33,51 @@ namespace Cryptool.Plugins.ChaCha
 
         protected override int MapIndex(ResultType<uint[]> resultType, int i)
         {
-            // offset is always zero because intermediate values of UserKeystreamBlockGenPage instances do not share their values with other pages.
-            return i;
+            Debug.Assert(resultType.Name.StartsWith("USER"), $"type {resultType.Name} given to MapIndex in UserKeystreamBlock does not start with USER");
+            switch (resultType.Name)
+            {
+                case "USER_CHACHA_HASH_ORIGINAL_STATE":
+                case "USER_CHACHA_HASH_ADD_ORIGINAL_STATE":
+                case "USER_CHACHA_HASH_LITTLEENDIAN_STATE":
+                case "USER_FLIPPED_BITS_ORIGINAL_STATE":
+                case "USER_FLIPPED_BITS_ADD_ORIGINAL_STATE":
+                case "USER_FLIPPED_BITS_LITTLEENDIAN_STATE":
+                case "USER_CHACHA_HASH_ORIGINAL_STATE_DIFFUSION":
+                case "USER_CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION":
+                case "USER_CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION":
+                    // These types are called with the keystream block as index i. Return zero because user keystream block is always at index 0 since there are no other keystream blocks (they overwrite each other).
+                    return 0;
+                default:
+                    // offset is always zero because intermediate values of UserKeystreamBlockGenPage instances do not share their values with other pages.
+                    return i;
+            }
         }
         protected override int MapIndex(ResultType<uint> resultType, int i)
         {
+            Debug.Assert(resultType.Name.StartsWith("USER"), $"type {resultType.Name} given to MapIndex in UserKeystreamBlock does not start with USER");
             // offset is always zero because intermediate values of UserKeystreamBlockGenPage instances do not share their values with other pages.
             return i;
         }
         protected override uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
         {
-            return pres.GetResult(MapResultType(resultType), MapIndex(resultType, index));
+            resultType = MapResultType(resultType);
+            return pres.GetResult(resultType, MapIndex(resultType, index));
         }
 
         protected override uint GetMappedResult(ResultType<uint> resultType, int index)
         {
-            return pres.GetResult(MapResultType(resultType), MapIndex(resultType, index));
+            resultType = MapResultType(resultType);
+            return pres.GetResult(resultType, MapIndex(resultType, index));
         }
         protected override string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
         {
-            return pres.GetHexResult(MapResultType(resultType), MapIndex(resultType, i), j);
+            resultType = MapResultType(resultType);
+            return pres.GetHexResult(resultType, MapIndex(resultType, i), j);
         }
         protected override string GetMappedHexResult(ResultType<uint> resultType, int index)
         {
-            return pres.GetHexResult(MapResultType(resultType), MapIndex(resultType, index));
+            resultType = MapResultType(resultType);
+            return pres.GetHexResult(resultType, MapIndex(resultType, index));
         }
     }
 
