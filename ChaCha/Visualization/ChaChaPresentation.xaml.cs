@@ -252,8 +252,8 @@ namespace Cryptool.Plugins.ChaCha
         #region Settings Variables
         public ChaCha.Version Version { get; set; }
         public int Rounds { get; set; }
-        private int _keystreamBlocksNeeded = -1;
-        public int KeystreamBlocksNeeded
+        private ulong _keystreamBlocksNeeded = 0;
+        public ulong KeystreamBlocksNeeded
         {
             get
             {
