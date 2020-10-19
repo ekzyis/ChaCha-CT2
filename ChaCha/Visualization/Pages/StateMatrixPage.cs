@@ -73,9 +73,9 @@ namespace Cryptool.Plugins.ChaCha
             pres = pres_;
             versionIsDJB = pres.Version == ChaCha.Version.DJB;
             keyIs32Byte = pres.InputKey.Length == 32;
-            descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ");
+            descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix. The first 16 bytes consist of the constants. ");
             descriptions.Add("The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ");
-            descriptions.Add($"The next { pres.InitialCounter.Length} bytes consist of the counter.Since this is our first keystream block, we set the counter to zero.The counter is special since we first reverse all bytes before applying the transformations but since the counter is zero, this does not matter for the first block. ");
+            descriptions.Add($"The next {pres.InitialCounter.Length} bytes consist of the counter. The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.");
             descriptions.Add($"The last {pres.InputIV.Length} bytes consist of the initialization vector. ");
             descriptions.Add("On the next page, we will use this initialized state matrix to generate the first keystream block.");
 
@@ -441,28 +441,28 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceTransformInputCounter()
         {
-            ReplaceTransformInput(pres.HexInitialCounter);
+            ReplaceTransformInput(pres.HexInputCounter);
         }
         private void ReplaceTransformChunkCounter()
         {
             if (versionIsDJB)
             {
-                ReplaceTransformChunk(pres.InitialCounterChunks[0], pres.InitialCounterChunks[1]);
+                ReplaceTransformChunk(pres.InputCounterChunks[0], pres.InputCounterChunks[1]);
             }
             else
             {
-                ReplaceTransformChunk(pres.InitialCounterChunks[0]);
+                ReplaceTransformChunk(pres.InputCounterChunks[0]);
             }
         }
         private void ReplaceTransformLittleEndianCounter()
         {
             if (versionIsDJB)
             {
-                ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0], pres.InitialCounterLittleEndian[1]);
+                ReplaceTransformLittleEndian(pres.InputCounterLittleEndian[0], pres.InputCounterLittleEndian[1]);
             }
             else
             {
-                ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
+                ReplaceTransformLittleEndian(pres.InputCounterLittleEndian[0]);
             }
         }
 

@@ -204,6 +204,30 @@ namespace Cryptool.Plugins.ChaCha
             {
                 _inputCounter = value;
                 OnPropertyChanged("InputCounter");
+                OnPropertyChanged("HexInputCounter");
+                OnPropertyChanged("InputCounterChunks");
+                OnPropertyChanged("InputCounterLittleEndian");
+            }
+        }
+        public string HexInputCounter
+        {
+            get
+            {
+                return HexString(_inputCounter);
+            }
+        }
+        public string[] InputCounterChunks
+        {
+            get
+            {
+                return Chunkify(HexString(_inputCounter), 8).Split(' ');
+            }
+        }
+        public string[] InputCounterLittleEndian
+        {
+            get
+            {
+                return Chunkify(HexStringLittleEndian(_inputCounter), 8).Split(' ');
             }
         }
         #endregion
