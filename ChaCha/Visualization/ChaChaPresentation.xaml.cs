@@ -310,6 +310,11 @@ namespace Cryptool.Plugins.ChaCha
             uint_resultsManager.ClearDiffusionResults();
             uint_array_resultsManager.ClearDiffusionResults();
         }
+        public void ClearUserKeystreamBlockResults()
+        {
+            uint_resultsManager.ClearUserKeystreamBlockResults();
+            uint_array_resultsManager.ClearUserKeystreamBlockResults();
+        }
         #endregion
 
         #region Visualization Helper Methods (Stringify)

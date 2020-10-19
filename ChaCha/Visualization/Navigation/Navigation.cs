@@ -425,10 +425,10 @@ namespace Cryptool.Plugins.ChaCha
 
         private void MoveToKeystreamPage(ulong n)
         {
-            if (n > (ulong)KeystreamBlocksNeeded)
+            if (n > KeystreamBlocksNeeded)
             {
                 // create new keystream block page with given keyblock number
-                KeystreamBlockGenPage p = Page.KeystreamBlockGenPage(this, n);
+                KeystreamBlockGenPage p = Page.UserKeystreamBlockGenPage(this, n);
                 InitPageNavigationBar(p);
                 InitKeystreamNavigation(p);
                 AddPage(p);

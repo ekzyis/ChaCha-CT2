@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -55,101 +56,91 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint> FLIPPED_BITS_ORIGINAL_STATE = new ResultType<uint>("FLIPPED_BITS_ORIGINAL_STATE");
         public static readonly ResultType<uint> FLIPPED_BITS_ADD_ORIGINAL_STATE = new ResultType<uint>("FLIPPED_BITS_ADD_ORIGINAL_STATE");
         public static readonly ResultType<uint> FLIPPED_BITS_LITTLEENDIAN_STATE = new ResultType<uint>("FLIPPED_BITS_LITTLEENDIAN_STATE");
+
+
+        public static readonly ResultType<uint> USER_QR_INPUT_A = new ResultType<uint>("USER_QR_INPUT_A");
+        public static readonly ResultType<uint> USER_QR_INPUT_B = new ResultType<uint>("USER_QR_INPUT_B");
+        public static readonly ResultType<uint> USER_QR_INPUT_C = new ResultType<uint>("USER_QR_INPUT_C");
+        public static readonly ResultType<uint> USER_QR_INPUT_D = new ResultType<uint>("USER_QR_INPUT_D");
+        public static readonly ResultType<uint> USER_QR_INPUT_X1 = new ResultType<uint>("USER_QR_INPUT_X1");
+        public static readonly ResultType<uint> USER_QR_INPUT_X2 = new ResultType<uint>("USER_QR_INPUT_X2");
+        public static readonly ResultType<uint> USER_QR_INPUT_X3 = new ResultType<uint>("USER_QR_INPUT_X3");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_X1 = new ResultType<uint>("USER_QR_OUTPUT_X1");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_X2 = new ResultType<uint>("USER_QR_OUTPUT_X2");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_X3 = new ResultType<uint>("USER_QR_OUTPUT_X3");
+        public static readonly ResultType<uint> USER_QR_ADD = new ResultType<uint>("USER_QR_ADD");
+        public static readonly ResultType<uint> USER_QR_XOR = new ResultType<uint>("USER_QR_XOR");
+        public static readonly ResultType<uint> USER_QR_SHIFT = new ResultType<uint>("USER_QR_SHIFT");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_A = new ResultType<uint>("USER_QR_OUTPUT_A");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_B = new ResultType<uint>("USER_QR_OUTPUT_B");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_C = new ResultType<uint>("USER_QR_OUTPUT_C");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_D = new ResultType<uint>("USER_QR_OUTPUT_D");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_ORIGINAL_STATE = new ResultType<uint[]>("USER_CHACHA_HASH_ORIGINAL_STATE");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_QUARTERROUND = new ResultType<uint[]>("USER_CHACHA_HASH_QUARTERROUND");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>("USER_CHACHA_HASH_ADD_ORIGINAL_STATE");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>("USER_CHACHA_HASH_LITTLEENDIAN_STATE");
+
+        public static readonly ResultType<uint> USER_QR_INPUT_A_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_A_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_INPUT_B_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_B_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_INPUT_C_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_C_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_INPUT_D_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_D_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_INPUT_X1_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_X1_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_INPUT_X2_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_X2_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_INPUT_X3_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_X3_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_X1_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_X1_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_X2_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_X2_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_X3_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_X3_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_ADD_DIFFUSION = new ResultType<uint>("USER_QR_ADD_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_XOR_DIFFUSION = new ResultType<uint>("USER_QR_XOR_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_SHIFT_DIFFUSION = new ResultType<uint>("USER_QR_SHIFT_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_A_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_A_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_B_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_B_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_C_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_C_DIFFUSION");
+        public static readonly ResultType<uint> USER_QR_OUTPUT_D_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_D_DIFFUSION");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_ORIGINAL_STATE_DIFFUSION");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_QUARTERROUND_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_QUARTERROUND_DIFFUSION");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION");
+        public static readonly ResultType<uint[]> USER_CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION");
+
+        public static readonly ResultType<uint> USER_FLIPPED_BITS_QR = new ResultType<uint>("USER_FLIPPED_BITS_QR");
+        public static readonly ResultType<uint> USER_FLIPPED_BITS_ORIGINAL_STATE = new ResultType<uint>("USER_FLIPPED_BITS_ORIGINAL_STATE");
+        public static readonly ResultType<uint> USER_FLIPPED_BITS_ADD_ORIGINAL_STATE = new ResultType<uint>("USER_FLIPPED_BITS_ADD_ORIGINAL_STATE");
+        public static readonly ResultType<uint> USER_FLIPPED_BITS_LITTLEENDIAN_STATE = new ResultType<uint>("USER_FLIPPED_BITS_LITTLEENDIAN_STATE");
+
+        private static object GetResultTypeByName(string name)
+        {
+            var field = typeof(ResultType).GetField(name, BindingFlags.Public | BindingFlags.Static);
+            return field.GetValue(null);
+        }
+
+        public static ResultType<uint> GetUserType(ResultType<uint> type)
+        {
+            Debug.Assert(!type.Name.StartsWith("USER_"), $"Tried to get user type of {type.Name} which is already a user type.");
+            return (ResultType<uint>)GetResultTypeByName($"USER_{type.Name}");
+        }
+
+        public static ResultType<uint[]> GetUserType(ResultType<uint[]> type)
+        {
+            Debug.Assert(!type.Name.StartsWith("USER_"), $"Tried to get user type of {type.Name} which is already a user type.");
+            return (ResultType<uint[]>)GetResultTypeByName($"USER_{type.Name}");
+        }
+
         public static ResultType<uint> GetDiffusionResultType(ResultType<uint> resultType)
         {
-            if (resultType == QR_INPUT_A)
-            {
-                return QR_INPUT_A_DIFFUSION;
-            }
-            else if (resultType == QR_INPUT_B)
-            {
-                return QR_INPUT_B_DIFFUSION;
-            }
-            else if (resultType == QR_INPUT_C)
-            {
-                return QR_INPUT_C_DIFFUSION;
-            }
-            else if (resultType == QR_INPUT_D)
-            {
-                return QR_INPUT_D_DIFFUSION;
-            }
-            else if (resultType == QR_INPUT_X1)
-            {
-                return QR_INPUT_X1_DIFFUSION;
-            }
-            else if (resultType == QR_INPUT_X2)
-            {
-                return QR_INPUT_X2_DIFFUSION;
-            }
-            else if (resultType == QR_INPUT_X3)
-            {
-                return QR_INPUT_X3_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_A)
-            {
-                return QR_OUTPUT_A_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_B)
-            {
-                return QR_OUTPUT_B_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_C)
-            {
-                return QR_OUTPUT_C_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_D)
-            {
-                return QR_OUTPUT_D_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_X1)
-            {
-                return QR_OUTPUT_X1_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_X2)
-            {
-                return QR_OUTPUT_X2_DIFFUSION;
-            }
-            else if (resultType == QR_OUTPUT_X3)
-            {
-                return QR_OUTPUT_X3_DIFFUSION;
-            }
-            else if (resultType == QR_ADD)
-            {
-                return QR_ADD_DIFFUSION;
-            }
-            else if (resultType == QR_SHIFT)
-            {
-                return QR_SHIFT_DIFFUSION;
-            }
-            else if (resultType == QR_XOR)
-            {
-                return QR_XOR_DIFFUSION;
-            }
-            else if (resultType.Name.StartsWith("FLIPPED_BITS"))
+            if (resultType.Name.StartsWith("FLIPPED_BITS"))
             {
                 return resultType;
             }
-            throw new InvalidOperationException($"No matching diffusion ResultType<uint> found for type {resultType.Name}.");
+            else
+            {
+                Debug.Assert(!resultType.Name.EndsWith("_DIFFUSION"), $"Tried to get diffusion type of {resultType.Name} which is already a diffusion type.");
+                return (ResultType<uint>)GetResultTypeByName($"{resultType.Name}_DIFFUSION");
+            }
         }
         public static ResultType<uint[]> GetDiffusionResultType(ResultType<uint[]> resultType)
         {
-            if (resultType == CHACHA_HASH_ORIGINAL_STATE)
-            {
-                return CHACHA_HASH_ORIGINAL_STATE_DIFFUSION;
-            }
-            else if (resultType == CHACHA_HASH_QUARTERROUND)
-            {
-                return CHACHA_HASH_QUARTERROUND_DIFFUSION;
-            }
-            else if (resultType == CHACHA_HASH_ADD_ORIGINAL_STATE)
-            {
-                return CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION;
-            }
-            else if (resultType == CHACHA_HASH_LITTLEENDIAN_STATE)
-            {
-                return CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION;
-            }
-            throw new InvalidOperationException($"No matching diffusion ResultType<uint[]> found for type {resultType.Name}");
+            Debug.Assert(!resultType.Name.EndsWith("_DIFFUSION"), $"Tried to get diffusion type of {resultType.Name} which is already a diffusion type.");
+            return (ResultType<uint[]>)GetResultTypeByName($"{resultType.Name}_DIFFUSION");
         }
     }
 
@@ -220,6 +211,15 @@ namespace Cryptool.Plugins.ChaCha
                 if(r.Type.Name.EndsWith("DIFFUSION") || r.Type.Name.StartsWith("FLIPPED_BITS")) r.Clear();
             }
         }
+
+        public void ClearUserKeystreamBlockResults()
+        {
+            foreach (IntermediateResultsList r in _intermediateResultsList)
+            {
+                if (r.Type.Name.StartsWith("USER")) r.Clear();
+            }
+        }
+
         public void AddResult(ResultType<T> type, T result)
         {
             if (!TypeExists(type))
