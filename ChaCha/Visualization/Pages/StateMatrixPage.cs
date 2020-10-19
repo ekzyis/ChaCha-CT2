@@ -451,7 +451,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void InitCounterInputValidator()
         {
-            ValidationRule counterInputValidationRule = new CounterInputValidationRule((ulong)(versionIsDJB ? Math.Pow(2, 64) - 1 : Math.Pow(2, 32) - 1));
+            ValidationRule counterInputValidationRule = new CounterInputValidationRule(versionIsDJB ? ulong.MaxValue : uint.MaxValue);
             Binding counterInputBinding = new Binding("InputCounter")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
             counterInputBinding.ValidationRules.Add(counterInputValidationRule);
