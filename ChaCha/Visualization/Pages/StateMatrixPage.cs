@@ -411,22 +411,19 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if(versionIsDJB)
                 {
-                    string counter0 = pres.UITransformLittleEndian1.Text;
-                    string counter1 = pres.UITransformLittleEndian2.Text;
-                    pres.Nav.Replace(pres.UIState12, counter0);
-                    pres.Nav.Replace(pres.UIState13, counter1);
+                    pres.Nav.SetTextBinding(pres.UIState12, "InputCounterLittleEndian[0]");
+                    pres.Nav.SetTextBinding(pres.UIState13, "InputCounterLittleEndian[1]");
                 }
                 else
                 {
-                    string counter0 = pres.UITransformLittleEndian0.Text;
-                    pres.Nav.Replace(pres.UIState12, counter0);
+                    pres.Nav.SetTextBinding(pres.UIState12, "InputCounterLittleEndian[0]");
                 }
             }, () =>
             {
-                pres.Nav.Clear(pres.UIState12);
+                pres.Nav.ClearTextBinding(pres.UIState12);
                 if (versionIsDJB)
                 {
-                    pres.Nav.Clear(pres.UIState13);
+                    pres.Nav.ClearTextBinding(pres.UIState13);
                 }
             });
             AddAction(counterStepDescriptionAction);
@@ -441,28 +438,28 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceTransformInputCounter()
         {
-            ReplaceTransformInput(pres.HexInputCounter);
+            SetTextBindingToTransformInput("HexInputCounter");
         }
         private void ReplaceTransformChunkCounter()
         {
             if (versionIsDJB)
             {
-                ReplaceTransformChunk(pres.InputCounterChunks[0], pres.InputCounterChunks[1]);
+                SetTextBindingToTransformChunk("InputCounterChunks[0]", "InputCounterChunks[1]");
             }
             else
             {
-                ReplaceTransformChunk(pres.InputCounterChunks[0]);
+                SetTextBindingToTransformChunk("InputCounterChunks[0]");
             }
         }
         private void ReplaceTransformLittleEndianCounter()
         {
             if (versionIsDJB)
             {
-                ReplaceTransformLittleEndian(pres.InputCounterLittleEndian[0], pres.InputCounterLittleEndian[1]);
+                SetTextBindingToTransformLittleEndian("InputCounterLittleEndian[0]", "InputCounterLittleEndian[1]");
             }
             else
             {
-                ReplaceTransformLittleEndian(pres.InputCounterLittleEndian[0]);
+                SetTextBindingToTransformLittleEndian("InputCounterLittleEndian[0]");
             }
         }
 
@@ -850,9 +847,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres.Nav.Replace(pres.UITransformInput, input);
         }
+        private void SetTextBindingToTransformInput(string bindingVarName)
+        {
+            pres.Nav.SetTextBinding(pres.UITransformInput, bindingVarName);
+        }
         private void ClearTransformInput()
         {
             pres.Nav.Clear(pres.UITransformInput);
+            pres.Nav.ClearTextBinding(pres.UITransformInput);
         }
         #endregion
 
@@ -873,11 +875,29 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+        private void SetTextBindingToTransformChunk(params string[] bindingVarNames)
+        {
+            if (bindingVarNames.Length == 2)
+            {
+                // use borders in center to center text
+                pres.Nav.SetTextBinding(pres.UITransformChunk1, bindingVarNames[0]);
+                pres.Nav.SetTextBinding(pres.UITransformChunk2, bindingVarNames[1]);
+            }
+            else
+            {
+                for (int i = 0; i < bindingVarNames.Length; ++i)
+                {
+                    pres.Nav.SetTextBinding((TextBox)pres.FindName($"UITransformChunk{i}"), bindingVarNames[i]);
+                }
+            }
+        }
         private void ClearTransformChunk()
         {
             for(int i = 0; i < 8; ++i)
             {
-                pres.Nav.Clear((TextBox)pres.FindName($"UITransformChunk{i}"));
+                TextBox tb = (TextBox)pres.FindName($"UITransformChunk{i}");
+                pres.Nav.Clear(tb);
+                pres.Nav.ClearTextBinding(tb);
             }
         }
         #endregion TransformChunk
@@ -900,11 +920,30 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+        private void SetTextBindingToTransformLittleEndian(params string[] bindingVarNames)
+        {
+            // TODO create another grid with 3 rows to center IV in IETF version and add branch for le.Length == 3 (IV IETF) and le.Length == 1 (counter IETF) here
+            if (bindingVarNames.Length == 2)
+            {
+                // use borders in center to center text
+                pres.Nav.SetTextBinding(pres.UITransformLittleEndian1, bindingVarNames[0]);
+                pres.Nav.SetTextBinding(pres.UITransformLittleEndian2, bindingVarNames[1]);
+            }
+            else
+            {
+                for (int i = 0; i < bindingVarNames.Length; ++i)
+                {
+                    pres.Nav.SetTextBinding((TextBox)pres.FindName($"UITransformLittleEndian{i}"), bindingVarNames[i]);
+                }
+            }
+        }
         private void ClearTransformLittleEndian()
         {
             for (int i = 0; i < 8; ++i)
             {
-                pres.Nav.Clear((TextBox)pres.FindName($"UITransformLittleEndian{i}"));
+                TextBox tb = (TextBox)pres.FindName($"UITransformLittleEndian{i}");
+                pres.Nav.Clear(tb);
+                pres.Nav.ClearTextBinding(tb);
             }
         }
         #endregion

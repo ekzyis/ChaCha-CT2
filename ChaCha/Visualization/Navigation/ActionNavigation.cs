@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -768,6 +769,16 @@ namespace Cryptool.Plugins.ChaCha
         {
             Replace(tb, text);
             Show(tb);
+        }
+
+        public void SetTextBinding(TextBox tb, string bindingVarName)
+        {
+            tb.SetBinding(TextBox.TextProperty, new Binding(bindingVarName) { Mode = BindingMode.OneWay } );
+        }
+
+        public void ClearTextBinding(TextBox tb)
+        {
+            BindingOperations.ClearBinding(tb, TextBox.TextProperty);
         }
         #endregion
 
