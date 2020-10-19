@@ -452,7 +452,6 @@ namespace Cryptool.Plugins.ChaCha
                 ShowAdditionResult();
                 ReplaceState(previousState);
             }, ACTIONLABEL_ADDITION_END);
-            addStates.Add(UpdateDiffusionAddOriginalStateFlippedBitsCountAction());
             return new PageAction[] { updateDescription, showOriginalState, addStates };
         }
         private PageAction[] ConvertStateEntriesToLittleEndian()
@@ -485,7 +484,6 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceState(previousState);
                 ShowStateLittleEndianTransformResult();
             }, ACTIONLABEL_LITTLE_ENDIAN_END);
-            convert.Add(UpdateDiffusionLittleEndianStateFlippedBitsCountAction());
             return new PageAction[] { updateDescription, showResult, convert };
         }
         #endregion
@@ -614,7 +612,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             return new PageAction(() =>
             {
-
                 if (pres.DiffusionActive)
                 {
                     UpdateDiffusionQRFlippedBitsCount(qrIndex);
@@ -645,46 +642,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres.DiffusionFlippedBitsAbsolute = GetMappedResult(ResultType.FLIPPED_BITS_ADD_ORIGINAL_STATE, (int) keyBlockNr - 1);
         }
-        private PageAction UpdateDiffusionAddOriginalStateFlippedBitsCountAction()
-        {
-            return new PageAction(() =>
-            {
-
-                if (pres.DiffusionActive)
-                {
-                    UpdateDiffusionAddOriginalStateFlippedBitsCount();
-                }
-            }, () =>
-            {
-                if (pres.DiffusionActive)
-                {
-                    UpdateDiffusionQRFlippedBitsCount(pres.Rounds * 4);
-                }
-            });
-        }
 
         private void UpdateDiffusionLittleEndianStateFlippedBitsCount()
         {
             pres.DiffusionFlippedBitsAbsolute =
                 GetMappedResult(ResultType.FLIPPED_BITS_LITTLEENDIAN_STATE, (int) keyBlockNr - 1);
-        }
-
-        private PageAction UpdateDiffusionLittleEndianStateFlippedBitsCountAction()
-        {
-            return new PageAction(() =>
-            {
-
-                if (pres.DiffusionActive)
-                {
-                    UpdateDiffusionLittleEndianStateFlippedBitsCount();
-                }
-            }, () =>
-            {
-                if (pres.DiffusionActive)
-                {
-                    UpdateDiffusionAddOriginalStateFlippedBitsCount();
-                }
-            });
         }
 
         private void UpdateDiffusionState(int qrIndex)
@@ -891,6 +853,7 @@ namespace Cryptool.Plugins.ChaCha
                 ClearAdditionDiffusion();
                 ClearAdditionResultDiffusion();
                 AddDiffusionToState(GetMappedResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1).Select(u => ChaChaPresentation.HexString(u)).ToArray());
+                UpdateDiffusionAddOriginalStateFlippedBitsCount();
             }, () =>
             {
                 SetFontSizeToStateEntries(DIFFUSION_INACTIVE_FONTSIZE);
@@ -898,6 +861,7 @@ namespace Cryptool.Plugins.ChaCha
                 ShowAdditionDiffusion();
                 ShowAdditionResultDiffusion();
                 AddDiffusionToState(previousState);
+                UpdateDiffusionQRFlippedBitsCount(pres.Rounds * 4);
             });
             return new PageAction[] { showOriginalDiffusionState, addDiffusionStates };
         }
@@ -935,10 +899,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 ClearStateLittleEndianTransformResultDiffusion();
                 AddDiffusionToState(littleEndianState);
+                UpdateDiffusionLittleEndianStateFlippedBitsCount();
             }, () =>
             {
                 AddDiffusionToState(previousState);
                 ShowStateLittleEndianTransformResultDiffusion();
+                UpdateDiffusionAddOriginalStateFlippedBitsCount();
             });
             return new PageAction[] { showResult, convert };
         }
