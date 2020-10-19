@@ -658,7 +658,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if (pres.DiffusionActive)
                 {
-                    UpdateDiffusionOriginalStateFlippedBitsCount();
+                    UpdateDiffusionQRFlippedBitsCount(pres.Rounds * 4);
                 }
             });
         }
