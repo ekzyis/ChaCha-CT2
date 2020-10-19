@@ -959,6 +959,7 @@
               <RowDefinition Height="1.6*"/>
               <RowDefinition Height="4*"/>
               <RowDefinition Height="1.6*"/>
+              <RowDefinition Height="1.6*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="1*"/>
@@ -999,6 +1000,13 @@
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):" Background="PaleGreen"/>
             <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell" >
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV" Background="PaleGreen"/>
+            </Border>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Text="Counter:" Background="SkyBlue"/>
+            <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Name="UIInputCounterCell" >
+              <StackPanel Orientation="Horizontal">
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" IsReadOnly="False" Margin="0,3,0,0" Text="{ Binding HexInitialCounter, Mode=OneWay }" Name="UICounter" Background="SkyBlue"/>
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="You can input here your own counter in hexadecimal if you like."/> 
+              </StackPanel>
             </Border>
           </Grid>
           <!--#endregion-->
