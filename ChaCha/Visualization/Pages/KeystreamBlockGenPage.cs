@@ -14,7 +14,7 @@ namespace Cryptool.Plugins.ChaCha
 {
     class KeystreamBlockGenPage : Page
     {
-        ChaChaPresentation pres;
+        protected ChaChaPresentation pres;
 
         private const string ACTIONLABEL_QR_START = "QUARTERROUND_START";
         private const string ACTIONLABEL_ROUND_START = "ROUND";
@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.ChaCha
         List<string> descriptions = new List<string>();
         private string[] originalState;
         private bool versionIsDJB;
-        private ulong keyBlockNr;
+        protected ulong keyBlockNr;
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres_, ulong keyblockNr_) : base(pageElement)
         {
             pres = pres_;
@@ -142,14 +142,14 @@ namespace Cryptool.Plugins.ChaCha
                     ClearQRDetail();
                     // update state matrix
                     ClearState();
-                    uint[] stateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
+                    uint[] stateEntries = qrIndex == 1 ? GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
                     for (int x = 0; x < stateEntries.Length; ++x)
                     {
                         InsertStateValue(x, stateEntries[x]);
                     }
                     if (pres.DiffusionActive)
                     {
-                        uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
+                        uint[] diffusionStateEntries = qrIndex == 1 ? GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
                             InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
@@ -1361,7 +1361,7 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Intermediate Result
-        private int MapIndex(ResultType<uint[]> resultType, int i)
+        protected virtual int MapIndex(ResultType<uint[]> resultType, int i)
         {
             int offset = 0;
             string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
@@ -1380,7 +1380,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             return (int)((ulong)offset * (keyBlockNr - 1)) + i;
         }
-        private int MapIndex(ResultType<uint> resultType, int i)
+        protected virtual int MapIndex(ResultType<uint> resultType, int i)
         {
             int offset = 0;
             string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
@@ -1413,21 +1413,20 @@ namespace Cryptool.Plugins.ChaCha
             }
             return (int)((ulong)offset * (keyBlockNr - 1)) + i;
         }
-        private uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
-        {
-            int mapIndex = MapIndex(resultType, index);
-            return pres.GetResult(resultType, mapIndex);
-        }
-
-        private uint GetMappedResult(ResultType<uint> resultType, int index)
+        protected virtual uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
         {
             return pres.GetResult(resultType, MapIndex(resultType, index));
         }
-        private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
+
+        protected virtual uint GetMappedResult(ResultType<uint> resultType, int index)
+        {
+            return pres.GetResult(resultType, MapIndex(resultType, index));
+        }
+        protected virtual string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
         {
             return pres.GetHexResult(resultType, MapIndex(resultType, i), j);
         }
-        private string GetMappedHexResult(ResultType<uint> resultType, int index)
+        protected virtual string GetMappedHexResult(ResultType<uint> resultType, int index)
         {
             return pres.GetHexResult(resultType, MapIndex(resultType, index));
         }
