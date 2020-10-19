@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private void Init()
+        protected virtual void Init()
         {
             PageAction generalDescriptionAction = new PageAction(() =>
             {

@@ -14,10 +14,10 @@ namespace Cryptool.Plugins.ChaCha
     {
         public UserKeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres_, ulong keyblockNr_) : base(pageElement, pres_, keyblockNr_) { }
 
-        public override void Setup()
+        protected override void Init()
         {
             pres.InitUserKeystreamBlock(keyBlockNr);
-            base.Setup();
+            base.Init();
         }
 
         public static ResultType<uint> MapResultType(ResultType<uint> resultType)
