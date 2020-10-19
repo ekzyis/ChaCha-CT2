@@ -954,6 +954,21 @@
 
           <!--#region State parameters -->
           <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+            <Grid.Resources>
+              <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource hexTextBox}">
+                <Setter Property="Validation.ErrorTemplate">
+                  <Setter.Value>
+                    <ControlTemplate>
+                      <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
+                                   Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                      </StackPanel>
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
               <RowDefinition Height="20"/>
               <RowDefinition Height="1.6*"/>
@@ -1005,20 +1020,8 @@
             <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Name="UIInputCounterCell" >
               <StackPanel Orientation="Horizontal">
                 <!-- Code-behind adds binding to Text property of UICounter with validation -->
-                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" IsReadOnly="False" Margin="0,3,0,0" Name="UICounter" Background="SkyBlue"/>
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource CustomErrorControlOnErrorStyle}" IsReadOnly="False" Margin="0,3,0,0" Name="UICounter" Background="SkyBlue"/>
                 <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="(You can input here your own counter in hexadecimal if you like.)"/>
-                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Name="CounterValidationError" Foreground="Red">
-                  <TextBox.Style>
-                    <Style TargetType="TextBox" BasedOn="{StaticResource text}">
-                      <Setter Property="Text" Value="" />
-                      <Style.Triggers>
-                        <DataTrigger Binding="{Binding ElementName=UICounter, Path=(Validation.HasError)}" Value="True">
-                          <Setter Property="Text" Value="{Binding ElementName=UICounter, Path=(Validation.Errors)[0].ErrorContent}" />
-                        </DataTrigger>
-                      </Style.Triggers>
-                    </Style>
-                  </TextBox.Style>
-                </TextBox>
               </StackPanel>
             </Border>
           </Grid>
