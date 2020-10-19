@@ -49,11 +49,12 @@ namespace Cryptool.Plugins.ChaCha
         // IV size (depends on version)
         private int BITS_IV;
         // initial counter value (for keystream blocks) (depends on version)
-        private uint INITIAL_COUNTER;
+        private ulong INITIAL_COUNTER;
 
         private bool ExecDiffusion { get; set; } = false;
         private byte[] _diffusionKey;
 
+        private ulong _userKeystreamBlockNr = 0;
         private bool ExecUserKeystreamBlock { get; set; } = false;
 
         private bool NormalExecution => !ExecDiffusion && !ExecUserKeystreamBlock;
@@ -269,8 +270,11 @@ namespace Cryptool.Plugins.ChaCha
 
         public void ExecuteChaChaWithUserKeystreamBlock(ulong keystreamBlockNr)
         {
+            //Works by executing the whole ChaCha cipher with a different initial counter and stopping after the first block.
             ExecUserKeystreamBlock = true;
+            _userKeystreamBlockNr = keystreamBlockNr;
             ExecuteChaCha();
+            _userKeystreamBlockNr = 0;
             ExecUserKeystreamBlock = false;
         }
 
@@ -363,18 +367,26 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
+            for (ulong i = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
                 byte[] keyblock = GenerateKeystreamBlock(i);
+                if (ExecUserKeystreamBlock) break;
                 // add each byte of keyblock to keystream
                 addToKeystream(keyblock);
             }
-            // XOR the input with the keystream
-            for (int i = 0; i < src.Length; ++i)
+            if(NormalExecution)
             {
-                dst[i] = (byte)(src[i] ^ keystream[i]);
+                // XOR the input with the keystream
+                for (int i = 0; i < src.Length; ++i)
+                {
+                    dst[i] = (byte)(src[i] ^ keystream[i]);
+                }
+                return dst;
             }
-            return dst;
+            else
+            {
+                return null;
+            }
         }
 
         /**
