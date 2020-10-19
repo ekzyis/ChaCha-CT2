@@ -444,8 +444,11 @@ namespace Cryptool.Plugins.ChaCha
                 AddPage(p);
                 MoveToLastPage();
                 // If we are already on the last page, by design, the navigation system will not execute the page setup/teardown thus we execute it in this case ourselves.
-                if (!p.tearDownExecuted) p.TearDown();
-                if (!p.setupExecuted) p.Setup();
+                if (!p.tearDownExecuted || !p.setupExecuted)
+                {
+                    p.TearDown();
+                    p.Setup();
+                }
             }
             else
             {
