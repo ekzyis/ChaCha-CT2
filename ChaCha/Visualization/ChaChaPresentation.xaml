@@ -983,7 +983,7 @@
                   <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="0" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey" Background="LightCoral"/>
-                <RichTextBox Grid.Row="1" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="UIInputDiffusionKey">
+                <RichTextBox Grid.Row="1" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,5,0,0" Name="UIInputDiffusionKey">
                   <RichTextBox.Visibility>
                     <MultiBinding Converter="{ StaticResource CollapsedIfAllFalse }">
                       <Binding Path="DiffusionActive"/>
