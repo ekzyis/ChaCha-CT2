@@ -385,6 +385,11 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
+        private void RemoveLastPage()
+        {
+            _pages.RemoveAt(_pages.Count - 1);
+        }
+
         private void SetupPage(Page p)
         {
             p.Setup();
@@ -428,9 +433,14 @@ namespace Cryptool.Plugins.ChaCha
             if (n > KeystreamBlocksNeeded)
             {
                 // create new keystream block page with given keyblock number
-                KeystreamBlockGenPage p = Page.UserKeystreamBlockGenPage(this, n);
+                UserKeystreamBlockGenPage p = Page.UserKeystreamBlockGenPage(this, n);
                 InitPageNavigationBar(p);
                 InitKeystreamNavigation(p);
+                if(UserKeystreamBlockGenPageAdded)
+                {
+                    // there is already a user page added. Remove it.
+                    RemoveLastPage();
+                }
                 AddPage(p);
                 MoveToLastPage();
             }
