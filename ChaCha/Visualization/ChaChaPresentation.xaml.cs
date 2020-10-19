@@ -297,7 +297,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             return HexString(ChaCha.GetBytes(u));
         }
-
+        public static string HexString(ulong u)
+        {
+            return HexString(ChaCha.GetBytes(u));
+        }
         /* Write bytes as hex string with each 4 byte written in little-endian */
         public static string HexStringLittleEndian(byte[] bytes)
         {

@@ -44,6 +44,19 @@ namespace Cryptool.Plugins.ChaCha
         }
     }
 
+    public class HexStringToULongConverter: IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ChaChaPresentation.HexString((ulong)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ulong.Parse((string)value, NumberStyles.HexNumber);
+        }
+    }
+
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
@@ -453,7 +466,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             ValidationRule counterInputValidationRule = new CounterInputValidationRule(versionIsDJB ? ulong.MaxValue : uint.MaxValue);
             Binding counterInputBinding = new Binding("InputCounter")
-            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, Converter = new HexStringToULongConverter() };
             counterInputBinding.ValidationRules.Add(counterInputValidationRule);
             pres.UICounter.SetBinding(TextBox.TextProperty, counterInputBinding);
         }
