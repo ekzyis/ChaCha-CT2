@@ -81,26 +81,29 @@ namespace Cryptool.Plugins.ChaCha
         }
         private class InputActionIndexRule : ValidationRule
         {
-            private int _maxActionIndex;
-            private int _minActionIndex;
-            public InputActionIndexRule(int maxActionIndex)
+            private ulong _maxActionIndex;
+            private ulong _minActionIndex;
+            public InputActionIndexRule(ulong maxActionIndex)
             {
                 _maxActionIndex = maxActionIndex;
             }
+            public InputActionIndexRule(int maxActionIndex) : this((ulong)maxActionIndex) { }
 
-            public InputActionIndexRule(int minActionIndex, int maxActionIndex)
+            public InputActionIndexRule(ulong minActionIndex, ulong maxActionIndex)
             {
                 _minActionIndex = minActionIndex;
                 _maxActionIndex = maxActionIndex;
             }
 
+            public InputActionIndexRule(int minActionIndex, int maxActionIndex) : this((ulong)minActionIndex, (ulong)maxActionIndex) { }
+
             public override ValidationResult Validate(object value, CultureInfo cultureInfo)
             {
-                int input = 0;
+                ulong input = 0;
 
                 try
                 {
-                    input = int.Parse((String)value);
+                    input = ulong.Parse((String)value);
                 }
                 catch (Exception e)
                 {
@@ -170,12 +173,13 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(keystream);
         }
 
-        private TextBox CreateKeystreamBlockTextBox(int totalKeystreamBlocks)
+        private TextBox CreateKeystreamBlockTextBox()
         {
             TextBox current = CreateNavigationTextBox();
             Binding actionIndexBinding = new Binding("CurrentKeystreamBlockTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalKeystreamBlocks);
+            bool versionIsDJB = Version.BitsCounter == 64;
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, versionIsDJB ? ulong.MaxValue : uint.MaxValue);
             actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
             current.SetBinding(TextBox.TextProperty, actionIndexBinding);
 
@@ -193,6 +197,7 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             current.KeyDown += HandleKeyDown;
+            current.Width = 40;
             return current;
         }
 
@@ -264,7 +269,7 @@ namespace Cryptool.Plugins.ChaCha
             Button previousKeystreamBlock = CreatePrevNavigationButton();
             previousKeystreamBlock.Click += PrevKeystreamBlock_Click;
             previousKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("PrevKeystreamBlockIsEnabled"));
-            TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox(totalKeystreamBlocks);
+            TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox();
             TextBlock keystreamDelimiter = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = "/" };
             TextBlock totalKeystreamBlockLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = totalKeystreamBlocks.ToString() };
             Button nextKeystreamBlock = CreateNextNavigationButton();
