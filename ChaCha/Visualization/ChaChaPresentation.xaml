@@ -12,6 +12,8 @@
              Name="UserControl">
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <UserControl.Resources>
+
+    <!--#region Styles -->
     <!-- TextBlock styles -->
     <Style TargetType="TextBlock">
       <Setter Property="TextWrapping" Value="Wrap" />
@@ -80,7 +82,9 @@
       <Setter Property="Height" Value="35"/>
     </Style>
 
-    <!-- Page template -->
+    <!--#endregion -->
+
+    <!--#region Page template -->
     <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
       <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -108,9 +112,12 @@
     <local:BooleanToVisibilityCollapsedConverter x:Key="CollapsedIfFalseConverter"/>
     <local:BooleanOrToVisibilityCollapsedConverter x:Key="CollapsedIfAllFalse"/>
   </UserControl.Resources>
+  <!--#endregion-->
+
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
-    <!-- Landing page -->
+
+    <!--#region Landing page -->
     <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <ContentControl.Resources>
         <Style TargetType="TextBox">
@@ -124,7 +131,9 @@
         <TextBox HorizontalAlignment="Center" FontSize="18" Foreground="Red" Margin="20" Name="ErrorText" Text="Invalid input detected. See logging tab for more information." Visibility="Hidden"/>
       </StackPanel>
     </ContentControl>
-    <!-- ChaCha Overview page -->
+    <!--#endregion-->
+
+    <!--#region ChaCha Overview page -->
     <ContentControl Name="UIWorkflowPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <ContentControl.Resources>
         <Style TargetType="TextBox">
@@ -303,7 +312,9 @@
         </RichTextBox>
       </Grid>
     </ContentControl>
-    <!-- ChaCha State matrix page -->
+    <!--#endregion -->
+
+    <!--#region ChaCha State matrix page -->
     <ContentControl Name="UIStateMatrixPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
@@ -986,7 +997,9 @@
         </Grid>
       </Grid>
     </ContentControl>
-    <!-- ChaCha Generate Keystream block page -->
+    <!--#endregion -->
+
+    <!--#region ChaCha Generate Keystream block page -->
     <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
@@ -2166,5 +2179,7 @@
         </Grid>
       </Grid>
     </ContentControl>
+    <!--#endregion -->
+
   </Grid>
 </UserControl>
