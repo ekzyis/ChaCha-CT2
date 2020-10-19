@@ -617,7 +617,7 @@
           <!--#endregion-->
 
           <!--#region Transformation -->
-          <Grid Grid.Row="1" Grid.Column="0" Margin="5">
+          <Grid Grid.Row="1" Grid.Column="0" Margin="5" Name="TransformGrid">
             <Grid.RowDefinitions>
               <RowDefinition></RowDefinition>
               <RowDefinition></RowDefinition>
@@ -702,9 +702,9 @@
             <!--#endregion-->
 
             <!--#region TransformChunks -->
-            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
+            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:" Name="TransformChunkDesc"/>
             <!--#region TransformChunks Constants, Counter, IV -->
-            <Grid Style="{StaticResource TransformGrid}" Grid.Row="1" Grid.Column="1">
+            <Grid Style="{StaticResource TransformGrid}" Grid.Row="1" Grid.Column="1" Name="TransformChunkValue">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -824,9 +824,9 @@
             <!--#endregion-->
 
             <!--#region TransformLittleEndian -->
-            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:"/>
+            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:" Name="TransformLittleEndianDesc"/>
             <!--#region TransformLittleEndian Constants, Counter, IV -->
-            <Grid Style="{StaticResource TransformGrid}" Grid.Row="2" Grid.Column="1">
+            <Grid Style="{StaticResource TransformGrid}" Grid.Row="2" Grid.Column="1" Name="TransformLittleEndianValue">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

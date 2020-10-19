@@ -378,6 +378,7 @@ namespace Cryptool.Plugins.ChaCha
                 ClearTransformInputKey();
                 ClearTransformChunkKey();
                 ClearTransformLittleEndianKey();
+                AddReverseBytesStep();
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -385,6 +386,7 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformInputKey();
                 ReplaceTransformChunkKey();
                 ReplaceTransformLittleEndianKey();
+                RemoveReverseBytesStep();
             });
             PageAction counterInputAction = new PageAction(() =>
             {
@@ -392,6 +394,13 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 ClearTransformInput();
+            });
+            PageAction reverseBytesAction = new PageAction(() =>
+            {
+                AddReverseCounter();
+            }, () =>
+            {
+                ClearReverseCounter();
             });
             PageAction counterChunksAction = new PageAction(() =>
             {
@@ -428,6 +437,7 @@ namespace Cryptool.Plugins.ChaCha
             });
             AddAction(counterStepDescriptionAction);
             AddAction(counterInputAction);
+            AddAction(reverseBytesAction);
             AddAction(counterChunksAction);
             AddAction(counterLittleEndianAction);
             AddAction(copyCounterToState);
@@ -473,6 +483,45 @@ namespace Cryptool.Plugins.ChaCha
             pres.UICounter.Text = ChaChaPresentation.HexString(pres.InitialCounter);
         }
 
+        private void AddReverseCounter()
+        {
+            TextBox reverseValue = (TextBox)LogicalTreeHelper.FindLogicalNode(pres.TransformGrid, "ReverseValue"); ;
+            pres.Nav.SetTextBinding(reverseValue, "HexInputCounterReverse");
+        }
+
+        private void AddReverseBytesStep()
+        {
+            pres.TransformGrid.RowDefinitions.Add(new RowDefinition());
+            Grid.SetRow(pres.TransformChunkDesc, 2);
+            Grid.SetRow(pres.TransformChunkValue, 2);
+            Grid.SetRow(pres.TransformLittleEndianDesc, 3);
+            Grid.SetRow(pres.TransformLittleEndianValue, 3);
+            TextBox reverseDesc = new TextBox() { Style = pres.TransformGrid.FindResource("TransformDesc") as Style, Name = "ReverseDesc", Text = "Reverse byte order:" };
+            TextBox reverseValue = new TextBox() { Style = pres.TransformGrid.FindResource("TransformValue") as Style, Name = "ReverseValue" };
+            Grid.SetRow(reverseDesc, 1);
+            Grid.SetRow(reverseValue, 1);
+            Grid.SetColumn(reverseValue, 1);
+            pres.TransformGrid.Children.Add(reverseDesc);
+            pres.TransformGrid.Children.Add(reverseValue);
+        }
+
+        private void ClearReverseCounter()
+        {
+            TextBox reverseValue = (TextBox)LogicalTreeHelper.FindLogicalNode(pres.TransformGrid, "ReverseValue");
+            pres.Nav.ClearTextBinding(reverseValue);
+        }
+
+        private void RemoveReverseBytesStep()
+        {
+            pres.TransformGrid.Children.RemoveAt(pres.TransformGrid.Children.Count - 1);
+            pres.TransformGrid.Children.RemoveAt(pres.TransformGrid.Children.Count - 1);
+            pres.TransformGrid.RowDefinitions.RemoveAt(3);
+            Grid.SetRow(pres.TransformChunkDesc, 1);
+            Grid.SetRow(pres.TransformChunkValue, 1);
+            Grid.SetRow(pres.TransformLittleEndianDesc, 2);
+            Grid.SetRow(pres.TransformLittleEndianValue, 2);
+        }
+
         #endregion
 
         #region IV
@@ -485,6 +534,8 @@ namespace Cryptool.Plugins.ChaCha
                 ClearTransformInput();
                 ClearTransformChunk();
                 ClearTransformLittleEndian();
+                ClearReverseCounter();
+                RemoveReverseBytesStep();
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -492,6 +543,8 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformInputCounter();
                 ReplaceTransformChunkCounter();
                 ReplaceTransformLittleEndianCounter();
+                AddReverseBytesStep();
+                AddReverseCounter();
             });
             PageAction ivInputAction = new PageAction(() =>
             {

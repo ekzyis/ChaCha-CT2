@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -205,6 +206,8 @@ namespace Cryptool.Plugins.ChaCha
                 _inputCounter = value;
                 OnPropertyChanged("InputCounter");
                 OnPropertyChanged("HexInputCounter");
+                OnPropertyChanged("HexInputCounterReverse");
+                OnPropertyChanged("InputCounterReverse");
                 OnPropertyChanged("InputCounterChunks");
                 OnPropertyChanged("InputCounterLittleEndian");
             }
@@ -216,18 +219,32 @@ namespace Cryptool.Plugins.ChaCha
                 return HexString(_inputCounter);
             }
         }
+        public string HexInputCounterReverse
+        {
+            get
+            {
+                return string.Join("", Chunkify(HexString(_inputCounter), 2).Split(' ').Reverse());
+            }
+        }
+        public ulong InputCounterReverse
+        {
+            get
+            {
+                return ulong.Parse(HexInputCounterReverse, System.Globalization.NumberStyles.HexNumber);
+            }
+        }
         public string[] InputCounterChunks
         {
             get
             {
-                return Chunkify(HexString(_inputCounter), 8).Split(' ');
+                return Chunkify(HexString(InputCounterReverse), 8).Split(' ');
             }
         }
         public string[] InputCounterLittleEndian
         {
             get
             {
-                return Chunkify(HexStringLittleEndian(_inputCounter), 8).Split(' ');
+                return Chunkify(HexStringLittleEndian(InputCounterReverse), 8).Split(' ');
             }
         }
         #endregion
