@@ -105,6 +105,10 @@ namespace Cryptool.Plugins.ChaCha
             });
             AddAction(nextPageDesc);
             InitDiffusion();
+        }
+
+        public override void Setup()
+        {
             InitCounterInputValidator();
         }
 
@@ -466,9 +470,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             ValidationRule counterInputValidationRule = new CounterInputValidationRule(versionIsDJB ? ulong.MaxValue : uint.MaxValue);
             Binding counterInputBinding = new Binding("InputCounter")
-            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, Converter = new HexStringToULongConverter() };
+            { Mode = BindingMode.OneWayToSource, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, Converter = new HexStringToULongConverter() };
             counterInputBinding.ValidationRules.Add(counterInputValidationRule);
             pres.UICounter.SetBinding(TextBox.TextProperty, counterInputBinding);
+            pres.UICounter.Text = ChaChaPresentation.HexString(pres.InitialCounter);
         }
 
         #endregion
