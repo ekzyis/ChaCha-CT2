@@ -408,7 +408,6 @@ namespace Cryptool.Plugins.ChaCha
         {
             uint[] state = (uint[])(initialState.Clone());
             SetCounterToState(state, n);
-            if(ExecDiffusion) DispatchOriginalStateFlippedBitsResult(state, n - INITIAL_COUNTER);
             // hash state block
             uint[] hash = ChaChaHash(state);
             // convert the hashed uint state array into an array of bytes
@@ -434,6 +433,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             uint[] originalState = (uint[])(state.Clone());
             DispatchResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])state.Clone());
+            if (ExecDiffusion) DispatchOriginalStateFlippedBitsResult(state, n - INITIAL_COUNTER);
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
