@@ -360,6 +360,12 @@ namespace Cryptool.Plugins.ChaCha
             goToLittleEndian.Width = 148;
             goToLittleEndian.Click += GoToLittleEndian;
             pageNavBar.Children.Add(goToLittleEndian);
+
+            Button keystreamGenEnd = CreateNavigationButton();
+            keystreamGenEnd.Content = "End";
+            keystreamGenEnd.Width = 128;
+            keystreamGenEnd.Click += GoToKeystreamGenEnd;
+            pageNavBar.Children.Add(keystreamGenEnd);
         }
 
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
@@ -857,6 +863,17 @@ namespace Cryptool.Plugins.ChaCha
         private void GoToLittleEndian(object sender, RoutedEventArgs e)
         {
             GoToLabeledAction(KeystreamBlockGenPage.ACTIONLABEL_LITTLE_ENDIAN_START);
+        }
+
+        private void GoToKeystreamGenEnd(object sender, RoutedEventArgs e)
+        {
+            GoToLastAction();
+        }
+
+        private void GoToLastAction()
+        {
+            int lastActionIndex = CurrentActions.Length;
+            MoveToAction(lastActionIndex);
         }
 
         private ActionCache Cache
