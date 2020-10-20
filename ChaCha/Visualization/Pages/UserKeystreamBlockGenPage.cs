@@ -29,7 +29,7 @@ namespace Cryptool.Plugins.ChaCha
 
         protected override void InitDiffusionResults()
         {
-            pres.InitDiffusionResults();
+            pres.InitDiffusionResultsForUserKeystreamBlock(keyBlockNr);
         }
 
         public static ResultType<uint> MapResultType(ResultType<uint> resultType)
