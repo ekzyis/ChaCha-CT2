@@ -467,6 +467,7 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     // if there is already a user page, replace it.
                     if (userPageExists) ReplaceUserPage(p);
+                    else AddPage(p);
                     // let the navigation system handle page teardown + setup
                     MoveToLastPage();
                 }
