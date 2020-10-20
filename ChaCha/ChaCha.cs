@@ -552,24 +552,6 @@ namespace Cryptool.Plugins.ChaCha
             return true;
         }
 
-        private ResultType<uint> MapResultType(ResultType<uint> type)
-        {
-            if(ExecUserKeystreamBlock)
-            {
-                return ResultType.GetUserType(type);
-            }
-            return type;
-        }
-
-        private ResultType<uint[]> MapResultType(ResultType<uint[]> type)
-        {
-            if (ExecUserKeystreamBlock)
-            {
-                return ResultType.GetUserType(type);
-            }
-            return type;
-        }
-
         private void DispatchToPresentation(SendOrPostCallback callback)
         {
             Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, callback, null);
@@ -582,8 +564,12 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     DispatchDiffusionResult(type, result);
                 }
+                else if(ExecUserKeystreamBlock)
+                {
+                    DispatchUserResult(type, result);
+                }
                 else {
-                    _presentation.AddResult(MapResultType(type), result);
+                    _presentation.AddResult(type, result);
                 }
             });
         }
@@ -595,19 +581,43 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     DispatchDiffusionResult(type, result);
                 }
+                else if(ExecUserKeystreamBlock)
+                {
+                    DispatchUserResult(type, result);
+                }
                 else
                 {
-                    _presentation.AddResult(MapResultType(type), result);
+                    _presentation.AddResult(type, result);
                 }
+            });
+        }
+
+        private void DispatchUserResult(ResultType<uint[]> type,  uint[] result)
+        {
+            ResultType<uint[]> userType = ResultType.GetUserType(type);
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(userType, result);
+            });
+        }
+        private void DispatchUserResult(ResultType<uint> type, uint result)
+        {
+            ResultType<uint> userType = ResultType.GetUserType(type);
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(userType, result);
             });
         }
 
         private delegate T _GetTResult<out T>();
         private uint[] GetResult(ResultType<uint[]> type, int index)
         {
-            _GetTResult<uint[]> getResult = () => _presentation.GetResult(MapResultType(type), index);
+            if(ExecUserKeystreamBlock)
+            {
+                type = ResultType.GetUserType(type);
+            }
+            _GetTResult<uint[]> getResult = () => _presentation.GetResult(type, index);
             return (uint[])Presentation.Dispatcher.Invoke(getResult, null);
-
         }
 
         private void DispatchQRFlippedBitsResult(uint[] diffusionState, int index)
