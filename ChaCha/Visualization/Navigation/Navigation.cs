@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -171,6 +172,17 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(overview);
             pageNavBar.Children.Add(stateMatrixInit);
             pageNavBar.Children.Add(keystream);
+
+            StackPanel pageNavBar2 = p.PageNavigationBar2;
+            pageNavBar2.Children.Clear();
+            Button previousPage = CreatePrevNavigationButton();
+            previousPage.SetBinding(Button.IsEnabledProperty, new Binding("PrevPageIsEnabled"));
+            previousPage.Click += PrevPage_Click;
+            Button nextPage = CreateNextNavigationButton();
+            nextPage.SetBinding(Button.IsEnabledProperty, new Binding("NextPageIsEnabled"));
+            nextPage.Click += NextPage_Click;
+            pageNavBar2.Children.Add(previousPage);
+            pageNavBar2.Children.Add(nextPage);
         }
 
         private TextBox CreateKeystreamBlockTextBox()
@@ -738,6 +750,9 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevQuarterroundIsEnabled => (PrevRoundIsEnabled || CurrentQuarterroundIndexTextBox > 1) && NavigationEnabled;
 
+        public bool NextPageIsEnabled => CurrentPageIndex < (TotalPages - 1);
+
+        public bool PrevPageIsEnabled => CurrentPageIndex != 0;
 
         private int _currentRoundIndex = 0;
         public int CurrentRoundIndex
