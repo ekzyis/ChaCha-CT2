@@ -109,19 +109,20 @@ namespace Cryptool.Plugins.ChaCha
 
         public override void Setup()
         {
+            base.Setup();
             InitCounterInput();
+            AddConstantsStepBoldToDescription();
+        }
+
+        public override void TearDown()
+        {
+            base.TearDown();
+            ClearDescription();
         }
 
         #region Constants
         private void AddConstantsActions()
         {
-            PageAction constantsStepDescriptionAction = new PageAction(() =>
-            {
-                AddConstantsStepBoldToDescription();
-            }, () =>
-            {
-                ClearDescription();
-            });
             PageAction constantsInputAction = new PageAction(() =>
             {
                 ReplaceTransformInputConstants();
@@ -161,7 +162,6 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Clear(pres.UIState2);
                 pres.Nav.Clear(pres.UIState3);
             });
-            AddAction(constantsStepDescriptionAction);
             AddAction(constantsInputAction);
             AddAction(constantsChunksAction);
             AddAction(constantsLittleEndianAction);

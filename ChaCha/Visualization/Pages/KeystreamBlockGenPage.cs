@@ -82,11 +82,13 @@ namespace Cryptool.Plugins.ChaCha
                 pres.AtLittleEndianStep = true;
                 pres.AtKeystreamGenerationEnd = false;
             }));
+            AddBoldToDescription(descriptions[0]);
         }
 
         public override void TearDown()
         {
             ClearState();
+            ClearDescription();
             if (pres.DiffusionActive)
             {
                 RemoveActionRange(ACTIONLABEL_ADDITION_END, AddOriginalStateDiffusion().Length);
@@ -97,13 +99,6 @@ namespace Cryptool.Plugins.ChaCha
 
         protected virtual void Init()
         {
-            PageAction generalDescriptionAction = new PageAction(() =>
-            {
-                AddBoldToDescription(descriptions[0]);
-            }, () =>
-            {
-                ClearDescription();
-            });
             PageAction firstColumnRoundDescriptionAction = new PageAction(() =>
             {
                 UnboldLastFromDescription();
@@ -113,7 +108,6 @@ namespace Cryptool.Plugins.ChaCha
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
             });
-            AddAction(generalDescriptionAction);
             AddAction(firstColumnRoundDescriptionAction);
 
             for (int qrIndex = 1; qrIndex <= pres.Rounds * 4; ++qrIndex)
