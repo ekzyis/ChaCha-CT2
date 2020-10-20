@@ -386,6 +386,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void ReplaceUserPage(Page p)
         {
+            Debug.Assert(TotalPages == 5, $"ReplaceUserPage called but page count was {TotalPages}. Expected 5.");
             _pages.Remove(_pages.Last());
             AddPage(p);
         }
@@ -403,7 +404,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void TearDownPreviousUserPage()
         {
-            Debug.Assert(_pages.Count == 5, $"TearDownPreviousUserPage called but page count was {_pages.Count}. Expected 5.");
+            Debug.Assert(TotalPages == 5, $"TearDownPreviousUserPage called but page count was {TotalPages}. Expected 5.");
             TearDownPage(_pages.Last());
         }
 
