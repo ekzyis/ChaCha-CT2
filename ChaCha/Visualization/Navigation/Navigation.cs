@@ -178,8 +178,7 @@ namespace Cryptool.Plugins.ChaCha
             TextBox current = CreateNavigationTextBox();
             Binding actionIndexBinding = new Binding("CurrentKeystreamBlockTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-            bool versionIsDJB = Version.BitsCounter == 64;
-            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, versionIsDJB ? ulong.MaxValue : uint.MaxValue);
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, MaxKeystreamBlock);
             actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
             current.SetBinding(TextBox.TextProperty, actionIndexBinding);
 
@@ -577,17 +576,12 @@ namespace Cryptool.Plugins.ChaCha
                 if (value == _currentPageIndex) return;
                 _currentPageIndex = value;
                 CurrentActionIndex = 0;
-                if (_currentPageIndex >= 3)
-                {
-                    CurrentKeystreamBlockTextBox = (ulong)_currentPageIndex - 2;
-                }
                 OnPropertyChanged("CurrentPageIndex");
                 OnPropertyChanged("CurrentPage");
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                OnPropertyChanged("CurrentKeystreamBlock");
             }
         }
         public int CurrentActionIndex
@@ -701,7 +695,9 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1 && NavigationEnabled;
 
-        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded && NavigationEnabled;
+        public ulong MaxKeystreamBlock => Version.BitsCounter == 64 ? ulong.MaxValue : uint.MaxValue;
+
+        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != MaxKeystreamBlock;
 
         public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1 && NavigationEnabled;
 
