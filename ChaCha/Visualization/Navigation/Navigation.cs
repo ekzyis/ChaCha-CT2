@@ -419,12 +419,18 @@ namespace Cryptool.Plugins.ChaCha
                     PrevPage_Click(null, null);
                 }
             }
-            else
+            else if(n > 0)
             {
                 for (int i = 0; i < Math.Abs(n); ++i)
                 {
                     NextPage_Click(null, null);
                 }
+            }
+            else
+            {
+                // Reinitialize current page. Needed for UserKeystreamBlockGen pages.
+                TearDownPage(CurrentPage);
+                SetupPage(CurrentPage);
             }
         }
 
@@ -443,12 +449,6 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 AddPage(p);
                 MoveToLastPage();
-                // If we are already on the last page, by design, the navigation system will not execute the page setup/teardown thus we execute it in this case ourselves.
-                if (!p.tearDownExecuted || !p.setupExecuted)
-                {
-                    p.TearDown();
-                    p.Setup();
-                }
             }
             else
             {
