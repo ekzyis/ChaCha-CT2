@@ -384,8 +384,9 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
-        private void RemoveLastPage()
+        private void TearDownAndRemoveLastPage()
         {
+            _pages.Last().TearDown();
             _pages.RemoveAt(_pages.Count - 1);
         }
 
@@ -444,7 +445,7 @@ namespace Cryptool.Plugins.ChaCha
                 if(UserKeystreamBlockGenPageAdded)
                 {
                     // there is already a user page added. Remove it.
-                    RemoveLastPage();
+                    TearDownAndRemoveLastPage();
                 }
                 AddPage(p);
                 MoveToLastPage();
