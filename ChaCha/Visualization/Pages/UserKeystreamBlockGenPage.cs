@@ -13,12 +13,26 @@ namespace Cryptool.Plugins.ChaCha
 
     class UserKeystreamBlockGenPage : KeystreamBlockGenPage
     {
+        private bool setupCalled = false;
+        private bool tearDownCalled = false;
         public UserKeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres_, ulong keyblockNr_) : base(pageElement, pres_, keyblockNr_) { }
 
         protected override void Init()
         {
             pres.InitUserKeystreamBlock(keyBlockNr);
             base.Init();
+        }
+
+        public override void Setup()
+        {
+            setupCalled = true;
+            base.Setup();
+        }
+
+        public override void TearDown()
+        {
+            tearDownCalled = true;
+            if (setupCalled) base.TearDown();
         }
 
         public static ResultType<uint> MapResultType(ResultType<uint> resultType)
