@@ -14,6 +14,37 @@ using System.Windows.Navigation;
 
 namespace Cryptool.Plugins.ChaCha
 {
+    public class BooleanToFontWeightConverter : IValueConverter
+    {
+        private FontWeight trueFontWeight;
+        private FontWeight falseFontWeight;
+
+        public BooleanToFontWeightConverter(FontWeight trueFontWeight, FontWeight falseFontWeight)
+        {
+            this.trueFontWeight = trueFontWeight;
+            this.falseFontWeight = falseFontWeight;
+        }
+
+        public BooleanToFontWeightConverter(FontWeight trueFontWeight) : this(trueFontWeight, FontWeights.Normal) { }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value ? trueFontWeight : falseFontWeight;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class BooleanToFontWeightBoldConverter : BooleanToFontWeightConverter
+    {
+        public BooleanToFontWeightBoldConverter() : base(FontWeights.Bold)
+        {
+        }
+    }
+
     partial class ChaChaPresentation
     {
         public ActionNavigation Nav = new ActionNavigation();
@@ -117,30 +148,6 @@ namespace Cryptool.Plugins.ChaCha
                         $"Please enter an age in the range: {0}-{_maxActionIndex}.");
                 }
                 return ValidationResult.ValidResult;
-            }
-        }
-
-        private class BooleanToFontWeightConverter : IValueConverter
-        {
-            private FontWeight trueFontWeight;
-            private FontWeight falseFontWeight;
-
-            public BooleanToFontWeightConverter(FontWeight trueFontWeight, FontWeight falseFontWeight)
-            {
-                this.trueFontWeight = trueFontWeight;
-                this.falseFontWeight = falseFontWeight;
-            }
-
-            public BooleanToFontWeightConverter(FontWeight trueFontWeight) : this(trueFontWeight, FontWeights.Normal) { }
-
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                return (bool)value ? trueFontWeight : falseFontWeight;
-            }
-
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
             }
         }
 
@@ -719,6 +726,11 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("PrevActionIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
+                for (int i = 1; i <= 8; ++i)
+                {
+                    OnPropertyChanged($"OnQR{i}ActionStart");
+                    OnPropertyChanged($"OnQR{i}ActionEnd");
+                }
             }
         }
 
@@ -1228,6 +1240,48 @@ namespace Cryptool.Plugins.ChaCha
             int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
             MoveToActionAsync(qrActionIndex);
         }
+
+        private int[] GetQRActionStartIndices(int qrRound)
+        {
+            List<int> indices = new List<int>();
+            for (int r = 0; r < Rounds; ++r)
+            {
+                string searchLabel = KeystreamBlockGenPage.QuarterroundStartLabelWithRound(qrRound, r + 1);
+                int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+                indices.Add(qrActionIndex);
+            }
+            return indices.ToArray();
+        }
+
+        private int[] GetQRActionEndIndices(int qrRound)
+        {
+            List<int> indices = new List<int>();
+            for (int r = 0; r < Rounds; ++r)
+            {
+                string searchLabel = KeystreamBlockGenPage.QuarterroundEndLabelWithRound(qrRound, r + 1);
+                int qrActionIndex = GetLabeledPageActionIndex(searchLabel, CurrentActions) + 1;
+                indices.Add(qrActionIndex);
+            }
+            return indices.ToArray();
+        }
+
+        public bool OnQR1ActionStart => GetQRActionStartIndices(1).Any(i => i == CurrentActionIndex);
+        public bool OnQR2ActionStart => GetQRActionStartIndices(2).Any(i => i == CurrentActionIndex);
+        public bool OnQR3ActionStart => GetQRActionStartIndices(3).Any(i => i == CurrentActionIndex);
+        public bool OnQR4ActionStart => GetQRActionStartIndices(4).Any(i => i == CurrentActionIndex);
+        public bool OnQR5ActionStart => GetQRActionStartIndices(5).Any(i => i == CurrentActionIndex);
+        public bool OnQR6ActionStart => GetQRActionStartIndices(6).Any(i => i == CurrentActionIndex);
+        public bool OnQR7ActionStart => GetQRActionStartIndices(7).Any(i => i == CurrentActionIndex);
+        public bool OnQR8ActionStart => GetQRActionStartIndices(8).Any(i => i == CurrentActionIndex);
+
+        public bool OnQR1ActionEnd => GetQRActionEndIndices(1).Any(i => i == CurrentActionIndex);
+        public bool OnQR2ActionEnd => GetQRActionEndIndices(2).Any(i => i == CurrentActionIndex);
+        public bool OnQR3ActionEnd => GetQRActionEndIndices(3).Any(i => i == CurrentActionIndex);
+        public bool OnQR4ActionEnd => GetQRActionEndIndices(4).Any(i => i == CurrentActionIndex);
+        public bool OnQR5ActionEnd => GetQRActionEndIndices(5).Any(i => i == CurrentActionIndex);
+        public bool OnQR6ActionEnd => GetQRActionEndIndices(6).Any(i => i == CurrentActionIndex);
+        public bool OnQR7ActionEnd => GetQRActionEndIndices(7).Any(i => i == CurrentActionIndex);
+        public bool OnQR8ActionEnd => GetQRActionEndIndices(8).Any(i => i == CurrentActionIndex);
 
         private void QR1_End_Click(object sender, RoutedEventArgs e)
         {

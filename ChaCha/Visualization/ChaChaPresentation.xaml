@@ -113,6 +113,7 @@
     <local:BooleanToVisibilityHiddenConverter x:Key="HiddenIfFalseConverter"/>
     <local:BooleanToVisibilityCollapsedConverter x:Key="CollapsedIfFalseConverter"/>
     <local:BooleanOrToVisibilityCollapsedConverter x:Key="CollapsedIfAllFalse"/>
+    <local:BooleanToFontWeightBoldConverter x:Key="BoldIfTrue"/>
   </UserControl.Resources>
   <!--#endregion-->
 
@@ -1659,8 +1660,8 @@
                   <TextBox>Quarterround(0, 4, 8, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                  <Button Style="{StaticResource qrButton}" Click="QR1_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR1_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR1_Start_Click" Content="Start" FontWeight="{ Binding OnQR1ActionStart, Converter={ StaticResource BoldIfTrue } }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR1_End_Click" Content="End" FontWeight="{ Binding OnQR1ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_2">
@@ -1669,8 +1670,8 @@
                   <TextBox>Quarterround(1, 5, 9, 13)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                  <Button Style="{StaticResource qrButton}" Click="QR2_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR2_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR2_Start_Click" Content="Start" FontWeight="{ Binding OnQR2ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR2_End_Click" Content="End" FontWeight="{ Binding OnQR2ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_3">
@@ -1679,8 +1680,8 @@
                   <TextBox>Quarterround(2, 6, 10, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                  <Button Style="{StaticResource qrButton}" Click="QR3_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR3_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR3_Start_Click" Content="Start" FontWeight="{ Binding OnQR3ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR3_End_Click" Content="End" FontWeight="{ Binding OnQR3ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_4">
@@ -1689,8 +1690,8 @@
                   <TextBox>Quarterround(3, 7, 11, 15)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                  <Button Style="{StaticResource qrButton}" Click="QR4_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR4_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR4_Start_Click" Content="Start" FontWeight="{ Binding OnQR4ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR4_End_Click" Content="End" FontWeight="{ Binding OnQR4ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="1" Orientation="Vertical" Name="QRound_Button_5" Visibility="Hidden">
@@ -1699,8 +1700,8 @@
                   <TextBox>Quarterround(0, 5, 10, 15)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                  <Button Style="{StaticResource qrButton}" Click="QR5_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR5_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR5_Start_Click" Content="Start" FontWeight="{ Binding OnQR5ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR5_End_Click" Content="End" FontWeight="{ Binding OnQR5ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="2" Orientation="Vertical" Name="QRound_Button_6" Visibility="Hidden">
@@ -1709,8 +1710,8 @@
                   <TextBox>Quarterround(1, 6, 11, 12)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                  <Button Style="{StaticResource qrButton}" Click="QR6_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR6_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR6_Start_Click" Content="Start" FontWeight="{ Binding OnQR6ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR6_End_Click" Content="End" FontWeight="{ Binding OnQR6ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="3" Orientation="Vertical" Name="QRound_Button_7" Visibility="Hidden">
@@ -1719,8 +1720,8 @@
                   <TextBox>Quarterround(2, 7, 8, 13)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                  <Button Style="{StaticResource qrButton}" Click="QR7_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR7_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR7_Start_Click" Content="Start" FontWeight="{ Binding OnQR7ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR7_End_Click" Content="End" FontWeight="{ Binding OnQR7ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="4" Orientation="Vertical" Name="QRound_Button_8" Visibility="Hidden">
@@ -1729,8 +1730,8 @@
                   <TextBox>Quarterround(3, 4, 9, 14)</TextBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                  <Button Style="{StaticResource qrButton}" Click="QR8_Start_Click" Content="Start"/>
-                  <Button Style="{StaticResource qrButton}" Click="QR8_End_Click" Content="End"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR8_Start_Click" Content="Start" FontWeight="{ Binding OnQR8ActionStart, Converter={ StaticResource BoldIfTrue} }"/>
+                  <Button Style="{StaticResource qrButton}" Click="QR8_End_Click" Content="End" FontWeight="{ Binding OnQR8ActionEnd, Converter={ StaticResource BoldIfTrue } }"/>
                 </StackPanel>
               </StackPanel>
               <StackPanel Grid.Row="5" Orientation="Vertical" Name="FlipBitsStatistic" Visibility="Collapsed">
