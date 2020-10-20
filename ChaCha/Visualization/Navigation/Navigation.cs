@@ -438,7 +438,7 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToKeystreamPage(ulong n)
         {
             bool moveToUserPage = n > KeystreamBlocksNeeded;
-            bool moveFromUserPage = CurrentPageIndex == 5;
+            bool moveFromUserPage = CurrentPageIndex == 4;
             bool userPageExists = TotalPages == 5;
             if (moveToUserPage)
             {
@@ -454,7 +454,7 @@ namespace Cryptool.Plugins.ChaCha
                  *
                  * In this branch, we only have to consider case 1 and 2 since we are currently moving to a user page.
                  */
-                bool moveFromNormalPage = CurrentPageIndex < 5;
+                bool moveFromNormalPage = CurrentPageIndex < 4;
                 // at least one case of these two should be true.
                 Debug.Assert(moveFromUserPage || moveFromNormalPage);
 
