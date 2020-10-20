@@ -67,6 +67,7 @@ namespace Cryptool.Plugins.ChaCha
 
             AssertInitialState();
             pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
+            pres.CurrentKeystreamBlockTextBox = keyBlockNr;
             if (pres.DiffusionActive)
             {
                 InsertAction(ACTIONLABEL_ADDITION_END, AddOriginalStateDiffusion());
