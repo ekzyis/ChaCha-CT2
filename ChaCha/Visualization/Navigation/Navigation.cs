@@ -157,9 +157,9 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private void InitPageNavigationBar(Page p)
+        private void InitPageNavigationBar(Page p, int pageIndex = -1)
         {
-            int pageIndex = _pages.FindIndex(p_ => p_ == p);
+            pageIndex = pageIndex == -1 ? _pages.FindIndex(p_ => p_ == p) : pageIndex;
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
             Button start = CreatePageButton("Start", pageIndex, 0, 64);
@@ -459,7 +459,7 @@ namespace Cryptool.Plugins.ChaCha
 
                 // create new keystream block page with given keyblock number
                 UserKeystreamBlockGenPage p = Page.UserKeystreamBlockGenPage(this, n);
-                InitPageNavigationBar(p);
+                InitPageNavigationBar(p, pageIndex: 5);
                 InitKeystreamNavigation(p);
 
                 if (moveFromNormalPage)
