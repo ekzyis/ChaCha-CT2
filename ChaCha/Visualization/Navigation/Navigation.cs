@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -171,6 +172,17 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(overview);
             pageNavBar.Children.Add(stateMatrixInit);
             pageNavBar.Children.Add(keystream);
+
+            StackPanel pageNavBar2 = p.PageNavigationBar2;
+            pageNavBar2.Children.Clear();
+            Button previousPage = CreatePrevNavigationButton();
+            previousPage.SetBinding(Button.IsEnabledProperty, new Binding("PrevPageIsEnabled"));
+            previousPage.Click += PrevPage_Click;
+            Button nextPage = CreateNextNavigationButton();
+            nextPage.SetBinding(Button.IsEnabledProperty, new Binding("NextPageIsEnabled"));
+            nextPage.Click += NextPage_Click;
+            pageNavBar2.Children.Add(previousPage);
+            pageNavBar2.Children.Add(nextPage);
         }
 
         private TextBox CreateKeystreamBlockTextBox()
@@ -386,7 +398,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void ReplaceUserPage(Page p)
         {
-            Debug.Assert(TotalPages == 5, $"ReplaceUserPage called but page count was {TotalPages}. Expected 5.");
+            Debug.Assert(UserKeystreamBlockGenPageAdded, $"ReplaceUserPage called but no user page found. (page count: {TotalPages})");
             _pages.Remove(_pages.Last());
             AddPage(p);
         }
@@ -404,7 +416,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void TearDownPreviousUserPage()
         {
-            Debug.Assert(TotalPages == 5, $"TearDownPreviousUserPage called but page count was {TotalPages}. Expected 5.");
+            Debug.Assert(UserKeystreamBlockGenPageAdded, $"ReplaceUserPage called but no user page found. (page count: {TotalPages})");
             TearDownPage(_pages.Last());
         }
 
@@ -438,8 +450,8 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToKeystreamPage(ulong n)
         {
             bool moveToUserPage = n > KeystreamBlocksNeeded;
-            bool moveFromUserPage = CurrentPageIndex == 4;
-            bool userPageExists = TotalPages == 5;
+            bool moveFromUserPage = CurrentPageIndex == TotalPagesWithoutUserKeystreamPages;
+            bool userPageExists = UserKeystreamBlockGenPageAdded;
             if (moveToUserPage)
             {
                 /*
@@ -454,7 +466,7 @@ namespace Cryptool.Plugins.ChaCha
                  *
                  * In this branch, we only have to consider case 1 and 2 since we are currently moving to a user page.
                  */
-                bool moveFromNormalPage = CurrentPageIndex < 4;
+                bool moveFromNormalPage = CurrentPageIndex < TotalPagesWithoutUserKeystreamPages;
                 // at least one case of these two should be true.
                 Debug.Assert(moveFromUserPage || moveFromNormalPage);
 
@@ -683,7 +695,10 @@ namespace Cryptool.Plugins.ChaCha
 
         private int TotalPages => _pages.Count;
 
-        private bool UserKeystreamBlockGenPageAdded => (ulong)_pages.Count > KeystreamBlocksNeeded + 3;
+        private int TotalPagesWithoutUserKeystreamPages => UserKeystreamBlockGenPageAdded ? TotalPages - 1 : TotalPages;
+
+        private bool UserKeystreamBlockGenPageAdded => TotalPages > (int)KeystreamBlocksNeeded + 3;
+
         private PageAction[] CurrentActions => CurrentPage.Actions;
 
         public bool ExecutionFinished
@@ -738,6 +753,9 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevQuarterroundIsEnabled => (PrevRoundIsEnabled || CurrentQuarterroundIndexTextBox > 1) && NavigationEnabled;
 
+        public bool NextPageIsEnabled => CurrentPageIndex < TotalPagesWithoutUserKeystreamPages - 1;
+
+        public bool PrevPageIsEnabled => CurrentPageIndex != 0;
 
         private int _currentRoundIndex = 0;
         public int CurrentRoundIndex

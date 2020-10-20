@@ -55,6 +55,15 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        public StackPanel PageNavigationBar2
+        {
+            get
+            {
+                _page.ApplyTemplate();
+                return (StackPanel)_page.Template.FindName("PageNavBar2", _page);
+            }
+        }
+
         // Initialize a page before entering.
         // Can be used to setup things using variables which weren't available during instance creation.
         public virtual void Setup() { }
