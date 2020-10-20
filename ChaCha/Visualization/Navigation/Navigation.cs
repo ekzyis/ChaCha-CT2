@@ -695,7 +695,10 @@ namespace Cryptool.Plugins.ChaCha
 
         private int TotalPages => _pages.Count;
 
-        private bool UserKeystreamBlockGenPageAdded => (ulong)_pages.Count > KeystreamBlocksNeeded + 3;
+        private int TotalPagesWithoutUserKeystreamPages => UserKeystreamBlockGenPageAdded ? TotalPages - 1 : TotalPages;
+
+        private bool UserKeystreamBlockGenPageAdded => TotalPages > (int)KeystreamBlocksNeeded + 3;
+
         private PageAction[] CurrentActions => CurrentPage.Actions;
 
         public bool ExecutionFinished
@@ -750,7 +753,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevQuarterroundIsEnabled => (PrevRoundIsEnabled || CurrentQuarterroundIndexTextBox > 1) && NavigationEnabled;
 
-        public bool NextPageIsEnabled => CurrentPageIndex < (TotalPages - 1);
+        public bool NextPageIsEnabled => CurrentPageIndex < TotalPagesWithoutUserKeystreamPages - 1;
 
         public bool PrevPageIsEnabled => CurrentPageIndex != 0;
 
