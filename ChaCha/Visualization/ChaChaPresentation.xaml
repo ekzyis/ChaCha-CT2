@@ -12,6 +12,8 @@
              Name="UserControl">
   <!-- Main grid with 2 rows. One big row row for content pane and one small row for navigation bar at bottom -->
   <UserControl.Resources>
+
+    <!--#region Styles -->
     <!-- TextBlock styles -->
     <Style TargetType="TextBlock">
       <Setter Property="TextWrapping" Value="Wrap" />
@@ -80,7 +82,9 @@
       <Setter Property="Height" Value="35"/>
     </Style>
 
-    <!-- Page template -->
+    <!--#endregion -->
+
+    <!--#region Page template -->
     <ControlTemplate x:Key="PageTemplate" TargetType="ContentControl">
       <Grid Margin="5">
         <Grid.RowDefinitions>
@@ -108,9 +112,12 @@
     <local:BooleanToVisibilityCollapsedConverter x:Key="CollapsedIfFalseConverter"/>
     <local:BooleanOrToVisibilityCollapsedConverter x:Key="CollapsedIfAllFalse"/>
   </UserControl.Resources>
+  <!--#endregion-->
+
   <!-- Main grid for content pane -->
   <Grid Name="UIContentPane">
-    <!-- Landing page -->
+
+    <!--#region Landing page -->
     <ContentControl Name="UILandingPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <ContentControl.Resources>
         <Style TargetType="TextBox">
@@ -124,7 +131,9 @@
         <TextBox HorizontalAlignment="Center" FontSize="18" Foreground="Red" Margin="20" Name="ErrorText" Text="Invalid input detected. See logging tab for more information." Visibility="Hidden"/>
       </StackPanel>
     </ContentControl>
-    <!-- ChaCha Overview page -->
+    <!--#endregion-->
+
+    <!--#region ChaCha Overview page -->
     <ContentControl Name="UIWorkflowPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <ContentControl.Resources>
         <Style TargetType="TextBox">
@@ -303,7 +312,9 @@
         </RichTextBox>
       </Grid>
     </ContentControl>
-    <!-- ChaCha State matrix page -->
+    <!--#endregion -->
+
+    <!--#region ChaCha State matrix page -->
     <ContentControl Name="UIStateMatrixPage" Visibility="Visible" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
@@ -326,7 +337,8 @@
             <RowDefinition/>
             <RowDefinition/>
           </Grid.RowDefinitions>
-          <!-- State matrix -->
+
+          <!--#region State matrix -->
           <Grid Grid.Row="0" Grid.Column="0">
             <Border BorderBrush="Black" BorderThickness="0,1,1,0">
               <Grid>
@@ -602,8 +614,10 @@
               </Grid>
             </Border>
           </Grid>
-          <!-- Transformation -->
-          <Grid Grid.Row="1" Grid.Column="0" Margin="5">
+          <!--#endregion-->
+
+          <!--#region Transformation -->
+          <Grid Grid.Row="1" Grid.Column="0" Margin="5" Name="TransformGrid">
             <Grid.RowDefinitions>
               <RowDefinition></RowDefinition>
               <RowDefinition></RowDefinition>
@@ -688,9 +702,9 @@
             <!--#endregion-->
 
             <!--#region TransformChunks -->
-            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:"/>
+            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="1" Grid.Column="0" Text="Split into 4 byte chunks:" Name="TransformChunkDesc"/>
             <!--#region TransformChunks Constants, Counter, IV -->
-            <Grid Style="{StaticResource TransformGrid}" Grid.Row="1" Grid.Column="1">
+            <Grid Style="{StaticResource TransformGrid}" Grid.Row="1" Grid.Column="1" Name="TransformChunkValue">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -810,9 +824,9 @@
             <!--#endregion-->
 
             <!--#region TransformLittleEndian -->
-            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:"/>
+            <TextBox Style="{ StaticResource TransformDesc }" Grid.Row="2" Grid.Column="0" Text="Transform each chunk into little-endian:" Name="TransformLittleEndianDesc"/>
             <!--#region TransformLittleEndian Constants, Counter, IV -->
-            <Grid Style="{StaticResource TransformGrid}" Grid.Row="2" Grid.Column="1">
+            <Grid Style="{StaticResource TransformGrid}" Grid.Row="2" Grid.Column="1" Name="TransformLittleEndianValue">
               <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -932,14 +946,34 @@
             <!--#endregion-->
 
           </Grid>
-          <!-- Step description -->
+          <!--#endregion -->
+
+          <!--#region Description -->
           <RichTextBox Style="{ StaticResource richText }" Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" Name="UIStateMatrixStepDescription"/>
-          <!-- state parameters -->
+          <!--#endregion-->
+
+          <!--#region State parameters -->
           <Grid Margin="20,0,0,0" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left">
+            <Grid.Resources>
+              <Style x:Key="CustomErrorControlOnErrorStyle" TargetType="TextBox" BasedOn="{StaticResource hexTextBox}">
+                <Setter Property="Validation.ErrorTemplate">
+                  <Setter.Value>
+                    <ControlTemplate>
+                      <StackPanel>
+                        <AdornedElementPlaceholder x:Name="placeholder" />
+                        <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
+                                   Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                      </StackPanel>
+                    </ControlTemplate>
+                  </Setter.Value>
+                </Setter>
+              </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
               <RowDefinition Height="20"/>
               <RowDefinition Height="1.6*"/>
               <RowDefinition Height="4*"/>
+              <RowDefinition Height="1.6*"/>
               <RowDefinition Height="1.6*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -964,7 +998,7 @@
                   <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="0" VerticalAlignment="Center" Style="{StaticResource hexTextBox}" Text="{ Binding HexInputKey, Mode=OneWay }" Name="UIInputKey" Background="LightCoral"/>
-                <RichTextBox Grid.Row="1" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,13,0,0" Name="UIInputDiffusionKey">
+                <RichTextBox Grid.Row="1" Background="{ Binding ElementName=UIInputKeyCell, Path=Background }" Style="{StaticResource hexRichTextBox}" Margin="-2,5,0,0" Name="UIInputDiffusionKey">
                   <RichTextBox.Visibility>
                     <MultiBinding Converter="{ StaticResource CollapsedIfAllFalse }">
                       <Binding Path="DiffusionActive"/>
@@ -982,11 +1016,23 @@
             <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell" >
               <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV" Background="PaleGreen"/>
             </Border>
+            <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Text="Counter:" Background="SkyBlue"/>
+            <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Name="UIInputCounterCell" >
+              <StackPanel Orientation="Horizontal">
+                <!-- Code-behind adds binding to Text property of UICounter with validation -->
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource CustomErrorControlOnErrorStyle}" IsReadOnly="False" Margin="0,3,0,0" Name="UICounter" Background="SkyBlue"/>
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="(You can input here your own counter in hexadecimal if you like.)"/>
+              </StackPanel>
+            </Border>
           </Grid>
+          <!--#endregion-->
+
         </Grid>
       </Grid>
     </ContentControl>
-    <!-- ChaCha Generate Keystream block page -->
+    <!--#endregion -->
+
+    <!--#region ChaCha Generate Keystream block page -->
     <ContentControl Name="UIKeystreamBlockGenPage" Visibility="Collapsed" Template="{ StaticResource PageTemplate }">
       <Grid>
         <Grid.Resources>
@@ -2166,5 +2212,7 @@
         </Grid>
       </Grid>
     </ContentControl>
+    <!--#endregion -->
+
   </Grid>
 </UserControl>

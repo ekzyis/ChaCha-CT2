@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
@@ -164,6 +165,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _initialCounter = value;
+                _inputCounter = ChaCha.ToUInt64(value, 0);
                 OnPropertyChanged("InitialCounter");
                 OnPropertyChanged("HexInitialCounter");
                 OnPropertyChanged("InitialCounterChunks");
@@ -191,13 +193,67 @@ namespace Cryptool.Plugins.ChaCha
                 return Chunkify(HexStringLittleEndian(_initialCounter), 8).Split(' ');
             }
         }
+
+        private ulong _inputCounter;
+        public ulong InputCounter
+        {
+            get
+            {
+                return _inputCounter;
+            }
+            set
+            {
+                _inputCounter = value;
+                OnPropertyChanged("InputCounter");
+                OnPropertyChanged("HexInputCounter");
+                OnPropertyChanged("HexInputCounterReverse");
+                OnPropertyChanged("InputCounterReverse");
+                OnPropertyChanged("InputCounterChunks");
+                OnPropertyChanged("InputCounterLittleEndian");
+            }
+        }
+        public string HexInputCounter
+        {
+            get
+            {
+                return HexString(_inputCounter);
+            }
+        }
+        public string HexInputCounterReverse
+        {
+            get
+            {
+                return string.Join("", Chunkify(HexString(_inputCounter), 2).Split(' ').Reverse());
+            }
+        }
+        public ulong InputCounterReverse
+        {
+            get
+            {
+                return ulong.Parse(HexInputCounterReverse, System.Globalization.NumberStyles.HexNumber);
+            }
+        }
+        public string[] InputCounterChunks
+        {
+            get
+            {
+                return Chunkify(HexString(InputCounterReverse), 8).Split(' ');
+            }
+        }
+        public string[] InputCounterLittleEndian
+        {
+            get
+            {
+                return Chunkify(HexStringLittleEndian(InputCounterReverse), 8).Split(' ');
+            }
+        }
         #endregion
 
         #region Settings Variables
         public ChaCha.Version Version { get; set; }
         public int Rounds { get; set; }
-        private int _keystreamBlocksNeeded = -1;
-        public int KeystreamBlocksNeeded
+        private ulong _keystreamBlocksNeeded = 0;
+        public ulong KeystreamBlocksNeeded
         {
             get
             {
@@ -254,6 +310,11 @@ namespace Cryptool.Plugins.ChaCha
             uint_resultsManager.ClearDiffusionResults();
             uint_array_resultsManager.ClearDiffusionResults();
         }
+        public void ClearUserKeystreamBlockResults()
+        {
+            uint_resultsManager.ClearUserKeystreamBlockResults();
+            uint_array_resultsManager.ClearUserKeystreamBlockResults();
+        }
         #endregion
 
         #region Visualization Helper Methods (Stringify)
@@ -282,7 +343,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             return HexString(ChaCha.GetBytes(u));
         }
-
+        public static string HexString(ulong u)
+        {
+            return HexString(ChaCha.GetBytes(u));
+        }
         /* Write bytes as hex string with each 4 byte written in little-endian */
         public static string HexStringLittleEndian(byte[] bytes)
         {

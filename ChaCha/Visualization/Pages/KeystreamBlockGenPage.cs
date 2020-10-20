@@ -14,13 +14,13 @@ namespace Cryptool.Plugins.ChaCha
 {
     class KeystreamBlockGenPage : Page
     {
-        ChaChaPresentation pres;
+        protected ChaChaPresentation pres;
 
         private const string ACTIONLABEL_QR_START = "QUARTERROUND_START";
         private const string ACTIONLABEL_ROUND_START = "ROUND";
         private const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
         public const string ACTIONLABEL_ADDITION_START = "ADDITION_START";
-        private const string ACTIONLABEL_ADDITION_END = "ADDITION_EMD";
+        private const string ACTIONLABEL_ADDITION_END = "ADDITION_END";
         public const string ACTIONLABEL_LITTLE_ENDIAN_START = "LITTLE_ENDIAN_START";
         private const string ACTIONLABEL_LITTLE_ENDIAN_END = "LITTLE_ENDIAN_END";
 
@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.ChaCha
         List<string> descriptions = new List<string>();
         private string[] originalState;
         private bool versionIsDJB;
-        private ulong keyBlockNr;
+        protected ulong keyBlockNr;
         public KeystreamBlockGenPage(ContentControl pageElement, ChaChaPresentation pres_, ulong keyblockNr_) : base(pageElement)
         {
             pres = pres_;
@@ -67,6 +67,7 @@ namespace Cryptool.Plugins.ChaCha
 
             AssertInitialState();
             pres.KeystreamBlocksNeededTextBlock.Text = keyBlockNr.ToString();
+            pres.CurrentKeystreamBlockTextBox = keyBlockNr;
             if (pres.DiffusionActive)
             {
                 InsertAction(ACTIONLABEL_ADDITION_END, AddOriginalStateDiffusion());
@@ -84,7 +85,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private void Init()
+        protected virtual void Init()
         {
             PageAction generalDescriptionAction = new PageAction(() =>
             {
@@ -142,14 +143,14 @@ namespace Cryptool.Plugins.ChaCha
                     ClearQRDetail();
                     // update state matrix
                     ClearState();
-                    uint[] stateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
+                    uint[] stateEntries = qrIndex == 1 ? GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND, qrIndex - 2);
                     for (int x = 0; x < stateEntries.Length; ++x)
                     {
                         InsertStateValue(x, stateEntries[x]);
                     }
                     if (pres.DiffusionActive)
                     {
-                        uint[] diffusionStateEntries = qrIndex == 1 ? pres.GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
+                        uint[] diffusionStateEntries = qrIndex == 1 ? GetMappedResult(ResultType.CHACHA_HASH_ORIGINAL_STATE_DIFFUSION, (int)keyBlockNr - 1) : GetMappedResult(ResultType.CHACHA_HASH_QUARTERROUND_DIFFUSION, qrIndex - 2);
                         for (int x = 0; x < diffusionStateEntries.Length; ++x)
                         {
                             InsertDiffusionStateValue(x, diffusionStateEntries[x], stateEntries[x]);
@@ -499,7 +500,7 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.SetFontSize(size, additionTextBoxes);
             pres.Nav.SetFontSize(size, additionResultTextBoxes);
         }
-        private void InitDiffusionResults()
+        protected virtual void InitDiffusionResults()
         {
             pres.InitDiffusionResults();
         }
@@ -681,14 +682,15 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void UpdateDiffusionQRInput(int qrIndex)
         {
-            string qrInA = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
-            string qrInADiffusion = pres.GetHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
-            string qrInB = pres.GetHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
-            string qrInBDiffusion = pres.GetHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
-            string qrInC = pres.GetHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
-            string qrInCDiffusion = pres.GetHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
-            string qrInD = pres.GetHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
-            string qrInDDiffusion = pres.GetHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
+            // GetMappedHexResult(ResultType.QR_INPUT_A, qrIndex - 1)
+            string qrInA = GetMappedHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
+            string qrInADiffusion = GetMappedHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
+            string qrInB = GetMappedHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
+            string qrInBDiffusion = GetMappedHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
+            string qrInC = GetMappedHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
+            string qrInCDiffusion = GetMappedHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
+            string qrInD = GetMappedHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
+            string qrInDDiffusion = GetMappedHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
             InsertDiffusionValue(pres.QRInADiffusion, qrInADiffusion, qrInA);
             InsertDiffusionValue(pres.QRInBDiffusion, qrInBDiffusion, qrInB);
             InsertDiffusionValue(pres.QRInCDiffusion, qrInCDiffusion, qrInC);
@@ -775,14 +777,14 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void UpdateDiffusionQROutput(int qrIndex)
         {
-            string qrOutA = pres.GetHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
-            string qrOutADiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_A_DIFFUSION, qrIndex - 1);
-            string qrOutB = pres.GetHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
-            string qrOutBDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_B_DIFFUSION, qrIndex - 1);
-            string qrOutC = pres.GetHexResult(ResultType.QR_OUTPUT_C, qrIndex - 1);
-            string qrOutCDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_C_DIFFUSION, qrIndex - 1);
-            string qrOutD = pres.GetHexResult(ResultType.QR_OUTPUT_D, qrIndex - 1);
-            string qrOutDDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_D_DIFFUSION, qrIndex - 1);
+            string qrOutA = GetMappedHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
+            string qrOutADiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_A_DIFFUSION, qrIndex - 1);
+            string qrOutB = GetMappedHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
+            string qrOutBDiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_B_DIFFUSION, qrIndex - 1);
+            string qrOutC = GetMappedHexResult(ResultType.QR_OUTPUT_C, qrIndex - 1);
+            string qrOutCDiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_C_DIFFUSION, qrIndex - 1);
+            string qrOutD = GetMappedHexResult(ResultType.QR_OUTPUT_D, qrIndex - 1);
+            string qrOutDDiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_D_DIFFUSION, qrIndex - 1);
             InsertDiffusionValue(pres.QROutADiffusion, qrOutADiffusion, qrOutA);
             InsertDiffusionValue(pres.QROutBDiffusion, qrOutBDiffusion, qrOutB);
             InsertDiffusionValue(pres.QROutCDiffusion, qrOutCDiffusion, qrOutC);
@@ -953,21 +955,21 @@ namespace Cryptool.Plugins.ChaCha
         }
         public PageAction ClearQRDetail(int qrIndex)
         {
-            string qrInA = pres.GetHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
-            string qrInB = pres.GetHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
-            string qrInC = pres.GetHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
-            string qrInD = pres.GetHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
+            string qrInA = GetMappedHexResult(ResultType.QR_INPUT_A, qrIndex - 1);
+            string qrInB = GetMappedHexResult(ResultType.QR_INPUT_B, qrIndex - 1);
+            string qrInC = GetMappedHexResult(ResultType.QR_INPUT_C, qrIndex - 1);
+            string qrInD = GetMappedHexResult(ResultType.QR_INPUT_D, qrIndex - 1);
             string[,] qrDetailValues = new string[4, 3];
             for (int i = 0; i < 4; ++i)
             {
-                qrDetailValues[i, 0] = pres.GetHexResult(ResultType.QR_ADD, i + (qrIndex - 1) * 4);
-                qrDetailValues[i, 1] = pres.GetHexResult(ResultType.QR_XOR, i + (qrIndex - 1) * 4);
-                qrDetailValues[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT, i + (qrIndex - 1) * 4);
+                qrDetailValues[i, 0] = GetMappedHexResult(ResultType.QR_ADD, i + (qrIndex - 1) * 4);
+                qrDetailValues[i, 1] = GetMappedHexResult(ResultType.QR_XOR, i + (qrIndex - 1) * 4);
+                qrDetailValues[i, 2] = GetMappedHexResult(ResultType.QR_SHIFT, i + (qrIndex - 1) * 4);
             }
-            string qrOutA = pres.GetHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
-            string qrOutB = pres.GetHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
-            string qrOutC = pres.GetHexResult(ResultType.QR_OUTPUT_C, qrIndex - 1);
-            string qrOutD = pres.GetHexResult(ResultType.QR_OUTPUT_D, qrIndex - 1);
+            string qrOutA = GetMappedHexResult(ResultType.QR_OUTPUT_A, qrIndex - 1);
+            string qrOutB = GetMappedHexResult(ResultType.QR_OUTPUT_B, qrIndex - 1);
+            string qrOutC = GetMappedHexResult(ResultType.QR_OUTPUT_C, qrIndex - 1);
+            string qrOutD = GetMappedHexResult(ResultType.QR_OUTPUT_D, qrIndex - 1);
 
             return new PageAction(() =>
             {
@@ -990,21 +992,21 @@ namespace Cryptool.Plugins.ChaCha
                 pres.Nav.Replace(pres.QROutD, qrOutD);
                 if (pres.DiffusionActive)
                 {
-                    string qrInADiffusion = pres.GetHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
-                    string qrInBDiffusion = pres.GetHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
-                    string qrInCDiffusion = pres.GetHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
-                    string qrInDDiffusion = pres.GetHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
+                    string qrInADiffusion = GetMappedHexResult(ResultType.QR_INPUT_A_DIFFUSION, qrIndex - 1);
+                    string qrInBDiffusion = GetMappedHexResult(ResultType.QR_INPUT_B_DIFFUSION, qrIndex - 1);
+                    string qrInCDiffusion = GetMappedHexResult(ResultType.QR_INPUT_C_DIFFUSION, qrIndex - 1);
+                    string qrInDDiffusion = GetMappedHexResult(ResultType.QR_INPUT_D_DIFFUSION, qrIndex - 1);
                     string[,] qrDetailValuesDiffusion = new string[4, 3];
                     for (int i = 0; i < 4; ++i)
                     {
-                        qrDetailValuesDiffusion[i, 0] = pres.GetHexResult(ResultType.QR_ADD_DIFFUSION, i + (qrIndex - 1) * 4);
-                        qrDetailValuesDiffusion[i, 1] = pres.GetHexResult(ResultType.QR_XOR_DIFFUSION, i + (qrIndex - 1) * 4);
-                        qrDetailValuesDiffusion[i, 2] = pres.GetHexResult(ResultType.QR_SHIFT_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 0] = GetMappedHexResult(ResultType.QR_ADD_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 1] = GetMappedHexResult(ResultType.QR_XOR_DIFFUSION, i + (qrIndex - 1) * 4);
+                        qrDetailValuesDiffusion[i, 2] = GetMappedHexResult(ResultType.QR_SHIFT_DIFFUSION, i + (qrIndex - 1) * 4);
                     }
-                    string qrOutADiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_A_DIFFUSION, qrIndex - 1);
-                    string qrOutBDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_B_DIFFUSION, qrIndex - 1);
-                    string qrOutCDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_C_DIFFUSION, qrIndex - 1);
-                    string qrOutDDiffusion = pres.GetHexResult(ResultType.QR_OUTPUT_D_DIFFUSION, qrIndex - 1);
+                    string qrOutADiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_A_DIFFUSION, qrIndex - 1);
+                    string qrOutBDiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_B_DIFFUSION, qrIndex - 1);
+                    string qrOutCDiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_C_DIFFUSION, qrIndex - 1);
+                    string qrOutDDiffusion = GetMappedHexResult(ResultType.QR_OUTPUT_D_DIFFUSION, qrIndex - 1);
                     InsertDiffusionValue(pres.QRInADiffusion, qrInADiffusion, qrInA);
                     InsertDiffusionValue(pres.QRInBDiffusion, qrInBDiffusion, qrInB);
                     InsertDiffusionValue(pres.QRInCDiffusion, qrInCDiffusion, qrInC);
@@ -1361,7 +1363,7 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Intermediate Result
-        private int MapIndex(ResultType<uint[]> resultType, int i)
+        protected virtual int MapIndex(ResultType<uint[]> resultType, int i)
         {
             int offset = 0;
             string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
@@ -1380,7 +1382,7 @@ namespace Cryptool.Plugins.ChaCha
             }
             return (int)((ulong)offset * (keyBlockNr - 1)) + i;
         }
-        private int MapIndex(ResultType<uint> resultType, int i)
+        protected virtual int MapIndex(ResultType<uint> resultType, int i)
         {
             int offset = 0;
             string name = Regex.Replace(resultType.Name, @"_DIFFUSION$", "");
@@ -1413,21 +1415,20 @@ namespace Cryptool.Plugins.ChaCha
             }
             return (int)((ulong)offset * (keyBlockNr - 1)) + i;
         }
-        private uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
-        {
-            int mapIndex = MapIndex(resultType, index);
-            return pres.GetResult(resultType, mapIndex);
-        }
-
-        private uint GetMappedResult(ResultType<uint> resultType, int index)
+        protected virtual uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
         {
             return pres.GetResult(resultType, MapIndex(resultType, index));
         }
-        private string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
+
+        protected virtual uint GetMappedResult(ResultType<uint> resultType, int index)
+        {
+            return pres.GetResult(resultType, MapIndex(resultType, index));
+        }
+        protected virtual string GetMappedHexResult(ResultType<uint[]> resultType, int i, int j)
         {
             return pres.GetHexResult(resultType, MapIndex(resultType, i), j);
         }
-        private string GetMappedHexResult(ResultType<uint> resultType, int index)
+        protected virtual string GetMappedHexResult(ResultType<uint> resultType, int index)
         {
             return pres.GetHexResult(resultType, MapIndex(resultType, index));
         }

@@ -95,6 +95,7 @@
     <Compile Include="Visualization\Pages\Page.cs" />
     <Compile Include="Visualization\Pages\PageAction.cs" />
     <Compile Include="Visualization\Pages\StateMatrixPage.cs" />
+    <Compile Include="Visualization\Pages\UserKeystreamBlockGenPage.cs" />
     <Compile Include="Visualization\Pages\WorkflowPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

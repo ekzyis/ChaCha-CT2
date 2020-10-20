@@ -3,17 +3,60 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Navigation;
 using Cryptool.Plugins.Chacha.Extensions;
 
 namespace Cryptool.Plugins.ChaCha
 {
+
+    public class CounterInputValidationRule: ValidationRule
+    {
+        private ulong _maxCounter;
+        public CounterInputValidationRule(ulong maxCounter)
+        {
+            _maxCounter = maxCounter;
+        }
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            string inputText = (string)value;
+            ulong inputCounter = 0;
+
+            try
+            {
+                inputCounter = ulong.Parse(inputText, NumberStyles.HexNumber);
+            }
+            catch (Exception e)
+            {
+                return new ValidationResult(false, $"{e.Message}");
+            }
+
+            if (inputCounter > _maxCounter)
+            {
+                return new ValidationResult(false,
+                    $"Counter must be in range 0-{_maxCounter}.");
+            }
+            return ValidationResult.ValidResult;
+        }
+    }
+
+    public class HexStringToULongConverter: IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ChaChaPresentation.HexString((ulong)value);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ulong.Parse((string)value, NumberStyles.HexNumber);
+        }
+    }
+
     class StateMatrixPage : Page
     {
         private ChaChaPresentation pres;
@@ -30,9 +73,9 @@ namespace Cryptool.Plugins.ChaCha
             pres = pres_;
             versionIsDJB = pres.Version == ChaCha.Version.DJB;
             keyIs32Byte = pres.InputKey.Length == 32;
-            descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes interpreted as little-endian. The first 16 bytes consist of the constants. ");
+            descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix. The first 16 bytes consist of the constants. ");
             descriptions.Add("The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ");
-            descriptions.Add($"The next { pres.InitialCounter.Length} bytes consist of the counter.Since this is our first keystream block, we set the counter to zero.The counter is special since we first reverse all bytes before applying the transformations but since the counter is zero, this does not matter for the first block. ");
+            descriptions.Add($"The next {pres.InitialCounter.Length} bytes consist of the counter. The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.");
             descriptions.Add($"The last {pres.InputIV.Length} bytes consist of the initialization vector. ");
             descriptions.Add("On the next page, we will use this initialized state matrix to generate the first keystream block.");
 
@@ -62,6 +105,11 @@ namespace Cryptool.Plugins.ChaCha
             });
             AddAction(nextPageDesc);
             InitDiffusion();
+        }
+
+        public override void Setup()
+        {
+            InitCounterInput();
         }
 
         #region Constants
@@ -330,6 +378,7 @@ namespace Cryptool.Plugins.ChaCha
                 ClearTransformInputKey();
                 ClearTransformChunkKey();
                 ClearTransformLittleEndianKey();
+                AddReverseBytesStep();
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -337,6 +386,7 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformInputKey();
                 ReplaceTransformChunkKey();
                 ReplaceTransformLittleEndianKey();
+                RemoveReverseBytesStep();
             });
             PageAction counterInputAction = new PageAction(() =>
             {
@@ -344,6 +394,13 @@ namespace Cryptool.Plugins.ChaCha
             }, () =>
             {
                 ClearTransformInput();
+            });
+            PageAction reverseBytesAction = new PageAction(() =>
+            {
+                AddReverseCounter();
+            }, () =>
+            {
+                ClearReverseCounter();
             });
             PageAction counterChunksAction = new PageAction(() =>
             {
@@ -363,26 +420,24 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if(versionIsDJB)
                 {
-                    string counter0 = pres.UITransformLittleEndian1.Text;
-                    string counter1 = pres.UITransformLittleEndian2.Text;
-                    pres.Nav.Replace(pres.UIState12, counter0);
-                    pres.Nav.Replace(pres.UIState13, counter1);
+                    pres.Nav.SetTextBinding(pres.UIState12, "InputCounterLittleEndian[0]");
+                    pres.Nav.SetTextBinding(pres.UIState13, "InputCounterLittleEndian[1]");
                 }
                 else
                 {
-                    string counter0 = pres.UITransformLittleEndian0.Text;
-                    pres.Nav.Replace(pres.UIState12, counter0);
+                    pres.Nav.SetTextBinding(pres.UIState12, "InputCounterLittleEndian[0]");
                 }
             }, () =>
             {
-                pres.Nav.Clear(pres.UIState12);
+                pres.Nav.ClearTextBinding(pres.UIState12);
                 if (versionIsDJB)
                 {
-                    pres.Nav.Clear(pres.UIState13);
+                    pres.Nav.ClearTextBinding(pres.UIState13);
                 }
             });
             AddAction(counterStepDescriptionAction);
             AddAction(counterInputAction);
+            AddAction(reverseBytesAction);
             AddAction(counterChunksAction);
             AddAction(counterLittleEndianAction);
             AddAction(copyCounterToState);
@@ -393,30 +448,80 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void ReplaceTransformInputCounter()
         {
-            ReplaceTransformInput(pres.HexInitialCounter);
+            SetTextBindingToTransformInput("HexInputCounter");
         }
         private void ReplaceTransformChunkCounter()
         {
             if (versionIsDJB)
             {
-                ReplaceTransformChunk(pres.InitialCounterChunks[0], pres.InitialCounterChunks[1]);
+                SetTextBindingToTransformChunk("InputCounterChunks[0]", "InputCounterChunks[1]");
             }
             else
             {
-                ReplaceTransformChunk(pres.InitialCounterChunks[0]);
+                SetTextBindingToTransformChunk("InputCounterChunks[0]");
             }
         }
         private void ReplaceTransformLittleEndianCounter()
         {
             if (versionIsDJB)
             {
-                ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0], pres.InitialCounterLittleEndian[1]);
+                SetTextBindingToTransformLittleEndian("InputCounterLittleEndian[0]", "InputCounterLittleEndian[1]");
             }
             else
             {
-                ReplaceTransformLittleEndian(pres.InitialCounterLittleEndian[0]);
+                SetTextBindingToTransformLittleEndian("InputCounterLittleEndian[0]");
             }
         }
+
+        private void InitCounterInput()
+        {
+            ValidationRule counterInputValidationRule = new CounterInputValidationRule(versionIsDJB ? ulong.MaxValue : uint.MaxValue);
+            Binding counterInputBinding = new Binding("InputCounter")
+            { Mode = BindingMode.OneWayToSource, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged, Converter = new HexStringToULongConverter() };
+            counterInputBinding.ValidationRules.Add(counterInputValidationRule);
+            pres.UICounter.SetBinding(TextBox.TextProperty, counterInputBinding);
+            pres.UICounter.Text = ChaChaPresentation.HexString(pres.InitialCounter);
+        }
+
+        private void AddReverseCounter()
+        {
+            TextBox reverseValue = (TextBox)LogicalTreeHelper.FindLogicalNode(pres.TransformGrid, "ReverseValue"); ;
+            pres.Nav.SetTextBinding(reverseValue, "HexInputCounterReverse");
+        }
+
+        private void AddReverseBytesStep()
+        {
+            pres.TransformGrid.RowDefinitions.Add(new RowDefinition());
+            Grid.SetRow(pres.TransformChunkDesc, 2);
+            Grid.SetRow(pres.TransformChunkValue, 2);
+            Grid.SetRow(pres.TransformLittleEndianDesc, 3);
+            Grid.SetRow(pres.TransformLittleEndianValue, 3);
+            TextBox reverseDesc = new TextBox() { Style = pres.TransformGrid.FindResource("TransformDesc") as Style, Name = "ReverseDesc", Text = "Reverse byte order:" };
+            TextBox reverseValue = new TextBox() { Style = pres.TransformGrid.FindResource("TransformValue") as Style, Name = "ReverseValue" };
+            Grid.SetRow(reverseDesc, 1);
+            Grid.SetRow(reverseValue, 1);
+            Grid.SetColumn(reverseValue, 1);
+            pres.TransformGrid.Children.Add(reverseDesc);
+            pres.TransformGrid.Children.Add(reverseValue);
+        }
+
+        private void ClearReverseCounter()
+        {
+            TextBox reverseValue = (TextBox)LogicalTreeHelper.FindLogicalNode(pres.TransformGrid, "ReverseValue");
+            pres.Nav.ClearTextBinding(reverseValue);
+        }
+
+        private void RemoveReverseBytesStep()
+        {
+            pres.TransformGrid.Children.RemoveAt(pres.TransformGrid.Children.Count - 1);
+            pres.TransformGrid.Children.RemoveAt(pres.TransformGrid.Children.Count - 1);
+            pres.TransformGrid.RowDefinitions.RemoveAt(3);
+            Grid.SetRow(pres.TransformChunkDesc, 1);
+            Grid.SetRow(pres.TransformChunkValue, 1);
+            Grid.SetRow(pres.TransformLittleEndianDesc, 2);
+            Grid.SetRow(pres.TransformLittleEndianValue, 2);
+        }
+
         #endregion
 
         #region IV
@@ -429,6 +534,8 @@ namespace Cryptool.Plugins.ChaCha
                 ClearTransformInput();
                 ClearTransformChunk();
                 ClearTransformLittleEndian();
+                ClearReverseCounter();
+                RemoveReverseBytesStep();
             }, () =>
             {
                 RemoveLastFromDescription();
@@ -436,6 +543,8 @@ namespace Cryptool.Plugins.ChaCha
                 ReplaceTransformInputCounter();
                 ReplaceTransformChunkCounter();
                 ReplaceTransformLittleEndianCounter();
+                AddReverseBytesStep();
+                AddReverseCounter();
             });
             PageAction ivInputAction = new PageAction(() =>
             {
@@ -791,9 +900,14 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres.Nav.Replace(pres.UITransformInput, input);
         }
+        private void SetTextBindingToTransformInput(string bindingVarName)
+        {
+            pres.Nav.SetTextBinding(pres.UITransformInput, bindingVarName);
+        }
         private void ClearTransformInput()
         {
             pres.Nav.Clear(pres.UITransformInput);
+            pres.Nav.ClearTextBinding(pres.UITransformInput);
         }
         #endregion
 
@@ -814,11 +928,29 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+        private void SetTextBindingToTransformChunk(params string[] bindingVarNames)
+        {
+            if (bindingVarNames.Length == 2)
+            {
+                // use borders in center to center text
+                pres.Nav.SetTextBinding(pres.UITransformChunk1, bindingVarNames[0]);
+                pres.Nav.SetTextBinding(pres.UITransformChunk2, bindingVarNames[1]);
+            }
+            else
+            {
+                for (int i = 0; i < bindingVarNames.Length; ++i)
+                {
+                    pres.Nav.SetTextBinding((TextBox)pres.FindName($"UITransformChunk{i}"), bindingVarNames[i]);
+                }
+            }
+        }
         private void ClearTransformChunk()
         {
             for(int i = 0; i < 8; ++i)
             {
-                pres.Nav.Clear((TextBox)pres.FindName($"UITransformChunk{i}"));
+                TextBox tb = (TextBox)pres.FindName($"UITransformChunk{i}");
+                pres.Nav.Clear(tb);
+                pres.Nav.ClearTextBinding(tb);
             }
         }
         #endregion TransformChunk
@@ -841,11 +973,30 @@ namespace Cryptool.Plugins.ChaCha
                 }
             }
         }
+        private void SetTextBindingToTransformLittleEndian(params string[] bindingVarNames)
+        {
+            // TODO create another grid with 3 rows to center IV in IETF version and add branch for le.Length == 3 (IV IETF) and le.Length == 1 (counter IETF) here
+            if (bindingVarNames.Length == 2)
+            {
+                // use borders in center to center text
+                pres.Nav.SetTextBinding(pres.UITransformLittleEndian1, bindingVarNames[0]);
+                pres.Nav.SetTextBinding(pres.UITransformLittleEndian2, bindingVarNames[1]);
+            }
+            else
+            {
+                for (int i = 0; i < bindingVarNames.Length; ++i)
+                {
+                    pres.Nav.SetTextBinding((TextBox)pres.FindName($"UITransformLittleEndian{i}"), bindingVarNames[i]);
+                }
+            }
+        }
         private void ClearTransformLittleEndian()
         {
             for (int i = 0; i < 8; ++i)
             {
-                pres.Nav.Clear((TextBox)pres.FindName($"UITransformLittleEndian{i}"));
+                TextBox tb = (TextBox)pres.FindName($"UITransformLittleEndian{i}");
+                pres.Nav.Clear(tb);
+                pres.Nav.ClearTextBinding(tb);
             }
         }
         #endregion

@@ -49,11 +49,17 @@ namespace Cryptool.Plugins.ChaCha
         // IV size (depends on version)
         private int BITS_IV;
         // initial counter value (for keystream blocks) (depends on version)
-        private uint INITIAL_COUNTER;
+        private ulong INITIAL_COUNTER;
 
-        // is currently executing for diffusion?
-        private bool _diffusion = false;
+        private bool ExecDiffusion { get; set; } = false;
         private byte[] _diffusionKey;
+
+        private ulong _userKeystreamBlockNr = 0;
+        private bool ExecUserKeystreamBlock { get; set; } = false;
+
+        private bool NormalExecution => !ExecDiffusion && !ExecUserKeystreamBlock;
+
+
         public class Version
         {
             public static readonly Version IETF = new Version("IETF", 32, 96, 1);
@@ -212,25 +218,35 @@ namespace Cryptool.Plugins.ChaCha
         private void ExecuteChaCha()
         {
             // clear all previous results (important if user started workflow, stopped and then restarted)
-            DispatchToPresentation(delegate
+            if (NormalExecution)
             {
-                if (!_diffusion)
+                DispatchToPresentation(delegate
                 {
                     _presentation.ClearAllResults();
-                }
-                else
+                    _presentation.Version = settings.Version;
+                    _presentation.Rounds = settings.Rounds;
+                });
+            }
+            else if(ExecDiffusion)
+            {
+                DispatchToPresentation(delegate
                 {
                     _presentation.ClearDiffusionResults();
-                }
-                _presentation.Version = settings.Version;
-                _presentation.Rounds = settings.Rounds;
-            });
+                });
+            }
+            else if(ExecUserKeystreamBlock)
+            {
+                DispatchToPresentation(delegate
+                {
+                    _presentation.ClearUserKeystreamBlockResults();
+                });
+            }
 
             BITS_COUNTER = settings.Version.BitsCounter;
             BITS_IV = settings.Version.BitsIV;
-            INITIAL_COUNTER = settings.Version.InitialCounter;
+            INITIAL_COUNTER = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : settings.Version.InitialCounter;
 
-            GuiLogMessage(_diffusion ? "Executing ChaCha (Diffusion)" : "Executing ChaCha", NotificationLevel.Info);
+            GuiLogMessage(ExecDiffusion ? "Executing ChaCha (Diffusion)" : "Executing ChaCha", NotificationLevel.Info);
             GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, BITS_IV / 8, BITS_COUNTER / 8), NotificationLevel.Info);
             GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
 
@@ -242,19 +258,38 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             // set values needed to enable navigation since now all values needed for visualization are set.
-            if(!_diffusion) DispatchToPresentation(delegate { _presentation.InputValid = inputValid; _presentation.ExecutionFinished = true; });
+            if(NormalExecution) DispatchToPresentation(delegate { _presentation.InputValid = inputValid; _presentation.ExecutionFinished = true; });
         }
 
         public void ExecuteChaChaWithDiffusionKey(byte[] diffusionKey)
         {
-            _diffusion = true;
+            ExecDiffusion = true;
             _diffusionKey = diffusionKey;
             Debug.Assert(diffusionKey.Length == InputKey.Length, $"Diffusion key length ({diffusionKey.Length}) does not match input key length ({InputKey.Length})");
             ExecuteChaCha();
             _dispatchAddedStateFlippedBitsResult = 0;
             _dispatchLittleEndianStateFlippedBitsResult = 0;
             _diffusionKey = null;
-            _diffusion = false;
+            ExecDiffusion = false;
+        }
+
+        public void ExecuteChaChaWithUserKeystreamBlock(ulong keystreamBlockNr)
+        {
+            //Works by executing the whole ChaCha cipher with a different initial counter and stopping after the first block.
+            ExecUserKeystreamBlock = true;
+            _userKeystreamBlockNr = keystreamBlockNr;
+            ExecuteChaCha();
+            _userKeystreamBlockNr = 0;
+            ExecUserKeystreamBlock = false;
+        }
+
+        public void ExecuteChaChaWithDiffusionKeyAndUserKeystreamBlock(byte[] diffusionKey, ulong keystreamBlockNr)
+        {
+            ExecUserKeystreamBlock = true;
+            _userKeystreamBlockNr = keystreamBlockNr;
+            ExecuteChaChaWithDiffusionKey(diffusionKey);
+            _userKeystreamBlockNr = 0;
+            ExecUserKeystreamBlock = false;
         }
 
         /**
@@ -299,13 +334,13 @@ namespace Cryptool.Plugins.ChaCha
             }
 
             add4ByteChunksToStateAsLittleEndian(constants);
-            add4ByteChunksToStateAsLittleEndian(_diffusion ? _diffusionKey : _inputKey);
-            if (_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(_diffusion ? _diffusionKey : _inputKey);
+            add4ByteChunksToStateAsLittleEndian(ExecDiffusion ? _diffusionKey : _inputKey);
+            if (_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(ExecDiffusion ? _diffusionKey : _inputKey);
             byte[] counter = Enumerable.Repeat<byte>(0, BITS_COUNTER / 8).ToArray();
             add4ByteChunksToStateAsLittleEndian(counter);
             add4ByteChunksToStateAsLittleEndian(InputIV);
 
-            if(!_diffusion)
+            if(NormalExecution)
             {
                 DispatchToPresentation(delegate
                 {
@@ -327,15 +362,15 @@ namespace Cryptool.Plugins.ChaCha
         public byte[] Xcrypt(byte[] src)
         {
             byte[] dst = new byte[src.Length];
-            int keystreamBlocksNeeded = (int)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
-            if (!_diffusion)
+            ulong keystreamBlocksNeeded = (ulong)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
+            if (NormalExecution)
             {
                 DispatchToPresentation(delegate
                 {
                     _presentation.KeystreamBlocksNeeded = keystreamBlocksNeeded;
                 });
             }
-            byte[] keystream = new byte[keystreamBlocksNeeded * BLOCKSIZE_BYTES];
+            byte[] keystream = new byte[keystreamBlocksNeeded * (ulong)BLOCKSIZE_BYTES];
             int keystreamBlocksOffset = 0;
             // Convenience method to abstract away keystream offset.
             void addToKeystream(byte[] block)
@@ -346,18 +381,26 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            for (uint i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
+            for (ulong i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
                 byte[] keyblock = GenerateKeystreamBlock(i);
+                if (ExecUserKeystreamBlock) break;
                 // add each byte of keyblock to keystream
                 addToKeystream(keyblock);
             }
-            // XOR the input with the keystream
-            for (int i = 0; i < src.Length; ++i)
+            if(NormalExecution)
             {
-                dst[i] = (byte)(src[i] ^ keystream[i]);
+                // XOR the input with the keystream
+                for (int i = 0; i < src.Length; ++i)
+                {
+                    dst[i] = (byte)(src[i] ^ keystream[i]);
+                }
+                return dst;
             }
-            return dst;
+            else
+            {
+                return null;
+            }
         }
 
         /**
@@ -369,9 +412,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             uint[] state = (uint[])(initialState.Clone());
             SetCounterToState(state, n);
-            if(_diffusion) DispatchOriginalStateFlippedBitsResult(state, n - INITIAL_COUNTER);
             // hash state block
-            uint[] hash = ChaChaHash(state);
+            uint[] hash = ChaChaHash(state, n);
             // convert the hashed uint state array into an array of bytes
             byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
             for (int i = 0; i < hash.Length; ++i)
@@ -391,39 +433,40 @@ namespace Cryptool.Plugins.ChaCha
          * Generates the ChaCha Hash out of the input state block 
          * by running the state a set times through the quarterround function.
          */
-        public uint[] ChaChaHash(uint[] state)
+        public uint[] ChaChaHash(uint[] state, ulong n)
         {
             uint[] originalState = (uint[])(state.Clone());
             DispatchResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])state.Clone());
+            if (ExecDiffusion) DispatchOriginalStateFlippedBitsResult(state, n - INITIAL_COUNTER);
             for (int i = 0; i < settings.Rounds / 2; ++i)
             {
                 // column round
                 state = QuarterroundState(state, 0, 4, 8, 12);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
                 // state is the diffusion state because we are in diffusion mode and thus currently calculating the diffusion state
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8);
                 state = QuarterroundState(state, 1, 5, 9, 13);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 1);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 1);
                 state = QuarterroundState(state, 2, 6, 10, 14);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 2);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 2);
                 state = QuarterroundState(state, 3, 7, 11, 15);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 3);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 3);
                 // diagonal round
                 state = QuarterroundState(state, 0, 5, 10, 15);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 4);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 4);
                 state = QuarterroundState(state, 1, 6, 11, 12);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 5);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 5);
                 state = QuarterroundState(state, 2, 7, 8, 13);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 6);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 6);
                 state = QuarterroundState(state, 3, 4, 9, 14);
                 DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (_diffusion) DispatchQRFlippedBitsResult(state, i*8 + 7);
+                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 7);
             }
             // add the original state
             for (int i = 0; i < state.Length; ++i)
@@ -431,7 +474,7 @@ namespace Cryptool.Plugins.ChaCha
                 state[i] += originalState[i];
             }
             DispatchResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (uint[])state.Clone());
-            if (_diffusion) DispatchAddedStateFlippedBitsResult(state);
+            if (ExecDiffusion) DispatchAddedStateFlippedBitsResult(state);
             // each 4 byte chunk as little-endian
             for (int i = 0; i < state.Length; ++i)
             {
@@ -440,7 +483,7 @@ namespace Cryptool.Plugins.ChaCha
                 state[i] = ToUInt32(b, 0);
             }
             DispatchResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (uint[])state.Clone());
-            if (_diffusion) DispatchLittleEndianStateFlippedBitsResult(state);
+            if (ExecDiffusion) DispatchLittleEndianStateFlippedBitsResult(state);
             return state;
         }
 
@@ -520,38 +563,72 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void DispatchResult(ResultType<uint> type, uint result)
         {
-            DispatchToPresentation(delegate
+            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
+            ResultType<uint> localType = type;
+            if (ExecDiffusion)
             {
-                if (_diffusion)
+                DispatchDiffusionResult(localType, result);
+            }
+            else if (ExecUserKeystreamBlock)
+            {
+                DispatchUserResult(localType, result);
+            }
+            else
+            {
+                DispatchToPresentation(delegate
                 {
-                    DispatchDiffusionResult(type, result);
-                }
-                else {
-                    _presentation.AddResult(type, result);
-                }
-            });
+                    _presentation.AddResult(localType, result);
+                });
+            }
         }
         private void DispatchResult(ResultType<uint[]> type, params uint[] result)
         {
+            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
+            ResultType<uint[]> localType = type;
+            if (ExecDiffusion)
+            {
+                DispatchDiffusionResult(localType, result);
+            }
+            else if (ExecUserKeystreamBlock)
+            {
+                DispatchUserResult(localType, result);
+            }
+            else
+            {
+                DispatchToPresentation(delegate
+                {
+                    _presentation.AddResult(localType, result);
+                });
+            }
+        }
+
+        private void DispatchUserResult(ResultType<uint[]> type,  uint[] result)
+        {
+            ResultType<uint[]> userType = ResultType.GetUserType(type);
             DispatchToPresentation(delegate
             {
-                if (_diffusion)
-                {
-                    DispatchDiffusionResult(type, result);
-                }
-                else
-                {
-                    _presentation.AddResult(type, result);
-                }
+                _presentation.AddResult(userType, result);
+            });
+        }
+        private void DispatchUserResult(ResultType<uint> type, uint result)
+        {
+            ResultType<uint> userType = ResultType.GetUserType(type);
+            DispatchToPresentation(delegate
+            {
+                _presentation.AddResult(userType, result);
             });
         }
 
         private delegate T _GetTResult<out T>();
         private uint[] GetResult(ResultType<uint[]> type, int index)
         {
-            _GetTResult<uint[]> getResult = () => _presentation.GetResult(type, index);
+            ResultType<uint[]> localType = type;
+            if(ExecUserKeystreamBlock)
+            {
+                localType = ResultType.GetUserType(localType);
+            }
+            _GetTResult<uint[]> getResult = () => _presentation.GetResult(localType, index);
             return (uint[])Presentation.Dispatcher.Invoke(getResult, null);
-
         }
 
         private void DispatchQRFlippedBitsResult(uint[] diffusionState, int index)
@@ -683,6 +760,15 @@ namespace Cryptool.Plugins.ChaCha
                 Array.Reverse(b);
             }
             return BitConverter.ToUInt32(b, startIndex);
+        }
+
+        public static ulong ToUInt64(byte[] b, int startIndex)
+        {
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(b);
+            }
+            return BitConverter.ToUInt64(b, startIndex);
         }
 
         /**

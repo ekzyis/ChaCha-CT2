@@ -81,26 +81,29 @@ namespace Cryptool.Plugins.ChaCha
         }
         private class InputActionIndexRule : ValidationRule
         {
-            private int _maxActionIndex;
-            private int _minActionIndex;
-            public InputActionIndexRule(int maxActionIndex)
+            private ulong _maxActionIndex;
+            private ulong _minActionIndex;
+            public InputActionIndexRule(ulong maxActionIndex)
             {
                 _maxActionIndex = maxActionIndex;
             }
+            public InputActionIndexRule(int maxActionIndex) : this((ulong)maxActionIndex) { }
 
-            public InputActionIndexRule(int minActionIndex, int maxActionIndex)
+            public InputActionIndexRule(ulong minActionIndex, ulong maxActionIndex)
             {
                 _minActionIndex = minActionIndex;
                 _maxActionIndex = maxActionIndex;
             }
 
+            public InputActionIndexRule(int minActionIndex, int maxActionIndex) : this((ulong)minActionIndex, (ulong)maxActionIndex) { }
+
             public override ValidationResult Validate(object value, CultureInfo cultureInfo)
             {
-                int input = 0;
+                ulong input = 0;
 
                 try
                 {
-                    input = int.Parse((String)value);
+                    input = ulong.Parse((String)value);
                 }
                 catch (Exception e)
                 {
@@ -154,9 +157,9 @@ namespace Cryptool.Plugins.ChaCha
             return b;
         }
 
-        private void InitPageNavigationBar(Page p)
+        private void InitPageNavigationBar(Page p, int pageIndex = -1)
         {
-            int pageIndex = _pages.FindIndex(p_ => p_ == p);
+            pageIndex = pageIndex == -1 ? _pages.FindIndex(p_ => p_ == p) : pageIndex;
             StackPanel pageNavBar = p.PageNavigationBar;
             pageNavBar.Children.Clear();
             Button start = CreatePageButton("Start", pageIndex, 0, 64);
@@ -170,12 +173,12 @@ namespace Cryptool.Plugins.ChaCha
             pageNavBar.Children.Add(keystream);
         }
 
-        private TextBox CreateKeystreamBlockTextBox(int totalKeystreamBlocks)
+        private TextBox CreateKeystreamBlockTextBox()
         {
             TextBox current = CreateNavigationTextBox();
             Binding actionIndexBinding = new Binding("CurrentKeystreamBlockTextBox")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, totalKeystreamBlocks);
+            ValidationRule inputActionIndexRule = new InputActionIndexRule(1, MaxKeystreamBlock);
             actionIndexBinding.ValidationRules.Add(inputActionIndexRule);
             current.SetBinding(TextBox.TextProperty, actionIndexBinding);
 
@@ -187,12 +190,13 @@ namespace Cryptool.Plugins.ChaCha
                     ValidationResult result = inputActionIndexRule.Validate(value, null);
                     if (result == ValidationResult.ValidResult)
                     {
-                        MoveToKeystreamPage(int.Parse(value));
+                        MoveToKeystreamPage(ulong.Parse(value));
                     }
                 }
             }
 
             current.KeyDown += HandleKeyDown;
+            current.Width = 40;
             return current;
         }
 
@@ -249,8 +253,10 @@ namespace Cryptool.Plugins.ChaCha
             return current;
         }
 
-        private void InitKeystreamNavigation(Page p, int totalKeystreamBlocks, int totalRounds)
+        private void InitKeystreamNavigation(Page p)
         {
+            ulong totalKeystreamBlocks = KeystreamBlocksNeeded;
+            int totalRounds = Rounds;
             // Assume that general page navigation bar has already been initialized
             StackPanel pageNavBar = p.PageNavigationBar;
 
@@ -264,7 +270,7 @@ namespace Cryptool.Plugins.ChaCha
             Button previousKeystreamBlock = CreatePrevNavigationButton();
             previousKeystreamBlock.Click += PrevKeystreamBlock_Click;
             previousKeystreamBlock.SetBinding(Button.IsEnabledProperty, new Binding("PrevKeystreamBlockIsEnabled"));
-            TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox(totalKeystreamBlocks);
+            TextBox currentKeystreamBlock = CreateKeystreamBlockTextBox();
             TextBlock keystreamDelimiter = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = "/" };
             TextBlock totalKeystreamBlockLabel = new TextBlock() { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, Text = totalKeystreamBlocks.ToString() };
             Button nextKeystreamBlock = CreateNextNavigationButton();
@@ -378,6 +384,13 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
+        private void ReplaceUserPage(Page p)
+        {
+            Debug.Assert(TotalPages == 5, $"ReplaceUserPage called but page count was {TotalPages}. Expected 5.");
+            _pages.Remove(_pages.Last());
+            AddPage(p);
+        }
+
         private void SetupPage(Page p)
         {
             p.Setup();
@@ -387,6 +400,12 @@ namespace Cryptool.Plugins.ChaCha
             }
             InitActionNavigationBar(p);
             p.Visibility = Visibility.Visible;
+        }
+
+        private void TearDownPreviousUserPage()
+        {
+            Debug.Assert(TotalPages == 5, $"TearDownPreviousUserPage called but page count was {TotalPages}. Expected 5.");
+            TearDownPage(_pages.Last());
         }
 
         private void TearDownPage(Page p)
@@ -407,7 +426,7 @@ namespace Cryptool.Plugins.ChaCha
                     PrevPage_Click(null, null);
                 }
             }
-            else
+            else if(n > 0)
             {
                 for (int i = 0; i < Math.Abs(n); ++i)
                 {
@@ -416,9 +435,62 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        private void MoveToKeystreamPage(int n)
+        private void MoveToKeystreamPage(ulong n)
         {
-            MoveToPage(2 + n);
+            bool moveToUserPage = n > KeystreamBlocksNeeded;
+            bool moveFromUserPage = CurrentPageIndex == 4;
+            bool userPageExists = TotalPages == 5;
+            if (moveToUserPage)
+            {
+                /*
+                 * We want to move to a user page (keystream page with own set counter).
+                 * There are three cases to consider:
+                 * 1. Moving from a normal page to a user page
+                 *   CurrentPageIndex does change to 5      => The navigation system will tear down and setup the pages.
+                 * 2. Moving from user page to a user page
+                 *   The CurrentPageIndex does not change   => The navigation system will *not* tear down and setup the pages.
+                 * 3. Moving from user page to normal page
+                 *   The CurrentPageIndex will change       => The navigation system will tear down and setup the pages.
+                 *
+                 * In this branch, we only have to consider case 1 and 2 since we are currently moving to a user page.
+                 */
+                bool moveFromNormalPage = CurrentPageIndex < 4;
+                // at least one case of these two should be true.
+                Debug.Assert(moveFromUserPage || moveFromNormalPage);
+
+                // create new keystream block page with given keyblock number
+                UserKeystreamBlockGenPage p = Page.UserKeystreamBlockGenPage(this, n);
+                InitPageNavigationBar(p, pageIndex: 5);
+                InitKeystreamNavigation(p);
+
+                if (moveFromNormalPage)
+                {
+                    // if there is already a user page, replace it.
+                    if (userPageExists) ReplaceUserPage(p);
+                    else AddPage(p);
+                    // let the navigation system handle page teardown + setup
+                    MoveToLastPage();
+                }
+                else if (moveFromUserPage)
+                {
+                    // there should already be a user page.
+                    Debug.Assert(userPageExists, "Assumption that when moving from user page to user page, there is already a user page, was wrong.");
+                    // manually tear down previous user page and setup new user page.
+                    TearDownPreviousUserPage();
+                    ReplaceUserPage(p);
+                    SetupPage(p);
+                }
+            }
+            else
+            {
+                // case 3 (Moving from user page to normal page) should be handled by the navigation system as if we are moving between normal pages.
+                MoveToPage((int)(2 + n));
+            }
+        }
+
+        private void MoveToLastPage()
+        {
+            MoveToPage(TotalPages - 1);
         }
 
         private void MoveToPage(int n)
@@ -450,16 +522,16 @@ namespace Cryptool.Plugins.ChaCha
             AddPage(Page.LandingPage(this));
             AddPage(Page.WorkflowPage(this));
             AddPage(Page.StateMatrixPage(this));
-            for (int i = 0; i < KeystreamBlocksNeeded; ++i)
+            for (ulong i = 0; i < KeystreamBlocksNeeded; ++i)
             {
-                AddPage(Page.KeystreamBlockGenPage(this, (ulong)i + 1));
+                AddPage(Page.KeystreamBlockGenPage(this, i + 1));
             }
             CollapseAllPagesExpect(START_VISUALIZATION_ON_PAGE_INDEX);
             for (int i = 0; i < _pages.Count; ++i)
             {
                 Page p = _pages[i];
                 InitPageNavigationBar(p);
-                if (i >= 3) InitKeystreamNavigation(p, KeystreamBlocksNeeded, Rounds);
+                if (i >= 3) InitKeystreamNavigation(p);
             }
             InitActionNavigationBar(CurrentPage);
         }
@@ -522,7 +594,7 @@ namespace Cryptool.Plugins.ChaCha
         // action index value for TextBox.
         // Prevents direct write-access to actual current action index value while still being able to read from it.
         private int _currentActionIndexTextBox = 0;
-        private int _currentKeystreamBlockTextBox = 1;
+        private ulong _currentKeystreamBlockTextBox = 1;
         private int _currentRoundIndexTextBox = 0;
         private int _currentQuarterroundIndexTextBox = 0;
 
@@ -537,17 +609,12 @@ namespace Cryptool.Plugins.ChaCha
                 if (value == _currentPageIndex) return;
                 _currentPageIndex = value;
                 CurrentActionIndex = 0;
-                if (_currentPageIndex >= 3)
-                {
-                    CurrentKeystreamBlockTextBox = _currentPageIndex - 2;
-                }
                 OnPropertyChanged("CurrentPageIndex");
                 OnPropertyChanged("CurrentPage");
                 OnPropertyChanged("NextPageIsEnabled");
                 OnPropertyChanged("PrevPageIsEnabled");
                 OnPropertyChanged("NextRoundIsEnabled");
                 OnPropertyChanged("PrevRoundIsEnabled");
-                OnPropertyChanged("CurrentKeystreamBlock");
             }
         }
         public int CurrentActionIndex
@@ -578,7 +645,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public int CurrentKeystreamBlockTextBox
+        public ulong CurrentKeystreamBlockTextBox
         {
             get => _currentKeystreamBlockTextBox;
             set
@@ -614,6 +681,9 @@ namespace Cryptool.Plugins.ChaCha
 
         private Page CurrentPage => _pages.Count == 0 ? Page.LandingPage(this) : _pages[CurrentPageIndex];
 
+        private int TotalPages => _pages.Count;
+
+        private bool UserKeystreamBlockGenPageAdded => (ulong)_pages.Count > KeystreamBlocksNeeded + 3;
         private PageAction[] CurrentActions => CurrentPage.Actions;
 
         public bool ExecutionFinished
@@ -658,7 +728,9 @@ namespace Cryptool.Plugins.ChaCha
 
         public bool PrevRoundIsEnabled => CurrentRoundIndex >= 1 && NavigationEnabled;
 
-        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != KeystreamBlocksNeeded && NavigationEnabled;
+        public ulong MaxKeystreamBlock => Version.BitsCounter == 64 ? ulong.MaxValue : uint.MaxValue;
+
+        public bool NextKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox != MaxKeystreamBlock;
 
         public bool PrevKeystreamBlockIsEnabled => CurrentKeystreamBlockTextBox > 1 && NavigationEnabled;
 
@@ -926,13 +998,13 @@ namespace Cryptool.Plugins.ChaCha
 
         private void NextKeystreamBlock_Click(object sender, RoutedEventArgs e)
         {
-            int pageIndex = CurrentKeystreamBlockTextBox + 1;
+            ulong pageIndex = (ulong)CurrentKeystreamBlockTextBox + 1;
             MoveToKeystreamPage(pageIndex);
         }
 
         private void PrevKeystreamBlock_Click(object sender, RoutedEventArgs e)
         {
-            int pageIndex = CurrentKeystreamBlockTextBox - 1;
+            ulong pageIndex = CurrentKeystreamBlockTextBox - 1;
             MoveToKeystreamPage(pageIndex);
         }
 
