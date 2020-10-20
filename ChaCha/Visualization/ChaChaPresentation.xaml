@@ -1017,14 +1017,20 @@
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="3" Grid.Column="0" TextWrapping="Wrap" Text="Initialization vector (IV):" Background="PaleGreen"/>
             <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="3" Grid.Column="1" Name="UIInputIVCell" >
-              <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV" Background="PaleGreen"/>
+              <StackPanel Orientation="Horizontal">
+                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource hexTextBox}" Margin="0,3,0,0" Text="{ Binding HexInputIV, Mode=OneWay }" Name="UIInputIV" Background="PaleGreen"/>
+                <StackPanel Margin="5,0,0,0" VerticalAlignment="Center" Orientation="Vertical">
+                  <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Text='Also called nonce (number used once). '/>
+                  <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Text='Should be random. Used to generate a unique keystream while reusing the key.'/>
+                </StackPanel>
+              </StackPanel>
             </Border>
             <TextBox VerticalAlignment="Center" Style="{ StaticResource text }" Grid.Row="4" Grid.Column="0" TextWrapping="Wrap" Text="Counter:" Background="SkyBlue"/>
             <Border Margin="5,0,0,0" HorizontalAlignment="Left" Grid.Row="4" Grid.Column="1" Name="UIInputCounterCell" >
               <StackPanel Orientation="Horizontal">
                 <!-- Code-behind adds binding to Text property of UICounter with validation -->
                 <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource CustomErrorControlOnErrorStyle}" IsReadOnly="False" Margin="0,3,0,0" Name="UICounter" Background="SkyBlue"/>
-                <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="(You can input here your own counter in hexadecimal if you like.)"/>
+                <TextBox Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource text}" Text="You can input here your own counter in hexadecimal if you like."/>
               </StackPanel>
             </Border>
           </Grid>
