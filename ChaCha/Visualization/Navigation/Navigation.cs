@@ -398,7 +398,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void ReplaceUserPage(Page p)
         {
-            Debug.Assert(TotalPages == 5, $"ReplaceUserPage called but page count was {TotalPages}. Expected 5.");
+            Debug.Assert(UserKeystreamBlockGenPageAdded, $"ReplaceUserPage called but no user page found. (page count: {TotalPages})");
             _pages.Remove(_pages.Last());
             AddPage(p);
         }
@@ -416,7 +416,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private void TearDownPreviousUserPage()
         {
-            Debug.Assert(TotalPages == 5, $"TearDownPreviousUserPage called but page count was {TotalPages}. Expected 5.");
+            Debug.Assert(UserKeystreamBlockGenPageAdded, $"ReplaceUserPage called but no user page found. (page count: {TotalPages})");
             TearDownPage(_pages.Last());
         }
 
@@ -450,8 +450,8 @@ namespace Cryptool.Plugins.ChaCha
         private void MoveToKeystreamPage(ulong n)
         {
             bool moveToUserPage = n > KeystreamBlocksNeeded;
-            bool moveFromUserPage = CurrentPageIndex == 4;
-            bool userPageExists = TotalPages == 5;
+            bool moveFromUserPage = CurrentPageIndex == TotalPagesWithoutUserKeystreamPages;
+            bool userPageExists = UserKeystreamBlockGenPageAdded;
             if (moveToUserPage)
             {
                 /*
@@ -466,7 +466,7 @@ namespace Cryptool.Plugins.ChaCha
                  *
                  * In this branch, we only have to consider case 1 and 2 since we are currently moving to a user page.
                  */
-                bool moveFromNormalPage = CurrentPageIndex < 4;
+                bool moveFromNormalPage = CurrentPageIndex < TotalPagesWithoutUserKeystreamPages;
                 // at least one case of these two should be true.
                 Debug.Assert(moveFromUserPage || moveFromNormalPage);
 
