@@ -9,6 +9,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             _chacha.ExecuteChaChaWithUserKeystreamBlock(keyblockNr);
         }
+
+        public void InitDiffusionResultsForUserKeystreamBlock(ulong keyblockNr)
+        {
+            _chacha.ExecuteChaChaWithDiffusionKeyAndUserKeystreamBlock(_diffusionKey, keyblockNr);
+        }
+
     }
 
     class UserKeystreamBlockGenPage : KeystreamBlockGenPage
@@ -21,6 +27,11 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres.InitUserKeystreamBlock(keyBlockNr);
             base.Init();
+        }
+
+        protected override void InitDiffusionResults()
+        {
+            pres.InitDiffusionResults();
         }
 
         public override void Setup()

@@ -278,6 +278,15 @@ namespace Cryptool.Plugins.ChaCha
             ExecUserKeystreamBlock = false;
         }
 
+        public void ExecuteChaChaWithDiffusionKeyAndUserKeystreamBlock(byte[] diffusionKey, ulong keystreamBlockNr)
+        {
+            ExecUserKeystreamBlock = true;
+            _userKeystreamBlockNr = keystreamBlockNr;
+            ExecuteChaChaWithDiffusionKey(diffusionKey);
+            _userKeystreamBlockNr = 0;
+            ExecUserKeystreamBlock = false;
+        }
+
         /**
          * Initialize the state of ChaCha which can be represented as a matrix.
          * 

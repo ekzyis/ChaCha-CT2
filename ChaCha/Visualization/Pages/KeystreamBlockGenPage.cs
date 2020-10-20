@@ -500,7 +500,7 @@ namespace Cryptool.Plugins.ChaCha
             pres.Nav.SetFontSize(size, additionTextBoxes);
             pres.Nav.SetFontSize(size, additionResultTextBoxes);
         }
-        private void InitDiffusionResults()
+        protected virtual void InitDiffusionResults()
         {
             pres.InitDiffusionResults();
         }
