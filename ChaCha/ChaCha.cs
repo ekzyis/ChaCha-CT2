@@ -239,7 +239,7 @@ namespace Cryptool.Plugins.ChaCha
 
             BITS_COUNTER = settings.Version.BitsCounter;
             BITS_IV = settings.Version.BitsIV;
-            INITIAL_COUNTER = settings.Version.InitialCounter;
+            INITIAL_COUNTER = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : settings.Version.InitialCounter;
 
             GuiLogMessage(ExecDiffusion ? "Executing ChaCha (Diffusion)" : "Executing ChaCha", NotificationLevel.Info);
             GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, BITS_IV / 8, BITS_COUNTER / 8), NotificationLevel.Info);
@@ -376,8 +376,7 @@ namespace Cryptool.Plugins.ChaCha
                     keystreamBlocksOffset++;
                 }
             }
-            ulong startIndex = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : INITIAL_COUNTER;
-            for (ulong i = startIndex; i < keystreamBlocksNeeded + startIndex; i++)
+            for (ulong i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
             {
                 byte[] keyblock = GenerateKeystreamBlock(i);
                 if (ExecUserKeystreamBlock) break;
@@ -409,7 +408,7 @@ namespace Cryptool.Plugins.ChaCha
             uint[] state = (uint[])(initialState.Clone());
             SetCounterToState(state, n);
             // hash state block
-            uint[] hash = ChaChaHash(state);
+            uint[] hash = ChaChaHash(state, n);
             // convert the hashed uint state array into an array of bytes
             byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
             for (int i = 0; i < hash.Length; ++i)
@@ -429,7 +428,7 @@ namespace Cryptool.Plugins.ChaCha
          * Generates the ChaCha Hash out of the input state block 
          * by running the state a set times through the quarterround function.
          */
-        public uint[] ChaChaHash(uint[] state)
+        public uint[] ChaChaHash(uint[] state, ulong n)
         {
             uint[] originalState = (uint[])(state.Clone());
             DispatchResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])state.Clone());
