@@ -73,7 +73,8 @@ namespace Cryptool.Plugins.ChaCha
             pres = pres_;
             versionIsDJB = pres.Version == ChaCha.Version.DJB;
             keyIs32Byte = pres.InputKey.Length == 32;
-            descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix. The first 16 bytes consist of the constants. ");
+            descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix. ");
+            descriptions.Add("The first 16 bytes consist of the constants. ");
             descriptions.Add("The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself. ");
             descriptions.Add($"The next {pres.InitialCounter.Length} bytes consist of the counter. The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.");
             descriptions.Add($"The last {pres.InputIV.Length} bytes consist of the initialization vector. ");
@@ -91,7 +92,7 @@ namespace Cryptool.Plugins.ChaCha
             PageAction nextPageDesc = new PageAction(() =>
             {
                 UnboldLastFromDescription();
-                AddBoldToDescription(descriptions[4]);
+                AddBoldToDescription(descriptions[5]);
                 ClearTransformInput();
                 ClearTransformChunk();
                 ClearTransformLittleEndian();
@@ -109,7 +110,15 @@ namespace Cryptool.Plugins.ChaCha
 
         public override void Setup()
         {
+            base.Setup();
             InitCounterInput();
+            AddBoldToDescription(descriptions[0]);
+        }
+
+        public override void TearDown()
+        {
+            base.TearDown();
+            ClearDescription();
         }
 
         #region Constants
@@ -117,10 +126,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             PageAction constantsStepDescriptionAction = new PageAction(() =>
             {
+                UnboldLastFromDescription();
                 AddConstantsStepBoldToDescription();
             }, () =>
             {
-                ClearDescription();
+                RemoveLastFromDescription();
+                MakeLastBoldInDescription();
             });
             PageAction constantsInputAction = new PageAction(() =>
             {
@@ -169,7 +180,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void AddConstantsStepBoldToDescription()
         {
-            AddBoldToDescription(descriptions[0]);
+            AddBoldToDescription(descriptions[1]);
         }
         private void ReplaceTransformInputConstants()
         {
@@ -233,7 +244,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void AddKeyStepBoldToDescription()
         {
-            AddBoldToDescription(descriptions[1]);
+            AddBoldToDescription(descriptions[2]);
         }
 
         private void ClearTransformInputKey()
@@ -444,7 +455,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void AddCounterStepBoldToDescription()
         {
-            AddBoldToDescription(descriptions[2]);
+            AddBoldToDescription(descriptions[3]);
         }
         private void ReplaceTransformInputCounter()
         {
@@ -601,7 +612,7 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void AddIVStepBoldToDescription()
         {
-            AddBoldToDescription(descriptions[3]);
+            AddBoldToDescription(descriptions[4]);
         }
         private void ReplaceTransformInputIV()
         {
