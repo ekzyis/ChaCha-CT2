@@ -217,19 +217,23 @@ namespace Cryptool.Plugins.ChaCha
          */
         private void ExecuteChaCha()
         {
+            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
+            bool localExecDiffusion = ExecDiffusion;
+            bool localExecUserKeystreamBlock = ExecUserKeystreamBlock;
+            bool localNormalExecution = !localExecDiffusion && !localExecUserKeystreamBlock;
             // clear all previous results (important if user started workflow, stopped and then restarted)
             DispatchToPresentation(delegate
             {
-                if (NormalExecution)
+                if (localNormalExecution)
                 {
                     _presentation.ClearAllResults();
                 }
-                else if (ExecDiffusion)
+                else if (localExecDiffusion)
                 {
                     _presentation.ClearDiffusionResults();
                 }
                 // no else here because diffusion execution and user keystream block generation are not mutually exclusive
-                if (ExecUserKeystreamBlock)
+                if (localExecUserKeystreamBlock)
                 {
                     _presentation.ClearUserKeystreamBlockResults();
                 }
@@ -558,36 +562,38 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void DispatchResult(ResultType<uint> type, uint result)
         {
+            ResultType<uint> localType = type;
             DispatchToPresentation(delegate
             {
                 if (ExecDiffusion)
                 {
-                    DispatchDiffusionResult(type, result);
+                    DispatchDiffusionResult(localType, result);
                 }
                 else if(ExecUserKeystreamBlock)
                 {
-                    DispatchUserResult(type, result);
+                    DispatchUserResult(localType, result);
                 }
                 else {
-                    _presentation.AddResult(type, result);
+                    _presentation.AddResult(localType, result);
                 }
             });
         }
         private void DispatchResult(ResultType<uint[]> type, params uint[] result)
         {
+            ResultType<uint[]> localType = type;
             DispatchToPresentation(delegate
             {
                 if (ExecDiffusion)
                 {
-                    DispatchDiffusionResult(type, result);
+                    DispatchDiffusionResult(localType, result);
                 }
                 else if(ExecUserKeystreamBlock)
                 {
-                    DispatchUserResult(type, result);
+                    DispatchUserResult(localType, result);
                 }
                 else
                 {
-                    _presentation.AddResult(type, result);
+                    _presentation.AddResult(localType, result);
                 }
             });
         }
@@ -612,11 +618,12 @@ namespace Cryptool.Plugins.ChaCha
         private delegate T _GetTResult<out T>();
         private uint[] GetResult(ResultType<uint[]> type, int index)
         {
+            ResultType<uint[]> localType = type;
             if(ExecUserKeystreamBlock)
             {
-                type = ResultType.GetUserType(type);
+                localType = ResultType.GetUserType(localType);
             }
-            _GetTResult<uint[]> getResult = () => _presentation.GetResult(type, index);
+            _GetTResult<uint[]> getResult = () => _presentation.GetResult(localType, index);
             return (uint[])Presentation.Dispatcher.Invoke(getResult, null);
         }
 
