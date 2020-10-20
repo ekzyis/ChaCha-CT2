@@ -80,33 +80,6 @@ namespace Cryptool.Plugins.ChaCha
         public static readonly ResultType<uint[]> USER_CHACHA_HASH_ADD_ORIGINAL_STATE = new ResultType<uint[]>("USER_CHACHA_HASH_ADD_ORIGINAL_STATE");
         public static readonly ResultType<uint[]> USER_CHACHA_HASH_LITTLEENDIAN_STATE = new ResultType<uint[]>("USER_CHACHA_HASH_LITTLEENDIAN_STATE");
 
-        public static readonly ResultType<uint> USER_QR_INPUT_A_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_A_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_INPUT_B_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_B_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_INPUT_C_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_C_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_INPUT_D_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_D_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_INPUT_X1_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_X1_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_INPUT_X2_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_X2_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_INPUT_X3_DIFFUSION = new ResultType<uint>("USER_QR_INPUT_X3_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_X1_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_X1_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_X2_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_X2_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_X3_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_X3_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_ADD_DIFFUSION = new ResultType<uint>("USER_QR_ADD_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_XOR_DIFFUSION = new ResultType<uint>("USER_QR_XOR_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_SHIFT_DIFFUSION = new ResultType<uint>("USER_QR_SHIFT_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_A_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_A_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_B_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_B_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_C_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_C_DIFFUSION");
-        public static readonly ResultType<uint> USER_QR_OUTPUT_D_DIFFUSION = new ResultType<uint>("USER_QR_OUTPUT_D_DIFFUSION");
-        public static readonly ResultType<uint[]> USER_CHACHA_HASH_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_ORIGINAL_STATE_DIFFUSION");
-        public static readonly ResultType<uint[]> USER_CHACHA_HASH_QUARTERROUND_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_QUARTERROUND_DIFFUSION");
-        public static readonly ResultType<uint[]> USER_CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION");
-        public static readonly ResultType<uint[]> USER_CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION = new ResultType<uint[]>("USER_CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION");
-
-        public static readonly ResultType<uint> USER_FLIPPED_BITS_QR = new ResultType<uint>("USER_FLIPPED_BITS_QR");
-        public static readonly ResultType<uint> USER_FLIPPED_BITS_ORIGINAL_STATE = new ResultType<uint>("USER_FLIPPED_BITS_ORIGINAL_STATE");
-        public static readonly ResultType<uint> USER_FLIPPED_BITS_ADD_ORIGINAL_STATE = new ResultType<uint>("USER_FLIPPED_BITS_ADD_ORIGINAL_STATE");
-        public static readonly ResultType<uint> USER_FLIPPED_BITS_LITTLEENDIAN_STATE = new ResultType<uint>("USER_FLIPPED_BITS_LITTLEENDIAN_STATE");
-
         private static object GetResultTypeByName(string name)
         {
             var field = typeof(ResultType).GetField(name, BindingFlags.Public | BindingFlags.Static);

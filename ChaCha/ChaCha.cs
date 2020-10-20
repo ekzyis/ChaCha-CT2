@@ -546,7 +546,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private ResultType<uint> MapResultType(ResultType<uint> type)
         {
-            if(ExecUserKeystreamBlock)
+            if(ExecUserKeystreamBlock && !ExecDiffusion)
             {
                 return ResultType.GetUserType(type);
             }
@@ -555,7 +555,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private ResultType<uint[]> MapResultType(ResultType<uint[]> type)
         {
-            if (ExecUserKeystreamBlock)
+            if (ExecUserKeystreamBlock && !ExecDiffusion)
             {
                 return ResultType.GetUserType(type);
             }
@@ -572,7 +572,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if (ExecDiffusion)
                 {
-                    DispatchDiffusionResult(MapResultType(type), result);
+                    DispatchDiffusionResult(type, result);
                 }
                 else {
                     _presentation.AddResult(MapResultType(type), result);
@@ -585,7 +585,7 @@ namespace Cryptool.Plugins.ChaCha
             {
                 if (ExecDiffusion)
                 {
-                    DispatchDiffusionResult(MapResultType(type), result);
+                    DispatchDiffusionResult(type, result);
                 }
                 else
                 {

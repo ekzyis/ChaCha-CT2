@@ -23,28 +23,28 @@ namespace Cryptool.Plugins.ChaCha
 
         public static ResultType<uint> MapResultType(ResultType<uint> resultType)
         {
-            return ResultType.GetUserType(resultType);
+            // don't map diffusion types
+            if (!resultType.Name.StartsWith("FLIPPED_BITS") && !resultType.Name.EndsWith("DIFFUSION")) return ResultType.GetUserType(resultType);
+            else return resultType;
         }
 
         public static ResultType<uint[]> MapResultType(ResultType<uint[]> resultType)
         {
-            return ResultType.GetUserType(resultType);
+            // don't map diffusion types
+            if (!resultType.Name.StartsWith("FLIPPED_BITS") && !resultType.Name.EndsWith("DIFFUSION")) return ResultType.GetUserType(resultType);
+            else return resultType;
         }
 
         protected override int MapIndex(ResultType<uint[]> resultType, int i)
         {
-            Debug.Assert(resultType.Name.StartsWith("USER"), $"type {resultType.Name} given to MapIndex in UserKeystreamBlock does not start with USER");
             switch (resultType.Name)
             {
                 case "USER_CHACHA_HASH_ORIGINAL_STATE":
                 case "USER_CHACHA_HASH_ADD_ORIGINAL_STATE":
                 case "USER_CHACHA_HASH_LITTLEENDIAN_STATE":
-                case "USER_FLIPPED_BITS_ORIGINAL_STATE":
-                case "USER_FLIPPED_BITS_ADD_ORIGINAL_STATE":
-                case "USER_FLIPPED_BITS_LITTLEENDIAN_STATE":
-                case "USER_CHACHA_HASH_ORIGINAL_STATE_DIFFUSION":
-                case "USER_CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION":
-                case "USER_CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION":
+                case "CHACHA_HASH_ORIGINAL_STATE_DIFFUSION":
+                case "CHACHA_HASH_ADD_ORIGINAL_STATE_DIFFUSION":
+                case "CHACHA_HASH_LITTLEENDIAN_STATE_DIFFUSION":
                     // These types are called with the keystream block as index i. Return zero because user keystream block is always at index 0 since there are no other keystream blocks (they overwrite each other).
                     return 0;
                 default:
@@ -54,9 +54,17 @@ namespace Cryptool.Plugins.ChaCha
         }
         protected override int MapIndex(ResultType<uint> resultType, int i)
         {
-            Debug.Assert(resultType.Name.StartsWith("USER"), $"type {resultType.Name} given to MapIndex in UserKeystreamBlock does not start with USER");
-            // offset is always zero because intermediate values of UserKeystreamBlockGenPage instances do not share their values with other pages.
-            return i;
+            switch(resultType.Name)
+            {
+                case "FLIPPED_BITS_ORIGINAL_STATE":
+                case "FLIPPED_BITS_ADD_ORIGINAL_STATE":
+                case "FLIPPED_BITS_LITTLEENDIAN_STATE":
+                    // These types are called with the keystream block as index i. Return zero because user keystream block is always at index 0 since there are no other keystream blocks (they overwrite each other).
+                    return 0;
+                default:
+                    // offset is always zero because intermediate values of UserKeystreamBlockGenPage instances do not share their values with other pages.
+                    return i;
+            }
         }
         protected override uint[] GetMappedResult(ResultType<uint[]> resultType, int index)
         {
