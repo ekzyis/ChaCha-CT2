@@ -217,29 +217,30 @@ namespace Cryptool.Plugins.ChaCha
          */
         private void ExecuteChaCha()
         {
-            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
-            bool localExecDiffusion = ExecDiffusion;
-            bool localExecUserKeystreamBlock = ExecUserKeystreamBlock;
-            bool localNormalExecution = !localExecDiffusion && !localExecUserKeystreamBlock;
             // clear all previous results (important if user started workflow, stopped and then restarted)
-            DispatchToPresentation(delegate
+            if (NormalExecution)
             {
-                if (localNormalExecution)
+                DispatchToPresentation(delegate
                 {
                     _presentation.ClearAllResults();
-                }
-                else if (localExecDiffusion)
+                    _presentation.Version = settings.Version;
+                    _presentation.Rounds = settings.Rounds;
+                });
+            }
+            else if(ExecDiffusion)
+            {
+                DispatchToPresentation(delegate
                 {
                     _presentation.ClearDiffusionResults();
-                }
-                // no else here because diffusion execution and user keystream block generation are not mutually exclusive
-                if (localExecUserKeystreamBlock)
+                });
+            }
+            else if(ExecUserKeystreamBlock)
+            {
+                DispatchToPresentation(delegate
                 {
                     _presentation.ClearUserKeystreamBlockResults();
-                }
-                _presentation.Version = settings.Version;
-                _presentation.Rounds = settings.Rounds;
-            });
+                });
+            }
 
             BITS_COUNTER = settings.Version.BitsCounter;
             BITS_IV = settings.Version.BitsIV;
@@ -562,40 +563,43 @@ namespace Cryptool.Plugins.ChaCha
         }
         private void DispatchResult(ResultType<uint> type, uint result)
         {
+            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
             ResultType<uint> localType = type;
-            DispatchToPresentation(delegate
+            if (ExecDiffusion)
             {
-                if (ExecDiffusion)
+                DispatchDiffusionResult(localType, result);
+            }
+            else if (ExecUserKeystreamBlock)
+            {
+                DispatchUserResult(localType, result);
+            }
+            else
+            {
+                DispatchToPresentation(delegate
                 {
-                    DispatchDiffusionResult(localType, result);
-                }
-                else if(ExecUserKeystreamBlock)
-                {
-                    DispatchUserResult(localType, result);
-                }
-                else {
                     _presentation.AddResult(localType, result);
-                }
-            });
+                });
+            }
         }
         private void DispatchResult(ResultType<uint[]> type, params uint[] result)
         {
+            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
             ResultType<uint[]> localType = type;
-            DispatchToPresentation(delegate
+            if (ExecDiffusion)
             {
-                if (ExecDiffusion)
-                {
-                    DispatchDiffusionResult(localType, result);
-                }
-                else if(ExecUserKeystreamBlock)
-                {
-                    DispatchUserResult(localType, result);
-                }
-                else
+                DispatchDiffusionResult(localType, result);
+            }
+            else if (ExecUserKeystreamBlock)
+            {
+                DispatchUserResult(localType, result);
+            }
+            else
+            {
+                DispatchToPresentation(delegate
                 {
                     _presentation.AddResult(localType, result);
-                }
-            });
+                });
+            }
         }
 
         private void DispatchUserResult(ResultType<uint[]> type,  uint[] result)
