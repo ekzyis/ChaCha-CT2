@@ -384,10 +384,10 @@ namespace Cryptool.Plugins.ChaCha
             _pages.Add(page);
         }
 
-        private void TearDownAndRemoveLastPage()
+        private void ReplaceUserPage(Page p)
         {
-            _pages.Last().TearDown();
-            _pages.RemoveAt(_pages.Count - 1);
+            _pages.Remove(_pages.Last());
+            AddPage(p);
         }
 
         private void SetupPage(Page p)
@@ -399,6 +399,12 @@ namespace Cryptool.Plugins.ChaCha
             }
             InitActionNavigationBar(p);
             p.Visibility = Visibility.Visible;
+        }
+
+        private void TearDownPreviousUserPage()
+        {
+            Debug.Assert(_pages.Count == 5, $"TearDownPreviousUserPage called but page count was {_pages.Count}. Expected 5.");
+            TearDownPage(_pages.Last());
         }
 
         private void TearDownPage(Page p)
@@ -426,32 +432,56 @@ namespace Cryptool.Plugins.ChaCha
                     NextPage_Click(null, null);
                 }
             }
-            else
-            {
-                // Reinitialize current page. Needed for UserKeystreamBlockGen pages.
-                TearDownPage(CurrentPage);
-                SetupPage(CurrentPage);
-            }
         }
 
         private void MoveToKeystreamPage(ulong n)
         {
-            if (n > KeystreamBlocksNeeded)
+            bool moveToUserPage = n > KeystreamBlocksNeeded;
+            bool moveFromUserPage = CurrentPageIndex == 5;
+            bool userPageExists = TotalPages == 5;
+            if (moveToUserPage)
             {
+                /*
+                 * We want to move to a user page (keystream page with own set counter).
+                 * There are three cases to consider:
+                 * 1. Moving from a normal page to a user page
+                 *   CurrentPageIndex does change to 5      => The navigation system will tear down and setup the pages.
+                 * 2. Moving from user page to a user page
+                 *   The CurrentPageIndex does not change   => The navigation system will *not* tear down and setup the pages.
+                 * 3. Moving from user page to normal page
+                 *   The CurrentPageIndex will change       => The navigation system will tear down and setup the pages.
+                 *
+                 * In this branch, we only have to consider case 1 and 2 since we are currently moving to a user page.
+                 */
+                bool moveFromNormalPage = CurrentPageIndex < 5;
+                // at least one case of these two should be true.
+                Debug.Assert(moveFromUserPage || moveFromNormalPage);
+
                 // create new keystream block page with given keyblock number
                 UserKeystreamBlockGenPage p = Page.UserKeystreamBlockGenPage(this, n);
                 InitPageNavigationBar(p);
                 InitKeystreamNavigation(p);
-                if(UserKeystreamBlockGenPageAdded)
+
+                if (moveFromNormalPage)
                 {
-                    // there is already a user page added. Remove it.
-                    TearDownAndRemoveLastPage();
+                    // if there is already a user page, replace it.
+                    if (userPageExists) ReplaceUserPage(p);
+                    // let the navigation system handle page teardown + setup
+                    MoveToLastPage();
                 }
-                AddPage(p);
-                MoveToLastPage();
+                else if (moveFromUserPage)
+                {
+                    // there should already be a user page.
+                    Debug.Assert(userPageExists, "Assumption that when moving from user page to user page, there is already a user page, was wrong.");
+                    // manually tear down previous user page and setup new user page.
+                    TearDownPreviousUserPage();
+                    ReplaceUserPage(p);
+                    SetupPage(p);
+                }
             }
             else
             {
+                // case 3 (Moving from user page to normal page) should be handled by the navigation system as if we are moving between normal pages.
                 MoveToPage((int)(2 + n));
             }
         }
