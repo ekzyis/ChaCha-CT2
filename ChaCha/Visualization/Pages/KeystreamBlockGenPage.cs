@@ -73,6 +73,15 @@ namespace Cryptool.Plugins.ChaCha
                 InsertAction(ACTIONLABEL_ADDITION_END, AddOriginalStateDiffusion());
                 InsertAction(ACTIONLABEL_LITTLE_ENDIAN_END, ConvertStateEntriesToLittleEndianDiffusion());
             }
+            Actions.Last().Add(new PageAction(() =>
+            {
+                pres.AtLittleEndianStep = false;
+                pres.AtKeystreamGenerationEnd = true;
+            }, () =>
+            {
+                pres.AtLittleEndianStep = true;
+                pres.AtKeystreamGenerationEnd = false;
+            }));
         }
 
         public override void TearDown()
@@ -83,6 +92,7 @@ namespace Cryptool.Plugins.ChaCha
                 RemoveActionRange(ACTIONLABEL_ADDITION_END, AddOriginalStateDiffusion().Length);
                 RemoveActionRange(ACTIONLABEL_LITTLE_ENDIAN_END, ConvertStateEntriesToLittleEndianDiffusion().Length);
             }
+            Actions.Last().RemoveLastAddedAction();
         }
 
         protected virtual void Init()
@@ -188,6 +198,8 @@ namespace Cryptool.Plugins.ChaCha
                     {
                         AddBoldToDescription(descriptions[1]);
                     }
+                    pres.AtAdditionStep = false;
+                    pres.AtLittleEndianStep = false;
                 });
                 return cache;
             }
@@ -407,10 +419,12 @@ namespace Cryptool.Plugins.ChaCha
             {
                 UnboldLastFromDescription();
                 AddBoldToDescription(descriptions[3]);
+                pres.AtAdditionStep = true;
             }, () =>
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
+                pres.AtAdditionStep = false;
             }, ACTIONLABEL_ADDITION_START);
             PageAction showOriginalState = new PageAction(() =>
             {
@@ -461,10 +475,14 @@ namespace Cryptool.Plugins.ChaCha
             {
                 UnboldLastFromDescription();
                 AddBoldToDescription(descriptions[4]);
+                pres.AtAdditionStep = false;
+                pres.AtLittleEndianStep = true;
             }, () =>
             {
                 RemoveLastFromDescription();
                 MakeLastBoldInDescription();
+                pres.AtLittleEndianStep = false;
+                pres.AtAdditionStep = true;
             }, ACTIONLABEL_LITTLE_ENDIAN_START);
             PageAction showResult = new PageAction(() =>
             {

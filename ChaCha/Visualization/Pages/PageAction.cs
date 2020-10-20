@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -47,6 +48,12 @@ namespace Cryptool.Plugins.ChaCha
         {
             _exec.Add(toAdd.Exec);
             _undo.Add(toAdd.Undo);
+        }
+
+        public void RemoveLastAddedAction()
+        {
+            _exec.Remove(_exec.Last());
+            _undo.Remove(_undo.Last());
         }
     }
 }

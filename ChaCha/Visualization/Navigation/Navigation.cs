@@ -119,6 +119,31 @@ namespace Cryptool.Plugins.ChaCha
                 return ValidationResult.ValidResult;
             }
         }
+
+        private class BooleanToFontWeightConverter : IValueConverter
+        {
+            private FontWeight trueFontWeight;
+            private FontWeight falseFontWeight;
+
+            public BooleanToFontWeightConverter(FontWeight trueFontWeight, FontWeight falseFontWeight)
+            {
+                this.trueFontWeight = trueFontWeight;
+                this.falseFontWeight = falseFontWeight;
+            }
+
+            public BooleanToFontWeightConverter(FontWeight trueFontWeight) : this(trueFontWeight, FontWeights.Normal) { }
+
+            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                return (bool)value ? trueFontWeight : falseFontWeight;
+            }
+
+            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private TextBox CreateCurrentActionIndexTextBox(int totalActions)
         {
             TextBox current = new TextBox { FontSize = NAVIGATION_BAR_FONTSIZE, Height = NAVIGATION_BAR_HEIGHT, VerticalAlignment = VerticalAlignment.Center, Width = 40 };
@@ -354,18 +379,63 @@ namespace Cryptool.Plugins.ChaCha
             goToAddition.Width = 196;
             goToAddition.Click += GoToAddition;
             pageNavBar.Children.Add(goToAddition);
+            goToAddition.SetBinding(Button.FontWeightProperty, new Binding("AtAdditionStep") { Converter = new BooleanToFontWeightConverter(FontWeights.Bold) });
 
             Button goToLittleEndian = CreateNavigationButton();
             goToLittleEndian.Content = "Little-endian";
             goToLittleEndian.Width = 148;
             goToLittleEndian.Click += GoToLittleEndian;
+            goToLittleEndian.SetBinding(Button.FontWeightProperty, new Binding("AtLittleEndianStep") { Converter = new BooleanToFontWeightConverter(FontWeights.Bold) });
             pageNavBar.Children.Add(goToLittleEndian);
 
             Button keystreamGenEnd = CreateNavigationButton();
             keystreamGenEnd.Content = "End";
             keystreamGenEnd.Width = 128;
             keystreamGenEnd.Click += GoToKeystreamGenEnd;
+            keystreamGenEnd.SetBinding(Button.FontWeightProperty, new Binding("AtKeystreamGenerationEnd") { Converter = new BooleanToFontWeightConverter(FontWeights.Bold) });
             pageNavBar.Children.Add(keystreamGenEnd);
+        }
+
+        private bool _atAdditionStep = false;
+        public bool AtAdditionStep
+        {
+            get
+            {
+                return _atAdditionStep;
+            }
+            set
+            {
+                _atAdditionStep = value;
+                OnPropertyChanged("AtAdditionStep");
+            }
+        }
+
+        private bool _atLittleEndianStep = false;
+        public bool AtLittleEndianStep
+        {
+            get
+            {
+                return _atLittleEndianStep;
+            }
+            set
+            {
+                _atLittleEndianStep = value;
+                OnPropertyChanged("AtLittleEndianStep");
+            }
+        }
+
+        public bool _atKeystreamGenerationEnd = false;
+        public bool AtKeystreamGenerationEnd
+        {
+            get
+            {
+                return _atKeystreamGenerationEnd;
+            }
+            set
+            {
+                _atKeystreamGenerationEnd = value;
+                OnPropertyChanged("AtKeystreamGenerationEnd");
+            }
         }
 
         private void InitActionSliderNavigationBar(StackPanel actionNavBar, int totalActions)
