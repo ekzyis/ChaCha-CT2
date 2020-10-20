@@ -20,7 +20,7 @@ namespace Cryptool.Plugins.ChaCha
         private const string ACTIONLABEL_ROUND_START = "ROUND";
         private const string ACTIONLABEL_QR_END = "QUARTERROUND_END";
         public const string ACTIONLABEL_ADDITION_START = "ADDITION_START";
-        private const string ACTIONLABEL_ADDITION_END = "ADDITION_EMD";
+        private const string ACTIONLABEL_ADDITION_END = "ADDITION_END";
         public const string ACTIONLABEL_LITTLE_ENDIAN_START = "LITTLE_ENDIAN_START";
         private const string ACTIONLABEL_LITTLE_ENDIAN_END = "LITTLE_ENDIAN_END";
 
