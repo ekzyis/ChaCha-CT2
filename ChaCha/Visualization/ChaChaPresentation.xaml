@@ -100,7 +100,7 @@
             <!-- Page click handlers are inserted here in code-behind -->
           </StackPanel>
           <StackPanel Margin="1" Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left">
-            <StackPanel Name="PageNavBar2" Orientation="Horizontal" HorizontalAlignment="Left"/>
+            <StackPanel Name="PageNavBar2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,10,0"/>
             <StackPanel Name="ActionNavBar" Orientation="Horizontal" HorizontalAlignment="Left"/>
             <!-- Action click handlers are inserted here in code-behind -->
           </StackPanel>
