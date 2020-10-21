@@ -984,7 +984,7 @@
               <ColumnDefinition Width="4*"/>
             </Grid.ColumnDefinitions>
             <TextBox Style="{ StaticResource text }" Grid.Row="0" Grid.Column="0" FontWeight="Bold" Text="State parameters"/>
-            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Orientation="Horizontal">
+            <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Orientation="Horizontal">
               <Button FontStyle="Italic" Content="Show diffusion display" Width="172" Name="ToggleShowDiffusion"/>
               <Button FontStyle="Italic" Content="Reset flipped bits" Width="172" Name="ResetDiffusion" Visibility="{ Binding ShowDiffusion, Converter={StaticResource HiddenIfFalseConverter}}"/>
             </StackPanel>
