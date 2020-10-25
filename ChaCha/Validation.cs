@@ -40,7 +40,7 @@ namespace Cryptool.Plugins.ChaCha
             byte[] inputIV = value as byte[];
             string hexIV = string.Join("", inputIV.Select(b => b.ToString("X2")));
             int maxBits = (int)currentVersion.IVBits;
-            int maxBytes = maxBits * 8;
+            int maxBytes = maxBits / 8;
 
             var required = new StringLengthAttribute(maxBytes * 2) { MinimumLength = 1 };
             return required.IsValid(hexIV) ?
