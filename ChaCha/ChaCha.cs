@@ -190,9 +190,6 @@ namespace Cryptool.Plugins.ChaCha
 
         /// <summary>
         /// Validates user input.
-        ///
-        /// Max key size 256-bit.
-        /// For version DJB, max IV size is 64-bit. For version IETF, max IV size is 96-bit.
         /// </summary>
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -214,7 +211,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /// <summary>
-        /// Convenience method to call Validate without a validation context.
+        /// Convenience method to call Validate without a validation context
         /// since ChaCha itself needs no validation context.
         /// </summary>
         public IEnumerable<ValidationResult> Validate()
