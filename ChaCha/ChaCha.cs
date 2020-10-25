@@ -48,6 +48,9 @@ namespace Cryptool.Plugins.ChaCha
             set;
         }
 
+        /// <summary>
+        /// Key chosen by the user which will be used for en- or decryption.
+        /// </summary>
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
         {
@@ -59,6 +62,9 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        /// <summary>
+        /// Initialization vector chosen by the user.
+        /// </summary>
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
         {
