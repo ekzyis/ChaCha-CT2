@@ -142,7 +142,7 @@ namespace Cryptool.Plugins.ChaCha
 
             GuiLogMessage($"Executing ChaCha.", NotificationLevel.Info);
             GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
-            GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit", NotificationLevel.Info);
+            GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit, Initial counter: {InitialCounter}", NotificationLevel.Info);
 
             Validate();
             if (IsValid)
