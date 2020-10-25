@@ -68,8 +68,8 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Initialization vector chosen by the user.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         [IVValidator("IV must be 64-bit in DJB version or 96-bit in IETF version")]
+        [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
         {
             get { return this.inputIV; }
