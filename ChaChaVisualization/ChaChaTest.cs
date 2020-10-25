@@ -1,15 +1,10 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ZXing.OneD;
-using System;
-using System.Text;
 
 namespace Tests.TemplateAndPluginTests
 {
-
     [TestClass]
     public class ChaChaTest
-    { 
-
+    {
         public ChaChaTest()
         {
         }
@@ -39,13 +34,14 @@ namespace Tests.TemplateAndPluginTests
             RunTests(djbTestvectors);
         }
 
-        struct TestVector
+        private struct TestVector
         {
             public int n, rounds, version;
             public string input, key, iv, output;
         }
+
         // IETF Test vectors from https://tools.ietf.org/html/rfc7539
-        readonly TestVector[] ietfTestvectors = new TestVector[] {
+        private readonly TestVector[] ietfTestvectors = new TestVector[] {
             new TestVector() {
                 n=0,
                 input="4c616469657320616e642047656e746c656d656e206f662074686520636c617373206f66202739393a204966204920636f756c64206f6666657220796f75206f6e6c79206f6e652074697020666f7220746865206675747572652c2073756e73637265656e20776f756c642062652069742e",
@@ -56,8 +52,9 @@ namespace Tests.TemplateAndPluginTests
                 version=0,
             }
         };
+
         // DJB Test vectors from https://tools.ietf.org/html/draft-strombergson-chacha-test-vectors-00#page-4
-        readonly TestVector[] djbTestvectors = new TestVector[] {
+        private readonly TestVector[] djbTestvectors = new TestVector[] {
             // TC1: All zero key and IV.
             new TestVector()
             {
