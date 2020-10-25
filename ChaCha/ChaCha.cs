@@ -130,7 +130,7 @@ namespace Cryptool.Plugins.ChaCha
             //      Beginning of byte hex string
             //
             // If byte array is in big-endian, the byte 0x12 would be at the zero-th index.
-            // We do this by guaranteeing that the key byte order is in little-endian, independent of system architecture.
+            // We do this by guaranteeing that the key byte order is in big-endian, independent of system architecture.
 
             ByteUtil.ConvertToBigEndian(ref key);
             ByteUtil.ConvertToBigEndian(ref iv);
