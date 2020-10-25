@@ -22,6 +22,82 @@ namespace Cryptool.Plugins.ChaCha
 {
     public class ChaChaSettings : ISettings
     {
+        #region Private Variables
+
+        private int rounds = 20;
+        private Version version;
+
+        #endregion Private Variables
+
+        #region TaskPane Settings
+
+        [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
+        public int Rounds
+        {
+            get { return rounds; }
+            set
+            {
+                // The CT2 environment calls this setter with the index thus we map the indices to the actual round value.
+                // The ChaCha Unittest calls this setter with the actual round value,
+                // that's why there is a fallthrough with the actual round value for each case.
+                switch (value)
+                {
+                    case 0:
+                    case 8:
+                        rounds = 8;
+                        break;
+
+                    case 1:
+                    case 12:
+                        rounds = 12;
+                        break;
+
+                    case 2:
+                    case 20:
+                        rounds = 20;
+                        break;
+                }
+                OnPropertyChanged("Rounds");
+            }
+        }
+
+        [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "DJB", "IETF" })]
+        public int IntVersion
+        {
+            get { return Version.Name == Version.DJB.Name ? 0 : 1; }
+            set
+            {
+                Version intVersion = value == 0 ? Version.DJB : Version.IETF;
+                if (Version.Name != intVersion.Name)
+                {
+                    Version = intVersion;
+                    OnPropertyChanged("IntVersion");
+                }
+            }
+        }
+
+        public Version Version
+        {
+            get
+            {
+                if (version == null)
+                {
+                    version = Version.DJB;
+                }
+                return version;
+            }
+            private set
+            {
+                if (version.Name != value.Name)
+                {
+                    version = value;
+                    OnPropertyChanged("Version");
+                }
+            }
+        }
+
+        #endregion TaskPane Settings
+
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
