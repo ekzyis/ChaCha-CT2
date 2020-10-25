@@ -13,23 +13,15 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System;
-using System.ComponentModel;
+
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.ComponentModel;
 
 namespace Cryptool.Plugins.ChaCha
 {
     public class ChaChaSettings : ISettings
     {
-        #region Private Variables
-
-        #endregion
-
-        #region TaskPane Settings
-
-        #endregion
-
         #region Events
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,11 +31,10 @@ namespace Cryptool.Plugins.ChaCha
             EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
         }
 
-        #endregion
+        #endregion Events
 
         public void Initialize()
         {
-
         }
     }
 }

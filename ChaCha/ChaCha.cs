@@ -13,10 +13,11 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-using System.ComponentModel;
-using System.Windows.Controls;
+
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -29,11 +30,7 @@ namespace Cryptool.Plugins.ChaCha
 
         private readonly ChaChaSettings settings = new ChaChaSettings();
 
-        #endregion
-
-        #region Data Properties
-
-        #endregion
+        #endregion Private Variables
 
         #region IPlugin Members
 
@@ -99,7 +96,7 @@ namespace Cryptool.Plugins.ChaCha
         {
         }
 
-        #endregion
+        #endregion IPlugin Members
 
         #region Event Handling
 
@@ -126,6 +123,6 @@ namespace Cryptool.Plugins.ChaCha
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
-        #endregion
+        #endregion Event Handling
     }
 }
