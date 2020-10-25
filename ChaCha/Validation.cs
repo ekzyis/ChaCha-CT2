@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -43,6 +44,25 @@ namespace Cryptool.Plugins.ChaCha
 
             var required = new StringLengthAttribute(maxBytes * 2) { MinimumLength = 1 };
             return required.IsValid(hexIV) ?
+                ValidationResult.Success :
+                new ValidationResult(ErrorMessage);
+        }
+    }
+
+    internal sealed class InitialCounterValidator : ValidationAttribute
+    {
+        public InitialCounterValidator(string errorMessage) : base(errorMessage)
+        {
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext context)
+        {
+            ChaCha chacha = context.ObjectInstance as ChaCha;
+            Version currentVersion = ((ChaChaSettings)chacha.Settings).Version;
+            ulong maxCounter = currentVersion.CounterBits == 32 ? uint.MaxValue : ulong.MaxValue;
+            BigInteger initialCounter = (BigInteger)value;
+
+            return initialCounter <= maxCounter ?
                 ValidationResult.Success :
                 new ValidationResult(ErrorMessage);
         }

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -39,6 +40,9 @@ namespace Cryptool.Plugins.ChaCha
 
         private byte[] inputKey;
         private byte[] inputIV;
+
+        // user can override initial counter given by version
+        private BigInteger initialCounter;
 
         /// <summary>
         /// Input text which should be en- or decrypted by ChaCha.
@@ -77,6 +81,18 @@ namespace Cryptool.Plugins.ChaCha
             {
                 this.inputIV = value;
                 OnPropertyChanged("InputIV");
+            }
+        }
+
+        [InitialCounterValidator("Counter must be 64-bit in DJB Version or 32-bit in IETF version")]
+        [PropertyInfo(Direction.InputData, "InputInitialCounterCaption", "InputInitialCounterTooltip", false)]
+        public BigInteger InitialCounter
+        {
+            get { return this.initialCounter; }
+            set
+            {
+                this.initialCounter = value;
+                OnPropertyChanged("InitialCounter");
             }
         }
 
@@ -180,6 +196,7 @@ namespace Cryptool.Plugins.ChaCha
             var results = new List<ValidationResult>();
             Validator.TryValidateProperty(InputKey, new ValidationContext(this) { MemberName = "InputKey" }, results);
             Validator.TryValidateProperty(InputIV, new ValidationContext(this) { MemberName = "InputIV" }, results);
+            Validator.TryValidateProperty(InitialCounter, new ValidationContext(this) { MemberName = "InitialCounter" }, results);
             if (results.Count == 0)
             {
                 GuiLogMessage("Input valid", NotificationLevel.Info);
