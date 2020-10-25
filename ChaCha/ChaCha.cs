@@ -15,6 +15,7 @@
 */
 
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -31,6 +32,52 @@ namespace Cryptool.Plugins.ChaCha
         private readonly ChaChaSettings settings = new ChaChaSettings();
 
         #endregion Private Variables
+
+        #region ICrypComponent I/O
+
+        private byte[] inputKey;
+        private byte[] inputIV;
+
+        /// <summary>
+        /// Input text which should be en- or decrypted by ChaCha.
+        /// </summary>
+        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
+        public ICryptoolStream InputStream
+        {
+            get;
+            set;
+        }
+
+        [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
+        public byte[] InputKey
+        {
+            get { return this.inputKey; }
+            set
+            {
+                this.inputKey = value;
+                OnPropertyChanged("InputKey");
+            }
+        }
+
+        [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
+        public byte[] InputIV
+        {
+            get { return this.inputIV; }
+            set
+            {
+                this.inputIV = value;
+                OnPropertyChanged("InputIV");
+            }
+        }
+
+        [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
+        public ICryptoolStream OutputStream
+        {
+            get;
+            set;
+        }
+
+        #endregion ICrypComponent I/O
 
         #region IPlugin Members
 
