@@ -173,9 +173,16 @@ namespace Cryptool.Plugins.ChaCha
                 state[i + 4] = ByteUtil.ToUInt32LE(key, i * 4);
             }
 
-            byte[] counterBytes = ByteUtil.GetBytesBE(counter);
+            // NOTE The original value of the counter is in reversed byte order!
+            // The counter 0x1 will be inserted into the state as follows:
+            //   Original value:                0x 00 00 00 00  00 00 00 01
+            //   Reverse byte order:            0x 01 00 00 00  00 00 00 00
+            //   Reverse order of each 4-byte:  0x 00 00 00 01  00 00 00 00
+            //   Final value:                   0x 00 00 00 01  00 00 00 00
+            byte[] counterBytes = ByteUtil.GetBytesLE(counter);
             for (int i = 0; i < 2; ++i)
             {
+                // but we still also reverse byte order of each UInt32
                 state[i + 12] = ByteUtil.ToUInt32LE(counterBytes, i * 4);
             }
 
