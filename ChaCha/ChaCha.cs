@@ -109,17 +109,18 @@ namespace Cryptool.Plugins.ChaCha
 
         #endregion ICrypComponent I/O
 
-        #region ChaCha Cipher methods
+        #region ChaCha Cipher methods (DJB)
 
         /// <summary>
-        /// En- or decrypt input stream with ChaCha.
+        /// En- or decrypt input stream with ChaCha DJB version.
         /// </summary>
-        /// <param name="key">The secret key</param>
-        /// <param name="iv">initialization vector</param>
-        /// <param name="initialCounter"></param>
-        /// <param name="input">input message</param>
-        /// <returns></returns>
-        public static ICryptoolStream Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ICryptoolStream input)
+        /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatenation with itself.</param>
+        /// <param name="iv">Initialization vector (64-bit)</param>
+        /// <param name="initialCounter">Initial counter. Can be any value between 0 and including ulong.MaxValue.</param>
+        /// <param name="rounds">ChaCha Hash Rounds per keystream block.</param>
+        /// <param name="input">Input message which we want to en- or decyrpt.</param>
+        /// <returns>En- or decrypted input message as stream</returns>
+        public static ICryptoolStream XcryptDJB(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input)
         {
             // Make sure that the byte at index 0 is the most significant byte
             // such that the beginning of the byte array corresponds to the beginning of a byte hex string
@@ -135,10 +136,60 @@ namespace Cryptool.Plugins.ChaCha
             ByteUtil.ConvertToBigEndian(ref key);
             ByteUtil.ConvertToBigEndian(ref iv);
 
+            byte[] state = StateDJB(key, iv, initialCounter);
+
             return null;
         }
 
-        #endregion ChaCha Cipher methods
+        /// <summary>
+        /// Construct the 512-bit state with the given key, iv and counter.
+        /// </summary>
+        /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatentation with itself.</param>
+        /// <param name="iv">Initialization vector (64-bit)</param>
+        /// <param name="counter">Counter for this keystream block. Can be between 0 and including ulong.MaxValue.</param>
+        /// <returns>Initialized 512-bit ChaCha state as input for ChaCha hash function.</returns>
+        public static byte[] StateDJB(byte[] key, byte[] iv, ulong counter)
+        {
+            return null;
+        }
+
+        #endregion ChaCha Cipher methods (DJB)
+
+        #region ChaCha Cipher methods (IETF)
+
+        /// <summary>
+        /// En- or decrypt input stream with ChaCha IETF version.
+        /// </summary>
+        /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatenation with itself.</param>
+        /// <param name="iv">Initialization vector (96-bit)</param>
+        /// <param name="initialCounter">Initial counter. Can be any value between 0 and including uint.MaxValue.</param>
+        /// <param name="rounds">ChaCha Hash Rounds per keystream block.</param>
+        /// <param name="input">Input message which we want to en- or decrpyt.</param>
+        /// <returns></returns>
+        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input)
+        {
+            // See XcryptDJB.
+            ByteUtil.ConvertToBigEndian(ref key);
+            ByteUtil.ConvertToBigEndian(ref iv);
+
+            byte[] state = StateIETF(key, iv, initialCounter);
+
+            return null;
+        }
+
+        /// <summary>
+        /// Construct the 512-bit state with the given key, iv and counter.
+        /// </summary>
+        /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatentation with itself.</param>
+        /// <param name="iv">Initialization vector (96-bit)</param>
+        /// <param name="counter">Counter for this keystream block. Can be between 0 and including uint.MaxValue.</param>
+        /// <returns>Initialized 512-bit ChaCha state as input for ChaCha hash function.</returns>
+        public static byte[] StateIETF(byte[] key, byte[] iv, ulong counter)
+        {
+            return null;
+        }
+
+        #endregion ChaCha Cipher methods (IETF)
 
         #region IPlugin Members
 
@@ -181,8 +232,15 @@ namespace Cryptool.Plugins.ChaCha
             {
                 // If InitialCounter is not set by user, it defaults to zero.
                 // Since maximum initial counter is 64-bit, we cast it to UInt64.
-                OutputStream = ChaCha.Xcrypt(InputKey, InputIV, (ulong)InitialCounter, InputStream);
-                System.Console.WriteLine("Input valid");
+                ulong initialCounter = (ulong)InitialCounter;
+                if (settings.Version == Version.DJB)
+                {
+                    OutputStream = ChaCha.XcryptDJB(InputKey, InputIV, initialCounter, settings.Rounds, InputStream);
+                }
+                else
+                {
+                    OutputStream = ChaCha.XcryptIETF(InputKey, InputIV, initialCounter, settings.Rounds, InputStream);
+                }
             }
 
             ProgressChanged(1, 1);
