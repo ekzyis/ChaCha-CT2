@@ -8,8 +8,8 @@
     <ProjectGuid>{1F4AA7EC-6281-40EC-8643-69521A912DD7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ChaCha</RootNamespace>
-    <AssemblyName>ChaCha</AssemblyName>
+    <RootNamespace>Cryptool.Plugins.ChaChaVisualization</RootNamespace>
+    <AssemblyName>ChaChaVisualization</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
@@ -76,14 +76,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChaCha.cs" />
+    <Compile Include="ChaChaVisualization.cs" />
     <Compile Include="Visualization\Diffusion.cs" />
     <Compile Include="Visualization\Extensions.cs" />
     <Compile Include="Visualization\Navigation\ActionNavigation.cs" />
     <Compile Include="Visualization\ChaChaPresentation.xaml.cs">
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ChaChaSettings.cs" />
+    <Compile Include="ChaChaVisualizationSettings.cs" />
     <Compile Include="Visualization\IntermediateResultsManager.cs" />
     <Compile Include="Visualization\Navigation\ActionCache.cs" />
     <Compile Include="Visualization\Navigation\IActionCache.cs" />

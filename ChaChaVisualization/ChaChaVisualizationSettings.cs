@@ -17,10 +17,10 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     // HOWTO: rename class (click name, press F2)
-    public class ChaChaSettings : ISettings
+    public class ChaChaVisualizationSettings : ISettings
     {
         private int rounds = 20;
         private int _version = 0;
@@ -60,10 +60,10 @@ namespace Cryptool.Plugins.ChaCha
                 switch (value)
                 {
                     case 0:
-                        Version = ChaCha.Version.IETF;
+                        Version = ChaChaVisualization.Version.IETF;
                         break;
                     case 1:
-                        Version = ChaCha.Version.DJB;
+                        Version = ChaChaVisualization.Version.DJB;
                         break;
 
                 }
@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public ChaCha.Version Version { get; private set; } = ChaCha.Version.IETF;
+        public ChaChaVisualization.Version Version { get; private set; } = ChaChaVisualization.Version.IETF;
 
         #region Events
 

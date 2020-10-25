@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     public class ResultType
     {

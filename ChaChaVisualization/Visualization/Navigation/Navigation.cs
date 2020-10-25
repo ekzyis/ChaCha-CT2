@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     public class BooleanToFontWeightConverter : IValueConverter
     {

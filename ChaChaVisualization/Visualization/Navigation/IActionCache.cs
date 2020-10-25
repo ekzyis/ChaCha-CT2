@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha
+﻿namespace Cryptool.Plugins.ChaChaVisualization
 {
     /**
      * Interface for page action caches.

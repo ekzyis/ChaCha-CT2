@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     class CachePageAction : PageAction
     {

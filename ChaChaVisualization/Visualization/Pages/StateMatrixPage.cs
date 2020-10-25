@@ -10,7 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using Cryptool.Plugins.Chacha.Extensions;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
 
     public class CounterInputValidationRule: ValidationRule
@@ -71,7 +71,7 @@ namespace Cryptool.Plugins.ChaCha
         public StateMatrixPage(ContentControl pageElement, ChaChaPresentation pres_) : base(pageElement)
         {
             pres = pres_;
-            versionIsDJB = pres.Version == ChaCha.Version.DJB;
+            versionIsDJB = pres.Version == ChaChaVisualization.Version.DJB;
             keyIs32Byte = pres.InputKey.Length == 32;
             descriptions.Add("The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix. ");
             descriptions.Add("The first 16 bytes consist of the constants. ");

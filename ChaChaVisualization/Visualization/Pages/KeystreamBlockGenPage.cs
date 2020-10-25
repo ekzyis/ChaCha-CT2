@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     class KeystreamBlockGenPage : Page
     {
@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             pres = pres_;
             keyBlockNr = keyblockNr_;
-            versionIsDJB = pres.Version == ChaCha.Version.DJB;
+            versionIsDJB = pres.Version == ChaChaVisualization.Version.DJB;
             originalState = GetOriginalState();
             descriptions.Add("To generate a keystream block, we apply the ChaCha hash function to the state. "
                     + $"The ChaCha hash function consists of {pres.Rounds} rounds. One round applies the quarterround function four times hence the name \"quarterround\". The quarterround function takes in 4 state entries and modifies them.");
@@ -243,7 +243,7 @@ namespace Cryptool.Plugins.ChaCha
             if (versionIsDJB)
             {
                 // 64-bit counter, 64-bit IV
-                byte[] counter = ChaCha.GetBytes(counter64);
+                byte[] counter = ChaChaVisualization.GetBytes(counter64);
                 // counter as little-endian
                 Array.Reverse(counter);
                 string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
@@ -257,7 +257,7 @@ namespace Cryptool.Plugins.ChaCha
             else
             {
                 // 32-bit counter, 96-bit IV
-                byte[] counter = ChaCha.GetBytes((uint)counter64);
+                byte[] counter = ChaChaVisualization.GetBytes((uint)counter64);
                 Array.Reverse(counter);
                 string counterStr = ChaChaPresentation.HexStringLittleEndian(counter);
                 Debug.Assert(counterStr.Length == 8, $"Counter string is of size {counterStr.Length}. Expected: 8 (version IETF)");

@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha
+﻿namespace Cryptool.Plugins.ChaChaVisualization
 {
     partial class Page
     {

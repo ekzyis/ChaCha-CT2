@@ -25,16 +25,16 @@ using System.Threading;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     // HOWTO: Change author name, email address, organization and URL.
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
     // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("ChaCha", "Stream cipher based on Salsa20", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("ChaChaVisualization", "Stream cipher based on Salsa20", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class ChaCha : ICrypComponent
+    public class ChaChaVisualization : ICrypComponent
     {
         // one block has 512 bits
         private static readonly int BLOCKSIZE_BYTES = 64;
@@ -77,9 +77,9 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        public ChaCha()
+        public ChaChaVisualization()
         {
-            settings = new ChaChaSettings();
+            settings = new ChaChaVisualizationSettings();
             _presentation = new ChaChaPresentation(this);
         }
 
@@ -143,7 +143,7 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region IPlugin Members (Settings & Presentation)
-        private readonly ChaChaSettings settings;
+        private readonly ChaChaVisualizationSettings settings;
         private readonly ChaChaPresentation _presentation;
         /// <summary>
         /// Provide plugin-related parameters (per instance) or return null.

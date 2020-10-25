@@ -9,7 +9,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     public class ActionNavigation : IActionNavigation<TextBlock, Border, Shape, RichTextBox, TextBox>
     {

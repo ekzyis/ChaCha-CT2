@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     partial class ChaChaPresentation
     {

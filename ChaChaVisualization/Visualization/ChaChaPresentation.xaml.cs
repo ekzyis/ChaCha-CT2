@@ -4,7 +4,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha
+namespace Cryptool.Plugins.ChaChaVisualization
 {
     /// <summary>
     /// Interaction logic for ChaChaPresentation.xaml
@@ -14,8 +14,8 @@ namespace Cryptool.Plugins.ChaCha
     {
         private readonly IntermediateResultsManager<uint> uint_resultsManager;
         private readonly IntermediateResultsManager<uint[]> uint_array_resultsManager;
-        private readonly ChaCha _chacha;
-        public ChaChaPresentation(ChaCha chacha)
+        private readonly ChaChaVisualization _chacha;
+        public ChaChaPresentation(ChaChaVisualization chacha)
         {
             uint_resultsManager = new IntermediateResultsManager<uint>();
             uint_array_resultsManager = new IntermediateResultsManager<uint[]>();
@@ -165,7 +165,7 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 _initialCounter = value;
-                _inputCounter = ChaCha.ToUInt64(value, 0);
+                _inputCounter = ChaChaVisualization.ToUInt64(value, 0);
                 OnPropertyChanged("InitialCounter");
                 OnPropertyChanged("HexInitialCounter");
                 OnPropertyChanged("InitialCounterChunks");
@@ -250,7 +250,7 @@ namespace Cryptool.Plugins.ChaCha
         #endregion
 
         #region Settings Variables
-        public ChaCha.Version Version { get; set; }
+        public ChaChaVisualization.Version Version { get; set; }
         public int Rounds { get; set; }
         private ulong _keystreamBlocksNeeded = 0;
         public ulong KeystreamBlocksNeeded
@@ -341,11 +341,11 @@ namespace Cryptool.Plugins.ChaCha
         }
         public static string HexString(uint u)
         {
-            return HexString(ChaCha.GetBytes(u));
+            return HexString(ChaChaVisualization.GetBytes(u));
         }
         public static string HexString(ulong u)
         {
-            return HexString(ChaCha.GetBytes(u));
+            return HexString(ChaChaVisualization.GetBytes(u));
         }
         /* Write bytes as hex string with each 4 byte written in little-endian */
         public static string HexStringLittleEndian(byte[] bytes)
@@ -353,17 +353,17 @@ namespace Cryptool.Plugins.ChaCha
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < bytes.Length; i += 4)
             {
-                sb.Append(HexString(ChaCha.To4ByteLE(bytes, i)));
+                sb.Append(HexString(ChaChaVisualization.To4ByteLE(bytes, i)));
             }
             return sb.ToString();
         }
         public static string HexStringLittleEndian(uint u)
         {
-            return HexStringLittleEndian(ChaCha.GetBytes(u));
+            return HexStringLittleEndian(ChaChaVisualization.GetBytes(u));
         }
         public static string HexStringLittleEndian(ulong u)
         {
-            return HexStringLittleEndian(ChaCha.GetBytes(u));
+            return HexStringLittleEndian(ChaChaVisualization.GetBytes(u));
         }
         #endregion
 
