@@ -44,12 +44,6 @@ namespace Cryptool.Plugins.ChaCha
 
         #region ICrypComponent I/O
 
-        private byte[] inputKey;
-        private byte[] inputIV;
-
-        // user can override initial counter given by version
-        private BigInteger initialCounter;
-
         /// <summary>
         /// Input text which should be en- or decrypted by ChaCha.
         /// </summary>
@@ -67,12 +61,8 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
         {
-            get { return this.inputKey; }
-            set
-            {
-                this.inputKey = value;
-                OnPropertyChanged("InputKey");
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -82,12 +72,8 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
         {
-            get { return this.inputIV; }
-            set
-            {
-                this.inputIV = value;
-                OnPropertyChanged("InputIV");
-            }
+            get;
+            set;
         }
 
         /// <summary>
@@ -97,12 +83,8 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.InputData, "InputInitialCounterCaption", "InputInitialCounterTooltip", false)]
         public BigInteger InitialCounter
         {
-            get { return this.initialCounter; }
-            set
-            {
-                this.initialCounter = value;
-                OnPropertyChanged("InitialCounter");
-            }
+            get;
+            set;
         }
 
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
