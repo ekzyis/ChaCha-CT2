@@ -84,6 +84,9 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        /// <summary>
+        /// Counter value for the first keystream block. Will be incremented for each keystream block.
+        /// </summary>
         [InitialCounterValidator("Counter must be 64-bit in DJB Version or 32-bit in IETF version")]
         [PropertyInfo(Direction.InputData, "InputInitialCounterCaption", "InputInitialCounterTooltip", false)]
         public BigInteger InitialCounter
