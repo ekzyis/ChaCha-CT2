@@ -17,15 +17,17 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
+using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Controls;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Cryptool.Plugins.ChaCha
 {
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     [PluginInfo("ChaCha", "A stream cipher based on Salsa used in TLS and developed by Daniel J. Bernstein.", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class ChaCha : ICrypComponent
+    public class ChaCha : ICrypComponent, IValidatableObject
     {
         #region Private Variables
 
@@ -51,6 +53,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Key chosen by the user which will be used for en- or decryption.
         /// </summary>
+        [KeyValidator("Key must be 128-bit or 256-bit")]
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
         {
@@ -66,6 +69,7 @@ namespace Cryptool.Plugins.ChaCha
         /// Initialization vector chosen by the user.
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
+        [IVValidator("IV must be 64-bit in DJB version or 96-bit in IETF version")]
         public byte[] InputIV
         {
             get { return this.inputIV; }
@@ -98,7 +102,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Provide custom presentation to visualize the execution or return null.
         /// </summary>
-        public UserControl Presentation
+        public System.Windows.Controls.UserControl Presentation
         {
             get { return null; }
         }
@@ -119,6 +123,13 @@ namespace Cryptool.Plugins.ChaCha
 
             GuiLogMessage($"Executing ChaCha.", NotificationLevel.Info);
             GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
+            GuiLogMessage($"Key: {InputKey.Length / 8}-bit, IV: {InputIV.Length / 8}-bit", NotificationLevel.Info);
+
+            Validate();
+            if (IsValid)
+            {
+                System.Console.WriteLine("Input valid");
+            }
 
             ProgressChanged(1, 1);
         }
@@ -153,6 +164,45 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #endregion IPlugin Members
+
+        #region Validation
+
+        private bool IsValid { get; set; }
+
+        /// <summary>
+        /// Validates user input.
+        ///
+        /// Max key size 256-bit.
+        /// For version DJB, max IV size is 64-bit. For version IETF, max IV size is 96-bit.
+        /// </summary>
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            var results = new List<ValidationResult>();
+            Validator.TryValidateProperty(InputKey, new ValidationContext(this) { MemberName = "InputKey" }, results);
+            Validator.TryValidateProperty(InputIV, new ValidationContext(this) { MemberName = "InputIV" }, results);
+            if (results.Count == 0)
+            {
+                GuiLogMessage("Input valid", NotificationLevel.Info);
+                IsValid = true;
+            }
+            else
+            {
+                GuiLogMessage($"Input invalid: {string.Join(", ", results.Select(r => r.ErrorMessage))}", NotificationLevel.Error);
+                IsValid = false;
+            }
+            return results;
+        }
+
+        /// <summary>
+        /// Convenience method to call Validate without a validation context.
+        /// since ChaCha itself needs no validation context.
+        /// </summary>
+        public IEnumerable<ValidationResult> Validate()
+        {
+            return Validate(null);
+        }
+
+        #endregion Validation
 
         #region Event Handling
 
