@@ -18,7 +18,7 @@ using System.ComponentModel;
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 
-namespace Cryptool.Plugins.ChaChaVisualization
+namespace Cryptool.Plugins.ChaCha
 {
     public class ChaChaSettings : ISettings
     {
