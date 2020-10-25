@@ -27,34 +27,11 @@ namespace Cryptool.Plugins.ChaChaVisualization
     {
         #region Private Variables
 
-        // HOWTO: You need to adapt the settings class as well, see the corresponding file.
         private readonly ChaChaSettings settings = new ChaChaSettings();
 
         #endregion
 
         #region Data Properties
-
-        /// <summary>
-        /// HOWTO: Input interface to read the input data. 
-        /// You can add more input properties of other type if needed.
-        /// </summary>
-        [PropertyInfo(Direction.InputData, "Input name", "Input tooltip description")]
-        public int SomeInput
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// HOWTO: Output interface to write the output data.
-        /// You can add more output properties ot other type if needed.
-        /// </summary>
-        [PropertyInfo(Direction.OutputData, "Output name", "Output tooltip description")]
-        public int SomeOutput
-        {
-            get;
-            set;
-        }
 
         #endregion
 
@@ -88,19 +65,8 @@ namespace Cryptool.Plugins.ChaChaVisualization
         /// </summary>
         public void Execute()
         {
-            // HOWTO: Use this to show the progress of a plugin algorithm execution in the editor.
             ProgressChanged(0, 1);
 
-            // HOWTO: After you have changed an output property, make sure you announce the name of the changed property to the CT2 core.
-            SomeOutput = SomeInput - settings.SomeParameter;
-            OnPropertyChanged("SomeOutput");
-
-            // HOWTO: You can pass error, warning, info or debug messages to the CT2 main window.
-            if (settings.SomeParameter < 0)
-            {
-                GuiLogMessage("SomeParameter is negative", NotificationLevel.Debug);
-            }
-            // HOWTO: Make sure the progress bar is at maximum when your Execute() finished successfully.
             ProgressChanged(1, 1);
         }
 
