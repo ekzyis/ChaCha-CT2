@@ -136,7 +136,7 @@ namespace Cryptool.Plugins.ChaCha
             ByteUtil.ConvertToBigEndian(ref key);
             ByteUtil.ConvertToBigEndian(ref iv);
 
-            byte[] state = StateDJB(key, iv, initialCounter);
+            uint[] state = StateDJB(key, iv, initialCounter);
 
             return null;
         }
@@ -148,9 +148,33 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="iv">Initialization vector (64-bit)</param>
         /// <param name="counter">Counter for this keystream block. Can be between 0 and including ulong.MaxValue.</param>
         /// <returns>Initialized 512-bit ChaCha state as input for ChaCha hash function.</returns>
-        public static byte[] StateDJB(byte[] key, byte[] iv, ulong counter)
+        public static uint[] StateDJB(byte[] key, byte[] iv, ulong counter)
         {
-            return null;
+            uint[] state = new uint[16];
+            byte[] constants = key.Length == 16 ? TAU : SIGMA;
+            for (int i = 0; i < 4; ++i)
+            {
+                state[i] = ByteUtil.ToUInt32LE(constants, i * 4);
+            }
+
+            ExpandKey(ref key);
+            for (int i = 0; i < 8; ++i)
+            {
+                state[i + 4] = ByteUtil.ToUInt32LE(key, i * 4);
+            }
+
+            byte[] counterBytes = ByteUtil.GetBytesBE(counter);
+            for (int i = 0; i < 2; ++i)
+            {
+                state[i + 12] = ByteUtil.ToUInt32LE(counterBytes, i * 4);
+            }
+
+            for (int i = 0; i < 2; ++i)
+            {
+                state[i + 14] = ByteUtil.ToUInt32LE(iv, i * 4);
+            }
+
+            return state;
         }
 
         #endregion ChaCha Cipher methods (DJB)
@@ -203,6 +227,27 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #endregion ChaCha Cipher methods (IETF)
+
+        #region ChaCha Cipher general methods
+
+        /// <summary>
+        /// Expands the key to a 256-bit key.
+        /// </summary>
+        /// <param name="key">128-bit or 256-bit key</param>
+        public static void ExpandKey(ref byte[] key)
+        {
+            if (key.Length == 32)
+            {
+                // Key already 256-bit. Nothing to do.
+                return;
+            }
+            byte[] expand = new byte[32];
+            key.CopyTo(expand, 0);
+            key.CopyTo(expand, 16);
+            key = expand;
+        }
+
+        #endregion ChaCha Cipher general methods
 
         #region IPlugin Members
 
