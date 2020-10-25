@@ -18,6 +18,7 @@ using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
 using Cryptool.Plugins.ChaCha.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -122,6 +123,19 @@ namespace Cryptool.Plugins.ChaCha
         /// <returns>En- or decrypted input message as stream</returns>
         public static ICryptoolStream XcryptDJB(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input)
         {
+            if (!(key.Length == 32 || key.Length == 16))
+            {
+                throw new ArgumentOutOfRangeException("key", key.Length, "Key must be exactly 128-bit or 256-bit.");
+            }
+            if (iv.Length != 8)
+            {
+                throw new ArgumentOutOfRangeException("iv", iv.Length, "IV must be exactly 64-bit.");
+            }
+            if (!(0 <= initialCounter && initialCounter <= ulong.MaxValue))
+            {
+                throw new ArgumentOutOfRangeException("initialCounter", initialCounter, $"Initial counter must be between 0 and {ulong.MaxValue}.");
+            }
+
             // Make sure that the byte at index 0 is the most significant byte
             // such that the beginning of the byte array corresponds to the beginning of a byte hex string
             // (when starting reading from the left).
@@ -168,6 +182,19 @@ namespace Cryptool.Plugins.ChaCha
         /// <returns></returns>
         public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input)
         {
+            if (!(key.Length == 32 || key.Length == 16))
+            {
+                throw new ArgumentOutOfRangeException("key", key.Length, "Key must be exactly 128-bit or 256-bit.");
+            }
+            if (iv.Length != 12)
+            {
+                throw new ArgumentOutOfRangeException("iv", iv.Length, "IV must be exactly 96-bit.");
+            }
+            if (!(0 <= initialCounter && initialCounter <= uint.MaxValue))
+            {
+                throw new ArgumentOutOfRangeException("initialCounter", initialCounter, $"Initial counter must be between 0 and {uint.MaxValue}.");
+            }
+
             // See XcryptDJB.
             ByteUtil.ConvertToBigEndian(ref key);
             ByteUtil.ConvertToBigEndian(ref iv);
