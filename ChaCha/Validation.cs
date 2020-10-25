@@ -16,8 +16,8 @@ namespace Cryptool.Plugins.ChaCha
             //   0 < K <= 128 || K == 256
             // The reason for this is that a 128-bit key can be expanded into a 256-bit
             // but a key larger than 128-bit cannot.
-            byte[] bytes = value as byte[];
-            string hexKey = string.Join("", bytes.Select(b => b.ToString("X2")));
+            byte[] inputKey = value as byte[];
+            string hexKey = string.Join("", inputKey.Select(b => b.ToString("X2")));
 
             // Because one byte consists of 2 hexadecimal letters, we multiply by 2.
             var check128Bit = new StringLengthAttribute(16 * 2) { MinimumLength = 1 };
@@ -36,10 +36,10 @@ namespace Cryptool.Plugins.ChaCha
         {
             ChaCha chacha = context.ObjectInstance as ChaCha;
             Version currentVersion = ((ChaChaSettings)chacha.Settings).Version;
-            byte[] bytes = value as byte[];
+            byte[] inputIV = value as byte[];
+            string hexIV = string.Join("", inputIV.Select(b => b.ToString("X2")));
             int maxBits = (int)currentVersion.IVBits;
             int maxBytes = maxBits * 8;
-            string hexIV = string.Join("", bytes.Select(b => b.ToString("X2")));
 
             var required = new StringLengthAttribute(maxBytes * 2) { MinimumLength = 1 };
             return required.IsValid(hexIV) ?
