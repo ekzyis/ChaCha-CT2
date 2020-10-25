@@ -17,6 +17,7 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.ChaCha.Util;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -108,6 +109,37 @@ namespace Cryptool.Plugins.ChaCha
 
         #endregion ICrypComponent I/O
 
+        #region ChaCha Cipher methods
+
+        /// <summary>
+        /// En- or decrypt input stream with ChaCha.
+        /// </summary>
+        /// <param name="key">The secret key</param>
+        /// <param name="iv">initialization vector</param>
+        /// <param name="initialCounter"></param>
+        /// <param name="input">input message</param>
+        /// <returns></returns>
+        public static ICryptoolStream Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ICryptoolStream input)
+        {
+            // Make sure that the byte at index 0 is the most significant byte
+            // such that the beginning of the byte array corresponds to the beginning of a byte hex string
+            // (when starting reading from the left).
+            //
+            //   0x 12 34 56 78
+            //      ^
+            //      Beginning of byte hex string
+            //
+            // If byte array is in big-endian, the byte 0x12 would be at the zero-th index.
+            // We do this by guaranteeing that the key byte order is in little-endian, independent of system architecture.
+
+            ByteUtil.ConvertToBigEndian(ref key);
+            ByteUtil.ConvertToBigEndian(ref iv);
+
+            return null;
+        }
+
+        #endregion ChaCha Cipher methods
+
         #region IPlugin Members
 
         /// <summary>
@@ -147,6 +179,9 @@ namespace Cryptool.Plugins.ChaCha
             Validate();
             if (IsValid)
             {
+                // If InitialCounter is not set by user, it defaults to zero.
+                // Since maximum initial counter is 64-bit, we cast it to UInt64.
+                OutputStream = ChaCha.Xcrypt(InputKey, InputIV, (ulong)InitialCounter, InputStream);
                 System.Console.WriteLine("Input valid");
             }
 
