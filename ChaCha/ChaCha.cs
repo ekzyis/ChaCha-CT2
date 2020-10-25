@@ -143,6 +143,16 @@ namespace Cryptool.Plugins.ChaCha
 
         /// <summary>
         /// Construct the 512-bit state with the given key, iv and counter.
+        ///
+        /// The ChaCha State matrix is built up like this:
+        ///
+        ///   Constants   Constants     Constants   Constants
+        ///   Key         Key           Key         Key
+        ///   Key         Key           Key         Key
+        ///   Counter     Counter       IV          IV
+        ///
+        /// The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
+        /// Furthermore, the byte order of the original counter value will be reversed before insertion.
         /// </summary>
         /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatentation with itself.</param>
         /// <param name="iv">Initialization vector (64-bit)</param>
@@ -216,6 +226,16 @@ namespace Cryptool.Plugins.ChaCha
 
         /// <summary>
         /// Construct the 512-bit state with the given key, iv and counter.
+        ///
+        /// The ChaCha State matrix is built up like this:
+        ///
+        ///   Constants   Constants     Constants   Constants
+        ///   Key         Key           Key         Key
+        ///   Key         Key           Key         Key
+        ///   Counter     IV            IV          IV
+        ///
+        /// The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
+        /// Furthermore, the byte order of the original counter value will be reversed before insertion.
         /// </summary>
         /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatentation with itself.</param>
         /// <param name="iv">Initialization vector (96-bit)</param>
