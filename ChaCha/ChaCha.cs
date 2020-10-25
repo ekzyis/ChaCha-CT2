@@ -64,7 +64,8 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
-            GuiLogMessage($"Version: {settings.Version.Name}", NotificationLevel.Debug);
+            GuiLogMessage($"Executing ChaCha.", NotificationLevel.Info);
+            GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
 
             ProgressChanged(1, 1);
         }

@@ -112,5 +112,10 @@ namespace Cryptool.Plugins.ChaCha
         public void Initialize()
         {
         }
+
+        public override string ToString()
+        {
+            return $"Rounds: {Rounds}, Version: {Version.Name}";
+        }
     }
 }
