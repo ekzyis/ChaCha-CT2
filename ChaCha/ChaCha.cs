@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 
 namespace Cryptool.Plugins.ChaCha
 {
@@ -35,6 +36,9 @@ namespace Cryptool.Plugins.ChaCha
         #region Private Variables
 
         private readonly ChaChaSettings settings = new ChaChaSettings();
+
+        private static readonly byte[] SIGMA = Encoding.ASCII.GetBytes("expand 32-byte k");
+        private static readonly byte[] TAU = Encoding.ASCII.GetBytes("expand 16-byte k");
 
         #endregion Private Variables
 
