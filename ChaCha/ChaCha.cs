@@ -133,14 +133,14 @@ namespace Cryptool.Plugins.ChaCha
             byte[] inputBytes = new byte[64];
             CStreamReader inputReader = input.CreateReader();
 
-            // Will hold the state during each keystream
-            uint[] state = (uint[])firstState.Clone();
-
             ulong blockCounter = initialCounter;
-            while (inputReader.Read(inputBytes) != 0)
+            int read = inputReader.Read(inputBytes);
+            while (read != 0)
             {
                 uint[] input512 = ByteUtil.ToUInt32Array(inputBytes);
-
+                // Will hold the state during each keystream
+                uint[] state = (uint[])firstState.Clone();
+                InsertCounterDJB(ref state, blockCounter);
                 ChaChaHash(ref state, rounds);
 
                 // Input XOR Keystream Block
@@ -153,7 +153,9 @@ namespace Cryptool.Plugins.ChaCha
                 // Initialize state matrix for next block
                 blockCounter++;
                 state = (uint[])firstState.Clone();
-                InsertCounterDJB(ref state, blockCounter);
+
+                // Read next input block
+                read = inputReader.Read(inputBytes);
             }
             inputReader.Dispose();
             output.Flush();
