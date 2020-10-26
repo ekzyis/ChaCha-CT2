@@ -40,6 +40,8 @@ namespace Cryptool.Plugins.ChaCha
         private static readonly byte[] SIGMA = Encoding.ASCII.GetBytes("expand 32-byte k");
         private static readonly byte[] TAU = Encoding.ASCII.GetBytes("expand 16-byte k");
 
+        private CStreamWriter outputWriter;
+
         #endregion Private Variables
 
         #region ICrypComponent I/O
@@ -90,8 +92,10 @@ namespace Cryptool.Plugins.ChaCha
         [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
         public ICryptoolStream OutputStream
         {
-            get;
-            set;
+            get
+            {
+                return outputWriter;
+            }
         }
 
         #endregion ICrypComponent I/O
@@ -106,8 +110,8 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="initialCounter">Initial counter. Can be any value between 0 and including ulong.MaxValue.</param>
         /// <param name="rounds">ChaCha Hash Rounds per keystream block.</param>
         /// <param name="input">Input message which we want to en- or decyrpt.</param>
-        /// <returns>En- or decrypted input message as stream</returns>
-        public static ICryptoolStream XcryptDJB(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input)
+        /// <param name="output">Output stream</param>
+        public static void XcryptDJB(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -143,9 +147,6 @@ namespace Cryptool.Plugins.ChaCha
             byte[] inputBytes = new byte[64];
             CStreamReader inputReader = input.CreateReader();
 
-            // Ciphertext stream
-            CStreamWriter output = new CStreamWriter();
-
             // Will hold the state during each keystream
             uint[] state = (uint[])firstState.Clone();
 
@@ -168,8 +169,8 @@ namespace Cryptool.Plugins.ChaCha
                 state = (uint[])firstState.Clone();
                 InsertCounterDJB(ref state, blockCounter);
             }
-
-            return output;
+            output.Flush();
+            output.Close();
         }
 
         /// <summary>
@@ -247,8 +248,9 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="initialCounter">Initial counter. Can be any value between 0 and including uint.MaxValue.</param>
         /// <param name="rounds">ChaCha Hash Rounds per keystream block.</param>
         /// <param name="input">Input message which we want to en- or decrpyt.</param>
+        /// <param name="output">Output stream</param>
         /// <returns></returns>
-        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input)
+        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -421,17 +423,19 @@ namespace Cryptool.Plugins.ChaCha
             Validate();
             if (IsValid)
             {
+                outputWriter = new CStreamWriter();
                 // If InitialCounter is not set by user, it defaults to zero.
                 // Since maximum initial counter is 64-bit, we cast it to UInt64.
                 ulong initialCounter = (ulong)InitialCounter;
                 if (settings.Version == Version.DJB)
                 {
-                    OutputStream = ChaCha.XcryptDJB(InputKey, InputIV, initialCounter, settings.Rounds, InputStream);
+                    ChaCha.XcryptDJB(InputKey, InputIV, initialCounter, settings.Rounds, InputStream, outputWriter);
                 }
                 else
                 {
-                    OutputStream = ChaCha.XcryptIETF(InputKey, InputIV, initialCounter, settings.Rounds, InputStream);
+                    ChaCha.XcryptIETF(InputKey, InputIV, initialCounter, settings.Rounds, InputStream, outputWriter);
                 }
+                OnPropertyChanged("OutputStream");
             }
 
             ProgressChanged(1, 1);
