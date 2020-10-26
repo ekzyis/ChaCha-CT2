@@ -158,20 +158,31 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /// <summary>
-        /// Construct the 512-bit state with the given key, iv and counter of ChaCha DJB version.
+        ///   Construct the 512-bit state with the given key, iv and counter of the ChaCha DJB version.
         ///
-        /// The ChaCha State matrix is built up like this:
-        ///
-        ///   Constants   Constants     Constants   Constants
-        ///   Key         Key           Key         Key
-        ///   Key         Key           Key         Key
-        ///   Counter     Counter       IV          IV
-        ///
-        /// The constants depends on the key size. A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
-        /// while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
-        /// A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
-        /// The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
-        /// Furthermore, the byte order of the original counter value will be reversed before insertion.
+        ///   The ChaCha State matrix is built up like this:
+        ///   <para>
+        ///     <code>
+        ///       Constants   Constants     Constants   Constants <br/>
+        ///       Key         Key           Key         Key       <br/>
+        ///       Key         Key           Key         Key       <br/>
+        ///       Counter     Counter       IV          IV        <br/>
+        ///     </code>
+        ///   </para>
+        ///   <br/>
+        ///   <para>
+        ///     The constants depends on the key size.</para>
+        ///   <para>
+        ///     A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
+        ///     while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
+        ///     A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
+        ///   </para>
+        ///   <para>
+        ///     The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
+        ///   </para>
+        ///   <para>
+        ///     Furthermore, the byte order of the original counter value will be reversed before insertion.
+        ///   </para>
         /// </summary>
         ///
         /// <example>
@@ -285,20 +296,31 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /// <summary>
-        /// Construct the 512-bit state with the given key, iv and counter of ChaCha IETF version.
+        ///   Construct the 512-bit state with the given key, iv and counter of the ChaCha DJB version.
         ///
-        /// The ChaCha State matrix is built up like this:
-        ///
-        ///   Constants   Constants     Constants   Constants
-        ///   Key         Key           Key         Key
-        ///   Key         Key           Key         Key
-        ///   Counter     IV            IV          IV
-        ///
-        /// The constants depends on the key size. A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
-        /// while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
-        /// A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
-        /// The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
-        /// Furthermore, the byte order of the original counter value will be reversed before insertion.
+        ///   The ChaCha State matrix is built up like this:
+        ///   <para>
+        ///     <code>
+        ///       Constants   Constants     Constants   Constants <br/>
+        ///       Key         Key           Key         Key       <br/>
+        ///       Key         Key           Key         Key       <br/>
+        ///       Counter     IV            IV          IV        <br/>
+        ///     </code>
+        ///   </para>
+        ///   <br/>
+        ///   <para>
+        ///     The constants depends on the key size.</para>
+        ///   <para>
+        ///     A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
+        ///     while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
+        ///     A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
+        ///   </para>
+        ///   <para>
+        ///     The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
+        ///   </para>
+        ///   <para>
+        ///     Furthermore, the byte order of the original counter value will be reversed before insertion.
+        ///   </para>
         /// </summary>
         ///
         /// <example>
