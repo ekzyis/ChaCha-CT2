@@ -12,26 +12,28 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
-        <Grid.Resources>
-            <Style TargetType="{x:Type StackPanel}">
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-            </Style>
-            <Style x:Key="Center" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                <Setter Property="HorizontalAlignment" Value="Center" />
-                <Setter Property="VerticalAlignment" Value="Center" />
-            </Style>
-            <Style x:Key="Title" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
-                <Setter Property="FontSize" Value="48" />
-            </Style>
-            <Style x:Key="SecondTitle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
-                <Setter Property="FontSize" Value="17" />
-            </Style>
-        </Grid.Resources>
-        <StackPanel>
-            <TextBox Style="{StaticResource Title}" Text="ChaCha Visualization" />
-            <TextBox Style="{StaticResource SecondTitle}" Text="A stream cipher developed by Daniel J. Bernstein in 2008" />
-        </StackPanel>
-    </Grid>
+    <Viewbox StretchDirection="Both" Stretch="Uniform">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style x:Key="Center" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style x:Key="Title" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
+                    <Setter Property="FontSize" Value="48" />
+                </Style>
+                <Style x:Key="SecondTitle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
+                    <Setter Property="FontSize" Value="17" />
+                </Style>
+            </Grid.Resources>
+            <StackPanel>
+                <TextBox Style="{StaticResource Title}" Text="ChaCha Visualization" />
+                <TextBox Style="{StaticResource SecondTitle}" Text="A stream cipher developed by Daniel J. Bernstein in 2008" />
+            </StackPanel>
+        </Grid>
+    </Viewbox>
 </UserControl>
