@@ -177,23 +177,15 @@ namespace Cryptool.Plugins.ChaCha
         {
             uint[] state = new uint[16];
             byte[] constants = key.Length == 16 ? TAU : SIGMA;
-            for (int i = 0; i < 4; ++i)
-            {
-                state[i] = ByteUtil.ToUInt32LE(constants, i * 4);
-            }
+
+            InsertUInt32LE(ref state, constants, 0);
 
             ExpandKey(ref key);
-            for (int i = 0; i < 8; ++i)
-            {
-                state[i + 4] = ByteUtil.ToUInt32LE(key, i * 4);
-            }
+            InsertUInt32LE(ref state, key, 8);
 
             InsertCounterDJB(ref state, counter);
 
-            for (int i = 0; i < 2; ++i)
-            {
-                state[i + 14] = ByteUtil.ToUInt32LE(iv, i * 4);
-            }
+            InsertUInt32LE(ref state, iv, 14);
 
             return state;
         }
@@ -212,11 +204,8 @@ namespace Cryptool.Plugins.ChaCha
             //   Reverse order of each 4-byte:  0x 00 00 00 01  00 00 00 00
             //   Final value:                   0x 00 00 00 01  00 00 00 00
             byte[] counterBytes = ByteUtil.GetBytesLE(counter);
-            for (int i = 0; i < 2; ++i)
-            {
-                // but we still also reverse byte order of each UInt32
-                state[i + 12] = ByteUtil.ToUInt32LE(counterBytes, i * 4);
-            }
+            // but we still also reverse byte order of each UInt32
+            InsertUInt32LE(ref state, counterBytes, 12);
         }
 
         #endregion ChaCha Cipher methods (DJB)
@@ -278,6 +267,20 @@ namespace Cryptool.Plugins.ChaCha
         #endregion ChaCha Cipher methods (IETF)
 
         #region ChaCha Cipher general methods
+
+        /// <summary>
+        /// Insert the input elements with reversed byte order starting at specified offset.
+        /// </summary>
+        /// <param name="state">512-bit ChaCha state</param>
+        /// <param name="input">Elements to be inserted</param>
+        /// <param name="offset">State offset</param>
+        public static void InsertUInt32LE(ref uint[] state, byte[] input, int offset)
+        {
+            for (int i = 0; i < input.Length / 4; ++i)
+            {
+                state[i + offset] = ByteUtil.ToUInt32LE(input, i * 4);
+            }
+        }
 
         /// <summary>
         /// Expands the key to a 256-bit key.
