@@ -80,6 +80,7 @@ namespace Cryptool.Plugins.ChaCha
 
         /// <summary>
         /// Counter value for the first keystream block. Will be incremented for each keystream block.
+        /// Is optional. Default is 0.
         /// </summary>
         [InitialCounterValidator("Counter must be 64-bit in DJB Version or 32-bit in IETF version")]
         [PropertyInfo(Direction.InputData, "InputInitialCounterCaption", "InputInitialCounterTooltip", false)]
@@ -107,9 +108,9 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatenation with itself.</param>
         /// <param name="iv">Initialization vector (64-bit)</param>
-        /// <param name="initialCounter">Initial counter. Can be any value between 0 and including ulong.MaxValue.</param>
-        /// <param name="rounds">ChaCha Hash Rounds per keystream block.</param>
-        /// <param name="input">Input message which we want to en- or decyrpt.</param>
+        /// <param name="initialCounter">Initial counter (64-bit). Can be any value between 0 and including ulong.MaxValue.</param>
+        /// <param name="rounds">ChaCha Hash Rounds per keystream block. Can be 8, 12, or 20.</param>
+        /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
         public static void XcryptDJB(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
         {
@@ -157,7 +158,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /// <summary>
-        /// Construct the 512-bit state with the given key, iv and counter.
+        /// Construct the 512-bit state with the given key, iv and counter of ChaCha DJB version.
         ///
         /// The ChaCha State matrix is built up like this:
         ///
@@ -166,9 +167,27 @@ namespace Cryptool.Plugins.ChaCha
         ///   Key         Key           Key         Key
         ///   Counter     Counter       IV          IV
         ///
+        /// The constants depends on the key size. A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
+        /// while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
+        /// A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
         /// The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
         /// Furthermore, the byte order of the original counter value will be reversed before insertion.
         /// </summary>
+        ///
+        /// <example>
+        /// Input parameters:
+        ///
+        ///   Key (128-bit):    01:02:03:04  05:06:07:08  09:0a:0b:0c  0d:0e:0f:10
+        ///   IV:               aa:bb:cc:dd  01:02:03:04
+        ///   Initial counter:  00:00:00:00  00:00:00:01
+        ///
+        /// Output as state matrix:
+        ///
+        ///                     61:70:78:65  33:20:64:6e  79:62:2d:32  6b:20:65:64
+        ///                     04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                     04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                     00:00:00:01: 00:00:00:00  dd:cc:bb:aa  04:03:02:01
+        /// </example>
         /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatentation with itself.</param>
         /// <param name="iv">Initialization vector (64-bit)</param>
         /// <param name="counter">Counter for this keystream block. Can be between 0 and including ulong.MaxValue.</param>
@@ -191,10 +210,8 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /// <summary>
-        /// Set the counter into the state matrix.
+        /// Set the counter into the ChaCha state matrix of DJB version.
         /// </summary>
-        /// <param name="state"></param>
-        /// <param name="counter"></param>
         public static void InsertCounterDJB(ref uint[] state, ulong counter)
         {
             // NOTE The original value of the counter is in reversed byte order!
@@ -217,12 +234,11 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatenation with itself.</param>
         /// <param name="iv">Initialization vector (96-bit)</param>
-        /// <param name="initialCounter">Initial counter. Can be any value between 0 and including uint.MaxValue.</param>
-        /// <param name="rounds">ChaCha Hash Rounds per keystream block.</param>
-        /// <param name="input">Input message which we want to en- or decrpyt.</param>
+        /// <param name="initialCounter">Initial counter (32-bit). Can be any value between 0 and including uint.MaxValue.</param>
+        /// <param name="rounds">ChaCha Hash Rounds per keystream block. Can be 8, 12, or 20.</param>
+        /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        /// <returns></returns>
-        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
+        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, uint initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -243,7 +259,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         /// <summary>
-        /// Construct the 512-bit state with the given key, iv and counter.
+        /// Construct the 512-bit state with the given key, iv and counter of ChaCha IETF version.
         ///
         /// The ChaCha State matrix is built up like this:
         ///
@@ -252,14 +268,32 @@ namespace Cryptool.Plugins.ChaCha
         ///   Key         Key           Key         Key
         ///   Counter     IV            IV          IV
         ///
+        /// The constants depends on the key size. A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
+        /// while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
+        /// A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
         /// The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
         /// Furthermore, the byte order of the original counter value will be reversed before insertion.
         /// </summary>
+        ///
+        /// <example>
+        /// Input parameters:
+        ///
+        ///   Key (128-bit):    01:02:03:04  05:06:07:08  09:0a:0b:0c  0d:0e:0f:10
+        ///   IV:               aa:bb:cc:dd  01:02:03:04  05:06:07:08
+        ///   Initial counter:  00:00:00:01
+        ///
+        /// Output as state matrix:
+        ///
+        ///                     61:70:78:65  33:20:64:6e  79:62:2d:32  6b:20:65:64
+        ///                     04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                     04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                     00:00:00:01  dd:cc:bb:aa  04:03:02:01  08:07:06:05
+        /// </example>
         /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatentation with itself.</param>
         /// <param name="iv">Initialization vector (96-bit)</param>
         /// <param name="counter">Counter for this keystream block. Can be between 0 and including uint.MaxValue.</param>
         /// <returns>Initialized 512-bit ChaCha state as input for ChaCha hash function.</returns>
-        public static byte[] StateIETF(byte[] key, byte[] iv, ulong counter)
+        public static byte[] StateIETF(byte[] key, byte[] iv, uint counter)
         {
             return null;
         }
@@ -427,7 +461,7 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 else
                 {
-                    ChaCha.XcryptIETF(InputKey, InputIV, initialCounter, settings.Rounds, InputStream, outputWriter);
+                    ChaCha.XcryptIETF(InputKey, InputIV, (uint)initialCounter, settings.Rounds, InputStream, outputWriter);
                 }
                 OnPropertyChanged("OutputStream");
             }
