@@ -161,5 +161,24 @@ namespace Cryptool.Plugins.ChaCha.Util
         {
             return (x << shift) | (x >> -shift);
         }
+
+        /// <summary>
+        /// Bytewise XOR of both arrays.
+        /// </summary>
+        /// <param name="a">First byte array</param>
+        /// <param name="b">Second byte array</param>
+        /// <param name="count">How many bytes should be XOR'ed</param>
+        /// <returns></returns>
+        public static byte[] XOR(byte[] a, byte[] b, int count)
+        {
+            // output buffer
+            byte[] c = new byte[count];
+
+            for (int i = 0; i < count; ++i)
+            {
+                c[i] = (byte)(a[i] ^ b[i]);
+            }
+            return c;
+        }
     }
 }
