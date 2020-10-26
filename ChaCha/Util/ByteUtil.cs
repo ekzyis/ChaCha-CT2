@@ -74,6 +74,12 @@ namespace Cryptool.Plugins.ChaCha.Util
         public static uint ToUInt32LE(uint x)
         {
             byte[] b = ByteUtil.GetBytesLE(x);
+            // If system architecture is little-endian, BitConverter.ToUInt32 will interpret byte array in little-endian.
+            // We reverse the array in this case before passing it to BitConverter.
+            if (BitConverter.IsLittleEndian)
+            {
+                b = b.Reverse().ToArray();
+            }
             return BitConverter.ToUInt32(b, 0);
         }
 
