@@ -150,9 +150,7 @@ namespace Cryptool.Plugins.ChaCha
                     output.Write(ByteUtil.GetBytesBE(c));
                 }
 
-                // Initialize state matrix for next block
                 blockCounter++;
-                state = (uint[])firstState.Clone();
 
                 // Read next input block
                 read = inputReader.Read(inputBytes);
