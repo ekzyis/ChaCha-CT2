@@ -238,7 +238,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="rounds">ChaCha Hash Rounds per keystream block. Can be 8, 12, or 20.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, uint initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
+        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -252,8 +252,8 @@ namespace Cryptool.Plugins.ChaCha
             {
                 throw new ArgumentOutOfRangeException("initialCounter", initialCounter, $"Initial counter must be between 0 and {uint.MaxValue}.");
             }
-
-            byte[] state = StateIETF(key, iv, initialCounter);
+            uint initialCounter32 = (uint)initialCounter;
+            byte[] state = StateIETF(key, iv, initialCounter32);
 
             return null;
         }
@@ -461,7 +461,8 @@ namespace Cryptool.Plugins.ChaCha
                 }
                 else
                 {
-                    ChaCha.XcryptIETF(InputKey, InputIV, (uint)initialCounter, settings.Rounds, InputStream, outputWriter);
+                    // We pass in the initial counter here as UInt64 as well to prevent accidental overflow.
+                    ChaCha.XcryptIETF(InputKey, InputIV, initialCounter, settings.Rounds, InputStream, outputWriter);
                 }
                 OnPropertyChanged("OutputStream");
             }
