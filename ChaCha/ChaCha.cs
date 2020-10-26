@@ -238,7 +238,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="rounds">ChaCha Hash Rounds per keystream block. Can be 8, 12, or 20.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        public static ICryptoolStream XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
+        public static void XcryptIETF(byte[] key, byte[] iv, ulong initialCounter, int rounds, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -253,9 +253,35 @@ namespace Cryptool.Plugins.ChaCha
                 throw new ArgumentOutOfRangeException("initialCounter", initialCounter, $"Initial counter must be between 0 and {uint.MaxValue}.");
             }
             uint initialCounter32 = (uint)initialCounter;
-            byte[] state = StateIETF(key, iv, initialCounter32);
 
-            return null;
+            // The first 512-bit state. Reused for counter insertion.
+            uint[] firstState = StateIETF(key, iv, initialCounter32);
+
+            // Buffer to read 512-bit input block
+            byte[] inputBytes = new byte[64];
+            CStreamReader inputReader = input.CreateReader();
+
+            uint blockCounter = initialCounter32;
+            int read = inputReader.Read(inputBytes);
+            while (read != 0)
+            {
+                // Will hold the state during each keystream
+                uint[] state = (uint[])firstState.Clone();
+                InsertCounterIETF(ref state, blockCounter);
+                ChaChaHash(ref state, rounds);
+
+                byte[] stateBytes = ByteUtil.ToByteArray(state);
+                byte[] c = ByteUtil.XOR(stateBytes, inputBytes, read);
+                output.Write(c);
+
+                blockCounter++;
+
+                // Read next input block
+                read = inputReader.Read(inputBytes);
+            }
+            inputReader.Dispose();
+            output.Flush();
+            output.Close();
         }
 
         /// <summary>
@@ -293,9 +319,39 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="iv">Initialization vector (96-bit)</param>
         /// <param name="counter">Counter for this keystream block. Can be between 0 and including uint.MaxValue.</param>
         /// <returns>Initialized 512-bit ChaCha state as input for ChaCha hash function.</returns>
-        public static byte[] StateIETF(byte[] key, byte[] iv, uint counter)
+        public static uint[] StateIETF(byte[] key, byte[] iv, uint counter)
         {
-            return null;
+            uint[] state = new uint[16];
+            byte[] constants = key.Length == 16 ? TAU : SIGMA;
+
+            InsertUInt32LE(ref state, constants, 0);
+
+            ExpandKey(ref key);
+            InsertUInt32LE(ref state, key, 8);
+
+            InsertCounterIETF(ref state, counter);
+
+            InsertUInt32LE(ref state, iv, 13);
+
+            return state;
+        }
+
+        /// <summary>
+        /// Set the counter into the ChaCha state matrix of IETF version.
+        /// </summary>
+        public static void InsertCounterIETF(ref uint[] state, uint counter)
+        {
+            // NOTE In the DJB version, the original value of the counter is in reversed byte order
+            // but it does not matter for the IETF version because the counter is only 32-bit.
+            // and we reverse each 4 byte chunk again, anyway. See following example:
+            // The counter 0x1 will be inserted into the state as follows:
+            //   Original value:                0x 00 00 00 01
+            //   Reverse byte order:            0x 01 00 00 00
+            //   Reverse order of each 4-byte:  0x 00 00 00 01
+            //   Final value:                   0x 00 00 00 01
+            byte[] counterBytes = ByteUtil.GetBytesLE(counter);
+            // but we still also reverse byte order of each UInt32
+            InsertUInt32LE(ref state, counterBytes, 12);
         }
 
         #endregion ChaCha Cipher methods (IETF)
