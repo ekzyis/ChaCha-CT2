@@ -334,6 +334,10 @@ namespace Cryptool.Plugins.ChaCha
             for (int i = 0; i < 16; ++i)
             {
                 state[i] += originalState[i];
+            }
+            // reverse byte order of each UInt32
+            for (int i = 0; i < 16; ++i)
+            {
                 state[i] = ByteUtil.ToUInt32LE(state[i]);
             }
         }

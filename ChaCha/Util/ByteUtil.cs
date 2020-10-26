@@ -51,6 +51,36 @@ namespace Cryptool.Plugins.ChaCha.Util
         }
 
         /// <summary>
+        /// Return the byte array in big-endian of the UInt32.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static byte[] GetBytesBE(uint x)
+        {
+            byte[] bytes = BitConverter.GetBytes(x);
+            if (BitConverter.IsLittleEndian)
+            {
+                bytes = bytes.Reverse().ToArray();
+            }
+            return bytes;
+        }
+
+        /// <summary>
+        /// Return the byte array in little-endian of the UInt32.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static byte[] GetBytesLE(uint x)
+        {
+            byte[] bytes = BitConverter.GetBytes(x);
+            if (!BitConverter.IsLittleEndian)
+            {
+                bytes = bytes.Reverse().ToArray();
+            }
+            return bytes;
+        }
+
+        /// <summary>
         /// Assume input is in big-endian. Return a UInt32 with reversed byte order, starting at the offset.
         /// </summary>
         /// <param name="x">Byte array of which we want to return the UInt32 in reversed byte order.</param>
