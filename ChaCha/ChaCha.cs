@@ -126,20 +126,6 @@ namespace Cryptool.Plugins.ChaCha
                 throw new ArgumentOutOfRangeException("initialCounter", initialCounter, $"Initial counter must be between 0 and {ulong.MaxValue}.");
             }
 
-            // Make sure that the byte at index 0 is the most significant byte
-            // such that the beginning of the byte array corresponds to the beginning of a byte hex string
-            // (when starting reading from the left).
-            //
-            //   0x 12 34 56 78
-            //      ^
-            //      Beginning of byte hex string
-            //
-            // If byte array is in big-endian, the byte 0x12 would be at the zero-th index.
-            // We do this by guaranteeing that the key byte order is in big-endian, independent of system architecture.
-
-            ByteUtil.ConvertToBigEndian(ref key);
-            ByteUtil.ConvertToBigEndian(ref iv);
-
             // The first 512-bit state. Reused for counter insertion.
             uint[] firstState = StateDJB(key, iv, initialCounter);
 
@@ -264,10 +250,6 @@ namespace Cryptool.Plugins.ChaCha
             {
                 throw new ArgumentOutOfRangeException("initialCounter", initialCounter, $"Initial counter must be between 0 and {uint.MaxValue}.");
             }
-
-            // See XcryptDJB.
-            ByteUtil.ConvertToBigEndian(ref key);
-            ByteUtil.ConvertToBigEndian(ref iv);
 
             byte[] state = StateIETF(key, iv, initialCounter);
 
