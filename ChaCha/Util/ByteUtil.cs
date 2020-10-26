@@ -133,7 +133,7 @@ namespace Cryptool.Plugins.ChaCha.Util
         }
 
         /// <summary>
-        /// Return a byte array of the UInt32 array by creating an byte array in big-endian notation for each UInt32.
+        /// Return a byte array of the UInt32 array by creating a byte array in big-endian notation for each UInt32.
         /// </summary>
         /// <param name="u"></param>
         /// <returns></returns>
