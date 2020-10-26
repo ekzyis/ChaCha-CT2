@@ -136,9 +136,40 @@ namespace Cryptool.Plugins.ChaCha
             ByteUtil.ConvertToBigEndian(ref key);
             ByteUtil.ConvertToBigEndian(ref iv);
 
-            uint[] state = StateDJB(key, iv, initialCounter);
+            // The first 512-bit state. Reused for counter insertion.
+            uint[] firstState = StateDJB(key, iv, initialCounter);
 
-            return null;
+            // Buffer to read 512-bit input block
+            byte[] inputBytes = new byte[64];
+            CStreamReader inputReader = input.CreateReader();
+
+            // Ciphertext stream
+            CStreamWriter output = new CStreamWriter();
+
+            // Will hold the state during each keystream
+            uint[] state = (uint[])firstState.Clone();
+
+            ulong blockCounter = initialCounter;
+            while (inputReader.Read(inputBytes) != 0)
+            {
+                uint[] input512 = ByteUtil.ToUInt32Array(inputBytes);
+
+                ChaChaHash(ref state, rounds);
+
+                // Input XOR Keystream Block
+                for (int i = 0; i < 16; ++i)
+                {
+                    uint c = input512[i] ^ state[i];
+                    output.Write(ByteUtil.GetBytesBE(c));
+                }
+
+                // Initialize state matrix for next block
+                blockCounter++;
+                state = (uint[])firstState.Clone();
+                InsertCounterDJB(ref state, blockCounter);
+            }
+
+            return output;
         }
 
         /// <summary>
@@ -173,6 +204,23 @@ namespace Cryptool.Plugins.ChaCha
                 state[i + 4] = ByteUtil.ToUInt32LE(key, i * 4);
             }
 
+            InsertCounterDJB(ref state, counter);
+
+            for (int i = 0; i < 2; ++i)
+            {
+                state[i + 14] = ByteUtil.ToUInt32LE(iv, i * 4);
+            }
+
+            return state;
+        }
+
+        /// <summary>
+        /// Set the counter into the state matrix.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="counter"></param>
+        public static void InsertCounterDJB(ref uint[] state, ulong counter)
+        {
             // NOTE The original value of the counter is in reversed byte order!
             // The counter 0x1 will be inserted into the state as follows:
             //   Original value:                0x 00 00 00 00  00 00 00 01
@@ -185,13 +233,6 @@ namespace Cryptool.Plugins.ChaCha
                 // but we still also reverse byte order of each UInt32
                 state[i + 12] = ByteUtil.ToUInt32LE(counterBytes, i * 4);
             }
-
-            for (int i = 0; i < 2; ++i)
-            {
-                state[i + 14] = ByteUtil.ToUInt32LE(iv, i * 4);
-            }
-
-            return state;
         }
 
         #endregion ChaCha Cipher methods (DJB)
@@ -272,6 +313,71 @@ namespace Cryptool.Plugins.ChaCha
             key.CopyTo(expand, 0);
             key.CopyTo(expand, 16);
             key = expand;
+        }
+
+        /// <summary>
+        /// Calculate the ChaCha Hash of the given 512-bit state.
+        /// </summary>
+        /// <param name="state">The state which will be hashed</param>
+        /// <param name="rounds">Rounds of hash function</param>
+        public static void ChaChaHash(ref uint[] state, int rounds)
+        {
+            if (!(rounds == 8 || rounds == 12 || rounds == 20))
+            {
+                throw new ArgumentException("Rounds must be 8, 12 or 20.");
+            }
+
+            // The original state before ChaCha hash function was applied. Needed for state addition afterwards.
+            uint[] originalState = (uint[])state.Clone();
+            for (int i = 0; i < rounds / 2; ++i)
+            {
+                // Column rounds
+                Quarterround(ref state, 0, 4, 8, 12);
+                Quarterround(ref state, 1, 5, 9, 13);
+                Quarterround(ref state, 2, 6, 10, 14);
+                Quarterround(ref state, 3, 7, 11, 15);
+                // Diagonal rounds
+                Quarterround(ref state, 0, 5, 10, 15);
+                Quarterround(ref state, 1, 6, 11, 12);
+                Quarterround(ref state, 2, 7, 8, 13);
+                Quarterround(ref state, 3, 4, 9, 14);
+            }
+
+            // add states and reverse byte order of each UInt32
+            for (int i = 0; i < 16; ++i)
+            {
+                state[i] += originalState[i];
+                state[i] = ByteUtil.ToUInt32LE(state[i]);
+            }
+        }
+
+        /// <summary>
+        /// Run a quarterround(a,b,c,d) with the given indices on the state.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <param name="i">state index of first element</param>
+        /// <param name="j">state index of second element</param>
+        /// <param name="k">state index of third element</param>
+        /// <param name="l">state index of fourth element</param>
+        public static void Quarterround(ref uint[] state, int i, int j, int k, int l)
+        {
+            (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
+        }
+
+        public static (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
+        {
+            (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
+            {
+                x1 += x2;
+                x3 ^= x1;
+                x3 = ByteUtil.RotateLeft(x3, shift);
+                return (x1, x2, x3);
+            }
+            (a, b, d) = QuarterroundStep(a, b, d, 16);
+            (c, d, b) = QuarterroundStep(c, d, b, 12);
+            (a, b, d) = QuarterroundStep(a, b, d, 8);
+            (c, d, b) = QuarterroundStep(c, d, b, 7);
+            return (a, b, c, d);
         }
 
         #endregion ChaCha Cipher general methods

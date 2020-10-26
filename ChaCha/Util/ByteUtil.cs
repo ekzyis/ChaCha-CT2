@@ -65,5 +65,46 @@ namespace Cryptool.Plugins.ChaCha.Util
 
             return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
         }
+
+        /// <summary>
+        /// Assume input is in big-endian. Reverse byte order.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static uint ToUInt32LE(uint x)
+        {
+            byte[] b = ByteUtil.GetBytesLE(x);
+            return BitConverter.ToUInt32(b, 0);
+        }
+
+        /// <summary>
+        /// Assume input is in big-endian. Return a UInt32 Array by combining each consecutive four bytes into a UInt32.
+        /// </summary>
+        /// <param name="b"></param>
+        public static uint[] ToUInt32Array(byte[] b)
+        {
+            if (b.Length % 4 != 0)
+            {
+                throw new ArgumentOutOfRangeException("b", b.Length, "Input bytes length must be multiple of four.");
+            }
+
+            uint[] u = new uint[b.Length / 4];
+            for (int i = 0; i < u.Length; ++i)
+            {
+                u[i] = (uint)(b[i] << 24 | b[i + 1] << 16 | b[i + 2] << 8 | b[i + 3]);
+            }
+            return u;
+        }
+
+        /// <summary>
+        /// Circular left shift.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="shift"></param>
+        /// <returns></returns>
+        public static uint RotateLeft(uint x, int shift)
+        {
+            return (x << shift) | (x >> -shift);
+        }
     }
 }
