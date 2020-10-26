@@ -401,7 +401,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Provide custom presentation to visualize the execution or return null.
         /// </summary>
-        public System.Windows.Controls.UserControl Presentation
+        public virtual System.Windows.Controls.UserControl Presentation
         {
             get { return null; }
         }

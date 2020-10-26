@@ -95,6 +95,10 @@
       <Name>CrypPluginBase</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\ChaCha\ChaCha.csproj">
+      <Project>{3d890e75-8ace-4780-8e5b-e7d94052834e}</Project>
+      <Name>ChaCha</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
