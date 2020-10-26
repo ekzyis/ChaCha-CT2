@@ -155,6 +155,7 @@ namespace Cryptool.Plugins.ChaCha
                 state = (uint[])firstState.Clone();
                 InsertCounterDJB(ref state, blockCounter);
             }
+            inputReader.Dispose();
             output.Flush();
             output.Close();
         }
