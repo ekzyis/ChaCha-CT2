@@ -143,13 +143,18 @@ namespace Cryptool.Plugins.ChaCha
                 ChaChaHash(ref state, rounds);
 
                 byte[] stateBytes = ByteUtil.ToByteArray(state);
-                // Input XOR Keystream Block
-                for (int j = 0; j < 64 && read > 0; ++j)
+
+                // output buffer
+                byte[] c = new byte[64];
+                // remember how many bytes we have written
+                int w = 0;
+                for (; w < 64 && read > 0; ++w)
                 {
-                    byte c = (byte)(stateBytes[j] ^ inputBytes[j]);
-                    output.Write(ByteUtil.GetBytesBE(c));
+                    // Input XOR Keystream Block
+                    c[w] = (byte)(stateBytes[w] ^ inputBytes[w]);
                     read--;
                 }
+                output.Write(c, 0, w);
 
                 blockCounter++;
 
