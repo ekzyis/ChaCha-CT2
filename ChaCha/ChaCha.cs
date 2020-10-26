@@ -200,7 +200,7 @@ namespace Cryptool.Plugins.ChaCha
             InsertUInt32LE(ref state, constants, 0);
 
             ExpandKey(ref key);
-            InsertUInt32LE(ref state, key, 8);
+            InsertUInt32LE(ref state, key, 4);
 
             InsertCounterDJB(ref state, counter);
 
@@ -327,7 +327,7 @@ namespace Cryptool.Plugins.ChaCha
             InsertUInt32LE(ref state, constants, 0);
 
             ExpandKey(ref key);
-            InsertUInt32LE(ref state, key, 8);
+            InsertUInt32LE(ref state, key, 4);
 
             InsertCounterIETF(ref state, counter);
 
