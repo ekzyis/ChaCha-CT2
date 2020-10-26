@@ -133,6 +133,25 @@ namespace Cryptool.Plugins.ChaCha.Util
         }
 
         /// <summary>
+        /// Return a byte array of the UInt32 array by creating an byte array in big-endian notation for each UInt32.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <returns></returns>
+        public static byte[] ToByteArray(uint[] u)
+        {
+            byte[] b = new byte[u.Length * 4];
+            for (int i = 0; i < u.Length; ++i)
+            {
+                byte[] uBytes = ByteUtil.GetBytesBE(u[i]);
+                b[i * 4] = uBytes[0];
+                b[i * 4 + 1] = uBytes[1];
+                b[i * 4 + 2] = uBytes[2];
+                b[i * 4 + 3] = uBytes[3];
+            }
+            return b;
+        }
+
+        /// <summary>
         /// Circular left shift.
         /// </summary>
         /// <param name="x"></param>

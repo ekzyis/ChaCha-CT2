@@ -137,17 +137,18 @@ namespace Cryptool.Plugins.ChaCha
             int read = inputReader.Read(inputBytes);
             while (read != 0)
             {
-                uint[] input512 = ByteUtil.ToUInt32Array(inputBytes);
                 // Will hold the state during each keystream
                 uint[] state = (uint[])firstState.Clone();
                 InsertCounterDJB(ref state, blockCounter);
                 ChaChaHash(ref state, rounds);
 
+                byte[] stateBytes = ByteUtil.ToByteArray(state);
                 // Input XOR Keystream Block
-                for (int i = 0; i < 16; ++i)
+                for (int j = 0; j < 64 && read > 0; ++j)
                 {
-                    uint c = input512[i] ^ state[i];
+                    byte c = (byte)(stateBytes[j] ^ inputBytes[j]);
                     output.Write(ByteUtil.GetBytesBE(c));
+                    read--;
                 }
 
                 blockCounter++;
