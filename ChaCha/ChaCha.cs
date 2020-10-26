@@ -349,6 +349,14 @@ namespace Cryptool.Plugins.ChaCha
             (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
         }
 
+        /// <summary>
+        /// Calculate the quarterround of the four inputs.
+        /// </summary>
+        /// <param name="a">Input a</param>
+        /// <param name="b">Input b</param>
+        /// <param name="c">Input c</param>
+        /// <param name="d">Input d</param>
+        /// <returns></returns>
         public static (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
             (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
