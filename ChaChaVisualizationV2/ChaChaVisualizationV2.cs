@@ -16,6 +16,7 @@
 
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using System.ComponentModel;
 using System.Windows.Controls;
 
@@ -29,6 +30,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         #region Private Variables
 
         private readonly ChaChaVisualizationV2Settings settings = new ChaChaVisualizationV2Settings();
+
+        private readonly ChaChaPresentation presentation = new ChaChaPresentation();
 
         #endregion Private Variables
 
@@ -47,7 +50,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         /// </summary>
         public UserControl Presentation
         {
-            get { return null; }
+            get { return presentation; }
         }
 
         /// <summary>
