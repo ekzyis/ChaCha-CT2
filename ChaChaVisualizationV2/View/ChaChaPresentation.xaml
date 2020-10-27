@@ -7,7 +7,16 @@
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Resources\DataTemplate.xaml" />
+                <ResourceDictionary Source="..\Resources\ContentTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
-        <local:Start />
+        <local:Start Margin="20" />
+        <local:Overview Style="{StaticResource Page}" Margin="20" />
     </Grid>
 </UserControl>

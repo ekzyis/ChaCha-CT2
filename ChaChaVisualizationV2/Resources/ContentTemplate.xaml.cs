@@ -3,11 +3,11 @@
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Resources
 {
     /// <summary>
-    /// Interaction logic for Resources.xaml
+    /// Interaction logic for ContentTemplate.xaml
     /// </summary>
-    public partial class Resources : ResourceDictionary
+    public partial class ContentTemplate : ResourceDictionary
     {
-        public Resources()
+        public ContentTemplate()
         {
             InitializeComponent();
         }
