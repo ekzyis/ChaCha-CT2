@@ -5,6 +5,6 @@
     /// </summary>
     internal class TitlePageViewModel : ViewModelBase
     {
-        public string Title { get; set; }
+        public string Title { get; set; } = "TitlePageViewModelTitleProperty";
     }
 }
