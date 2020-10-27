@@ -5,6 +5,17 @@
     /// </summary>
     internal class TitlePageViewModel : ViewModelBase
     {
-        public string Title { get; set; } = "TitlePageViewModelTitleProperty";
+        private string _title; public string Title
+        {
+            get
+            {
+                return _title;
+            }
+            set
+            {
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }
