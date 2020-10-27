@@ -6,8 +6,16 @@
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
+    <Style x:Key="Text" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+        <Setter Property="FontSize" Value="20" />
+    </Style>
+    <Style x:Key="RichText" TargetType="RichTextBox">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
     <Style x:Key="UniformViewbox" TargetType="{x:Type Viewbox}">
-        <Setter Property="StretchDirection" Value="Both"/>
-        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="StretchDirection" Value="Both" />
+        <Setter Property="Stretch" Value="Uniform" />
     </Style>
 </ResourceDictionary>

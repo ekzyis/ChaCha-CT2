@@ -26,7 +26,9 @@
                     <ColumnDefinition Width="90*" />
                     <ColumnDefinition Width="10*" />
                 </Grid.ColumnDefinitions>
-                <ContentPresenter Grid.Column="1" />
+                <Grid Grid.Column="0" />
+                <ContentPresenter Grid.Column="1"/>
+                <Grid Grid.Column="2" />
             </Grid>
         </Grid>
     </ControlTemplate>
