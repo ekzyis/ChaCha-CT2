@@ -9,10 +9,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Resources\Styles.xaml" />
+                <ResourceDictionary Source="..\Resources\ContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <ContentControl Template="{StaticResource PageTemplate}">
         <TextBox Style="{StaticResource DefaultTextBox}" Text="Overview.xaml" />
-    </Grid>
+    </ContentControl>
 </UserControl>
