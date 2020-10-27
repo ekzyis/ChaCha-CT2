@@ -10,6 +10,13 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+    <ControlTemplate x:Key="ViewboxButton" TargetType="{x:Type ContentControl}">
+        <Button>
+            <Viewbox Style="{StaticResource UniformViewbox}">
+                <ContentPresenter />
+            </Viewbox>
+        </Button>
+    </ControlTemplate>
     <ControlTemplate x:Key="PageTemplate" TargetType="{x:Type ContentControl}">
         <Grid>
             <Grid.RowDefinitions>
@@ -34,26 +41,18 @@
                         <ColumnDefinition Width="18*" />
                         <ColumnDefinition Width="18*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0">
-                        <Viewbox>
-                            <Label Content="Start" />
-                        </Viewbox>
-                    </Button>
-                    <Button Grid.Column="1">
-                        <Viewbox>
-                            <Label Content="Overview" />
-                        </Viewbox>
-                    </Button>
-                    <Button Grid.Column="2">
-                        <Viewbox>
-                            <Label Content="State Matrix" />
-                        </Viewbox>
-                    </Button>
-                    <Button Grid.Column="3">
-                        <Viewbox>
-                            <Label Content="ChaCha Hash" />
-                        </Viewbox>
-                    </Button>
+                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="0">
+                        <Label Content="Start" />
+                    </ContentControl>
+                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="1">
+                        <Label Content="Overview" />
+                    </ContentControl>
+                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="2">
+                        <Label Content="State Matrix" />
+                    </ContentControl>
+                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="3">
+                        <Label Content="ChaCha Hash" />
+                    </ContentControl>
                 </Grid>
                 <Viewbox Grid.Column="1"  Style="{StaticResource UniformViewbox}">
                     <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding Title}" />
