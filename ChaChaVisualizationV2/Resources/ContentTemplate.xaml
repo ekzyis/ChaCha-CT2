@@ -10,30 +10,24 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
-    <Style x:Key="Page" TargetType="{x:Type ContentControl}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="10*" />
-                            <RowDefinition Height="90*" />
-                            <RowDefinition Height="10*" />
-                        </Grid.RowDefinitions>
-                        <Viewbox Style="{StaticResource UniformViewbox}">
-                            <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding Title}" />
-                        </Viewbox>
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="10*" />
-                                <ColumnDefinition Width="90*" />
-                                <ColumnDefinition Width="10*" />
-                            </Grid.ColumnDefinitions>
-                            <ContentPresenter Grid.Column="1" />
-                        </Grid>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <ControlTemplate x:Key="PageTemplate" TargetType="{x:Type ContentControl}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="90*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Viewbox Style="{StaticResource UniformViewbox}">
+                <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding Title}" />
+            </Viewbox>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*" />
+                    <ColumnDefinition Width="90*" />
+                    <ColumnDefinition Width="10*" />
+                </Grid.ColumnDefinitions>
+                <ContentPresenter Grid.Column="1" />
+            </Grid>
+        </Grid>
+    </ControlTemplate>
 </ResourceDictionary>

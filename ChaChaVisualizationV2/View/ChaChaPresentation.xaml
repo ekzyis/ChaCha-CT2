@@ -11,10 +11,13 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Resources\ContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Resources\Styles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <vw:Overview Style="{StaticResource Page}" />
+        <vw:Overview Template="{StaticResource PageTemplate}">
+            <TextBox Style="{StaticResource DefaultTextBox}" Text="ChaChaPresentation.xaml" />
+        </vw:Overview>
     </Grid>
 </UserControl>
