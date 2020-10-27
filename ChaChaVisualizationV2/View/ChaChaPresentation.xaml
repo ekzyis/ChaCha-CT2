@@ -15,6 +15,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <vw:Overview Style="{StaticResource Page}" Margin="20" />
+        <vw:Overview Style="{StaticResource Page}" />
     </Grid>
 </UserControl>
