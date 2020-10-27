@@ -1,10 +1,9 @@
 ﻿namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
-    internal class OverviewViewModel : TitlePageViewModel
+    internal class OverviewViewModel : TitledPageViewModel
     {
-        public OverviewViewModel()
+        public OverviewViewModel() : base("Overview")
         {
-            Title = "Overview";
         }
     }
 }

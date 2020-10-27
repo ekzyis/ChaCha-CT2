@@ -4,10 +4,73 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vw="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.View"
+             xmlns:vm="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.ViewModel"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
-    <Grid>
-        <vw:Overview />
-    </Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <DataTemplate DataType="{x:Type vm:StartViewModel}">
+                <vw:Start />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:OverviewViewModel}">
+                <vw:Overview />
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ContentControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="90*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="25*" />
+                    <ColumnDefinition Width="50*" />
+                    <ColumnDefinition Width="25*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <ItemsControl ItemsSource="{Binding Pages}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Button Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                        CommandParameter="{Binding .}">
+                                        <Label Content="{Binding Name, Mode=OneWay}" />
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
+                <Viewbox Grid.Column="1"  Style="{StaticResource UniformViewbox}">
+                    <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding CurrentPage.Title, Mode=OneWay}" />
+                </Viewbox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="98*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" />
+                <ContentControl Grid.Column="1" Content="{Binding CurrentPage}" />
+                <Grid Grid.Column="2" />
+            </Grid>
+        </Grid>
+    </ContentControl>
 </UserControl>

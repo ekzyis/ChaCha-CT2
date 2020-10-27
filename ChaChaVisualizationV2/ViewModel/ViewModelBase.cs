@@ -7,16 +7,34 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     /// <summary>
     /// Base class for all view models.
-    ///
-    ///
+    /// <remarks>
     /// https://docs.microsoft.com/en-us/archive/msdn-magazine/2009/february/patterns-wpf-apps-with-the-model-view-viewmodel-design-pattern#viewmodelbase-class
+    /// </remarks>
     /// </summary>
-    internal class ViewModelBase : INotifyPropertyChanged
+    internal abstract class ViewModelBase : INotifyPropertyChanged
     {
         public bool ThrowOnInvalidPropertyName { get; set; } = true;
 
-        public ViewModelBase()
+        public ViewModelBase(string name)
         {
+            this.Name = name;
+        }
+
+        /// <summary>
+        /// Name of page. Used as content in page navigation buttons.
+        /// </summary>
+        private string _name; public string Name
+
+        {
+            get
+            {
+                return _name;
+            }
+            private set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

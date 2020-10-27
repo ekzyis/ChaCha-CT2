@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl Template="{StaticResource PageTemplate}" Name="Root">
+    <ContentControl Name="Root">
         <Viewbox Style="{StaticResource UniformViewbox}">
             <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{ StaticResource RichText }" FontSize="20">
                 <FlowDocument>
