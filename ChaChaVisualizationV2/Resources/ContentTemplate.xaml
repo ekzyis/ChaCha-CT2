@@ -36,10 +36,10 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="8*" />
+                        <ColumnDefinition Width="6*" />
+                        <ColumnDefinition Width="9*" />
+                        <ColumnDefinition Width="12*" />
                         <ColumnDefinition Width="13*" />
-                        <ColumnDefinition Width="18*" />
-                        <ColumnDefinition Width="18*" />
                     </Grid.ColumnDefinitions>
                     <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="0">
                         <Label Content="Start" />
