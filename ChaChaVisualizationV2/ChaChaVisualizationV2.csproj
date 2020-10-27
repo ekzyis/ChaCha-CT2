@@ -85,6 +85,7 @@
     <Compile Include="Resources\Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\OverviewViewModel.cs" />
     <Compile Include="ViewModel\TitlePageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ChaChaPresentation.xaml.cs">

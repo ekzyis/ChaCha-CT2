@@ -11,7 +11,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         public Overview()
         {
             InitializeComponent();
-            this.DataContext = new TitlePageViewModel();
+            this.DataContext = new OverviewViewModel();
         }
     }
 }
