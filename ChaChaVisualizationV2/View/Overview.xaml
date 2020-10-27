@@ -8,8 +8,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Resources\Styles.xaml" />
-                <ResourceDictionary Source="..\Resources\ContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
+                <ResourceDictionary Source="..\Styles\RichTextBox.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
