@@ -20,7 +20,9 @@
                             <RowDefinition Height="90*" />
                             <RowDefinition Height="10*" />
                         </Grid.RowDefinitions>
-                        <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding Title}" />
+                        <Viewbox StretchDirection="Both" Stretch="Uniform">
+                            <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding Title}" />
+                        </Viewbox>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10*" />
