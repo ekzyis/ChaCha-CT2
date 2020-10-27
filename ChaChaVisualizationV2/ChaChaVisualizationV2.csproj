@@ -82,9 +82,6 @@
     <Compile Include="Resources\ContentTemplate.xaml.cs">
       <DependentUpon>ContentTemplate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Resources\DataTemplate.xaml.cs">
-      <DependentUpon>DataTemplate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Resources\Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>
     </Compile>
@@ -136,10 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Resources\ContentTemplate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\DataTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
