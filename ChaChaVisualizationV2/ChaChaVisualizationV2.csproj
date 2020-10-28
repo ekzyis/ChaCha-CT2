@@ -96,10 +96,11 @@
     <Compile Include="Styles\Viewbox.xaml.cs">
       <DependentUpon>Viewbox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\INavigation.cs" />
+    <Compile Include="ViewModel\ITitle.cs" />
     <Compile Include="ViewModel\OverviewViewModel.cs" />
     <Compile Include="ViewModel\ChaChaPresentationViewModel.cs" />
     <Compile Include="ViewModel\StartViewModel.cs" />
-    <Compile Include="ViewModel\TitledPageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ChaChaPresentation.xaml.cs">
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>

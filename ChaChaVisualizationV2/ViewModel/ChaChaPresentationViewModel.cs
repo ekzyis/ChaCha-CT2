@@ -7,7 +7,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class ChaChaPresentationViewModel : ViewModelBase
     {
-        public ChaChaPresentationViewModel() : base("ChaChaPresentation")
+        public ChaChaPresentationViewModel()
         {
             // Add available pages
             Pages.Add(new StartViewModel());
@@ -26,7 +26,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_changePageCommand == null)
                 {
                     _changePageCommand = new RelayCommand(
-                        p => ChangePage((TitledPageViewModel)p),
+                        p => ChangePage((ViewModelBase)p),
                         p => p is ViewModelBase);
                 }
 
@@ -34,18 +34,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private List<TitledPageViewModel> _pages; public List<TitledPageViewModel> Pages
+        private List<ViewModelBase> _pages; public List<ViewModelBase> Pages
         {
             get
             {
                 if (_pages == null)
-                    _pages = new List<TitledPageViewModel>();
+                    _pages = new List<ViewModelBase>();
 
                 return _pages;
             }
         }
 
-        private TitledPageViewModel _currentPage; public TitledPageViewModel CurrentPage
+        private ViewModelBase _currentPage; public ViewModelBase CurrentPage
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Methods
 
-        private void ChangePage(TitledPageViewModel viewModel)
+        private void ChangePage(ViewModelBase viewModel)
         {
             if (!Pages.Contains(viewModel))
                 Pages.Add(viewModel);

@@ -15,28 +15,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     {
         public bool ThrowOnInvalidPropertyName { get; set; } = true;
 
-        public ViewModelBase(string name)
-        {
-            this.Name = name;
-        }
-
-        /// <summary>
-        /// Name of page. Used as content in page navigation buttons.
-        /// </summary>
-        private string _name; public string Name
-
-        {
-            get
-            {
-                return _name;
-            }
-            private set
-            {
-                _name = value;
-                OnPropertyChanged();
-            }
-        }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = "")
