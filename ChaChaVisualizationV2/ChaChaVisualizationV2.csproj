@@ -104,6 +104,8 @@
     <Compile Include="Styles\Viewbox.xaml.cs">
       <DependentUpon>Viewbox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\ActionViewModelBase.cs" />
+    <Compile Include="ViewModel\IActionNavigation.cs" />
     <Compile Include="ViewModel\INavigation.cs" />
     <Compile Include="ViewModel\ITitle.cs" />
     <Compile Include="ViewModel\OverviewViewModel.cs" />

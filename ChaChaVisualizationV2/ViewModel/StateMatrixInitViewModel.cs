@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
-    internal class StateMatrixInitViewModel : ViewModelBase, INavigation, ITitle
+    internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle
     {
         public StateMatrixInitViewModel()
         {
@@ -36,6 +36,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 }
             }
         }
+
+        #region Action Navigation
+
+        public override void Reset()
+        {
+        }
+
+        #endregion Action Navigation
 
         #region INavigation
 
