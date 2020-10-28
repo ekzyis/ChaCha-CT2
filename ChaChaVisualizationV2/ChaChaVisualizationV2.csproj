@@ -82,8 +82,9 @@
       <DependentUpon>ViewboxButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\Converter\CompareStrings.cs" />
-    <Compile Include="Helper\IGrid.cs" />
+    <Compile Include="Model\IGrid.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="Model\StateMatrixValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContentTemplate\PageTemplate.xaml.cs">
       <DependentUpon>PageTemplate.xaml</DependentUpon>
@@ -154,9 +155,7 @@
   <ItemGroup>
     <Resource Include="userdoc.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="ContentTemplate\PageTemplate.xaml">
       <SubType>Designer</SubType>

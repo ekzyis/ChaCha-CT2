@@ -1,34 +1,9 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System;
 using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
-    public class StateMatrixValue : IGrid<uint>
-    {
-        public StateMatrixValue(uint value, int row, int column)
-        {
-            this.Value = value;
-            this.Row = row;
-            this.Column = column;
-        }
-
-        public uint Value
-        {
-            get; set;
-        }
-
-        public int Row
-        {
-            get; set;
-        }
-
-        public int Column
-        {
-            get; set;
-        }
-    }
-
     internal class StateMatrixInitViewModel : ViewModelBase, INavigation, ITitle
     {
         public StateMatrixInitViewModel()

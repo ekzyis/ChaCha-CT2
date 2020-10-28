@@ -1,4 +1,4 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows;
 using System.Windows.Controls;

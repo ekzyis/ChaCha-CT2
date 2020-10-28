@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
+﻿namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
 {
     /// <summary>
     /// Interface for classes which can be put into a grid
