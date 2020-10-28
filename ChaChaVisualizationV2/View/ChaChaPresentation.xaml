@@ -45,42 +45,44 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
+                    <Viewbox Style="{StaticResource UniformViewbox}" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <ItemsControl ItemsSource="{Binding Pages}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Button Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                            CommandParameter="{Binding .}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
                                         <Viewbox Style="{StaticResource UniformViewbox}">
-                                            <Label Content="{Binding Name, Mode=OneWay}">
-                                                <Label.Style>
-                                                    <Style TargetType="Label">
-                                                        <Setter Property="FontWeight" Value="Normal" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Value="True">
-                                                                <DataTrigger.Binding>
-                                                                    <MultiBinding Converter="{StaticResource CompareStrings}">
-                                                                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" Path="DataContext.CurrentPage.Name" Mode="OneWay" />
-                                                                        <Binding Path="Name" Mode="OneWay" />
-                                                                    </MultiBinding>
-                                                                </DataTrigger.Binding>
-                                                                <Setter Property="FontWeight" Value="Bold" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Label.Style>
-                                            </Label>
+                                            <Button Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding .}">
+                                                <Label Content="{Binding Name, Mode=OneWay}">
+                                                    <Label.Style>
+                                                        <Style TargetType="Label">
+                                                            <Setter Property="FontWeight" Value="Normal" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Value="True">
+                                                                    <DataTrigger.Binding>
+                                                                        <MultiBinding Converter="{StaticResource CompareStrings}">
+                                                                            <Binding RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" Path="DataContext.CurrentPage.Name" Mode="OneWay" />
+                                                                            <Binding Path="Name" Mode="OneWay" />
+                                                                        </MultiBinding>
+                                                                    </DataTrigger.Binding>
+                                                                    <Setter Property="FontWeight" Value="Bold" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Label.Style>
+                                                </Label>
+                                            </Button>
                                         </Viewbox>
-                                    </Button>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Viewbox>
                 </Grid>
                 <Viewbox Grid.Column="1"  Style="{StaticResource UniformViewbox}">
                     <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding CurrentPage.Title, Mode=OneWay}" />
