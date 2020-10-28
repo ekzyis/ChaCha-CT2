@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
@@ -67,6 +69,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             MoveToAction(TotalActions - 1);
         }
 
+        private ICommand _nextActionCommand; public ICommand NextActionCommand
+        {
+            get
+            {
+                if (_nextActionCommand == null) _nextActionCommand = new RelayCommand((arg) => NextAction(), (arg) => CanNextAction);
+                return _nextActionCommand;
+            }
+        }
+
         public void NextAction()
         {
             Reset();
@@ -74,11 +85,36 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Actions[CurrentActionIndex]();
         }
 
+        public bool CanNextAction
+        {
+            get
+            {
+                return CurrentActionIndex < TotalActions;
+            }
+        }
+
+        private ICommand _prevActionCommand; public ICommand PrevActionCommand
+        {
+            get
+            {
+                if (_prevActionCommand == null) _prevActionCommand = new RelayCommand((arg) => PrevAction(), (arg) => CanPrevAction);
+                return _prevActionCommand;
+            }
+        }
+
         public void PrevAction()
         {
             Reset();
             CurrentActionIndex--;
             Actions[CurrentActionIndex]();
+        }
+
+        public bool CanPrevAction
+        {
+            get
+            {
+                return CurrentActionIndex != 0;
+            }
         }
 
         #endregion IActionNavigation
