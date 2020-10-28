@@ -35,9 +35,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private List<INavigation> _pages;
-
-        public List<INavigation> Pages
+        private List<INavigation> _pages; public List<INavigation> Pages
         {
             get
             {
@@ -48,9 +46,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private INavigation _currentPage;
-
-        public INavigation CurrentPage
+        private INavigation _currentPage; public INavigation CurrentPage
         {
             get
             {

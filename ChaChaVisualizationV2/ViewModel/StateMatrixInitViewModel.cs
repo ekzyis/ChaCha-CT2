@@ -45,9 +45,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private ObservableCollection<IGrid<uint>> _stateMatrixValues;
-
-        public ObservableCollection<IGrid<uint>> StateMatrixValues
+        private ObservableCollection<IGrid<uint>> _stateMatrixValues; public ObservableCollection<IGrid<uint>> StateMatrixValues
         {
             get
             {
@@ -66,9 +64,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region INavigation
 
-        private string _name;
-
-        public string Name
+        private string _name; public string Name
         {
             get
             {
@@ -89,9 +85,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region ITitle
 
-        private string _title;
-
-        public string Title
+        private string _title; public string Title
         {
             get
             {

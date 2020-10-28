@@ -10,9 +10,7 @@
 
         #region INavigation
 
-        private string _name;
-
-        public string Name
+        private string _name; public string Name
         {
             get
             {
@@ -33,9 +31,7 @@
 
         #region ITitle
 
-        private string _title;
-
-        public string Title
+        private string _title; public string Title
         {
             get
             {
