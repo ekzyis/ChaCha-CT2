@@ -1,11 +1,67 @@
-﻿namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using System;
+using System.Collections.ObjectModel;
+
+namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
+    public class StateMatrixValue : IGrid<uint>
+    {
+        public StateMatrixValue(uint value, int row, int column)
+        {
+            this.Value = value;
+            this.Row = row;
+            this.Column = column;
+        }
+
+        public uint Value
+        {
+            get; set;
+        }
+
+        public int Row
+        {
+            get; set;
+        }
+
+        public int Column
+        {
+            get; set;
+        }
+    }
+
     internal class StateMatrixInitViewModel : ViewModelBase, INavigation, ITitle
     {
         public StateMatrixInitViewModel()
         {
             Name = "State Matrix";
             Title = "State Matrix Initialization";
+            var rnd = new Random();
+            for (int i = 0; i < 16; ++i)
+            {
+                int row = i / 4;
+                int col = i % 4;
+                uint value = (uint)rnd.Next();
+                StateMatrixValues.Add(new StateMatrixValue(value, row, col));
+            }
+        }
+
+        private ObservableCollection<IGrid<uint>> _stateMatrixValues;
+
+        public ObservableCollection<IGrid<uint>> StateMatrixValues
+        {
+            get
+            {
+                if (_stateMatrixValues == null) _stateMatrixValues = new ObservableCollection<IGrid<uint>>();
+                return _stateMatrixValues;
+            }
+            private set
+            {
+                if (_stateMatrixValues != value)
+                {
+                    _stateMatrixValues = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         #region INavigation

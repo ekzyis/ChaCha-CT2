@@ -1,0 +1,8 @@
+﻿<ResourceDictionary x:Class="Cryptool.Plugins.ChaChaVisualizationV2.Styles.Border"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="stateBorder" TargetType="Border">
+        <Setter Property="BorderBrush" Value="Black" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+</ResourceDictionary>

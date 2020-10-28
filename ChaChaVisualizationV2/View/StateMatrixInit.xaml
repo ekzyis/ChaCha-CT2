@@ -9,9 +9,17 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Styles\ItemsControl.xaml" />
+                <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
                 <ResourceDictionary Source="..\Styles\TextBox.xaml" />
+                <ResourceDictionary Source="..\Styles\Border.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="stateText" TargetType="TextBox" BasedOn="{StaticResource Hex}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style x:Key="stateViewbox" TargetType="Viewbox" BasedOn="{StaticResource UniformViewbox}">
+                <Setter Property="Margin" Value="1" />
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -24,96 +32,32 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Border BorderBrush="Black" BorderThickness="1"></Border>
-        <ItemsControl Grid.Row="0" Grid.Column="0" Style="{StaticResource StateMatrix}">
-            <ItemsControl.Resources>
-                <Style TargetType="TextBox" BasedOn="{StaticResource Hex}">
-                    <Setter Property="VerticalAlignment" Value="Center" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                </Style>
-            </ItemsControl.Resources>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="0">
-                <Viewbox Margin="1" >
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="1">
-                <Viewbox Margin="1" >
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="2">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="0" Grid.Column="3">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="0">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="1">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="2">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1" Grid.Column="3">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="1">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="2">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="3">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.Column="0">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.Column="1">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.Column="2">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" Grid.Row="3" Grid.Column="3">
-                <Viewbox Margin="1">
-                    <TextBox Text="12345678" />
-                </Viewbox>
-            </Border>
-        </ItemsControl>
+        <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
+            <Grid.Resources>
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ItemsControl ItemsSource="{Binding StateMatrixEntries}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="{Binding Row}" Grid.Column="{Binding Column}">
+                            <Viewbox Margin="1">
+                                <TextBox Text="{Binding Value}" />
+                            </Viewbox>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </Grid>
 </UserControl>

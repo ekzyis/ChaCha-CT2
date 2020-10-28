@@ -82,10 +82,14 @@
       <DependentUpon>ViewboxButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\Converter\CompareStrings.cs" />
+    <Compile Include="Helper\IGrid.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContentTemplate\PageTemplate.xaml.cs">
       <DependentUpon>PageTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Styles\Border.xaml.cs">
+      <DependentUpon>Border.xaml</DependentUpon>
     </Compile>
     <Compile Include="Styles\ItemsControl.xaml.cs">
       <DependentUpon>ItemsControl.xaml</DependentUpon>
@@ -159,6 +163,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ContentTemplate\ViewboxButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Border.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
