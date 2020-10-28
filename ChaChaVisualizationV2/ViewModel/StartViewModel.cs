@@ -7,6 +7,8 @@
             Name = "Start";
         }
 
+        #region INavigation
+
         private string _name;
 
         public string Name
@@ -25,5 +27,7 @@
                 }
             }
         }
+
+        #endregion INavigation
     }
 }

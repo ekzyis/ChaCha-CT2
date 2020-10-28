@@ -8,6 +8,8 @@
             Title = "State Matrix Initialization";
         }
 
+        #region INavigation
+
         private string _name;
 
         public string Name
@@ -27,6 +29,10 @@
             }
         }
 
+        #endregion INavigation
+
+        #region ITitle
+
         private string _title;
 
         public string Title
@@ -45,5 +51,7 @@
                 }
             }
         }
+
+        #endregion ITitle
     }
 }
