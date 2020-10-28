@@ -87,6 +87,9 @@
     <Compile Include="ContentTemplate\PageTemplate.xaml.cs">
       <DependentUpon>PageTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\ItemsControl.xaml.cs">
+      <DependentUpon>ItemsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Styles\RichTextBox.xaml.cs">
       <DependentUpon>RichTextBox.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,7 @@
     <Compile Include="ViewModel\OverviewViewModel.cs" />
     <Compile Include="ViewModel\ChaChaPresentationViewModel.cs" />
     <Compile Include="ViewModel\StartViewModel.cs" />
+    <Compile Include="ViewModel\StateMatrixInitViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ChaChaPresentation.xaml.cs">
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>
@@ -110,6 +114,9 @@
     </Compile>
     <Compile Include="View\Start.xaml.cs">
       <DependentUpon>Start.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StateMatrixInit.xaml.cs">
+      <DependentUpon>StateMatrixInit.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -155,6 +162,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\ItemsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\RichTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -176,6 +187,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Start.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StateMatrixInit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

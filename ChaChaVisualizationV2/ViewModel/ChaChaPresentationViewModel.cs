@@ -12,6 +12,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
+            Pages.Add(new StateMatrixInitViewModel());
 
             // Set starting page
             CurrentPage = Pages[0];

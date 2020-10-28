@@ -13,4 +13,7 @@
         <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+    <Style x:Key="Hex" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
+        <Setter Property="FontFamily" Value="Courier New" />
+    </Style>
 </ResourceDictionary>
