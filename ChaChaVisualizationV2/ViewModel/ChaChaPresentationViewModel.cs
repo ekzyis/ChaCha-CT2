@@ -26,26 +26,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_changePageCommand == null)
                 {
                     _changePageCommand = new RelayCommand(
-                        p => ChangePage((ViewModelBase)p),
-                        p => p is ViewModelBase);
+                        p => ChangePage((INavigation)p),
+                        p => p is INavigation);
                 }
 
                 return _changePageCommand;
             }
         }
 
-        private List<ViewModelBase> _pages; public List<ViewModelBase> Pages
+        private List<INavigation> _pages;
+
+        public List<INavigation> Pages
         {
             get
             {
                 if (_pages == null)
-                    _pages = new List<ViewModelBase>();
+                    _pages = new List<INavigation>();
 
                 return _pages;
             }
         }
 
-        private ViewModelBase _currentPage; public ViewModelBase CurrentPage
+        private INavigation _currentPage;
+
+        public INavigation CurrentPage
         {
             get
             {
@@ -65,7 +69,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Methods
 
-        private void ChangePage(ViewModelBase viewModel)
+        private void ChangePage(INavigation viewModel)
         {
             if (!Pages.Contains(viewModel))
                 Pages.Add(viewModel);
