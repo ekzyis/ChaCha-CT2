@@ -10,14 +10,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             Name = "State Matrix";
             Title = "State Matrix Initialization";
-            var rnd = new Random();
-            for (int i = 0; i < 16; ++i)
+            InitActions();
+        }
+
+        private void InitActions()
+        {
+            Actions.Add(() =>
             {
-                int row = i / 4;
-                int col = i % 4;
-                uint value = (uint)rnd.Next();
-                StateMatrixValues.Add(new StateMatrixValue(value, row, col));
-            }
+                var rnd = new Random();
+                for (int i = 0; i < 16; ++i)
+                {
+                    int row = i / 4;
+                    int col = i % 4;
+                    uint value = (uint)rnd.Next();
+                    StateMatrixValues.Add(new StateMatrixValue(value, row, col));
+                }
+            });
         }
 
         private ObservableCollection<IGrid<uint>> _stateMatrixValues; public ObservableCollection<IGrid<uint>> StateMatrixValues
@@ -41,6 +49,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
+            StateMatrixValues.Clear();
         }
 
         #endregion Action Navigation
