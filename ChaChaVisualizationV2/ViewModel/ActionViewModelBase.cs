@@ -9,8 +9,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     {
         public ActionViewModelBase()
         {
-            // Set action index to -1 such that NextAction will increment it to 0 and execute the first action in the list of actions.
-            CurrentActionIndex = -1;
+            CurrentActionIndex = 0;
+            // Make sure that the action at index 0 is the initial page state.
+            Actions.Add(() => Reset());
         }
 
         private List<Action> _actions; public List<Action> Actions
@@ -37,7 +38,21 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region IActionNavigation
 
-        public int CurrentActionIndex { get; private set; }
+        private int _currentActionIndex; public int CurrentActionIndex
+        {
+            get
+            {
+                return _currentActionIndex;
+            }
+            set
+            {
+                if (_currentActionIndex != value)
+                {
+                    _currentActionIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         public int TotalActions { get => Actions.Count; }
 
@@ -54,9 +69,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 throw new ArgumentOutOfRangeException("n", n, $"Action index out of range. Total actions: {TotalActions}");
             }
-            Reset();
+            Actions[n]();
             CurrentActionIndex = n;
-            Actions[CurrentActionIndex]();
         }
 
         public void MoveToFirstAction()
@@ -87,7 +101,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                return CurrentActionIndex < TotalActions;
+                return CurrentActionIndex < TotalActions - 1;
             }
         }
 

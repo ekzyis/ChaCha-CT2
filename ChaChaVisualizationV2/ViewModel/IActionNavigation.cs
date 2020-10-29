@@ -3,8 +3,9 @@
     internal interface IActionNavigation
     {
         /// <summary>
-        /// The index of the action in the list of all actions which is currently visible on the page.
-        /// If currently no action is visible (initial state of page), the index can be negative.
+        /// The index of the action in the list of all actions which is currently visible.
+        /// The action index of the initial page state is defined to be 0.
+        /// Thus, if no action was executed yet, the index MUST be 0.
         /// </summary>
         int CurrentActionIndex { get; }
 
