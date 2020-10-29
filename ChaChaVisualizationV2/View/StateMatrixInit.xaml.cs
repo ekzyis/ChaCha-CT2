@@ -1,5 +1,4 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
-using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,13 +13,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         public StateMatrixInit()
         {
             InitializeComponent();
-            this.DataContext = new StateMatrixInitViewModel();
+            ViewModel = new StateMatrixInitViewModel();
+            this.DataContext = ViewModel;
             InitStateMatrixGrid();
+        }
+
+        private StateMatrixInitViewModel _viewModel; private StateMatrixInitViewModel ViewModel
+        {
+            get => _viewModel;
+            set => _viewModel = value;
         }
 
         private class StateCell : Border
         {
-            public StateCell(IGrid<uint> entry, int index)
+            public StateCell(int index)
             {
                 TextBox tb = new TextBox();
                 // TODO is there a way to not hardcode the path to the ObservableCollection in the view model?
@@ -34,8 +40,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 this.Child = vb;
                 Viewbox = vb;
 
-                Grid.SetRow(this, entry.Row);
-                Grid.SetColumn(this, entry.Column);
+                Grid.SetRow(this, index / 4);
+                Grid.SetColumn(this, index % 4);
             }
 
             public TextBox TextBox { get; set; }
@@ -51,8 +57,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             StateMatrix.Children.Clear();
             for (int i = 0; i < 16; ++i)
             {
-                IGrid<uint> entry = ((StateMatrixInitViewModel)DataContext).StateMatrixValues[i];
-                StateCell cell = new StateCell(entry, i)
+                StateCell cell = new StateCell(i)
                 {
                     Style = this.FindResource("stateBorder") as Style
                 };
