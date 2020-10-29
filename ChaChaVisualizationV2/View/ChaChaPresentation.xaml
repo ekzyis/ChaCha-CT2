@@ -84,7 +84,7 @@
                         </ItemsControl>
                     </Viewbox>
                 </Grid>
-                <Viewbox Grid.Column="1"  Style="{StaticResource UniformViewbox}">
+                <Viewbox Grid.Column="1" Style="{StaticResource UniformViewbox}">
                     <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding CurrentPage.Title, Mode=OneWay}" />
                 </Viewbox>
             </Grid>
