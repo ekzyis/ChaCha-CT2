@@ -80,9 +80,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void NextAction()
         {
-            Reset();
-            CurrentActionIndex++;
-            Actions[CurrentActionIndex]();
+            MoveActions(1);
         }
 
         public bool CanNextAction
@@ -104,9 +102,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void PrevAction()
         {
-            Reset();
-            CurrentActionIndex--;
-            Actions[CurrentActionIndex]();
+            MoveActions(-1);
         }
 
         public bool CanPrevAction
