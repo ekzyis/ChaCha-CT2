@@ -99,10 +99,12 @@
                 <Grid Grid.Column="2" />
             </Grid>
             <Grid Grid.Row="2">
-                <StackPanel Orientation="Horizontal" Visibility="{Binding CurrentPage.HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
-                    <Button Command="{Binding CurrentPage.PrevActionCommand}" Style="{StaticResource PrevButton}" />
-                    <Button Command="{Binding CurrentPage.NextActionCommand}" Style="{StaticResource NextButton}" />
-                </StackPanel>
+                <Viewbox Style="{StaticResource UniformViewbox}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding CurrentPage.HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
+                        <Button Command="{Binding CurrentPage.PrevActionCommand}" Style="{StaticResource PrevButton}" />
+                        <Button Command="{Binding CurrentPage.NextActionCommand}" Style="{StaticResource NextButton}" />
+                    </StackPanel>
+                </Viewbox>
             </Grid>
         </Grid>
     </ContentControl>
