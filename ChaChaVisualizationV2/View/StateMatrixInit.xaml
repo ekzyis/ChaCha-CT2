@@ -31,33 +31,109 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1"></Border>
-        <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
-            <Grid.Resources>
-            </Grid.Resources>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <ItemsControl ItemsSource="{Binding StateMatrixEntries}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="{Binding Row}" Grid.Column="{Binding Column}">
-                            <Viewbox Margin="1">
-                                <TextBox Text="{Binding Value}" />
-                            </Viewbox>
-                        </Border>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </Grid>
+        <Border Style="{StaticResource stateBorder}" BorderBrush="Black" BorderThickness="1">
+            <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
+                <Grid.Resources>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource stateText}" />
+                    <Style TargetType="Viewbox" BasedOn="{StaticResource stateViewbox}" />
+                    <Style TargetType="Border" BasedOn="{StaticResource stateBorder}" />
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Row="0" Grid.Column="0">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[0].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="1">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[1].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="2">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[2].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="0" Grid.Column="3">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[3].Value}" />
+                    </Viewbox>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[4].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[5].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="2">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[6].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="3">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[7].Value}" />
+                    </Viewbox>
+                </Border>
+
+                <Border Grid.Row="2" Grid.Column="0">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[8].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="1">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[9].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="2">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[10].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="2" Grid.Column="3">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[11].Value}" />
+                    </Viewbox>
+                </Border>
+
+                <Border Grid.Row="3" Grid.Column="0">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[12].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="1">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[13].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="2">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[14].Value}" />
+                    </Viewbox>
+                </Border>
+                <Border Grid.Row="3" Grid.Column="3">
+                    <Viewbox>
+                        <TextBox Text="{Binding StateMatrixValues[15].Value}" />
+                    </Viewbox>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
