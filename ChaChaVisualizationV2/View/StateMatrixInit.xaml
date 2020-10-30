@@ -31,7 +31,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Border Style="{StaticResource stateBorder}" BorderBrush="Black" BorderThickness="1">
+        <Border Style="{StaticResource stateBorder}" Grid.Row="0" Grid.Column="0">
             <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                 <Grid.Resources>
                     <Style TargetType="TextBox" BasedOn="{StaticResource stateText}" />
