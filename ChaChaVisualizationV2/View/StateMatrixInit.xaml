@@ -135,5 +135,23 @@
                 </Border>
             </Grid>
         </Border>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Width="100" Height="20" Click="button_Click" Content="Generate random value"></Button>
+                <ListView Margin="5,5,5,5" Grid.Column="2" ItemsSource="{Binding StateMatrixValues}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Value"  DisplayMemberBinding="{Binding Value}" />
+                            <GridViewColumn Header="Row"  DisplayMemberBinding="{Binding Row}" />
+                            <GridViewColumn Header="Column"  DisplayMemberBinding="{Binding Column}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

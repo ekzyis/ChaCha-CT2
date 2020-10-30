@@ -1,4 +1,7 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.View
@@ -10,8 +13,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
     {
         public StateMatrixInit()
         {
+            ViewModel = new StateMatrixInitViewModel();
+            this.DataContext = ViewModel;
             InitializeComponent();
-            this.DataContext = new StateMatrixInitViewModel(); ;
+        }
+
+        private StateMatrixInitViewModel ViewModel { get; set; }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            var rnd = new Random();
+            uint value = (uint)rnd.Next();
+            ViewModel.StateMatrixValues.Add(new StateMatrixValue(value, 0, 0));
         }
     }
 }
