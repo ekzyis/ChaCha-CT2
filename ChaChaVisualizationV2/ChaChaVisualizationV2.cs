@@ -15,6 +15,7 @@
 */
 
 using Cryptool.PluginBase;
+using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using System.Windows.Controls;
 
@@ -27,7 +28,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
     {
         #region Private Variables
 
-        private readonly ChaChaPresentation presentation = new ChaChaPresentation();
+        private readonly ChaChaPresentation presentation;
+
+        public ChaChaVisualizationV2()
+        {
+            presentation = new ChaChaPresentation(this, (ChaChaSettings)Settings);
+        }
 
         #endregion Private Variables
 

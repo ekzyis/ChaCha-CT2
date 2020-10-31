@@ -1,4 +1,5 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.View
@@ -8,10 +9,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
     /// </summary>
     public partial class ChaChaPresentation : UserControl
     {
-        public ChaChaPresentation()
+        public ChaChaPresentation(ChaCha.ChaCha chacha, ChaChaSettings settings)
         {
             InitializeComponent();
-            this.DataContext = new ChaChaPresentationViewModel();
+            this.DataContext = new ChaChaPresentationViewModel(chacha, settings);
         }
     }
 }

@@ -13,8 +13,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
     {
         public StateMatrixInit()
         {
-            ViewModel = new StateMatrixInitViewModel();
-            this.DataContext = ViewModel;
             InitializeComponent();
         }
 

@@ -5,6 +5,9 @@ using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
+    /// <summary>
+    /// View model base for all view models which implement action navigation
+    /// </summary>
     internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation
     {
         public ActionViewModelBase()

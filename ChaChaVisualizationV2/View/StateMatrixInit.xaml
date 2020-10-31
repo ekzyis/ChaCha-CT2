@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.View"
+             xmlns:conv="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -11,6 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
                 <ResourceDictionary Source="..\Styles\TextBox.xaml" />
+                <ResourceDictionary Source="..\Styles\RichTextBox.xaml" />
                 <ResourceDictionary Source="..\Styles\Border.xaml" />
                 <ResourceDictionary Source="..\Styles\Button.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
@@ -23,6 +25,7 @@
                 <Setter Property="Margin" Value="1" />
             </Style>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
+            <conv:BitsToBytes x:Key="BitsToBytes" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}">
@@ -139,33 +142,45 @@
                     </Border>
                 </Grid>
             </Border>
-            <Grid Grid.Row="0" Grid.Column="1">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0"  Orientation="Vertical">
-                        <StackPanel.Resources>
-                            <Style TargetType="Button">
-                                <Setter Property="Width" Value="100" />
-                                <Setter Property="Height" Value="40" />
-                                <Setter Property="Margin" Value="1" />
-                            </Style>
-                        </StackPanel.Resources>
-                        <Button Click="button_Click_codebehind" Content="Generate random value from code-behind"></Button>
-                        <Button Click="button_Click_viewmodel" Content="Generate random value from viewmodel"></Button>
+            <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
+                <Viewbox Style="{StaticResource UniformViewbox}">
+                    <Viewbox.Resources>
+                        <Style TargetType="RichTextBox" BasedOn="{StaticResource RichText}">
+                            <Setter Property="Margin" Value="3" />
+                        </Style>
+                    </Viewbox.Resources>
+                    <StackPanel Orientation="Vertical">
+                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    The first 16 bytes consist of the constants.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    The next
+                                    <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the counter. The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
                     </StackPanel>
-                    <ListView Margin="5,5,5,5" Grid.Column="2" ItemsSource="{Binding StateMatrixValues}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Value"  DisplayMemberBinding="{Binding Value}" />
-                                <GridViewColumn Header="Row"  DisplayMemberBinding="{Binding Row}" />
-                                <GridViewColumn Header="Column"  DisplayMemberBinding="{Binding Column}" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </Grid>
+                </Viewbox>
             </Grid>
         </Grid>
     </ContentControl>

@@ -1,4 +1,5 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
@@ -7,12 +8,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class ChaChaPresentationViewModel : ViewModelBase
     {
-        public ChaChaPresentationViewModel()
+        public ChaChaPresentationViewModel(ChaCha.ChaCha chacha, ChaChaSettings settings)
         {
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
-            Pages.Add(new StateMatrixInitViewModel());
+            Pages.Add(new StateMatrixInitViewModel(chacha, settings));
 
             // Set starting page
             CurrentPage = Pages[0];
