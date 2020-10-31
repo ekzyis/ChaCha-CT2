@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vw="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.View"
              xmlns:vm="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.ViewModel"
-             xmlns:conv="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter"
              xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
@@ -16,6 +15,7 @@
                 <ResourceDictionary Source="..\Styles\ViewBox.xaml" />
                 <ResourceDictionary Source="..\Styles\Button.xaml" />
                 <ResourceDictionary Source="..\Styles\TextBox.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageNavigationTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type vm:StartViewModel}">
                 <vw:Start />
@@ -26,77 +26,18 @@
             <DataTemplate DataType="{x:Type vm:StateMatrixInitViewModel}">
                 <vw:StateMatrixInit />
             </DataTemplate>
-            <conv:CompareStrings x:Key="CompareStrings" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl>
+    <ContentControl Template="{StaticResource PageNavigationTemplate}">
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10*" />
-                <RowDefinition Height="90*" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*" />
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="25*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Viewbox Style="{StaticResource UniformViewbox}" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <ItemsControl ItemsSource="{Binding Pages}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Viewbox Style="{StaticResource UniformViewbox}">
-                                        <Button Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                            CommandParameter="{Binding .}">
-                                            <Label Content="{Binding Name, Mode=OneWay}">
-                                                <Label.Style>
-                                                    <Style TargetType="Label">
-                                                        <Setter Property="FontWeight" Value="Normal" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Value="True">
-                                                                <DataTrigger.Binding>
-                                                                    <MultiBinding Converter="{StaticResource CompareStrings}">
-                                                                        <Binding RelativeSource="{RelativeSource AncestorType={x:Type UserControl}}" Path="DataContext.CurrentPage.Name" Mode="OneWay" />
-                                                                        <Binding Path="Name" Mode="OneWay" />
-                                                                    </MultiBinding>
-                                                                </DataTrigger.Binding>
-                                                                <Setter Property="FontWeight" Value="Bold" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Label.Style>
-                                            </Label>
-                                        </Button>
-                                    </Viewbox>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Viewbox>
-                </Grid>
-                <Viewbox Grid.Column="1" Style="{StaticResource UniformViewbox}">
-                    <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding CurrentPage.Title, Mode=OneWay}" />
-                </Viewbox>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="98*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" />
-                <ContentControl Grid.Column="1" Content="{Binding CurrentPage}" />
-                <Grid Grid.Column="2" />
-            </Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="98*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" />
+            <ContentControl Grid.Column="1" Content="{Binding CurrentPage}" />
+            <Grid Grid.Column="2" />
         </Grid>
     </ContentControl>
 </UserControl>

@@ -78,6 +78,9 @@
   <ItemGroup>
     <Compile Include="ChaChaVisualizationV2.cs" />
     <Compile Include="ChaChaVisualizationV2Settings.cs" />
+    <Compile Include="ContentTemplate\PageNavigationTemplate.xaml.cs">
+      <DependentUpon>PageNavigationTemplate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentTemplate\ViewboxButton.xaml.cs">
       <DependentUpon>ViewboxButton.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="ContentTemplate\PageContentTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ContentTemplate\PageNavigationTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
