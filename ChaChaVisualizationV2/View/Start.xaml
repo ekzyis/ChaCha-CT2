@@ -11,12 +11,12 @@
                 <ResourceDictionary Source="..\Styles\TextBox.xaml" />
                 <ResourceDictionary Source="..\Styles\ViewBox.xaml" />
                 <ResourceDictionary Source="..\Styles\Button.xaml" />
-                <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl Template="{StaticResource PageTemplate}">
+    <ContentControl Template="{StaticResource PageContentTemplate}">
         <Viewbox Grid.Row="0" StretchDirection="Both" Stretch="Uniform">
             <Grid>
                 <Grid.Resources>

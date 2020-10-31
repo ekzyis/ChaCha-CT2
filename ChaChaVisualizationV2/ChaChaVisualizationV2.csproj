@@ -86,8 +86,8 @@
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Model\StateMatrixValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ContentTemplate\PageTemplate.xaml.cs">
-      <DependentUpon>PageTemplate.xaml</DependentUpon>
+    <Compile Include="ContentTemplate\PageContentTemplate.xaml.cs">
+      <DependentUpon>PageContentTemplate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Styles\Border.xaml.cs">
       <DependentUpon>Border.xaml</DependentUpon>
@@ -162,7 +162,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Page Include="ContentTemplate\PageTemplate.xaml">
+    <Page Include="ContentTemplate\PageContentTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

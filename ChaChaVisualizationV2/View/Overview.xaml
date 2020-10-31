@@ -11,12 +11,12 @@
                 <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
                 <ResourceDictionary Source="..\Styles\RichTextBox.xaml" />
                 <ResourceDictionary Source="..\Styles\Button.xaml" />
-                <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl Name="Root" Template="{StaticResource PageTemplate}">
+    <ContentControl Name="Root" Template="{StaticResource PageContentTemplate}">
         <Viewbox Grid.Row="0" Style="{StaticResource UniformViewbox}">
             <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{ StaticResource RichText }" FontSize="20">
                 <FlowDocument>
