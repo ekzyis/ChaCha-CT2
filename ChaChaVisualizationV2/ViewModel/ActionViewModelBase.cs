@@ -72,6 +72,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 throw new ArgumentOutOfRangeException("n", n, $"Action index out of range. Total actions: {TotalActions}");
             }
+            Reset();
             Actions[n]();
             CurrentActionIndex = n;
         }
