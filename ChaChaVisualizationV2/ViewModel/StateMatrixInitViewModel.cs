@@ -1,6 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
-using System;
 using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -29,9 +28,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             Actions.Add(() =>
             {
-                var rnd = new Random();
-                uint value = (uint)rnd.Next();
-                StateMatrixValues.Add(new StateMatrixValue(value, 0, 0));
+                Description[1] = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
+                Description[2] = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
             });
         }
 
@@ -73,7 +81,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
-            // StateMatrixValues.Clear();
+            Description.Clear();
+            InitDescriptions();
+            StateMatrixValues.Clear();
         }
 
         #endregion Action Navigation
