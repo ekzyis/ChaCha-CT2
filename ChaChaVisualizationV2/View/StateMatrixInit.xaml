@@ -10,12 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
-                <ResourceDictionary Source="..\Styles\TextBox.xaml" />
-                <ResourceDictionary Source="..\Styles\RichTextBox.xaml" />
-                <ResourceDictionary Source="..\Styles\Border.xaml" />
-                <ResourceDictionary Source="..\Styles\Button.xaml" />
-                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Styles\Index.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="stateText" TargetType="TextBox" BasedOn="{StaticResource Hex}">
                 <Setter Property="VerticalAlignment" Value="Center" />

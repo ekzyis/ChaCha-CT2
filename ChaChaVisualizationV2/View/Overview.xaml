@@ -8,10 +8,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
-                <ResourceDictionary Source="..\Styles\RichTextBox.xaml" />
-                <ResourceDictionary Source="..\Styles\Button.xaml" />
-                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Styles\Index.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
