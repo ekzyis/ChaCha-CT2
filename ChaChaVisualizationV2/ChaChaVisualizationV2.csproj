@@ -85,7 +85,9 @@
       <DependentUpon>ViewboxButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\Converter\BitsToBytes.cs" />
+    <Compile Include="Helper\Converter\BytesToHex.cs" />
     <Compile Include="Helper\Converter\CompareStrings.cs" />
+    <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Model\IGrid.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Model\StateMatrixValue.cs" />
@@ -115,6 +117,7 @@
       <DependentUpon>Viewbox.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ActionViewModelBase.cs" />
+    <Compile Include="ViewModel\DiffusionViewModel.cs" />
     <Compile Include="ViewModel\IActionNavigation.cs" />
     <Compile Include="ViewModel\IChaCha.cs" />
     <Compile Include="ViewModel\INavigation.cs" />
@@ -126,6 +129,9 @@
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="View\ChaChaPresentation.xaml.cs">
       <DependentUpon>ChaChaPresentation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Diffusion.xaml.cs">
+      <DependentUpon>Diffusion.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Overview.xaml.cs">
       <DependentUpon>Overview.xaml</DependentUpon>
@@ -211,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ChaChaPresentation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Diffusion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

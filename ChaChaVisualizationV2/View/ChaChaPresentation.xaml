@@ -23,6 +23,9 @@
             <DataTemplate DataType="{x:Type vm:StateMatrixInitViewModel}">
                 <vw:StateMatrixInit />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:DiffusionViewModel}">
+                <vw:Diffusion />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageNavigationTemplate}">

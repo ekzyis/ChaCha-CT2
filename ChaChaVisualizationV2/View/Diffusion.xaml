@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="Cryptool.Plugins.ChaChaVisualizationV2.View.Diffusion"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.View"
+             xmlns:conv="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Styles\Index.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="TextBox" BasedOn="{StaticResource Text}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="TextBox" x:Key="Hex" BasedOn="{StaticResource Hex}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <conv:BytesToHex x:Key="BytesToHex" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ContentControl Template="{StaticResource PageContentTemplate}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBox Grid.Row="0" Grid.Column="0" Text="Key" />
+                <TextBox Grid.Row="1" Grid.Column="0" Text="Initialization vector" />
+                <TextBox Grid.Row="2" Grid.Column="0" Text="Initial counter" />
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <TextBox Style="{StaticResource Hex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource BytesToHex}}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                    <TextBox Style="{StaticResource Hex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource BytesToHex}}" />
+                </StackPanel>
+                <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                    <TextBox Style="{StaticResource Hex}" Text="{Binding ChaCha.InitialCounter, Converter={StaticResource BytesToHex}}" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </ContentControl>
+</UserControl>
