@@ -20,11 +20,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private StateMatrixInitViewModel ViewModel { get; set; }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void button_Click_codebehind(object sender, RoutedEventArgs e)
         {
             var rnd = new Random();
             uint value = (uint)rnd.Next();
             ViewModel.StateMatrixValues.Add(new StateMatrixValue(value, 0, 0));
+        }
+
+        private void button_Click_viewmodel(object sender, RoutedEventArgs e)
+        {
+            ViewModel.MoveToAction(1);
         }
     }
 }

@@ -18,13 +18,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Actions.Add(() =>
             {
                 var rnd = new Random();
-                for (int i = 0; i < 16; ++i)
-                {
-                    int row = i / 4;
-                    int col = i % 4;
-                    uint value = (uint)rnd.Next();
-                    StateMatrixValues.Add(new StateMatrixValue(value, row, col));
-                }
+                uint value = (uint)rnd.Next();
+                StateMatrixValues.Add(new StateMatrixValue(value, 0, 0));
             });
         }
 
@@ -49,7 +44,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
-            StateMatrixValues.Clear();
+            // StateMatrixValues.Clear();
         }
 
         #endregion Action Navigation
