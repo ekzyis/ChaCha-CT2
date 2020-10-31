@@ -6,15 +6,16 @@ using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
-    internal class ChaChaPresentationViewModel : ViewModelBase
+    internal class ChaChaPresentationViewModel : ViewModelBase, IChaCha
     {
-        public ChaChaPresentationViewModel(ChaCha.ChaCha chacha, ChaChaSettings settings)
+        public ChaChaPresentationViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
+            ChaChaVisualization = chachaVisualization;
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
-            Pages.Add(new DiffusionViewModel(chacha, settings));
-            Pages.Add(new StateMatrixInitViewModel(chacha, settings));
+            Pages.Add(new DiffusionViewModel(chachaVisualization));
+            Pages.Add(new StateMatrixInitViewModel(chachaVisualization));
 
             // Set starting page
             CurrentPage = Pages[0];
@@ -78,5 +79,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion Methods
+
+        #region IChaCha
+
+        public ChaChaVisualizationV2 ChaChaVisualization { get; private set; }
+        public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
+        public ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
+
+        #endregion IChaCha
     }
 }

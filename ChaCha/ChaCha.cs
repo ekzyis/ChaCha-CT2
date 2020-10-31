@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Cryptool.Plugins.ChaCha
@@ -471,7 +472,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region Validation
 
-        protected bool IsValid { get; set; }
+        public virtual bool IsValid { get; set; }
 
         /// <summary>
         /// Validates user input.
@@ -521,7 +522,7 @@ namespace Cryptool.Plugins.ChaCha
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
-        private void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }

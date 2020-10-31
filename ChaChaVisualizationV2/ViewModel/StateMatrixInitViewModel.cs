@@ -6,10 +6,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle, IChaCha
     {
-        public StateMatrixInitViewModel(ChaCha.ChaCha chacha, ChaChaSettings settings)
+        public StateMatrixInitViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
-            ChaCha = chacha;
-            Settings = settings;
+            ChaChaVisualization = chachaVisualization;
             Name = "State Matrix";
             Title = "State Matrix Initialization";
             InitDescriptions();
@@ -132,8 +131,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region IChaCha
 
-        public ChaCha.ChaCha ChaCha { get; private set; }
-        public ChaCha.ChaChaSettings Settings { get; private set; }
+        public ChaChaVisualizationV2 ChaChaVisualization { get; private set; }
+        public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
+        public ChaCha.ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
 
         #endregion IChaCha
     }

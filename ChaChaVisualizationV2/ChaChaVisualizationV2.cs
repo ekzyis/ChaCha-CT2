@@ -15,9 +15,9 @@
 */
 
 using Cryptool.PluginBase;
-using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2
@@ -25,7 +25,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
     [PluginInfo("ChaChaVisualizationV2", "Subtract one number from another", "ChaChaVisualizationV2/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class ChaChaVisualizationV2 : ChaCha.ChaCha
+    public class ChaChaVisualizationV2 : ChaCha.ChaCha, INotifyPropertyChanged
     {
         #region Private Variables
 
@@ -35,7 +35,25 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
 
         public ChaChaVisualizationV2()
         {
-            presentation = new ChaChaPresentation(this, (ChaChaSettings)Settings);
+            presentation = new ChaChaPresentation(this);
+        }
+
+        #region Validation
+
+        private bool _isValid; public override bool IsValid
+        {
+            get
+            {
+                return _isValid;
+            }
+            set
+            {
+                if (_isValid != value)
+                {
+                    _isValid = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         /// <summary>
@@ -56,6 +74,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             }
             return base.Validate(null);
         }
+
+        #endregion Validation
 
         #region IPlugin Members
 

@@ -34,8 +34,10 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <Viewbox Style="{StaticResource UniformViewbox}">
-                                        <Button Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                                            CommandParameter="{Binding .}">
+                                        <Button
+                                            Command="{Binding DataContext.ChangePageCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding .}"
+                                            IsEnabled="{Binding DataContext.ChaChaVisualization.IsValid, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                             <Label Content="{Binding Name, Mode=OneWay}">
                                                 <Label.Style>
                                                     <Style TargetType="Label">

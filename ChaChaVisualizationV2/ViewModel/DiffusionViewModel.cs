@@ -4,10 +4,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha
     {
-        public DiffusionViewModel(ChaCha.ChaCha chacha, ChaChaSettings settings)
+        public DiffusionViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
-            ChaCha = chacha;
-            Settings = settings;
+            ChaChaVisualization = chachaVisualization;
             Name = "Diffusion";
             Title = "Diffusion";
         }
@@ -56,8 +55,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region IChaCha
 
-        public ChaCha.ChaCha ChaCha { get; private set; }
-        public ChaCha.ChaChaSettings Settings { get; private set; }
+        public ChaChaVisualizationV2 ChaChaVisualization { get; private set; }
+        public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
+        public ChaCha.ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
 
         #endregion IChaCha
     }
