@@ -17,7 +17,8 @@
 using Cryptool.PluginBase;
 using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
-using System.Windows.Controls;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2
 {
@@ -30,12 +31,31 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
 
         private readonly ChaChaPresentation presentation;
 
+        #endregion Private Variables
+
         public ChaChaVisualizationV2()
         {
             presentation = new ChaChaPresentation(this, (ChaChaSettings)Settings);
         }
 
-        #endregion Private Variables
+        /// <summary>
+        /// Convenience method to call Validate without a validation context
+        /// since ChaCha itself needs no validation context.
+        /// </summary>
+        public override IEnumerable<ValidationResult> Validate()
+        {
+            if (InputStream == null || InputKey == null || InputIV == null || InitialCounter == null)
+            {
+                string errorMsg = "Some input is missing. Please check inputs.";
+                GuiLogMessage(errorMsg, NotificationLevel.Error);
+                IsValid = false;
+                return new List<ValidationResult>
+                {
+                    new ValidationResult(errorMsg)
+                };
+            }
+            return base.Validate(null);
+        }
 
         #region IPlugin Members
 
@@ -46,7 +66,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         /// <summary>
         /// Provide custom presentation to visualize the execution or return null.
         /// </summary>
-        public override UserControl Presentation
+        public override System.Windows.Controls.UserControl Presentation
         {
             get { return presentation; }
         }

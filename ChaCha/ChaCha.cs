@@ -411,6 +411,7 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public void PreExecution()
         {
+            Validate();
         }
 
         /// <summary>
@@ -424,7 +425,6 @@ namespace Cryptool.Plugins.ChaCha
             GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
             GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit, Initial counter: {InitialCounter}", NotificationLevel.Info);
 
-            Validate();
             if (IsValid)
             {
                 outputWriter = new CStreamWriter();
@@ -471,7 +471,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region Validation
 
-        private bool IsValid { get; set; }
+        protected bool IsValid { get; set; }
 
         /// <summary>
         /// Validates user input.
@@ -499,7 +499,7 @@ namespace Cryptool.Plugins.ChaCha
         /// Convenience method to call Validate without a validation context
         /// since ChaCha itself needs no validation context.
         /// </summary>
-        public IEnumerable<ValidationResult> Validate()
+        public virtual IEnumerable<ValidationResult> Validate()
         {
             return Validate(null);
         }
@@ -516,7 +516,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        protected void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
