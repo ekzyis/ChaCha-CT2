@@ -5,49 +5,16 @@
         <ResourceDictionary Source=".\ViewboxButton.xaml" />
         <ResourceDictionary Source="..\Styles\TextBox.xaml" />
         <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
+        <ResourceDictionary Source="..\Styles\Button.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
     <ControlTemplate x:Key="PageTemplate" TargetType="{x:Type ContentControl}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="10*" />
                 <RowDefinition Height="90*" />
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25*" />
-                    <ColumnDefinition Width="50*" />
-                    <ColumnDefinition Width="25*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*" />
-                        <ColumnDefinition Width="9*" />
-                        <ColumnDefinition Width="12*" />
-                        <ColumnDefinition Width="13*" />
-                    </Grid.ColumnDefinitions>
-                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="0">
-                        <Label Content="Start" />
-                    </ContentControl>
-                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="1">
-                        <Label Content="Overview" />
-                    </ContentControl>
-                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="2">
-                        <Label Content="State Matrix" />
-                    </ContentControl>
-                    <ContentControl Template="{StaticResource ViewboxButton}" Grid.Column="3">
-                        <Label Content="ChaCha Hash" />
-                    </ContentControl>
-                </Grid>
-                <Viewbox Grid.Column="1"  Style="{StaticResource UniformViewbox}">
-                    <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding Title}" />
-                </Viewbox>
-            </Grid>
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="98*" />
@@ -56,6 +23,14 @@
                 <Grid Grid.Column="0" />
                 <ContentPresenter Grid.Column="1" />
                 <Grid Grid.Column="2" />
+            </Grid>
+            <Grid Grid.Row="1">
+                <Viewbox Style="{StaticResource UniformViewbox}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
+                        <Button Command="{Binding PrevActionCommand}" Style="{StaticResource PrevButton}" />
+                        <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
+                    </StackPanel>
+                </Viewbox>
             </Grid>
         </Grid>
     </ControlTemplate>

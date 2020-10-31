@@ -13,8 +13,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
+                <ResourceDictionary Source="..\Styles\ViewBox.xaml" />
                 <ResourceDictionary Source="..\Styles\Button.xaml" />
+                <ResourceDictionary Source="..\Styles\TextBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type vm:StartViewModel}">
                 <vw:Start />
@@ -26,7 +27,6 @@
                 <vw:StateMatrixInit />
             </DataTemplate>
             <conv:CompareStrings x:Key="CompareStrings" />
-            <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl>

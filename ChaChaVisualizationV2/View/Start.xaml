@@ -11,48 +11,35 @@
                 <ResourceDictionary Source="..\Styles\TextBox.xaml" />
                 <ResourceDictionary Source="..\Styles\ViewBox.xaml" />
                 <ResourceDictionary Source="..\Styles\Button.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="90*" />
-                <RowDefinition Height="10*" />
-            </Grid.RowDefinitions>
-            <Viewbox Grid.Row="0" StretchDirection="Both" Stretch="Uniform">
-                <Grid>
-                    <Grid.Resources>
-                        <Style TargetType="{x:Type StackPanel}">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                        </Style>
-                        <Style x:Key="Center" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                            <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                        </Style>
-                        <Style x:Key="Title" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
-                            <Setter Property="FontSize" Value="48" />
-                        </Style>
-                        <Style x:Key="SecondTitle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
-                            <Setter Property="FontSize" Value="17" />
-                        </Style>
-                    </Grid.Resources>
-                    <StackPanel>
-                        <TextBox Style="{StaticResource Title}" Text="ChaCha Visualization" />
-                        <TextBox Style="{StaticResource SecondTitle}" Text="A stream cipher developed by Daniel J. Bernstein in 2008" />
-                    </StackPanel>
-                </Grid>
-            </Viewbox>
-            <Grid Grid.Row="1">
-                <Viewbox Style="{StaticResource UniformViewbox}">
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
-                        <Button Command="{Binding PrevActionCommand}" Style="{StaticResource PrevButton}" />
-                        <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
-                    </StackPanel>
-                </Viewbox>
+    <ContentControl Template="{StaticResource PageTemplate}">
+        <Viewbox Grid.Row="0" StretchDirection="Both" Stretch="Uniform">
+            <Grid>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type StackPanel}">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style x:Key="Center" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                    </Style>
+                    <Style x:Key="Title" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
+                        <Setter Property="FontSize" Value="48" />
+                    </Style>
+                    <Style x:Key="SecondTitle" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Center}">
+                        <Setter Property="FontSize" Value="17" />
+                    </Style>
+                </Grid.Resources>
+                <StackPanel>
+                    <TextBox Style="{StaticResource Title}" Text="ChaCha Visualization" />
+                    <TextBox Style="{StaticResource SecondTitle}" Text="A stream cipher developed by Daniel J. Bernstein in 2008" />
+                </StackPanel>
             </Grid>
-        </Grid>
+        </Viewbox>
     </ContentControl>
 </UserControl>
