@@ -18,7 +18,7 @@
     </UserControl.Resources>
     <ContentControl Name="Root" Template="{StaticResource PageContentTemplate}">
         <Viewbox Grid.Row="0" Style="{StaticResource UniformViewbox}">
-            <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{ StaticResource RichText }" FontSize="20">
+            <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{StaticResource RichText}">
                 <FlowDocument>
                     <Table CellSpacing="10">
                         <Table.Columns>
