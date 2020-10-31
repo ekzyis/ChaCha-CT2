@@ -13,8 +13,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Settings = settings;
             Name = "State Matrix";
             Title = "State Matrix Initialization";
-            Description.Add(true);
+            InitDescriptions();
             InitActions();
+        }
+
+        private void InitDescriptions()
+        {
+            Description.Add(true);
+            Description.Add(false);
+            Description.Add(false);
+            Description.Add(false);
         }
 
         private void InitActions()
