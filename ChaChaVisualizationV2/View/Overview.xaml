@@ -10,175 +10,191 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Viewbox.xaml" />
                 <ResourceDictionary Source="..\Styles\RichTextBox.xaml" />
+                <ResourceDictionary Source="..\Styles\Button.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Name="Root">
-        <Viewbox Style="{StaticResource UniformViewbox}">
-            <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{ StaticResource RichText }" FontSize="20">
-                <FlowDocument>
-                    <Table CellSpacing="10">
-                        <Table.Columns>
-                            <TableColumn />
-                            <TableColumn />
-                        </Table.Columns>
-                        <TableRowGroup>
-                            <TableRow>
-                                <TableCell ColumnSpan="2">
-                                    <Paragraph>
-                                        ChaCha is a stream cipher.
-                                        <LineBreak /> It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream.
-                                        <!-- Picture of plaintext XOR keystream -->
-                                    </Paragraph>
-                                </TableCell>
-                            </TableRow>
-                        </TableRowGroup>
-                        <TableRowGroup>
-                            <TableRow>
-                                <TableCell ColumnSpan="2">
-                                    <Paragraph>
-                                        The keystream is created by first generating keystream blocks of 512 bits and concatenating them until the keystream size is equal or larger than the input.
-                                        <LineBreak /> To generate the keystream, ChaCha uses for each keystream block a 512 bit state which consists of following four values:
-                                    </Paragraph>
-                                </TableCell>
-                            </TableRow>
-                            <TableRow>
-                                <TableCell>
-                                    <List MarkerStyle="Decimal" TextAlignment="Left">
-                                        <ListItem Background="Bisque">
-                                            <Paragraph>Constants (nothing-up-my-sleeves numbers) (128-bit)</Paragraph>
-                                        </ListItem>
-                                        <ListItem Background="LightCoral">
-                                            <Paragraph>Key (128-bit or 256-bit. At 128-bit key will be expanded into a 256-bit key.)</Paragraph>
-                                        </ListItem>
-                                        <ListItem Background="SkyBlue">
-                                            <Paragraph>Keystream block counter (64-bit)</Paragraph>
-                                        </ListItem>
-                                        <ListItem Background="PaleGreen">
-                                            <Paragraph>Initialization vector (64-bit)</Paragraph>
-                                        </ListItem>
-                                    </List>
-                                </TableCell>
-                                <TableCell>
-                                    <Table>
-                                        <Table.Resources>
-                                            <Style TargetType="TableCell">
-                                                <Setter Property="BorderBrush" Value="Black" />
-                                                <Setter Property="BorderThickness" Value="1" />
-                                                <Setter Property="TextAlignment" Value="Center" />
-                                            </Style>
-                                        </Table.Resources>
-                                        <Table.Columns>
-                                            <TableColumn />
-                                            <TableColumn />
-                                            <TableColumn />
-                                            <TableColumn />
-                                        </Table.Columns>
-                                        <TableRowGroup>
-                                            <TableRow>
-                                                <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
-                                                </TableCell>
-                                                <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                            <TableRow>
-                                                <TableCell Background="SkyBlue">
-                                                    <Paragraph>COUNTER</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="SkyBlue">
-                                                    <Paragraph>COUNTER</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="PaleGreen">
-                                                    <Paragraph>IV</Paragraph>
-                                                </TableCell>
-                                                <TableCell Background="PaleGreen">
-                                                    <Paragraph>IV</Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableRowGroup>
-                                        <TableRowGroup>
-                                            <TableRow>
-                                                <TableCell ColumnSpan="4" BorderThickness="0">
-                                                    <Paragraph FontSize="16">State as a 4x4 matrix where each cell is 4 bytes</Paragraph>
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableRowGroup>
-                                    </Table>
-                                </TableCell>
-                            </TableRow>
-                        </TableRowGroup>
-                        <TableRowGroup>
-                            <TableRow>
-                                <TableCell ColumnSpan="2">
-                                    <Paragraph>
-                                        Applying the ChaCha hash function to the 512 bit state would then return a keystream block.
-                                    </Paragraph>
-                                    <Paragraph>
-                                        This leads us to following steps to encrypt a message M using the ChaCha cipher:
-                                    </Paragraph>
-                                    <List MarkerStyle="Decimal">
-                                        <ListItem>
-                                            <Paragraph>
-                                                Initialize state matrix
-                                            </Paragraph>
-                                        </ListItem>
-                                        <ListItem>
-                                            <Paragraph>
-                                                Generate keystream
-                                            </Paragraph>
-                                        </ListItem>
-                                        <ListItem>
-                                            <Paragraph>
-                                                M XOR Keystream
-                                            </Paragraph>
-                                        </ListItem>
-                                    </List>
-                                    <Paragraph>
-                                        <Italic>Remark: Due to XOR being the inverse function to itself, decryption works exactly the same.</Italic>
-                                    </Paragraph>
-                                </TableCell>
-                            </TableRow>
-                        </TableRowGroup>
-                    </Table>
-                </FlowDocument>
-            </RichTextBox>
-        </Viewbox>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Viewbox Grid.Row="0" Style="{StaticResource UniformViewbox}">
+                <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{ StaticResource RichText }" FontSize="20">
+                    <FlowDocument>
+                        <Table CellSpacing="10">
+                            <Table.Columns>
+                                <TableColumn />
+                                <TableColumn />
+                            </Table.Columns>
+                            <TableRowGroup>
+                                <TableRow>
+                                    <TableCell ColumnSpan="2">
+                                        <Paragraph>
+                                            ChaCha is a stream cipher.
+                                            <LineBreak /> It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream.
+                                            <!-- Picture of plaintext XOR keystream -->
+                                        </Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                            </TableRowGroup>
+                            <TableRowGroup>
+                                <TableRow>
+                                    <TableCell ColumnSpan="2">
+                                        <Paragraph>
+                                            The keystream is created by first generating keystream blocks of 512 bits and concatenating them until the keystream size is equal or larger than the input.
+                                            <LineBreak /> To generate the keystream, ChaCha uses for each keystream block a 512 bit state which consists of following four values:
+                                        </Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <List MarkerStyle="Decimal" TextAlignment="Left">
+                                            <ListItem Background="Bisque">
+                                                <Paragraph>Constants (nothing-up-my-sleeves numbers) (128-bit)</Paragraph>
+                                            </ListItem>
+                                            <ListItem Background="LightCoral">
+                                                <Paragraph>Key (128-bit or 256-bit. At 128-bit key will be expanded into a 256-bit key.)</Paragraph>
+                                            </ListItem>
+                                            <ListItem Background="SkyBlue">
+                                                <Paragraph>Keystream block counter (64-bit)</Paragraph>
+                                            </ListItem>
+                                            <ListItem Background="PaleGreen">
+                                                <Paragraph>Initialization vector (64-bit)</Paragraph>
+                                            </ListItem>
+                                        </List>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Table>
+                                            <Table.Resources>
+                                                <Style TargetType="TableCell">
+                                                    <Setter Property="BorderBrush" Value="Black" />
+                                                    <Setter Property="BorderThickness" Value="1" />
+                                                    <Setter Property="TextAlignment" Value="Center" />
+                                                </Style>
+                                            </Table.Resources>
+                                            <Table.Columns>
+                                                <TableColumn />
+                                                <TableColumn />
+                                                <TableColumn />
+                                                <TableColumn />
+                                            </Table.Columns>
+                                            <TableRowGroup>
+                                                <TableRow>
+                                                    <TableCell Background="Bisque">
+                                                        <Paragraph>CONSTANT</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="Bisque">
+                                                        <Paragraph>CONSTANT</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="Bisque">
+                                                        <Paragraph>CONSTANT</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="Bisque">
+                                                        <Paragraph>CONSTANT</Paragraph>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell Background="LightCoral">
+                                                        <Paragraph>KEY</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="LightCoral">
+                                                        <Paragraph>KEY</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="LightCoral">
+                                                        <Paragraph>KEY</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="LightCoral">
+                                                        <Paragraph>KEY</Paragraph>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell>
+                                                        <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    </TableCell>
+                                                </TableRow>
+                                                <TableRow>
+                                                    <TableCell Background="SkyBlue">
+                                                        <Paragraph>COUNTER</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="SkyBlue">
+                                                        <Paragraph>COUNTER</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="PaleGreen">
+                                                        <Paragraph>IV</Paragraph>
+                                                    </TableCell>
+                                                    <TableCell Background="PaleGreen">
+                                                        <Paragraph>IV</Paragraph>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableRowGroup>
+                                            <TableRowGroup>
+                                                <TableRow>
+                                                    <TableCell ColumnSpan="4" BorderThickness="0">
+                                                        <Paragraph FontSize="16">State as a 4x4 matrix where each cell is 4 bytes</Paragraph>
+                                                    </TableCell>
+                                                </TableRow>
+                                            </TableRowGroup>
+                                        </Table>
+                                    </TableCell>
+                                </TableRow>
+                            </TableRowGroup>
+                            <TableRowGroup>
+                                <TableRow>
+                                    <TableCell ColumnSpan="2">
+                                        <Paragraph>
+                                            Applying the ChaCha hash function to the 512 bit state would then return a keystream block.
+                                        </Paragraph>
+                                        <Paragraph>
+                                            This leads us to following steps to encrypt a message M using the ChaCha cipher:
+                                        </Paragraph>
+                                        <List MarkerStyle="Decimal">
+                                            <ListItem>
+                                                <Paragraph>
+                                                    Initialize state matrix
+                                                </Paragraph>
+                                            </ListItem>
+                                            <ListItem>
+                                                <Paragraph>
+                                                    Generate keystream
+                                                </Paragraph>
+                                            </ListItem>
+                                            <ListItem>
+                                                <Paragraph>
+                                                    M XOR Keystream
+                                                </Paragraph>
+                                            </ListItem>
+                                        </List>
+                                        <Paragraph>
+                                            <Italic>Remark: Due to XOR being the inverse function to itself, decryption works exactly the same.</Italic>
+                                        </Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                            </TableRowGroup>
+                        </Table>
+                    </FlowDocument>
+                </RichTextBox>
+            </Viewbox>
+            <Grid Grid.Row="1">
+                <Viewbox Style="{StaticResource UniformViewbox}">
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
+                        <Button Command="{Binding PrevActionCommand}" Style="{StaticResource PrevButton}" />
+                        <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
+                    </StackPanel>
+                </Viewbox>
+            </Grid>
+        </Grid>
     </ContentControl>
 </UserControl>
