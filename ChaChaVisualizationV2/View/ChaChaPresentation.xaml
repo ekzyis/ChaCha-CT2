@@ -13,6 +13,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageNavigationTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <DataTemplate DataType="{x:Type vm:StartViewModel}">
                 <vw:Start />

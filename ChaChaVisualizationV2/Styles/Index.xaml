@@ -8,8 +8,5 @@
         <ResourceDictionary Source=".\TextBox.xaml" />
         <ResourceDictionary Source=".\RichTextBox.xaml" />
         <ResourceDictionary Source=".\Viewbox.xaml" />
-        <ResourceDictionary Source="..\ContentTemplate\ViewboxButton.xaml" />
-        <ResourceDictionary Source="..\ContentTemplate\PageNavigationTemplate.xaml" />
-        <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

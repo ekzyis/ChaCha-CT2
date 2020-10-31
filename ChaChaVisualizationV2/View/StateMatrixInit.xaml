@@ -11,6 +11,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="stateText" TargetType="TextBox" BasedOn="{StaticResource Hex}">
                 <Setter Property="VerticalAlignment" Value="Center" />

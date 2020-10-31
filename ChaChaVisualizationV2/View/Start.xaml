@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
