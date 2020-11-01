@@ -16,7 +16,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
-                <ResourceDictionary Source="..\Styles\TextBox.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="TextBox" x:Key="DiffusionText" BasedOn="{StaticResource Text}">
@@ -156,7 +155,7 @@
                                 <TableRowGroup>
                                     <TableRow>
                                         <TableCell BorderThickness="0">
-                                            <Paragraph FontSize="16">Example how diffusion values are visualized. In the first row is the primary value, and in the second row is the diffusion value.</Paragraph>
+                                            <Paragraph Style="{StaticResource Description}">Example how diffusion values are visualized. In the first row is the primary value, and in the second row is the diffusion value.</Paragraph>
                                         </TableCell>
                                     </TableRow>
                                 </TableRowGroup>

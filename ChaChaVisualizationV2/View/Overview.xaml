@@ -63,11 +63,7 @@
                                 <TableCell>
                                     <Table>
                                         <Table.Resources>
-                                            <Style TargetType="TableCell">
-                                                <Setter Property="BorderBrush" Value="Black" />
-                                                <Setter Property="BorderThickness" Value="1" />
-                                                <Setter Property="TextAlignment" Value="Center" />
-                                            </Style>
+                                            <Style TargetType="TableCell" BasedOn="{StaticResource DefaultTableCell}" />
                                         </Table.Resources>
                                         <Table.Columns>
                                             <TableColumn />
@@ -136,7 +132,7 @@
                                         <TableRowGroup>
                                             <TableRow>
                                                 <TableCell ColumnSpan="4" BorderThickness="0">
-                                                    <Paragraph FontSize="16">State as a 4x4 matrix where each cell is 4 bytes</Paragraph>
+                                                    <Paragraph Style="{StaticResource Description}">State as a 4x4 matrix where each cell is 4 bytes</Paragraph>
                                                 </TableCell>
                                             </TableRow>
                                         </TableRowGroup>
