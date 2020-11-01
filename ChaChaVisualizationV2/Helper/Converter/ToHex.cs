@@ -29,7 +29,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
             }
             else
             {
-                throw new ArgumentException("value was neither byte[] nor BigInteger");
+                // For some reason, the bindings in the ToHex Converter in Diffusion view are updated unset values when moving away from Diffusion page.
+                // throw new ArgumentException("value was neither byte[] nor BigInteger");
+                return null;
             }
         }
 
