@@ -8,8 +8,8 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:local="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.View"
                  xmlns:conv="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter"
+                 xmlns:val="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation"
                  mc:Ignorable="d"
                  d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -29,6 +29,17 @@
             <Style TargetType="TextBox" x:Key="DiffusionInput" BasedOn="{StaticResource DiffusionHex}">
                 <Setter Property="IsReadOnly" Value="False"/>
                 <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Validation.ErrorTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <StackPanel>
+                                <AdornedElementPlaceholder x:Name="placeholder" />
+                                <TextBlock FontSize="11" FontStyle="Italic" Foreground="Red"
+                                               Text="{Binding ElementName=placeholder, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}" />
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
             <Style TargetType="{x:Type StackPanel}">
                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -94,11 +105,27 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        <TextBox Style="{StaticResource DiffusionInput}">
+                            <TextBox.Text>
+                                <Binding Path="DiffusionInputKey" Converter="{StaticResource ToHex}" Mode="OneWay">
+                                    <Binding.ValidationRules>
+                                        <val:HexValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                        <TextBox Style="{StaticResource DiffusionInput}">
+                            <TextBox.Text>
+                                <Binding Path="DiffusionInputIV" Converter="{StaticResource ToHex}" Mode="OneWay">
+                                    <Binding.ValidationRules>
+                                        <val:HexValidationRule/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}">
@@ -112,8 +139,11 @@
                         <TextBox Style="{StaticResource DiffusionInput}">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
-                                    <Binding Path="ChaCha.InitialCounter" />
-                                    <Binding Path="ChaCha.Settings" />
+                                    <Binding Path="DiffusionInitialCounter" />
+                                    <Binding Path="ChaCha.Settings" Mode="OneWay"/>
+                                    <MultiBinding.ValidationRules>
+                                        <val:HexValidationRule/>
+                                    </MultiBinding.ValidationRules>
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>

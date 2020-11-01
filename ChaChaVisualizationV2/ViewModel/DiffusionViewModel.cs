@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
@@ -9,6 +10,57 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             ChaChaVisualization = chachaVisualization;
             Name = "Diffusion";
             Title = "Diffusion";
+            DiffusionInputKey = ChaChaVisualization.InputKey;
+            DiffusionInputIV = ChaChaVisualization.InputIV;
+            DiffusionInitialCounter = ChaChaVisualization.InitialCounter;
+        }
+
+        private byte[] _diffusionKey; public byte[] DiffusionInputKey
+        {
+            get
+            {
+                return _diffusionKey;
+            }
+            set
+            {
+                if (_diffusionKey != value)
+                {
+                    _diffusionKey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private byte[] _diffusionInputIV; public byte[] DiffusionInputIV
+        {
+            get
+            {
+                return _diffusionInputIV;
+            }
+            set
+            {
+                if (_diffusionInputIV != value)
+                {
+                    _diffusionInputIV = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private BigInteger _diffusionInitialCounter; public BigInteger DiffusionInitialCounter
+        {
+            get
+            {
+                return _diffusionInitialCounter;
+            }
+            set
+            {
+                if (_diffusionInitialCounter != value)
+                {
+                    _diffusionInitialCounter = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         #region INavigation

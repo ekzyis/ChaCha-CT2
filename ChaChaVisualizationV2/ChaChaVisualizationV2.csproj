@@ -91,6 +91,7 @@
     <Compile Include="Helper\Converter\ToHexWithVersion.cs" />
     <Compile Include="Helper\Converter\CompareStrings.cs" />
     <Compile Include="Helper\Formatter.cs" />
+    <Compile Include="Helper\Validation\HexValidationRule.cs" />
     <Compile Include="Model\IGrid.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Model\StateMatrixValue.cs" />

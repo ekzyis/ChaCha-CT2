@@ -8,6 +8,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
             return Formatter.HexString((byte[])value);
         }
 

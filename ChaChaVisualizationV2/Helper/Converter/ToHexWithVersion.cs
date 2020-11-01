@@ -11,6 +11,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var value = values[0];
+            if (value == null) return null;
             if (value is byte[] bytes)
             {
                 return Formatter.HexString(bytes);
