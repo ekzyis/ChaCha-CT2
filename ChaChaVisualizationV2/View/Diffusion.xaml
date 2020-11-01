@@ -35,6 +35,7 @@
                 <Setter Property="Margin" Value="5" />
             </Style>
             <conv:ToHex x:Key="ToHex" />
+            <conv:ToHexWithVersion x:Key="ToHexWithVersion" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -91,36 +92,24 @@
                         <TextBox Text="Diffusion Initial counter" Style="{StaticResource DiffusionText}" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Name="Key">
-                        <TextBox Style="{StaticResource DiffusionHex}" >
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
-                                    <Binding Path="ChaCha.InputKey" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Width="{Binding ElementName=Key, Path=Width}"/>
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                        <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        <TextBox Style="{StaticResource DiffusionInput}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource DiffusionHex}" Name="IV">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
-                                    <Binding Path="ChaCha.InputIV" />
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Width="{Binding ElementName=IV, Path=Width}"/>
+                        <TextBox Style="{StaticResource DiffusionHex}" Name="IV" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                        <TextBox Style="{StaticResource DiffusionInput}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Name="InitialCounterText">
                             <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
+                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
                                     <Binding Path="ChaCha.InitialCounter" />
                                     <Binding Path="ChaCha.Settings" />
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Width="{Binding ElementName=InitialCounter, Path=Width}"/>
+                        <TextBox Style="{StaticResource DiffusionInput}"/>
                     </StackPanel>
                 </Grid>
             </Viewbox>

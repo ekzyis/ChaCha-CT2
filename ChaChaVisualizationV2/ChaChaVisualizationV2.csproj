@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="Helper\Converter\BitsToBytes.cs" />
     <Compile Include="Helper\Converter\ToHex.cs" />
+    <Compile Include="Helper\Converter\ToHexWithVersion.cs" />
     <Compile Include="Helper\Converter\CompareStrings.cs" />
     <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Model\IGrid.cs" />
