@@ -26,8 +26,13 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
+            <Style TargetType="TextBox" x:Key="DiffusionInput" BasedOn="{StaticResource DiffusionHex}">
+                <Setter Property="IsReadOnly" Value="False"/>
+                <Setter Property="BorderThickness" Value="1"/>
+            </Style>
             <Style TargetType="{x:Type StackPanel}">
                 <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="5" />
             </Style>
             <conv:ToHex x:Key="ToHex" />
         </ResourceDictionary>
@@ -73,30 +78,41 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <TextBox Grid.Row="0" Grid.Column="0" Text="Key" Style="{StaticResource DiffusionText}" />
-                    <TextBox Grid.Row="1" Grid.Column="0" Text="Initialization vector" Style="{StaticResource DiffusionText}" />
-                    <TextBox Grid.Row="2" Grid.Column="0" Text="Initial counter" Style="{StaticResource DiffusionText}" />
+                    <StackPanel Grid.Row="0" Grid.Column="0">
+                        <TextBox Text="Key" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Diffusion Key" Style="{StaticResource DiffusionText}"  />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <TextBox Text="Initialization vector" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Diffusion Initialization vector" Style="{StaticResource DiffusionText}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="0">
+                        <TextBox Text="Initial counter" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Diffusion Initial counter" Style="{StaticResource DiffusionText}" />
+                    </StackPanel>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource DiffusionHex}">
+                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" Name="Key">
+                        <TextBox Style="{StaticResource DiffusionHex}" >
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
                                     <Binding Path="ChaCha.InputKey" />
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
+                        <TextBox Style="{StaticResource DiffusionInput}" Width="{Binding ElementName=Key, Path=Width}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource DiffusionHex}">
+                        <TextBox Style="{StaticResource DiffusionHex}" Name="IV">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
                                     <Binding Path="ChaCha.InputIV" />
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
+                        <TextBox Style="{StaticResource DiffusionInput}" Width="{Binding ElementName=IV, Path=Width}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource DiffusionHex}">
+                        <TextBox Style="{StaticResource DiffusionHex}" Name="InitialCounterText">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
                                     <Binding Path="ChaCha.InitialCounter" />
@@ -104,6 +120,7 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
+                        <TextBox Style="{StaticResource DiffusionInput}" Width="{Binding ElementName=InitialCounter, Path=Width}"/>
                     </StackPanel>
                 </Grid>
             </Viewbox>
