@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -8,8 +9,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public DiffusionViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
             ChaChaVisualization = chachaVisualization;
+            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(InputChanged);
             Name = "Diffusion";
             Title = "Diffusion";
+        }
+
+        private void InputChanged(object sender, PropertyChangedEventArgs e)
+        {
             DiffusionInputKey = ChaChaVisualization.InputKey;
             DiffusionInputIV = ChaChaVisualization.InputIV;
             DiffusionInitialCounter = ChaChaVisualization.InitialCounter;

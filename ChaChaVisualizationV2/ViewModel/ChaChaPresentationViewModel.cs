@@ -12,7 +12,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public ChaChaPresentationViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
             ChaChaVisualization = chachaVisualization;
-            chachaVisualization.PropertyChanged += new PropertyChangedEventHandler(NavigationEnabledChanged);
+            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(NavigationEnabledChanged);
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
