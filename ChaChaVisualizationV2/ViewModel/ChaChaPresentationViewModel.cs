@@ -1,6 +1,7 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
@@ -11,6 +12,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public ChaChaPresentationViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
             ChaChaVisualization = chachaVisualization;
+            chachaVisualization.PropertyChanged += new PropertyChangedEventHandler(NavigationEnabledChanged);
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
@@ -63,6 +65,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     OnPropertyChanged();
                 }
             }
+        }
+
+        private void NavigationEnabledChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged("NavigationEnabled");
+        }
+
+        public bool NavigationEnabled
+        {
+            get => ChaChaVisualization.ExecutionFinished;
         }
 
         #endregion Properties / Commands

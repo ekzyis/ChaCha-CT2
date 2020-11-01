@@ -45,6 +45,23 @@ namespace Cryptool.Plugins.ChaCha
 
         #endregion Private Variables
 
+        #region Public Variables
+
+        private bool _executionFinished; public bool ExecutionFinished
+        {
+            get => _executionFinished;
+            set
+            {
+                if (_executionFinished != value)
+                {
+                    _executionFinished = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion Public Variables
+
         #region ICrypComponent I/O
 
         /// <summary>
@@ -443,13 +460,15 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged("OutputStream");
             }
 
+            ExecutionFinished = true;
+
             ProgressChanged(1, 1);
         }
 
         /// <summary>
         /// Called once after workflow execution has stopped.
         /// </summary>
-        public void PostExecution()
+        public virtual void PostExecution()
         {
         }
 
