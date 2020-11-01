@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
@@ -9,14 +8,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             string inputText = (string)value;
-
-            try
+            if (!System.Text.RegularExpressions.Regex.IsMatch(inputText, @"\A\b[0-9a-fA-F]+\b\Z"))
             {
-                ulong.Parse(inputText, NumberStyles.HexNumber);
-            }
-            catch (Exception e)
-            {
-                return new ValidationResult(false, $"{e.Message}");
+                return new ValidationResult(false, $"Input is not a valid hex string.");
             }
             return ValidationResult.ValidResult;
         }
