@@ -94,14 +94,14 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource DiffusionHex}" Name="IV" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}"/>
+                        <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-                        <TextBox Style="{StaticResource DiffusionHex}" Name="InitialCounterText">
+                        <TextBox Style="{StaticResource DiffusionHex}">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
                                     <Binding Path="ChaCha.InitialCounter" />
@@ -109,7 +109,14 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}"/>
+                        <TextBox Style="{StaticResource DiffusionInput}">
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                    <Binding Path="ChaCha.InitialCounter" />
+                                    <Binding Path="ChaCha.Settings" />
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
                     </StackPanel>
                 </Grid>
             </Viewbox>
