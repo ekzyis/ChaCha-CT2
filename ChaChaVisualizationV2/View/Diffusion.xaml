@@ -47,8 +47,8 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                     <TextBox Style="{StaticResource Hex}">
                         <TextBox.Text>
-                            <MultiBinding Converter="{StaticResource ToHex}">
-                                <Binding Path="ChaCha.InputKey" Mode="OneWay" />
+                            <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
+                                <Binding Path="ChaCha.InputKey" />
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
@@ -56,8 +56,8 @@
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                     <TextBox Style="{StaticResource Hex}">
                         <TextBox.Text>
-                            <MultiBinding Converter="{StaticResource ToHex}">
-                                <Binding Path="ChaCha.InputIV" Mode="OneWay" />
+                            <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
+                                <Binding Path="ChaCha.InputIV" />
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
@@ -65,9 +65,9 @@
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                     <TextBox Style="{StaticResource Hex}">
                         <TextBox.Text>
-                            <MultiBinding Converter="{StaticResource ToHex}">
-                                <Binding Path="ChaCha.InitialCounter" Mode="OneWay" />
-                                <Binding Path="ChaCha.Settings" Mode="OneWay" />
+                            <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
+                                <Binding Path="ChaCha.InitialCounter" />
+                                <Binding Path="ChaCha.Settings" />
                             </MultiBinding>
                         </TextBox.Text>
                     </TextBox>
