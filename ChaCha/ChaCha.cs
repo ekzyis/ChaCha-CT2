@@ -47,18 +47,7 @@ namespace Cryptool.Plugins.ChaCha
 
         #region Public Variables
 
-        private bool _executionFinished; public bool ExecutionFinished
-        {
-            get => _executionFinished;
-            set
-            {
-                if (_executionFinished != value)
-                {
-                    _executionFinished = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
+        public virtual bool ExecutionFinished { get; set; }
 
         #endregion Public Variables
 

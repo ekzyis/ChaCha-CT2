@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             presentation = new ChaChaPresentation(this);
         }
 
-        #region Validation
+        #region Public Variables
 
         private bool _isValid; public override bool IsValid
         {
@@ -54,7 +54,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             }
         }
 
-        #endregion Validation
+        private bool _executionFinished; public override bool ExecutionFinished
+        {
+            get
+            {
+                return _executionFinished;
+            }
+            set
+            {
+                if (_executionFinished != value)
+                {
+                    _executionFinished = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion Public Variables
 
         #region IPlugin Members
 
