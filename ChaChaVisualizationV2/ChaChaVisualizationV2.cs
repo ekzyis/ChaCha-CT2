@@ -16,9 +16,7 @@
 
 using Cryptool.PluginBase;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2
 {
@@ -54,25 +52,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
                     OnPropertyChanged();
                 }
             }
-        }
-
-        /// <summary>
-        /// Convenience method to call Validate without a validation context
-        /// since ChaCha itself needs no validation context.
-        /// </summary>
-        public override IEnumerable<ValidationResult> Validate()
-        {
-            if (InputStream == null || InputKey == null || InputIV == null || InitialCounter == null)
-            {
-                string errorMsg = "Some input is missing. Please check inputs.";
-                GuiLogMessage(errorMsg, NotificationLevel.Error);
-                IsValid = false;
-                return new List<ValidationResult>
-                {
-                    new ValidationResult(errorMsg)
-                };
-            }
-            return base.Validate(null);
         }
 
         #endregion Validation

@@ -60,6 +60,12 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Key chosen by the user which will be used for en- or decryption.
         /// </summary>
+        /// <remarks>
+        /// The [Required] validation attribute does not work because CT2 seems to pass the inputs after `PreExecution`
+        /// and only executes `Execute` if all inputs are given. This means that we have no way of validating if all required
+        /// inputs are given because the component won't even execute without all.
+        /// </remarks>
+        // [Required]
         [KeyValidator("Key must be 128-bit or 256-bit")]
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
@@ -71,6 +77,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Initialization vector chosen by the user.
         /// </summary>
+        // [Required]
         [IVValidator("IV must be 64-bit in DJB version or 96-bit in IETF version")]
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
@@ -412,7 +419,6 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public void PreExecution()
         {
-            Validate();
         }
 
         /// <summary>
@@ -426,6 +432,7 @@ namespace Cryptool.Plugins.ChaCha
             GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
             GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit, Initial counter: {InitialCounter}", NotificationLevel.Info);
 
+            Validate();
             if (IsValid)
             {
                 outputWriter = new CStreamWriter();
