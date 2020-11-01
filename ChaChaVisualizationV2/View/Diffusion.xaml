@@ -11,15 +11,19 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
+                <ResourceDictionary Source="..\Styles\TextBox.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="TextBox" BasedOn="{StaticResource Text}">
+            <Style TargetType="TextBox" x:Key="DiffusionText" BasedOn="{StaticResource Text}">
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
-            <Style TargetType="TextBox" x:Key="Hex" BasedOn="{StaticResource Hex}">
+            <Style TargetType="TextBox" x:Key="DiffusionHex" BasedOn="{StaticResource Hex}">
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+            <Style TargetType="{x:Type StackPanel}">
+                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
             <conv:ToHex x:Key="ToHex" />
         </ResourceDictionary>
@@ -27,25 +31,25 @@
     <ContentControl Template="{StaticResource PageContentTemplate}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" Text="Key" />
-                <TextBox Grid.Row="1" Grid.Column="0" Text="Initialization vector" />
-                <TextBox Grid.Row="2" Grid.Column="0" Text="Initial counter" />
+                <TextBox Grid.Row="0" Grid.Column="0" Text="Key" Style="{StaticResource DiffusionText}" />
+                <TextBox Grid.Row="1" Grid.Column="0" Text="Initialization vector" Style="{StaticResource DiffusionText}" />
+                <TextBox Grid.Row="2" Grid.Column="0" Text="Initial counter" Style="{StaticResource DiffusionText}" />
 
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
-                    <TextBox Style="{StaticResource Hex}">
+                    <TextBox Style="{StaticResource DiffusionHex}">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
                                 <Binding Path="ChaCha.InputKey" />
@@ -54,7 +58,7 @@
                     </TextBox>
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-                    <TextBox Style="{StaticResource Hex}">
+                    <TextBox Style="{StaticResource DiffusionHex}">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
                                 <Binding Path="ChaCha.InputIV" />
@@ -63,7 +67,7 @@
                     </TextBox>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-                    <TextBox Style="{StaticResource Hex}">
+                    <TextBox Style="{StaticResource DiffusionHex}">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource ToHex}" Mode="OneWay">
                                 <Binding Path="ChaCha.InitialCounter" />
