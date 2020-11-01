@@ -18,7 +18,7 @@ namespace Cryptool.Plugins.ChaCha.Util
     /// This is solved by reversing byte arrays when using `BitConverter.GetBytes`
     /// on little-endian architectures.
     /// </summary>
-    internal static class ByteUtil
+    public static class ByteUtil
     {
         /// <summary>
         /// Reverse the byte array if running system has little-endian architecture.

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Cryptool.Plugins.ChaCha.Util;
+using System.Text;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
 {
@@ -23,6 +24,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         public static string HexString(byte[] bytes)
         {
             return HexString(bytes, 0, bytes.Length);
+        }
+
+        /// <summary>
+        /// Return hex representation of UInt64.
+        /// </summary>
+        public static string HexString(ulong u)
+        {
+            return HexString(ByteUtil.GetBytesBE(u));
+        }
+
+        /// <summary>
+        /// Return hex representation of UInt32.
+        /// </summary>
+        public static string HexString(uint u)
+        {
+            return HexString(ByteUtil.GetBytesBE(u));
         }
     }
 }
