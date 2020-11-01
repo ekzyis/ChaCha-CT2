@@ -74,7 +74,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public bool NavigationEnabled
         {
-            get => ChaChaVisualization.ExecutionFinished;
+            get => ChaChaVisualization.ExecutionFinished && ChaChaVisualization.IsValid;
         }
 
         #endregion Properties / Commands
