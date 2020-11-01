@@ -92,6 +92,8 @@
     <Compile Include="Helper\Converter\CompareStrings.cs" />
     <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Helper\Validation\HexValidationRule.cs" />
+    <Compile Include="Helper\Validation\RangeChecker.cs" />
+    <Compile Include="Helper\Validation\StringLengthValidationRule.cs" />
     <Compile Include="Model\IGrid.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Model\StateMatrixValue.cs" />

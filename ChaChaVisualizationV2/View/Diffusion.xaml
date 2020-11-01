@@ -110,6 +110,11 @@
                                 <Binding Path="DiffusionInputKey" Converter="{StaticResource ToHex}" Mode="OneWayToSource">
                                     <Binding.ValidationRules>
                                         <val:HexValidationRule/>
+                                        <val:StringLengthValidationRule>
+                                            <val:StringLengthValidationRule.ValidRange>
+                                                <val:RangeChecker Maximum="64"/>
+                                            </val:StringLengthValidationRule.ValidRange>
+                                        </val:StringLengthValidationRule>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -122,6 +127,11 @@
                                 <Binding Path="DiffusionInputIV" Converter="{StaticResource ToHex}" Mode="OneWayToSource">
                                     <Binding.ValidationRules>
                                         <val:HexValidationRule/>
+                                        <val:StringLengthValidationRule>
+                                            <val:StringLengthValidationRule.ValidRange>
+                                                <val:RangeChecker Maximum="24"/>
+                                            </val:StringLengthValidationRule.ValidRange>
+                                        </val:StringLengthValidationRule>
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
@@ -143,6 +153,11 @@
                                     <Binding Path="ChaCha.Settings" Mode="OneWay"/>
                                     <MultiBinding.ValidationRules>
                                         <val:HexValidationRule/>
+                                        <val:StringLengthValidationRule>
+                                            <val:StringLengthValidationRule.ValidRange>
+                                                <val:RangeChecker Maximum="16"/>
+                                            </val:StringLengthValidationRule.ValidRange>
+                                        </val:StringLengthValidationRule>
                                     </MultiBinding.ValidationRules>
                                 </MultiBinding>
                             </TextBox.Text>
