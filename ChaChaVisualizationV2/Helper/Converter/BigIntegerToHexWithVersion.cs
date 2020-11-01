@@ -6,17 +6,12 @@ using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
 {
-    internal class ToHexWithVersion : IMultiValueConverter
+    internal class BigIntegerToHexWithVersion : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             var value = values[0];
-            if (value == null) return null;
-            if (value is byte[] bytes)
-            {
-                return Formatter.HexString(bytes);
-            }
-            else if (value is BigInteger bigInteger)
+            if (value is BigInteger bigInteger)
             {
                 var version = ((ChaChaSettings)values[1]).Version;
                 if (version.CounterBits == 64)
@@ -28,17 +23,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
                     return Formatter.HexString((uint)bigInteger);
                 }
             }
-            else
-            {
-                // For some reason, the bindings in the ToHex Converter in Diffusion view are updated unset values when moving away from Diffusion page.
-                // throw new ArgumentException("value was neither byte[] nor BigInteger");
-                return null;
-            }
+            return null;
         }
 
-        public object[] ConvertBack(object values, Type[] targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            string hex = (string)value;
+            System.Diagnostics.Debug.Assert(hex.Length == 16 || hex.Length == 24);
+            // 64-bit are 8 bytes thus if the hex string has 16 characters, it has 8 bytes and is the counter of version DJB.
+            ChaCha.Version v = hex.Length == 16 ? ChaCha.Version.DJB : ChaCha.Version.IETF;
+            return new object[] { Formatter.BigInteger((string)value), v };
         }
     }
 }

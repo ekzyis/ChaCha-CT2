@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 {
@@ -23,6 +15,19 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         public Diffusion()
         {
             InitializeComponent();
+            this.DataContextChanged += OnDataContextChanged;
+        }
+
+        private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            DiffusionViewModel ViewModel = (DiffusionViewModel)e.NewValue;
+            if (ViewModel != null)
+            {
+                DiffusionInputKey.Text = Formatter.HexString(ViewModel.ChaChaVisualization.InputKey);
+                DiffusionInputIV.Text = Formatter.HexString(ViewModel.ChaChaVisualization.InputIV);
+                BigInteger initialCounter = ViewModel.ChaChaVisualization.InitialCounter;
+                DiffusionInitialCounter.Text = Formatter.HexString(ViewModel.Settings.Version == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
+            }
         }
     }
 }

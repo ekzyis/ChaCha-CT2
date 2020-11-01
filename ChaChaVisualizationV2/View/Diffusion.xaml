@@ -45,8 +45,8 @@
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Margin" Value="5" />
             </Style>
-            <conv:ToHex x:Key="ToHex" />
-            <conv:ToHexWithVersion x:Key="ToHexWithVersion" />
+            <conv:BytesToHex x:Key="ToHex" />
+            <conv:BigIntegerToHexWithVersion x:Key="ToHexWithVersion" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -105,9 +105,9 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}">
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey">
                             <TextBox.Text>
-                                <Binding Path="DiffusionInputKey" Converter="{StaticResource ToHex}" Mode="OneWay">
+                                <Binding Path="DiffusionInputKey" Converter="{StaticResource ToHex}" Mode="OneWayToSource">
                                     <Binding.ValidationRules>
                                         <val:HexValidationRule/>
                                     </Binding.ValidationRules>
@@ -117,9 +117,9 @@
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}">
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV">
                             <TextBox.Text>
-                                <Binding Path="DiffusionInputIV" Converter="{StaticResource ToHex}" Mode="OneWay">
+                                <Binding Path="DiffusionInputIV" Converter="{StaticResource ToHex}" Mode="OneWayToSource">
                                     <Binding.ValidationRules>
                                         <val:HexValidationRule/>
                                     </Binding.ValidationRules>
@@ -136,9 +136,9 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}">
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter">
                             <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWayToSource">
                                     <Binding Path="DiffusionInitialCounter" />
                                     <Binding Path="ChaCha.Settings" Mode="OneWay"/>
                                     <MultiBinding.ValidationRules>
