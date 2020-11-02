@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
 
             if (inputText.Length > MaxHexKeyStringLength)
             {
-                return new ValidationResult(false, $"Hex input exceeds maximum key size of {MaxKeyBytesLength} bytes.");
+                return new ValidationResult(false, $"Hex input exceeds maximum size of {MaxKeyBytesLength} bytes / {MaxKeyBytesLength / 8}-bit.");
             }
             return ValidationResult.ValidResult;
         }
