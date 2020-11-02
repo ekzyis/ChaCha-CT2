@@ -104,15 +104,15 @@
                         <TextBox Text="Diffusion Initial counter (hex)" Style="{StaticResource DiffusionText}" />
                     </StackPanel>
 
-                    <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
+                    <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                    <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV"/>
                     </StackPanel>
-                    <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
+                    <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
