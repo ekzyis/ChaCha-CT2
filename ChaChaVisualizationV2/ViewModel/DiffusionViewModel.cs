@@ -9,12 +9,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public DiffusionViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
             ChaChaVisualization = chachaVisualization;
-            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(InputChanged);
+            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(PluginInputChanged);
             Name = "Diffusion";
             Title = "Diffusion";
         }
 
-        private void InputChanged(object sender, PropertyChangedEventArgs e)
+        private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
         {
             DiffusionInputKey = ChaChaVisualization.InputKey;
             DiffusionInputIV = ChaChaVisualization.InputIV;
