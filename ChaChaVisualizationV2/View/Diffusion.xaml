@@ -105,37 +105,11 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey">
-                            <TextBox.Text>
-                                <Binding Path="DiffusionInputKey" Converter="{StaticResource ToHex}" Mode="OneWayToSource">
-                                    <Binding.ValidationRules>
-                                        <val:HexValidationRule/>
-                                        <val:StringLengthValidationRule>
-                                            <val:StringLengthValidationRule.ValidRange>
-                                                <val:RangeChecker Maximum="64"/>
-                                            </val:StringLengthValidationRule.ValidRange>
-                                        </val:StringLengthValidationRule>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV">
-                            <TextBox.Text>
-                                <Binding Path="DiffusionInputIV" Converter="{StaticResource ToHex}" Mode="OneWayToSource">
-                                    <Binding.ValidationRules>
-                                        <val:HexValidationRule/>
-                                        <val:StringLengthValidationRule>
-                                            <val:StringLengthValidationRule.ValidRange>
-                                                <val:RangeChecker Maximum="24"/>
-                                            </val:StringLengthValidationRule.ValidRange>
-                                        </val:StringLengthValidationRule>
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
                         <TextBox Style="{StaticResource DiffusionHex}">
@@ -146,26 +120,10 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter">
-                            <TextBox.Text>
-                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWayToSource">
-                                    <Binding Path="DiffusionInitialCounter" />
-                                    <Binding Path="ChaCha.Settings" Mode="OneWay"/>
-                                    <MultiBinding.ValidationRules>
-                                        <val:HexValidationRule/>
-                                        <val:StringLengthValidationRule>
-                                            <val:StringLengthValidationRule.ValidRange>
-                                                <val:RangeChecker Maximum="16"/>
-                                            </val:StringLengthValidationRule.ValidRange>
-                                        </val:StringLengthValidationRule>
-                                    </MultiBinding.ValidationRules>
-                                </MultiBinding>
-                            </TextBox.Text>
-                        </TextBox>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter"/>
                     </StackPanel>
                 </Grid>
             </Viewbox>
-
             <!--#endregion-->
 
             <Grid Grid.Row="1" Grid.Column="1" Name="Root2">

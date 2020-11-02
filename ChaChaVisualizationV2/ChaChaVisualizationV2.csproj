@@ -90,7 +90,10 @@
     <Compile Include="Helper\Converter\BytesToHex.cs" />
     <Compile Include="Helper\Converter\BigIntegerToHexWithVersion.cs" />
     <Compile Include="Helper\Converter\CompareStrings.cs" />
+    <Compile Include="Helper\Converter\DiffusionBytesConverter.cs" />
+    <Compile Include="Helper\Converter\DiffusionCounterConverter.cs" />
     <Compile Include="Helper\Formatter.cs" />
+    <Compile Include="Helper\Validation\DiffusionInputValidationRule.cs" />
     <Compile Include="Helper\Validation\HexValidationRule.cs" />
     <Compile Include="Helper\Validation\RangeChecker.cs" />
     <Compile Include="Helper\Validation\StringLengthValidationRule.cs" />
