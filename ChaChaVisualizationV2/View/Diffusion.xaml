@@ -68,10 +68,11 @@
                         </Paragraph>
                         <Paragraph>
                             The ChaCha cipher will also be executed with these input values. This is done to visualize the diffusion property of the cipher.
-                            The values received from the diffusion execution will always be shown below the values received from the primary execution. The hex value which is different will be shown in red.
+                            The values received from the diffusion execution will always be shown below the values received from the primary execution. The hex value which is different will be shown in red.  At the right side, there is an example how this will look like.
                         </Paragraph>
                         <Paragraph>
-                            At the right side, there is an example how this will look like.
+                            Additionally, during the ChaCha hash function, statistics about how many bits are flipped will be shown.
+                            A well designed cipher should have 50% of all ciphertext bits flipped if any bit in the plaintext is flipped and vice versa.
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
