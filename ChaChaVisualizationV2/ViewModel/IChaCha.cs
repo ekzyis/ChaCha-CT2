@@ -7,6 +7,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     /// </summary>
     internal interface IChaCha
     {
+        ChaChaPresentationViewModel PresentationViewModel { get; }
+
         ChaChaVisualizationV2 ChaChaVisualization { get; }
 
         ChaCha.ChaCha ChaCha { get; }

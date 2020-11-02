@@ -3,6 +3,7 @@ using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -16,8 +17,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
-            Pages.Add(new DiffusionViewModel(chachaVisualization));
-            Pages.Add(new StateMatrixInitViewModel(chachaVisualization));
+            Pages.Add(new DiffusionViewModel(this));
+            Pages.Add(new StateMatrixInitViewModel(this));
 
             // Set starting page
             CurrentPage = Pages[0];
@@ -83,6 +84,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #endregion Binding Properties
 
+        #region Binding Properties (Diffusion)
+
+        private DiffusionViewModel DiffusionViewModel
+        {
+            get => (DiffusionViewModel)Pages[2];
+        }
+
+        public byte[] DiffusionInputKey
+        {
+            get => DiffusionViewModel.DiffusionInputKey;
+        }
+
+        public byte[] DiffusionInputIV
+        {
+            get => DiffusionViewModel.DiffusionInputIV;
+        }
+
+        public BigInteger DiffusionInitialCounter
+        {
+            get => DiffusionViewModel.DiffusionInitialCounter;
+        }
+
+        #endregion Binding Properties (Diffusion)
+
         #region Methods
 
         private void ChangePage(INavigation viewModel)
@@ -100,6 +125,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region IChaCha
 
+        public ChaChaPresentationViewModel PresentationViewModel { get => this; }
         public ChaChaVisualizationV2 ChaChaVisualization { get; private set; }
         public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
         public ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
