@@ -94,16 +94,16 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0">
-                        <TextBox Text="Key (hex)" Style="{StaticResource DiffusionText}" />
-                        <TextBox Text="Diffusion Key (hex)" Style="{StaticResource DiffusionText}"  />
+                        <TextBox Text="Key (hex)" Style="{StaticResource DiffusionText}" Background="LightCoral"/>
+                        <TextBox Text="Diffusion Key (hex)" Style="{StaticResource DiffusionText}"  Background="LightCoral"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0">
-                        <TextBox Text="Initialization vector (hex)" Style="{StaticResource DiffusionText}" />
-                        <TextBox Text="Diffusion Initialization vector (hex)" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
+                        <TextBox Text="Diffusion Initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="0">
-                        <TextBox Text="Initial counter (hex)" Style="{StaticResource DiffusionText}" />
-                        <TextBox Text="Diffusion Initial counter (hex)" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
+                        <TextBox Text="Diffusion Initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="0">
                         <TextBox Text="Flipped Bits" Style="{StaticResource DiffusionText}"/>

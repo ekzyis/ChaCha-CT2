@@ -43,7 +43,9 @@
             <Border Style="{StaticResource stateBorder}" Grid.Row="0" Grid.Column="0">
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource stateText}" />
+                        <Style TargetType="TextBox" BasedOn="{StaticResource stateText}">
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}"/>
+                        </Style>
                         <Style TargetType="Viewbox" BasedOn="{StaticResource stateViewbox}" />
                         <Style TargetType="Border" BasedOn="{StaticResource stateBorder}" />
                     </Grid.Resources>
@@ -59,85 +61,85 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Border Grid.Row="0" Grid.Column="0">
+                    <Border Grid.Row="0" Grid.Column="0" Background="Bisque">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[0].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[0].Value}"/>
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="1">
+                    <Border Grid.Row="0" Grid.Column="1" Background="Bisque">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[1].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="2">
+                    <Border Grid.Row="0" Grid.Column="2" Background="Bisque">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[2].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="0" Grid.Column="3">
+                    <Border Grid.Row="0" Grid.Column="3" Background="Bisque">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[3].Value}" />
                         </Viewbox>
                     </Border>
 
-                    <Border Grid.Row="1" Grid.Column="0">
+                    <Border Grid.Row="1" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[4].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="1">
+                    <Border Grid.Row="1" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[5].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="2">
+                    <Border Grid.Row="1" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[6].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="1" Grid.Column="3">
+                    <Border Grid.Row="1" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[7].Value}" />
                         </Viewbox>
                     </Border>
 
-                    <Border Grid.Row="2" Grid.Column="0">
+                    <Border Grid.Row="2" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[8].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="1">
+                    <Border Grid.Row="2" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[9].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="2">
+                    <Border Grid.Row="2" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[10].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="3">
+                    <Border Grid.Row="2" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[11].Value}" />
                         </Viewbox>
                     </Border>
 
-                    <Border Grid.Row="3" Grid.Column="0">
+                    <Border Grid.Row="3" Grid.Column="0" Background="SkyBlue">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[12].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="1">
+                    <Border Grid.Row="3" Grid.Column="1" Name="State13">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[13].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="2">
+                    <Border Grid.Row="3" Grid.Column="2" Background="PaleGreen">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[14].Value}" />
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="3">
+                    <Border Grid.Row="3" Grid.Column="3" Background="PaleGreen">
                         <Viewbox>
                             <TextBox Text="{Binding StateMatrixValues[15].Value}" />
                         </Viewbox>
@@ -167,14 +169,16 @@
                         <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The first 16 bytes consist of the constants.
+                                    The first 16 bytes consist of the
+                                    <Run Background="Bisque">constants</Run> .
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The next 32 bytes consist of the key. If the key consists of only 16 bytes, it is concatenated with itself.
+                                    The next 32 bytes consist of the
+                                    <Run Background="LightCoral">key</Run> . If the key consists of only 16 bytes, it is concatenated with itself.
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
@@ -182,7 +186,8 @@
                             <FlowDocument>
                                 <Paragraph>
                                     The next
-                                    <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the counter. The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.
+                                    <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the
+                                    <Run Background="SkyBlue">counter</Run> . The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
@@ -217,9 +222,9 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Row="0" Grid.Column="0" Text="State parameters" Margin="25" />
-                    <TextBox Grid.Row="1" Grid.Column="0" Text="Key" />
-                    <TextBox Grid.Row="2" Grid.Column="0" Text="Initialization vector" />
-                    <TextBox Grid.Row="3" Grid.Column="0" Text="Initial counter" />
+                    <TextBox Grid.Row="1" Grid.Column="0" Text="Key" Background="LightCoral" />
+                    <TextBox Grid.Row="2" Grid.Column="0" Text="Initialization vector" Background="PaleGreen" />
+                    <TextBox Grid.Row="3" Grid.Column="0" Text="Initial counter" Background="SkyBlue" />
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <RichTextBox Width="395" Style="{StaticResource RichHex}">

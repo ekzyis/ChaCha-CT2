@@ -25,11 +25,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             StateMatrixInitViewModel ViewModel = (StateMatrixInitViewModel)e.NewValue;
             if (ViewModel != null)
             {
+                // Colorize state background depending on Version
+                ChaCha.Version v = ViewModel.Settings.Version;
+                State13.Background = v.CounterBits == 64 ? Brushes.SkyBlue : Brushes.PaleGreen;
+
                 // Create the FlowDocuments of the RichTextBoxes for the diffusion values.
                 // Marks differences in the diffusion value red.
                 InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
                 InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
-                InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, ViewModel.Settings.Version);
+                InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
             }
         }
 
