@@ -33,6 +33,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             // Hide state values.
             ConstantsMatrix = false;
+            KeyMatrix = false;
+            CounterMatrix = false;
+            State13Matrix = false;
         }
 
         private void ClearEncoding()
@@ -42,10 +45,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             ConstantsEncodingASCII = false;
             ConstantsEncodingChunkify = false;
             ConstantsEncodingLittleEndian = false;
+
+            KeyEncoding = false;
+            KeyEncodingInput = false;
+            KeyEncodingChunkify = false;
+            KeyEncodingLittleEndian = false;
+
+            CounterEncoding = false;
+            CounterEncodingInput = false;
+            CounterEncodingReverse = false;
+            CounterEncodingChunkify = false;
+            CounterEncodingLittleEndian = false;
         }
 
         private void InitActions()
         {
+            #region Constants
+
             Actions.Add(() =>
             {
                 Description[1] = true;
@@ -91,11 +107,128 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 ConstantsEncodingLittleEndian = true;
                 ConstantsMatrix = true;
             });
+
+            #endregion Constants
+
+            #region Key
+
             Actions.Add(() =>
             {
+                ConstantsMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                KeyEncoding = true;
             });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                KeyEncoding = true;
+                KeyEncodingInput = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                KeyEncoding = true;
+                KeyEncodingInput = true;
+                KeyEncodingChunkify = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                KeyEncoding = true;
+                KeyEncodingInput = true;
+                KeyEncodingChunkify = true;
+                KeyEncodingLittleEndian = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                KeyEncoding = true;
+                KeyEncodingInput = true;
+                KeyEncodingChunkify = true;
+                KeyEncodingLittleEndian = true;
+                KeyMatrix = true;
+            });
+
+            #endregion Key
+
+            #region Counter
+
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                CounterEncoding = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                CounterEncoding = true;
+                CounterEncodingInput = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                CounterEncoding = true;
+                CounterEncodingInput = true;
+                CounterEncodingReverse = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                CounterEncoding = true;
+                CounterEncodingInput = true;
+                CounterEncodingReverse = true;
+                CounterEncodingChunkify = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                CounterEncoding = true;
+                CounterEncodingInput = true;
+                CounterEncodingReverse = true;
+                CounterEncodingChunkify = true;
+                CounterEncodingLittleEndian = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                CounterEncoding = true;
+                CounterEncodingInput = true;
+                CounterEncodingReverse = true;
+                CounterEncodingChunkify = true;
+                CounterEncodingLittleEndian = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+            });
+
+            #endregion Counter
+
             Actions.Add(() =>
             {
                 Description[1] = true;
@@ -255,6 +388,58 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Binding Properties (Key)
 
+        private bool _keyEncoding; public bool KeyEncoding
+        {
+            get
+            {
+                return _keyEncoding;
+            }
+            set
+            {
+                _keyEncoding = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _keyEncodingInput; public bool KeyEncodingInput
+        {
+            get
+            {
+                return _keyEncodingInput;
+            }
+            set
+            {
+                _keyEncodingInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _keyEncodingChunkify; public bool KeyEncodingChunkify
+        {
+            get
+            {
+                return _keyEncodingChunkify;
+            }
+            set
+            {
+                _keyEncodingChunkify = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _keyEncodingLittleEndian; public bool KeyEncodingLittleEndian
+        {
+            get
+            {
+                return _keyEncodingLittleEndian;
+            }
+            set
+            {
+                _keyEncodingLittleEndian = value;
+                OnPropertyChanged();
+            }
+        }
+
         private bool _keyMatrix; public bool KeyMatrix
         {
             get
@@ -271,6 +456,71 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion Binding Properties (Key)
 
         #region Binding Properties (Counter)
+
+        private bool _counterEncoding; public bool CounterEncoding
+        {
+            get
+            {
+                return _counterEncoding;
+            }
+            set
+            {
+                _counterEncoding = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _counterEncodingInput; public bool CounterEncodingInput
+        {
+            get
+            {
+                return _counterEncodingInput;
+            }
+            set
+            {
+                _counterEncodingInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _counterEncodingReverse; public bool CounterEncodingReverse
+        {
+            get
+            {
+                return _counterEncodingReverse;
+            }
+            set
+            {
+                _counterEncodingReverse = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _counterEncodingChunkify; public bool CounterEncodingChunkify
+        {
+            get
+            {
+                return _counterEncodingChunkify;
+            }
+            set
+            {
+                _counterEncodingChunkify = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _counterEncodingLittleEndian; public bool CounterEncodingLittleEndian
+        {
+            get
+            {
+                return _counterEncodingLittleEndian;
+            }
+            set
+            {
+                _counterEncodingLittleEndian = value;
+                OnPropertyChanged();
+            }
+        }
 
         private bool _counterMatrix; public bool CounterMatrix
         {

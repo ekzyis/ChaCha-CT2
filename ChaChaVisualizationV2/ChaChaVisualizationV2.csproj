@@ -96,7 +96,10 @@
     <Compile Include="Helper\Converter\DiffusionCounterConverter.cs" />
     <Compile Include="Helper\ByteUtil.cs" />
     <Compile Include="Helper\Converter\DoubleToPercentage.cs" />
+    <Compile Include="Helper\Converter\HexToBytes.cs" />
     <Compile Include="Helper\Converter\LittleEndian.cs" />
+    <Compile Include="Helper\Converter\MultiSequentialValueConverter.cs" />
+    <Compile Include="Helper\Converter\ReverseBytes.cs" />
     <Compile Include="Helper\Converter\SequentialValueConverter.cs" />
     <Compile Include="Helper\Converter\UInt32ToHex.cs" />
     <Compile Include="Helper\Formatter.cs" />

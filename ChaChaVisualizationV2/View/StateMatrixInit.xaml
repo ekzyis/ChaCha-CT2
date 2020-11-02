@@ -283,7 +283,21 @@
             <!--#region Encoding -->
 
             <Grid Grid.Row="1" Grid.Column="0" Margin="0,5,5,5">
-
+                <Grid.Resources>
+                    <Style TargetType="{x:Type TextBox}" x:Key="Title" BasedOn="{StaticResource Text}">
+                        <Setter Property="Margin" Value="10" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="22" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}" x:Key="Description" BasedOn="{StaticResource Text}">
+                        <Setter Property="Margin" Value="10" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}" x:Key="Value" BasedOn="{StaticResource Hex}">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Margin" Value="10" />
+                    </Style>
+                </Grid.Resources>
                 <!--#region Constants encoding -->
                 <Viewbox>
                     <Grid Visibility="{Binding ConstantsEncoding, Converter={StaticResource BooleanToVisibility}}">
@@ -298,21 +312,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type TextBox}" x:Key="Title" BasedOn="{StaticResource Text}">
-                                <Setter Property="Margin" Value="10" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="FontWeight" Value="Bold" />
-                                <Setter Property="FontSize" Value="22" />
-                            </Style>
-                            <Style TargetType="{x:Type TextBox}" x:Key="Description" BasedOn="{StaticResource Text}">
-                                <Setter Property="Margin" Value="10" />
-                            </Style>
-                            <Style TargetType="{x:Type TextBox}" x:Key="Value" BasedOn="{StaticResource Hex}">
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="10" />
-                            </Style>
-                        </Grid.Resources>
+
                         <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Constants encoding" />
                         <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value (ASCII):" />
                         <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="As bytes:" />
@@ -370,9 +370,168 @@
                         </TextBox>
                     </Grid>
                 </Viewbox>
-            </Grid>
+                <!--#endregion-->
 
-            <!--#endregion-->
+                <!--#region  Key encoding -->
+
+                <Viewbox>
+                    <Grid Visibility="{Binding KeyEncoding, Converter={StaticResource BooleanToVisibility}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Key encoding" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value:" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }"
+                                     Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <Binding Path="ChaCha.InputKey" Mode="OneWay">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:BytesToHex />
+                                                <conv:Chunkify />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <Binding Path="ChaCha.InputKey" Mode="OneWay">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:LittleEndian />
+                                                <conv:BytesToHex />
+                                                <conv:Chunkify />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+
+                <!--#endregion-->
+
+                <!--#region-->
+
+                <Viewbox>
+                    <Grid Visibility="{Binding CounterEncoding, Converter={StaticResource BooleanToVisibility}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Counter encoding" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value:" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse all bytes:" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
+                        <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding CounterEncodingInput, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                        <Binding Path="ChaCha.InitialCounter" />
+                                        <Binding Path="ChaCha.Settings" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding CounterEncodingReverse, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <MultiBinding Mode="OneWay">
+                                        <Binding Path="ChaCha.InitialCounter" />
+                                        <Binding Path="ChaCha.Settings" />
+                                        <MultiBinding.Converter>
+                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                <conv:HexToBytes />
+                                                <conv:ReverseBytes />
+                                                <conv:BytesToHex />
+                                            </conv:MultiSequentialValueConverter>
+                                        </MultiBinding.Converter>
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding CounterEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <MultiBinding Mode="OneWay">
+                                        <Binding Path="ChaCha.InitialCounter" />
+                                        <Binding Path="ChaCha.Settings" />
+                                        <MultiBinding.Converter>
+                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                <conv:HexToBytes />
+                                                <conv:ReverseBytes />
+                                                <conv:BytesToHex />
+                                                <conv:Chunkify />
+                                            </conv:MultiSequentialValueConverter>
+                                        </MultiBinding.Converter>
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="4" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding CounterEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <MultiBinding Mode="OneWay">
+                                        <Binding Path="ChaCha.InitialCounter" />
+                                        <Binding Path="ChaCha.Settings" />
+                                        <MultiBinding.Converter>
+                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                <conv:HexToBytes />
+                                                <conv:ReverseBytes />
+                                                <conv:LittleEndian />
+                                                <conv:BytesToHex />
+                                                <conv:Chunkify />
+                                            </conv:MultiSequentialValueConverter>
+                                        </MultiBinding.Converter>
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+
+                <!--#endregion-->
+            </Grid>
         </Grid>
     </ContentControl>
 </UserControl>
