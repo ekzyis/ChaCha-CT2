@@ -24,6 +24,7 @@
             <conv:BitsToBytes x:Key="BitsToBytes" />
             <conv:BytesToHex x:Key="ToHex" />
             <conv:BigIntegerToHexWithVersion x:Key="ToHexWithVersion" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}">
@@ -221,15 +222,15 @@
                     <TextBox Grid.Row="3" Grid.Column="0" Text="Initial counter" />
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
-                        <TextBox Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Text="{Binding DiffusionInputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        <TextBox Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" Margin="0"/>
+                        <TextBox Text="{Binding DiffusionInputKey, Converter={StaticResource ToHex}, Mode=OneWay}" Margin="0" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
-                        <TextBox Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Text="{Binding DiffusionInputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        <TextBox Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" Margin="0" />
+                        <TextBox Text="{Binding DiffusionInputIV, Converter={StaticResource ToHex}, Mode=OneWay}" Margin="0" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="1">
-                        <TextBox>
+                        <TextBox Margin="0">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
                                     <Binding Path="ChaCha.InitialCounter" />
@@ -237,7 +238,7 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox>
+                        <TextBox Margin="0" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
                                     <Binding Path="DiffusionInitialCounter" />
