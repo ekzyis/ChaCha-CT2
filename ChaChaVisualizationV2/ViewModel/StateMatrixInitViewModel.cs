@@ -235,6 +235,81 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #endregion Counter
 
+            #region IV
+
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
+                Description[4] = true;
+                IVEncoding = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
+                Description[4] = true;
+                IVEncoding = true;
+                IVEncodingInput = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
+                Description[4] = true;
+                IVEncoding = true;
+                IVEncodingInput = true;
+                IVEncodingChunkify = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
+                Description[4] = true;
+                IVEncoding = true;
+                IVEncodingInput = true;
+                IVEncodingChunkify = true;
+                IVEncodingLittleEndian = true;
+            });
+            Actions.Add(() =>
+            {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
+                Description[4] = true;
+                IVEncoding = true;
+                IVEncodingInput = true;
+                IVEncodingChunkify = true;
+                IVEncodingLittleEndian = true;
+                IVMatrix = true;
+            });
+
+            #endregion IV
+
             Actions.Add(() =>
             {
                 Description[1] = true;
@@ -557,6 +632,58 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion Binding Properties (Counter)
 
         #region Binding Properties (IV)
+
+        private bool _ivEncoding; public bool IVEncoding
+        {
+            get
+            {
+                return _ivEncoding;
+            }
+            set
+            {
+                _ivEncoding = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _ivEncodingInput; public bool IVEncodingInput
+        {
+            get
+            {
+                return _ivEncodingInput;
+            }
+            set
+            {
+                _ivEncodingInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _ivEncodingChunkify; public bool IVEncodingChunkify
+        {
+            get
+            {
+                return _ivEncodingChunkify;
+            }
+            set
+            {
+                _ivEncodingChunkify = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _ivEncodingLittleEndian; public bool IVEncodingLittleEndian
+        {
+            get
+            {
+                return _ivEncodingLittleEndian;
+            }
+            set
+            {
+                _ivEncodingLittleEndian = value;
+                OnPropertyChanged();
+            }
+        }
 
         private bool _ivMatrix; public bool IVMatrix
         {
