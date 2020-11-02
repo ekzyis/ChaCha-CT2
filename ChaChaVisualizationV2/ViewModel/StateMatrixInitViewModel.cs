@@ -168,6 +168,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                Description[3] = true;
                 CounterEncoding = true;
             });
             Actions.Add(() =>
@@ -176,6 +177,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                Description[3] = true;
                 CounterEncoding = true;
                 CounterEncodingInput = true;
             });
@@ -185,6 +187,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                Description[3] = true;
                 CounterEncoding = true;
                 CounterEncodingInput = true;
                 CounterEncodingReverse = true;
@@ -195,6 +198,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                Description[3] = true;
                 CounterEncoding = true;
                 CounterEncodingInput = true;
                 CounterEncodingReverse = true;
@@ -206,6 +210,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                Description[3] = true;
                 CounterEncoding = true;
                 CounterEncodingInput = true;
                 CounterEncodingReverse = true;
@@ -218,6 +223,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
+                Description[3] = true;
                 CounterEncoding = true;
                 CounterEncodingInput = true;
                 CounterEncodingReverse = true;
