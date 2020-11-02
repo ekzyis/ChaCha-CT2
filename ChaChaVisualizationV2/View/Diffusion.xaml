@@ -90,6 +90,7 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0">
                         <TextBox Text="Key (hex)" Style="{StaticResource DiffusionText}" />
@@ -102,6 +103,10 @@
                     <StackPanel Grid.Row="2" Grid.Column="0">
                         <TextBox Text="Initial counter (hex)" Style="{StaticResource DiffusionText}" />
                         <TextBox Text="Diffusion Initial counter (hex)" Style="{StaticResource DiffusionText}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="0">
+                        <TextBox Text="Flipped Bits" Style="{StaticResource DiffusionText}"/>
+                        <TextBox Text="Diffusion state" Style="{StaticResource DiffusionText}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="0" Grid.Column="1">
@@ -123,6 +128,12 @@
                         </TextBox>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter"/>
                     </StackPanel>
+
+                    <StackPanel Grid.Row="3" Grid.Column="1">
+                        <TextBox Text="123/123 ( 100.00% )" Style="{StaticResource DiffusionText}"/>
+                        <TextBox Text="Inactive" Style="{StaticResource DiffusionText}" Foreground="Red"/>
+                    </StackPanel>
+
                 </Grid>
             </Viewbox>
             <!--#endregion-->
