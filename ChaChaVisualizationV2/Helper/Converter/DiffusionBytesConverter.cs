@@ -25,11 +25,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string inputText = (string)value;
-            // Left-pad hex string with zero such that is has an even amount of characters.
-            if (inputText.Length % 2 == 1)
-            {
-                inputText = $"0{inputText}";
-            }
+            inputText = inputText.PadLeft(Padding).Replace(" ", "0");
             return Formatter.Bytes(inputText);
         }
     }
