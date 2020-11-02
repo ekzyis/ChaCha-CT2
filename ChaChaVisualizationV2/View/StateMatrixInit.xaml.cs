@@ -1,5 +1,7 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaCha.Util;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -27,6 +29,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 // Marks differences in the diffusion value red.
                 InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
                 InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
+                InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, ViewModel.Settings.Version);
             }
         }
 
@@ -49,6 +52,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             }
             flowDocument.Blocks.Add(paragraph);
             rtb.Document = flowDocument;
+        }
+
+        private void InitDiffusionValue(RichTextBox rtb, BigInteger diffusion, BigInteger primary, ChaCha.Version version)
+        {
+            if (version.CounterBits == 64)
+            {
+                byte[] diffusionBytes = ByteUtil.GetBytesBE((ulong)diffusion);
+                byte[] primaryBytes = ByteUtil.GetBytesBE((ulong)primary);
+                InitDiffusionValue(rtb, diffusionBytes, primaryBytes);
+            }
+            else
+            {
+                byte[] diffusionBytes = ByteUtil.GetBytesBE((uint)diffusion);
+                byte[] primaryBytes = ByteUtil.GetBytesBE((uint)primary);
+                InitDiffusionValue(rtb, diffusionBytes, primaryBytes);
+            }
         }
 
         /// <summary>
