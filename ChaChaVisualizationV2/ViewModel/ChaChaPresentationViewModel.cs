@@ -83,11 +83,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void ChangePage(INavigation viewModel)
         {
+            CurrentPage.Teardown();
             if (!Pages.Contains(viewModel))
                 Pages.Add(viewModel);
 
             CurrentPage = Pages
                 .FirstOrDefault(vm => vm == viewModel);
+            CurrentPage.Setup();
         }
 
         #endregion Methods
