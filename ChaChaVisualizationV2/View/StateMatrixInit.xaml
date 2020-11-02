@@ -301,8 +301,8 @@
                             <Style TargetType="{x:Type TextBox}" x:Key="Title" BasedOn="{StaticResource Text}">
                                 <Setter Property="Margin" Value="10" />
                                 <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter Property="FontSize" Value="22"/>
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="FontSize" Value="22" />
                             </Style>
                             <Style TargetType="{x:Type TextBox}" x:Key="Description" BasedOn="{StaticResource Text}">
                                 <Setter Property="Margin" Value="10" />
@@ -312,14 +312,19 @@
                                 <Setter Property="Margin" Value="10" />
                             </Style>
                         </Grid.Resources>
-                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Constants encoding"/>
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Constants encoding" />
                         <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value (ASCII):" />
                         <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="As bytes:" />
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
                         <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
-                        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Value}" Text="{Binding ASCIIConstants, Mode=OneWay }" />
-                        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource Value}">
+                        <TextBox Grid.Row="1" Grid.Column="1"
+                                 Style="{StaticResource Value}"
+                                 Text="{Binding ASCIIConstants, Mode=OneWay }"
+                                 Visibility="{Binding ConstantsEncodingInput, Converter={StaticResource BooleanToVisibility}}" />
+                        <TextBox Grid.Row="2" Grid.Column="1"
+                                 Style="{StaticResource Value}"
+                                 Visibility="{Binding ConstantsEncodingASCII, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox.Text>
                                 <Binding Path="ASCIIConstants" Mode="OneWay">
                                     <Binding.Converter>
@@ -331,7 +336,9 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource Value}">
+                        <TextBox Grid.Row="3" Grid.Column="1"
+                                 Style="{StaticResource Value}"
+                                 Visibility="{Binding ConstantsEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox.Text>
                                 <Binding Path="ASCIIConstants" Mode="OneWay">
                                     <Binding.Converter>
@@ -344,7 +351,9 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource Value}">
+                        <TextBox Grid.Row="4" Grid.Column="1"
+                                 Style="{StaticResource Value}"
+                                 Visibility="{Binding ConstantsEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox.Text>
                                 <Binding Path="ASCIIConstants" Mode="OneWay">
                                     <Binding.Converter>

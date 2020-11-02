@@ -16,6 +16,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             InitActions();
         }
 
+        private void ClearDescriptions()
+        {
+            Description.Clear();
+        }
+
         private void InitDescriptions()
         {
             Description.Add(true);
@@ -24,11 +29,56 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Description.Add(false);
         }
 
+        private void ClearStateMatrixValues()
+        {
+            StateMatrixValues.Clear();
+        }
+
+        private void ClearEncoding()
+        {
+            ConstantsEncoding = false;
+            ConstantsEncodingInput = false;
+            ConstantsEncodingASCII = false;
+            ConstantsEncodingChunkify = false;
+            ConstantsEncodingLittleEndian = false;
+        }
+
         private void InitActions()
         {
             Actions.Add(() =>
             {
                 Description[1] = true;
+                ConstantsEncoding = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
+                ConstantsEncoding = true;
+                ConstantsEncodingInput = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
+                ConstantsEncoding = true;
+                ConstantsEncodingInput = true;
+                ConstantsEncodingASCII = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
+                ConstantsEncoding = true;
+                ConstantsEncodingInput = true;
+                ConstantsEncodingASCII = true;
+                ConstantsEncodingChunkify = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
+                ConstantsEncoding = true;
+                ConstantsEncodingInput = true;
+                ConstantsEncodingASCII = true;
+                ConstantsEncodingChunkify = true;
+                ConstantsEncodingLittleEndian = true;
             });
             Actions.Add(() =>
             {
@@ -83,11 +133,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Binding Properties (Diffusion)
 
-        public string ASCIIConstants
-        {
-            get => ChaCha.InputKey.Length == 16 ? "expand 16-byte k" : "expand 32-byte k";
-        }
-
         public byte[] DiffusionInputKey
         {
             get => PresentationViewModel.DiffusionInputKey;
@@ -110,13 +155,88 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #endregion Binding Properties (Diffusion)
 
+        #region Binding Properties (Constants)
+
+        public string ASCIIConstants
+        {
+            get => ChaCha.InputKey.Length == 16 ? "expand 16-byte k" : "expand 32-byte k";
+        }
+
+        private bool _constantsEncoding; public bool ConstantsEncoding
+        {
+            get
+            {
+                return _constantsEncoding;
+            }
+            set
+            {
+                _constantsEncoding = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _constantsEncodingInput; public bool ConstantsEncodingInput
+        {
+            get
+            {
+                return _constantsEncodingInput;
+            }
+            set
+            {
+                _constantsEncodingInput = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _constantsEncodingASCII; public bool ConstantsEncodingASCII
+        {
+            get
+            {
+                return _constantsEncodingASCII;
+            }
+            set
+            {
+                _constantsEncodingASCII = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _constantsEncodingChunkify; public bool ConstantsEncodingChunkify
+        {
+            get
+            {
+                return _constantsEncodingChunkify;
+            }
+            set
+            {
+                _constantsEncodingChunkify = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool _constantsEncodingLittleEndian; public bool ConstantsEncodingLittleEndian
+        {
+            get
+            {
+                return _constantsEncodingLittleEndian;
+            }
+            set
+            {
+                _constantsEncodingLittleEndian = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Binding Properties (Constants)
+
         #region Action Navigation
 
         public override void Reset()
         {
-            Description.Clear();
+            ClearDescriptions();
             InitDescriptions();
-            StateMatrixValues.Clear();
+            ClearEncoding();
+            ClearStateMatrixValues();
         }
 
         #endregion Action Navigation
