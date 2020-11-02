@@ -93,6 +93,7 @@
     <Compile Include="Helper\Converter\DiffusionBytesConverter.cs" />
     <Compile Include="Helper\Converter\DiffusionCounterConverter.cs" />
     <Compile Include="Helper\ByteUtil.cs" />
+    <Compile Include="Helper\Converter\DoubleToString.cs" />
     <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Helper\Validation\DiffusionInputValidationRule.cs" />
     <Compile Include="Helper\Validation\HexValidationRule.cs" />

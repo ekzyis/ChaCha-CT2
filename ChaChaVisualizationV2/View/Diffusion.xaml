@@ -47,6 +47,7 @@
             </Style>
             <conv:BytesToHex x:Key="ToHex" />
             <conv:BigIntegerToHexWithVersion x:Key="ToHexWithVersion" />
+            <conv:DoubleToString x:Key="DoubleToString" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -135,8 +136,8 @@
                             <TextBox Style="{StaticResource DiffusionText}" Text="/"/>
                             <TextBox Style="{StaticResource DiffusionText}" Text="{Binding TotalBits, Mode=OneWay}"/>
                             <TextBox Style="{StaticResource DiffusionText}" Text=" ( "/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text="{Binding FlippedBitsPercentage, Mode=OneWay}"/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text=" )"/>
+                            <TextBox Style="{StaticResource DiffusionText}" Text="{Binding FlippedBitsPercentage, Converter={StaticResource DoubleToString}, Mode=OneWay}"/>
+                            <TextBox Style="{StaticResource DiffusionText}" Text="% )"/>
                         </StackPanel>
                         <TextBox>
                             <TextBox.Style>
