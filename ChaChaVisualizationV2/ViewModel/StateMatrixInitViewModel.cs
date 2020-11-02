@@ -253,6 +253,70 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #endregion Binding Properties (Constants)
 
+        #region Binding Properties (Key)
+
+        private bool _keyMatrix; public bool KeyMatrix
+        {
+            get
+            {
+                return _keyMatrix;
+            }
+            set
+            {
+                _keyMatrix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Binding Properties (Key)
+
+        #region Binding Properties (Counter)
+
+        private bool _counterMatrix; public bool CounterMatrix
+        {
+            get
+            {
+                return _counterMatrix;
+            }
+            set
+            {
+                _counterMatrix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _state13Matrix; public bool State13Matrix
+        {
+            get
+            {
+                return _state13Matrix;
+            }
+            set
+            {
+                _state13Matrix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Binding Properties (Counter)
+
+        #region Binding Properties (IV)
+
+        private bool _ivMatrix; public bool IVMatrix
+        {
+            get
+            {
+                return _ivMatrix;
+            }
+            set
+            {
+                _ivMatrix = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Binding Properties (IV)
+
         #region Action Navigation
 
         public override void Reset()
