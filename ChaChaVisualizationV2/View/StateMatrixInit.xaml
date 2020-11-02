@@ -435,7 +435,7 @@
 
                 <!--#endregion-->
 
-                <!--#region-->
+                <!--#region Counter encoding -->
 
                 <Viewbox>
                     <Grid Visibility="{Binding CounterEncoding, Converter={StaticResource BooleanToVisibility}}">
