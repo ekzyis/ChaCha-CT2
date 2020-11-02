@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using System.ComponentModel;
+using System.Linq;
 using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -33,6 +34,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 {
                     _diffusionKey = value;
                     OnPropertyChanged();
+                    OnPropertyChanged("DiffusionActive");
                 }
             }
         }
@@ -49,6 +51,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 {
                     _diffusionInputIV = value;
                     OnPropertyChanged();
+                    OnPropertyChanged("DiffusionActive");
                 }
             }
         }
@@ -65,8 +68,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 {
                     _diffusionInitialCounter = value;
                     OnPropertyChanged();
+                    OnPropertyChanged("DiffusionActive");
                 }
             }
+        }
+
+        public bool DiffusionActive
+        {
+            get => !(DiffusionInputKey.SequenceEqual(ChaChaVisualization.InputKey) && DiffusionInputIV.SequenceEqual(ChaChaVisualization.InputIV) && DiffusionInitialCounter == ChaChaVisualization.InitialCounter);
         }
 
         #region INavigation

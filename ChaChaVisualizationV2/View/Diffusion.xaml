@@ -131,7 +131,21 @@
 
                     <StackPanel Grid.Row="3" Grid.Column="1">
                         <TextBox Text="123/123 ( 100.00% )" Style="{StaticResource DiffusionText}"/>
-                        <TextBox Text="Inactive" Style="{StaticResource DiffusionText}" Foreground="Red"/>
+                        <TextBox>
+                            <TextBox.Style>
+                                <Style TargetType="TextBox" BasedOn="{StaticResource DiffusionText}">
+                                    <Setter Property="Text" Value="Inactive"/>
+                                    <Setter Property="Foreground" Value="Red"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding DiffusionActive}" Value="True">
+                                            <Setter Property="Text" Value="Active"/>
+                                            <Setter Property="Foreground" Value="Green"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                            </TextBox.Style>
+                        </TextBox>
                     </StackPanel>
 
                 </Grid>
