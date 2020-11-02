@@ -16,6 +16,7 @@
 
 using Cryptool.PluginBase;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2
@@ -35,6 +36,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             presentation = new ChaChaPresentation(this);
         }
+
+        #region ChaCha Override
+
+        public override uint[] State(byte[] key, byte[] iv, ulong counter, ChaCha.Version version)
+        {
+            uint[] state = base.State(key, iv, counter, version);
+            OriginalState.Add(state);
+            return state;
+        }
+
+        #endregion ChaCha Override
+
+        #region Intermediate values from cipher execution
+
+        private List<uint[]> _state; public List<uint[]> OriginalState
+        {
+            get
+            {
+                if (_state == null) _state = new List<uint[]>();
+                return _state;
+            }
+        }
+
+        #endregion Intermediate values from cipher execution
 
         #region Public Variables
 

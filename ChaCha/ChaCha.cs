@@ -263,7 +263,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <returns>
         ///   Initialized 512-bit ChaCha state as input for ChaCha hash function.
         /// </returns>
-        public uint[] State(byte[] key, byte[] iv, ulong counter, Version version)
+        public virtual uint[] State(byte[] key, byte[] iv, ulong counter, Version version)
         {
             uint[] state = new uint[16];
             byte[] constants = key.Length == 16 ? TAU : SIGMA;

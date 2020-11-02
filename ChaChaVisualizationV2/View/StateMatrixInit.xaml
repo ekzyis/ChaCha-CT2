@@ -23,6 +23,7 @@
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
             <conv:BitsToBytes x:Key="BitsToBytes" />
             <conv:BytesToHex x:Key="ToHex" />
+            <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <conv:BigIntegerToHexWithVersion x:Key="ToHexWithVersion" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
@@ -63,85 +64,85 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="0" Grid.Column="0" Background="Bisque">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[0].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[0], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding ConstantsMatrix, Converter={StaticResource BooleanToVisibility}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1" Background="Bisque">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[1].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[1], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding ConstantsMatrix, Converter={StaticResource BooleanToVisibility}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2" Background="Bisque">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[2].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[2], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding ConstantsMatrix, Converter={StaticResource BooleanToVisibility}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3" Background="Bisque">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[3].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[3], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding ConstantsMatrix, Converter={StaticResource BooleanToVisibility}}" />
                         </Viewbox>
                     </Border>
 
                     <Border Grid.Row="1" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[4].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[5].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[6].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[7].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
 
                     <Border Grid.Row="2" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[8].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[9].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[10].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[11].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
 
                     <Border Grid.Row="3" Grid.Column="0" Background="SkyBlue">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[12].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" Name="State13">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[13].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" Background="PaleGreen">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[14].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" Background="PaleGreen">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[15].Value}" />
+                            <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" />
                         </Viewbox>
                     </Border>
                 </Grid>

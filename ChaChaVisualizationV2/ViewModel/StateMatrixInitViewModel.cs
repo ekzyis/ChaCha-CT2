@@ -1,5 +1,4 @@
 ﻿using Cryptool.Plugins.ChaCha;
-using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
@@ -19,6 +18,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void ClearDescriptions()
         {
             Description.Clear();
+            InitDescriptions();
         }
 
         private void InitDescriptions()
@@ -29,9 +29,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Description.Add(false);
         }
 
-        private void ClearStateMatrixValues()
+        private void ClearState()
         {
-            StateMatrixValues.Clear();
+            // Hide state values.
+            ConstantsMatrix = false;
         }
 
         private void ClearEncoding()
@@ -83,6 +84,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Actions.Add(() =>
             {
                 Description[1] = true;
+                ConstantsEncoding = true;
+                ConstantsEncodingInput = true;
+                ConstantsEncodingASCII = true;
+                ConstantsEncodingChunkify = true;
+                ConstantsEncodingLittleEndian = true;
+                ConstantsMatrix = true;
+            });
+            Actions.Add(() =>
+            {
+                Description[1] = true;
                 Description[2] = true;
             });
             Actions.Add(() =>
@@ -95,11 +106,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Binding Properties
 
-        private ObservableCollection<IGrid<uint>> _stateMatrixValues; public ObservableCollection<IGrid<uint>> StateMatrixValues
+        private ObservableCollection<uint> _stateMatrixValues; public ObservableCollection<uint> StateMatrixValues
         {
             get
             {
-                if (_stateMatrixValues == null) _stateMatrixValues = new ObservableCollection<IGrid<uint>>();
+                if (_stateMatrixValues == null) _stateMatrixValues = new ObservableCollection<uint>();
                 return _stateMatrixValues;
             }
             private set
@@ -227,6 +238,19 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private bool _constantsMatrix; public bool ConstantsMatrix
+        {
+            get
+            {
+                return _constantsMatrix;
+            }
+            set
+            {
+                _constantsMatrix = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion Binding Properties (Constants)
 
         #region Action Navigation
@@ -234,9 +258,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public override void Reset()
         {
             ClearDescriptions();
-            InitDescriptions();
             ClearEncoding();
-            ClearStateMatrixValues();
+            ClearState();
         }
 
         #endregion Action Navigation
@@ -262,6 +285,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void Setup()
         {
+            uint[] state = ChaChaVisualization.OriginalState[0];
+            StateMatrixValues.Clear();
+            for (int i = 0; i < state.Length; ++i)
+            {
+                StateMatrixValues.Add(state[i]);
+            }
         }
 
         public void Teardown()

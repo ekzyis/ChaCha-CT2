@@ -98,6 +98,7 @@
     <Compile Include="Helper\Converter\DoubleToPercentage.cs" />
     <Compile Include="Helper\Converter\LittleEndian.cs" />
     <Compile Include="Helper\Converter\SequentialValueConverter.cs" />
+    <Compile Include="Helper\Converter\UInt32ToHex.cs" />
     <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Helper\Validation\DiffusionInputValidationRule.cs" />
     <Compile Include="Helper\Validation\HexValidationRule.cs" />
