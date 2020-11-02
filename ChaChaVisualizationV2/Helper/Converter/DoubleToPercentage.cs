@@ -4,12 +4,12 @@ using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
 {
-    internal class DoubleToString : IValueConverter
+    internal class DoubleToPercentage : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             double d = (double)value;
-            return string.Format("{0:0.00}", d);
+            return string.Format("{0:0.00}%", d * 100);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

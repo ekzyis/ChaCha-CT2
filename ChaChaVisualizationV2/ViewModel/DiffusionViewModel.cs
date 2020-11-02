@@ -92,7 +92,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public double FlippedBitsPercentage
         {
-            get => (double)FlippedBits * 100 / TotalBits;
+            get => (double)FlippedBits / TotalBits;
         }
 
         public bool DiffusionActive
