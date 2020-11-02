@@ -11,9 +11,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
         /// </summary>
         private int Padding { get; set; }
 
-        public DiffusionBytesConverter(int padding) : base()
+        public DiffusionBytesConverter(int bytes) : base()
         {
-            Padding = padding;
+            Padding = bytes * 2;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
