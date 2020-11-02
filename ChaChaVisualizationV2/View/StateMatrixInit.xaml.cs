@@ -26,6 +26,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 // Create the FlowDocuments of the RichTextBoxes for the diffusion values.
                 // Marks differences in the diffusion value red.
                 InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
+                InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
             }
         }
 

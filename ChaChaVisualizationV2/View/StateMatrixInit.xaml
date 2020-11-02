@@ -232,8 +232,14 @@
                         <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputKey" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
-                        <TextBox Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" Margin="0" />
-                        <TextBox Text="{Binding DiffusionInputIV, Converter={StaticResource ToHex}, Mode=OneWay}" Margin="0" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    <TextBlock Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIV" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="1">
                         <TextBox Margin="0">
