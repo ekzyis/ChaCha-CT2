@@ -106,6 +106,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             get => DiffusionViewModel.DiffusionInitialCounter;
         }
 
+        public bool DiffusionActive
+        {
+            get => DiffusionViewModel.DiffusionActive;
+        }
+
         #endregion Binding Properties (Diffusion)
 
         #region Methods

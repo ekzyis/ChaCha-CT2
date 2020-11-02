@@ -5,4 +5,8 @@
         <Setter Property="StretchDirection" Value="Both" />
         <Setter Property="Stretch" Value="Uniform" />
     </Style>
+    <Style x:Key="DownOnlyViewbox" TargetType="{x:Type Viewbox}">
+        <Setter Property="StretchDirection" Value="DownOnly"/>
+        <Setter Property="Stretch" Value="Uniform"/>
+    </Style>
 </ResourceDictionary>

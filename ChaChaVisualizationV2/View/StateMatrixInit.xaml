@@ -22,6 +22,8 @@
             </Style>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
             <conv:BitsToBytes x:Key="BitsToBytes" />
+            <conv:BytesToHex x:Key="ToHex" />
+            <conv:BigIntegerToHexWithVersion x:Key="ToHexWithVersion" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}">
@@ -34,6 +36,9 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
+
+            <!--#region  State Matrix -->
+
             <Border Style="{StaticResource stateBorder}" Grid.Row="0" Grid.Column="0">
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
@@ -138,6 +143,11 @@
                     </Border>
                 </Grid>
             </Border>
+
+            <!--#endregion-->
+
+            <!--#region  Description -->
+
             <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
                 <Viewbox Style="{StaticResource UniformViewbox}">
                     <Viewbox.Resources>
@@ -178,6 +188,68 @@
                     </StackPanel>
                 </Viewbox>
             </Grid>
+
+            <!--#endregion-->
+
+            <!--#region  State parameters -->
+
+            <Viewbox Grid.Row="1" Grid.Column="1">
+                <Grid>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
+                            <Setter Property="Margin" Value="0,5,0,5" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Margin" Value="0,5,0,5" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Row="0" Grid.Column="0" Text="State parameters" Margin="25" />
+                    <TextBox Grid.Row="1" Grid.Column="0" Text="Key" />
+                    <TextBox Grid.Row="2" Grid.Column="0" Text="Initialization vector" />
+                    <TextBox Grid.Row="3" Grid.Column="0" Text="Initial counter" />
+
+                    <StackPanel Grid.Row="1" Grid.Column="1">
+                        <TextBox Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        <TextBox Text="{Binding DiffusionInputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1">
+                        <TextBox Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        <TextBox Text="{Binding DiffusionInputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Grid.Column="1">
+                        <TextBox>
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                    <Binding Path="ChaCha.InitialCounter" />
+                                    <Binding Path="ChaCha.Settings" />
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox>
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                    <Binding Path="DiffusionInitialCounter" />
+                                    <Binding Path="ChaCha.Settings" />
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </StackPanel>
+                </Grid>
+            </Viewbox>
+
+            <!--#endregion-->
         </Grid>
     </ContentControl>
 </UserControl>
