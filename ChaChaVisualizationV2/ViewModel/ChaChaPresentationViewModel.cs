@@ -23,7 +23,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             CurrentPage = Pages[0];
         }
 
-        #region Properties / Commands
+        private void NavigationEnabledChanged(object sender, PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged("NavigationEnabled");
+        }
+
+        #region Commands
 
         private ICommand _changePageCommand; public ICommand ChangePageCommand
         {
@@ -67,17 +72,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private void NavigationEnabledChanged(object sender, PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged("NavigationEnabled");
-        }
+        #endregion Commands
+
+        #region Binding Properties
 
         public bool NavigationEnabled
         {
             get => ChaChaVisualization.ExecutionFinished && ChaChaVisualization.IsValid;
         }
 
-        #endregion Properties / Commands
+        #endregion Binding Properties
 
         #region Methods
 

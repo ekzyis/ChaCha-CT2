@@ -42,6 +42,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             });
         }
 
+        #region Binding Properties
+
         private ObservableCollection<IGrid<uint>> _stateMatrixValues; public ObservableCollection<IGrid<uint>> StateMatrixValues
         {
             get
@@ -75,6 +77,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 }
             }
         }
+
+        #endregion Binding Properties
 
         #region Action Navigation
 

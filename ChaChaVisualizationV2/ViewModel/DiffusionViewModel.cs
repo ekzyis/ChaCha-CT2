@@ -23,6 +23,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             DiffusionInitialCounter = ChaChaVisualization.InitialCounter;
         }
 
+        #region Binding Properties
+
         private byte[] _diffusionKey; public byte[] DiffusionInputKey
         {
             get
@@ -99,6 +101,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get => !(DiffusionInputKey.SequenceEqual(ChaChaVisualization.InputKey) && DiffusionInputIV.SequenceEqual(ChaChaVisualization.InputIV) && DiffusionInitialCounter == ChaChaVisualization.InitialCounter);
         }
+
+        #endregion Binding Properties
 
         #region INavigation
 
