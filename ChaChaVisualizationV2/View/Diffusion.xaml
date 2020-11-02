@@ -92,16 +92,16 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0">
-                        <TextBox Text="Key" Style="{StaticResource DiffusionText}" />
-                        <TextBox Text="Diffusion Key" Style="{StaticResource DiffusionText}"  />
+                        <TextBox Text="Key (hex)" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Diffusion Key (hex)" Style="{StaticResource DiffusionText}"  />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0">
-                        <TextBox Text="Initialization vector" Style="{StaticResource DiffusionText}" />
-                        <TextBox Text="Diffusion Initialization vector" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Initialization vector (hex)" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Diffusion Initialization vector (hex)" Style="{StaticResource DiffusionText}" />
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="0">
-                        <TextBox Text="Initial counter" Style="{StaticResource DiffusionText}" />
-                        <TextBox Text="Diffusion Initial counter" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Initial counter (hex)" Style="{StaticResource DiffusionText}" />
+                        <TextBox Text="Diffusion Initial counter (hex)" Style="{StaticResource DiffusionText}" />
                     </StackPanel>
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical">
