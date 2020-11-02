@@ -11,7 +11,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
         public DiffusionInputValidationRule(int maxKeyBytesLength) : base()
         {
             MaxKeyBytesLength = maxKeyBytesLength;
-            MaxHexKeyStringLength = maxKeyBytesLength / 2;
+            MaxHexKeyStringLength = maxKeyBytesLength * 2;
         }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
