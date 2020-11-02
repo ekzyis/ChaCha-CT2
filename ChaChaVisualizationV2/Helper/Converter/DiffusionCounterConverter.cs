@@ -14,10 +14,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
 
         private int CounterBits { get; set; }
 
-        public DiffusionCounterConverter(int counterBits) : base()
+        public DiffusionCounterConverter(int counterBytes) : base()
         {
-            CounterBits = counterBits;
-            Padding = counterBits * 8 / 2;
+            CounterBits = counterBytes * 8;
+            Padding = counterBytes / 2;
         }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

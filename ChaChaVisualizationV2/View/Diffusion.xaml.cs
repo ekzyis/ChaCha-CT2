@@ -42,7 +42,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
                 BigInteger initialCounter = ViewModel.ChaChaVisualization.InitialCounter;
                 DiffusionInitialCounter.Text = Formatter.HexString(v == ChaCha.Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
-                int counterLength = (int)v.CounterBits * 8;
+                int counterLength = (int)v.CounterBits / 8;
                 ValidationRule counterRule = new DiffusionInputValidationRule(counterLength);
                 IValueConverter counterConverter = new DiffusionCounterConverter(counterLength);
                 InitDiffusionInputField(DiffusionInitialCounter, counterRule, counterConverter, "DiffusionInitialCounter");
