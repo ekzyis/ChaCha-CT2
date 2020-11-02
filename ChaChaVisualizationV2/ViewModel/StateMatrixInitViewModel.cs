@@ -83,6 +83,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Binding Properties (Diffusion)
 
+        public string ASCIIConstants
+        {
+            get => ChaCha.InputKey.Length == 16 ? "expand 16-byte k" : "expand 32-byte k";
+        }
+
         public byte[] DiffusionInputKey
         {
             get => PresentationViewModel.DiffusionInputKey;

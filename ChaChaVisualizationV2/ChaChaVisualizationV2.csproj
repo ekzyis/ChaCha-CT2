@@ -86,14 +86,18 @@
     <Compile Include="ContentTemplate\ViewboxButton.xaml.cs">
       <DependentUpon>ViewboxButton.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Converter\ASCII.cs" />
     <Compile Include="Helper\Converter\BitsToBytes.cs" />
     <Compile Include="Helper\Converter\BytesToHex.cs" />
     <Compile Include="Helper\Converter\BigIntegerToHexWithVersion.cs" />
+    <Compile Include="Helper\Converter\Chunkify.cs" />
     <Compile Include="Helper\Converter\CompareStrings.cs" />
     <Compile Include="Helper\Converter\DiffusionBytesConverter.cs" />
     <Compile Include="Helper\Converter\DiffusionCounterConverter.cs" />
     <Compile Include="Helper\ByteUtil.cs" />
     <Compile Include="Helper\Converter\DoubleToPercentage.cs" />
+    <Compile Include="Helper\Converter\LittleEndian.cs" />
+    <Compile Include="Helper\Converter\SequentialValueConverter.cs" />
     <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Helper\Validation\DiffusionInputValidationRule.cs" />
     <Compile Include="Helper\Validation\HexValidationRule.cs" />

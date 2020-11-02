@@ -44,7 +44,7 @@
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
                         <Style TargetType="TextBox" BasedOn="{StaticResource stateText}">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}"/>
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
                         </Style>
                         <Style TargetType="Viewbox" BasedOn="{StaticResource stateViewbox}" />
                         <Style TargetType="Border" BasedOn="{StaticResource stateBorder}" />
@@ -63,7 +63,7 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="0" Grid.Column="0" Background="Bisque">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[0].Value}"/>
+                            <TextBox Text="{Binding StateMatrixValues[0].Value}" />
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1" Background="Bisque">
@@ -216,17 +216,28 @@
                         <RowDefinition />
                         <RowDefinition />
                         <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Row="0" Grid.Column="0" Text="State parameters" Margin="25" />
-                    <TextBox Grid.Row="1" Grid.Column="0" Text="Key" Background="LightCoral" />
-                    <TextBox Grid.Row="2" Grid.Column="0" Text="Initialization vector" Background="PaleGreen" />
-                    <TextBox Grid.Row="3" Grid.Column="0" Text="Initial counter" Background="SkyBlue" />
+                    <TextBox Grid.Row="1" Grid.Column="0" Text="Constants" Background="Bisque" />
+                    <TextBox Grid.Row="2" Grid.Column="0" Text="Key" Background="LightCoral" />
+                    <TextBox Grid.Row="3" Grid.Column="0" Text="Initialization vector" Background="PaleGreen" />
+                    <TextBox Grid.Row="4" Grid.Column="0" Text="Initial counter" Background="SkyBlue" />
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
+                        <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    <TextBlock Text="{Binding ASCIIConstants, Mode=OneWay}" />
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1">
                         <RichTextBox Width="395" Style="{StaticResource RichHex}">
                             <FlowDocument>
                                 <Paragraph>
@@ -236,7 +247,7 @@
                         </RichTextBox>
                         <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputKey" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                     </StackPanel>
-                    <StackPanel Grid.Row="2" Grid.Column="1">
+                    <StackPanel Grid.Row="3" Grid.Column="1">
                         <RichTextBox Width="395" Style="{StaticResource RichHex}">
                             <FlowDocument>
                                 <Paragraph>
@@ -246,7 +257,7 @@
                         </RichTextBox>
                         <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIV" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                     </StackPanel>
-                    <StackPanel Grid.Row="3" Grid.Column="1">
+                    <StackPanel Grid.Row="4" Grid.Column="1">
                         <RichTextBox Width="395" Style="{StaticResource RichHex}">
                             <FlowDocument>
                                 <Paragraph>
@@ -265,6 +276,91 @@
                     </StackPanel>
                 </Grid>
             </Viewbox>
+
+            <!--#endregion-->
+
+            <!--#region Encoding -->
+
+            <Grid Grid.Row="1" Grid.Column="0" Margin="0,5,5,5">
+
+                <!--#region Constants encoding -->
+                <Viewbox>
+                    <Grid Visibility="{Binding ConstantsEncoding, Converter={StaticResource BooleanToVisibility}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBox}" x:Key="Title" BasedOn="{StaticResource Text}">
+                                <Setter Property="Margin" Value="10" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="FontSize" Value="22"/>
+                            </Style>
+                            <Style TargetType="{x:Type TextBox}" x:Key="Description" BasedOn="{StaticResource Text}">
+                                <Setter Property="Margin" Value="10" />
+                            </Style>
+                            <Style TargetType="{x:Type TextBox}" x:Key="Value" BasedOn="{StaticResource Hex}">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="10" />
+                            </Style>
+                        </Grid.Resources>
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Constants encoding"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value (ASCII):" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="As bytes:" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
+                        <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+
+                        <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource Value}" Text="{Binding ASCIIConstants, Mode=OneWay }" />
+                        <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource Value}">
+                            <TextBox.Text>
+                                <Binding Path="ASCIIConstants" Mode="OneWay">
+                                    <Binding.Converter>
+                                        <conv:SequentialValueConverter>
+                                            <conv:ASCII />
+                                            <conv:BytesToHex />
+                                        </conv:SequentialValueConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource Value}">
+                            <TextBox.Text>
+                                <Binding Path="ASCIIConstants" Mode="OneWay">
+                                    <Binding.Converter>
+                                        <conv:SequentialValueConverter>
+                                            <conv:ASCII />
+                                            <conv:BytesToHex />
+                                            <conv:Chunkify />
+                                        </conv:SequentialValueConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource Value}">
+                            <TextBox.Text>
+                                <Binding Path="ASCIIConstants" Mode="OneWay">
+                                    <Binding.Converter>
+                                        <conv:SequentialValueConverter>
+                                            <conv:ASCII />
+                                            <conv:LittleEndian />
+                                            <conv:BytesToHex />
+                                            <conv:Chunkify />
+                                        </conv:SequentialValueConverter>
+                                    </Binding.Converter>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                    </Grid>
+                </Viewbox>
+            </Grid>
 
             <!--#endregion-->
         </Grid>
