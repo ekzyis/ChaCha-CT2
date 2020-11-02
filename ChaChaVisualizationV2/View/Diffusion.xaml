@@ -137,7 +137,7 @@
                                         <Setter Property="BorderThickness" Value="1" />
                                         <Setter Property="TextAlignment" Value="Center" />
                                     </Style>
-                                    <Style TargetType="RichTextBox" BasedOn="{StaticResource RichText}" />
+                                    <Style TargetType="RichTextBox" BasedOn="{StaticResource RichHex}" />
                                 </Table.Resources>
                                 <Table.Columns>
                                     <TableColumn />
