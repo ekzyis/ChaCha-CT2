@@ -27,6 +27,14 @@
             }
         }
 
+        public void Setup()
+        {
+        }
+
+        public void Teardown()
+        {
+        }
+
         #endregion INavigation
 
         #region ITitle

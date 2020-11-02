@@ -119,6 +119,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        public void Setup()
+        {
+        }
+
+        public void Teardown()
+        {
+        }
+
         #endregion INavigation
 
         #region ITitle

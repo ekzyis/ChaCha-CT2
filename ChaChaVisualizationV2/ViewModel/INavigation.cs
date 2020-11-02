@@ -9,5 +9,15 @@
         /// Page name. Will be used as content in page navigation button.
         /// </summary>
         string Name { get; set; }
+
+        /// <summary>
+        /// Function which should be called if user enters this page.
+        /// </summary>
+        void Setup();
+
+        /// <summary>
+        /// Function which should be called if user leaves this page.
+        /// </summary>
+        void Teardown();
     }
 }
