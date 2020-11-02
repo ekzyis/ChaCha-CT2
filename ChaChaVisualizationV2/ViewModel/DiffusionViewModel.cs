@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
@@ -35,6 +36,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     _diffusionKey = value;
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
+                    OnPropertyChanged("FlippedBits");
+                    OnPropertyChanged("FlippedBitsPercentage");
                 }
             }
         }
@@ -52,6 +55,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     _diffusionInputIV = value;
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
+                    OnPropertyChanged("FlippedBits");
+                    OnPropertyChanged("FlippedBitsPercentage");
                 }
             }
         }
@@ -69,8 +74,25 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     _diffusionInitialCounter = value;
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
+                    OnPropertyChanged("FlippedBits");
+                    OnPropertyChanged("FlippedBitsPercentage");
                 }
             }
+        }
+
+        public int FlippedBits
+        {
+            get => ByteUtil.FlippedBits(DiffusionInputKey, ChaChaVisualization.InputKey) + ByteUtil.FlippedBits(DiffusionInputIV, ChaChaVisualization.InputIV) + ByteUtil.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaChaVisualization.InitialCounter);
+        }
+
+        public int TotalBits
+        {
+            get => DiffusionInputKey.Length * 8 + DiffusionInputIV.Length * 8 + (int)Settings.Version.CounterBits;
+        }
+
+        public double FlippedBitsPercentage
+        {
+            get => FlippedBits * 100 / TotalBits;
         }
 
         public bool DiffusionActive

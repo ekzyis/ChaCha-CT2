@@ -1,5 +1,4 @@
-﻿using Cryptool.Plugins.ChaCha.Util;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
@@ -32,7 +31,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         /// </summary>
         public static string HexString(ulong u)
         {
-            return HexString(ByteUtil.GetBytesBE(u));
+            return HexString(ChaCha.Util.ByteUtil.GetBytesBE(u));
         }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         /// </summary>
         public static string HexString(uint u)
         {
-            return HexString(ByteUtil.GetBytesBE(u));
+            return HexString(ChaCha.Util.ByteUtil.GetBytesBE(u));
         }
 
         /// <summary>
