@@ -314,7 +314,9 @@
                         <Setter Property="Margin" Value="10" />
                     </Style>
                 </Grid.Resources>
+
                 <!--#region Constants encoding -->
+
                 <Viewbox>
                     <Grid Visibility="{Binding ConstantsEncoding, Converter={StaticResource BooleanToVisibility}}">
                         <Grid.ColumnDefinitions>
