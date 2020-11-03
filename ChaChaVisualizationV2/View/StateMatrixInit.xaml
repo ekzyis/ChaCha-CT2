@@ -609,7 +609,7 @@
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="1"
@@ -629,7 +629,7 @@
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="3" Grid.Column="1"
@@ -650,7 +650,7 @@
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="4" Grid.Column="1"
@@ -672,7 +672,7 @@
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                     </Grid>
                 </Viewbox>
@@ -702,7 +702,7 @@
                                     Visibility="{Binding IVEncodingInput, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox Style="{StaticResource Value}"
                                      Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="2" Grid.Column="1"
@@ -719,7 +719,7 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="3" Grid.Column="1"
@@ -737,7 +737,7 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                     </Grid>
                 </Viewbox>
