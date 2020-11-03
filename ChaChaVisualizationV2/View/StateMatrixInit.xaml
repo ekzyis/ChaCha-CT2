@@ -26,6 +26,7 @@
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <conv:BigIntegerToHexWithVersion x:Key="ToHexWithVersion" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+            <conv:BooleanAndVisibility x:Key="BooleanAndVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -85,64 +86,184 @@
 
                     <Border Grid.Row="1" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState4">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState5">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState6">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState7">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
 
                     <Border Grid.Row="2" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState8">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState9">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState10">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState11">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="KeyMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
 
                     <Border Grid.Row="3" Grid.Column="0" Background="SkyBlue">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState12">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="CounterMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" Name="State13">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState13">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="StateMatrix13" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" Background="PaleGreen">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState14">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="IVMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" Background="PaleGreen">
                         <Viewbox>
-                            <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel>
+                                <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                <RichTextBox Name="DiffusionState15">
+                                    <RichTextBox.Visibility>
+                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                            <Binding Path="IVMatrix" />
+                                            <Binding Path="DiffusionActive" />
+                                        </MultiBinding>
+                                    </RichTextBox.Visibility>
+                                </RichTextBox>
+                            </StackPanel>
                         </Viewbox>
                     </Border>
                 </Grid>
