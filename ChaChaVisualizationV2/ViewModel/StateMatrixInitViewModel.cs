@@ -757,6 +757,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void Teardown()
         {
+            MoveToFirstAction();
         }
 
         #endregion INavigation
