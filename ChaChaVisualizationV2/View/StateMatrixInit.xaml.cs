@@ -1,7 +1,7 @@
 ﻿using Cryptool.Plugins.ChaCha.Util;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System;
-using System.Linq;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,8 +51,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// </summary>
         private void InitDiffusionValue(RichTextBox rtb, byte[] diffusion, byte[] primary)
         {
-            string dHex = string.Join("", diffusion.Select(b => b.ToString("X2")).ToArray());
-            string pHex = string.Join("", primary.Select(b => b.ToString("X2")).ToArray());
+            string dHex = Formatter.HexString(diffusion);
+            string pHex = Formatter.HexString(primary);
             InitDiffusionValue(rtb, dHex, pHex);
         }
 
