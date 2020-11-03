@@ -115,5 +115,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         {
             return ReverseBytes(ChaCha.Util.ByteUtil.GetBytesBE(u));
         }
+
+        /// <summary>
+        /// Reverse byte order of UInt64.
+        /// </summary>
+        public static byte[] ReverseBytes(ulong u)
+        {
+            return ReverseBytes(ChaCha.Util.ByteUtil.GetBytesBE(u));
+        }
     }
 }
