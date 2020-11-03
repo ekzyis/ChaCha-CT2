@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Cryptool.Plugins.ChaCha.Util;
+using System;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -88,6 +90,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
                 le[i + 3] = b[i];
             }
             return le;
+        }
+
+        /// <summary>
+        /// Reverse order of every 4 bytes in UInt64.
+        /// </summary>
+        public static byte[] LittleEndian(ulong u)
+        {
+            return LittleEndian(ByteUtil.GetBytesBE(u));
+        }
+
+        /// <summary>
+        /// Reverse byte order of array
+        /// </summary>
+        public static byte[] ReverseBytes(byte[] b)
+        {
+            return b.Reverse().ToArray();
+        }
+
+        /// <summary>
+        /// Reverse byte order of UInt32.
+        /// </summary>
+        public static byte[] ReverseBytes(uint u)
+        {
+            return ReverseBytes(ChaCha.Util.ByteUtil.GetBytesBE(u));
         }
     }
 }

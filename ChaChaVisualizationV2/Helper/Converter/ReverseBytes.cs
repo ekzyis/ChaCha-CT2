@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
@@ -10,8 +9,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
-            byte[] b = (byte[])value;
-            return b.Reverse().ToArray();
+            return Formatter.ReverseBytes((byte[])value);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

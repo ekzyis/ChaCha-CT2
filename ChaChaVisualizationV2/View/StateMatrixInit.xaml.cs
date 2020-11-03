@@ -41,15 +41,61 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
 
                 // State encoding diffusion values
+                // -- Key
                 InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
 
-                string dHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputKey), 8);
-                string pHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputKey), 8);
-                InitDiffusionValue(DiffusionKeyEncodingChunkify, dHexChunks, pHexChunks);
+                string dKeyHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputKey), 8);
+                string pKeyHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputKey), 8);
+                InitDiffusionValue(DiffusionKeyEncodingChunkify, dKeyHexChunks, pKeyHexChunks);
 
-                string dHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
-                string pHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
-                InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dHexChunksLE, pHexChunksLE);
+                string dKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
+                string pKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
+                InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dKeyHexChunksLE, pKeyHexChunksLE);
+
+                // -- Counter
+                InitDiffusionValue(DiffusionCounterEncodingInput, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
+
+                if (v.CounterBits == 64)
+                {
+                    ulong diffusionInitialCounter = (ulong)ViewModel.DiffusionInitialCounter;
+                    ulong initialCounter = (ulong)ViewModel.ChaCha.InitialCounter;
+
+                    string dCounterHexChunks = Formatter.Chunkify(Formatter.HexString(diffusionInitialCounter), 8);
+                    string pCounterHexChunks = Formatter.Chunkify(Formatter.HexString(initialCounter), 8);
+                    InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
+
+                    string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
+                    string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
+                    InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
+                }
+                else
+                {
+                    uint diffusionInitialCounter = (uint)ViewModel.DiffusionInitialCounter;
+                    uint initialCounter = (uint)ViewModel.ChaCha.InitialCounter;
+
+                    string dCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(diffusionInitialCounter));
+                    string pCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(initialCounter));
+                    InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
+
+                    string dCounterHexChunks = Formatter.Chunkify(Formatter.HexString(diffusionInitialCounter), 8);
+                    string pCounterHexChunks = Formatter.Chunkify(Formatter.HexString(initialCounter), 8);
+                    InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
+
+                    string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
+                    string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
+                    InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
+                }
+
+                // -- IV
+                InitDiffusionValue(DiffusionIVEncodingInput, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
+
+                string dIVHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputIV), 8);
+                string pIVHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputIV), 8);
+                InitDiffusionValue(DiffusionIVEncodingChunkify, dIVHexChunks, pIVHexChunks);
+
+                string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputIV)), 8);
+                string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputIV)), 8);
+                InitDiffusionValue(DiffusionIVEncodingLittleEndian, dIVHexChunksLE, pIVHexChunksLE);
             }
         }
 
