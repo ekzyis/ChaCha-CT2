@@ -204,9 +204,7 @@
                         <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[5], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The next
-                                    <Run Text="{Binding Settings.Version.IVBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the
-                                    <Run Background="PaleGreen">IV</Run> .
+                                    On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block.
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
