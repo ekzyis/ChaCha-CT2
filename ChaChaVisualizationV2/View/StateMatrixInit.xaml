@@ -228,7 +228,7 @@
                                 <RichTextBox Name="DiffusionState13">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="StateMatrix13" />
+                                            <Binding Path="State13Matrix" />
                                             <Binding Path="DiffusionActive" />
                                         </MultiBinding>
                                     </RichTextBox.Visibility>
