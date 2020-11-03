@@ -36,7 +36,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 actionSlider.ValueChanged += ViewModel.ActionSliderValueChange;
 
                 // State parameter diffusion values
-                // Marks differences in the diffusion value red.
                 InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
                 InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
                 InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
