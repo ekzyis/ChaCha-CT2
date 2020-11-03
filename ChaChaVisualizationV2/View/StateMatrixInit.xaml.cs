@@ -190,6 +190,35 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// </summary>
         private void InitDiffusionStateMatrixCounter()
         {
+            ChaCha.Version v = ViewModel.Settings.Version;
+
+            if (v.CounterBits == 64)
+            {
+                ulong diffusionInitialCounter = (ulong)ViewModel.DiffusionInitialCounter;
+                ulong initialCounter = (ulong)ViewModel.ChaCha.InitialCounter;
+
+                string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
+                string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
+                string[] encodedDCounter = Regex.Replace(dCounterHexChunksLE, @" $", "").Split(' ');
+                string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
+                Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "key and diffusion key length should be the same.");
+                Debug.Assert(encodedDCounter.Length == 2, $"Encoded diffusion counter length should be 8 bytes for 64-bit counter. Is {encodedDCounter.Length}");
+                InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
+                InitDiffusionValue(DiffusionState13, encodedDCounter[1], encodedPCounter[1]);
+            }
+            else
+            {
+                uint diffusionInitialCounter = (uint)ViewModel.DiffusionInitialCounter;
+                uint initialCounter = (uint)ViewModel.ChaCha.InitialCounter;
+
+                string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
+                string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
+                string[] encodedDCounter = Regex.Replace(dCounterHexChunksLE, @" $", "").Split(' ');
+                string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
+                Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "key and diffusion key length should be the same.");
+                Debug.Assert(encodedDCounter.Length == 1, $"Encoded diffusion counter length should be 4 bytes for 32-bit counter. Is {encodedDCounter.Length}");
+                InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
+            }
         }
 
         /// <summary>
