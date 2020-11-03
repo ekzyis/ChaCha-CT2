@@ -35,6 +35,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
                 InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
 
+                // Create FlowDocuments of diffusion values during state encoding
+                InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
+
                 // Add value changed event handler to action slider
                 Root.ApplyTemplate();
                 Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);

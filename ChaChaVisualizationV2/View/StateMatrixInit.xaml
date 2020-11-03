@@ -410,15 +410,14 @@
                         <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
-                        <StackPanel Grid.Row="1" Grid.Column="1">
+                        <StackPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox Style="{StaticResource Value}"
-                                     Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }"
-                                     Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}" />
+                                     Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="1">
-                            <TextBox Style="{StaticResource Value}"
-                                     Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
+                        <StackPanel Grid.Row="2" Grid.Column="1" Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
+                            <TextBox Style="{StaticResource Value}">
                                 <TextBox.Text>
                                     <Binding Path="ChaCha.InputKey" Mode="OneWay">
                                         <Binding.Converter>
@@ -430,11 +429,11 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="3" Grid.Column="1">
-                            <TextBox Style="{StaticResource Value}"
-                                     Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
+                        <StackPanel Grid.Row="3" Grid.Column="1" Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
+                            <TextBox Style="{StaticResource Value}">
                                 <TextBox.Text>
                                     <Binding Path="ChaCha.InputKey" Mode="OneWay">
                                         <Binding.Converter>
@@ -447,6 +446,7 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                     </Grid>
                 </Viewbox>
