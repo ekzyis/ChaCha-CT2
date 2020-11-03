@@ -43,6 +43,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 string pHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputKey), 8);
                 InitDiffusionValue(DiffusionKeyEncodingChunkify, dHexChunks, pHexChunks);
 
+                string dHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
+                string pHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
+                InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dHexChunksLE, pHexChunksLE);
+
                 // Add value changed event handler to action slider
                 Root.ApplyTemplate();
                 Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
