@@ -411,7 +411,8 @@
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
                         <StackPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}"
+                            <TextBox Name="TextBox_KeyEncodingInput"
+                                     Style="{StaticResource Value}"
                                      Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
                             <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
@@ -429,7 +430,7 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="443" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
                         <StackPanel Grid.Row="3" Grid.Column="1" Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
@@ -446,7 +447,7 @@
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="443" Style="{StaticResource RichHex}" Name="DiffusionKeyEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                     </Grid>
                 </Viewbox>
