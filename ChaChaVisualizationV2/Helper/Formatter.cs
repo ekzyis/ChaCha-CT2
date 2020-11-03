@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -70,6 +71,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         public static string Chunkify(string s, int n)
         {
             return Regex.Replace(s, $".{{{n}}}", "$0 ");
+        }
+
+        /// <summary>
+        /// Reverse order of every 4 bytes.
+        /// </summary>
+        public static byte[] LittleEndian(byte[] b)
+        {
+            if (b.Length % 4 != 0) throw new ArgumentException("Byte length must be divisible by four.");
+            byte[] le = new byte[b.Length];
+            for (int i = 0; i < b.Length; i += 4)
+            {
+                le[i] = b[i + 3];
+                le[i + 1] = b[i + 2];
+                le[i + 2] = b[i + 1];
+                le[i + 3] = b[i];
+            }
+            return le;
         }
     }
 }
