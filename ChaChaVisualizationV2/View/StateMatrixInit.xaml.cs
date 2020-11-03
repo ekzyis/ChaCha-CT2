@@ -226,6 +226,25 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// </summary>
         private void InitDiffusionStateMatrixIV()
         {
+            ChaCha.Version v = ViewModel.Settings.Version;
+            string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputIV)), 8);
+            string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputIV)), 8);
+            string[] encodedDIV = Regex.Replace(dIVHexChunksLE, @" $", "").Split(' ');
+            string[] encodedPIV = Regex.Replace(pIVHexChunksLE, @" $", "").Split(' ');
+            Debug.Assert(encodedDIV.Length == encodedPIV.Length, "iv and diffusion iv length should be the same.");
+            if (v.CounterBits == 64)
+            {
+                Debug.Assert(encodedDIV.Length == 2, $"Encoded diffusion iv length should be 8 bytes for 64-bit counter. Is {encodedDIV.Length}");
+                InitDiffusionValue(DiffusionState14, encodedDIV[0], encodedPIV[0]);
+                InitDiffusionValue(DiffusionState15, encodedDIV[1], encodedPIV[1]);
+            }
+            else
+            {
+                Debug.Assert(encodedDIV.Length == 3, $"Encoded diffusion iv length should be 12 bytes for 64-bit counter. Is {encodedDIV.Length}");
+                InitDiffusionValue(DiffusionState13, encodedDIV[0], encodedPIV[0]);
+                InitDiffusionValue(DiffusionState14, encodedDIV[1], encodedPIV[1]);
+                InitDiffusionValue(DiffusionState15, encodedDIV[2], encodedPIV[2]);
+            }
         }
 
         /// <summary>
