@@ -11,6 +11,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
             byte[] b = (byte[])value;
             if (b.Length % 4 != 0) throw new ArgumentException("Byte length must be divisible by four.");
             byte[] le = new byte[b.Length];

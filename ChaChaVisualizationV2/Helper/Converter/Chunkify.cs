@@ -12,6 +12,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return null;
             return Regex.Replace((string)value, @".{8}", "$0 ");
         }
 
