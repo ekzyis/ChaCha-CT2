@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public int FlippedBits
         {
-            get => ByteUtil.FlippedBits(DiffusionInputKey, ChaChaVisualization.InputKey) + ByteUtil.FlippedBits(DiffusionInputIV, ChaChaVisualization.InputIV) + ByteUtil.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaChaVisualization.InitialCounter);
+            get => BitFlips.FlippedBits(DiffusionInputKey, ChaChaVisualization.InputKey) + BitFlips.FlippedBits(DiffusionInputIV, ChaChaVisualization.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaChaVisualization.InitialCounter);
         }
 
         public int TotalBits

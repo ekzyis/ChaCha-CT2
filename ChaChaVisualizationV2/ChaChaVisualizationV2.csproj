@@ -94,7 +94,7 @@
     <Compile Include="Helper\Converter\CompareStrings.cs" />
     <Compile Include="Helper\Converter\DiffusionBytesConverter.cs" />
     <Compile Include="Helper\Converter\DiffusionCounterConverter.cs" />
-    <Compile Include="Helper\ByteUtil.cs" />
+    <Compile Include="Helper\BitFlips.cs" />
     <Compile Include="Helper\Converter\DoubleToPercentage.cs" />
     <Compile Include="Helper\Converter\HexToBytes.cs" />
     <Compile Include="Helper\Converter\LittleEndian.cs" />

@@ -3,9 +3,9 @@
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
 {
     /// <summary>
-    /// Class with helper functions related to bytes.
+    /// Class with functions related to bit flips.
     /// </summary>
-    internal static class ByteUtil
+    internal static class BitFlips
     {
         /// <summary>
         /// Calculate amount of flipped bits between two byte arrays.
