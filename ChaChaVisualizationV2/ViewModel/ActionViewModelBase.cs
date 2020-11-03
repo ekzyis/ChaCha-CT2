@@ -1,6 +1,7 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using System;
 using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -32,6 +33,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     OnPropertyChanged(); OnPropertyChanged("TotalActions"); OnPropertyChanged("HasActions");
                 }
             }
+        }
+
+        public void ActionSliderValueChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int actionIndex = (int)e.NewValue;
+            MoveToAction(actionIndex);
         }
 
         /// <summary>

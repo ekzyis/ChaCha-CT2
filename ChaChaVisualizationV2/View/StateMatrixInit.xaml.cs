@@ -34,6 +34,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
                 InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
                 InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
+
+                // Add value changed event handler to action slider
+                Root.ApplyTemplate();
+                Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
+                actionSlider.ValueChanged += ViewModel.ActionSliderValueChange;
             }
         }
 

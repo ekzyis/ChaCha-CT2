@@ -101,6 +101,7 @@
     <Compile Include="Helper\Converter\MultiSequentialValueConverter.cs" />
     <Compile Include="Helper\Converter\ReverseBytes.cs" />
     <Compile Include="Helper\Converter\SequentialValueConverter.cs" />
+    <Compile Include="Helper\Converter\SubtractOne.cs" />
     <Compile Include="Helper\Converter\UInt32ToHex.cs" />
     <Compile Include="Helper\Formatter.cs" />
     <Compile Include="Helper\Validation\DiffusionInputValidationRule.cs" />

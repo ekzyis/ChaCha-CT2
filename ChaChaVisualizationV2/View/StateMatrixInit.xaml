@@ -28,7 +28,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl Template="{StaticResource PageContentTemplate}">
+    <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition />
@@ -204,7 +204,9 @@
                         <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[5], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    On the next page, we will use this initialized state matrix to generate our first keystream block.
+                                    The next
+                                    <Run Text="{Binding Settings.Version.IVBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the
+                                    <Run Background="PaleGreen">IV</Run> .
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
