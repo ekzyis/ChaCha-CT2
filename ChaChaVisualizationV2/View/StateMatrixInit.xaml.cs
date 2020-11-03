@@ -45,6 +45,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             }
         }
 
+        /// <summary>
+        /// Set the Document of the RichTextBox wit the diffusion value as hex string; marking differences red.
+        /// </summary>
         private void InitDiffusionValue(RichTextBox rtb, byte[] diffusion, byte[] primary)
         {
             if (diffusion.Length != primary.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
@@ -66,6 +69,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             rtb.Document = flowDocument;
         }
 
+        /// <summary>
+        /// Set the Document of the RichTextBox with the diffusion value; marking differences red.
+        /// Version is used to determine counter size.
+        /// </summary>
         private void InitDiffusionValue(RichTextBox rtb, BigInteger diffusion, BigInteger primary, ChaCha.Version version)
         {
             if (version.CounterBits == 64)
