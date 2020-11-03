@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
 {
@@ -61,6 +62,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         {
             string unsignedHex = $"0{hex}";
             return System.Numerics.BigInteger.Parse(unsignedHex, NumberStyles.HexNumber);
+        }
+
+        /// <summary>
+        /// Insert a space after every n characters.
+        /// </summary>
+        public static string Chunkify(string s, int n)
+        {
+            return Regex.Replace(s, $".{{{n}}}", "$0 ");
         }
     }
 }

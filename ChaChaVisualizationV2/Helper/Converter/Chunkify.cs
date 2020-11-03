@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
@@ -13,7 +12,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null) return null;
-            return Regex.Replace((string)value, @".{8}", "$0 ");
+            return Formatter.Chunkify((string)value, 8);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
