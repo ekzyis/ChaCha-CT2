@@ -38,6 +38,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             KeyMatrix = false;
             CounterMatrix = false;
             State13Matrix = false;
+            IVMatrix = false;
         }
 
         private void ClearEncoding()
@@ -58,6 +59,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             CounterEncodingReverse = false;
             CounterEncodingChunkify = false;
             CounterEncodingLittleEndian = false;
+
+            IVEncoding = false;
+            IVEncodingInput = false;
+            IVEncodingChunkify = false;
+            IVEncodingLittleEndian = false;
         }
 
         private void InitActions()
