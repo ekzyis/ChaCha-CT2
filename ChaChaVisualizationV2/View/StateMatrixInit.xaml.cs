@@ -215,7 +215,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
                 string[] encodedDCounter = Regex.Replace(dCounterHexChunksLE, @" $", "").Split(' ');
                 string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
-                Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "key and diffusion key length should be the same.");
+                Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "counter and diffusion counter length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 1, $"Encoded diffusion counter length should be 4 bytes for 32-bit counter. Is {encodedDCounter.Length}");
                 InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
             }
