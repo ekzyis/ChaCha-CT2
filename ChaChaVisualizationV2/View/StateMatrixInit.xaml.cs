@@ -43,6 +43,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
                 // State encoding diffusion values
                 InitDiffusionStateEncoding();
+
+                // State matrix diffusion values
+                InitDiffusionStateMatrix();
             }
         }
 
@@ -142,6 +145,37 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputIV)), 8);
             string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputIV)), 8);
             InitDiffusionValue(DiffusionIVEncodingLittleEndian, dIVHexChunksLE, pIVHexChunksLE);
+        }
+
+        /// <summary>
+        /// Initialize the diffusion values in the state matrix.
+        /// </summary>
+        private void InitDiffusionStateMatrix()
+        {
+            InitDiffusionStateMatrixKey();
+            InitDiffusionStateMatrixCounter();
+            InitDiffusionStateMatrixIV();
+        }
+
+        /// <summary>
+        /// Initialize the diffusion key values in the state matrix.
+        /// </summary>
+        private void InitDiffusionStateMatrixKey()
+        {
+        }
+
+        /// <summary>
+        /// Initialize the diffusion counter values in the state matrix.
+        /// </summary>
+        private void InitDiffusionStateMatrixCounter()
+        {
+        }
+
+        /// <summary>
+        /// Initialize the diffusion IV values in the state matrix.
+        /// </summary>
+        private void InitDiffusionStateMatrixIV()
+        {
         }
 
         /// <summary>
