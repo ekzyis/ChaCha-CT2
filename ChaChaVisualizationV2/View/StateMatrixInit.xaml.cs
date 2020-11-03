@@ -39,6 +39,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 // Create FlowDocuments of diffusion values during state encoding
                 InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
 
+                string dHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputKey), 8);
+                string pHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputKey), 8);
+                InitDiffusionValue(DiffusionKeyEncodingChunkify, dHexChunks, pHexChunks);
+
                 // Add value changed event handler to action slider
                 Root.ApplyTemplate();
                 Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
