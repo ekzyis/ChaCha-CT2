@@ -192,6 +192,22 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
+                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    The next
+                                    <Run Text="{Binding Settings.Version.IVBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the
+                                    <Run Background="PaleGreen">IV</Run> .
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[5], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    On the next page, we will use this initialized state matrix to generate our first keystream block.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
                     </StackPanel>
                 </Viewbox>
             </Grid>
@@ -524,6 +540,68 @@
                                             </conv:MultiSequentialValueConverter>
                                         </MultiBinding.Converter>
                                     </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+                </Viewbox>
+
+                <!--#endregion-->
+
+                <!--#region IV encoding -->
+
+                <Viewbox>
+                    <Grid Visibility="{Binding IVEncoding, Converter={StaticResource BooleanToVisibility}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="IV encoding" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value:" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+
+                        <StackPanel Grid.Row="1" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding IVEncodingInput, Converter={StaticResource BooleanToVisibility}}"
+                                     Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding IVEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <Binding Path="ChaCha.InputIV" Mode="OneWay">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:BytesToHex />
+                                                <conv:Chunkify />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                        </StackPanel>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1">
+                            <TextBox Style="{StaticResource Value}"
+                                     Visibility="{Binding IVEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
+                                <TextBox.Text>
+                                    <Binding Path="ChaCha.InputIV" Mode="OneWay">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:LittleEndian />
+                                                <conv:BytesToHex />
+                                                <conv:Chunkify />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
                                 </TextBox.Text>
                             </TextBox>
                         </StackPanel>

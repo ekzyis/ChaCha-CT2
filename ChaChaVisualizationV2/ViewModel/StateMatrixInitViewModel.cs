@@ -27,6 +27,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Description.Add(false);
             Description.Add(false);
             Description.Add(false);
+            Description.Add(false);
+            Description.Add(false);
         }
 
         private void ClearState()
@@ -312,9 +314,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             Actions.Add(() =>
             {
+                ConstantsMatrix = true;
+                KeyMatrix = true;
+                CounterMatrix = true;
+                if (Settings.Version.CounterBits == 64) State13Matrix = true;
+                IVMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
                 Description[3] = true;
+                Description[4] = true;
+                Description[5] = true;
             });
         }
 
