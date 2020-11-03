@@ -50,6 +50,9 @@
                         </Style>
                         <Style TargetType="Viewbox" BasedOn="{StaticResource stateViewbox}" />
                         <Style TargetType="Border" BasedOn="{StaticResource stateBorder}" />
+                        <Style TargetType="RichTextBox" BasedOn="{StaticResource RichHex}">
+                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
+                        </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition />
