@@ -30,13 +30,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 ChaCha.Version v = ViewModel.Settings.Version;
                 State13.Background = v.CounterBits == 64 ? Brushes.SkyBlue : Brushes.PaleGreen;
 
-                // Create the FlowDocuments of the RichTextBoxes for the diffusion values.
+                // Add value changed event handler to action slider
+                Root.ApplyTemplate();
+                Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
+                actionSlider.ValueChanged += ViewModel.ActionSliderValueChange;
+
+                // State parameter diffusion values
                 // Marks differences in the diffusion value red.
                 InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
                 InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
                 InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
 
-                // Create FlowDocuments of diffusion values during state encoding
+                // State encoding diffusion values
                 InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
 
                 string dHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputKey), 8);
@@ -46,11 +51,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 string dHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
                 string pHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
                 InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dHexChunksLE, pHexChunksLE);
-
-                // Add value changed event handler to action slider
-                Root.ApplyTemplate();
-                Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
-                actionSlider.ValueChanged += ViewModel.ActionSliderValueChange;
             }
         }
 
