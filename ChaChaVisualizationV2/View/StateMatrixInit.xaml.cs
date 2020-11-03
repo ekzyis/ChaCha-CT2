@@ -2,7 +2,9 @@
 using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System;
+using System.Diagnostics;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -162,6 +164,26 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// </summary>
         private void InitDiffusionStateMatrixKey()
         {
+            string dKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
+            string pKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
+            string[] encodedDkey = Regex.Replace(dKeyHexChunksLE, @" $", "").Split(' ');
+            string[] encodedPKey = Regex.Replace(pKeyHexChunksLE, @" $", "").Split(' ');
+            Debug.Assert(encodedDkey.Length == encodedPKey.Length, "key and diffusion key length should be the same.");
+            Debug.Assert(encodedDkey.Length == 4 || encodedDkey.Length == 8, $"Encoded diffusion key length should be either 16 or 32 bytes. Is {encodedDkey.Length}");
+            Debug.Assert(encodedPKey.Length == 4 || encodedPKey.Length == 8, $"Encoded key length should be either 16 or 32 bytes. Is {encodedPKey.Length}");
+            for (int i = 0; i < encodedDkey.Length; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 4}");
+                InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
+            }
+            if (encodedDkey.Length == 4)
+            {
+                for (int i = 0; i < encodedDkey.Length; ++i)
+                {
+                    RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 8}");
+                    InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
+                }
+            }
         }
 
         /// <summary>
