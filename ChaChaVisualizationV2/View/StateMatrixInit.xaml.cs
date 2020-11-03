@@ -1,6 +1,7 @@
 ﻿using Cryptool.Plugins.ChaCha.Util;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,27 +47,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         }
 
         /// <summary>
-        /// Set the Document of the RichTextBox wit the diffusion value as hex string; marking differences red.
+        /// Set the Document of the RichTextBox wit the diffusion value as hex string; using byte array for comparison; marking differences red.
         /// </summary>
         private void InitDiffusionValue(RichTextBox rtb, byte[] diffusion, byte[] primary)
         {
-            if (diffusion.Length != primary.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
-            if (diffusion.Length % 2 != 0) throw new ArgumentException("Length must be even");
-            FlowDocument flowDocument = new FlowDocument();
-            Paragraph paragraph = new Paragraph();
-            for (int i = 0; i < diffusion.Length; ++i)
-            {
-                string dHex = diffusion[i].ToString("X2");
-                string pHex = primary[i].ToString("x2");
-                char dHex1 = dHex[0];
-                char dHex2 = dHex[1];
-                char pHex1 = pHex[0];
-                char pHex2 = pHex[1];
-                paragraph.Inlines.Add(RedIfDifferent(dHex1, pHex1));
-                paragraph.Inlines.Add(RedIfDifferent(dHex2, pHex2));
-            }
-            flowDocument.Blocks.Add(paragraph);
-            rtb.Document = flowDocument;
+            string dHex = string.Join("", diffusion.Select(b => b.ToString("X2")).ToArray());
+            string pHex = string.Join("", primary.Select(b => b.ToString("X2")).ToArray());
+            InitDiffusionValue(rtb, dHex, pHex);
         }
 
         /// <summary>
@@ -87,6 +74,28 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 byte[] primaryBytes = ByteUtil.GetBytesBE((uint)primary);
                 InitDiffusionValue(rtb, diffusionBytes, primaryBytes);
             }
+        }
+
+        /// <summary>
+        /// Set the document of the RichTextBox with the diffusion value as hex string; using strings for comparison; marking differences red.
+        /// </summary>
+        private void InitDiffusionValue(RichTextBox rtb, string dHex, string pHex)
+        {
+            if (dHex.Length != pHex.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
+            if (dHex.Length % 2 != 0) throw new ArgumentException("Length must be even");
+            FlowDocument flowDocument = new FlowDocument();
+            Paragraph paragraph = new Paragraph();
+            for (int i = 0; i < dHex.Length; i += 2)
+            {
+                char dChar1 = dHex[i];
+                char dChar2 = dHex[i + 1];
+                char pChar1 = pHex[i];
+                char pChar2 = pHex[i + 1];
+                paragraph.Inlines.Add(RedIfDifferent(dChar1, pChar1));
+                paragraph.Inlines.Add(RedIfDifferent(dChar2, pChar2));
+            }
+            flowDocument.Blocks.Add(paragraph);
+            rtb.Document = flowDocument;
         }
 
         /// <summary>
