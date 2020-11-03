@@ -170,7 +170,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             string[] encodedPKey = Regex.Replace(pKeyHexChunksLE, @" $", "").Split(' ');
             Debug.Assert(encodedDkey.Length == encodedPKey.Length, "key and diffusion key length should be the same.");
             Debug.Assert(encodedDkey.Length == 4 || encodedDkey.Length == 8, $"Encoded diffusion key length should be either 16 or 32 bytes. Is {encodedDkey.Length}");
-            Debug.Assert(encodedPKey.Length == 4 || encodedPKey.Length == 8, $"Encoded key length should be either 16 or 32 bytes. Is {encodedPKey.Length}");
             for (int i = 0; i < encodedDkey.Length; ++i)
             {
                 RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 4}");
