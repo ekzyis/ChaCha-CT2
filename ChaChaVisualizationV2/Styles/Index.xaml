@@ -6,6 +6,7 @@
         <ResourceDictionary Source=".\Button.xaml" />
         <ResourceDictionary Source=".\ItemsControl.xaml" />
         <ResourceDictionary Source=".\Paragraph.xaml" />
+        <ResourceDictionary Source=".\Path.xaml" />
         <ResourceDictionary Source=".\RichTextBox.xaml" />
         <ResourceDictionary Source=".\TextBox.xaml" />
         <ResourceDictionary Source=".\Viewbox.xaml" />

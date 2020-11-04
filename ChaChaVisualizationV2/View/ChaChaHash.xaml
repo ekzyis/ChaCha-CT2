@@ -341,7 +341,7 @@
                             <!-- First box -->
                             <Path Data="M 0,20 h 50 m 4,0 v 60 h -55 M 60,20 h 20" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInABorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[0].Add}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -353,7 +353,7 @@
                             </Path>
                             <Path Data="M 0,20 h 140 m 9,-10 v -170 h -10 M 159,20 h 5" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[0].XOR}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -365,7 +365,7 @@
                             </Path>
                             <Path Data="M 229,20 h 5 m 20,0 h 5" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInDBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[0].Shift}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -378,7 +378,7 @@
                             <!-- Second box -->
                             <Path Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInCBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[1].Add}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -390,7 +390,7 @@
                             </Path>
                             <Path Data="M 0,20 h 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[1].XOR}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -402,7 +402,7 @@
                             </Path>
                             <Path Data="M 563,20 h 5 m 20,0 h 5" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[1].Shift}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -415,7 +415,7 @@
                             <!-- Third box -->
                             <Path Data="M -529,20 H 50 m 4,0 v 60 h -65 M 60,20 h 20" Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInABorder, Path=(Canvas.Top)}" Panel.ZIndex="0">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[2].Add}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -427,7 +427,7 @@
                             </Path>
                             <Path Data="M -344,20 H 140 m 9,-10 v -170 h -10 M 159,20 h 5" Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInDBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[2].XOR}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -439,7 +439,7 @@
                             </Path>
                             <Path Data="M 229,20 h 5 m 20,0 h 5" Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInDBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[2].Shift}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -452,7 +452,7 @@
                             <!-- Fourth box -->
                             <Path Data="M -195,20 H 139 c 0 -10 20 -10 20 0 h 220 m 19,0 h 9 m -19, 0 v 60 h -64" Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInCBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[3].Add}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -464,7 +464,7 @@
                             </Path>
                             <Path  Data="M -10,20 H 139 c 0 -10 20 -10 20 0 h 314 m 19,0 h 6 m -15,10 v 50 h -10" Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[3].XOR}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -476,7 +476,7 @@
                             </Path>
                             <Path Data="M 563,20 h 5 m 20,0 h 5" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExec[3].Shift}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -489,7 +489,7 @@
                             <!-- Output paths -->
                             <Path Data="M 0,20 h 563" Canvas.Left="872" Canvas.Top="{ Binding ElementName=QRInABorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExecOutA}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -501,7 +501,7 @@
                             </Path>
                             <Path Data="M 0,20 h 44" Canvas.Left="1391" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExeOutB}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -513,7 +513,7 @@
                             </Path>
                             <Path Data="M 0,20 h 229" Canvas.Left="1206" Canvas.Top="{ Binding ElementName=QRInCBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExecOutC}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -525,7 +525,7 @@
                             </Path>
                             <Path Data="M 0,20 h 378" Canvas.Left="1057" Canvas.Top="{ Binding ElementName=QRInDBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
-                                    <Style BasedOn="{StaticResource DefaultPath}">
+                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding QRExecOutD}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
@@ -585,7 +585,7 @@
                                             </Border>
                                             <Path Name="QRAddCircle_0">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource AddCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[0].Add}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -607,7 +607,7 @@
                                             </Border>
                                             <Path Name="QRXORCircle_0">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource XORCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[0].XOR}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -632,7 +632,7 @@
                                             </Border>
                                             <Path Name="QRShiftCircle_0">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource ShiftCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[0].XOR}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -676,7 +676,7 @@
                                             </Border>
                                             <Path Name="QRAddCircle_1">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource AddCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[1].Add}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -699,7 +699,7 @@
                                             </Border>
                                             <Path Name="QRXORCircle_1">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource XORCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[1].XOR}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -721,7 +721,7 @@
                                             </Border>
                                             <Path Name="QRShiftCircle_1">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource ShiftCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[1].Shift}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -765,7 +765,7 @@
                                             </Border>
                                             <Path Name="QRAddCircle_2">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource AddCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[2].Add}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -788,7 +788,7 @@
                                             </Border>
                                             <Path Name="QRXORCircle_2">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource XORCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[2].XOR}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -813,7 +813,7 @@
                                             </Border>
                                             <Path Name="QRShiftCircle_2">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource ShiftCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[2].Shift}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -857,7 +857,7 @@
                                             </Border>
                                             <Path Name="QRAddCircle_3">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource AddCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[3].Add}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -880,7 +880,7 @@
                                             </Border>
                                             <Path Name="QRXORCircle_3">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource XORCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[3].XOR}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
@@ -903,7 +903,7 @@
                                             </Border>
                                             <Path Name="QRShiftCircle_3">
                                                 <Path.Style>
-                                                    <Style BasedOn="{StaticResource ShiftCircle}">
+                                                    <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding QRExec[3].Shift}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
