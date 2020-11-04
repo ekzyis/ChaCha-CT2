@@ -6,7 +6,10 @@
         <Setter Property="Stretch" Value="Uniform" />
     </Style>
     <Style x:Key="DownOnlyViewbox" TargetType="{x:Type Viewbox}">
-        <Setter Property="StretchDirection" Value="DownOnly"/>
-        <Setter Property="Stretch" Value="Uniform"/>
+        <Setter Property="StretchDirection" Value="DownOnly" />
+        <Setter Property="Stretch" Value="Uniform" />
+    </Style>
+    <Style x:Key="StateViewbox" TargetType="{x:Type Viewbox}" BasedOn="{StaticResource UniformViewbox}">
+        <Setter Property="Margin" Value="1" />
     </Style>
 </ResourceDictionary>

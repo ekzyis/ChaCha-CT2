@@ -13,13 +13,6 @@
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="stateText" TargetType="TextBox" BasedOn="{StaticResource Hex}">
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-            </Style>
-            <Style x:Key="stateViewbox" TargetType="Viewbox" BasedOn="{StaticResource UniformViewbox}">
-                <Setter Property="Margin" Value="1" />
-            </Style>
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
@@ -37,19 +30,13 @@
 
             <!--#region  State Matrix -->
 
-            <Border Style="{StaticResource stateBorder}" Grid.Row="0" Grid.Column="0">
+            <Border Style="{StaticResource StateBorder}" Grid.Row="0" Grid.Column="0">
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource stateText}">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
-                        </Style>
-                        <Style TargetType="Viewbox" BasedOn="{StaticResource stateViewbox}" />
-                        <Style TargetType="Border" BasedOn="{StaticResource stateBorder}" />
-                        <Style TargetType="RichTextBox" x:Key="DiffusionState" BasedOn="{StaticResource RichHex}">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
-                            <Setter Property="Visibility" Value="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
-                            <Setter Property="Width" Value="107" />
-                        </Style>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
+                        <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
+                        <Style TargetType="{x:Type Border}" BasedOn="{StaticResource stateBorder}" />
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}" />
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -67,7 +54,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[0], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState0" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState0" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -75,7 +62,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[1], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState1" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState1" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -83,7 +70,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[2], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState2" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState2" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -91,7 +78,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[3], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState3" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState3" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -100,7 +87,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState4" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState4" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -108,7 +95,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState5" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState5" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -116,7 +103,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState6" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState6" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -124,7 +111,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState7" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState7" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -133,7 +120,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState8" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState8" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -141,7 +128,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState9" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState9" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -149,7 +136,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState10" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState10" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -157,7 +144,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState11" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState11" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -166,7 +153,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState12" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState12" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -174,7 +161,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState13" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState13" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -182,7 +169,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState14" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState14" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -190,7 +177,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" />
-                                <RichTextBox Name="DiffusionState15" Style="{StaticResource DiffusionState}" />
+                                <RichTextBox Name="DiffusionState15" />
                             </StackPanel>
                         </Viewbox>
                     </Border>

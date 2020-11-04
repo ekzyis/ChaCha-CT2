@@ -13,13 +13,6 @@
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="stateText" TargetType="TextBox" BasedOn="{StaticResource Hex}">
-                <Setter Property="VerticalAlignment" Value="Center" />
-                <Setter Property="HorizontalAlignment" Value="Center" />
-            </Style>
-            <Style x:Key="stateViewbox" TargetType="Viewbox" BasedOn="{StaticResource UniformViewbox}">
-                <Setter Property="Margin" Value="1" />
-            </Style>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
             <conv:BitsToBytes x:Key="BitsToBytes" />
             <conv:BytesToHex x:Key="ToHex" />
@@ -42,16 +35,14 @@
 
             <!--#region  State Matrix -->
 
-            <Border Style="{StaticResource stateBorder}" Grid.Row="0" Grid.Column="0">
+            <Border Style="{StaticResource StateBorder}" Grid.Row="0" Grid.Column="0">
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
-                        <Style TargetType="TextBox" BasedOn="{StaticResource stateText}">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}">
                         </Style>
-                        <Style TargetType="Viewbox" BasedOn="{StaticResource stateViewbox}" />
-                        <Style TargetType="Border" BasedOn="{StaticResource stateBorder}" />
-                        <Style TargetType="RichTextBox" BasedOn="{StaticResource RichHex}">
-                            <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
+                        <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
+                        <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}" />
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}">
                         </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
@@ -91,7 +82,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState4" Width="107">
+                                <RichTextBox Name="DiffusionState4">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -106,7 +97,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState5" Width="107">
+                                <RichTextBox Name="DiffusionState5">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -121,7 +112,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState6" Width="107">
+                                <RichTextBox Name="DiffusionState6">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -136,7 +127,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState7" Width="107">
+                                <RichTextBox Name="DiffusionState7">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -152,7 +143,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState8" Width="107">
+                                <RichTextBox Name="DiffusionState8">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -167,7 +158,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState9" Width="107">
+                                <RichTextBox Name="DiffusionState9">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -182,7 +173,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState10" Width="107">
+                                <RichTextBox Name="DiffusionState10">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -197,7 +188,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState11" Width="107">
+                                <RichTextBox Name="DiffusionState11">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="KeyMatrix" />
@@ -213,7 +204,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState12" Width="107">
+                                <RichTextBox Name="DiffusionState12">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="CounterMatrix" />
@@ -228,7 +219,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState13" Width="107">
+                                <RichTextBox Name="DiffusionState13">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="State13Matrix" />
@@ -243,7 +234,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState14" Width="107">
+                                <RichTextBox Name="DiffusionState14">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="IVMatrix" />
@@ -258,7 +249,7 @@
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState15" Width="107">
+                                <RichTextBox Name="DiffusionState15">
                                     <RichTextBox.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
                                             <Binding Path="IVMatrix" />
@@ -279,19 +270,20 @@
             <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
                 <Viewbox Style="{StaticResource UniformViewbox}">
                     <Viewbox.Resources>
-                        <Style TargetType="RichTextBox" BasedOn="{StaticResource RichText}">
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
                             <Setter Property="Margin" Value="3" />
+                            <Setter Property="Width" Value="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" />
                         </Style>
                     </Viewbox.Resources>
                     <StackPanel Orientation="Vertical">
-                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix.
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The first 16 bytes consist of the
@@ -299,7 +291,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The next 32 bytes consist of the
@@ -307,7 +299,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The next
@@ -316,7 +308,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The next
@@ -325,7 +317,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Width="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" Visibility="{Binding Description[5], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[5], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block.

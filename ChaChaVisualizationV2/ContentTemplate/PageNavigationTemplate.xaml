@@ -40,7 +40,7 @@
                                             IsEnabled="{Binding DataContext.NavigationEnabled, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
                                             <Label Content="{Binding Name, Mode=OneWay}">
                                                 <Label.Style>
-                                                    <Style TargetType="Label">
+                                                    <Style TargetType="{x:Type Label}">
                                                         <Setter Property="FontWeight" Value="Normal" />
                                                         <Style.Triggers>
                                                             <DataTrigger Value="True">

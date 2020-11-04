@@ -63,7 +63,7 @@
                                 <TableCell>
                                     <Table>
                                         <Table.Resources>
-                                            <Style TargetType="TableCell" BasedOn="{StaticResource DefaultTableCell}" />
+                                            <Style TargetType="{x:Type TableCell}" BasedOn="{StaticResource DefaultTableCell}" />
                                         </Table.Resources>
                                         <Table.Columns>
                                             <TableColumn />

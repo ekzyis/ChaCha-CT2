@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary x:Class="Cryptool.Plugins.ChaChaVisualizationV2.Styles.ItemsControl"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="StateMatrix" TargetType="ItemsControl">
+    <Style x:Key="StateMatrix" TargetType="{x:Type ItemsControl}">
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

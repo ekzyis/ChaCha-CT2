@@ -18,15 +18,15 @@
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="TextBox" x:Key="DiffusionText" BasedOn="{StaticResource Text}">
+            <Style TargetType="{x:Type TextBox}" x:Key="DiffusionText" BasedOn="{StaticResource Text}">
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
-            <Style TargetType="TextBox" x:Key="DiffusionHex" BasedOn="{StaticResource Hex}">
+            <Style TargetType="{x:Type TextBox}" x:Key="DiffusionHex" BasedOn="{StaticResource Hex}">
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="HorizontalAlignment" Value="Center" />
             </Style>
-            <Style TargetType="TextBox" x:Key="DiffusionInput" BasedOn="{StaticResource DiffusionHex}">
+            <Style TargetType="{x:Type TextBox}" x:Key="DiffusionInput" BasedOn="{StaticResource DiffusionHex}">
                 <Setter Property="IsReadOnly" Value="False"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Validation.ErrorTemplate">
@@ -141,7 +141,7 @@
                         </StackPanel>
                         <TextBox>
                             <TextBox.Style>
-                                <Style TargetType="TextBox" BasedOn="{StaticResource DiffusionText}">
+                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiffusionText}">
                                     <Setter Property="Text" Value="Inactive"/>
                                     <Setter Property="Foreground" Value="Red"/>
                                     <Style.Triggers>
@@ -166,12 +166,12 @@
                         <FlowDocument>
                             <Table>
                                 <Table.Resources>
-                                    <Style TargetType="TableCell">
+                                    <Style TargetType="{x:Type TableCell}">
                                         <Setter Property="BorderBrush" Value="Black" />
                                         <Setter Property="BorderThickness" Value="1" />
                                         <Setter Property="TextAlignment" Value="Center" />
                                     </Style>
-                                    <Style TargetType="RichTextBox" BasedOn="{StaticResource RichHex}" />
+                                    <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" />
                                 </Table.Resources>
                                 <Table.Columns>
                                     <TableColumn />
@@ -181,7 +181,7 @@
                                         <TableCell BorderThickness="0">
                                             <Paragraph>
                                                 <InlineUIContainer>
-                                                    <Border Style="{StaticResource stateBorder}">
+                                                    <Border Style="{StaticResource StateBorder}">
                                                         <StackPanel Orientation="Vertical">
                                                             <RichTextBox>
                                                                 <FlowDocument>

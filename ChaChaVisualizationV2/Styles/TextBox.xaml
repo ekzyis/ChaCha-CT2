@@ -16,4 +16,9 @@
     <Style x:Key="Hex" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
         <Setter Property="FontFamily" Value="Courier New" />
     </Style>
+    <Style x:Key="StateText" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Hex}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
+    </Style>
 </ResourceDictionary>
