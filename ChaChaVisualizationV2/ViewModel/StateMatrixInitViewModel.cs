@@ -11,17 +11,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             PresentationViewModel = chachaPresentationViewModel;
             Name = "State Matrix";
             Title = "State Matrix Initialization";
-            InitDescriptions();
+            InitDescriptionVisibilityFlags();
             InitActions();
         }
 
-        private void ClearDescriptions()
+        private void HideDescriptions()
         {
             Description.Clear();
-            InitDescriptions();
+            InitDescriptionVisibilityFlags();
         }
 
-        private void InitDescriptions()
+        private void InitDescriptionVisibilityFlags()
         {
             Description.Add(true);
             Description.Add(false);
@@ -31,7 +31,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Description.Add(false);
         }
 
-        private void ClearState()
+        private void HideState()
         {
             // Hide state values.
             ConstantsMatrix = false;
@@ -41,7 +41,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             IVMatrix = false;
         }
 
-        private void ClearEncoding()
+        private void HideEncoding()
         {
             ConstantsEncoding = false;
             ConstantsEncodingInput = false;
@@ -719,9 +719,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
-            ClearDescriptions();
-            ClearEncoding();
-            ClearState();
+            HideDescriptions();
+            InitDescriptionVisibilityFlags();
+            HideEncoding();
+            HideState();
         }
 
         #endregion Action Navigation
