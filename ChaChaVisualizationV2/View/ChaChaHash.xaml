@@ -186,6 +186,8 @@
 
             <!--#endregion-->
 
+            <!-- Description -->
+
             <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
                 <Viewbox Style="{StaticResource UniformViewbox}">
                     <Viewbox.Resources>
@@ -222,6 +224,8 @@
                     </StackPanel>
                 </Viewbox>
             </Grid>
+
+            <!--#endregion-->
         </Grid>
     </ContentControl>
 </UserControl>
