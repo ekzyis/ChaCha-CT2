@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using System.Collections.ObjectModel;
+using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
@@ -42,6 +43,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion Binding Properties
+
+        #region Binding Properties (Diffusion)
+
+        public byte[] DiffusionInputKey
+        {
+            get => PresentationViewModel.DiffusionInputKey;
+        }
+
+        public byte[] DiffusionInputIV
+        {
+            get => PresentationViewModel.DiffusionInputIV;
+        }
+
+        public BigInteger DiffusionInitialCounter
+        {
+            get => PresentationViewModel.DiffusionInitialCounter;
+        }
+
+        public bool DiffusionActive
+        {
+            get => PresentationViewModel.DiffusionActive;
+        }
+
+        #endregion Binding Properties (Diffusion)
 
         #region Action Navigation
 
