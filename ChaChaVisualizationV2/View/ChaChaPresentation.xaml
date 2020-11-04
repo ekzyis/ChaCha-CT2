@@ -27,6 +27,9 @@
             <DataTemplate DataType="{x:Type vm:DiffusionViewModel}">
                 <vw:Diffusion />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ChaChaHashViewModel}">
+                <vw:ChaChaHash />
+            </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageNavigationTemplate}">
