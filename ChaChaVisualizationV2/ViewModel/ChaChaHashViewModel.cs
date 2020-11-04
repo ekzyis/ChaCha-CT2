@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using System.Collections.ObjectModel;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
@@ -10,6 +11,37 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Name = "ChaCha hash";
             Title = "ChaCha hash function";
         }
+
+        private void InitStateMatrixValues()
+        {
+            uint[] state = ChaChaVisualization.OriginalState[0];
+            StateMatrixValues.Clear();
+            for (int i = 0; i < state.Length; ++i)
+            {
+                StateMatrixValues.Add(state[i]);
+            }
+        }
+
+        #region Binding Properties
+
+        private ObservableCollection<uint> _stateMatrixValues; public ObservableCollection<uint> StateMatrixValues
+        {
+            get
+            {
+                if (_stateMatrixValues == null) _stateMatrixValues = new ObservableCollection<uint>();
+                return _stateMatrixValues;
+            }
+            private set
+            {
+                if (_stateMatrixValues != value)
+                {
+                    _stateMatrixValues = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion Binding Properties
 
         #region Action Navigation
 
@@ -40,6 +72,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void Setup()
         {
+            InitStateMatrixValues();
         }
 
         public void Teardown()
