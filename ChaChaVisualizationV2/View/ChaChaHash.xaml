@@ -759,58 +759,74 @@
                                         </Grid.RowDefinitions>
                                         <Canvas Grid.Row="1" Grid.Column="0">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
-                                            <Border Canvas.Top="10" Canvas.Left="40">
+                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[2].Add}" />
-                                                    <RichTextBox Style="{StaticResource QRDiffusionValie}" Name="QRValueAddDiffusion_2" />
+                                                    <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
-                                            <Path Name="QRAddCircle_3">
-                                                <Path.Data>
-                                                    <EllipseGeometry Center="21,30" RadiusX="10" RadiusY="10" />
-                                                </Path.Data>
+                                            <Path Name="QRAddCircle_2">
+                                                <Path.Style>
+                                                    <Style BasedOn="{StaticResource AddCircle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRExec[2].Add}" Value="True">
+                                                                <Setter Property="Stroke" Value="Purple" />
+                                                                <Setter Property="StrokeThickness" Value="3" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
                                             </Path>
-                                            <Label Canvas.Top="11" Canvas.Left="10" Width="Auto" FontSize="18" Foreground="{ Binding ElementName=QRAddCircle_3, Path=Stroke}" Content="+" />
+                                            <Label Canvas.Top="11" Canvas.Left="10" Style="{StaticResource AddLabel}" Foreground="{ Binding ElementName=QRAddCircle_2, Path=Stroke}" />
                                             <Path Data="M 20,40 v 50" />
                                         </Canvas>
                                         <Canvas Grid.Row="4" Grid.Column="1">
-                                            <Rectangle Canvas.Top="10" Canvas.Left="55" />
-                                            <Border Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55">
+                                            <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
+                                            <Border Style="{StaticResource QRValueBorder}" Name="QRXORCell_3" Canvas.Top="10" Canvas.Left="55">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource hexQRCell}" Name="QRXOR_3" />
-                                                    <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRXORDiffusion_3" Background="{ Binding ElementName=QRXORCell_3, Path=Background}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[2].XOR}" />
+                                                    <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
-                                            <TextBox Canvas.Left="30" Canvas.Top="24" Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="8" TextAlignment="Center" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" Text="XOR" />
-                                            <Path Name="QRXORCircle_3">
-                                                <Path.Data>
-                                                    <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10" />
-                                                </Path.Data>
+                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" />
+                                            <Path Name="QRXORCircle_2">
+                                                <Path.Style>
+                                                    <Style BasedOn="{StaticResource XORCircle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRExec[2].XOR}" Value="True">
+                                                                <Setter Property="Stroke" Value="Purple" />
+                                                                <Setter Property="StrokeThickness" Value="3" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
                                             </Path>
                                         </Canvas>
                                         <Canvas Grid.Row="1" Grid.Column="1">
                                             <Path Canvas.Left="30" Data="M 10,30 v 170" />
                                         </Canvas>
                                         <Canvas Grid.Row="4" Grid.Column="2">
-                                            <Path Name="QRShiftCircle_3">
-                                                <Path.Data>
-                                                    <EllipseGeometry Center="60,30" RadiusX="10" RadiusY="10" />
-                                                </Path.Data>
-                                            </Path>
-                                            <TextBlock Width="20" Height="20"
-                                     Canvas.Top="24" Canvas.Left="50"
-                                     HorizontalAlignment="Center" VerticalAlignment="Center"
-                                     FontSize="8"
-                                     TextAlignment="Center" Foreground="{ Binding ElementName=QRShiftCircle_3, Path=Stroke}"
-                                     Text="&lt;&lt;&lt;" />
-                                            <TextBlock FontSize="8" Canvas.Top="39" Canvas.Left="66" Text="8" Foreground="{ Binding ElementName=QRShiftCircle_3, Path=Stroke}" />
-                                            <Rectangle Canvas.Top="10" Canvas.Left="75" />
-                                            <Border Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75">
+                                            <Rectangle Style="{StaticResource QRValueRectangle}"  Canvas.Top="10" Canvas.Left="75" />
+                                            <Border Style="{StaticResource QRValueBorder}" Name="QRShiftCell_3" Canvas.Top="10" Canvas.Left="75">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource hexQRCell}" Name="QRShift_3" />
-                                                    <RichTextBox Style="{StaticResource diffusionQRValue}" Name="QRShiftDiffusion_3" Background="{ Binding ElementName=QRShiftCell_3, Path=Background}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[2].Shift}" />
+                                                    <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
+                                            <Path Name="QRShiftCircle_2">
+                                                <Path.Style>
+                                                    <Style BasedOn="{StaticResource ShiftCircle}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRExec[2].Shift}" Value="True">
+                                                                <Setter Property="Stroke" Value="Purple" />
+                                                                <Setter Property="StrokeThickness" Value="3" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Path.Style>
+                                            </Path>
+                                            <TextBlock Canvas.Top="24" Canvas.Left="50" Style="{StaticResource ShiftLabel}" Foreground="{ Binding ElementName=QRShiftCircle_2, Path=Stroke}" />
+                                            <TextBlock Canvas.Top="39" Canvas.Left="66" Style="{StaticResource ShiftSubscript}" Text="8" Foreground="{ Binding ElementName=QRShiftCircle_2, Path=Stroke}" />
                                         </Canvas>
                                     </Grid>
                                 </Canvas>
