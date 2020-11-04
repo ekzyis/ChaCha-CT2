@@ -333,6 +333,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             });
         }
 
+        private void InitStateMatrixValues()
+        {
+            uint[] state = ChaChaVisualization.OriginalState[0];
+            StateMatrixValues.Clear();
+            for (int i = 0; i < state.Length; ++i)
+            {
+                StateMatrixValues.Add(state[i]);
+            }
+        }
+
         #region Binding Properties
 
         private ObservableCollection<uint> _stateMatrixValues; public ObservableCollection<uint> StateMatrixValues
@@ -748,12 +758,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void Setup()
         {
-            uint[] state = ChaChaVisualization.OriginalState[0];
-            StateMatrixValues.Clear();
-            for (int i = 0; i < state.Length; ++i)
-            {
-                StateMatrixValues.Add(state[i]);
-            }
+            InitStateMatrixValues();
         }
 
         public void Teardown()
