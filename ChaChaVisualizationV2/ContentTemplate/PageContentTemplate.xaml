@@ -14,14 +14,7 @@
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="98*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" />
-                <ContentPresenter Grid.Column="1" />
-                <Grid Grid.Column="2" />
+                <ContentPresenter />
             </Grid>
             <Grid Grid.Row="1">
                 <Viewbox Style="{StaticResource UniformViewbox}">
