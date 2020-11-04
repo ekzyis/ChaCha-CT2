@@ -131,6 +131,9 @@
     <Compile Include="Styles\Paragraph.xaml.cs">
       <DependentUpon>Paragraph.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\Path.xaml.cs">
+      <DependentUpon>Path.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Styles\RichTextBox.xaml.cs">
       <DependentUpon>RichTextBox.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Paragraph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Path.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
