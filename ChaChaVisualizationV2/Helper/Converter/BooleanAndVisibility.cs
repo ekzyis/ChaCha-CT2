@@ -10,6 +10,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            if (values.Any(v => v == DependencyProperty.UnsetValue)) return DependencyProperty.UnsetValue;
             return values.All(v => (bool)v == true) ? Visibility.Visible : Visibility.Collapsed;
         }
 
