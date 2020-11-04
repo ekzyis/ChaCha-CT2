@@ -229,7 +229,7 @@
 
             <!--#region  Quarterround visualization -->
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                <Viewbox Height="230">
+                <Viewbox Style="{StaticResource UniformViewbox}">
                     <Viewbox.Resources>
                         <Style x:Key="QRValue" TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
                         <Style x:Key="QRDiffusionValue" TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}" />
@@ -279,7 +279,7 @@
                             <Setter Property="FontSize" Value="8" />
                         </Style>
                     </Viewbox.Resources>
-                    <Canvas Width="1500" Height="220" Grid.Row="1">
+                    <Canvas Background="Red" Width="1500" Height="200" Grid.Row="1">
                         <Canvas>
                             <!-- Input cells -->
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="0" Name="QRInABorder">
