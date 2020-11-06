@@ -69,6 +69,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 StateValues[8].Mark = true;
                 StateValues[12].Mark = true;
             });
+            Actions.Add(() =>
+            {
+                MarkQRInput();
+            });
+        }
+
+        private void MarkQRInput()
+        {
+            QRInA.Mark = true;
+            QRInB.Mark = true;
+            QRInC.Mark = true;
+            QRInD.Mark = true;
         }
 
         #region Binding Properties
