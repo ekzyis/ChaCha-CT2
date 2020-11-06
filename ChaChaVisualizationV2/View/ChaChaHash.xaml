@@ -503,7 +503,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExeOutB}" Value="True">
+                                            <DataTrigger Binding="{Binding QRExecOutB}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
