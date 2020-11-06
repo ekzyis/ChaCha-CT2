@@ -12,8 +12,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             PresentationViewModel = chachaPresentationViewModel;
             Name = "ChaCha hash";
             Title = "ChaCha hash function";
+            InitActions();
         }
 
+        /// <summary>
+        /// Replace the with the state before the ChaCha hash function was applied.
+        /// Works by first clearing the state and then adding the values in their respective order.
+        /// </summary>
         private void InitStateMatrixValues()
         {
             uint[] state = ChaChaVisualization.OriginalState[0];
@@ -22,6 +27,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 StateValues.Add(new StateValue(state[i]));
             }
+        }
+
+        private void InitActions()
+        {
+            Actions.Add(() =>
+            {
+                StateValues[0].Mark = true;
+                StateValues[4].Mark = true;
+                StateValues[8].Mark = true;
+                StateValues[12].Mark = true;
+            });
         }
 
         #region Binding Properties
@@ -202,6 +218,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
+            InitStateMatrixValues();
         }
 
         #endregion Action Navigation
