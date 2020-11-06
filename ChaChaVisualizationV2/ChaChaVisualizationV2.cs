@@ -18,6 +18,7 @@ using Cryptool.PluginBase;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2
 {
@@ -44,6 +45,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             uint[] state = base.State(key, iv, counter, version);
             OriginalState.Add(state);
             return state;
+        }
+
+        public override IEnumerable<ValidationResult> Validate()
+        {
+            IEnumerable<ValidationResult> results = base.Validate();
+            if (InputStream.Length == 0)
+            {
+                GuiLogMessage("Input message must not be empty.", NotificationLevel.Error);
+                IsValid = false;
+            }
+            return results;
         }
 
         #endregion ChaCha Override
