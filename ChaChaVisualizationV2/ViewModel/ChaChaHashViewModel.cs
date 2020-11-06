@@ -65,9 +65,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             PageAction markState = MarkState(0, 4, 8, 12);
             Actions.Add(markState);
-            PageAction markQRInput = MarkQRInput().Extend(markState);
-            Actions.Add(markQRInput);
-            PageAction showQRInput = InitQRInput(0).Extend(markQRInput);
+            PageAction showQRInput = InitQRInput(0).Extend(MarkQRInput()).Extend(markState);
             Actions.Add(showQRInput);
         }
 
