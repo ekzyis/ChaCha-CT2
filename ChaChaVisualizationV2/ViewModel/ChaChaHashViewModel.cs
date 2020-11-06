@@ -52,7 +52,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 v.Reset();
             }
-            foreach (QRStep qrStep in QRStep)
+            foreach (VisualQRStep qrStep in QRStep)
             {
                 foreach (QRValue v in qrStep)
                 {
@@ -63,14 +63,25 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void InitActions()
         {
+            // Copy from state into quarterround input
             PageAction markState = MarkState(0, 4, 8, 12);
-            PageAction markQRInput = MarkQRInput();
-            PageAction initQRInput = InitQRInput(0);
-            PageAction showQRInput = initQRInput.Extend(markQRInput, markState);
-            PageAction unmarkState = initQRInput;
+            PageAction markQRInputs = MarkQRInputs();
+            PageAction insertQRInputs = InsertQRInputs(0);
+            PageAction showQRInput = insertQRInputs.Extend(markQRInputs, markState);
+            PageAction unmarkState = insertQRInputs;
             Actions.Add(markState);
             Actions.Add(showQRInput);
             Actions.Add(unmarkState);
+
+            // Execute first addition
+            PageAction markAddInputs = MarkAddInputs(0);
+            PageAction insertAdd = InsertAdd(0);
+            PageAction markAdd = MarkAdd(0);
+            PageAction showAdd = insertAdd.Extend(markAddInputs, markAdd);
+            PageAction unmarkAdd = insertAdd;
+            Actions.Add(markAddInputs);
+            Actions.Add(showAdd);
+            Actions.Add(unmarkAdd);
         }
 
         #region Actions
@@ -86,7 +97,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             };
         }
 
-        private Action MarkQRInput()
+        private Action MarkQRInputs()
         {
             return () =>
             {
@@ -97,9 +108,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             };
         }
 
-        private Action InitQRInput(int index)
+        private Action InsertQRInputs(int index)
         {
             return () => (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[index];
+        }
+
+        private Action MarkAddInputs(int index)
+        {
+            return () =>
+            {
+                QRStep[index].Add.MarkInput = true;
+            };
+        }
+
+        private Action MarkAdd(int index)
+        {
+            return () =>
+            {
+                QRStep[index].Add.Mark = true;
+            };
+        }
+
+        private Action InsertAdd(int index)
+        {
+            return () => QRStep[index].Add.Value = ChaChaVisualization.QRStep[index].Add;
         }
 
         #endregion Actions
@@ -123,11 +155,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private ObservableCollection<QRStep> _qrStep; public ObservableCollection<QRStep> QRStep
+        private ObservableCollection<VisualQRStep> _qrStep; public ObservableCollection<VisualQRStep> QRStep
         {
             get
             {
-                if (_qrStep == null) _qrStep = new ObservableCollection<QRStep>();
+                if (_qrStep == null) _qrStep = new ObservableCollection<VisualQRStep>();
                 return _qrStep;
             }
             private set
@@ -323,13 +355,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 StateValues.Add(new StateValue(state[i]));
             }
+            Debug.Assert(QRStep.Count == 0, "QRStep should be empty during ChaCha hash setup.");
+            // For each round, there are four quarterround and each quarterround has four steps.
+            for (int i = 0; i < Settings.Rounds * 4 * 4; ++i)
+            {
+                QRStep.Add(new VisualQRStep());
+            }
         }
 
         public void Teardown()
         {
             MoveToFirstAction();
-            // Clear state to undo Setup.
+            // Clear lists to undo Setup.
             StateValues.Clear();
+            QRStep.Clear();
         }
 
         #endregion INavigation

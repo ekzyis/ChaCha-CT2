@@ -1,25 +1,18 @@
-﻿using System.Collections;
-
-namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
+﻿namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
 {
     /// <summary>
     /// Class for each step during one quarterround.
     /// </summary>
-    internal class QRStep
+    public class QRStep
     {
-        public QRValue Add { get; set; }
-        public QRValue XOR { get; set; }
-        public QRValue Shift { get; set; }
-
-        /// <summary>
-        /// Get enumerator for all quarterround values of this step.
-        /// </summary>
-        /// <remarks>
-        /// Needed for `foreach`.
-        /// </remarks>
-        public IEnumerator GetEnumerator()
+        public QRStep(uint add, uint xor, uint shift)
         {
-            return new QRValue[] { Add, XOR, Shift }.GetEnumerator();
+            Add = add;
+            XOR = xor;
+            Shift = shift;
         }
+        public uint Add { get; }
+        public uint XOR { get; }
+        public uint Shift { get; }
     }
 }

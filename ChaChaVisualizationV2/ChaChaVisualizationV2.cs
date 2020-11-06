@@ -15,6 +15,8 @@
 */
 
 using Cryptool.PluginBase;
+using Cryptool.Plugins.ChaCha.Util;
+using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -53,6 +55,29 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             return base.Quarterround(a, b, c, d);
         }
 
+        /// <summary>
+        /// Visualization overriden quarterround step function.
+        ///
+        /// Does not call base function because it must calculate intermediate values anyway and thus
+        /// can return them without calling base function.
+        /// </summary>
+        /// <param name="x1"></param>
+        /// <param name="x2"></param>
+        /// <param name="x3"></param>
+        /// <param name="shift"></param>
+        /// <returns></returns>
+        protected override (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
+        {
+            x1 += x2;
+            uint add = x1;
+            x3 ^= x1;
+            uint xor = x3;
+            x3 = ByteUtil.RotateLeft(x3, shift);
+            uint shift_ = x3;
+            QRStep.Add(new QRStep(add, xor, shift_));
+            return (x1, x2, x3);
+        }
+
         public override IEnumerable<ValidationResult> Validate()
         {
             IEnumerable<ValidationResult> results = base.Validate();
@@ -83,6 +108,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             {
                 if (_qrInput == null) _qrInput = new List<(uint, uint, uint, uint)>();
                 return _qrInput;
+            }
+        }
+
+        private List<QRStep> _qrStep; public List<QRStep> QRStep
+        {
+            get
+            {
+                if (_qrStep == null) _qrStep = new List<QRStep>();
+                return _qrStep;
             }
         }
 
