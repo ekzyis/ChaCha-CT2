@@ -28,20 +28,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
             Action = action;
         }
 
-        public IAction Extend(IAction action)
+        public Action Extend(Action action)
         {
-            return new PageAction(Action.Extend(Action));
+            return Action.Extend(action);
         }
 
         /// <summary>
         /// Syntactic sugar for Extend chaining.
-        /// In other words: action.Extend(x, y) is equivalent to action.Extend(x).Extend(y)
+        /// In other words: PageAction.Extend(x, y) is equivalent to PageAction.Extend(x).Extend(y)
         /// </summary>
         /// <param name="actions"></param>
         /// <returns></returns>
-        public T Extend<T>(params T[] actions) where T : IAction
+        public Action Extend(params Action[] actions)
         {
-            return actions.Aggregate((acc, curr) => (T)acc.Extend(curr));
+            return actions.Aggregate(Action, (acc, curr) => acc.Extend(curr));
         }
 
         public void Invoke()
@@ -81,7 +81,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
 
         /// <summary>
         /// Syntactic sugar for Extend chaining.
-        /// In other words: action.Extend(x, y) is equivalent to action.Extend(x).Extend(y)
+        /// In other words: Action.Extend(x, y) is equivalent to Action.Extend(x).Extend(y)
         /// </summary>
         public static Action Extend(this Action action, params Action[] toExtend)
         {
