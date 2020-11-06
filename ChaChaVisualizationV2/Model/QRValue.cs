@@ -12,6 +12,18 @@
         /// <summary>
         /// True if the input paths for this value should be marked.
         /// </summary>
-        public bool MarkInput { get; set; }
+        private bool _markInput; public bool MarkInput
+
+        {
+            get
+            {
+                return _markInput;
+            }
+            set
+            {
+                _markInput = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

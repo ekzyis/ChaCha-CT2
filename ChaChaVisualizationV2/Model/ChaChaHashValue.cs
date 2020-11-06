@@ -1,9 +1,12 @@
-﻿namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
 {
     /// <summary>
     /// Abstract class for all values which are calculated during the ChaCha hash function.
     /// </summary>
-    internal abstract class ChaChaHashValue
+    internal abstract class ChaChaHashValue : INotifyPropertyChanged
     {
         public ChaChaHashValue(uint value)
         {
@@ -13,11 +16,47 @@
         /// <summary>
         /// The actual UInt32 value.
         /// </summary>
-        public uint Value { get; set; }
+        private uint _value; public uint Value
+
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                _value = value;
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// True if the element containing the value should be marked, for example by setting the background to a specific color.
         /// </summary>
-        public bool Mark { get; set; }
+        private bool _mark; public bool Mark
+
+        {
+            get
+            {
+                return _mark;
+            }
+            set
+            {
+                _mark = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChangedEventHandler handler = this.PropertyChanged;
+            if (handler != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                handler(this, e);
+            }
+        }
     }
 }
