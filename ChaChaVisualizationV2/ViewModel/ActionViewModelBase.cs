@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -18,11 +19,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Actions.Add(() => Reset());
         }
 
-        private List<Action> _actions; public List<Action> Actions
+        private List<PageAction> _actions; public List<PageAction> Actions
         {
             get
             {
-                if (_actions == null) _actions = new List<Action>();
+                if (_actions == null) _actions = new List<PageAction>();
                 return _actions;
             }
             set
@@ -80,7 +81,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 throw new ArgumentOutOfRangeException("n", n, $"Action index out of range. Total actions: {TotalActions}");
             }
             Reset();
-            Actions[n]();
+            Actions[n].Invoke();
             CurrentActionIndex = n;
         }
 

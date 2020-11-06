@@ -111,6 +111,8 @@
     <Compile Include="Helper\Validation\StringLengthValidationRule.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Model\ChaChaHashValue.cs" />
+    <Compile Include="Model\IAction.cs" />
+    <Compile Include="Model\PageAction.cs" />
     <Compile Include="Model\QRStep.cs" />
     <Compile Include="Model\QRValue.cs" />
     <Compile Include="Model\StateValue.cs" />

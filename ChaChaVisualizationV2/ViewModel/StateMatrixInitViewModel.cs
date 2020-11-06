@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
