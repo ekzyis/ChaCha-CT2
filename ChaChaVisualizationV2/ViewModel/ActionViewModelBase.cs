@@ -3,6 +3,7 @@ using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -38,8 +39,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void ActionSliderValueChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int actionIndex = (int)e.NewValue;
-            MoveToAction(actionIndex);
+            Slider slider = (Slider)sender;
+            if (slider.IsFocused)
+            {
+                int actionIndex = (int)e.NewValue;
+                MoveToAction(actionIndex);
+            }
         }
 
         /// <summary>
