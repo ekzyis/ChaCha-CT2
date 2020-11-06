@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
 {
@@ -30,6 +31,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
         public IAction Extend(IAction action)
         {
             return new PageAction(Action.Extend(Action));
+        }
+
+        /// <summary>
+        /// Syntactic sugar for Extend chaining.
+        /// In other words: action.Extend(x, y) is equivalent to action.Extend(x).Extend(y)
+        /// </summary>
+        public IAction Extend(params IAction[] actions)
+        {
+            return actions.Aggregate((acc, curr) => acc.Extend(curr));
         }
 
         public void Invoke()
