@@ -33,6 +33,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
             return new PageAction(Action.Extend(Action));
         }
 
+        /// <summary>
+        /// Syntactic sugar for Extend chaining.
+        /// In other words: action.Extend(x, y) is equivalent to action.Extend(x).Extend(y)
+        /// </summary>
+        /// <param name="actions"></param>
+        /// <returns></returns>
+        public T Extend<T>(params T[] actions) where T : IAction
+        {
+            return actions.Aggregate((acc, curr) => (T)acc.Extend(curr));
+        }
+
         public void Invoke()
         {
             Action.Invoke();
