@@ -73,6 +73,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 MarkQRInput();
             });
+            Actions.Add(() =>
+            {
+                (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[0];
+            });
         }
 
         private void MarkQRInput()

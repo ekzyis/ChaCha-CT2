@@ -47,6 +47,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             return state;
         }
 
+        protected override (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
+        {
+            QRInput.Add((a, b, c, d));
+            return base.Quarterround(a, b, c, d);
+        }
+
         public override IEnumerable<ValidationResult> Validate()
         {
             IEnumerable<ValidationResult> results = base.Validate();
@@ -68,6 +74,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             {
                 if (_state == null) _state = new List<uint[]>();
                 return _state;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrInput; public List<(uint, uint, uint, uint)> QRInput
+        {
+            get
+            {
+                if (_qrInput == null) _qrInput = new List<(uint, uint, uint, uint)>();
+                return _qrInput;
             }
         }
 
