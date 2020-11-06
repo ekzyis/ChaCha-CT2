@@ -2,18 +2,31 @@
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class ChaChaHashViewModel : ActionViewModelBase, INavigation, ITitle, IChaCha
     {
+        /// <summary>
+        /// Convenience list to write cleaner code which modifies all input values.
+        /// </summary>
+        private QRValue[] qrInValues;
+
+        /// <summary>
+        /// Convenience list to write cleaner code which modifies all output values.
+        /// </summary>
+        private QRValue[] qrOutValues;
+
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
             PresentationViewModel = chachaPresentationViewModel;
             Name = "ChaCha hash";
             Title = "ChaCha hash function";
             InitActions();
+            qrInValues = new QRValue[] { QRInA, QRInB, QRInC, QRInD };
+            qrOutValues = new QRValue[] { QROutA, QROutB, QROutC, QROutD };
         }
 
         /// <summary>
@@ -26,6 +39,24 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 StateValues[i].Value = state[i];
                 StateValues[i].Mark = false;
+            }
+        }
+
+        /// <summary>
+        /// Clear the values and background of each cell in the quarterround visualzation.
+        /// </summary>
+        private void ResetQuarterroundValues()
+        {
+            foreach (QRValue v in qrInValues.Concat(qrOutValues))
+            {
+                v.Reset();
+            }
+            foreach (QRStep qrStep in QRStep)
+            {
+                foreach (QRValue v in qrStep)
+                {
+                    v.Reset();
+                }
             }
         }
 
@@ -227,6 +258,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public override void Reset()
         {
             ResetStateMatrixValues();
+            ResetQuarterroundValues();
         }
 
         #endregion Action Navigation
