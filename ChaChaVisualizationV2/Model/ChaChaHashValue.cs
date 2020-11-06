@@ -52,6 +52,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
             }
         }
 
+        /// <summary>
+        /// Reset the field.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Value = null;
+            Mark = false;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")

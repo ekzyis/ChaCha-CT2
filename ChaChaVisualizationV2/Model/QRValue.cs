@@ -29,5 +29,11 @@
                 OnPropertyChanged();
             }
         }
+
+        public override void Reset()
+        {
+            base.Reset();
+            MarkInput = false;
+        }
     }
 }
