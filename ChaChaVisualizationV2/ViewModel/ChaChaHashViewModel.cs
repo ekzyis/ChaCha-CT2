@@ -255,6 +255,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public void Teardown()
         {
             MoveToFirstAction();
+            // Clear state to undo Setup.
+            StateValues.Clear();
         }
 
         #endregion INavigation
