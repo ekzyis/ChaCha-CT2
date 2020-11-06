@@ -82,6 +82,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrInA == null) _qrInA = new QRValue();
                 return _qrInA;
             }
             set
@@ -95,6 +96,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrInB == null) _qrInB = new QRValue();
                 return _qrInB;
             }
             set
@@ -108,6 +110,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrInC == null) _qrInC = new QRValue();
                 return _qrInC;
             }
             set
@@ -121,6 +124,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrInD == null) _qrInD = new QRValue();
                 return _qrInD;
             }
             set
@@ -138,6 +142,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrOutA == null) _qrOutA = new QRValue();
                 return _qrOutA;
             }
             set
@@ -151,6 +156,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrOutB == null) _qrOutB = new QRValue();
                 return _qrOutB;
             }
             set
@@ -164,6 +170,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrOutC == null) _qrOutC = new QRValue();
                 return _qrOutC;
             }
             set
@@ -177,6 +184,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
+                if (_qrOutD == null) _qrOutD = new QRValue();
                 return _qrOutD;
             }
             set
