@@ -52,7 +52,7 @@
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="0" Grid.Column="0">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[0].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -69,7 +69,7 @@
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[1].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -86,7 +86,7 @@
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[2].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -103,7 +103,7 @@
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[3].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -121,7 +121,7 @@
 
                     <Border Grid.Row="1" Grid.Column="0">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[4].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -138,7 +138,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[5].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -155,7 +155,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[6].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -172,7 +172,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[7].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -190,7 +190,7 @@
 
                     <Border Grid.Row="2" Grid.Column="0">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[8].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -207,7 +207,7 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[9].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -224,7 +224,7 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[10].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -241,7 +241,7 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[11].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -259,7 +259,7 @@
 
                     <Border Grid.Row="3" Grid.Column="0">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[12].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -276,7 +276,7 @@
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[13].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -293,7 +293,7 @@
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[14].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
@@ -310,7 +310,7 @@
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3">
                         <Border.Style>
-                            <Style TargetType="{x:Type Border}">
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding StateValues[15].Mark}" Value="True">
                                         <Setter Property="Background" Value="AliceBlue" />
