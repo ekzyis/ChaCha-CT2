@@ -51,6 +51,15 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Row="0" Grid.Column="0">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[0].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[0].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -59,6 +68,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="1">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[1].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[1].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -67,6 +85,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="2">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[2].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[2].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -75,6 +102,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="0" Grid.Column="3">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[3].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[3].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -84,6 +120,15 @@
                     </Border>
 
                     <Border Grid.Row="1" Grid.Column="0">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[4].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[4].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -92,6 +137,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[5].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[5].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -100,6 +154,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[6].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[6].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -108,6 +171,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[7].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[7].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -117,6 +189,15 @@
                     </Border>
 
                     <Border Grid.Row="2" Grid.Column="0">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[8].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[8].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -125,6 +206,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[9].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[9].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -133,6 +223,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[10].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[10].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -141,6 +240,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[11].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[11].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -150,6 +258,15 @@
                     </Border>
 
                     <Border Grid.Row="3" Grid.Column="0">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[12].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[12].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -158,6 +275,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[13].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[13].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -166,6 +292,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[14].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[14].Value, Converter={StaticResource UInt32ToHex}}" />
@@ -174,6 +309,15 @@
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding StateValues[15].Mark}" Value="True">
+                                        <Setter Property="Background" Value="AliceBlue" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <TextBox Text="{Binding StateValues[15].Value, Converter={StaticResource UInt32ToHex}}" />
