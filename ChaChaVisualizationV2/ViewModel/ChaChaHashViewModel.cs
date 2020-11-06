@@ -13,12 +13,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <summary>
         /// Convenience list to write cleaner code which modifies all input values.
         /// </summary>
-        private QRValue[] qrInValues;
+        private readonly QRValue[] qrInValues;
 
         /// <summary>
         /// Convenience list to write cleaner code which modifies all output values.
         /// </summary>
-        private QRValue[] qrOutValues;
+        private readonly QRValue[] qrOutValues;
 
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
