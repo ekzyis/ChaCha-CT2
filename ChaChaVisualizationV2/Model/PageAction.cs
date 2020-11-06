@@ -58,12 +58,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
         /// The last parameter is the action from which we want to derive a new, extended action.
         /// This is why we call it first in the new returned action.
         /// </summary>
-        public static Action Extend(this Action action1, Action action2)
+        public static Action Extend(this Action action, Action toExtend)
         {
             return () =>
             {
-                action2.Invoke();
-                action1.Invoke();
+                toExtend.Invoke();
+                action.Invoke();
             };
         }
     }
