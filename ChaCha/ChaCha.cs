@@ -338,7 +338,7 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         /// <param name="state">The state which will be hashed</param>
         /// <param name="rounds">Rounds of hash function</param>
-        public void ChaChaHash(ref uint[] state, int rounds)
+        public virtual void ChaChaHash(ref uint[] state, int rounds)
         {
             if (!(rounds == 8 || rounds == 12 || rounds == 20))
             {
@@ -376,7 +376,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Run a quarterround(a,b,c,d) with the given indices on the state.
         /// </summary>
-        public void Quarterround(ref uint[] state, int i, int j, int k, int l)
+        public virtual void Quarterround(ref uint[] state, int i, int j, int k, int l)
         {
             (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
         }
@@ -384,7 +384,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Calculate the quarterround of the four inputs.
         /// </summary>
-        private (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
+        public virtual (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
             (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
             {
