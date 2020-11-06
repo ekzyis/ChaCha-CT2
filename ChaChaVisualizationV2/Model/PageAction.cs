@@ -21,12 +21,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
         /// The list of actions this action extends.
         /// Named `baseActions` because this action can be called to be "based" on them.
         /// </summary>
-        private List<IAction> BaseActions { get; set; }
+        private List<IAction> BaseActions { get; set; } = new List<IAction>();
 
         /// <summary>
         /// The list of actions of this page action.
         /// </summary>
-        private List<Action> Actions { get; set; }
+        private List<Action> Actions { get; set; } = new List<Action>();
 
         public PageAction(Action action)
         {
@@ -36,6 +36,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
         public void Extend(IAction action)
         {
             BaseActions.Add(action);
+        }
+
+        public void Extend(Action action)
+        {
+            BaseActions.Add(new PageAction(action));
         }
 
         public void Invoke()
@@ -49,6 +54,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
                 action.Invoke();
             }
         }
+
+        public static implicit operator PageAction(Action action) => new PageAction(action);
+
+        public static implicit operator Action(PageAction pageAction) => () => pageAction.Invoke();
     }
 
     internal static class PageActionExtensions
@@ -60,6 +69,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
         {
             PageAction wrappedAction = new PageAction(action);
             list.Add(wrappedAction);
+        }
+
+        public static PageAction Extend(this Action a, Action action)
+        {
+            PageAction pageAction = new PageAction(a);
+            pageAction.Extend(action);
+            return pageAction;
         }
     }
 }

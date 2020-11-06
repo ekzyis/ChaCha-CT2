@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -62,30 +63,44 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void InitActions()
         {
-            Actions.Add(() =>
-            {
-                StateValues[0].Mark = true;
-                StateValues[4].Mark = true;
-                StateValues[8].Mark = true;
-                StateValues[12].Mark = true;
-            });
-            Actions.Add(() =>
-            {
-                MarkQRInput();
-            });
-            Actions.Add(() =>
-            {
-                (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[0];
-            });
+            PageAction markState = MarkState(0, 4, 8, 12);
+            Actions.Add(markState);
+            PageAction markQRInput = MarkQRInput().Extend(markState);
+            Actions.Add(markQRInput);
+            PageAction showQRInput = InitQRInput(0).Extend(markQRInput);
+            Actions.Add(showQRInput);
         }
 
-        private void MarkQRInput()
+        #region Actions
+
+        private Action MarkState(params int[] stateIndices)
         {
-            QRInA.Mark = true;
-            QRInB.Mark = true;
-            QRInC.Mark = true;
-            QRInD.Mark = true;
+            return () =>
+            {
+                foreach (int i in stateIndices)
+                {
+                    StateValues[i].Mark = true;
+                }
+            };
         }
+
+        private Action MarkQRInput()
+        {
+            return () =>
+            {
+                QRInA.Mark = true;
+                QRInB.Mark = true;
+                QRInC.Mark = true;
+                QRInD.Mark = true;
+            };
+        }
+
+        private Action InitQRInput(int index)
+        {
+            return () => (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[0];
+        }
+
+        #endregion Actions
 
         #region Binding Properties
 
