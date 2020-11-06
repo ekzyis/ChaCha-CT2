@@ -97,7 +97,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private Action InitQRInput(int index)
         {
-            return () => (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[0];
+            return () => (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[index];
         }
 
         #endregion Actions
