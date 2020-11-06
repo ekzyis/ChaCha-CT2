@@ -393,6 +393,9 @@ namespace Cryptool.Plugins.ChaCha
             return (a, b, c, d);
         }
 
+        /// <summary>
+        /// Calculate one step in the quarterround function.
+        /// </summary>
         public virtual (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
         {
             x1 += x2;
