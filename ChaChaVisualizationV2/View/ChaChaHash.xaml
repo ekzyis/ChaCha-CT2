@@ -474,7 +474,7 @@
                                     </Style>
                                 </Path.Style>
                             </Path>
-                            <Path Data="M 563,20 h 5 m 20,0 h 5" Canvas.Left="65" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
+                            <Path Data="M 563,20 h 5 m 20,0 h 5" Canvas.Left="733" Canvas.Top="{ Binding ElementName=QRInBBorder, Path=(Canvas.Top)}">
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
