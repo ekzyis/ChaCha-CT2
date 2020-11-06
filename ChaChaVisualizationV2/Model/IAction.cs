@@ -6,9 +6,9 @@
     internal interface IAction
     {
         /// <summary>
-        /// Mark this action as an extension/base of the given action.
+        /// Return a new action which extends the current action with the given action.
         /// </summary>
-        void Extend(IAction action);
+        IAction Extend(IAction action);
 
         /// <summary>
         /// Invoke the action; executing it.

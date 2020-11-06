@@ -18,41 +18,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
     internal class PageAction : IAction
     {
         /// <summary>
-        /// The list of actions this action extends.
-        /// Named `baseActions` because this action can be called to be "based" on them.
+        /// The action which will perform the UI changes for this page action.
         /// </summary>
-        private List<IAction> BaseActions { get; set; } = new List<IAction>();
-
-        /// <summary>
-        /// The list of actions of this page action.
-        /// </summary>
-        private List<Action> Actions { get; set; } = new List<Action>();
+        private Action Action { get; set; }
 
         public PageAction(Action action)
         {
-            Actions.Add(action);
+            Action = action;
         }
 
-        public void Extend(IAction action)
+        public IAction Extend(IAction action)
         {
-            BaseActions.Add(action);
-        }
-
-        public void Extend(Action action)
-        {
-            BaseActions.Add(new PageAction(action));
+            return new PageAction(Action.Extend(Action));
         }
 
         public void Invoke()
         {
-            foreach (IAction baseAction in BaseActions)
-            {
-                baseAction.Invoke();
-            }
-            foreach (Action action in Actions)
-            {
-                action.Invoke();
-            }
+            Action.Invoke();
         }
 
         public static implicit operator PageAction(Action action) => new PageAction(action);
@@ -71,11 +53,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
             list.Add(wrappedAction);
         }
 
-        public static PageAction Extend(this Action a, Action action)
+        /// <summary>
+        /// Extension method to extend actions.
+        /// The last parameter is the action from which we want to derive a new, extended action.
+        /// This is why we call it first in the new returned action.
+        /// </summary>
+        public static Action Extend(this Action action1, Action action2)
         {
-            PageAction pageAction = new PageAction(a);
-            pageAction.Extend(action);
-            return pageAction;
+            return () =>
+            {
+                action2.Invoke();
+                action1.Invoke();
+            };
         }
     }
 }
