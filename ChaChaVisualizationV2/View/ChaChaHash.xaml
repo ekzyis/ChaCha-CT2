@@ -793,7 +793,16 @@
                                         </Grid.RowDefinitions>
                                         <Canvas Grid.Row="1" Grid.Column="0">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
+                                            <Border Canvas.Top="10" Canvas.Left="40">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[0].Add.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[0].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_0" />
@@ -815,7 +824,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="4" Grid.Column="1">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
+                                            <Border Canvas.Top="10" Canvas.Left="55">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[0].XOR.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[0].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_0" />
@@ -840,7 +858,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="4" Grid.Column="2">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
-                                            <Border Style="{StaticResource QRValueBorder}"  Canvas.Top="10" Canvas.Left="75">
+                                            <Border Canvas.Top="10" Canvas.Left="75">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[0].Shift.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[0].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_0" />
@@ -884,7 +911,16 @@
                                         </Grid.RowDefinitions>
                                         <Canvas Grid.Row="3" Grid.Column="0">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
+                                            <Border Canvas.Top="10" Canvas.Left="40">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[1].Add.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[1].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_1" />
@@ -907,7 +943,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="2" Grid.Column="1">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
+                                            <Border Canvas.Top="10" Canvas.Left="55">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[1].XOR.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[1].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_1" />
@@ -930,7 +975,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="2" Grid.Column="2">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="75">
+                                            <Border Canvas.Top="10" Canvas.Left="75">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[1].Shift.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[1].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_1" />
@@ -974,7 +1028,16 @@
                                         </Grid.RowDefinitions>
                                         <Canvas Grid.Row="1" Grid.Column="0">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
+                                            <Border Canvas.Top="10" Canvas.Left="40">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[2].Add.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[2].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_2" />
@@ -997,7 +1060,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="4" Grid.Column="1">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
+                                            <Border Canvas.Top="10" Canvas.Left="55">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[2].XOR.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[2].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_2" />
@@ -1022,7 +1094,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="4" Grid.Column="2">
                                             <Rectangle Style="{StaticResource QRValueRectangle}"  Canvas.Top="10" Canvas.Left="75" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="75">
+                                            <Border Canvas.Top="10" Canvas.Left="75">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[2].Shift.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[2].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_2" />
@@ -1066,7 +1147,16 @@
                                         </Grid.RowDefinitions>
                                         <Canvas Grid.Row="3" Grid.Column="0">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
+                                            <Border Canvas.Top="10" Canvas.Left="40">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[3].Add.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[3].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_3" />
@@ -1089,7 +1179,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="2" Grid.Column="1">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
+                                            <Border Canvas.Top="10" Canvas.Left="55">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[3].XOR.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[3].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_3" />
@@ -1112,7 +1211,16 @@
                                         </Canvas>
                                         <Canvas Grid.Row="2" Grid.Column="2">
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
-                                            <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="75">
+                                            <Border Canvas.Top="10" Canvas.Left="75">
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding QRStep[3].Shift.Mark}" Value="True">
+                                                                <Setter Property="Background" Value="AliceBlue" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
                                                 <StackPanel>
                                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[3].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_3" />
