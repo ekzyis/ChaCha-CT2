@@ -284,50 +284,50 @@
                             <!-- Input cells -->
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="0" Name="QRInABorder">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInA, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInA.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInADiffusion" />
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="60" Name="QRInBBorder">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInB, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInB.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInBDiffusion" />
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="120" Name="QRInCBorder">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInC, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInC.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInCDiffusion" />
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="180" Name="QRInDBorder">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInD, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInD.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInDDiffusion" />
                                 </StackPanel>
                             </Border>
                             <!-- Output cells -->
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="0">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutA, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutA.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutADiffusion" />
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="60">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutB, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutB.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutBDiffusion" />
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="120">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutC}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutC.Value}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutCDiffusion" />
                                 </StackPanel>
                             </Border>
                             <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="180">
                                 <StackPanel>
-                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutD}" />
+                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutD.Value}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutDDiffusion" />
                                 </StackPanel>
                             </Border>
@@ -343,7 +343,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[0].Add}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[0].Add.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -355,7 +355,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[0].XOR}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[0].XOR.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -367,7 +367,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[0].Shift}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[0].Shift.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -380,7 +380,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[1].Add}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[1].Add.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -392,7 +392,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[1].XOR}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[1].XOR.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -404,7 +404,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[1].Shift}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[1].Shift.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -417,7 +417,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[2].Add}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[2].Add.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -429,7 +429,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[2].XOR}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[2].XOR.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -441,7 +441,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[2].Shift}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[2].Shift.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -454,7 +454,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[3].Add}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[3].Add.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -466,7 +466,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[3].XOR}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[3].XOR.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -478,7 +478,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExec[3].Shift}" Value="True">
+                                            <DataTrigger Binding="{Binding QRStep[3].Shift.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -491,7 +491,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExecOutA}" Value="True">
+                                            <DataTrigger Binding="{Binding QROutA.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -503,7 +503,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExecOutB}" Value="True">
+                                            <DataTrigger Binding="{Binding QROutB.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -515,7 +515,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExecOutC}" Value="True">
+                                            <DataTrigger Binding="{Binding QROutC.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -527,7 +527,7 @@
                                 <Path.Style>
                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRExecOutD}" Value="True">
+                                            <DataTrigger Binding="{Binding QROutD.MarkInput}" Value="True">
                                                 <Setter Property="Stroke" Value="Purple" />
                                                 <Setter Property="StrokeThickness" Value="3" />
                                             </DataTrigger>
@@ -579,7 +579,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[0].Add}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[0].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_0" />
                                                 </StackPanel>
                                             </Border>
@@ -587,7 +587,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[0].Add}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[0].Add.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -601,7 +601,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[0].XOR}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[0].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_0" />
                                                 </StackPanel>
                                             </Border>
@@ -610,7 +610,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[0].XOR}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[0].XOR.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -626,7 +626,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
                                             <Border Style="{StaticResource QRValueBorder}"  Canvas.Top="10" Canvas.Left="75">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[0].Shift}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[0].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_0" />
                                                 </StackPanel>
                                             </Border>
@@ -634,7 +634,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[0].XOR}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[0].Shift.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -670,7 +670,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[1].Add}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[1].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_1" />
                                                 </StackPanel>
                                             </Border>
@@ -678,7 +678,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[1].Add}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[1].Add.Value}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -693,7 +693,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[1].XOR}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[1].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_1" />
                                                 </StackPanel>
                                             </Border>
@@ -702,7 +702,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[1].XOR}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[1].XOR.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -716,7 +716,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="75">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[1].Shift}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[1].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_1" />
                                                 </StackPanel>
                                             </Border>
@@ -724,7 +724,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[1].Shift}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[1].Shift.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -760,7 +760,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[2].Add}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[2].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
@@ -768,7 +768,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[2].Add}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[2].Add.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -783,7 +783,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[2].XOR}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[2].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
@@ -792,7 +792,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[2].XOR}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[2].XOR.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -808,7 +808,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}"  Canvas.Top="10" Canvas.Left="75" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="75">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[2].Shift}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[2].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
@@ -816,7 +816,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[2].Shift}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[2].Shift.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -852,7 +852,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="40" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="40">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[3].Add}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[3].Add.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueAddDiffusion_3" />
                                                 </StackPanel>
                                             </Border>
@@ -860,7 +860,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[3].Add}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[3].Add.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -875,7 +875,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="55" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="55">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[3].XOR}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[3].XOR.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_3" />
                                                 </StackPanel>
                                             </Border>
@@ -884,7 +884,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[3].XOR}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[3].XOR.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -898,7 +898,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
                                             <Border Style="{StaticResource QRValueBorder}" Canvas.Top="10" Canvas.Left="75">
                                                 <StackPanel>
-                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[3].Shift}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRStep[3].Shift.Value}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_3" />
                                                 </StackPanel>
                                             </Border>
@@ -906,7 +906,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource ShiftCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRExec[3].Shift}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[3].Shift.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
