@@ -426,50 +426,122 @@
                     <Canvas Width="1500" Height="260" Grid.Row="1">
                         <Canvas Canvas.Top="20">
                             <!-- Input cells -->
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="0" Name="QRInABorder">
+                            <Border Canvas.Left="00" Canvas.Top="0" Name="QRInABorder">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QRInA.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInA.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInADiffusion" />
                                 </StackPanel>
                             </Border>
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="60" Name="QRInBBorder">
+                            <Border Canvas.Left="00" Canvas.Top="60" Name="QRInBBorder">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QRInB.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInB.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInBDiffusion" />
                                 </StackPanel>
                             </Border>
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="120" Name="QRInCBorder">
+                            <Border Canvas.Left="00" Canvas.Top="120" Name="QRInCBorder">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QRInC.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInC.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInCDiffusion" />
                                 </StackPanel>
                             </Border>
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="00" Canvas.Top="180" Name="QRInDBorder">
+                            <Border Canvas.Left="00" Canvas.Top="180" Name="QRInDBorder">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QRInD.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInD.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInDDiffusion" />
                                 </StackPanel>
                             </Border>
                             <!-- Output cells -->
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="0">
+                            <Border Canvas.Left="1435" Canvas.Top="0">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QROutA.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutA.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutADiffusion" />
                                 </StackPanel>
                             </Border>
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="60">
+                            <Border Canvas.Left="1435" Canvas.Top="60">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QROutB.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutB.Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutBDiffusion" />
                                 </StackPanel>
                             </Border>
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="120">
+                            <Border Canvas.Left="1435" Canvas.Top="120">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QROutC.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutC.Value}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutCDiffusion" />
                                 </StackPanel>
                             </Border>
-                            <Border Style="{StaticResource QRValueBorder}" Canvas.Left="1435" Canvas.Top="180">
+                            <Border Canvas.Left="1435" Canvas.Top="180">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding QROutD.Mark}" Value="True">
+                                                <Setter Property="Background" Value="AliceBlue" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <StackPanel>
                                     <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutD.Value}" />
                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutDDiffusion" />
