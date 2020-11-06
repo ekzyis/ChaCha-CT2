@@ -17,7 +17,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl Template="{StaticResource PageContentTemplate}">
+    <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
