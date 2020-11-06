@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
@@ -16,31 +17,160 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void InitStateMatrixValues()
         {
             uint[] state = ChaChaVisualization.OriginalState[0];
-            StateMatrixValues.Clear();
+            StateValues.Clear();
             for (int i = 0; i < state.Length; ++i)
             {
-                StateMatrixValues.Add(state[i]);
+                StateValues.Add(new StateValue(state[i]));
             }
         }
 
         #region Binding Properties
 
-        private ObservableCollection<uint> _stateMatrixValues; public ObservableCollection<uint> StateMatrixValues
+        private ObservableCollection<StateValue> _stateValues; public ObservableCollection<StateValue> StateValues
         {
             get
             {
-                if (_stateMatrixValues == null) _stateMatrixValues = new ObservableCollection<uint>();
-                return _stateMatrixValues;
+                if (_stateValues == null) _stateValues = new ObservableCollection<StateValue>();
+                return _stateValues;
             }
             private set
             {
-                if (_stateMatrixValues != value)
+                if (_stateValues != value)
                 {
-                    _stateMatrixValues = value;
+                    _stateValues = value;
                     OnPropertyChanged();
                 }
             }
         }
+
+        private ObservableCollection<QRStep> _qrStep; public ObservableCollection<QRStep> QRStep
+        {
+            get
+            {
+                if (_qrStep == null) _qrStep = new ObservableCollection<QRStep>();
+                return _qrStep;
+            }
+            private set
+            {
+                if (_qrStep != value)
+                {
+                    _qrStep = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #region QRInX
+
+        private QRValue _qrInA; public QRValue QRInA
+        {
+            get
+            {
+                return _qrInA;
+            }
+            set
+            {
+                _qrInA = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _qrInB; public QRValue QRInB
+        {
+            get
+            {
+                return _qrInB;
+            }
+            set
+            {
+                _qrInB = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _qrInC; public QRValue QRInC
+        {
+            get
+            {
+                return _qrInC;
+            }
+            set
+            {
+                _qrInC = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _qrInD; public QRValue QRInD
+        {
+            get
+            {
+                return _qrInD;
+            }
+            set
+            {
+                _qrInD = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion QRInX
+
+        #region QROutX
+
+        private QRValue _qrOutA; public QRValue QROutA
+        {
+            get
+            {
+                return _qrOutA;
+            }
+            set
+            {
+                _qrOutA = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _qrOutB; public QRValue QROutB
+        {
+            get
+            {
+                return _qrOutB;
+            }
+            set
+            {
+                _qrOutB = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _qrOutC; public QRValue QROutC
+        {
+            get
+            {
+                return _qrOutC;
+            }
+            set
+            {
+                _qrOutC = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _qrOutD; public QRValue QROutD
+        {
+            get
+            {
+                return _qrOutD;
+            }
+            set
+            {
+                _qrOutD = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion QROutX
 
         #endregion Binding Properties
 

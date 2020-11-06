@@ -109,9 +109,11 @@
     <Compile Include="Helper\Validation\HexValidationRule.cs" />
     <Compile Include="Helper\Validation\RangeChecker.cs" />
     <Compile Include="Helper\Validation\StringLengthValidationRule.cs" />
-    <Compile Include="Model\IGrid.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
-    <Compile Include="Model\StateMatrixValue.cs" />
+    <Compile Include="Model\ChaChaHashValue.cs" />
+    <Compile Include="Model\QRStep.cs" />
+    <Compile Include="Model\QRValue.cs" />
+    <Compile Include="Model\StateValue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ContentTemplate\PageContentTemplate.xaml.cs">
       <DependentUpon>PageContentTemplate.xaml</DependentUpon>
