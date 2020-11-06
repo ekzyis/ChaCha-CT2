@@ -1,6 +1,7 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -16,16 +17,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         /// <summary>
-        /// Replace the with the state before the ChaCha hash function was applied.
-        /// Works by first clearing the state and then adding the values in their respective order.
+        /// Replace the state with the state before the ChaCha hash function was applied.
         /// </summary>
-        private void InitStateMatrixValues()
+        private void ResetStateMatrixValues()
         {
             uint[] state = ChaChaVisualization.OriginalState[0];
-            StateValues.Clear();
-            for (int i = 0; i < state.Length; ++i)
+            for (int i = 0; i < 16; ++i)
             {
-                StateValues.Add(new StateValue(state[i]));
+                StateValues[i].Value = state[i];
+                StateValues[i].Mark = false;
             }
         }
 
@@ -218,7 +218,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
-            InitStateMatrixValues();
+            ResetStateMatrixValues();
         }
 
         #endregion Action Navigation
@@ -244,7 +244,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void Setup()
         {
-            InitStateMatrixValues();
+            Debug.Assert(StateValues.Count == 0, "StateValues should be empty during ChaCha hash setup.");
+            uint[] state = ChaChaVisualization.OriginalState[0];
+            for (int i = 0; i < state.Length; ++i)
+            {
+                StateValues.Add(new StateValue(state[i]));
+            }
         }
 
         public void Teardown()
