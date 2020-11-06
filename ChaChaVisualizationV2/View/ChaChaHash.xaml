@@ -257,9 +257,9 @@
                             <Setter Property="FontSize" Value="18" />
                             <Setter Property="Content" Value="+" />
                         </Style>
-                        <Style x:Key="XORLabel" TargetType="{x:Type TextBox}">
+                        <Style x:Key="XORLabel" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
                             <Setter Property="Width" Value="20" />
-                            <Setter Property="Height" Value="20" />
+                            <Setter Property="Height" Value="15" />
                             <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="VerticalAlignment" Value="Center" />
                             <Setter Property="FontSize" Value="8" />
@@ -605,6 +605,7 @@
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_0" />
                                                 </StackPanel>
                                             </Border>
+                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_0, Path=Stroke}" />
                                             <Path Name="QRXORCircle_0">
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
@@ -617,7 +618,6 @@
                                                     </Style>
                                                 </Path.Style>
                                             </Path>
-                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_0, Path=Stroke}" />
                                         </Canvas>
                                         <Canvas Grid.Row="1" Grid.Column="1">
                                             <Path Canvas.Left="30" Data="M 10,30 v 170" />
@@ -626,7 +626,7 @@
                                             <Rectangle Style="{StaticResource QRValueRectangle}" Canvas.Top="10" Canvas.Left="75" />
                                             <Border Style="{StaticResource QRValueBorder}"  Canvas.Top="10" Canvas.Left="75">
                                                 <StackPanel>
-                                                    <TextBox Text="{Binding QRValue[0].Shift}" />
+                                                    <TextBox Style="{StaticResource QRValue}" Text="{Binding QRValue[0].Shift}" />
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueShiftDiffusion_0" />
                                                 </StackPanel>
                                             </Border>
@@ -697,6 +697,7 @@
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_1" />
                                                 </StackPanel>
                                             </Border>
+                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_0, Path=Stroke}" />
                                             <Path Name="QRXORCircle_1">
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
@@ -786,6 +787,7 @@
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_2" />
                                                 </StackPanel>
                                             </Border>
+                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" />
                                             <Path Name="QRXORCircle_2">
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
@@ -798,7 +800,6 @@
                                                     </Style>
                                                 </Path.Style>
                                             </Path>
-                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_2, Path=Stroke}" />
                                         </Canvas>
                                         <Canvas Grid.Row="1" Grid.Column="1">
                                             <Path Canvas.Left="30" Data="M 10,30 v 170" />
@@ -878,6 +879,7 @@
                                                     <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRValueXORDiffusion_3" />
                                                 </StackPanel>
                                             </Border>
+                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" />
                                             <Path Name="QRXORCircle_3">
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource XORCircle}">
@@ -890,7 +892,6 @@
                                                     </Style>
                                                 </Path.Style>
                                             </Path>
-                                            <TextBox Canvas.Left="30" Canvas.Top="24" Style="{StaticResource XORLabel}" Foreground="{ Binding ElementName=QRXORCircle_3, Path=Stroke}" />
                                             <Path Data="M 40,40 v 50" />
                                         </Canvas>
                                         <Canvas Grid.Row="2" Grid.Column="2">

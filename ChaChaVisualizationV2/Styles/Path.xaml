@@ -5,7 +5,7 @@
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="Stroke" Value="Black" />
     </Style>
-    <Style x:Key="AddCircle" TargetType="{x:Type Path}">
+    <Style x:Key="AddCircle" TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
         <Setter Property="Fill" Value="White" />
         <Setter Property="Data">
             <Setter.Value>
@@ -13,14 +13,14 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="XORCircle" TargetType="{x:Type Path}">
+    <Style x:Key="XORCircle" TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
         <Setter Property="Data">
             <Setter.Value>
                 <EllipseGeometry Center="40,30" RadiusX="10" RadiusY="10" />
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="ShiftCircle" TargetType="{x:Type Path}">
+    <Style x:Key="ShiftCircle" TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
         <Setter Property="Fill" Value="White" />
         <Setter Property="Data">
             <Setter.Value>
