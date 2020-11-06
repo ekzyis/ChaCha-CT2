@@ -126,7 +126,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="settings">Chosen Settings in the Plugin workspace. Includes Rounds and Version property.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        public void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -263,7 +263,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <returns>
         ///   Initialized 512-bit ChaCha state as input for ChaCha hash function.
         /// </returns>
-        public virtual uint[] State(byte[] key, byte[] iv, ulong counter, Version version)
+        protected virtual uint[] State(byte[] key, byte[] iv, ulong counter, Version version)
         {
             uint[] state = new uint[16];
             byte[] constants = key.Length == 16 ? TAU : SIGMA;
@@ -284,7 +284,7 @@ namespace Cryptool.Plugins.ChaCha
         /// Insert the counter into the 512-bit state matrix.
         /// Insertion depends on the version since counter size differs between versions.
         /// </summary>
-        public void InsertCounter(ref uint[] state, ulong counter, Version version)
+        private void InsertCounter(ref uint[] state, ulong counter, Version version)
         {
             // NOTE The original value of the counter is in reversed byte order!
             // The counter 0x1 will be inserted into the state as follows
@@ -308,7 +308,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="state">512-bit ChaCha state</param>
         /// <param name="input">Elements to be inserted</param>
         /// <param name="offset">State offset</param>
-        public static void InsertUInt32LE(ref uint[] state, byte[] input, int offset)
+        private static void InsertUInt32LE(ref uint[] state, byte[] input, int offset)
         {
             for (int i = 0; i < input.Length / 4; ++i)
             {
@@ -320,7 +320,7 @@ namespace Cryptool.Plugins.ChaCha
         /// Expands the key to a 256-bit key.
         /// </summary>
         /// <param name="key">128-bit or 256-bit key</param>
-        public static void ExpandKey(ref byte[] key)
+        private static void ExpandKey(ref byte[] key)
         {
             if (key.Length == 32)
             {
@@ -338,7 +338,7 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         /// <param name="state">The state which will be hashed</param>
         /// <param name="rounds">Rounds of hash function</param>
-        public virtual void ChaChaHash(ref uint[] state, int rounds)
+        protected virtual void ChaChaHash(ref uint[] state, int rounds)
         {
             if (!(rounds == 8 || rounds == 12 || rounds == 20))
             {
@@ -376,7 +376,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Run a quarterround(a,b,c,d) with the given indices on the state.
         /// </summary>
-        public virtual void Quarterround(ref uint[] state, int i, int j, int k, int l)
+        protected void Quarterround(ref uint[] state, int i, int j, int k, int l)
         {
             (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
         }
@@ -384,7 +384,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Calculate the quarterround of the four inputs.
         /// </summary>
-        public virtual (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
+        protected virtual (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
             (a, b, d) = QuarterroundStep(a, b, d, 16);
             (c, d, b) = QuarterroundStep(c, d, b, 12);
@@ -396,7 +396,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Calculate one step in the quarterround function.
         /// </summary>
-        public virtual (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
+        protected virtual (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
         {
             x1 += x2;
             x3 ^= x1;

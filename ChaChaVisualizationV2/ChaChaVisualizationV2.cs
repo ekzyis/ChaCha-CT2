@@ -39,7 +39,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
 
         #region ChaCha Override
 
-        public override uint[] State(byte[] key, byte[] iv, ulong counter, ChaCha.Version version)
+        protected override uint[] State(byte[] key, byte[] iv, ulong counter, ChaCha.Version version)
         {
             uint[] state = base.State(key, iv, counter, version);
             OriginalState.Add(state);
