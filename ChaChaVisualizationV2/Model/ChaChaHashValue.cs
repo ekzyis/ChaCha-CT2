@@ -8,15 +8,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
     /// </summary>
     internal abstract class ChaChaHashValue : INotifyPropertyChanged
     {
-        public ChaChaHashValue(uint value)
+        public ChaChaHashValue(uint? value)
         {
             Value = value;
         }
 
+        public ChaChaHashValue()
+        {
+            Value = null;
+        }
+
         /// <summary>
-        /// The actual UInt32 value.
+        /// The actual UInt32 value. Can be null in case no value should be shown in the visualization.
         /// </summary>
-        private uint _value; public uint Value
+        private uint? _value; public uint? Value
 
         {
             get

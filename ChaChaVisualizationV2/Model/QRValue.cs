@@ -5,7 +5,11 @@
     /// </summary>
     internal class QRValue : ChaChaHashValue
     {
-        public QRValue(uint value) : base(value)
+        public QRValue(uint? value) : base(value)
+        {
+        }
+
+        public QRValue() : base()
         {
         }
 

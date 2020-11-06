@@ -5,7 +5,11 @@
     /// </summary>
     internal class StateValue : ChaChaHashValue
     {
-        public StateValue(uint value) : base(value)
+        public StateValue(uint? value) : base(value)
+        {
+        }
+
+        public StateValue() : base()
         {
         }
     }
