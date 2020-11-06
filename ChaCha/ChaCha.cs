@@ -386,18 +386,19 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public virtual (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
-            (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
-            {
-                x1 += x2;
-                x3 ^= x1;
-                x3 = ByteUtil.RotateLeft(x3, shift);
-                return (x1, x2, x3);
-            }
             (a, b, d) = QuarterroundStep(a, b, d, 16);
             (c, d, b) = QuarterroundStep(c, d, b, 12);
             (a, b, d) = QuarterroundStep(a, b, d, 8);
             (c, d, b) = QuarterroundStep(c, d, b, 7);
             return (a, b, c, d);
+        }
+
+        public virtual (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
+        {
+            x1 += x2;
+            x3 ^= x1;
+            x3 = ByteUtil.RotateLeft(x3, shift);
+            return (x1, x2, x3);
         }
 
         #endregion ChaCha Cipher methods
