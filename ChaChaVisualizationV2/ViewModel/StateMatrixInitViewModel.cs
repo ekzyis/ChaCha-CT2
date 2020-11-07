@@ -1,5 +1,4 @@
 ﻿using Cryptool.Plugins.ChaCha;
-using System;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
@@ -84,7 +83,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region Key
 
-            ActionCreator.ResetBaseline(() => { Description[1] = true; ConstantsMatrix = true; });
+            ActionCreator.ResetSequence(() => { ConstantsMatrix = true; });
 
             Seq(() => { Description[2] = true; KeyEncoding = true; });
             Seq(() => { KeyEncodingInput = true; });
@@ -96,13 +95,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region Counter
 
-            ActionCreator.ResetBaseline(() =>
-            {
-                Description[1] = true;
-                Description[2] = true;
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-            });
+            ActionCreator.ResetSequence(() => { Description[2] = true; KeyMatrix = true; });
 
             Seq(() => { Description[3] = true; CounterEncoding = true; });
             Seq(() => { CounterEncodingInput = true; });
@@ -115,16 +108,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region IV
 
-            ActionCreator.ResetBaseline(() =>
-            {
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-            });
+            ActionCreator.ResetSequence(() => { Description[3] = true; CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
 
             Seq(() => { Description[4] = true; IVEncoding = true; });
             Seq(() => { IVEncodingInput = true; });
@@ -134,18 +118,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #endregion IV
 
-            ActionCreator.ResetBaseline(() =>
-            {
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                Description[4] = true;
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-                IVMatrix = true;
-            });
+            ActionCreator.ResetSequence(() => { IVMatrix = true; });
 
             Seq(() => { Description[5] = true; });
         }
