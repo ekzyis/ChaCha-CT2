@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="ViewModel\ActionViewModelBase.cs" />
     <Compile Include="ViewModel\ChaChaHashViewModel.cs" />
+    <Compile Include="ViewModel\Components\ActionCreator.cs" />
     <Compile Include="ViewModel\DiffusionViewModel.cs" />
     <Compile Include="ViewModel\Components\IActionCreator.cs" />
     <Compile Include="ViewModel\Components\IActionNavigation.cs" />
