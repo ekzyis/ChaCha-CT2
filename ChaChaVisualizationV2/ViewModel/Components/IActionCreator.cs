@@ -29,6 +29,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         void ResetBaseline();
 
         /// <summary>
+        /// Remove all baseline actions and add given action as new baseline.
+        /// </summary>
+        /// <param name="newBaseline"></param>
+        void ResetBaseline(Action newBaseline);
+
+        /// <summary>
         /// Extends the given action with the current baseline.
         /// </summary>
         Action ExtendBaseline(Action action);
@@ -59,5 +65,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// </example>
         /// </summary>
         Action Sequential(Action action);
+
+        /// <summary>
+        /// Reset the sequence; removing all sequential actions from the baseline
+        /// thus resetting it to the baseline before the first sequential action was created.
+        /// </summary>
+        /// <returns></returns>
+        void ResetSequence();
     }
 }

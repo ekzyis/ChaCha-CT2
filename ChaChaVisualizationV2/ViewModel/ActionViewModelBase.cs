@@ -55,6 +55,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// </summary>
         public abstract void Reset();
 
+        /// <summary>
+        /// Convenience method for Actions.Add(ActionCreator.Sequential(action))
+        /// </summary>
+        /// <param name="action"></param>
+        protected void Seq(Action action)
+        {
+            Actions.Add(ActionCreator.Sequential(action));
+        }
+
         #region IActionNavigation
 
         private int _currentActionIndex; public int CurrentActionIndex

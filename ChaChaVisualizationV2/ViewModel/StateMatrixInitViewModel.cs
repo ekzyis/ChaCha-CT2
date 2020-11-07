@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha;
+using System;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
@@ -70,44 +71,32 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             #region Constants
 
-            ActionCreator.PushBaseline(() => { Description[1] = true; });
+            ActionCreator.ResetBaseline(() => { Description[1] = true; });
 
-            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncoding = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingInput = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingASCII = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingChunkify = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingLittleEndian = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { ConstantsMatrix = true; }));
-
-            ActionCreator.ResetBaseline();
+            Seq(() => { ConstantsEncoding = true; });
+            Seq(() => { ConstantsEncodingInput = true; });
+            Seq(() => { ConstantsEncodingASCII = true; });
+            Seq(() => { ConstantsEncodingChunkify = true; });
+            Seq(() => { ConstantsEncodingLittleEndian = true; });
+            Seq(() => { ConstantsMatrix = true; });
 
             #endregion Constants
 
             #region Key
 
-            ActionCreator.PushBaseline(() =>
-            {
-                Description[1] = true;
-                ConstantsMatrix = true;
-            });
+            ActionCreator.ResetBaseline(() => { Description[1] = true; ConstantsMatrix = true; });
 
-            Actions.Add(ActionCreator.Sequential(() =>
-            {
-                Description[2] = true;
-                KeyEncoding = true;
-            }));
-            Actions.Add(ActionCreator.Sequential(() => { KeyEncodingInput = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { KeyEncodingChunkify = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { KeyEncodingLittleEndian = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { KeyMatrix = true; }));
-
-            ActionCreator.ResetBaseline();
+            Seq(() => { Description[2] = true; KeyEncoding = true; });
+            Seq(() => { KeyEncodingInput = true; });
+            Seq(() => { KeyEncodingChunkify = true; });
+            Seq(() => { KeyEncodingLittleEndian = true; });
+            Seq(() => { KeyMatrix = true; });
 
             #endregion Key
 
             #region Counter
 
-            ActionCreator.PushBaseline(() =>
+            ActionCreator.ResetBaseline(() =>
             {
                 Description[1] = true;
                 Description[2] = true;
@@ -115,28 +104,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 KeyMatrix = true;
             });
 
-            Actions.Add(ActionCreator.Sequential(() =>
-            {
-                Description[3] = true;
-                CounterEncoding = true;
-            }));
-            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingInput = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingReverse = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingChunkify = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingLittleEndian = true; }));
-            Actions.Add(ActionCreator.Sequential(() =>
-            {
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-            }));
-
-            ActionCreator.ResetBaseline();
+            Seq(() => { Description[3] = true; CounterEncoding = true; });
+            Seq(() => { CounterEncodingInput = true; });
+            Seq(() => { CounterEncodingReverse = true; });
+            Seq(() => { CounterEncodingChunkify = true; });
+            Seq(() => { CounterEncodingLittleEndian = true; });
+            Seq(() => { CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
 
             #endregion Counter
 
             #region IV
 
-            ActionCreator.PushBaseline(() =>
+            ActionCreator.ResetBaseline(() =>
             {
                 Description[1] = true;
                 Description[2] = true;
@@ -147,21 +126,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (Settings.Version.CounterBits == 64) State13Matrix = true;
             });
 
-            Actions.Add(ActionCreator.Sequential(() =>
-            {
-                Description[4] = true;
-                IVEncoding = true;
-            }));
-            Actions.Add(ActionCreator.Sequential(() => { IVEncodingInput = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { IVEncodingChunkify = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { IVEncodingLittleEndian = true; }));
-            Actions.Add(ActionCreator.Sequential(() => { IVMatrix = true; }));
-
-            ActionCreator.ResetBaseline();
+            Seq(() => { Description[4] = true; IVEncoding = true; });
+            Seq(() => { IVEncodingInput = true; });
+            Seq(() => { IVEncodingChunkify = true; });
+            Seq(() => { IVEncodingLittleEndian = true; });
+            Seq(() => { IVMatrix = true; });
 
             #endregion IV
 
-            ActionCreator.PushBaseline(() =>
+            ActionCreator.ResetBaseline(() =>
             {
                 Description[1] = true;
                 Description[2] = true;
@@ -174,7 +147,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 IVMatrix = true;
             });
 
-            Actions.Add(ActionCreator.Sequential(() => { Description[5] = true; }));
+            Seq(() => { Description[5] = true; });
         }
 
         private void InitStateMatrixValues()

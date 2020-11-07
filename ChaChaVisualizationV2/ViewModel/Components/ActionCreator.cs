@@ -11,6 +11,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 
         private Action AggregatedBaseline { get => Baseline.Aggregate((acc, curr) => curr.Extend(acc)); }
 
+        private int SequenceCount { get; set; }
+
         public void PushBaseline(Action baseline)
         {
             Baseline.Push(baseline);
@@ -24,6 +26,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         public void ResetBaseline()
         {
             Baseline.Clear();
+            SequenceCount = 0;
+        }
+
+        public void ResetBaseline(Action newBaseline)
+        {
+            ResetBaseline();
+            PushBaseline(newBaseline);
         }
 
         public Action ExtendBaseline(Action action)
@@ -35,7 +44,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             Action extended = action.Extend(AggregatedBaseline);
             PushBaseline(action);
+            SequenceCount++;
             return extended;
+        }
+
+        public void ResetSequence()
+        {
+            for (int i = 0; i < SequenceCount; ++i)
+            {
+                PopBaseline();
+            }
+            SequenceCount = 0;
         }
     }
 }
