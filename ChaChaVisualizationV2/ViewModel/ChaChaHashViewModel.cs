@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -64,24 +65,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void InitActions()
         {
             // Copy from state into quarterround input
-            PageAction markState = MarkState(0, 4, 8, 12);
-            PageAction markQRInputs = MarkQRInputs();
-            PageAction insertQRInputs = InsertQRInputs(0);
-            PageAction showQRInput = insertQRInputs.Extend(markQRInputs, markState);
-            PageAction unmarkState = insertQRInputs;
-            Actions.Add(markState);
-            Actions.Add(showQRInput);
-            Actions.Add(unmarkState);
+            Seq(MarkState(0, 4, 8, 12));
+            Seq(InsertQRInputs(0).Extend(MarkQRInputs));
+
+            ActionCreator.ResetSequence(InsertQRInputs(0));
+            Seq(() => { });
 
             // Execute first addition
-            PageAction markAddInputs = MarkAddInputs(0);
-            PageAction insertAdd = InsertAdd(0);
-            PageAction markAdd = MarkAdd(0);
-            PageAction showAdd = insertAdd.Extend(markAddInputs, markAdd);
-            PageAction unmarkAdd = insertAdd;
-            Actions.Add(markAddInputs);
-            Actions.Add(showAdd);
-            Actions.Add(unmarkAdd);
+
+            Seq(MarkAddInputs(0).Extend(MarkQRInputs));
+            Seq(InsertAdd(0).Extend(MarkAdd(0)));
+
+            ActionCreator.ResetSequence(InsertAdd(0));
         }
 
         #region Actions
@@ -97,15 +92,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             };
         }
 
-        private Action MarkQRInputs()
+        private Action MarkQRInputs
         {
-            return () =>
+            get
             {
-                QRInA.Mark = true;
-                QRInB.Mark = true;
-                QRInC.Mark = true;
-                QRInD.Mark = true;
-            };
+                return () =>
+                {
+                    QRInA.Mark = true;
+                    QRInB.Mark = true;
+                    QRInC.Mark = true;
+                    QRInD.Mark = true;
+                };
+            }
         }
 
         private Action InsertQRInputs(int index)
