@@ -48,6 +48,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         ///   3
         /// </example>
         /// </summary>
-        Action Consecutive(Action action);
+        Action Sequential(Action action);
     }
 }
