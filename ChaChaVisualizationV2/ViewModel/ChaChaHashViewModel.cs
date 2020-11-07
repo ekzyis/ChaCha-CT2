@@ -46,6 +46,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Seq(InsertAdd(0).Extend(MarkAdd(0)));
 
             ActionCreator.ResetSequence(InsertAdd(0));
+
+            // Execute first XOR
+            Seq(MarkXORInputs(0));
+            Seq(InsertXOR(0).Extend(MarkXOR(0)));
         }
 
         #region Actions
@@ -99,6 +103,30 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private Action InsertAdd(int index)
         {
             return () => QRStep[index].Add.Value = ChaChaVisualization.QRStep[index].Add;
+        }
+
+        private Action MarkXORInputs(int index)
+        {
+            return () =>
+            {
+                QRStep[index].XOR.MarkInput = true;
+            };
+        }
+
+        private Action MarkXOR(int index)
+        {
+            return () =>
+            {
+                QRStep[index].XOR.Mark = true;
+            };
+        }
+
+        private Action InsertXOR(int index)
+        {
+            return () =>
+            {
+                QRStep[index].XOR.Value = ChaChaVisualization.QRStep[index].XOR;
+            };
         }
 
         #endregion Actions
