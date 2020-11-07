@@ -29,6 +29,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         void ResetBaseline();
 
         /// <summary>
+        /// Extends the given action with the current baseline.
+        /// </summary>
+        Action ExtendBaseline(Action action);
+
+        /// <summary>
         /// Extends the given action with the current baseline and adding it to the baseline.
         /// This enables creation of actions which reuse the code of previous actions without having
         /// to rewrite their action code.
