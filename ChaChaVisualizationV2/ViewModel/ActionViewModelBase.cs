@@ -18,6 +18,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             CurrentActionIndex = 0;
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
+            InitActions();
         }
 
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
@@ -48,6 +49,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 MoveToAction(actionIndex);
             }
         }
+
+        /// <summary>
+        /// Initialize the page actions.
+        /// </summary>
+        protected abstract void InitActions();
 
         /// <summary>
         /// Reset the page, undoing any action that was applied to it.

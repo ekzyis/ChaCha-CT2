@@ -12,7 +12,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             PresentationViewModel = chachaPresentationViewModel;
             Name = "State Matrix";
             Title = "State Matrix Initialization";
-            InitActions();
         }
 
         private void HideDescriptions()
@@ -58,7 +57,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             IVEncodingLittleEndian = false;
         }
 
-        private void InitActions()
+        protected override void InitActions()
         {
             #region Constants
 

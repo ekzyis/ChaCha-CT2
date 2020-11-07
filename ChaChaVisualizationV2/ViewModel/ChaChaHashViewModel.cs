@@ -26,7 +26,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             PresentationViewModel = chachaPresentationViewModel;
             Name = "ChaCha hash";
             Title = "ChaCha hash function";
-            InitActions();
             qrInValues = new QRValue[] { QRInA, QRInB, QRInC, QRInD };
             qrOutValues = new QRValue[] { QROutA, QROutB, QROutC, QROutD };
         }
@@ -62,7 +61,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private void InitActions()
+        protected override void InitActions()
         {
             // Copy from state into quarterround input
             Seq(MarkState(0, 4, 8, 12));
