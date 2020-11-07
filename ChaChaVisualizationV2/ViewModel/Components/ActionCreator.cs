@@ -8,7 +8,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
     {
         private Stack<Action> Baseline { get; set; } = new Stack<Action>();
 
-        private Action AggregatedBaseline { get => Baseline.Aggregate((acc, curr) => curr.Extend(acc)); }
+        private Action AggregatedBaseline { get => Baseline.Aggregate<Action, Action>(() => { }, (acc, curr) => curr.Extend(acc)); }
 
         private int SequenceCount { get; set; }
 
