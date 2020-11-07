@@ -1,5 +1,4 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -61,6 +60,32 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             ResetSequence();
             PushBaseline(newBaseline);
+        }
+    }
+
+    internal static class ActionExtensions
+    {
+        /// <summary>
+        /// Extension method to extend actions.
+        /// The last parameter is the action from which we want to derive a new, extended action.
+        /// This is why we call it first in the new returned action.
+        /// </summary>
+        public static Action Extend(this Action action, Action toExtend)
+        {
+            return () =>
+            {
+                toExtend.Invoke();
+                action.Invoke();
+            };
+        }
+
+        /// <summary>
+        /// Syntactic sugar for Extend chaining.
+        /// In other words: Action.Extend(x, y) is equivalent to Action.Extend(x).Extend(y)
+        /// </summary>
+        public static Action Extend(this Action action, params Action[] toExtend)
+        {
+            return toExtend.Aggregate(action, (acc, curr) => acc.Extend(curr));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
-using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.Generic;
@@ -23,11 +22,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
 
-        private List<PageAction> _actions; public List<PageAction> Actions
+        private List<Action> _actions; public List<Action> Actions
         {
             get
             {
-                if (_actions == null) _actions = new List<PageAction>();
+                if (_actions == null) _actions = new List<Action>();
                 return _actions;
             }
             set
