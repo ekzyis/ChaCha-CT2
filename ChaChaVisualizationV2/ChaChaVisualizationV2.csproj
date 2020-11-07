@@ -154,11 +154,11 @@
     <Compile Include="ViewModel\ActionViewModelBase.cs" />
     <Compile Include="ViewModel\ChaChaHashViewModel.cs" />
     <Compile Include="ViewModel\DiffusionViewModel.cs" />
-    <Compile Include="ViewModel\IActionCreator.cs" />
-    <Compile Include="ViewModel\IActionNavigation.cs" />
-    <Compile Include="ViewModel\IChaCha.cs" />
-    <Compile Include="ViewModel\INavigation.cs" />
-    <Compile Include="ViewModel\ITitle.cs" />
+    <Compile Include="ViewModel\Components\IActionCreator.cs" />
+    <Compile Include="ViewModel\Components\IActionNavigation.cs" />
+    <Compile Include="ViewModel\Components\IChaCha.cs" />
+    <Compile Include="ViewModel\Components\INavigation.cs" />
+    <Compile Include="ViewModel\Components\ITitle.cs" />
     <Compile Include="ViewModel\OverviewViewModel.cs" />
     <Compile Include="ViewModel\ChaChaPresentationViewModel.cs" />
     <Compile Include="ViewModel\StartViewModel.cs" />
