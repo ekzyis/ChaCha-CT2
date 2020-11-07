@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -19,6 +20,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
         }
+
+        public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
 
         private List<PageAction> _actions; public List<PageAction> Actions
         {

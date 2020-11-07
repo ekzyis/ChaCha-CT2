@@ -1,5 +1,4 @@
 ﻿using Cryptool.Plugins.ChaCha;
-using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using System.Collections.ObjectModel;
 using System.Numerics;
 
@@ -71,267 +70,111 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             #region Constants
 
-            Actions.Add(() =>
-            {
-                Description[1] = true;
-                ConstantsEncoding = true;
-            });
-            Actions.Add(() =>
-            {
-                Description[1] = true;
-                ConstantsEncoding = true;
-                ConstantsEncodingInput = true;
-            });
-            Actions.Add(() =>
-            {
-                Description[1] = true;
-                ConstantsEncoding = true;
-                ConstantsEncodingInput = true;
-                ConstantsEncodingASCII = true;
-            });
-            Actions.Add(() =>
-            {
-                Description[1] = true;
-                ConstantsEncoding = true;
-                ConstantsEncodingInput = true;
-                ConstantsEncodingASCII = true;
-                ConstantsEncodingChunkify = true;
-            });
-            Actions.Add(() =>
-            {
-                Description[1] = true;
-                ConstantsEncoding = true;
-                ConstantsEncodingInput = true;
-                ConstantsEncodingASCII = true;
-                ConstantsEncodingChunkify = true;
-                ConstantsEncodingLittleEndian = true;
-            });
-            Actions.Add(() =>
-            {
-                Description[1] = true;
-                ConstantsEncoding = true;
-                ConstantsEncodingInput = true;
-                ConstantsEncodingASCII = true;
-                ConstantsEncodingChunkify = true;
-                ConstantsEncodingLittleEndian = true;
-                ConstantsMatrix = true;
-            });
+            ActionCreator.PushBaseline(() => { Description[1] = true; });
+
+            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncoding = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingInput = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingASCII = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingChunkify = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { ConstantsEncodingLittleEndian = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { ConstantsMatrix = true; }));
+
+            ActionCreator.ResetBaseline();
 
             #endregion Constants
 
             #region Key
 
-            Actions.Add(() =>
+            ActionCreator.PushBaseline(() =>
             {
-                ConstantsMatrix = true;
                 Description[1] = true;
+                ConstantsMatrix = true;
+            });
+
+            Actions.Add(ActionCreator.Sequential(() =>
+            {
                 Description[2] = true;
                 KeyEncoding = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                KeyEncoding = true;
-                KeyEncodingInput = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                KeyEncoding = true;
-                KeyEncodingInput = true;
-                KeyEncodingChunkify = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                KeyEncoding = true;
-                KeyEncodingInput = true;
-                KeyEncodingChunkify = true;
-                KeyEncodingLittleEndian = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                KeyEncoding = true;
-                KeyEncodingInput = true;
-                KeyEncodingChunkify = true;
-                KeyEncodingLittleEndian = true;
-                KeyMatrix = true;
-            });
+            }));
+            Actions.Add(ActionCreator.Sequential(() => { KeyEncodingInput = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { KeyEncodingChunkify = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { KeyEncodingLittleEndian = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { KeyMatrix = true; }));
+
+            ActionCreator.ResetBaseline();
 
             #endregion Key
 
             #region Counter
 
-            Actions.Add(() =>
+            ActionCreator.PushBaseline(() =>
             {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
                 Description[1] = true;
                 Description[2] = true;
-                Description[3] = true;
-                CounterEncoding = true;
+                ConstantsMatrix = true;
+                KeyMatrix = true;
             });
-            Actions.Add(() =>
+
+            Actions.Add(ActionCreator.Sequential(() =>
             {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
                 Description[3] = true;
                 CounterEncoding = true;
-                CounterEncodingInput = true;
-            });
-            Actions.Add(() =>
+            }));
+            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingInput = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingReverse = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingChunkify = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { CounterEncodingLittleEndian = true; }));
+            Actions.Add(ActionCreator.Sequential(() =>
             {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                CounterEncoding = true;
-                CounterEncodingInput = true;
-                CounterEncodingReverse = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                CounterEncoding = true;
-                CounterEncodingInput = true;
-                CounterEncodingReverse = true;
-                CounterEncodingChunkify = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                CounterEncoding = true;
-                CounterEncodingInput = true;
-                CounterEncodingReverse = true;
-                CounterEncodingChunkify = true;
-                CounterEncodingLittleEndian = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                CounterEncoding = true;
-                CounterEncodingInput = true;
-                CounterEncodingReverse = true;
-                CounterEncodingChunkify = true;
-                CounterEncodingLittleEndian = true;
                 CounterMatrix = true;
                 if (Settings.Version.CounterBits == 64) State13Matrix = true;
-            });
+            }));
+
+            ActionCreator.ResetBaseline();
 
             #endregion Counter
 
             #region IV
 
-            Actions.Add(() =>
+            ActionCreator.PushBaseline(() =>
             {
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
                 ConstantsMatrix = true;
                 KeyMatrix = true;
                 CounterMatrix = true;
                 if (Settings.Version.CounterBits == 64) State13Matrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                Description[4] = true;
-                IVEncoding = true;
             });
-            Actions.Add(() =>
+
+            Actions.Add(ActionCreator.Sequential(() =>
             {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
                 Description[4] = true;
                 IVEncoding = true;
-                IVEncodingInput = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                Description[4] = true;
-                IVEncoding = true;
-                IVEncodingInput = true;
-                IVEncodingChunkify = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                Description[4] = true;
-                IVEncoding = true;
-                IVEncodingInput = true;
-                IVEncodingChunkify = true;
-                IVEncodingLittleEndian = true;
-            });
-            Actions.Add(() =>
-            {
-                ConstantsMatrix = true;
-                KeyMatrix = true;
-                CounterMatrix = true;
-                if (Settings.Version.CounterBits == 64) State13Matrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                Description[4] = true;
-                IVEncoding = true;
-                IVEncodingInput = true;
-                IVEncodingChunkify = true;
-                IVEncodingLittleEndian = true;
-                IVMatrix = true;
-            });
+            }));
+            Actions.Add(ActionCreator.Sequential(() => { IVEncodingInput = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { IVEncodingChunkify = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { IVEncodingLittleEndian = true; }));
+            Actions.Add(ActionCreator.Sequential(() => { IVMatrix = true; }));
+
+            ActionCreator.ResetBaseline();
 
             #endregion IV
 
-            Actions.Add(() =>
+            ActionCreator.PushBaseline(() =>
             {
+                Description[1] = true;
+                Description[2] = true;
+                Description[3] = true;
+                Description[4] = true;
                 ConstantsMatrix = true;
                 KeyMatrix = true;
                 CounterMatrix = true;
                 if (Settings.Version.CounterBits == 64) State13Matrix = true;
                 IVMatrix = true;
-                Description[1] = true;
-                Description[2] = true;
-                Description[3] = true;
-                Description[4] = true;
-                Description[5] = true;
             });
+
+            Actions.Add(ActionCreator.Sequential(() => { Description[5] = true; }));
         }
 
         private void InitStateMatrixValues()
