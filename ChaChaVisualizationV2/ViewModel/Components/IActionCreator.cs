@@ -42,9 +42,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         ///   <para>
         ///   Example:
         ///   <code>
-        ///     > Action a = Consecutive(() => Console.WriteLine("1")); <br/>
-        ///     > Action b = Consecutive(() => Console.WriteLine("2")); <br/>
-        ///     > Action c = Consecutive(() => Console.WriteLine("3")); <br/>
+        ///     > Action a = Sequential(() => Console.WriteLine("1")); <br/>
+        ///     > Action b = Sequential(() => Console.WriteLine("2")); <br/>
+        ///     > Action c = Sequential(() => Console.WriteLine("3")); <br/>
         ///     > a.Invoke(); <br/>
         ///       1 <br/>
         ///     > b.Invoke(); <br/>
