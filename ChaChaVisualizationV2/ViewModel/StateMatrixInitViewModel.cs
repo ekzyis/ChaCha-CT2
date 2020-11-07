@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -11,24 +12,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             PresentationViewModel = chachaPresentationViewModel;
             Name = "State Matrix";
             Title = "State Matrix Initialization";
-            InitDescriptionVisibilityFlags();
             InitActions();
         }
 
         private void HideDescriptions()
         {
-            Description.Clear();
-            InitDescriptionVisibilityFlags();
-        }
-
-        private void InitDescriptionVisibilityFlags()
-        {
-            Description.Add(true);
-            Description.Add(false);
-            Description.Add(false);
-            Description.Add(false);
-            Description.Add(false);
-            Description.Add(false);
+            for (int i = 0; i < Description.Count; ++i)
+            {
+                Description[i] = false;
+            }
         }
 
         private void HideState()
@@ -70,7 +62,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             #region Constants
 
-            ActionCreator.ResetBaseline(() => { Description[1] = true; });
+            ActionCreator.ResetBaseline(() => { Description[0] = true; });
 
             Seq(() => { ConstantsEncoding = true; });
             Seq(() => { ConstantsEncodingInput = true; });
@@ -85,7 +77,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             ActionCreator.ResetSequence(() => { ConstantsMatrix = true; });
 
-            Seq(() => { Description[2] = true; KeyEncoding = true; });
+            Seq(() => { Description[1] = true; KeyEncoding = true; });
             Seq(() => { KeyEncodingInput = true; });
             Seq(() => { KeyEncodingChunkify = true; });
             Seq(() => { KeyEncodingLittleEndian = true; });
@@ -95,9 +87,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region Counter
 
-            ActionCreator.ResetSequence(() => { Description[2] = true; KeyMatrix = true; });
+            ActionCreator.ResetSequence(() => { Description[1] = true; KeyMatrix = true; });
 
-            Seq(() => { Description[3] = true; CounterEncoding = true; });
+            Seq(() => { Description[2] = true; CounterEncoding = true; });
             Seq(() => { CounterEncodingInput = true; });
             Seq(() => { CounterEncodingReverse = true; });
             Seq(() => { CounterEncodingChunkify = true; });
@@ -108,9 +100,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region IV
 
-            ActionCreator.ResetSequence(() => { Description[3] = true; CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
+            ActionCreator.ResetSequence(() => { Description[2] = true; CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
 
-            Seq(() => { Description[4] = true; IVEncoding = true; });
+            Seq(() => { Description[3] = true; IVEncoding = true; });
             Seq(() => { IVEncodingInput = true; });
             Seq(() => { IVEncodingChunkify = true; });
             Seq(() => { IVEncodingLittleEndian = true; });
@@ -120,7 +112,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             ActionCreator.ResetSequence(() => { IVMatrix = true; });
 
-            Seq(() => { Description[5] = true; });
+            Seq(() => { Description[4] = true; });
         }
 
         private void InitStateMatrixValues()
@@ -156,7 +148,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                if (_description == null) _description = new ObservableCollection<bool>();
+                if (_description == null) _description = new ObservableCollection<bool>(Enumerable.Repeat(false, 5).ToList());
                 return _description;
             }
             set
@@ -520,7 +512,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public override void Reset()
         {
             HideDescriptions();
-            InitDescriptionVisibilityFlags();
             HideEncoding();
             HideState();
         }

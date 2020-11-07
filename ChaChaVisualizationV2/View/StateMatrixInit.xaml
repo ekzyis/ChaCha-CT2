@@ -276,14 +276,14 @@
                         </Style>
                     </Viewbox.Resources>
                     <StackPanel Orientation="Vertical">
-                        <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox>
                             <FlowDocument>
                                 <Paragraph>
                                     The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix.
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The first 16 bytes consist of the
@@ -291,7 +291,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The next 32 bytes consist of the
@@ -299,7 +299,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The next
@@ -308,7 +308,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     The next
@@ -317,7 +317,7 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[5], Converter={StaticResource FalseToCollapsed}}">
+                        <RichTextBox Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
                                     On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block.
