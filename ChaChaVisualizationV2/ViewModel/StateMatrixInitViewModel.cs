@@ -14,48 +14,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Title = "State Matrix Initialization";
         }
 
-        private void HideDescriptions()
-        {
-            for (int i = 0; i < Description.Count; ++i)
-            {
-                Description[i] = false;
-            }
-        }
-
-        private void HideState()
-        {
-            // Hide state values.
-            ConstantsMatrix = false;
-            KeyMatrix = false;
-            CounterMatrix = false;
-            State13Matrix = false;
-            IVMatrix = false;
-        }
-
-        private void HideEncoding()
-        {
-            ConstantsEncoding = false;
-            ConstantsEncodingInput = false;
-            ConstantsEncodingASCII = false;
-            ConstantsEncodingChunkify = false;
-            ConstantsEncodingLittleEndian = false;
-
-            KeyEncoding = false;
-            KeyEncodingInput = false;
-            KeyEncodingChunkify = false;
-            KeyEncodingLittleEndian = false;
-
-            CounterEncoding = false;
-            CounterEncodingInput = false;
-            CounterEncodingReverse = false;
-            CounterEncodingChunkify = false;
-            CounterEncodingLittleEndian = false;
-
-            IVEncoding = false;
-            IVEncodingInput = false;
-            IVEncodingChunkify = false;
-            IVEncodingLittleEndian = false;
-        }
+        #region ActionViewModelBase
 
         protected override void InitActions()
         {
@@ -114,15 +73,57 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Seq(() => { Description[4] = true; });
         }
 
-        private void InitStateMatrixValues()
+        public override void Reset()
         {
-            uint[] state = ChaChaVisualization.OriginalState[0];
-            StateMatrixValues.Clear();
-            for (int i = 0; i < state.Length; ++i)
+            HideDescriptions();
+            HideEncoding();
+            HideState();
+        }
+
+        private void HideDescriptions()
+        {
+            for (int i = 0; i < Description.Count; ++i)
             {
-                StateMatrixValues.Add(state[i]);
+                Description[i] = false;
             }
         }
+
+        private void HideState()
+        {
+            // Hide state values.
+            ConstantsMatrix = false;
+            KeyMatrix = false;
+            CounterMatrix = false;
+            State13Matrix = false;
+            IVMatrix = false;
+        }
+
+        private void HideEncoding()
+        {
+            ConstantsEncoding = false;
+            ConstantsEncodingInput = false;
+            ConstantsEncodingASCII = false;
+            ConstantsEncodingChunkify = false;
+            ConstantsEncodingLittleEndian = false;
+
+            KeyEncoding = false;
+            KeyEncodingInput = false;
+            KeyEncodingChunkify = false;
+            KeyEncodingLittleEndian = false;
+
+            CounterEncoding = false;
+            CounterEncodingInput = false;
+            CounterEncodingReverse = false;
+            CounterEncodingChunkify = false;
+            CounterEncodingLittleEndian = false;
+
+            IVEncoding = false;
+            IVEncodingInput = false;
+            IVEncodingChunkify = false;
+            IVEncodingLittleEndian = false;
+        }
+
+        #endregion ActionViewModelBase
 
         #region Binding Properties
 
@@ -506,17 +507,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #endregion Binding Properties (IV)
 
-        #region Action Navigation
-
-        public override void Reset()
-        {
-            HideDescriptions();
-            HideEncoding();
-            HideState();
-        }
-
-        #endregion Action Navigation
-
         #region INavigation
 
         private string _name; public string Name
@@ -544,6 +534,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public void Teardown()
         {
             MoveToFirstAction();
+        }
+
+        private void InitStateMatrixValues()
+        {
+            uint[] state = ChaChaVisualization.OriginalState[0];
+            StateMatrixValues.Clear();
+            for (int i = 0; i < state.Length; ++i)
+            {
+                StateMatrixValues.Add(state[i]);
+            }
         }
 
         #endregion INavigation

@@ -30,36 +30,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             qrOutValues = new QRValue[] { QROutA, QROutB, QROutC, QROutD };
         }
 
-        /// <summary>
-        /// Replace the state with the state before the ChaCha hash function was applied.
-        /// </summary>
-        private void ResetStateMatrixValues()
-        {
-            uint[] state = ChaChaVisualization.OriginalState[0];
-            for (int i = 0; i < 16; ++i)
-            {
-                StateValues[i].Value = state[i];
-                StateValues[i].Mark = false;
-            }
-        }
-
-        /// <summary>
-        /// Clear the values and background of each cell in the quarterround visualzation.
-        /// </summary>
-        private void ResetQuarterroundValues()
-        {
-            foreach (QRValue v in qrInValues.Concat(qrOutValues))
-            {
-                v.Reset();
-            }
-            foreach (VisualQRStep qrStep in QRStep)
-            {
-                foreach (QRValue v in qrStep)
-                {
-                    v.Reset();
-                }
-            }
-        }
+        #region ActionViewModelBase
 
         protected override void InitActions()
         {
@@ -132,6 +103,45 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion Actions
+
+        public override void Reset()
+        {
+            ResetStateMatrixValues();
+            ResetQuarterroundValues();
+        }
+
+        /// <summary>
+        /// Replace the state with the state before the ChaCha hash function was applied.
+        /// </summary>
+        private void ResetStateMatrixValues()
+        {
+            uint[] state = ChaChaVisualization.OriginalState[0];
+            for (int i = 0; i < 16; ++i)
+            {
+                StateValues[i].Value = state[i];
+                StateValues[i].Mark = false;
+            }
+        }
+
+        /// <summary>
+        /// Clear the values and background of each cell in the quarterround visualzation.
+        /// </summary>
+        private void ResetQuarterroundValues()
+        {
+            foreach (QRValue v in qrInValues.Concat(qrOutValues))
+            {
+                v.Reset();
+            }
+            foreach (VisualQRStep qrStep in QRStep)
+            {
+                foreach (QRValue v in qrStep)
+                {
+                    v.Reset();
+                }
+            }
+        }
+
+        #endregion ActionViewModelBase
 
         #region Binding Properties
 
@@ -314,16 +324,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion Binding Properties (Diffusion)
-
-        #region Action Navigation
-
-        public override void Reset()
-        {
-            ResetStateMatrixValues();
-            ResetQuarterroundValues();
-        }
-
-        #endregion Action Navigation
 
         #region INavigation
 
