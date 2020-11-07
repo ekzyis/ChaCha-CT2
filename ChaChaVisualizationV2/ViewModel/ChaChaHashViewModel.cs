@@ -42,7 +42,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Seq(() => { });
 
             // Execute first addition
-
             Seq(MarkAddInputs(0).Extend(MarkQRInputs));
             Seq(InsertAdd(0).Extend(MarkAdd(0)));
 
