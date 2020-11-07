@@ -39,18 +39,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// to rewrite their action code.
         ///
         /// <example>
-        /// > Action a = Consecutive(() => Console.WriteLine("1"));
-        /// > Action b = Consecutive(() => Console.WriteLine("2"));
-        /// > Action c = Consecutive(() => Console.WriteLine("3"));
-        /// > a.Invoke();
-        ///   1
-        /// > b.Invoke();
-        ///   1
-        ///   2
-        /// > c.Invoke();
-        ///   1
-        ///   2
-        ///   3
+        ///   <para>
+        ///   Example:
+        ///   <code>
+        ///     > Action a = Consecutive(() => Console.WriteLine("1")); <br/>
+        ///     > Action b = Consecutive(() => Console.WriteLine("2")); <br/>
+        ///     > Action c = Consecutive(() => Console.WriteLine("3")); <br/>
+        ///     > a.Invoke(); <br/>
+        ///       1 <br/>
+        ///     > b.Invoke(); <br/>
+        ///       1 <br/>
+        ///       2 <br/>
+        ///     > c.Invoke(); <br/>
+        ///       1 <br/>
+        ///       2 <br/>
+        ///       3 <br/>
+        ///     </code>
+        ///   </para>
         /// </example>
         /// </summary>
         Action Sequential(Action action);
