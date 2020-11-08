@@ -339,8 +339,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 StateValues.Add(new StateValue(state[i]));
             }
             Debug.Assert(QRStep.Count == 0, "QRStep should be empty during ChaCha hash setup.");
-            // For each round, there are four quarterround and each quarterround has four steps.
-            for (int i = 0; i < Settings.Rounds * 4 * 4; ++i)
+            // There are four steps inside a quarterround. The array indices will be reused between different (quarter)rounds.
+            for (int i = 0; i < 4; ++i)
             {
                 QRStep.Add(new VisualQRStep());
             }
