@@ -29,9 +29,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// Create an quarterround action creator instance
         /// for the given round.
         /// </summary>
-        /// <param name="round">
-        ///   Zero-based round index.
-        /// </param>
+        /// <param name="round">Zero-based round index.</param>
         protected QRStepOperationActionCreator(ChaChaHashViewModel viewModel, QRStepOperation operation)
         {
             VM = viewModel;
