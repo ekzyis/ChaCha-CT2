@@ -44,205 +44,36 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         protected override void InitActions()
         {
-            // Copy from state into quarterround input
-            Seq(MarkState(0, 4, 8, 12));
-            Seq(InsertQRInputs(0).Extend(MarkQRInputs));
+            QRIOActionCreator qrIO = new QRIOActionCreator(this, round: 0);
 
-            ResetSequence(InsertQRInputs(0));
+            QRAdditionActionCreator qrAdd = new QRAdditionActionCreator(this);
+            QRXORActionCreator qrXOR = new QRXORActionCreator(this);
+            QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
+
+            // Copy from state into quarterround input
+            Seq(qrIO.MarkState(0, 4, 8, 12));
+            Seq(qrIO.InsertQRInputs.Extend(qrIO.MarkQRInputs));
+
+            ResetSequence(qrIO.InsertQRInputs);
 
             // Execute first addition
-            Seq(MarkAddInputs(0));
-            Seq(InsertAdd(0).Extend(MarkAdd(0)));
+            Seq(qrAdd.MarkInputs(round: 0, qr: 0, qrStep: 0));
+            Seq(qrAdd.Insert(round: 0, qr: 0, qrStep: 0).Extend(qrAdd.Mark(round: 0, qr: 0, qrStep: 0)));
 
-            ResetSequence(InsertAdd(0));
+            ResetSequence(qrAdd.Insert(round: 0, qr: 0, qrStep: 0));
 
             // Execute first XOR
-            Seq(MarkXORInputs(0));
-            Seq(InsertXOR(0).Extend(MarkXOR(0)));
+            Seq(qrXOR.MarkInputs(round: 0, qr: 0, qrStep: 0));
+            Seq(qrXOR.Insert(round: 0, qr: 0, qrStep: 0).Extend(qrXOR.Mark(round: 0, qr: 0, qrStep: 0)));
 
-            ResetSequence(InsertXOR(0));
+            ResetSequence(qrXOR.Insert(round: 0, qr: 0, qrStep: 0));
 
             // Execute first shift
-            Seq(MarkShiftInputs(0));
-            Seq(InsertShift(0).Extend(MarkShift(0)));
+            Seq(qrShift.MarkInputs(round: 0, qr: 0, qrStep: 0));
+            Seq(qrShift.Insert(round: 0, qr: 0, qrStep: 0).Extend(qrShift.Mark(round: 0, qr: 0, qrStep: 0)));
 
-            ResetSequence(InsertShift(0));
+            ResetSequence(qrShift.Insert(round: 0, qr: 0, qrStep: 0));
         }
-
-        #region Actions
-
-        /// <summary>
-        /// Mark the state boxes at the given indices.
-        /// </summary>
-        private Action MarkState(params int[] stateIndices)
-        {
-            return () =>
-            {
-                foreach (int i in stateIndices)
-                {
-                    StateValues[i].Mark = true;
-                }
-            };
-        }
-
-        /// <summary>
-        /// Action which marks the qr input boxes.
-        /// </summary>
-        private Action MarkQRInputs
-        {
-            get
-            {
-                return () =>
-                {
-                    QRInA.Mark = true;
-                    QRInB.Mark = true;
-                    QRInC.Mark = true;
-                    QRInD.Mark = true;
-                };
-            }
-        }
-
-        /// <summary>
-        /// Action which inserts the QR input values of into the QR input boxes.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action InsertQRInputs(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => (QRInA.Value, QRInB.Value, QRInC.Value, QRInD.Value) = ChaChaVisualization.QRInput[index];
-        }
-
-        /// <summary>
-        /// Action which marks the input paths and boxes for the addition.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action MarkAddInputs(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].Add.MarkInput = true;
-        }
-
-        /// <summary>
-        /// Action which marks the box for the addition result.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action MarkAdd(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].Add.Mark = true;
-        }
-
-        /// <summary>
-        /// Action which inserts the addition result.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action InsertAdd(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].Add.Value = ChaChaVisualization.QRStep[index].Add;
-        }
-
-        /// <summary>
-        /// Action which marks the input paths and boxes for the XOR.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action MarkXORInputs(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].XOR.MarkInput = true;
-        }
-
-        /// <summary>
-        /// Action which marks the box for the XOR result.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action MarkXOR(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].XOR.Mark = true;
-        }
-
-        /// <summary>
-        /// Action which inserts the XOR result.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action InsertXOR(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].XOR.Value = ChaChaVisualization.QRStep[index].XOR;
-        }
-
-        /// <summary>
-        /// Action which marks the box for the shift result.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action MarkShift(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].Shift.Mark = true;
-        }
-
-        /// <summary>
-        /// Action which inserts the shift result.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action InsertShift(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].Shift.Value = ChaChaVisualization.QRStep[index].Add;
-        }
-
-        /// <summary>
-        /// Action which marks the input paths and boxes for the shift.
-        /// </summary>
-        /// <param name="index">
-        ///   Number of quarterround step on which we want to operate.
-        ///   Zero-based, thus for quarterround step 1 this needs to be 0.
-        ///   Can be 0 - 3.
-        /// </param>
-        private Action MarkShiftInputs(int index)
-        {
-            if (0 < index || index > 3) throw new ArgumentOutOfRangeException("index", $"Index must be between 0 and 3. Received {index}");
-            return () => QRStep[index].Shift.MarkInput = true;
-        }
-
-        #endregion Actions
 
         public override void Reset()
         {
