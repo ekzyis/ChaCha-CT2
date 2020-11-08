@@ -23,6 +23,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 
         private Stack<Sequence> Sequences { get; set; } = new Stack<Sequence>();
 
+        private Sequence CurrentSequence { get => Sequences.Peek(); }
+
         public void StartSequence()
         {
             Sequences.Push(new Sequence());
@@ -35,6 +37,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             Sequences.Pop();
         }
 
+        public Action Pop()
+        {
+            return CurrentSequence.Pop();
+        }
+
+        public void Replace(Action action)
+        {
+            if (CurrentSequence.Count > 0) Pop();
+            CurrentSequence.Push(Sequential(action));
+        }
+
         public Action Sequential(Action action)
         {
             if (Sequences.Count == 0)
@@ -43,7 +56,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 .Select(s => s.AggregatedAction)
                 .Aggregate((Action acc, Action curr) => curr.Extend(acc));
             Action extendedAction = action.Extend(baseAction);
-            Sequences.Peek().Push(action);
+            CurrentSequence.Push(action);
             return extendedAction;
         }
     }

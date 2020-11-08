@@ -42,6 +42,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             for (int round = 0; round < Settings.Rounds; ++round)
             {
+                // Column round sequence
+                ActionCreator.StartSequence();
                 for (int qr = 0; qr < 4; ++qr)
                 {
                     //  Quarterround sequence
@@ -108,6 +110,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // Keep state update for rest of round sequence
                     Seq(qrIO.UpdateState(round, qr));
                 }
+                // End round sequence
+                ActionCreator.EndSequence();
+
+                // Keep state updates from all quarterrounds of the last round for rest of ChaCha hash sequence.
+                // This replaces for performance (and bug) reasons the last sequential action in the ChaCha hash sequence
+                // because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
+                // in a sequence.
+                ActionCreator.Replace(qrIO.UpdateState(round, 3).Extend(qrIO.UpdateState(round, 2), qrIO.UpdateState(round, 1), qrIO.UpdateState(round, 0)));
             }
 
             ActionCreator.EndSequence();

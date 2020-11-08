@@ -50,6 +50,19 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         void EndSequence();
 
         /// <summary>
+        /// Pop the last action from the current sequence.
+        /// </summary>
+        /// <returns></returns>
+        Action Pop();
+
+        /// <summary>
+        /// Replace the last action from the current sequence with the given action.
+        /// The action will be inserted extended.
+        /// If there is no last action in the current sequence, it will NOT throw an error and just insert the action at the beginning.
+        /// </summary>
+        void Replace(Action action);
+
+        /// <summary>
         /// Create a extended action using all previous sequential actions.
         /// </summary>
         /// <param name="action">The action we want to extend</param>
