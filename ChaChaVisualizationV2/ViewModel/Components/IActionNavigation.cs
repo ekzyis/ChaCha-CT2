@@ -24,7 +24,6 @@
         ///
         /// This implements absolute action navigation.
         /// </summary>
-        /// <param name="n"></param>
         void MoveToAction(int n);
 
         /// <summary>
@@ -32,7 +31,6 @@
         ///
         /// This implements relative action navigation.
         /// </summary>
-        /// <param name="n"></param>
         void MoveActions(int n);
 
         /// <summary>
