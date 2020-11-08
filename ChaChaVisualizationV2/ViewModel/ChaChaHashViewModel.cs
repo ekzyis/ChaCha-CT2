@@ -59,6 +59,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Execute first XOR
             Seq(MarkXORInputs(0));
             Seq(InsertXOR(0).Extend(MarkXOR(0)));
+
+            ResetSequence(InsertXOR(0));
+
+            // Execute first shift
+            Seq(MarkShiftInputs(0));
+            Seq(InsertShift(0).Extend(MarkShift(0)));
+
+            ResetSequence(InsertShift(0));
         }
 
         #region Actions
@@ -136,6 +144,21 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 QRStep[index].XOR.Value = ChaChaVisualization.QRStep[index].XOR;
             };
+        }
+
+        private Action MarkShift(int index)
+        {
+            return () => QRStep[index].Shift.Mark = true;
+        }
+
+        private Action InsertShift(int index)
+        {
+            return () => QRStep[index].Shift.Value = ChaChaVisualization.QRStep[index].Add;
+        }
+
+        private Action MarkShiftInputs(int index)
+        {
+            return () => QRStep[index].Shift.MarkInput = true;
         }
 
         #endregion Actions
