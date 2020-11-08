@@ -6,62 +6,45 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 {
     internal class ActionCreator : IActionCreator
     {
-        private Stack<Action> Baseline { get; set; } = new Stack<Action>();
-
-        private Action AggregatedBaseline { get => Baseline.Aggregate<Action, Action>(() => { }, (acc, curr) => curr.Extend(acc)); }
-
-        private int SequenceCount { get; set; }
-
-        public void PushBaseline(Action baseline)
+        /// <summary>
+        /// Data structure to store sequences.
+        /// </summary>
+        private class Sequence : Stack<Action>, IEnumerable<Action>
         {
-            Baseline.Push(baseline);
-        }
-
-        public void PopBaseline()
-        {
-            Baseline.Pop();
-        }
-
-        public void PopBaseline(int n)
-        {
-            for (int i = 0; i < n; ++i)
+            public Action AggregatedAction
             {
-                PopBaseline();
+                get
+                {
+                    if (Count == 0) return () => { };
+                    return this.Aggregate((Action acc, Action curr) => curr.Extend(acc));
+                }
             }
         }
 
-        public void ResetBaseline()
+        private Stack<Sequence> Sequences { get; set; } = new Stack<Sequence>();
+
+        public void StartSequence()
         {
-            Baseline.Clear();
-            SequenceCount = 0;
+            Sequences.Push(new Sequence());
         }
 
-        public void ResetBaseline(Action newBaseline)
+        public void EndSequence()
         {
-            ResetBaseline();
-            PushBaseline(newBaseline);
-        }
-
-        public Action ExtendBaseline(Action action)
-        {
-            return action.Extend(AggregatedBaseline);
+            if (Sequences.Count == 0)
+                throw new InvalidOperationException("Cannot end sequence because there is none.");
+            Sequences.Pop();
         }
 
         public Action Sequential(Action action)
         {
-            Action extended = action.Extend(AggregatedBaseline);
-            PushBaseline(action);
-            SequenceCount++;
-            return extended;
-        }
-
-        public void ResetSequence()
-        {
-            for (int i = 0; i < SequenceCount; ++i)
-            {
-                PopBaseline();
-            }
-            SequenceCount = 0;
+            if (Sequences.Count == 0)
+                throw new InvalidOperationException("Cannot create sequential action because there has no sequence been started. Please call `StartSequence` first.");
+            Action baseAction = Sequences
+                .Select(s => s.AggregatedAction)
+                .Aggregate((Action acc, Action curr) => curr.Extend(acc));
+            Action extendedAction = action.Extend(baseAction);
+            Sequences.Peek().Push(action);
+            return extendedAction;
         }
     }
 

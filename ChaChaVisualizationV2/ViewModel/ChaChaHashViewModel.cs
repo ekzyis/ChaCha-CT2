@@ -37,6 +37,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             QRXORActionCreator qrXOR = new QRXORActionCreator(this);
             QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
 
+            /*
             for (int round = 0; round < Settings.Rounds; ++round)
             {
                 for (int qr = 0; qr < 4; ++qr)
@@ -87,6 +88,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     ActionCreator.PushBaseline(qrIO.UpdateState(round, qr));
                 }
             }
+            */
         }
 
         public override void Reset()
