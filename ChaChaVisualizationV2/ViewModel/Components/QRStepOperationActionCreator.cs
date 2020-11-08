@@ -49,12 +49,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 
         private void AssertQRInput(int qr)
         {
-            if (0 < qr || qr > 3) throw new ArgumentOutOfRangeException("qr", $"qr must be between 0 and 3. Received {qr}");
+            if (qr < 0 || qr > 3) throw new ArgumentOutOfRangeException("qr", $"qr must be between 0 and 3. Received {qr}");
         }
 
         private void AssertQRStepInput(int qrStep)
         {
-            if (0 < qrStep || qrStep > 3) throw new ArgumentOutOfRangeException("qrStep", $"qrStep must be between 0 and 3. Received {qrStep}");
+            if (qrStep < 0 || qrStep > 3) throw new ArgumentOutOfRangeException("qrStep", $"qrStep must be between 0 and 3. Received {qrStep}");
         }
 
         /// <summary>

@@ -42,35 +42,50 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         protected override void InitActions()
         {
-            QRIOActionCreator qrIO = new QRIOActionCreator(this, round: 0);
+            QRIOActionCreator qrIO = new QRIOActionCreator(this);
 
             QRAdditionActionCreator qrAdd = new QRAdditionActionCreator(this);
             QRXORActionCreator qrXOR = new QRXORActionCreator(this);
             QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
 
-            // Copy from state into quarterround input
-            Seq(qrIO.MarkState(0, 4, 8, 12));
-            Seq(qrIO.InsertQRInputs.Extend(qrIO.MarkQRInputs));
+            for (int round = 0; round < Settings.Rounds; ++round)
+            {
+                for (int qr = 0; qr < 4; ++qr)
+                {
+                    // Copy from state into quarterround input
+                    Seq(qrIO.MarkState(round, qr));
+                    Seq(qrIO.InsertQRInputs(qr).Extend(qrIO.MarkQRInputs));
 
-            ResetSequence(qrIO.InsertQRInputs);
+                    ResetSequence(qrIO.InsertQRInputs(qr));
 
-            // Execute first addition
-            Seq(qrAdd.MarkInputs(round: 0, qr: 0, qrStep: 0));
-            Seq(qrAdd.Insert(round: 0, qr: 0, qrStep: 0).Extend(qrAdd.Mark(round: 0, qr: 0, qrStep: 0)));
+                    // Run quarterround
+                    for (int qrStep = 0; qrStep < 4; ++qrStep)
+                    {
+                        // Execute addition
+                        Seq(qrAdd.MarkInputs(round, qr, qrStep));
+                        Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(round, qr, qrStep)));
 
-            ResetSequence(qrAdd.Insert(round: 0, qr: 0, qrStep: 0));
+                        ResetSequence(qrAdd.Insert(round, qr, qrStep));
 
-            // Execute first XOR
-            Seq(qrXOR.MarkInputs(round: 0, qr: 0, qrStep: 0));
-            Seq(qrXOR.Insert(round: 0, qr: 0, qrStep: 0).Extend(qrXOR.Mark(round: 0, qr: 0, qrStep: 0)));
+                        // Execute XOR
+                        Seq(qrXOR.MarkInputs(round, qr, qrStep));
+                        Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(round, qr, qrStep)));
 
-            ResetSequence(qrXOR.Insert(round: 0, qr: 0, qrStep: 0));
+                        ResetSequence(qrXOR.Insert(round, qr, qrStep));
 
-            // Execute first shift
-            Seq(qrShift.MarkInputs(round: 0, qr: 0, qrStep: 0));
-            Seq(qrShift.Insert(round: 0, qr: 0, qrStep: 0).Extend(qrShift.Mark(round: 0, qr: 0, qrStep: 0)));
+                        // Execute shift
+                        Seq(qrShift.MarkInputs(round, qr, qrStep));
+                        Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(round, qr, qrStep)));
 
-            ResetSequence(qrShift.Insert(round: 0, qr: 0, qrStep: 0));
+                        ResetSequence(qrShift.Insert(round, qr, qrStep));
+                    }
+
+                    Seq(qrIO.MarkQROutputPaths);
+                    Seq(qrIO.InsertQROutputs(qr).Extend(qrIO.MarkQROutputs));
+
+                    ResetSequence(qrIO.InsertQROutputs(qr));
+                }
+            }
         }
 
         public override void Reset()
