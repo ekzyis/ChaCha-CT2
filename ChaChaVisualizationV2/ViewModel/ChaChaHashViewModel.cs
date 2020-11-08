@@ -123,10 +123,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
             foreach (VisualQRStep qrStep in QRStep)
             {
-                foreach (QRValue v in qrStep)
-                {
-                    v.Reset();
-                }
+                qrStep.Reset();
             }
         }
 
