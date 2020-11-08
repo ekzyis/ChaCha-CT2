@@ -108,6 +108,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     ActionCreator.EndSequence();
 
                     // Keep state update for rest of round sequence
+                    // FIXME There is a bug that the state update order is not as expected.
+                    //   We need to apply previous state updates ( from the previous round ) and then the new state update.
+                    //   But it for some reasons first applies the latest state and then the state updates fro last round in the correct order.
+                    //   So basically like this: 4, 0, 3, 2, 1.
+                    //   This leads to an overwrite of the diagonal.
                     Seq(qrIO.UpdateState(round, qr));
                 }
                 // End round sequence
