@@ -6,29 +6,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
     /// A helper class which creates the input and output actions for the quarterround visualization
     /// for the given round.
     /// </summary>
-    internal class QRIOActionCreator
+    internal class QRIOActionCreator : QRActionCreator
     {
         /// <summary>
         /// Creates an instance to help with quarterround input action creation for the given round.
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
-        public QRIOActionCreator(ChaChaHashViewModel viewModel)
+        public QRIOActionCreator(ChaChaHashViewModel viewModel) : base(viewModel)
         {
-            VM = viewModel;
-        }
-
-        public ChaChaHashViewModel VM { get; private set; }
-
-        private void AssertRoundInput(int round)
-        {
-            int maxRoundIndex = VM.Settings.Rounds - 1;
-            if (round < 0 || round > maxRoundIndex)
-                throw new ArgumentOutOfRangeException("round", $"round must be between 0 and {maxRoundIndex}. Received {round}.");
-        }
-
-        private void AssertQRInput(int qr)
-        {
-            if (qr < 0 || qr > 3) throw new ArgumentOutOfRangeException("qr", $"qr must be between 0 and 3. Received {qr}");
         }
 
         /// <summary>
@@ -101,11 +86,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <summary>
         /// Action which inserts the QR input values into the QR input boxes.
         /// </summary>
+        /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
-        public Action InsertQRInputs(int qr)
+        public Action InsertQRInputs(int round, int qr)
         {
+            AssertRoundInput(round);
             AssertQRInput(qr);
-            return () => (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[qr];
+            int arrayIndex = MapIndex(round, qr);
+            return () => (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[arrayIndex];
         }
 
         /// <summary>
@@ -146,10 +134,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// Action which inserts the QR output values into the QR output boxes.
         /// </summary>
         /// <param name="qr">Zero-based quarterround index.</param>
-        public Action InsertQROutputs(int qr)
+        public Action InsertQROutputs(int round, int qr)
         {
             AssertQRInput(qr);
-            return () => (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[qr];
+            int arrayIndex = MapIndex(round, qr);
+            return () => (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
         }
     }
 }

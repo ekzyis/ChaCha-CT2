@@ -54,9 +54,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 {
                     // Copy from state into quarterround input
                     Seq(qrIO.MarkState(round, qr));
-                    Seq(qrIO.InsertQRInputs(qr).Extend(qrIO.MarkQRInputs));
+                    Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
 
-                    ResetSequence(qrIO.InsertQRInputs(qr));
+                    ResetSequence(qrIO.InsertQRInputs(round, qr));
 
                     // Run quarterround
                     for (int qrStep = 0; qrStep < 4; ++qrStep)
@@ -81,9 +81,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     }
 
                     Seq(qrIO.MarkQROutputPaths);
-                    Seq(qrIO.InsertQROutputs(qr).Extend(qrIO.MarkQROutputs));
+                    Seq(qrIO.InsertQROutputs(round, qr).Extend(qrIO.MarkQROutputs));
 
-                    ResetSequence(qrIO.InsertQROutputs(qr));
+                    ResetSequence(qrIO.InsertQROutputs(round, qr));
                 }
             }
         }
