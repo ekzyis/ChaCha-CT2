@@ -83,7 +83,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
 
                     ActionCreator.ResetSequence();
-                    ActionCreator.PushBaseline(qrIO.UpdateState(round, qr).Extend(() => ResetQuarterroundValues()));
+                    ActionCreator.PopBaseline(14);
+                    ActionCreator.PushBaseline(qrIO.UpdateState(round, qr));
                 }
             }
         }

@@ -22,6 +22,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             Baseline.Pop();
         }
 
+        public void PopBaseline(int n)
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                PopBaseline();
+            }
+        }
+
         public void ResetBaseline()
         {
             Baseline.Clear();

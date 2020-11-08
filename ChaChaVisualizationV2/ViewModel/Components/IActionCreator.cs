@@ -24,6 +24,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         void PopBaseline();
 
         /// <summary>
+        /// Pop the latest n added baseline actions from the baseline.
+        /// </summary>
+        /// <param name="n"></param>
+        void PopBaseline(int n);
+
+        /// <summary>
         /// Remove all baseline actions.
         /// </summary>
         void ResetBaseline();
