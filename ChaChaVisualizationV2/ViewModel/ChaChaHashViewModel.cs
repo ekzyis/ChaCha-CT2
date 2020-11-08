@@ -37,58 +37,79 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             QRXORActionCreator qrXOR = new QRXORActionCreator(this);
             QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
 
-            /*
+            ActionCreator.StartSequence();
+
             for (int round = 0; round < Settings.Rounds; ++round)
             {
                 for (int qr = 0; qr < 4; ++qr)
                 {
-                    // Copy from state into quarterround input
+                    // Quarterround action sequence
+                    ActionCreator.StartSequence();
+
+                    // Sequence: Copy from state into quarterround input
+                    ActionCreator.StartSequence();
                     Seq(qrIO.MarkState(round, qr));
                     Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
+                    ActionCreator.EndSequence();
 
-                    ActionCreator.ResetSequence();
-                    ActionCreator.PushBaseline(qrIO.InsertQRInputs(round, qr));
+                    // Keep inserted qr input visible for the rest of the quarterround sequence
+                    Seq(qrIO.InsertQRInputs(round, qr));
 
-                    // Run quarterround
+                    // Run quarterround steps
                     for (int qrStep = 0; qrStep < 4; ++qrStep)
                     {
                         // Execute addition
+                        ActionCreator.StartSequence();
                         Seq(qrAdd.MarkInputs(qrStep));
                         Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
+                        ActionCreator.EndSequence();
 
-                        ActionCreator.ResetSequence();
-                        ActionCreator.PushBaseline(qrAdd.Insert(round, qr, qrStep));
+                        // Keep executed additions visible
+                        Seq(qrAdd.Insert(round, qr, qrStep));
 
                         // Execute XOR
+                        ActionCreator.StartSequence();
                         Seq(qrXOR.MarkInputs(qrStep));
                         Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
+                        ActionCreator.EndSequence();
 
-                        ActionCreator.ResetSequence();
-                        ActionCreator.PushBaseline(qrXOR.Insert(round, qr, qrStep));
+                        // Keep executed XORs visible
+                        Seq(qrXOR.Insert(round, qr, qrStep));
 
                         // Execute shift
+                        ActionCreator.StartSequence();
                         Seq(qrShift.MarkInputs(qrStep));
                         Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
+                        ActionCreator.EndSequence();
 
-                        ActionCreator.ResetSequence();
-                        ActionCreator.PushBaseline(qrShift.Insert(round, qr, qrStep));
+                        // Keep executed shift visible
+                        Seq(qrShift.Insert(round, qr, qrStep));
                     }
 
+                    // Execute fill quarterround output actions
+                    ActionCreator.StartSequence();
                     Seq(qrIO.MarkQROutputPaths);
                     Seq(qrIO.InsertQROutputs(round, qr).Extend(qrIO.MarkQROutputs));
+                    ActionCreator.EndSequence();
 
-                    ActionCreator.ResetSequence();
-                    ActionCreator.PushBaseline(qrIO.InsertQROutputs(round, qr));
+                    // Keep quarterround output values for the rest of the quarterround sequence
+                    Seq(qrIO.InsertQROutputs(round, qr));
 
+                    // Sequene: Copy from qr output to state
+                    ActionCreator.StartSequence();
                     Seq(qrIO.MarkQROutputs);
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
+                    ActionCreator.EndSequence();
 
-                    ActionCreator.ResetSequence();
-                    ActionCreator.PopBaseline(14);
-                    ActionCreator.PushBaseline(qrIO.UpdateState(round, qr));
+                    // End quarterround action sequence
+                    ActionCreator.EndSequence();
+
+                    // Keep state update
+                    Seq(qrIO.UpdateState(round, qr));
                 }
             }
-            */
+
+            ActionCreator.EndSequence();
         }
 
         public override void Reset()
