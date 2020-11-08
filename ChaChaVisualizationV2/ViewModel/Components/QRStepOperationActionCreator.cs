@@ -45,9 +45,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qrStep">Zero-based quarterround step index.</param>
         public Action MarkInputs(int round, int qr, int qrStep)
         {
-            AssertRoundInput(round);
-            AssertQRInput(qr);
-            AssertQRStepInput(qrStep);
             int arrayIndex = MapIndex(round, qr, qrStep);
             if (Operation == QRStepOperation.ADD)
                 return () => VM.QRStep[arrayIndex].Add.MarkInput = true;
@@ -66,9 +63,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qrStep">Zero-based quarterround step index.</param>
         public Action Mark(int round, int qr, int qrStep)
         {
-            AssertRoundInput(round);
-            AssertQRInput(qr);
-            AssertQRStepInput(qrStep);
             int arrayIndex = MapIndex(round, qr, qrStep);
             if (Operation == QRStepOperation.ADD)
                 return () => VM.QRStep[arrayIndex].Add.Mark = true;
@@ -87,9 +81,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qrStep">Zero-based quarterround step index.</param>
         public Action Insert(int round, int qr, int qrStep)
         {
-            AssertRoundInput(round);
-            AssertQRInput(qr);
-            AssertQRStepInput(qrStep);
             int arrayIndex = MapIndex(round, qr, qrStep);
             if (Operation == QRStepOperation.ADD)
                 return () => VM.QRStep[arrayIndex].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;

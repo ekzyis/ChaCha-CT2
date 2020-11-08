@@ -91,8 +91,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qr">Zero-based quarterround index.</param>
         public Action InsertQRInputs(int round, int qr)
         {
-            AssertRoundInput(round);
-            AssertQRInput(qr);
             int arrayIndex = MapIndex(round, qr);
             return () => (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[arrayIndex];
         }
@@ -137,8 +135,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qr">Zero-based quarterround index.</param>
         public Action InsertQROutputs(int round, int qr)
         {
-            AssertRoundInput(qr);
-            AssertQRInput(qr);
             int arrayIndex = MapIndex(round, qr);
             return () => (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
         }
@@ -150,8 +146,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qr">Zero-based quarterround index.</param>
         public Action UpdateState(int round, int qr)
         {
-            AssertRoundInput(qr);
-            AssertQRInput(qr);
             int arrayIndex = MapIndex(round, qr);
             (uint a, uint b, uint c, uint d) = VM.ChaChaVisualization.QROutput[arrayIndex];
             return () =>

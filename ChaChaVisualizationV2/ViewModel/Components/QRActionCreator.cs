@@ -41,6 +41,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qrStep">Zero-based quarterround step index.</param>
         protected int MapIndex(int round, int qr, int qrStep)
         {
+            AssertRoundInput(qr);
+            AssertQRInput(qr);
+            AssertQRStepInput(qrStep);
             // For every round, we need to skip 16 steps.
             // For every quarterround, we need to skip 4 steps.
             return round * 16 + qr * 4 + qrStep;
@@ -54,6 +57,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qr">Zero-based quarterround index.</param>
         protected int MapIndex(int round, int qr)
         {
+            AssertRoundInput(qr);
+            AssertQRInput(qr);
             // For every round, we need to skip 4 quarterrounds.
             return round * 4 + qr;
         }
