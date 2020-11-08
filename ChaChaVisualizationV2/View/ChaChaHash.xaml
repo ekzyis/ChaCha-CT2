@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.View"
              xmlns:conv="clr-namespace:Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter"
              mc:Ignorable="d"
+             Background="White"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -455,7 +456,14 @@
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRInB.Mark}" Value="True">
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                        <Binding Path="QRInB.Mark" />
+                                                        <Binding Path="QRStep[1].XOR.MarkInput" />
+                                                        <Binding Path="QRStep[0].Add.MarkInput" />
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
                                                 <Setter Property="Background" Value="AliceBlue" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -472,7 +480,13 @@
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRInC.Mark}" Value="True">
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                        <Binding Path="QRInC.Mark" />
+                                                        <Binding Path="QRStep[1].Add.MarkInput" />
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
                                                 <Setter Property="Background" Value="AliceBlue" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -489,7 +503,13 @@
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRInD.Mark}" Value="True">
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                        <Binding Path="QRInD.Mark" />
+                                                        <Binding Path="QRStep[0].XOR.MarkInput" />
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
                                                 <Setter Property="Background" Value="AliceBlue" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -821,7 +841,14 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[0].Add.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[0].Add.Mark" />
+                                                                        <Binding Path="QRStep[0].XOR.MarkInput" />
+                                                                        <Binding Path="QRStep[2].Add.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -854,7 +881,13 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[0].XOR.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[0].XOR.Mark" />
+                                                                        <Binding Path="QRStep[0].Shift.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -890,7 +923,14 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[0].Shift.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[0].Shift.Mark" />
+                                                                        <Binding Path="QRStep[1].Add.MarkInput" />
+                                                                        <Binding Path="QRStep[2].XOR.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -945,7 +985,14 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[1].Add.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[1].Add.Mark" />
+                                                                        <Binding Path="QRStep[1].XOR.MarkInput" />
+                                                                        <Binding Path="QRStep[3].Add.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -962,7 +1009,7 @@
                                                 <Path.Style>
                                                     <Style TargetType="{x:Type Path}" BasedOn="{StaticResource AddCircle}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[1].Add.Value}" Value="True">
+                                                            <DataTrigger Binding="{Binding QRStep[1].Add.MarkInput}" Value="True">
                                                                 <Setter Property="Stroke" Value="Purple" />
                                                                 <Setter Property="StrokeThickness" Value="3" />
                                                             </DataTrigger>
@@ -979,7 +1026,13 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[1].XOR.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[1].XOR.Mark" />
+                                                                        <Binding Path="QRStep[1].Shift.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1013,7 +1066,14 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[1].Shift.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[1].Shift.Mark" />
+                                                                        <Binding Path="QRStep[2].Add.MarkInput" />
+                                                                        <Binding Path="QRStep[3].XOR.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1068,7 +1128,14 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[2].Add.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[2].Add.Mark" />
+                                                                        <Binding Path="QROutA.MarkInput" />
+                                                                        <Binding Path="QRStep[2].XOR.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1102,7 +1169,13 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[2].XOR.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[2].XOR.Mark" />
+                                                                        <Binding Path="QRStep[2].Shift.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1138,7 +1211,14 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[2].Shift.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[2].Shift.Mark" />
+                                                                        <Binding Path="QRStep[3].Add.MarkInput" />
+                                                                        <Binding Path="QROutD.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1193,7 +1273,13 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[3].Add.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[3].Add.Mark" />
+                                                                        <Binding Path="QROutC.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1227,7 +1313,13 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[3].XOR.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[3].XOR.Mark" />
+                                                                        <Binding Path="QRStep[3].Shift.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
@@ -1261,7 +1353,13 @@
                                                 <Border.Style>
                                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                                         <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding QRStep[3].Shift.Mark}" Value="True">
+                                                            <DataTrigger Value="True">
+                                                                <DataTrigger.Binding>
+                                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                                        <Binding Path="QRStep[3].Shift.Mark" />
+                                                                        <Binding Path="QROutB.MarkInput" />
+                                                                    </MultiBinding>
+                                                                </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
                                                             </DataTrigger>
                                                         </Style.Triggers>
