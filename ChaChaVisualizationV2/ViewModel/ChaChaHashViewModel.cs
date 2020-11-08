@@ -103,18 +103,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private Action MarkAddInputs(int index)
         {
-            return () =>
-            {
-                QRStep[index].Add.MarkInput = true;
-            };
+            return () => QRStep[index].Add.MarkInput = true;
         }
 
         private Action MarkAdd(int index)
         {
-            return () =>
-            {
-                QRStep[index].Add.Mark = true;
-            };
+            return () => QRStep[index].Add.Mark = true;
         }
 
         private Action InsertAdd(int index)
@@ -124,26 +118,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private Action MarkXORInputs(int index)
         {
-            return () =>
-            {
-                QRStep[index].XOR.MarkInput = true;
-            };
+            return () => QRStep[index].XOR.MarkInput = true;
         }
 
         private Action MarkXOR(int index)
         {
-            return () =>
-            {
-                QRStep[index].XOR.Mark = true;
-            };
+            return () => QRStep[index].XOR.Mark = true;
         }
 
         private Action InsertXOR(int index)
         {
-            return () =>
-            {
-                QRStep[index].XOR.Value = ChaChaVisualization.QRStep[index].XOR;
-            };
+            return () => QRStep[index].XOR.Value = ChaChaVisualization.QRStep[index].XOR;
         }
 
         private Action MarkShift(int index)
