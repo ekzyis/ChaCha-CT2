@@ -15,6 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+            <conv:BooleanOr x:Key="BooleanOr" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -422,7 +423,7 @@
                         <Style x:Key="ShiftSubscript" TargetType="{x:Type TextBlock}">
                             <Setter Property="FontSize" Value="8" />
                         </Style>
-                        <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource UniformViewbox}"/>
+                        <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource UniformViewbox}" />
                     </Viewbox.Resources>
                     <Canvas Width="1500" Height="260" Grid.Row="1">
                         <Canvas Canvas.Top="20">
@@ -431,7 +432,13 @@
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}" BasedOn="{StaticResource QRValueBorder}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding QRInA.Mark}" Value="True">
+                                            <DataTrigger Value="True">
+                                                <DataTrigger.Binding>
+                                                    <MultiBinding Converter="{StaticResource BooleanOr}">
+                                                        <Binding Path="QRInA.Mark" />
+                                                        <Binding Path="QRStep[0].Add.Mark" />
+                                                    </MultiBinding>
+                                                </DataTrigger.Binding>
                                                 <Setter Property="Background" Value="AliceBlue" />
                                             </DataTrigger>
                                         </Style.Triggers>
