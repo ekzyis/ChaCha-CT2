@@ -87,6 +87,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
                     Seq(qrIO.MarkQROutputs);
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
+
+                    ResetSequence(qrIO.UpdateState(round, qr).Extend(qrIO.ResetQRValues));
                 }
             }
         }

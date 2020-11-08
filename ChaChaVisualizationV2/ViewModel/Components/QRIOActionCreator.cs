@@ -157,5 +157,19 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 VM.StateValues[l].Value = d;
             };
         }
+
+        public Action ResetQRValues
+        {
+            get
+            {
+                return () =>
+                {
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        VM.QRStep[i].Reset();
+                    }
+                };
+            }
+        }
     }
 }

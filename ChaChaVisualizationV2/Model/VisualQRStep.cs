@@ -22,5 +22,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Model
         {
             return new QRValue[] { Add, XOR, Shift }.GetEnumerator();
         }
+
+        /// <summary>
+        /// Reset all values in this qr step.
+        /// </summary>
+        public void Reset()
+        {
+            Add.Reset();
+            XOR.Reset();
+            Shift.Reset();
+        }
     }
 }
