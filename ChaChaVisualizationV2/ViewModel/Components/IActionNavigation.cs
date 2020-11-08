@@ -52,5 +52,23 @@
         /// Go to the first action.
         /// </summary>
         void MoveToFirstAction();
+
+        /// <summary>
+        /// Queue an absolute move command up which will be executed asynchronously.
+        /// </summary>
+        void QueueMoveToAction(int n);
+
+        void QueueMoveActions(int n);
+
+        /// <summary>
+        /// Start the thread which will execute move commands asynchronously.
+        /// </summary>
+        /// <param name="millisecondsPeriod">The delay in milliseconds between move command executions.</param>
+        void StartActionBufferHandler(int millisecondsPeriod);
+
+        /// <summary>
+        /// Stop the thread which executes asynchronous move commands.
+        /// </summary>
+        void StopActionBufferHandler();
     }
 }

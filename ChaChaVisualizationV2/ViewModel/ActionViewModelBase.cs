@@ -3,6 +3,8 @@ using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -162,6 +164,76 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 return CurrentActionIndex != 0;
             }
         }
+
+        #region Asynchronous action navigation
+
+        private readonly Stack<int> AsyncMoveCommandsStack = new Stack<int>();
+
+        private CancellationTokenSource ActionNavigationTokenSource;
+
+        public void QueueMoveActions(int n)
+        {
+            QueueMoveToAction(n + CurrentActionIndex);
+        }
+
+        public void QueueMoveToAction(int n)
+        {
+            lock (AsyncMoveCommandsStack)
+            {
+                AsyncMoveCommandsStack.Push(n);
+            }
+        }
+
+        public async void StartActionBufferHandler(int millisecondsPeriod)
+        {
+            // first stop action thread if one exists
+            StopActionBufferHandler();
+            ActionNavigationTokenSource = new CancellationTokenSource();
+            CancellationToken cancellationToken = ActionNavigationTokenSource.Token;
+            Task ClearActionBuffer()
+            {
+                return Task.Run(() =>
+                {
+                    int n = CurrentActionIndex;
+                    lock (AsyncMoveCommandsStack)
+                    {
+                        if (AsyncMoveCommandsStack.Count != 0)
+                        {
+                            n = AsyncMoveCommandsStack.Pop();
+                            AsyncMoveCommandsStack.Clear();
+                        }
+                    }
+                    var watch = System.Diagnostics.Stopwatch.StartNew();
+                    MoveToAction(n);
+                    watch.Stop();
+                    var elapsedMs = watch.ElapsedMilliseconds;
+                    if (elapsedMs != 0)
+                    {
+                        // Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
+                    }
+                }, cancellationToken);
+            }
+            while (true)
+            {
+                try
+                {
+                    var delayTask = Task.Delay(millisecondsPeriod, cancellationToken);
+                    await ClearActionBuffer();
+                    await delayTask;
+                }
+                catch (TaskCanceledException)
+                {
+                    break;
+                }
+            }
+        }
+
+        public void StopActionBufferHandler()
+        {
+            ActionNavigationTokenSource?.Cancel();
+        }
+
+        #endregion Asynchronous action navigation
 
         #endregion IActionNavigation
 
