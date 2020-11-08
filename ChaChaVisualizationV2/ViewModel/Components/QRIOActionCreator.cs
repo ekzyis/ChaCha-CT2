@@ -136,6 +136,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <param name="qr">Zero-based quarterround index.</param>
         public Action InsertQROutputs(int round, int qr)
         {
+            AssertRoundInput(qr);
             AssertQRInput(qr);
             int arrayIndex = MapIndex(round, qr);
             return () => (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
