@@ -379,10 +379,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 QRStep.Add(new VisualQRStep());
             }
+            StartActionBufferHandler(50);
         }
 
         public void Teardown()
         {
+            StopActionBufferHandler();
             MoveToFirstAction();
             // Clear lists to undo Setup.
             StateValues.Clear();
