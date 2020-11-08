@@ -1,4 +1,5 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+﻿using Cryptool.Plugins.ChaCha;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     /// <summary>
     /// View model base for all view models which implement action navigation
     /// </summary>
-    internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation
+    internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation, IChaCha
     {
-        public ActionViewModelBase()
+        public ActionViewModelBase(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
+            PresentationViewModel = chachaPresentationViewModel;
             CurrentActionIndex = 0;
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
@@ -162,5 +164,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion IActionNavigation
+
+        #region IChaCha
+
+        public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
+        public ChaChaVisualizationV2 ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
+        public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
+        public ChaCha.ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
+
+        #endregion IChaCha
     }
 }

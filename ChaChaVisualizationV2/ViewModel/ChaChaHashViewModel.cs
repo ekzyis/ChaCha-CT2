@@ -1,5 +1,4 @@
-﻿using Cryptool.Plugins.ChaCha;
-using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
@@ -21,9 +20,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// </summary>
         private readonly QRValue[] qrOutValues;
 
-        public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
+        public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
-            PresentationViewModel = chachaPresentationViewModel;
             Name = "ChaCha hash";
             Title = "ChaCha hash function";
             qrInValues = new QRValue[] { QRInA, QRInB, QRInC, QRInD };
@@ -361,14 +359,5 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion ITitle
-
-        #region IChaCha
-
-        public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
-        public ChaChaVisualizationV2 ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
-        public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
-        public ChaCha.ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
-
-        #endregion IChaCha
     }
 }

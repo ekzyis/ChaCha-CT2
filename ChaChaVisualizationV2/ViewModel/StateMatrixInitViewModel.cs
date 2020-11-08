@@ -1,15 +1,13 @@
-﻿using Cryptool.Plugins.ChaCha;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
-    internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle, IChaCha
+    internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle
     {
-        public StateMatrixInitViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
+        public StateMatrixInitViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
-            PresentationViewModel = chachaPresentationViewModel;
             Name = "State Matrix";
             Title = "State Matrix Initialization";
         }
@@ -568,14 +566,5 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion ITitle
-
-        #region IChaCha
-
-        public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
-        public ChaChaVisualizationV2 ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
-        public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
-        public ChaCha.ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
-
-        #endregion IChaCha
     }
 }
