@@ -89,7 +89,7 @@
     <Compile Include="Helper\Converter\ASCII.cs" />
     <Compile Include="Helper\Converter\BitsToBytes.cs" />
     <Compile Include="Helper\Converter\BooleanAndVisibility.cs" />
-    <Compile Include="Helper\Converter\BooleanOrVisibility.cs" />
+    <Compile Include="Helper\Converter\BooleanOr.cs" />
     <Compile Include="Helper\Converter\BytesToHex.cs" />
     <Compile Include="Helper\Converter\BigIntegerToHexWithVersion.cs" />
     <Compile Include="Helper\Converter\Chunkify.cs" />
