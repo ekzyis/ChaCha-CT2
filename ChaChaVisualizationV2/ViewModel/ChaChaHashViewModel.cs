@@ -32,20 +32,29 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region ActionViewModelBase
 
+        /// <summary>
+        /// Method which wraps ActionCreator.ResetSequence.
+        /// Calls ActionCreator.ResetSequence and adds action to show new baseline by adding an empty action.
+        /// </summary>
+        private void ResetSequence(Action newBaseline)
+        {
+            ActionCreator.ResetSequence(newBaseline);
+            Seq(() => { });
+        }
+
         protected override void InitActions()
         {
             // Copy from state into quarterround input
             Seq(MarkState(0, 4, 8, 12));
             Seq(InsertQRInputs(0).Extend(MarkQRInputs));
 
-            ActionCreator.ResetSequence(InsertQRInputs(0));
-            Seq(() => { });
+            ResetSequence(InsertQRInputs(0));
 
             // Execute first addition
             Seq(MarkAddInputs(0));
             Seq(InsertAdd(0).Extend(MarkAdd(0)));
 
-            ActionCreator.ResetSequence(InsertAdd(0));
+            ResetSequence(InsertAdd(0));
 
             // Execute first XOR
             Seq(MarkXORInputs(0));
