@@ -16,7 +16,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 get
                 {
                     if (Count == 0) return () => { };
-                    return this.Aggregate((Action acc, Action curr) => curr.Extend(acc));
+                    // Reverse to traverse the stack from bottom up
+                    return this.Reverse().Aggregate((Action acc, Action curr) => curr.Extend(acc));
                 }
             }
         }
@@ -54,6 +55,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 throw new InvalidOperationException("Cannot create sequential action because there has no sequence been started. Please call `StartSequence` first.");
             Action baseAction = Sequences
                 .Select(s => s.AggregatedAction)
+                // Reverse such that the aggregated action of the latest sequence comes indeed last due to reversed stack iteration order
+                .Reverse()
                 .Aggregate((Action acc, Action curr) => curr.Extend(acc));
             Action extendedAction = action.Extend(baseAction);
             CurrentSequence.Push(action);
