@@ -62,20 +62,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     for (int qrStep = 0; qrStep < 4; ++qrStep)
                     {
                         // Execute addition
-                        Seq(qrAdd.MarkInputs(round, qr, qrStep));
-                        Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(round, qr, qrStep)));
+                        Seq(qrAdd.MarkInputs(qrStep));
+                        Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
 
                         ResetSequence(qrAdd.Insert(round, qr, qrStep));
 
                         // Execute XOR
-                        Seq(qrXOR.MarkInputs(round, qr, qrStep));
-                        Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(round, qr, qrStep)));
+                        Seq(qrXOR.MarkInputs(qrStep));
+                        Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
 
                         ResetSequence(qrXOR.Insert(round, qr, qrStep));
 
                         // Execute shift
-                        Seq(qrShift.MarkInputs(round, qr, qrStep));
-                        Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(round, qr, qrStep)));
+                        Seq(qrShift.MarkInputs(qrStep));
+                        Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
 
                         ResetSequence(qrShift.Insert(round, qr, qrStep));
                     }

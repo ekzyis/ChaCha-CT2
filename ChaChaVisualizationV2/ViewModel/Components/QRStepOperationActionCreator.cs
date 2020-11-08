@@ -40,36 +40,32 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <summary>
         /// Action which marks the input paths and boxes for the step operation.
         /// </summary>
-        /// <param name="round">Zero-based round index.</param>
-        /// <param name="qr">Zero-based quarterround index.</param>
         /// <param name="qrStep">Zero-based quarterround step index.</param>
-        public Action MarkInputs(int round, int qr, int qrStep)
+        public Action MarkInputs(int qrStep)
         {
-            int arrayIndex = MapIndex(round, qr, qrStep);
+            AssertQRStepInput(qrStep);
             if (Operation == QRStepOperation.ADD)
-                return () => VM.QRStep[arrayIndex].Add.MarkInput = true;
+                return () => VM.QRStep[qrStep].Add.MarkInput = true;
             else if (Operation == QRStepOperation.XOR)
-                return () => VM.QRStep[arrayIndex].XOR.MarkInput = true;
+                return () => VM.QRStep[qrStep].XOR.MarkInput = true;
             else if (Operation == QRStepOperation.SHIFT)
-                return () => VM.QRStep[arrayIndex].Shift.MarkInput = true;
+                return () => VM.QRStep[qrStep].Shift.MarkInput = true;
             throw new InvalidOperationException("Could not find a matching QRStepOperation.");
         }
 
         /// <summary>
         /// Action which marks the box for the step operation result.
         /// </summary>
-        /// <param name="round">Zero-based round index.</param>
-        /// <param name="qr">Zero-based quarterround index.</param>
         /// <param name="qrStep">Zero-based quarterround step index.</param>
-        public Action Mark(int round, int qr, int qrStep)
+        public Action Mark(int qrStep)
         {
-            int arrayIndex = MapIndex(round, qr, qrStep);
+            AssertQRStepInput(qrStep);
             if (Operation == QRStepOperation.ADD)
-                return () => VM.QRStep[arrayIndex].Add.Mark = true;
+                return () => VM.QRStep[qrStep].Add.Mark = true;
             else if (Operation == QRStepOperation.XOR)
-                return () => VM.QRStep[arrayIndex].XOR.Mark = true;
+                return () => VM.QRStep[qrStep].XOR.Mark = true;
             else if (Operation == QRStepOperation.SHIFT)
-                return () => VM.QRStep[arrayIndex].Shift.Mark = true;
+                return () => VM.QRStep[qrStep].Shift.Mark = true;
             throw new InvalidOperationException("Could not find a matching QRStepOperation.");
         }
 
@@ -83,11 +79,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             int arrayIndex = MapIndex(round, qr, qrStep);
             if (Operation == QRStepOperation.ADD)
-                return () => VM.QRStep[arrayIndex].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;
+                return () => VM.QRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;
             else if (Operation == QRStepOperation.XOR)
-                return () => VM.QRStep[arrayIndex].XOR.Value = VM.ChaChaVisualization.QRStep[arrayIndex].XOR;
+                return () => VM.QRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStep[arrayIndex].XOR;
             else if (Operation == QRStepOperation.SHIFT)
-                return () => VM.QRStep[arrayIndex].Shift.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Shift;
+                return () => VM.QRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Shift;
             throw new InvalidOperationException("Could not find a matching QRStepOperation.");
         }
     }
