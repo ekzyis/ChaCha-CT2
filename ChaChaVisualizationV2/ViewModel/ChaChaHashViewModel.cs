@@ -37,22 +37,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             QRXORActionCreator qrXOR = new QRXORActionCreator(this);
             QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
 
+            // ChaCha Hash sequence
             ActionCreator.StartSequence();
 
             for (int round = 0; round < Settings.Rounds; ++round)
             {
                 for (int qr = 0; qr < 4; ++qr)
                 {
-                    // Quarterround action sequence
+                    //  Quarterround sequence
                     ActionCreator.StartSequence();
 
-                    // Sequence: Copy from state into quarterround input
+                    // Copy from state into qr input
                     ActionCreator.StartSequence();
                     Seq(qrIO.MarkState(round, qr));
                     Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
                     ActionCreator.EndSequence();
 
-                    // Keep inserted qr input visible for the rest of the quarterround sequence
+                    // Keep inserted qr input for the rest of the qr sequence
                     Seq(qrIO.InsertQRInputs(round, qr));
 
                     // Run quarterround steps
@@ -64,7 +65,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
                         ActionCreator.EndSequence();
 
-                        // Keep executed additions visible
+                        // Keep addition values
                         Seq(qrAdd.Insert(round, qr, qrStep));
 
                         // Execute XOR
@@ -73,7 +74,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
                         ActionCreator.EndSequence();
 
-                        // Keep executed XORs visible
+                        // Keep XOR values
                         Seq(qrXOR.Insert(round, qr, qrStep));
 
                         // Execute shift
@@ -82,29 +83,29 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
                         ActionCreator.EndSequence();
 
-                        // Keep executed shift visible
+                        // Keep shift values
                         Seq(qrShift.Insert(round, qr, qrStep));
                     }
 
-                    // Execute fill quarterround output actions
+                    // Fill quarterround output
                     ActionCreator.StartSequence();
                     Seq(qrIO.MarkQROutputPaths);
                     Seq(qrIO.InsertQROutputs(round, qr).Extend(qrIO.MarkQROutputs));
                     ActionCreator.EndSequence();
 
-                    // Keep quarterround output values for the rest of the quarterround sequence
+                    // Keep qr output values
                     Seq(qrIO.InsertQROutputs(round, qr));
 
-                    // Sequene: Copy from qr output to state
+                    // Copy from qr output to state
                     ActionCreator.StartSequence();
                     Seq(qrIO.MarkQROutputs);
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
                     ActionCreator.EndSequence();
 
-                    // End quarterround action sequence
+                    // End quarterround sequence
                     ActionCreator.EndSequence();
 
-                    // Keep state update
+                    // Keep state update for rest of round sequence
                     Seq(qrIO.UpdateState(round, qr));
                 }
             }
