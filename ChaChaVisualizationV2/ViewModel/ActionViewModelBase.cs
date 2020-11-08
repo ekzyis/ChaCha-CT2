@@ -121,48 +121,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             MoveToAction(TotalActions - 1);
         }
 
-        private ICommand _nextActionCommand; public ICommand NextActionCommand
-        {
-            get
-            {
-                if (_nextActionCommand == null) _nextActionCommand = new RelayCommand((arg) => NextAction(), (arg) => CanNextAction);
-                return _nextActionCommand;
-            }
-        }
-
         public void NextAction()
         {
             MoveActions(1);
         }
 
-        public bool CanNextAction
-        {
-            get
-            {
-                return CurrentActionIndex < TotalActions - 1;
-            }
-        }
-
-        private ICommand _prevActionCommand; public ICommand PrevActionCommand
-        {
-            get
-            {
-                if (_prevActionCommand == null) _prevActionCommand = new RelayCommand((arg) => PrevAction(), (arg) => CanPrevAction);
-                return _prevActionCommand;
-            }
-        }
-
         public void PrevAction()
         {
             MoveActions(-1);
-        }
-
-        public bool CanPrevAction
-        {
-            get
-            {
-                return CurrentActionIndex != 0;
-            }
         }
 
         #region Asynchronous action navigation
@@ -236,6 +202,44 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion Asynchronous action navigation
 
         #endregion IActionNavigation
+
+        #region ICommand
+
+        private ICommand _nextActionCommand; public ICommand NextActionCommand
+        {
+            get
+            {
+                if (_nextActionCommand == null) _nextActionCommand = new RelayCommand((arg) => NextAction(), (arg) => CanNextAction);
+                return _nextActionCommand;
+            }
+        }
+
+        public bool CanNextAction
+        {
+            get
+            {
+                return CurrentActionIndex < TotalActions - 1;
+            }
+        }
+
+        private ICommand _prevActionCommand; public ICommand PrevActionCommand
+        {
+            get
+            {
+                if (_prevActionCommand == null) _prevActionCommand = new RelayCommand((arg) => PrevAction(), (arg) => CanPrevAction);
+                return _prevActionCommand;
+            }
+        }
+
+        public bool CanPrevAction
+        {
+            get
+            {
+                return CurrentActionIndex != 0;
+            }
+        }
+
+        #endregion ICommand
 
         #region IChaCha
 
