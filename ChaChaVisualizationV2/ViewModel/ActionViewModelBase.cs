@@ -67,7 +67,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <summary>
         /// Convenience method for Actions.Add(ActionCreator.Sequential(action))
         /// </summary>
-        /// <param name="action"></param>
         protected void Seq(Action action)
         {
             Actions.Add(ActionCreator.Sequential(action));
