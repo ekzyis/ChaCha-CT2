@@ -147,9 +147,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         public Action UpdateState(int round, int qr)
         {
             int arrayIndex = MapIndex(round, qr);
-            (uint a, uint b, uint c, uint d) = VM.ChaChaVisualization.QROutput[arrayIndex];
             return () =>
             {
+                (uint a, uint b, uint c, uint d) = VM.ChaChaVisualization.QROutput[arrayIndex];
                 (int i, int j, int k, int l) = GetStateIndices(round, qr);
                 VM.StateValues[i].Value = a;
                 VM.StateValues[j].Value = b;
