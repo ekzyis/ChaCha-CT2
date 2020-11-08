@@ -72,11 +72,5 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// </summary>
         /// <returns></returns>
         void ResetSequence();
-
-        /// <summary>
-        /// Reset the sequence and add a new baseline action.
-        /// </summary>
-        /// <param name="newBaseline"></param>
-        void ResetSequence(Action newBaseline);
     }
 }

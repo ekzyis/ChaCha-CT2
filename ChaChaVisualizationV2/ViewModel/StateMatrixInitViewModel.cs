@@ -31,7 +31,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region Key
 
-            ActionCreator.ResetSequence(() => { ConstantsMatrix = true; });
+            ActionCreator.ResetSequence();
+            ActionCreator.PushBaseline(() => { ConstantsMatrix = true; });
 
             Seq(() => { Description[1] = true; KeyEncoding = true; });
             Seq(() => { KeyEncodingInput = true; });
@@ -43,7 +44,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region Counter
 
-            ActionCreator.ResetSequence(() => { Description[1] = true; KeyMatrix = true; });
+            ActionCreator.ResetSequence();
+            ActionCreator.PushBaseline(() => { Description[1] = true; KeyMatrix = true; });
 
             Seq(() => { Description[2] = true; CounterEncoding = true; });
             Seq(() => { CounterEncodingInput = true; });
@@ -56,7 +58,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #region IV
 
-            ActionCreator.ResetSequence(() => { Description[2] = true; CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
+            ActionCreator.ResetSequence();
+            ActionCreator.PushBaseline(() => { Description[2] = true; CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
 
             Seq(() => { Description[3] = true; IVEncoding = true; });
             Seq(() => { IVEncodingInput = true; });
@@ -66,7 +69,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             #endregion IV
 
-            ActionCreator.ResetSequence(() => { IVMatrix = true; });
+            ActionCreator.ResetSequence();
+            ActionCreator.PushBaseline(() => { IVMatrix = true; });
 
             Seq(() => { Description[4] = true; });
         }

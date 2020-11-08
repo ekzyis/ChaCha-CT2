@@ -55,12 +55,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             }
             SequenceCount = 0;
         }
-
-        public void ResetSequence(Action newBaseline)
-        {
-            ResetSequence();
-            PushBaseline(newBaseline);
-        }
     }
 
     internal static class ActionExtensions

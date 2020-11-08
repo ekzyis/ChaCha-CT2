@@ -1,6 +1,5 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
-using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -30,16 +29,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region ActionViewModelBase
 
-        /// <summary>
-        /// Method which wraps ActionCreator.ResetSequence.
-        /// Calls ActionCreator.ResetSequence and adds action to show new baseline by adding an empty action.
-        /// </summary>
-        private void ResetSequence(Action newBaseline)
-        {
-            ActionCreator.ResetSequence(newBaseline);
-            Seq(() => { });
-        }
-
         protected override void InitActions()
         {
             QRIOActionCreator qrIO = new QRIOActionCreator(this);
@@ -56,7 +45,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     Seq(qrIO.MarkState(round, qr));
                     Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
 
-                    ResetSequence(qrIO.InsertQRInputs(round, qr));
+                    ActionCreator.ResetSequence();
+                    ActionCreator.PushBaseline(qrIO.InsertQRInputs(round, qr));
 
                     // Run quarterround
                     for (int qrStep = 0; qrStep < 4; ++qrStep)
@@ -65,30 +55,35 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         Seq(qrAdd.MarkInputs(qrStep));
                         Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
 
-                        ResetSequence(qrAdd.Insert(round, qr, qrStep));
+                        ActionCreator.ResetSequence();
+                        ActionCreator.PushBaseline(qrAdd.Insert(round, qr, qrStep));
 
                         // Execute XOR
                         Seq(qrXOR.MarkInputs(qrStep));
                         Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
 
-                        ResetSequence(qrXOR.Insert(round, qr, qrStep));
+                        ActionCreator.ResetSequence();
+                        ActionCreator.PushBaseline(qrXOR.Insert(round, qr, qrStep));
 
                         // Execute shift
                         Seq(qrShift.MarkInputs(qrStep));
                         Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
 
-                        ResetSequence(qrShift.Insert(round, qr, qrStep));
+                        ActionCreator.ResetSequence();
+                        ActionCreator.PushBaseline(qrShift.Insert(round, qr, qrStep));
                     }
 
                     Seq(qrIO.MarkQROutputPaths);
                     Seq(qrIO.InsertQROutputs(round, qr).Extend(qrIO.MarkQROutputs));
 
-                    ResetSequence(qrIO.InsertQROutputs(round, qr));
+                    ActionCreator.ResetSequence();
+                    ActionCreator.PushBaseline(qrIO.InsertQROutputs(round, qr));
 
                     Seq(qrIO.MarkQROutputs);
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
 
-                    ResetSequence(qrIO.UpdateState(round, qr).Extend(() => ResetQuarterroundValues()));
+                    ActionCreator.ResetSequence();
+                    ActionCreator.PushBaseline(qrIO.UpdateState(round, qr).Extend(() => ResetQuarterroundValues()));
                 }
             }
         }

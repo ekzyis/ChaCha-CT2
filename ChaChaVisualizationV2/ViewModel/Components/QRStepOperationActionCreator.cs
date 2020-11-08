@@ -79,11 +79,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             int arrayIndex = MapIndex(round, qr, qrStep);
             if (Operation == QRStepOperation.ADD)
-                return () => VM.QRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;
+                return () =>
+                {
+                    VM.QRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;
+                };
             else if (Operation == QRStepOperation.XOR)
-                return () => VM.QRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStep[arrayIndex].XOR;
+                return () =>
+                {
+                    VM.QRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStep[arrayIndex].XOR;
+                };
             else if (Operation == QRStepOperation.SHIFT)
-                return () => VM.QRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Shift;
+                return () =>
+                {
+                    VM.QRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Shift;
+                };
             throw new InvalidOperationException("Could not find a matching QRStepOperation.");
         }
     }
