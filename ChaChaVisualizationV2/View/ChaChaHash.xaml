@@ -436,7 +436,7 @@
                                                 <DataTrigger.Binding>
                                                     <MultiBinding Converter="{StaticResource BooleanOr}">
                                                         <Binding Path="QRInA.Mark" />
-                                                        <Binding Path="QRStep[0].Add.Mark" />
+                                                        <Binding Path="QRStep[0].Add.MarkInput" />
                                                     </MultiBinding>
                                                 </DataTrigger.Binding>
                                                 <Setter Property="Background" Value="AliceBlue" />
