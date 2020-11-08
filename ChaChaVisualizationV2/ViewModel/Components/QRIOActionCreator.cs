@@ -25,10 +25,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             return () =>
             {
-                foreach (int i in GetStateIndices(round, qr))
-                {
-                    VM.StateValues[i].Mark = true;
-                }
+                (int i, int j, int k, int l) = GetStateIndices(round, qr);
+                VM.StateValues[i].Mark = true;
+                VM.StateValues[j].Mark = true;
+                VM.StateValues[k].Mark = true;
+                VM.StateValues[l].Mark = true;
             };
         }
 
@@ -37,7 +38,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
-        private int[] GetStateIndices(int round, int qr)
+        private (int, int, int, int) GetStateIndices(int round, int qr)
         {
             AssertRoundInput(round);
             AssertQRInput(qr);
@@ -46,10 +47,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 // Column rounds
                 switch (qr)
                 {
-                    case 0: return new int[] { 0, 4, 8, 12 };
-                    case 1: return new int[] { 1, 5, 9, 13 };
-                    case 2: return new int[] { 2, 6, 10, 14 };
-                    case 3: return new int[] { 3, 7, 11, 15 };
+                    case 0: return (0, 4, 8, 12);
+                    case 1: return (1, 5, 9, 13);
+                    case 2: return (2, 6, 10, 14);
+                    case 3: return (3, 7, 11, 15);
                 }
             }
             else
@@ -57,10 +58,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 // Diagonal rounds
                 switch (qr)
                 {
-                    case 0: return new int[] { 0, 5, 10, 15 };
-                    case 1: return new int[] { 1, 6, 11, 12 };
-                    case 2: return new int[] { 2, 7, 8, 13 };
-                    case 3: return new int[] { 3, 4, 9, 14 };
+                    case 0: return (0, 5, 10, 15);
+                    case 1: return (1, 6, 11, 12);
+                    case 2: return (2, 7, 8, 13);
+                    case 3: return (3, 4, 9, 14);
                 }
             }
             throw new InvalidOperationException($"No matching state indices found for given quarterround index {qr}");
