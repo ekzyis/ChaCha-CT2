@@ -105,9 +105,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 throw new ArgumentOutOfRangeException("n", n, $"Action index out of range. Total actions: {TotalActions}");
             }
-            Reset();
-            Actions[n].Invoke();
-            CurrentActionIndex = n;
+            if (CurrentActionIndex != n)
+            {
+                Reset();
+                Actions[n].Invoke();
+                CurrentActionIndex = n;
+            }
         }
 
         public void MoveToFirstAction()
