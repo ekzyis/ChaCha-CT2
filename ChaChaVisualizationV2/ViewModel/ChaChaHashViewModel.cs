@@ -193,56 +193,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private void NextRound()
-        {
-            int nextRoundIndex = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex + 1;
-            int nextRoundActionIndex = GetTaggedActionIndex(RoundStartTag(nextRoundIndex));
-            MoveToAction(nextRoundActionIndex);
-        }
+        #endregion ActionViewModelBase
 
-        private void PrevRound()
-        {
-            if (CurrentRoundIndex == null)
-                throw new InvalidOperationException("CurrentRoundIndex was null in PrevRound.");
-            int currentRound = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex;
-            int currentRoundStartIndex = GetTaggedActionIndex(RoundStartTag(currentRound));
-            // only go back to start of previous round if we are on the start of a round
-            // else go to start of current round
-            if (CurrentActionIndex == currentRoundStartIndex)
-            {
-                int prevRoundIndex = (int)CurrentRoundIndex - 1;
-                int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(prevRoundIndex));
-                MoveToAction(prevRoundActionIndex);
-            }
-            else
-            {
-                MoveToAction(currentRoundStartIndex);
-            }
-        }
+        #region ChaCha Hash Navigation Bar
 
-        /// <summary>
-        /// Go to the quarterround start of the given qr index of the current round.
-        /// </summary>
-        /// <param name="qr">Zero-based qr index.</param>
-        private void GoToQRStart(int qr)
-        {
-            int round = CurrentRoundIndex ?? 0;
-            int qrStartActionIndex = GetTaggedActionIndex(QRStartTag(round, qr));
-            MoveToAction(qrStartActionIndex);
-        }
-
-        /// <summary>
-        /// Go to the quarterround end of the given qr index of the current round.
-        /// </summary>
-        /// <param name="qr">Zero-based qr index.</param>
-        private void GoToQREnd(int qr)
-        {
-            int round = CurrentRoundIndex ?? 0;
-            int qrStartActionIndex = GetTaggedActionIndex(QREndTag(round, qr));
-            MoveToAction(qrStartActionIndex);
-        }
-
-        #region ICommand
+        #region Round input
 
         private ICommand _nextRoundCommand; public ICommand NextRoundCommand
         {
@@ -278,31 +233,32 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private ICommand _quarterroundStartCommand; public ICommand QuarterroundStartCommand
+        private void NextRound()
         {
-            get
-            {
-                if (_quarterroundStartCommand == null) _quarterroundStartCommand = new RelayCommand((arg) => GoToQRStart(int.Parse((string)arg)));
-                return _quarterroundStartCommand;
-            }
+            int nextRoundIndex = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex + 1;
+            int nextRoundActionIndex = GetTaggedActionIndex(RoundStartTag(nextRoundIndex));
+            MoveToAction(nextRoundActionIndex);
         }
 
-        private ICommand _quarterroundEndCommand; public ICommand QuarterroundEndCommand
+        private void PrevRound()
         {
-            get
+            if (CurrentRoundIndex == null)
+                throw new InvalidOperationException("CurrentRoundIndex was null in PrevRound.");
+            int currentRound = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex;
+            int currentRoundStartIndex = GetTaggedActionIndex(RoundStartTag(currentRound));
+            // only go back to start of previous round if we are on the start of a round
+            // else go to start of current round
+            if (CurrentActionIndex == currentRoundStartIndex)
             {
-                if (_quarterroundEndCommand == null) _quarterroundEndCommand = new RelayCommand((arg) => GoToQREnd(int.Parse((string)arg)));
-                return _quarterroundEndCommand;
+                int prevRoundIndex = (int)CurrentRoundIndex - 1;
+                int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(prevRoundIndex));
+                MoveToAction(prevRoundActionIndex);
+            }
+            else
+            {
+                MoveToAction(currentRoundStartIndex);
             }
         }
-
-        #endregion ICommand
-
-        #endregion ActionViewModelBase
-
-        #region ChaCha Hash Navigation Bar
-
-        #region Round input
 
         private ValidationRule _roundInputRule; private ValidationRule RoundInputRule
         {
@@ -337,6 +293,46 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion Round input
 
         #region Quarterround input
+
+        private ICommand _quarterroundStartCommand; public ICommand QuarterroundStartCommand
+        {
+            get
+            {
+                if (_quarterroundStartCommand == null) _quarterroundStartCommand = new RelayCommand((arg) => GoToQRStart(int.Parse((string)arg)));
+                return _quarterroundStartCommand;
+            }
+        }
+
+        private ICommand _quarterroundEndCommand; public ICommand QuarterroundEndCommand
+        {
+            get
+            {
+                if (_quarterroundEndCommand == null) _quarterroundEndCommand = new RelayCommand((arg) => GoToQREnd(int.Parse((string)arg)));
+                return _quarterroundEndCommand;
+            }
+        }
+
+        /// <summary>
+        /// Go to the quarterround start of the given qr index of the current round.
+        /// </summary>
+        /// <param name="qr">Zero-based qr index.</param>
+        private void GoToQRStart(int qr)
+        {
+            int round = CurrentRoundIndex ?? 0;
+            int qrStartActionIndex = GetTaggedActionIndex(QRStartTag(round, qr));
+            MoveToAction(qrStartActionIndex);
+        }
+
+        /// <summary>
+        /// Go to the quarterround end of the given qr index of the current round.
+        /// </summary>
+        /// <param name="qr">Zero-based qr index.</param>
+        private void GoToQREnd(int qr)
+        {
+            int round = CurrentRoundIndex ?? 0;
+            int qrStartActionIndex = GetTaggedActionIndex(QREndTag(round, qr));
+            MoveToAction(qrStartActionIndex);
+        }
 
         private ValidationRule _qrInputRule; private ValidationRule QRInputRule
         {
