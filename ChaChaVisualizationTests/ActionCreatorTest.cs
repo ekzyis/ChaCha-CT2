@@ -17,9 +17,9 @@ namespace ChaChaVisualizationTests
             int count = 0;
 
             actionCreator.StartSequence();
-            Actions.Add(actionCreator.Sequential(() => { count++; }));
-            Actions.Add(actionCreator.Sequential(() => { count++; }));
-            Actions.Add(actionCreator.Sequential(() => { count++; }));
+            Actions.Add(actionCreator.Sequential(() => { count++; })); // +1
+            Actions.Add(actionCreator.Sequential(() => { count++; })); // +2
+            Actions.Add(actionCreator.Sequential(() => { count++; })); // +3
             actionCreator.EndSequence();
 
             foreach (Action a in Actions)
