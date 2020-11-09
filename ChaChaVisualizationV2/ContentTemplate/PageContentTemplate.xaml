@@ -32,7 +32,7 @@
                             TickFrequency="1"
                             IsSnapToTickEnabled="True" />
                         <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
-                        <TextBox Name="ActionInputTextBox" Style="{StaticResource Text}" Margin="3,0,0,0" IsReadOnly="False" BorderThickness="1" Width="50" TextAlignment="Right"/>
+                        <TextBox Name="ActionInputTextBox" Style="{StaticResource Input}" Margin="3,0,0,0" Width="50" />
                         <TextBox Style="{StaticResource Text}" Text="/" />
                         <TextBox Style="{StaticResource Text}" Width="45" Text="{Binding TotalActions, Mode=OneWay, Converter={StaticResource SubtractOne}}" />
                     </StackPanel>

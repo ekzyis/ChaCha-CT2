@@ -21,4 +21,9 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}}" />
     </Style>
+    <Style x:Key="Input" TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
+        <Setter Property="IsReadOnly" Value="False" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="TextAlignment" Value="Right" />
+    </Style>
 </ResourceDictionary>
