@@ -1,6 +1,7 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -31,6 +32,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region ActionViewModelBase
 
+        /// <summary>
+        /// This variable is used during `InitActions` to tag actions.
+        /// It always points to the last index.
+        /// </summary>
+        private int ActionIndex => Actions.Count - 1;
+
         protected override void InitActions()
         {
             QRIOActionCreator qrIO = new QRIOActionCreator(this);
@@ -44,6 +51,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             for (int round = 0; round < Settings.Rounds; ++round)
             {
+                // add one to match quarterround start tag
+                TagAction(RoundStartTag(round), ActionIndex + 1);
                 // Column round sequence
                 ActionCreator.StartSequence();
                 for (int qr = 0; qr < 4; ++qr)
@@ -54,6 +63,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // Copy from state into qr input
                     ActionCreator.StartSequence();
                     Seq(qrIO.MarkState(round, qr));
+                    TagAction(QRStartTag(round, qr), ActionIndex);
+
                     Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
                     ActionCreator.EndSequence();
 
@@ -103,7 +114,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // Copy from qr output to state
                     ActionCreator.StartSequence();
                     Seq(qrIO.MarkQROutputs);
+
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
+                    TagAction(QREndTag(round, qr), ActionIndex);
+
+                    if (qr % 4 == 0)
+                    {
+                        TagAction(RoundEndTag(round), ActionIndex);
+                    }
+
                     ActionCreator.EndSequence();
 
                     // End quarterround sequence
@@ -409,6 +428,68 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion Binding Properties (Diffusion)
+
+        #region IActionTag
+
+        /// <summary>
+        /// Create the round start tag.
+        /// </summary>
+        /// <param name="round">Zero-based round index.</param>
+        private string RoundStartTag(int round)
+        {
+            int maxRoundIndex = Settings.Rounds - 1;
+            if (round < 0 || round > maxRoundIndex)
+                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
+            return $"ROUND_START_{round}";
+        }
+
+        /// <summary>
+        /// Create the round end tag.
+        /// </summary>
+        /// <param name="round">Zero-based round index.</param>
+        private string RoundEndTag(int round)
+        {
+            int maxRoundIndex = Settings.Rounds - 1;
+            if (round < 0 || round > maxRoundIndex)
+                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
+            return $"ROUND_END_{round}";
+        }
+
+        /// <summary>
+        /// Create the quarterround start tag.
+        /// </summary>
+        /// <param name="round">Zero-based round index.</param>
+        /// <param name="qr">Zero-based qr index.</param>
+        private string QRStartTag(int round, int qr)
+        {
+            int maxRoundIndex = Settings.Rounds - 1;
+            if (round < 0 || round > maxRoundIndex)
+                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
+            if (qr < 0 || qr > 3)
+            {
+                throw new ArgumentOutOfRangeException("qr", $"Quarterround must be between 0 and 3. Received {qr}");
+            }
+            return $"ROUND_{round}_QR_START_{qr}";
+        }
+
+        /// <summary>
+        /// Create the quarterround end tag.
+        /// </summary>
+        /// <param name="round">Zero-based round index.</param>
+        /// <param name="qr">Zero-based qr index.</param>
+        private string QREndTag(int round, int qr)
+        {
+            int maxRoundIndex = Settings.Rounds - 1;
+            if (round < 0 || round > maxRoundIndex)
+                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
+            if (qr < 0 || qr > 3)
+            {
+                throw new ArgumentOutOfRangeException("qr", $"Quarterround must be between 0 and 3. Received {qr}");
+            }
+            return $"ROUND_{round}_QR_END_{qr}";
+        }
+
+        #endregion IActionTag
 
         #region INavigation
 
