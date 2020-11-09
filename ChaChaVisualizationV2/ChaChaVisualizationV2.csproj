@@ -86,7 +86,7 @@
     <Compile Include="ContentTemplate\ViewboxButton.xaml.cs">
       <DependentUpon>ViewboxButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper\Converter\AddOne.cs" />
+    <Compile Include="Helper\Converter\ZeroBasedIndexToOneBasedIndex.cs" />
     <Compile Include="Helper\Converter\ASCII.cs" />
     <Compile Include="Helper\Converter\BitsToBytes.cs" />
     <Compile Include="Helper\Converter\BooleanAndVisibility.cs" />

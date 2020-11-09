@@ -17,7 +17,6 @@
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <conv:BooleanOr x:Key="BooleanOr" />
-            <conv:AddOne x:Key="AddOne" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">

@@ -38,7 +38,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             Binding binding = new Binding("CurrentUserRoundIndex")
             {
                 Mode = BindingMode.TwoWay,
-                Converter = new AddOne(),
+                Converter = new ZeroBasedIndexToOneBasedIndex(),
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             };
             ActionViewBase.InitUserInputField(roundInputTextBox, binding, 1, maxRound, ViewModel.RoundInputHandler);
@@ -50,7 +50,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             Binding binding = new Binding("CurrentUserQRIndex")
             {
                 Mode = BindingMode.TwoWay,
-                Converter = new AddOne(),
+                Converter = new ZeroBasedIndexToOneBasedIndex(),
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             };
             ActionViewBase.InitUserInputField(qrInputTextBox, "CurrentUserQRIndex", 1, 4, ViewModel.QRInputHandler);
