@@ -44,7 +44,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        public void ActionSliderValueChange(object sender, RoutedPropertyChangedEventArgs<double> e)
+        public void HandleActionSliderValueChange(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Slider slider = (Slider)sender;
             if (slider.IsFocused)

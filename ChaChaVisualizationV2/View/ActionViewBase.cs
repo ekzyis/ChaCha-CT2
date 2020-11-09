@@ -18,7 +18,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             // Add value changed event handler to action slider
             root.ApplyTemplate();
             Slider actionSlider = (Slider)root.Template.FindName("ActionSlider", root);
-            actionSlider.ValueChanged += viewModel.ActionSliderValueChange;
+            actionSlider.ValueChanged += viewModel.HandleActionSliderValueChange;
         }
     }
 }
