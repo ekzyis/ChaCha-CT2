@@ -26,7 +26,7 @@
                             VerticalAlignment="Center"
                             Minimum="0"
                             Maximum="{Binding TotalActions, Converter={StaticResource SubtractOne}}"
-                            Width="500"
+                            Width="1200"
                             Value="{Binding CurrentActionIndex, Mode=OneWay}"
                             Name="ActionSlider"
                             TickFrequency="1"
