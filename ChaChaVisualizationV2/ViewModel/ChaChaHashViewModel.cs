@@ -194,12 +194,26 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             MoveToAction(prevRoundActionIndex);
         }
 
+        /// <summary>
+        /// Go to the quarterround start of the given qr index of the current round.
+        /// </summary>
+        /// <param name="qr">Zero-based qr index.</param>
         private void GoToQRStart(int qr)
         {
+            int round = CurrentRoundIndex ?? 0;
+            int qrStartActionIndex = GetTaggedActionIndex(QRStartTag(round, qr));
+            MoveToAction(qrStartActionIndex);
         }
 
+        /// <summary>
+        /// Go to the quarterround end of the given qr index of the current round.
+        /// </summary>
+        /// <param name="qr">Zero-based qr index.</param>
         private void GoToQREnd(int qr)
         {
+            int round = CurrentRoundIndex ?? 0;
+            int qrStartActionIndex = GetTaggedActionIndex(QREndTag(round, qr));
+            MoveToAction(qrStartActionIndex);
         }
 
         #region ICommand
