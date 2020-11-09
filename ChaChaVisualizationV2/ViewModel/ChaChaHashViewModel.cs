@@ -50,8 +50,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             // ChaCha Hash sequence
             ActionCreator.StartSequence();
+
+            // Extend the first action which was added by the base class.
             Action setRoundToNull = () => { CurrentRoundIndex = null; };
             ExtendAction(0, () => { CurrentRoundIndex = null; });
+
             for (int round = 0; round < Settings.Rounds; ++round)
             {
                 // Column round sequence
