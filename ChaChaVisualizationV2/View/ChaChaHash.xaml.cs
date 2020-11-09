@@ -1,6 +1,8 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 {
@@ -33,12 +35,24 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         {
             TextBox roundInputTextBox = (TextBox)this.FindName("RoundInput");
             int maxRound = ViewModel.Settings.Rounds;
-            ActionViewBase.InitUserInputField(roundInputTextBox, "CurrentUserRoundIndex", 0, maxRound, ViewModel.RoundInputHandler);
+            Binding binding = new Binding("CurrentUserRoundIndex")
+            {
+                Mode = BindingMode.TwoWay,
+                Converter = new AddOne(),
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            };
+            ActionViewBase.InitUserInputField(roundInputTextBox, binding, 1, maxRound, ViewModel.RoundInputHandler);
         }
 
         private void InitQRInput()
         {
             TextBox qrInputTextBox = (TextBox)this.FindName("QRInput");
+            Binding binding = new Binding("CurrentUserQRIndex")
+            {
+                Mode = BindingMode.TwoWay,
+                Converter = new AddOne(),
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            };
             ActionViewBase.InitUserInputField(qrInputTextBox, "CurrentUserQRIndex", 1, 4, ViewModel.QRInputHandler);
         }
     }
