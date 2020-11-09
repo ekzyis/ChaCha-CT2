@@ -342,7 +342,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                if (_qrInputRule == null) _qrInputRule = new UserInputValidationRule(1, Settings.Rounds);
+                if (_qrInputRule == null) _qrInputRule = new UserInputValidationRule(1, 4);
                 return _qrInputRule;
             }
         }
