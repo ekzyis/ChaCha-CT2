@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 {
-    internal class ActionCreator : IActionCreator
+    public class ActionCreator : IActionCreator
     {
         /// <summary>
         /// Data structure to store sequences.
