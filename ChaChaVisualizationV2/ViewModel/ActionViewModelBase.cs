@@ -14,7 +14,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     /// <summary>
     /// View model base for all view models which implement action navigation
     /// </summary>
-    internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation, IChaCha
+    internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation, IChaCha, INavigation
     {
         public ActionViewModelBase(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
@@ -239,6 +239,38 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion ICommand
+
+        #region INavigation
+
+        private string _name; public string Name
+        {
+            get
+            {
+                if (_name == null) _name = "";
+                return _name;
+            }
+            set
+            {
+                if (_name != value)
+                {
+                    _name = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public virtual void Setup()
+        {
+            StartActionBufferHandler(50);
+        }
+
+        public virtual void Teardown()
+        {
+            StopActionBufferHandler();
+            MoveToFirstAction();
+        }
+
+        #endregion INavigation
 
         #region IChaCha
 

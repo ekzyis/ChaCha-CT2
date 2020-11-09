@@ -525,31 +525,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region INavigation
 
-        private string _name; public string Name
-        {
-            get
-            {
-                if (_name == null) _name = "";
-                return _name;
-            }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public void Setup()
+        public override void Setup()
         {
             InitStateMatrixValues();
+            base.Setup();
         }
 
-        public void Teardown()
+        public override void Teardown()
         {
-            MoveToFirstAction();
+            base.Teardown();
         }
 
         private void InitStateMatrixValues()

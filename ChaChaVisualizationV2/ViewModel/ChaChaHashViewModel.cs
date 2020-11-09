@@ -348,24 +348,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region INavigation
 
-        private string _name; public string Name
-        {
-            get
-            {
-                if (_name == null) _name = "";
-                return _name;
-            }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-
-        public void Setup()
+        public override void Setup()
         {
             Debug.Assert(StateValues.Count == 0, "StateValues should be empty during ChaCha hash setup.");
             uint[] state = ChaChaVisualization.OriginalState[0];
@@ -379,13 +362,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 QRStep.Add(new VisualQRStep());
             }
-            StartActionBufferHandler(50);
+            // First setup page, then call base setup because action buffer handler may depend on things being setup already.
+            base.Setup();
         }
 
-        public void Teardown()
+        public override void Teardown()
         {
-            StopActionBufferHandler();
-            MoveToFirstAction();
+            base.Teardown();
             // Clear lists to undo Setup.
             StateValues.Clear();
             QRStep.Clear();
