@@ -19,6 +19,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             root.ApplyTemplate();
             Slider actionSlider = (Slider)root.Template.FindName("ActionSlider", root);
             actionSlider.ValueChanged += viewModel.HandleActionSliderValueChange;
+
+            TextBox actionInputTextbox = (TextBox)root.Template.FindName("ActionInputTextBox", root);
+            actionInputTextbox.KeyDown += viewModel.HandleUserActionInput;
         }
     }
 }

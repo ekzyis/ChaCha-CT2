@@ -54,6 +54,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        public void HandleUserActionInput(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                string value = ((TextBox)sender).Text;
+                MoveToAction(int.Parse(value));
+            }
+        }
+
         /// <summary>
         /// Initialize the page actions.
         /// </summary>
