@@ -580,7 +580,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void TagRoundEndStartAction(int round)
         {
             TagAction(RoundEndTag(round), ActionIndex);
-            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
@@ -592,7 +591,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void TagQRStartAction(int round, int qr)
         {
             TagAction(QRStartTag(round, qr), ActionIndex);
-            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
@@ -604,7 +602,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void TagQREndAction(int round, int qr)
         {
             TagAction(QREndTag(round, qr), ActionIndex);
-            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
