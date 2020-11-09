@@ -293,6 +293,73 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region Quarterround input
 
+        private ICommand _nextQRCommand; public ICommand NextQRCommand
+        {
+            get
+            {
+                if (_nextQRCommand == null) _nextQRCommand = new RelayCommand((arg) => NextQR(), (arg) => CanNextQR);
+                return _nextQRCommand;
+            }
+        }
+
+        public bool CanNextQR
+        {
+            get
+            {
+                return CurrentQRIndex < 4 || CurrentRoundIndex < Settings.Rounds - 1;
+            }
+        }
+
+        private ICommand _prevQRCommand; public ICommand PrevQRCommand
+        {
+            get
+            {
+                if (_prevQRCommand == null) _prevQRCommand = new RelayCommand((arg) => PrevQR(), (arg) => CanPrevQR);
+                return _prevQRCommand;
+            }
+        }
+
+        public bool CanPrevQR
+        {
+            get
+            {
+                return CurrentRoundIndex != 0 || CurrentQRIndex != 0;
+            }
+        }
+
+        private void NextQR()
+        {
+            int roundIndex = CurrentRoundIndex ?? 0;
+            int nextQRIndex = CurrentQRIndex == null ? 0 : (int)CurrentQRIndex + 1;
+            int nextQRActionIndex = GetTaggedActionIndex(QRStartTag(roundIndex, nextQRIndex));
+            MoveToAction(nextQRActionIndex);
+        }
+
+        private void PrevQR()
+        {
+            if (CurrentRoundIndex == null || CurrentRoundIndex == 0)
+                throw new InvalidOperationException("CurrentQRIndex was null or zero in PrevQR.");
+            if (CurrentQRIndex == null || CurrentQRIndex == 0)
+                throw new InvalidOperationException("CurrentRoundIndex was null or zero in PrevQR.");
+            int currentRoundIndex = (int)CurrentRoundIndex;
+            int currentQRIndex = (int)CurrentQRIndex;
+            int currentQRStartIndex = GetTaggedActionIndex(QRStartTag(currentRoundIndex, currentQRIndex));
+            // only go back to start of previous qr if we are on the start of a qr
+            // else go to start of current qr
+            if (CurrentActionIndex == currentQRStartIndex)
+            {
+                // check if we would "underflow" and thus have to go to the last quarterround of previous round
+                int prevQRIndex = currentQRIndex == 0 ? 3 : currentQRIndex - 1;
+                int roundIndexForPrevQR = currentQRIndex == 0 ? currentRoundIndex - 1 : currentRoundIndex;
+                int prevRoundActionIndex = GetTaggedActionIndex(QRStartTag(roundIndexForPrevQR, prevQRIndex));
+                MoveToAction(prevRoundActionIndex);
+            }
+            else
+            {
+                MoveToAction(currentQRStartIndex);
+            }
+        }
+
         private ICommand _quarterroundStartCommand; public ICommand QuarterroundStartCommand
         {
             get
