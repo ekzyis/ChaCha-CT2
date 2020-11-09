@@ -408,6 +408,66 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_currentRoundIndex != value)
                 {
                     _currentRoundIndex = value;
+                    CurrentUserRoundIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Same purpose as property 'CurrentUserActionIndex'.
+        /// See its documentation for further information.
+        /// </summary>
+        private int? _currentUserRoundIndex = null; public int? CurrentUserRoundIndex
+
+        {
+            get
+            {
+                return _currentUserRoundIndex;
+            }
+            set
+            {
+                if (_currentUserRoundIndex != value)
+                {
+                    _currentUserRoundIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int? _currentQRIndex = null; public int? CurrentQRIndex
+        {
+            get
+            {
+                return _currentQRIndex;
+            }
+            set
+            {
+                if (_currentQRIndex != value)
+                {
+                    _currentQRIndex = value;
+                    CurrentUserQRIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Same purpose as property 'CurrentUserActionIndex'.
+        /// See its documentation for further information.
+        /// </summary>
+        private int? _currentUserQRIndex = null; public int? CurrentUserQRIndex
+
+        {
+            get
+            {
+                return _currentUserQRIndex;
+            }
+            set
+            {
+                if (_currentUserQRIndex != value)
+                {
+                    _currentUserQRIndex = value;
                     OnPropertyChanged();
                 }
             }
