@@ -11,7 +11,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="90*" />
-                <RowDefinition Height="10*" />
+                <RowDefinition Height="5*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <ContentPresenter />
@@ -23,7 +23,7 @@
                         <Slider
                             Minimum="0"
                             Maximum="{Binding TotalActions, Converter={StaticResource SubtractOne}}"
-                            Width="200"
+                            Width="500"
                             Value="{Binding CurrentActionIndex, Mode=OneWay}"
                             Name="ActionSlider"
                             TickFrequency="1"
