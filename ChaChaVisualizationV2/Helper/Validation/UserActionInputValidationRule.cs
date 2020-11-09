@@ -6,9 +6,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
 {
     internal class UserActionInputValidationRule : ValidationRule
     {
-        public UserActionInputValidationRule(int maxActionIndex) : base()
+        public UserActionInputValidationRule(int totalActions) : base()
         {
-            MaxActionIndex = maxActionIndex;
+            MaxActionIndex = totalActions - 1;
         }
 
         private int MaxActionIndex { get; set; }
