@@ -59,6 +59,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             CurrentSequence.Push(action);
         }
 
+        public void ExtendLast(Action action)
+        {
+            if (CurrentSequence.Count == 0)
+                throw new InvalidOperationException("Cannot extend last action because there is no sequence. Please call `StartSequence` first.");
+            Action last = Pop();
+            CurrentSequence.Push(last.Extend(action));
+        }
+
         public Action Sequential(Action action)
         {
             if (Sequences.Count == 0)

@@ -48,6 +48,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             // ChaCha Hash sequence
             ActionCreator.StartSequence();
+            Action setRoundToNull = () => { CurrentRoundIndex = null; };
             ExtendAction(0, () => { CurrentRoundIndex = null; });
             for (int round = 0; round < Settings.Rounds; ++round)
             {
@@ -61,8 +62,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // Copy from state into qr input
                     ActionCreator.StartSequence();
                     Seq(qrIO.MarkState(round, qr));
-                    if (qr == 0) TagRoundStartAction(round, ActionIndex);
-                    TagQRStartAction(round, qr, ActionIndex);
+                    if (qr == 0) TagRoundStartAction(round);
+                    TagQRStartAction(round, qr);
 
                     Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
                     ActionCreator.EndSequence();
@@ -115,8 +116,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     Seq(qrIO.MarkQROutputs);
 
                     Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
-                    if (qr == 3) TagRoundEndStartAction(round, ActionIndex);
-                    TagQREndAction(round, qr, ActionIndex);
+                    if (qr == 3) TagRoundEndStartAction(round);
+                    TagQREndAction(round, qr);
 
                     ActionCreator.EndSequence();
 
@@ -496,53 +497,64 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #region IActionTag
 
         /// <summary>
-        /// Tag the action at the given action index as the start of the given round.
+        /// Tag the last added action as the start of the given round.
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagRoundStartAction(int round, int actionIndex)
+        private void TagRoundStartAction(int round)
         {
-            TagAction(RoundStartTag(round), actionIndex);
-            // Inject the statement to update the round index into the action at the given action index.
-            ExtendAction(actionIndex, () => { CurrentRoundIndex = round; });
+            TagAction(RoundStartTag(round), ActionIndex);
+            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
-        /// Tag the action at the given action index as the end of the given round.
+        /// Tag the last added action as the end of the given round.
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagRoundEndStartAction(int round, int actionIndex)
+        private void TagRoundEndStartAction(int round)
         {
-            TagAction(RoundEndTag(round), actionIndex);
-            // Inject the statement to update the round index into the action at the given action index.
-            ExtendAction(actionIndex, () => { CurrentRoundIndex = round; });
+            TagAction(RoundEndTag(round), ActionIndex);
+            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
-        /// Tag the action at the given action index as start start of the given quarterround of the given round.
+        /// Tag the last added action as the start of the given quarterround of the given round.
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based qr index.</param>
         /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagQRStartAction(int round, int qr, int actionIndex)
+        private void TagQRStartAction(int round, int qr)
         {
-            TagAction(QRStartTag(round, qr), actionIndex);
-            // Inject the statement to update the round index into the action at the given action index.
-            ExtendAction(actionIndex, () => { CurrentRoundIndex = round; });
+            TagAction(QRStartTag(round, qr), ActionIndex);
+            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
-        /// Tag the action at the given action index as start end of the given quarterround of the given round.
+        /// Tag the last added action as the end of the given quarterround of the given round.
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based qr index.</param>
         /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagQREndAction(int round, int qr, int actionIndex)
+        private void TagQREndAction(int round, int qr)
         {
-            TagAction(QREndTag(round, qr), actionIndex);
+            TagAction(QREndTag(round, qr), ActionIndex);
+            ExtendLastActionWithRoundSetter(round);
+        }
+
+        /// <summary>
+        /// Extend the last added action with the appropriate round setter
+        /// and also the action in the action creator such next actions include this round setter
+        /// by extension.
+        /// </summary>
+        /// <param name="round">Zero-based round index.</param>
+        private void ExtendLastActionWithRoundSetter(int round)
+        {
             // Inject the statement to update the round index into the action at the given action index.
-            ExtendAction(actionIndex, () => { CurrentRoundIndex = round; });
+            Action setRound = () => { CurrentRoundIndex = round; };
+            ExtendAction(ActionIndex, setRound);
+            // update the action in the action creator such that next actions include this round setter.
+            ActionCreator.ExtendLast(setRound);
         }
 
         /// <summary>

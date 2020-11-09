@@ -63,6 +63,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         void ReplaceLast(Action action);
 
         /// <summary>
+        /// Extend the last action from the current sequence with the given action.
+        /// </summary>
+        void ExtendLast(Action action);
+
+        /// <summary>
         /// Create a extended action using all previous sequential actions.
         /// </summary>
         /// <param name="action">The action we want to extend</param>
