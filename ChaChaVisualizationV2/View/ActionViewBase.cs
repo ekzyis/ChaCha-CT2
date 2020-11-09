@@ -1,5 +1,7 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
+using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 {
@@ -22,6 +24,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
             TextBox actionInputTextbox = (TextBox)root.Template.FindName("ActionInputTextBox", root);
             actionInputTextbox.KeyDown += viewModel.HandleUserActionInput;
+            // The following code adds a binding with validation to the action input textbox.
+            // (It was not possible in pure XAML because the ValidationRule
+            // needs an argument and ValidationRule is not a DependencyObject thus no data binding available
+            // to pass in the argument.)
+            Binding actionInputBinding = new Binding("CurrentActionIndex") { Mode = BindingMode.OneWay };
+
+            ValidationRule inputActionIndexRule = new UserActionInputValidationRule(viewModel.TotalActions);
+            actionInputBinding.ValidationRules.Add(inputActionIndexRule);
+            actionInputTextbox.SetBinding(TextBox.TextProperty, actionInputBinding);
         }
     }
 }

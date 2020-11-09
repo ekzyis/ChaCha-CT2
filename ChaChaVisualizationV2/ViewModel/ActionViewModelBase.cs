@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
             InitActions();
+            ActionInputRule = new UserActionInputValidationRule(TotalActions);
         }
 
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
@@ -54,12 +56,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private ValidationRule ActionInputRule { get; set; }
+
         public void HandleUserActionInput(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
                 string value = ((TextBox)sender).Text;
-                MoveToAction(int.Parse(value));
+                ValidationResult result = ActionInputRule.Validate(value, null);
+                if (result == ValidationResult.ValidResult)
+                {
+                    MoveToAction(int.Parse(value));
+                }
             }
         }
 
