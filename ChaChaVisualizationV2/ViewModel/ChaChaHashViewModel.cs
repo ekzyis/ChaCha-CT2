@@ -61,7 +61,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 ActionCreator.StartSequence();
                 // Set a sequence base extension for round sequence.
                 // All further actions will now extend this action.
-                ActionCreator.Sequential(() => { CurrentRoundIndex = round; });
+                int localRound = round; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
+                ActionCreator.Sequential(() => { CurrentRoundIndex = localRound; });
 
                 for (int qr = 0; qr < 4; ++qr)
                 {
@@ -69,7 +70,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     ActionCreator.StartSequence();
                     // Set a sequence base extension for quarterround sequence.
                     // All further actions will now extend this action.
-                    ActionCreator.Sequential(() => { CurrentQRIndex = qr; });
+                    int localQr = qr; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
+                    ActionCreator.Sequential(() => { CurrentQRIndex = localQr; });
 
                     // Copy from state into qr input
                     ActionCreator.StartSequence();
