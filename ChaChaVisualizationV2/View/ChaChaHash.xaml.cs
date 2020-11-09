@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 Converter = new ZeroBasedIndexToOneBasedIndex(),
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
             };
-            ActionViewBase.InitUserInputField(qrInputTextBox, "CurrentUserQRIndex", 1, 4, ViewModel.QRInputHandler);
+            ActionViewBase.InitUserInputField(qrInputTextBox, binding, 1, 4, ViewModel.QRInputHandler);
         }
     }
 }
