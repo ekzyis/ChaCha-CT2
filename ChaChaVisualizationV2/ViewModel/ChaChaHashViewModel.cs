@@ -337,10 +337,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void PrevQR()
         {
-            if (CurrentRoundIndex == null || CurrentRoundIndex == 0)
-                throw new InvalidOperationException("CurrentQRIndex was null or zero in PrevQR.");
-            if (CurrentQRIndex == null || CurrentQRIndex == 0)
-                throw new InvalidOperationException("CurrentRoundIndex was null or zero in PrevQR.");
+            if (CurrentQRIndex == null)
+                throw new InvalidOperationException("CurrentQRIndex was null in PrevQR.");
             int currentRoundIndex = (int)CurrentRoundIndex;
             int currentQRIndex = (int)CurrentQRIndex;
             int currentQRStartIndex = GetTaggedActionIndex(QRStartTag(currentRoundIndex, currentQRIndex));
