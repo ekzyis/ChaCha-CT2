@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
             InitActions();
-            ActionInputRule = new UserActionInputValidationRule(TotalActions);
+            ActionInputRule = new UserInputValidationRule(TotalActions - 1);
         }
 
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();

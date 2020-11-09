@@ -34,7 +34,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             // to pass in the argument.)
             Binding actionInputBinding = new Binding("CurrentUserActionIndex")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-            ValidationRule inputActionIndexRule = new UserActionInputValidationRule(totalActions);
+            ValidationRule inputActionIndexRule = new UserInputValidationRule(totalActions);
             actionInputBinding.ValidationRules.Add(inputActionIndexRule);
             actionInputTextbox.SetBinding(TextBox.TextProperty, actionInputBinding);
             // restrict maximum length to only allow as many digits as the maximum action does allow

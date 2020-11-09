@@ -114,7 +114,7 @@
     <Compile Include="Helper\Validation\RangeChecker.cs" />
     <Compile Include="Helper\Validation\StringLengthValidationRule.cs" />
     <Compile Include="Helper\RelayCommand.cs" />
-    <Compile Include="Helper\Validation\UserActionInputValidationRule.cs" />
+    <Compile Include="Helper\Validation\UserInputValidationRule.cs" />
     <Compile Include="Model\QRStep.cs" />
     <Compile Include="Model\ChaChaHashValue.cs" />
     <Compile Include="Model\VisualQRStep.cs" />

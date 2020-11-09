@@ -4,14 +4,23 @@ using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
 {
-    internal class UserActionInputValidationRule : ValidationRule
+    internal class UserInputValidationRule : ValidationRule
     {
-        public UserActionInputValidationRule(int totalActions) : base()
+        public UserInputValidationRule(int max) : base()
         {
-            MaxActionIndex = totalActions - 1;
+            Min = 0;
+            Max = max;
         }
 
-        private int MaxActionIndex { get; set; }
+        public UserInputValidationRule(int min, int max) : base()
+        {
+            Min = min;
+            Max = max;
+        }
+
+        private int Min { get; set; }
+
+        private int Max { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -26,10 +35,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation
                 return new ValidationResult(false, $"Illegal characters or {e.Message}");
             }
 
-            if ((input < 0) || (input > MaxActionIndex))
+            if ((input < Min) || (input > Max))
             {
                 return new ValidationResult(false,
-                    $"Please enter a value between {0} and {MaxActionIndex}.");
+                    $"Please enter a value between {Min} and {Max}.");
             }
             return ValidationResult.ValidResult;
         }
