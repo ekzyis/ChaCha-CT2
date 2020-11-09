@@ -57,7 +57,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             for (int round = 0; round < Settings.Rounds; ++round)
             {
-                // Column round sequence
+                // round sequence
                 ActionCreator.StartSequence();
                 // Set a sequence base extension for round sequence.
                 // All further actions will now extend this action.
