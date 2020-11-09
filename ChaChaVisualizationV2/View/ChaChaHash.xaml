@@ -334,41 +334,47 @@
 
             <!-- Description -->
 
-            <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
-                <Viewbox Style="{StaticResource UniformViewbox}">
-                    <Viewbox.Resources>
-                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
-                            <Setter Property="Margin" Value="3" />
-                            <Setter Property="Width" Value="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" />
-                        </Style>
-                    </Viewbox.Resources>
-                    <StackPanel Orientation="Vertical">
-                        <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    To generate a keystream block, we apply the ChaCha hash function to the state. The ChaCha hash function consists of
-                                    <Run Text="{Binding ChaCha.Rounds, FallbackValue=X}" /> rounds.
-                                    <LineBreak />
-                                    During each round, we run the quarterround function four times (hence the name
-                                    <Italic>quarterround</Italic> ) which modifies four state entries. This means that after each round, the whole state has been modified.
-                                    <LineBreak />
-                                    In an even round (round 0, 2, 4, ...), we go through all columns thus the even rounds can also be called
-                                    <Italic>column rounds</Italic> ,
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30*" />
+                    <ColumnDefinition Width="70*" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="1" Name="DescriptionRoot">
+                    <Viewbox Style="{StaticResource UniformViewbox}">
+                        <Viewbox.Resources>
+                            <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
+                                <Setter Property="Margin" Value="3" />
+                                <Setter Property="Width" Value="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" />
+                            </Style>
+                        </Viewbox.Resources>
+                        <StackPanel Orientation="Vertical">
+                            <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        To generate a keystream block, we apply the ChaCha hash function to the state. The ChaCha hash function consists of
+                                        <Run Text="{Binding ChaCha.Rounds, FallbackValue=X}" /> rounds.
+                                        <LineBreak />
+                                        During each round, we run the quarterround function four times (hence the name
+                                        <Italic>quarterround</Italic> ) which modifies four state entries. This means that after each round, the whole state has been modified.
+                                        <LineBreak />
+                                        In an even round (round 0, 2, 4, ...), we go through all columns thus the even rounds can also be called
+                                        <Italic>column rounds</Italic> ,
                                     whereas in an uneven round (round 1, 3, 5, ...), we go through all diagonals thus the uneven rounds can be called
-                                    <Italic>diagonal rounds</Italic> .
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    At the left, you can see the current state. At the bottom, you see the visualization of the quarterround function. It consists of four steps where each step modifies three values using addition modulo 2
-                                    <Run Typography.Variants="Superscript">32</Run> , XOR and a circular left shift.
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                    </StackPanel>
-                </Viewbox>
+                                        <Italic>diagonal rounds</Italic> .
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        At the left, you can see the current state. At the bottom, you see the visualization of the quarterround function. It consists of four steps where each step modifies three values using addition modulo 2
+                                        <Run Typography.Variants="Superscript">32</Run> , XOR and a circular left shift.
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                        </StackPanel>
+                    </Viewbox>
+                </Grid>
             </Grid>
 
             <!--#endregion-->
