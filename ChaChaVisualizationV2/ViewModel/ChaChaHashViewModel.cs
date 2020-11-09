@@ -629,7 +629,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void TagRoundStartAction(int round)
         {
             TagAction(RoundStartTag(round), ActionIndex);
-            ExtendLastActionWithRoundSetter(round);
         }
 
         /// <summary>
@@ -662,21 +661,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void TagQREndAction(int round, int qr)
         {
             TagAction(QREndTag(round, qr), ActionIndex);
-        }
-
-        /// <summary>
-        /// Extend the last added action with the appropriate round setter
-        /// and also the action in the action creator such next actions include this round setter
-        /// by extension.
-        /// </summary>
-        /// <param name="round">Zero-based round index.</param>
-        private void ExtendLastActionWithRoundSetter(int round)
-        {
-            // Inject the statement to update the round index into the action at the given action index.
-            Action setRound = () => { CurrentRoundIndex = round; };
-            ExtendAction(ActionIndex, setRound);
-            // update the action in the action creator such that next actions include this round setter.
-            ActionCreator.ExtendLast(setRound);
         }
 
         /// <summary>
