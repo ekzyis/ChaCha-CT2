@@ -340,7 +340,7 @@
                     <ColumnDefinition Width="20*" />
                     <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
+                <Grid Margin="5" Grid.Column="0">
                     <Viewbox>
                         <Grid>
                             <Grid.RowDefinitions>
