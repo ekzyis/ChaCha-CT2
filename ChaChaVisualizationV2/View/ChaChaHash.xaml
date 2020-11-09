@@ -336,254 +336,45 @@
 
             <!--#region Top-right corner -->
 
-            <Grid Grid.Row="0" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20*" />
-                    <ColumnDefinition Width="80*" />
-                </Grid.ColumnDefinitions>
-                <Grid Margin="5" Grid.Column="0">
-                    <Viewbox>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
+                <!--#region Description -->
 
-                            <!--#region Navigation -->
-
-                            <Grid Grid.Row="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type StackPanel}">
-                                        <Setter Property="Orientation" Value="Horizontal" />
-                                        <Setter Property="HorizontalAlignment" Value="Center" />
-                                    </Style>
-                                    <Style TargetType="{x:Type Button}" x:Key="QRButton">
-                                        <Setter Property="Width" Value="45" />
-                                        <Setter Property="Height" Value="25" />
-                                        <Setter Property="Margin" Value="3" />
-                                    </Style>
-                                </Grid.Resources>
-                                <StackPanel Grid.Row="0">
-                                    <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
-                                    <TextBox Style="{StaticResource Text}" Text="Round: " />
-                                    <TextBox Style="{StaticResource Text}" Text="{Binding CurrentRoundIndex, Converter={StaticResource AddOne}}" />
-                                    <TextBox Style="{StaticResource Text}" Text="/" />
-                                    <TextBox Style="{StaticResource Text}" Text="{Binding TotalRounds}" />
-                                    <Button Style="{StaticResource NextButton}" Command="{Binding NextRoundCommand}" />
-                                </StackPanel>
-                                <StackPanel Grid.Row="1">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(0,4,8,12)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="1">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven Inverted="True" />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(1,5,10,15)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="2">
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel.Visibility>
-                                            <Binding Path="CurrentRoundIndex">
-                                                <Binding.Converter>
-                                                    <conv:SequentialValueConverter>
-                                                        <conv:IsEven />
-                                                        <BooleanToVisibilityConverter />
-                                                    </conv:SequentialValueConverter>
-                                                </Binding.Converter>
-                                            </Binding>
-                                        </StackPanel.Visibility>
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(1,5,9,13)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="2">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven Inverted="True" />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(1,6,11,12)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="3">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(2,6,10,14)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="3">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven Inverted="True" />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(2,7,8,13)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="4">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(3,7,11,15)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                                <StackPanel Grid.Row="4">
-                                    <StackPanel.Visibility>
-                                        <Binding Path="CurrentRoundIndex">
-                                            <Binding.Converter>
-                                                <conv:SequentialValueConverter>
-                                                    <conv:IsEven Inverted="True" />
-                                                    <BooleanToVisibilityConverter />
-                                                </conv:SequentialValueConverter>
-                                            </Binding.Converter>
-                                        </Binding>
-                                    </StackPanel.Visibility>
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(3,4,9,14)" />
-                                        <StackPanel>
-                                            <Button Style="{StaticResource QRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
-                                            <Button Style="{StaticResource QRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-
-                            <!--#endregion Navigation -->
-
-                            <!--#region Diffusion statistics -->
-
-                            <Grid Grid.Row="1">
-                            </Grid>
-
-                            <!--#endregion Diffusoin statistics -->
-                        </Grid>
-                    </Viewbox>
-                </Grid>
-                <Grid Grid.Column="1" Name="DescriptionRoot">
-
-                    <!--#region Description -->
-
-                    <Viewbox Style="{StaticResource UniformViewbox}">
-                        <Viewbox.Resources>
-                            <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
-                                <Setter Property="Margin" Value="3" />
-                                <Setter Property="Width" Value="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" />
-                            </Style>
-                        </Viewbox.Resources>
-                        <StackPanel Orientation="Vertical">
-                            <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        To generate a keystream block, we apply the ChaCha hash function to the state. The ChaCha hash function consists of
-                                        <Run Text="{Binding ChaCha.Rounds, FallbackValue=X}" /> rounds.
-                                        <LineBreak />
-                                        During each round, we run the quarterround function four times (hence the name
-                                        <Italic>quarterround</Italic> ) which modifies four state entries. This means that after each round, the whole state has been modified.
-                                        <LineBreak />
-                                        In an even round (round 0, 2, 4, ...), we go through all columns thus the even rounds can also be called
-                                        <Italic>column rounds</Italic> ,
+                <Viewbox Style="{StaticResource UniformViewbox}">
+                    <Viewbox.Resources>
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Width" Value="{Binding ElementName=DescriptionRoot, Path=ActualWidth}" />
+                        </Style>
+                    </Viewbox.Resources>
+                    <StackPanel Orientation="Vertical">
+                        <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    To generate a keystream block, we apply the ChaCha hash function to the state. The ChaCha hash function consists of
+                                    <Run Text="{Binding ChaCha.Rounds, FallbackValue=X}" /> rounds.
+                                    <LineBreak />
+                                    During each round, we run the quarterround function four times (hence the name
+                                    <Italic>quarterround</Italic> ) which modifies four state entries. This means that after each round, the whole state has been modified.
+                                    <LineBreak />
+                                    In an even round (round 0, 2, 4, ...), we go through all columns thus the even rounds can also be called
+                                    <Italic>column rounds</Italic> ,
                                     whereas in an uneven round (round 1, 3, 5, ...), we go through all diagonals thus the uneven rounds can be called
-                                        <Italic>diagonal rounds</Italic> .
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        At the left, you can see the current state. At the bottom, you see the visualization of the quarterround function. It consists of four steps where each step modifies three values using addition modulo 2
-                                        <Run Typography.Variants="Superscript">32</Run> , XOR and a circular left shift.
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                        </StackPanel>
-                    </Viewbox>
+                                    <Italic>diagonal rounds</Italic> .
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                        <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
+                            <FlowDocument>
+                                <Paragraph>
+                                    At the left, you can see the current state. At the bottom, you see the visualization of the quarterround function. It consists of four steps where each step modifies three values using addition modulo 2
+                                    <Run Typography.Variants="Superscript">32</Run> , XOR and a circular left shift.
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
+                    </StackPanel>
+                </Viewbox>
 
-                    <!--#endregion Description -->
-                </Grid>
+                <!--#endregion Description -->
             </Grid>
 
             <!--#endregion-->
