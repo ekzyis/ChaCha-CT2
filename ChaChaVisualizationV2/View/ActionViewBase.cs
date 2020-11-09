@@ -3,6 +3,7 @@ using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 {
@@ -26,19 +27,37 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
             // --- USER ACTION INPUT ---
             TextBox actionInputTextbox = (TextBox)root.Template.FindName("ActionInputTextBox", root);
-            int totalActions = viewModel.TotalActions;
-            actionInputTextbox.KeyDown += viewModel.HandleUserActionInput;
+            int maxAction = viewModel.TotalActions - 1;
+            InitUserInputField(actionInputTextbox, "CurrentUserActionIndex", 0, maxAction, viewModel.HandleUserActionInput);
+        }
+
+        /// <summary>
+        /// Initialize the textbox to support user input including validation.
+        /// It adds a two-way binding to the property at the specified path and adds a validation rule
+        /// such that only the minimum and maximum value are valid.
+        /// It also adds the given handler to the 'KeyDown' event and sets the maximum length
+        /// to the amount of digits the maximum value has.
+        /// </summary>
+        /// <param name="tb">The Textbox we want to setup.</param>
+        /// <param name="bindingPath">Path to property the Textbox should bind to.</param>
+        /// <param name="min">Minimum valid user value-</param>
+        /// <param name="max">Maximum valid user value.</param>
+        /// <param name="handleUserInput">The function which handles the user input.</param>
+        public static void InitUserInputField(TextBox tb, string bindingPath, int min, int max, KeyEventHandler handleUserInput)
+        {
             // The following code adds a binding with validation to the action input textbox.
             // (It was not possible in pure XAML because the ValidationRule
             // needs an argument and ValidationRule is not a DependencyObject thus no data binding available
             // to pass in the argument.)
-            Binding actionInputBinding = new Binding("CurrentUserActionIndex")
-            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-            ValidationRule inputActionIndexRule = new UserInputValidationRule(totalActions);
-            actionInputBinding.ValidationRules.Add(inputActionIndexRule);
-            actionInputTextbox.SetBinding(TextBox.TextProperty, actionInputBinding);
-            // restrict maximum length to only allow as many digits as the maximum action does allow
-            actionInputTextbox.MaxLength = Digits.GetAmountOfDigits(totalActions);
+            tb.KeyDown += handleUserInput;
+            Binding binding = new Binding(bindingPath)
+            {
+                Mode = BindingMode.TwoWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            binding.ValidationRules.Add(new UserInputValidationRule(min, max));
+            tb.SetBinding(TextBox.TextProperty, binding);
+            tb.MaxLength = Digits.GetAmountOfDigits(max);
         }
     }
 }
