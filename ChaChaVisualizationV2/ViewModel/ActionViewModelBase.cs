@@ -73,6 +73,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        /// <summary>
+        /// Handles the event 'user enters value into action textbox next to slider'.
+        /// </summary>
         public void HandleUserActionInput(object sender, KeyEventArgs e)
         {
             ActionInputHandler(sender, e);
