@@ -1,4 +1,5 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -25,6 +26,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
             // --- USER ACTION INPUT ---
             TextBox actionInputTextbox = (TextBox)root.Template.FindName("ActionInputTextBox", root);
+            int totalActions = viewModel.TotalActions;
             actionInputTextbox.KeyDown += viewModel.HandleUserActionInput;
             // The following code adds a binding with validation to the action input textbox.
             // (It was not possible in pure XAML because the ValidationRule
@@ -32,9 +34,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             // to pass in the argument.)
             Binding actionInputBinding = new Binding("CurrentUserActionIndex")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-            ValidationRule inputActionIndexRule = new UserActionInputValidationRule(viewModel.TotalActions);
+            ValidationRule inputActionIndexRule = new UserActionInputValidationRule(totalActions);
             actionInputBinding.ValidationRules.Add(inputActionIndexRule);
             actionInputTextbox.SetBinding(TextBox.TextProperty, actionInputBinding);
+            // restrict maximum length to only allow as many digits as the maximum action does allow
+            actionInputTextbox.MaxLength = Digits.GetAmountOfDigits(totalActions);
         }
     }
 }

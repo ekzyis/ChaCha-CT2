@@ -106,6 +106,7 @@
     <Compile Include="Helper\Converter\SubtractOne.cs" />
     <Compile Include="Helper\Converter\UInt32ToHex.cs" />
     <Compile Include="Helper\Formatter.cs" />
+    <Compile Include="Helper\GetAmountOfDigits.cs" />
     <Compile Include="Helper\Validation\DiffusionInputValidationRule.cs" />
     <Compile Include="Helper\Validation\HexValidationRule.cs" />
     <Compile Include="Helper\Validation\RangeChecker.cs" />
