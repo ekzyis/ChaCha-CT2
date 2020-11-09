@@ -17,11 +17,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// <param name="Root">The ContentControl which has the slider and textbox in its template.</param>
         public static void AddEventHandlers(ActionViewModelBase viewModel, ContentControl root)
         {
+            // --- ACTION SLIDER ---
             // Add value changed event handler to action slider
             root.ApplyTemplate();
             Slider actionSlider = (Slider)root.Template.FindName("ActionSlider", root);
             actionSlider.ValueChanged += viewModel.HandleActionSliderValueChange;
 
+            // --- USER ACTION INPUT ---
             TextBox actionInputTextbox = (TextBox)root.Template.FindName("ActionInputTextBox", root);
             actionInputTextbox.KeyDown += viewModel.HandleUserActionInput;
             // The following code adds a binding with validation to the action input textbox.
@@ -30,7 +32,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             // to pass in the argument.)
             Binding actionInputBinding = new Binding("CurrentUserActionIndex")
             { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
-
             ValidationRule inputActionIndexRule = new UserActionInputValidationRule(viewModel.TotalActions);
             actionInputBinding.ValidationRules.Add(inputActionIndexRule);
             actionInputTextbox.SetBinding(TextBox.TextProperty, actionInputBinding);
