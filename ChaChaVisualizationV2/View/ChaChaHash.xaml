@@ -1722,7 +1722,7 @@
                         <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
                         <TextBox Name="RoundInput" Style="{StaticResource Input}" />
                         <TextBox Style="{StaticResource Text}" Text="/" />
-                        <TextBox Style="{StaticResource Text}" Text="{Binding ChaCha.Rounds, Mode=OneWay}" />
+                        <TextBox Style="{StaticResource Text}" Text="{Binding Settings.Rounds, Mode=OneWay}" />
                         <Button Style="{StaticResource NextButton}" Command="{Binding NextRoundCommand}" />
                     </StackPanel>
                     <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource Label}" Text="Quarterround" />
