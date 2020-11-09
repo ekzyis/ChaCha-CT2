@@ -1,4 +1,5 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
@@ -285,6 +287,79 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion ICommand
 
         #endregion ActionViewModelBase
+
+        #region ChaCha Hash Navigation Bar
+
+        #region Round input
+
+        private ValidationRule _roundInputRule; private ValidationRule RoundInputRule
+        {
+            get
+            {
+                if (_roundInputRule == null) _roundInputRule = new UserInputValidationRule(1, Settings.Rounds);
+                return _roundInputRule;
+            }
+        }
+
+        private KeyEventHandler _roundInputHandler; public KeyEventHandler RoundInputHandler
+        {
+            get
+            {
+                if (_roundInputHandler == null) _roundInputHandler = UserInputHandler(RoundInputRule, GoToRound);
+                return _roundInputHandler;
+            }
+        }
+
+        /// <summary>
+        /// Go to given round.
+        /// </summary>
+        /// <param name="round">One-based round index.</param>
+        private void GoToRound(int round)
+        {
+            // Value comes from user. Map to zero-based round index.
+            int roundIndex = round - 1;
+            int roundActionIndex = GetTaggedActionIndex(RoundStartTag(roundIndex));
+            MoveToAction(roundActionIndex);
+        }
+
+        #endregion Round input
+
+        #region Quarterround input
+
+        private ValidationRule _qrInputRule; private ValidationRule QRInputRule
+        {
+            get
+            {
+                if (_qrInputRule == null) _qrInputRule = new UserInputValidationRule(1, Settings.Rounds);
+                return _qrInputRule;
+            }
+        }
+
+        private KeyEventHandler _qrInputHandler; public KeyEventHandler QRInputHandler
+        {
+            get
+            {
+                if (_qrInputHandler == null) _qrInputHandler = UserInputHandler(QRInputRule, GoToQR);
+                return _qrInputHandler;
+            }
+        }
+
+        /// <summary>
+        /// Go to given quarterround.
+        /// </summary>
+        /// <param name="qr">One-based quarterround index.</param>
+        private void GoToQR(int qr)
+        {
+            // Value comes from user. Map to zero-based round index.
+            int qrIndex = qr - 1;
+            int round = CurrentRoundIndex ?? 0;
+            int qrActionIndex = GetTaggedActionIndex(QRStartTag(round, qrIndex));
+            MoveToAction(qrActionIndex);
+        }
+
+        #endregion Quarterround input
+
+        #endregion ChaCha Hash Navigation Bar
 
         #region Binding Properties
 

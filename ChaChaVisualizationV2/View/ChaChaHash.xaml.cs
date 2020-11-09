@@ -15,13 +15,31 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             this.DataContextChanged += OnDataContextChanged;
         }
 
+        private ChaChaHashViewModel ViewModel { get; set; }
+
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ChaChaHashViewModel ViewModel = (ChaChaHashViewModel)e.NewValue;
+            ViewModel = (ChaChaHashViewModel)e.NewValue;
             if (ViewModel != null)
             {
                 ActionViewBase.AddEventHandlers(ViewModel, Root);
+
+                InitRoundInput();
+                InitQRInput();
             }
+        }
+
+        private void InitRoundInput()
+        {
+            TextBox roundInputTextBox = (TextBox)this.FindName("RoundInput");
+            int maxRound = ViewModel.Settings.Rounds;
+            ActionViewBase.InitUserInputField(roundInputTextBox, "CurrentUserRoundIndex", 0, maxRound, ViewModel.RoundInputHandler);
+        }
+
+        private void InitQRInput()
+        {
+            TextBox qrInputTextBox = (TextBox)this.FindName("QRInput");
+            ActionViewBase.InitUserInputField(qrInputTextBox, "CurrentUserQRIndex", 1, 4, ViewModel.QRInputHandler);
         }
     }
 }
