@@ -102,6 +102,38 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_currentActionIndex != value)
                 {
                     _currentActionIndex = value;
+                    CurrentUserActionIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Wrapper around internal current action index.
+        ///
+        /// We use it because we don't want to directly bind the text property
+        /// to the internal current action index since we never want to change
+        /// the internal current action index ourself. Only the action move handlers should do this.
+        /// But we need two-way data binding to enable validation.
+        ///
+        /// This property will get updated when the internal
+        /// current action index changes thus changes to it are reflected
+        /// in the user action index.
+        /// If the user enters a valid result, the internal current action index
+        /// gets updated which as mentioned updates this property.
+        /// </summary>
+        private int _currentUserActionIndex; public int CurrentUserActionIndex
+
+        {
+            get
+            {
+                return _currentUserActionIndex;
+            }
+            set
+            {
+                if (_currentUserActionIndex != value)
+                {
+                    _currentUserActionIndex = value;
                     OnPropertyChanged();
                 }
             }
