@@ -48,7 +48,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             // ChaCha Hash sequence
             ActionCreator.StartSequence();
-
+            ExtendAction(0, () => { CurrentRoundIndex = null; });
             for (int round = 0; round < Settings.Rounds; ++round)
             {
                 // Column round sequence
@@ -180,14 +180,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void NextRound()
         {
-            int nextRoundIndex = GetTaggedActionIndex(RoundStartTag(CurrentRoundIndex + 1));
-            MoveToAction(nextRoundIndex);
+            int nextRoundIndex = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex + 1;
+            int nextRoundActionIndex = GetTaggedActionIndex(RoundStartTag(nextRoundIndex));
+            MoveToAction(nextRoundActionIndex);
         }
 
         private void PrevRound()
         {
-            int prevRoundIndex = GetTaggedActionIndex(RoundStartTag(CurrentRoundIndex - 1));
-            MoveToAction(prevRoundIndex);
+            if (CurrentRoundIndex == null)
+                throw new InvalidOperationException("CurrentRoundIndex was null in PrevRound.");
+            int prevRoundIndex = (int)CurrentRoundIndex - 1;
+            int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(prevRoundIndex));
+            MoveToAction(prevRoundActionIndex);
         }
 
         #region ICommand
@@ -205,7 +209,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                return CurrentRoundIndex < Settings.Rounds - 1;
+                return CurrentRoundIndex == null ? true : CurrentRoundIndex < Settings.Rounds - 1;
             }
         }
 
@@ -222,7 +226,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                return CurrentRoundIndex != 0;
+                return CurrentRoundIndex != null && CurrentRoundIndex != 0;
             }
         }
 
@@ -266,7 +270,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private int _currentRoundIndex; public int CurrentRoundIndex
+        private int? _currentRoundIndex = null; public int? CurrentRoundIndex
         {
             get
             {
