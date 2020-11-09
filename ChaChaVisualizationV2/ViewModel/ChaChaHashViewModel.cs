@@ -180,7 +180,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void NextRound()
         {
-            int nextRoundIndex = GetTaggedActionIndex(RoundStartTag(CurrentRoundIndex));
+            int nextRoundIndex = GetTaggedActionIndex(RoundStartTag(CurrentRoundIndex + 1));
             MoveToAction(nextRoundIndex);
         }
 
