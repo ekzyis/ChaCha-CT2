@@ -37,6 +37,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// such that only the minimum and maximum value are valid.
         /// It also adds the given handler to the 'KeyDown' event and sets the maximum length
         /// to the amount of digits the maximum value has.
+        /// (It was not possible to do this in pure XAML because the ValidationRule
+        /// needs an argument and ValidationRule is not a DependencyObject thus no data binding available
+        /// to pass in the argument.)
         /// </summary>
         /// <param name="tb">The TextBox we want to setup.</param>
         /// <param name="bindingPath">Path to property the TextBox should bind to.</param>
@@ -45,16 +48,26 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// <param name="handleUserInput">The function which handles the user input.</param>
         public static void InitUserInputField(TextBox tb, string bindingPath, int min, int max, KeyEventHandler handleUserInput)
         {
-            // The following code adds a binding with validation to the action input textbox.
-            // (It was not possible in pure XAML because the ValidationRule
-            // needs an argument and ValidationRule is not a DependencyObject thus no data binding available
-            // to pass in the argument.)
-            tb.KeyDown += handleUserInput;
             Binding binding = new Binding(bindingPath)
             {
                 Mode = BindingMode.TwoWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
+            InitUserInputField(tb, binding, min, max, handleUserInput);
+        }
+
+        /// <summary>
+        /// Initialize the TextBox to support user input including validation.
+        /// Wrapper method with predefined binding. Can be used to use converters with the binding.
+        /// </summary>
+        /// <param name="tb">The TextBox we want to setup.</param>
+        /// <param name="binding">The binding we want to use with the Text property of the TextBox.</param>
+        /// <param name="min">Minimum valid user value.</param>
+        /// <param name="max">Maximum valid user value.</param>
+        /// <param name="handleUserInput">The function which handles the user input.</param>
+        public static void InitUserInputField(TextBox tb, Binding binding, int min, int max, KeyEventHandler handleUserInput)
+        {
+            tb.KeyDown += handleUserInput;
             binding.ValidationRules.Add(new UserInputValidationRule(min, max));
             tb.SetBinding(TextBox.TextProperty, binding);
             tb.MaxLength = Digits.GetAmountOfDigits(max);
