@@ -185,10 +185,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void NextRound()
         {
+            int nextRoundIndex = GetTaggedActionIndex(RoundStartTag(CurrentRoundIndex));
+            MoveToAction(nextRoundIndex);
         }
 
         private void PrevRound()
         {
+            int prevRoundIndex = GetTaggedActionIndex(RoundStartTag(CurrentRoundIndex - 1));
+            MoveToAction(prevRoundIndex);
         }
 
         #region ICommand
