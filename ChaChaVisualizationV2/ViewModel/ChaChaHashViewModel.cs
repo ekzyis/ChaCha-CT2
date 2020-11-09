@@ -189,9 +189,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             if (CurrentRoundIndex == null)
                 throw new InvalidOperationException("CurrentRoundIndex was null in PrevRound.");
-            int prevRoundIndex = (int)CurrentRoundIndex - 1;
-            int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(prevRoundIndex));
-            MoveToAction(prevRoundActionIndex);
+            int currentRound = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex;
+            int currentRoundStartIndex = GetTaggedActionIndex(RoundStartTag(currentRound));
+            // only go back to start of previous round if we are on the start of a round
+            // else go to start of current round
+            if (CurrentActionIndex == currentRoundStartIndex)
+            {
+                int prevRoundIndex = (int)CurrentRoundIndex - 1;
+                int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(prevRoundIndex));
+                MoveToAction(prevRoundActionIndex);
+            }
+            else
+            {
+                MoveToAction(currentRoundStartIndex);
+            }
         }
 
         /// <summary>
