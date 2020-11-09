@@ -336,9 +336,198 @@
 
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*" />
-                    <ColumnDefinition Width="70*" />
+                    <ColumnDefinition Width="20*" />
+                    <ColumnDefinition Width="80*" />
                 </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Viewbox>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <!-- Navigation -->
+                            <Grid Grid.Row="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Orientation" Value="Horizontal" />
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                    </Style>
+                                </Grid.Resources>
+                                <StackPanel Grid.Row="0">
+                                    <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
+                                    <TextBox Style="{StaticResource Text}" Text="Round: " />
+                                    <TextBox Style="{StaticResource Text}" Text="{Binding CurrentRound}" />
+                                    <TextBox Style="{StaticResource Text}" Text="/" />
+                                    <TextBox Style="{StaticResource Text}" Text="{Binding TotalRounds}" />
+                                    <Button Style="{StaticResource NextButton}" Command="{Binding NextRoundCommand}" />
+                                </StackPanel>
+                                <StackPanel Grid.Row="1">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(0,4,8,12)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="1">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven Inverted="True" />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(1,5,10,15)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2">
+                                    <StackPanel Orientation="Vertical">
+                                        <StackPanel.Visibility>
+                                            <Binding Path="CurrentRound">
+                                                <Binding.Converter>
+                                                    <conv:SequentialValueConverter>
+                                                        <conv:IsEven />
+                                                        <BooleanToVisibilityConverter />
+                                                    </conv:SequentialValueConverter>
+                                                </Binding.Converter>
+                                            </Binding>
+                                        </StackPanel.Visibility>
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(1,5,9,13)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="2">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven Inverted="True" />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(1,6,11,12)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(2,6,10,14)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="3">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven Inverted="True" />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(2,7,8,13)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="4">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(3,7,11,15)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                                <StackPanel Grid.Row="4">
+                                    <StackPanel.Visibility>
+                                        <Binding Path="CurrentRound">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:IsEven Inverted="True" />
+                                                    <BooleanToVisibilityConverter />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </StackPanel.Visibility>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBox Style="{StaticResource Text}" Text="Quarterround(3,4,9,14)" />
+                                        <StackPanel>
+                                            <Button Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                                            <Button Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <!-- Diffusion statistics -->
+                            <Grid Grid.Row="1">
+                            </Grid>
+                        </Grid>
+                    </Viewbox>
+                </Grid>
                 <Grid Grid.Column="1" Name="DescriptionRoot">
                     <Viewbox Style="{StaticResource UniformViewbox}">
                         <Viewbox.Resources>

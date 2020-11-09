@@ -99,6 +99,7 @@
     <Compile Include="Helper\BitFlips.cs" />
     <Compile Include="Helper\Converter\DoubleToPercentage.cs" />
     <Compile Include="Helper\Converter\HexToBytes.cs" />
+    <Compile Include="Helper\Converter\IsEven.cs" />
     <Compile Include="Helper\Converter\LittleEndian.cs" />
     <Compile Include="Helper\Converter\MultiSequentialValueConverter.cs" />
     <Compile Include="Helper\Converter\ReverseBytes.cs" />
