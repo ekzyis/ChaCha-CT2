@@ -53,6 +53,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
             // Extend the first action which was added by the base class.
             ExtendAction(0, () => { CurrentRoundIndex = null; });
+            ExtendAction(0, () => { CurrentQRIndex = null; });
 
             for (int round = 0; round < Settings.Rounds; ++round)
             {
