@@ -32,15 +32,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         }
 
         /// <summary>
-        /// Initialize the textbox to support user input including validation.
+        /// Initialize the TextBox to support user input including validation.
         /// It adds a two-way binding to the property at the specified path and adds a validation rule
         /// such that only the minimum and maximum value are valid.
         /// It also adds the given handler to the 'KeyDown' event and sets the maximum length
         /// to the amount of digits the maximum value has.
         /// </summary>
-        /// <param name="tb">The Textbox we want to setup.</param>
-        /// <param name="bindingPath">Path to property the Textbox should bind to.</param>
-        /// <param name="min">Minimum valid user value-</param>
+        /// <param name="tb">The TextBox we want to setup.</param>
+        /// <param name="bindingPath">Path to property the TextBox should bind to.</param>
+        /// <param name="min">Minimum valid user value.</param>
         /// <param name="max">Maximum valid user value.</param>
         /// <param name="handleUserInput">The function which handles the user input.</param>
         public static void InitUserInputField(TextBox tb, string bindingPath, int min, int max, KeyEventHandler handleUserInput)
