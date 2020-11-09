@@ -60,7 +60,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// The action will be inserted extended.
         /// If there is no last action in the current sequence, it will NOT throw an error and just insert the action at the beginning.
         /// </summary>
-        void Replace(Action action);
+        void ReplaceLast(Action action);
 
         /// <summary>
         /// Create a extended action using all previous sequential actions.

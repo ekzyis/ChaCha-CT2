@@ -138,7 +138,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 // This replaces for performance (and bug) reasons the last sequential action in the ChaCha hash sequence
                 // because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
                 // in a sequence.
-                ActionCreator.Replace(qrIO.UpdateState(round, 3).Extend(qrIO.UpdateState(round, 2), qrIO.UpdateState(round, 1), qrIO.UpdateState(round, 0)));
+                ActionCreator.ReplaceLast(qrIO.UpdateState(round, 3).Extend(qrIO.UpdateState(round, 2), qrIO.UpdateState(round, 1), qrIO.UpdateState(round, 0)));
             }
 
             ActionCreator.EndSequence();

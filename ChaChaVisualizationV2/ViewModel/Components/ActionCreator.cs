@@ -52,7 +52,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             return CurrentSequence.Pop();
         }
 
-        public void Replace(Action action)
+        public void ReplaceLast(Action action)
         {
             if (CurrentSequence.Count > 0) Pop();
             Action extendedAction = action.Extend(BaseAction);
