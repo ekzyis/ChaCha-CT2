@@ -16,7 +16,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         /// <summary>
         /// Attaches the event handler from the view model to the slider and textbox which are inside a template.
         /// </summary>
-        /// <param name="Root">The ContentControl which has the slider and textbox in its template.</param>
+        /// <param name="root">The ContentControl which has the slider and textbox in its template.</param>
         public static void AddEventHandlers(ActionViewModelBase viewModel, ContentControl root)
         {
             // --- ACTION SLIDER ---
