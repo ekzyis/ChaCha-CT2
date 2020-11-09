@@ -306,7 +306,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                return CanNextRound || (CurrentQRIndex == null ? true : CurrentQRIndex < 4);
+                return CanNextRound || (CurrentQRIndex == null ? true : CurrentQRIndex < 3);
             }
         }
 
