@@ -1,9 +1,11 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
+using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
@@ -162,6 +164,52 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private void NextRound()
+        {
+        }
+
+        private void PrevRound()
+        {
+        }
+
+        #region ICommand
+
+        private ICommand _nextRoundCommand; public ICommand NextRoundCommand
+        {
+            get
+            {
+                if (_nextRoundCommand == null) _nextRoundCommand = new RelayCommand((arg) => NextRound(), (arg) => CanNextRound);
+                return _nextRoundCommand;
+            }
+        }
+
+        public bool CanNextRound
+        {
+            get
+            {
+                return CurrentRoundIndex < Settings.Rounds - 1;
+            }
+        }
+
+        private ICommand _prevRoundCommand; public ICommand PrevRoundCommand
+        {
+            get
+            {
+                if (_prevRoundCommand == null) _prevRoundCommand = new RelayCommand((arg) => PrevRound(), (arg) => CanPrevRound);
+                return _prevRoundCommand;
+            }
+        }
+
+        public bool CanPrevRound
+        {
+            get
+            {
+                return CurrentRoundIndex != 0;
+            }
+        }
+
+        #endregion ICommand
+
         #endregion ActionViewModelBase
 
         #region Binding Properties
@@ -195,6 +243,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_qrStep != value)
                 {
                     _qrStep = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _currentRoundIndex; public int CurrentRoundIndex
+        {
+            get
+            {
+                return _currentRoundIndex;
+            }
+            set
+            {
+                if (_currentRoundIndex != value)
+                {
+                    _currentRoundIndex = value;
                     OnPropertyChanged();
                 }
             }
