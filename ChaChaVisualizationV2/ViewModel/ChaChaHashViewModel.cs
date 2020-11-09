@@ -59,10 +59,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 // Column round sequence
                 ActionCreator.StartSequence();
+                // Set a sequence base extension for round sequence.
+                // All further actions will now extend this action.
+                ActionCreator.Sequential(() => { CurrentRoundIndex = round; });
+
                 for (int qr = 0; qr < 4; ++qr)
                 {
                     //  Quarterround sequence
                     ActionCreator.StartSequence();
+                    // Set a sequence base extension for quarterround sequence.
+                    // All further actions will now extend this action.
+                    ActionCreator.Sequential(() => { CurrentQRIndex = qr; });
 
                     // Copy from state into qr input
                     ActionCreator.StartSequence();
