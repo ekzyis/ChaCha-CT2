@@ -4,15 +4,12 @@ using System.Windows.Data;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter
 {
-    internal class IsEven : IValueConverter
+    internal class AddOne : IValueConverter
     {
-        public bool Inverted { get; set; } = false;
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null) value = 0;
-            bool isEven = (int)value % 2 == 0;
-            return Inverted ? !isEven : isEven;
+            if (value == null) return 0;
+            return (int)value + 1;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

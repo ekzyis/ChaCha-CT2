@@ -17,6 +17,7 @@
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <conv:BooleanOr x:Key="BooleanOr" />
+            <conv:AddOne x:Key="AddOne" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -364,7 +365,7 @@
                                 <StackPanel Grid.Row="0">
                                     <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
                                     <TextBox Style="{StaticResource Text}" Text="Round: " />
-                                    <TextBox Style="{StaticResource Text}" Text="{Binding CurrentRoundIndex}" />
+                                    <TextBox Style="{StaticResource Text}" Text="{Binding CurrentRoundIndex, Converter={StaticResource AddOne}}" />
                                     <TextBox Style="{StaticResource Text}" Text="/" />
                                     <TextBox Style="{StaticResource Text}" Text="{Binding TotalRounds}" />
                                     <Button Style="{StaticResource NextButton}" Command="{Binding NextRoundCommand}" />
