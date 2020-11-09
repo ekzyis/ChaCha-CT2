@@ -268,7 +268,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                if (_quarterroundStartCommand == null) _quarterroundStartCommand = new RelayCommand((arg) => GoToQRStart(int.Parse((string)arg)), (arg) => CanGoToQRStart(int.Parse((string)arg)));
+                if (_quarterroundStartCommand == null) _quarterroundStartCommand = new RelayCommand((arg) => GoToQRStart(int.Parse((string)arg)));
                 return _quarterroundStartCommand;
             }
         }
@@ -277,19 +277,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                if (_quarterroundEndCommand == null) _quarterroundEndCommand = new RelayCommand((arg) => GoToQREnd(int.Parse((string)arg)), (arg) => CanGoToQREnd(int.Parse((string)arg)));
+                if (_quarterroundEndCommand == null) _quarterroundEndCommand = new RelayCommand((arg) => GoToQREnd(int.Parse((string)arg)));
                 return _quarterroundEndCommand;
             }
-        }
-
-        public bool CanGoToQRStart(int qr)
-        {
-            return true;
-        }
-
-        public bool CanGoToQREnd(int qr)
-        {
-            return true;
         }
 
         #endregion ICommand
