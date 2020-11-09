@@ -24,7 +24,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
             InitActions();
-            ActionInputRule = new UserInputValidationRule(TotalActions - 1);
         }
 
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
@@ -56,19 +55,46 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
-        private ValidationRule ActionInputRule { get; set; }
+        private ValidationRule _actionInputRule; private ValidationRule ActionInputRule
+        {
+            get
+            {
+                if (_actionInputRule == null) _actionInputRule = new UserInputValidationRule(TotalActions - 1);
+                return _actionInputRule;
+            }
+        }
+
+        private KeyEventHandler _actionInputHandler; private KeyEventHandler ActionInputHandler
+        {
+            get
+            {
+                if (_actionInputHandler == null) _actionInputHandler = UserInputHandler(ActionInputRule, MoveToAction);
+                return _actionInputHandler;
+            }
+        }
 
         public void HandleUserActionInput(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Return)
+            ActionInputHandler(sender, e);
+        }
+
+        /// <summary>
+        /// Factory function to create user input handlers.
+        /// </summary>
+        protected KeyEventHandler UserInputHandler(ValidationRule validationRule, Action<int> HandleEvent)
+        {
+            return (object sender, KeyEventArgs e) =>
             {
-                string value = ((TextBox)sender).Text;
-                ValidationResult result = ActionInputRule.Validate(value, null);
-                if (result == ValidationResult.ValidResult)
+                if (e.Key == Key.Return)
                 {
-                    MoveToAction(int.Parse(value));
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = validationRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        HandleEvent((int.Parse(value)));
+                    }
                 }
-            }
+            };
         }
 
         /// <summary>
