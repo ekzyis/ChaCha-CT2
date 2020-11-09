@@ -29,6 +29,9 @@
                             TickFrequency="1"
                             IsSnapToTickEnabled="True" />
                         <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
+                        <TextBox Style="{StaticResource Text}" IsReadOnly="False" />
+                        <TextBox Style="{StaticResource Text}" Text="/" />
+                        <TextBox Style="{StaticResource Text}" Text="{Binding TotalActions, Mode=OneWay}" />
                     </StackPanel>
                 </Viewbox>
             </Grid>
