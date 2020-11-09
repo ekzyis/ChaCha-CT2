@@ -364,14 +364,14 @@
                                 <StackPanel Grid.Row="0">
                                     <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
                                     <TextBox Style="{StaticResource Text}" Text="Round: " />
-                                    <TextBox Style="{StaticResource Text}" Text="{Binding CurrentRound}" />
+                                    <TextBox Style="{StaticResource Text}" Text="{Binding CurrentRoundIndex}" />
                                     <TextBox Style="{StaticResource Text}" Text="/" />
                                     <TextBox Style="{StaticResource Text}" Text="{Binding TotalRounds}" />
                                     <Button Style="{StaticResource NextButton}" Command="{Binding NextRoundCommand}" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="1">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven />
@@ -390,7 +390,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="1">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven Inverted="True" />
@@ -410,7 +410,7 @@
                                 <StackPanel Grid.Row="2">
                                     <StackPanel Orientation="Vertical">
                                         <StackPanel.Visibility>
-                                            <Binding Path="CurrentRound">
+                                            <Binding Path="CurrentRoundIndex">
                                                 <Binding.Converter>
                                                     <conv:SequentialValueConverter>
                                                         <conv:IsEven />
@@ -428,7 +428,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="2">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven Inverted="True" />
@@ -447,7 +447,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="3">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven />
@@ -466,7 +466,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="3">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven Inverted="True" />
@@ -485,7 +485,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="4">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven />
@@ -504,7 +504,7 @@
                                 </StackPanel>
                                 <StackPanel Grid.Row="4">
                                     <StackPanel.Visibility>
-                                        <Binding Path="CurrentRound">
+                                        <Binding Path="CurrentRoundIndex">
                                             <Binding.Converter>
                                                 <conv:SequentialValueConverter>
                                                     <conv:IsEven Inverted="True" />
