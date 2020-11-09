@@ -18,9 +18,11 @@
             </Grid>
             <Grid Grid.Row="1">
                 <Viewbox Style="{StaticResource UniformViewbox}">
-                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
+                    <StackPanel  Orientation="Horizontal" Visibility="{Binding HasActions, Converter={StaticResource FalseToCollapsed}, FallbackValue={x:Static Visibility.Collapsed}}">
                         <Button Command="{Binding PrevActionCommand}" Style="{StaticResource PrevButton}" />
                         <Slider
+                            Margin="3,0,3,0"
+                            VerticalAlignment="Center"
                             Minimum="0"
                             Maximum="{Binding TotalActions, Converter={StaticResource SubtractOne}}"
                             Width="500"
@@ -29,9 +31,9 @@
                             TickFrequency="1"
                             IsSnapToTickEnabled="True" />
                         <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
-                        <TextBox Style="{StaticResource Text}" IsReadOnly="False" />
+                        <TextBox Style="{StaticResource Text}" Margin="3,0,0,0" IsReadOnly="False" BorderThickness="1" Width="50" Text="{Binding CurrentActionIndex, Mode=OneWay}" />
                         <TextBox Style="{StaticResource Text}" Text="/" />
-                        <TextBox Style="{StaticResource Text}" Text="{Binding TotalActions, Mode=OneWay}" />
+                        <TextBox Style="{StaticResource Text}" Width="45" Text="{Binding TotalActions, Mode=OneWay, Converter={StaticResource SubtractOne}}" />
                     </StackPanel>
                 </Viewbox>
             </Grid>
