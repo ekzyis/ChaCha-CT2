@@ -256,7 +256,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region IActionTag
 
-        private Dictionary<string, int> ActionTags { get; set; }
+        private Dictionary<string, int> ActionTags { get; set; } = new Dictionary<string, int>();
 
         /// <summary>
         /// Saves action indices under a "tag" for later retrieval.
