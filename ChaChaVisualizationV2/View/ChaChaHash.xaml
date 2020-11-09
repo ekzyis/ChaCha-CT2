@@ -333,8 +333,8 @@
 
             <!--#endregion-->
 
-            <!-- Description -->
-
+            <!--#region Top-right corner -->
+            
             <Grid Grid.Row="0" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*" />
@@ -347,7 +347,9 @@
                                 <RowDefinition />
                                 <RowDefinition />
                             </Grid.RowDefinitions>
-                            <!-- Navigation -->
+
+                            <!--#region Navigation -->
+
                             <Grid Grid.Row="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -528,13 +530,23 @@
                                     </StackPanel>
                                 </StackPanel>
                             </Grid>
-                            <!-- Diffusion statistics -->
+
+                            <!--#endregion Navigation -->
+                            
+                            <!--#region Diffusion statistics -->
+                            
                             <Grid Grid.Row="1">
                             </Grid>
+
+                            <!--#endregion Diffusoin statistics -->
+
                         </Grid>
                     </Viewbox>
                 </Grid>
                 <Grid Grid.Column="1" Name="DescriptionRoot">
+                    
+                    <!--#region Description -->
+
                     <Viewbox Style="{StaticResource UniformViewbox}">
                         <Viewbox.Resources>
                             <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
@@ -569,6 +581,8 @@
                             </RichTextBox>
                         </StackPanel>
                     </Viewbox>
+
+                    <!--#endregion Description -->
                 </Grid>
             </Grid>
 
