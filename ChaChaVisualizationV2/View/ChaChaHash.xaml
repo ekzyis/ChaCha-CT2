@@ -27,8 +27,9 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="8*" />
             </Grid.RowDefinitions>
 
             <!--#region  State Matrix -->
@@ -1608,6 +1609,183 @@
                     </Canvas>
                 </Viewbox>
             </Grid>
+            <!--#endregion -->
+
+            <!--#region Button navigation -->
+
+            <Viewbox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Orientation" Value="Horizontal" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="5,0,5,0" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}" x:Key="Label" BasedOn="{StaticResource Text}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}" x:Key="Input" BasedOn="{StaticResource Input}">
+                            <Setter Property="Width" Value="40" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}" x:Key="ColumnLabel" BasedOn="{StaticResource Label}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Visibility">
+                                <Setter.Value>
+                                    <Binding Path="CurrentRoundIndex">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:IsEven />
+                                                <BooleanToVisibilityConverter />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton">
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Visibility">
+                                <Setter.Value>
+                                    <Binding Path="CurrentRoundIndex">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:IsEven />
+                                                <BooleanToVisibilityConverter />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}" x:Key="DiagonalLabel" BasedOn="{StaticResource Label}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Visibility">
+                                <Setter.Value>
+                                    <Binding Path="CurrentRoundIndex">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:IsEven Inverted="True" />
+                                                <BooleanToVisibilityConverter />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type Button}" x:Key="DiagonalQRButton">
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Visibility">
+                                <Setter.Value>
+                                    <Binding Path="CurrentRoundIndex">
+                                        <Binding.Converter>
+                                            <conv:SequentialValueConverter>
+                                                <conv:IsEven Inverted="True" />
+                                                <BooleanToVisibilityConverter />
+                                            </conv:SequentialValueConverter>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Grid.Resources>
+
+                    <TextBox Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" Text="Keystream Block" Margin="3,0,3,0" />
+                    <StackPanel Grid.Column="0" Grid.Row="1">
+                        <Button Style="{StaticResource PrevButton}" Command="{Binding PrevKeystreamBlockCommand}" />
+                        <TextBox Name="KeystreamBlockInput" Style="{StaticResource Input}" />
+                        <TextBox Style="{StaticResource Text}" Text="/" />
+                        <TextBox Style="{StaticResource Text}" Text="{Binding TotalKeystreamBlocks, Mode=OneWay}" />
+                        <Button Style="{StaticResource NextButton}" Command="{Binding NextKeystreamBlockCommand}" />
+                    </StackPanel>
+                    <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Label}" Text="Round" />
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
+                        <TextBox Name="RoundInput" Style="{StaticResource Input}" />
+                        <TextBox Style="{StaticResource Text}" Text="/" />
+                        <TextBox Style="{StaticResource Text}" Text="{Binding ChaCha.Rounds, Mode=OneWay}" />
+                        <Button Style="{StaticResource NextButton}" Command="{Binding NextRoundCommand}" />
+                    </StackPanel>
+                    <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource Label}" Text="Quarterround" />
+                    <StackPanel Grid.Column="2" Grid.Row="1">
+                        <Button Style="{StaticResource PrevButton}" Command="{Binding PrevQRCommand}" />
+                        <TextBox Name="QRInput" Style="{StaticResource Input}" />
+                        <TextBox Style="{StaticResource Text}" Text="/" />
+                        <TextBox Style="{StaticResource Text}" Text="4" />
+                        <Button Style="{StaticResource NextButton}" Command="{Binding NextQRCommand}" />
+                    </StackPanel>
+
+                    <!--#region column rounds -->
+                    <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource Label}" Text="Columnround (0,4,8,12)" />
+                    <StackPanel Grid.Column="3" Grid.Row="1">
+                        <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                        <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                    </StackPanel>
+                    <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource Label}" Text="Columnround (1,5,9,13)" />
+                    <StackPanel Grid.Column="4" Grid.Row="1">
+                        <TextBox Style="{StaticResource ColumnLabel}" Text="" />
+                        <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                        <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                    </StackPanel>
+                    <TextBox Grid.Column="5" Grid.Row="0" Style="{StaticResource Label}" Text="Columnround (2,6,10,14)" />
+                    <StackPanel Grid.Column="5" Grid.Row="1">
+                        <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                        <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                    </StackPanel>
+                    <TextBox Grid.Column="6" Grid.Row="0" Style="{StaticResource Label}" Text="Columnround (3,7,11,15)" />
+                    <StackPanel Grid.Column="6" Grid.Row="1">
+                        <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                        <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                    </StackPanel>
+
+                    <!--#endregion-->
+
+                    <!--#region  diagonal rounds -->
+
+                    <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Diagonalround (1,5,10,15)" />
+                    <StackPanel Grid.Column="3" Grid.Row="1">
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                    </StackPanel>
+                    <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Diagonalround (1,6,11,12)" />
+                    <StackPanel Grid.Column="4" Grid.Row="1">
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                    </StackPanel>
+                    <TextBox Grid.Column="5" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Diagonalround (2,7,8,13)" />
+                    <StackPanel Grid.Column="5" Grid.Row="1">
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                    </StackPanel>
+                    <TextBox Grid.Column="6" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Diagonalround (3,4,9,14)" />
+                    <StackPanel Grid.Column="6" Grid.Row="1">
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                        <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                    </StackPanel>
+
+                    <!--#endregion-->
+                </Grid>
+            </Viewbox>
+
             <!--#endregion-->
         </Grid>
     </ContentControl>
