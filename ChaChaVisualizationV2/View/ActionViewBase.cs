@@ -28,7 +28,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             // (It was not possible in pure XAML because the ValidationRule
             // needs an argument and ValidationRule is not a DependencyObject thus no data binding available
             // to pass in the argument.)
-            Binding actionInputBinding = new Binding("CurrentUserActionIndex") { Mode = BindingMode.TwoWay };
+            Binding actionInputBinding = new Binding("CurrentUserActionIndex")
+            { Mode = BindingMode.TwoWay, UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged };
 
             ValidationRule inputActionIndexRule = new UserActionInputValidationRule(viewModel.TotalActions);
             actionInputBinding.ValidationRules.Add(inputActionIndexRule);
