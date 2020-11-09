@@ -15,7 +15,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     /// <summary>
     /// View model base for all view models which implement action navigation
     /// </summary>
-    internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation, IChaCha, INavigation
+    internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation, IChaCha, INavigation, IActionTag
     {
         public ActionViewModelBase(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
@@ -253,6 +253,32 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion Asynchronous action navigation
 
         #endregion IActionNavigation
+
+        #region IActionTag
+
+        private Dictionary<string, int> ActionTags { get; set; }
+
+        /// <summary>
+        /// Saves action indices under a "tag" for later retrieval.
+        /// This implements "action tagging". We can mark actions with a string
+        /// and then retrieve their action index using that string.
+        /// One must use this function during action creation and call
+        /// it with the index of the action we want to tag.
+        /// </summary>
+        public void TagAction(string tag, int actionIndex)
+        {
+            ActionTags.Add(tag, actionIndex);
+        }
+
+        /// <summary>
+        /// Return the action index of the given action tag.
+        /// </summary>
+        public int GetTaggedActionIndex(string tag)
+        {
+            return ActionTags[tag];
+        }
+
+        #endregion IActionTag
 
         #region ICommand
 
