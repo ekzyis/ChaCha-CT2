@@ -330,7 +330,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void NextQR()
         {
             int roundIndex = CurrentRoundIndex ?? 0;
-            int nextQRIndex = CurrentQRIndex == null ? 0 : (int)CurrentQRIndex + 1;
+            int nextQRIndex = CurrentQRIndex == null ? 0 : ((int)(CurrentQRIndex + 1) % 4);
+            if (CurrentQRIndex != null && (int)CurrentQRIndex == 3) roundIndex += 1;
             int nextQRActionIndex = GetTaggedActionIndex(QRStartTag(roundIndex, nextQRIndex));
             MoveToAction(nextQRActionIndex);
         }
