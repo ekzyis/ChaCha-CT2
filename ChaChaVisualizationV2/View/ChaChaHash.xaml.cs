@@ -15,19 +15,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             this.DataContextChanged += OnDataContextChanged;
         }
 
-        private ChaChaHashViewModel ViewModel { get; set; }
-
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             ChaChaHashViewModel ViewModel = (ChaChaHashViewModel)e.NewValue;
             if (ViewModel != null)
             {
-                this.ViewModel = ViewModel;
-
-                // Add value changed event handler to action slider
-                Root.ApplyTemplate();
-                Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
-                actionSlider.ValueChanged += ViewModel.ActionSliderValueChange;
+                ActionViewBase.AddEventHandlers(ViewModel, Root);
             }
         }
     }

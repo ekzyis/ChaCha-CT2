@@ -167,6 +167,7 @@
     <Compile Include="ViewModel\StartViewModel.cs" />
     <Compile Include="ViewModel\StateMatrixInitViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="View\ActionViewBase.cs" />
     <Compile Include="View\ChaChaHash.xaml.cs">
       <DependentUpon>ChaChaHash.xaml</DependentUpon>
     </Compile>

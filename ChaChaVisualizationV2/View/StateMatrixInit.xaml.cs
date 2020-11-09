@@ -30,15 +30,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             StateMatrixInitViewModel ViewModel = (StateMatrixInitViewModel)e.NewValue;
             if (ViewModel != null)
             {
+                ActionViewBase.AddEventHandlers(ViewModel, Root);
+
                 this.ViewModel = ViewModel;
                 // Colorize state background depending on Version
                 ChaCha.Version v = ViewModel.Settings.Version;
                 State13.Background = v.CounterBits == 64 ? Brushes.SkyBlue : Brushes.PaleGreen;
-
-                // Add value changed event handler to action slider
-                Root.ApplyTemplate();
-                Slider actionSlider = (Slider)Root.Template.FindName("ActionSlider", Root);
-                actionSlider.ValueChanged += ViewModel.ActionSliderValueChange;
 
                 // State parameter diffusion values
                 InitDiffusionStateParameters();
