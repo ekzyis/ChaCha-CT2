@@ -177,7 +177,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     var elapsedMs = watch.ElapsedMilliseconds;
                     if (elapsedMs != 0)
                     {
-                        Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
+                        // Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
                     }
                 }, cancellationToken);
             }
