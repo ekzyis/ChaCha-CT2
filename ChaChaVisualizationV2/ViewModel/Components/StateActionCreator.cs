@@ -29,6 +29,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                     }
                     if (VM.DiffusionActive)
                     {
+                        uint[] diffusionState = VM.ChaChaVisualization.OriginalStateDiffusion[0];
+                        for (int i = 0; i < 16; ++i)
+                        {
+                            VM.DiffusionStateValues[i].Value = diffusionState[i];
+                        }
+                        VM.OnPropertyChanged("DiffusionStateValues");
                     }
                 };
             }

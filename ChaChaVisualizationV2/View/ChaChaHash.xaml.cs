@@ -1,5 +1,7 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -24,12 +26,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             ViewModel = (ChaChaHashViewModel)e.NewValue;
             if (ViewModel != null)
             {
+                ViewModel.PropertyChanged += new PropertyChangedEventHandler(OnViewModelPropertyChange);
                 ActionViewBase.AddEventHandlers(ViewModel, Root);
 
                 InitKeystreamBlockInput();
                 InitRoundInput();
                 InitQRInput();
             }
+        }
+
+        private void OnViewModelPropertyChange(object sender, PropertyChangedEventArgs e)
+        {
+            Console.WriteLine("HUAAH RANGERS");
         }
 
         private void InitKeystreamBlockInput()
