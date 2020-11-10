@@ -24,12 +24,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             ViewModel = (ChaChaHashViewModel)e.NewValue;
             if (ViewModel != null)
             {
+                ViewModel.View = this;
                 ActionViewBase.AddEventHandlers(ViewModel, Root);
 
-                InitKeystreamBlockInput();
-                InitRoundInput();
-                InitQRInput();
+                InitUserInputFields();
             }
+        }
+
+        public void InitUserInputFields()
+        {
+            InitKeystreamBlockInput();
+            InitRoundInput();
+            InitQRInput();
         }
 
         private void InitKeystreamBlockInput()

@@ -1,6 +1,7 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
@@ -23,6 +24,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// Convenience list to write cleaner code which modifies all output values.
         /// </summary>
         private readonly QRValue[] qrOutValues;
+
+        /// <summary>
+        ///
+        /// The view associated with this view model.
+        /// ChaChaHashViewModel needs access to its view to tell it to reinitialize the input fields
+        /// with the new properties.
+        /// Workaround for ValidationRule not supporting bindings.
+        /// </summary>
+        public ChaChaHash View { get; set; }
 
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
@@ -1042,8 +1052,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 QRStep.Add(new VisualQRStep());
             }
+
             // First setup page, then call base setup because action buffer handler may depend on things being setup already.
             base.Setup();
+
+            // Reinitialize user input fields because TotalActions or other things may have changed since DataContext of view changed.
+            // (DataContext change is the trigger to initialize the user input fields in the View.)
+            View?.InitUserInputFields();
         }
 
         public override void Teardown()
