@@ -55,11 +55,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             base.Xcrypt(key, iv, initialCounter, settings, input, output);
         }
 
-        protected override uint[] State(byte[] key, byte[] iv, ulong counter, ChaCha.Version version)
+        protected override void ChaChaHash(ref uint[] state, int rounds)
         {
-            uint[] state = base.State(key, iv, counter, version);
-            OriginalState.Add(state);
-            return state;
+            uint[] originalState = (uint[])(state.Clone());
+            OriginalState.Add(originalState);
+            base.ChaChaHash(ref state, rounds);
         }
 
         protected override (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
