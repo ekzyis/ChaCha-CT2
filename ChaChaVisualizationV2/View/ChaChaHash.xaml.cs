@@ -54,6 +54,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             {
                 HandleDiffusionLittleEndianStateChange();
             }
+            else if (e.PropertyName == "DiffusionQRIn")
+            {
+                HandleDiffusionQRInChange();
+            }
+            else if (e.PropertyName == "DiffusionQROut")
+            {
+                HandleDiffusionQROutChange();
+            }
+            else if (e.PropertyName == "DiffusionQRStep")
+            {
+                HandleDiffusionQRStepChange();
+            }
         }
 
         private void HandleDiffusionStateValuesChange()
@@ -83,6 +95,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         }
 
         private void HandleDiffusionLittleEndianStateChange()
+        {
+        }
+
+        private void HandleDiffusionQRInChange()
+        {
+        }
+
+        private void HandleDiffusionQROutChange()
+        {
+        }
+
+        private void HandleDiffusionQRStepChange()
         {
         }
 

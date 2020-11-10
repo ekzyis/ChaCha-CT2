@@ -15,10 +15,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// </summary>
         private readonly QRValue[] qrInValues;
 
+        private readonly QRValue[] diffusionQrInValues;
+
         /// <summary>
         /// Convenience list to write cleaner code which modifies all output values.
         /// </summary>
         private readonly QRValue[] qrOutValues;
+
+        private readonly QRValue[] diffusionQrOutValues;
 
         /// <summary>
         /// Creates an instance to help with quarterround input action creation for the given round.
@@ -28,6 +32,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             qrInValues = new QRValue[] { VM.QRInA, VM.QRInB, VM.QRInC, VM.QRInD };
             qrOutValues = new QRValue[] { VM.QROutA, VM.QROutB, VM.QROutC, VM.QROutD };
+            diffusionQrInValues = new QRValue[] { VM.DiffusionQRInA, VM.DiffusionQRInB, VM.DiffusionQRInC, VM.DiffusionQRInD };
+            diffusionQrOutValues = new QRValue[] { VM.DiffusionQROutA, VM.DiffusionQROutB, VM.DiffusionQROutC, VM.DiffusionQROutD };
         }
 
         /// <summary>
@@ -46,6 +52,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                     foreach (VisualQRStep qrStep in VM.QRStep)
                     {
                         qrStep.Reset();
+                    }
+                    if (VM.DiffusionActive)
+                    {
+                        foreach (QRValue v in diffusionQrInValues.Concat(diffusionQrOutValues))
+                        {
+                            v.Reset();
+                        }
+                        foreach (VisualQRStep qrStep in VM.DiffusionQRStep)
+                        {
+                            qrStep.Reset();
+                        }
                     }
                 };
             }
@@ -128,7 +145,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         public Action InsertQRInputs(int keystreamBlock, int round, int qr)
         {
             int arrayIndex = MapIndex(keystreamBlock, round, qr);
-            return () => (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[arrayIndex];
+            return () =>
+            {
+                (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[arrayIndex];
+                if (VM.DiffusionActive)
+                {
+                    (VM.DiffusionQRInA.Value, VM.DiffusionQRInB.Value, VM.DiffusionQRInC.Value, VM.DiffusionQRInD.Value) = VM.ChaChaVisualization.QRInputDiffusion[arrayIndex];
+                    VM.OnPropertyChanged("DiffusionQRIn");
+                }
+            };
         }
 
         /// <summary>
@@ -174,7 +199,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         public Action InsertQROutputs(int keystreamBlock, int round, int qr)
         {
             int arrayIndex = MapIndex(keystreamBlock, round, qr);
-            return () => (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
+            return () =>
+            {
+                (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
+                if (VM.DiffusionActive)
+                {
+                    (VM.DiffusionQROutA.Value, VM.DiffusionQROutB.Value, VM.DiffusionQROutC.Value, VM.DiffusionQROutD.Value) = VM.ChaChaVisualization.QROutputDiffusion[arrayIndex];
+                    VM.OnPropertyChanged("DiffusionQROut");
+                }
+            };
         }
 
         /// <summary>
@@ -194,6 +227,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 VM.StateValues[j].Value = b;
                 VM.StateValues[k].Value = c;
                 VM.StateValues[l].Value = d;
+                if (VM.DiffusionActive)
+                {
+                    (uint dA, uint dB, uint dC, uint dD) = VM.ChaChaVisualization.QROutputDiffusion[arrayIndex];
+                    VM.DiffusionStateValues[i].Value = dA;
+                    VM.DiffusionStateValues[j].Value = dB;
+                    VM.DiffusionStateValues[k].Value = dC;
+                    VM.DiffusionStateValues[l].Value = dD;
+                }
+                VM.OnPropertyChanged("DiffusionStateValues");
             };
         }
     }
