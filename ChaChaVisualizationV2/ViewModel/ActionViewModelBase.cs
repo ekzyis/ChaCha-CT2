@@ -368,6 +368,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public virtual void Setup()
         {
             StartActionBufferHandler(50);
+            ActionTags.Clear();
             // Setup actions when navigating to page to have the newest inputs.
             // Fix for TotalKeystreamBlocks = 0 when initializing actions in ctor.
             // TODO(Performance) check if actions have already been initialized or if they need to be reinitialized.
