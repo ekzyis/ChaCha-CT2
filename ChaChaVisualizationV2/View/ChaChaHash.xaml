@@ -21,6 +21,36 @@
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
         <Grid>
+            <Grid.Resources>
+                <Style TargetType="{x:Type Grid}" x:Key="MatrixVisualizationGrid">
+                    <Setter Property="Visibility">
+                        <Setter.Value>
+                            <Binding Path="RoundsStep">
+                                <Binding.Converter>
+                                    <conv:SequentialValueConverter>
+                                        <conv:Invert />
+                                        <BooleanToVisibilityConverter />
+                                    </conv:SequentialValueConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style TargetType="{x:Type Border}" x:Key="MatrixVisualizationBorder" BasedOn="{StaticResource MatrixBorder}">
+                    <Setter Property="Visibility">
+                        <Setter.Value>
+                            <Binding Path="RoundsStep">
+                                <Binding.Converter>
+                                    <conv:SequentialValueConverter>
+                                        <conv:Invert />
+                                        <BooleanToVisibilityConverter />
+                                    </conv:SequentialValueConverter>
+                                </Binding.Converter>
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50*" />
                 <RowDefinition Height="50*" />
@@ -29,16 +59,6 @@
 
             <!-- #region Top Row -->
             <Grid Grid.Row="0">
-                <Grid.Visibility>
-                    <Binding Path="RoundsStep">
-                        <Binding.Converter>
-                            <conv:SequentialValueConverter>
-                                <conv:Invert />
-                                <BooleanToVisibilityConverter />
-                            </conv:SequentialValueConverter>
-                        </Binding.Converter>
-                    </Binding>
-                </Grid.Visibility>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
@@ -46,7 +66,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!--#region WORKAROUND FOR SCALING ISSUE: Top path as border -->
-                <Grid Grid.Row="0" Grid.Column="0">
+                <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -1413,17 +1433,7 @@
 
                 <!--#region WORKAROUND FOR SCALING ISSUE -->
 
-                <Grid Grid.Column="0">
-                    <Grid.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Grid.Visibility>
+                <Grid Grid.Column="0" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -1431,17 +1441,7 @@
                     <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,2,2" Margin="20,0,0,0" />
                 </Grid>
 
-                <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="20">
-                    <Grid.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Grid.Visibility>
+                <Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="20" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -1472,17 +1472,7 @@
                     </Border>
                 </Grid>
 
-                <Grid Grid.Column="1">
-                    <Grid.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Grid.Visibility>
+                <Grid Grid.Column="1" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -1490,17 +1480,7 @@
                     <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,2" Margin="0,0,0,0" />
                 </Grid>
 
-                <Grid Grid.Column="2">
-                    <Grid.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Grid.Visibility>
+                <Grid Grid.Column="2" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -1510,17 +1490,7 @@
 
                 <!--#endregion-->
 
-                <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="0">
-                    <Border.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Border.Visibility>
+                <Border Style="{StaticResource MatrixVisualizationBorder}" Grid.Row="0" Grid.Column="0">
                     <Grid Name="AdditionMatrix">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
@@ -1822,17 +1792,7 @@
                     </Grid>
                 </Border>
 
-                <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="1">
-                    <Border.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Border.Visibility>
+                <Border Style="{StaticResource MatrixVisualizationBorder}" Grid.Row="0" Grid.Column="1">
                     <Grid Name="AdditionResultMatrix">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
@@ -2134,17 +2094,7 @@
                     </Grid>
                 </Border>
 
-                <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="2">
-                    <Border.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Border.Visibility>
+                <Border Style="{StaticResource MatrixVisualizationBorder}" Grid.Row="0" Grid.Column="2">
                     <Grid Name="LittleEndianMatrix">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
@@ -2446,17 +2396,7 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.ColumnSpan="2">
-                    <Grid.Visibility>
-                        <Binding Path="RoundsStep">
-                            <Binding.Converter>
-                                <conv:SequentialValueConverter>
-                                    <conv:Invert />
-                                    <BooleanToVisibilityConverter />
-                                </conv:SequentialValueConverter>
-                            </Binding.Converter>
-                        </Binding>
-                    </Grid.Visibility>
+                <Grid Grid.ColumnSpan="2" Style="{StaticResource MatrixVisualizationGrid}">
                     <Viewbox Style="{StaticResource UniformViewbox}">
                         <Viewbox.Resources>
                             <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
