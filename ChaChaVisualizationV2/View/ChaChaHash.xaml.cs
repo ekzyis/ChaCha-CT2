@@ -176,40 +176,52 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private void HandleDiffusionQRStepChange(string propertyName)
         {
-            var match = Regex.Match(propertyName, @"DiffusionQRStep\[([0-9])\]\.(Add|XOR|Shift)");
+            var pattern = @"DiffusionQRStep\[([0-9])\]\.(Add|XOR|Shift)";
+            var match = Regex.Match(propertyName, pattern);
             if (match.Success)
             {
                 int index = int.Parse(match.Groups[1].Value);
                 string operation = match.Groups[2].Value;
-                RichTextBox rtb = (RichTextBox)FindName($"QRValue{operation}Diffusion_{index}");
-                VisualQRStep diffusionQrStep = ViewModel.DiffusionQRStep[index];
-                VisualQRStep primaryQrStep = ViewModel.QRStep[index];
-                uint? diffusionValue; uint? primaryValue;
-                if (operation == "Add")
-                {
-                    diffusionValue = diffusionQrStep.Add.Value;
-                    primaryValue = primaryQrStep.Add.Value;
-                }
-                else if (operation == "XOR")
-                {
-                    diffusionValue = diffusionQrStep.XOR.Value;
-                    primaryValue = primaryQrStep.XOR.Value;
-                }
-                else if (operation == "Shift")
-                {
-                    diffusionValue = diffusionQrStep.Shift.Value;
-                    primaryValue = primaryQrStep.Shift.Value;
-                }
-                else
-                {
-                    throw new InvalidOperationException("No matching operation found.");
-                }
-                InitOrClearDiffusionValue(rtb, diffusionValue, primaryValue);
+                HandleDiffusionQRStepChange(index, operation);
             }
             else
             {
                 Debug.Assert(propertyName == "DiffusionQRStep");
+                for (int i = 0; i < 4; ++i)
+                {
+                    HandleDiffusionQRStepChange(i, "Add");
+                    HandleDiffusionQRStepChange(i, "XOR");
+                    HandleDiffusionQRStepChange(i, "Shift");
+                }
             }
+        }
+
+        private void HandleDiffusionQRStepChange(int index, string operation)
+        {
+            RichTextBox rtb = (RichTextBox)FindName($"QRValue{operation}Diffusion_{index}");
+            VisualQRStep diffusionQrStep = ViewModel.DiffusionQRStep[index];
+            VisualQRStep primaryQrStep = ViewModel.QRStep[index];
+            uint? diffusionValue; uint? primaryValue;
+            if (operation == "Add")
+            {
+                diffusionValue = diffusionQrStep.Add.Value;
+                primaryValue = primaryQrStep.Add.Value;
+            }
+            else if (operation == "XOR")
+            {
+                diffusionValue = diffusionQrStep.XOR.Value;
+                primaryValue = primaryQrStep.XOR.Value;
+            }
+            else if (operation == "Shift")
+            {
+                diffusionValue = diffusionQrStep.Shift.Value;
+                primaryValue = primaryQrStep.Shift.Value;
+            }
+            else
+            {
+                throw new InvalidOperationException("No matching operation found.");
+            }
+            InitOrClearDiffusionValue(rtb, diffusionValue, primaryValue);
         }
 
         #endregion Diffusion
