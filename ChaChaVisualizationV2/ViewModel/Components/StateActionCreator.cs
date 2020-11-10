@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             };
         }
 
-        public Action ShowAdditionResultState(int keystreamBlock)
+        public Action ShowAdditionResult(int keystreamBlock)
         {
             return () =>
             {
@@ -37,7 +37,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             };
         }
 
-        public Action ShowLittleEndianState(int keystreamBlock)
+        public Action ShowLittleEndian(int keystreamBlock)
         {
             return () =>
             {
