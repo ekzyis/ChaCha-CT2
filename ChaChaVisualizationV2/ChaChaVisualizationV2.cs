@@ -49,8 +49,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             // calculate total keystream blocks needed
             CStreamReader inputReader = input.CreateReader();
+            // byte size of input
             long inputSize = inputReader.Length;
-            TotalKeystreamBlocks = (int)Math.Ceiling((double)(inputSize) / 512);
+            // one keystream block is 64 bytes (512 bit)
+            TotalKeystreamBlocks = (int)Math.Ceiling((double)(inputSize) / 64);
             inputReader.Dispose();
             base.Xcrypt(key, iv, initialCounter, settings, input, output);
         }
