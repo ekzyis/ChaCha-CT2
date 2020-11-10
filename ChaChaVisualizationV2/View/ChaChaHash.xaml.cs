@@ -34,17 +34,61 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             }
         }
 
+        #region Diffusion
+
         private void OnViewModelPropertyChange(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName != "DiffusionStateValues") return;
-            for (int i = 0; i < 16; ++i)
+            if (e.PropertyName == "DiffusionStateValues")
             {
-                RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i}");
-                Plugins.ChaChaVisualizationV2.ViewModel.Components.Diffusion.InitDiffusionValue(
-                    rtb, (uint)ViewModel.DiffusionStateValues[i].Value, (uint)ViewModel.StateValues[i].Value
-                );
+                HandleDiffusionStateValuesChange();
+            }
+            else if (e.PropertyName == "DiffusionOriginalState")
+            {
+                HandleDiffusionOriginalStateChange();
+            }
+            else if (e.PropertyName == "DiffusionAdditionResultState")
+            {
+                HandleDiffusionAdditionResultStateChange();
+            }
+            else if (e.PropertyName == "DiffusionLittleEndianState")
+            {
+                HandleDiffusionLittleEndianStateChange();
             }
         }
+
+        private void HandleDiffusionStateValuesChange()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
+                uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
+                uint? stateValue = ViewModel.StateValues[i].Value;
+                if (diffusionStateValue != null)
+                {
+                    Plugins.ChaChaVisualizationV2.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
+                }
+                else
+                {
+                    rtb.Document.Blocks.Clear();
+                }
+            }
+        }
+
+        private void HandleDiffusionOriginalStateChange()
+        {
+        }
+
+        private void HandleDiffusionAdditionResultStateChange()
+        {
+        }
+
+        private void HandleDiffusionLittleEndianStateChange()
+        {
+        }
+
+        #endregion Diffusion
+
+        #region User Input
 
         private void InitKeystreamBlockInput()
         {
@@ -83,5 +127,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             };
             ActionViewBase.InitUserInputField(qrInputTextBox, binding, 1, 4, ViewModel.QRInputHandler);
         }
+
+        #endregion User Input
     }
 }

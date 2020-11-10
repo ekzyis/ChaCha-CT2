@@ -18,24 +18,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             {
                 return () =>
                 {
-                    Debug.Assert(
-                        VM.ChaChaVisualization.OriginalState.Count == VM.ChaChaVisualization.TotalKeystreamBlocks,
-                        $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {VM.ChaChaVisualization.TotalKeystreamBlocks}. Actual: {VM.ChaChaVisualization.OriginalState.Count}");
-                    uint[] state = VM.ChaChaVisualization.OriginalState[0];
-                    for (int i = 0; i < 16; ++i)
-                    {
-                        VM.StateValues[i].Value = state[i];
-                        VM.StateValues[i].Mark = false;
-                    }
-                    if (VM.DiffusionActive)
-                    {
-                        uint[] diffusionState = VM.ChaChaVisualization.OriginalStateDiffusion[0];
-                        for (int i = 0; i < 16; ++i)
-                        {
-                            VM.DiffusionStateValues[i].Value = diffusionState[i];
-                        }
-                        VM.OnPropertyChanged("DiffusionStateValues");
-                    }
+                    InsertOriginalState(0);
                 };
             }
         }
@@ -56,6 +39,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                     VM.StateValues[i].Value = state[i];
                     VM.StateValues[i].Mark = false;
                 }
+                if (VM.DiffusionActive)
+                {
+                    uint[] diffusionState = VM.ChaChaVisualization.OriginalStateDiffusion[keystreamBlock];
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.DiffusionStateValues[i].Value = diffusionState[i];
+                    }
+                    VM.OnPropertyChanged("DiffusionStateValues");
+                }
             };
         }
 
@@ -68,6 +60,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                     for (int i = 0; i < 16; ++i)
                     {
                         VM.OriginalState[i].Value = null;
+                    }
+                    if (VM.DiffusionActive)
+                    {
+                        for (int i = 0; i < 16; ++i)
+                        {
+                            VM.DiffusionOriginalState[i].Value = null;
+                        }
+                        VM.OnPropertyChanged("DiffusionOriginalState");
                     }
                 };
             }
@@ -83,6 +83,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                     {
                         VM.AdditionResultState[i].Value = null;
                     }
+                    if (VM.DiffusionActive)
+                    {
+                        for (int i = 0; i < 16; ++i)
+                        {
+                            VM.DiffusionAdditionResultState[i].Value = null;
+                        }
+                        VM.OnPropertyChanged("DiffusionAdditionResultState");
+                    }
                 };
             }
         }
@@ -96,6 +104,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                     for (int i = 0; i < 16; ++i)
                     {
                         VM.LittleEndianState[i].Value = null;
+                    }
+                    if (VM.DiffusionActive)
+                    {
+                        for (int i = 0; i < 16; ++i)
+                        {
+                            VM.DiffusionLittleEndianState[i].Value = null;
+                        }
+                        VM.OnPropertyChanged("DiffusionLittleEndianState");
                     }
                 };
             }
@@ -111,6 +127,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 {
                     VM.OriginalState[i].Value = originalState[i];
                 }
+                if (VM.DiffusionActive)
+                {
+                    uint[] diffusionState = VM.ChaChaVisualization.OriginalStateDiffusion[keystreamBlock];
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.DiffusionOriginalState[i].Value = diffusionState[i];
+                    }
+                    VM.OnPropertyChanged("DiffusionOriginalState");
+                }
             };
         }
 
@@ -124,6 +149,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 {
                     VM.AdditionResultState[i].Value = additionResult[i];
                 }
+                if (VM.DiffusionActive)
+                {
+                    uint[] diffusionState = VM.ChaChaVisualization.AdditionResultStateDiffusion[keystreamBlock];
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.DiffusionAdditionResultState[i].Value = diffusionState[i];
+                    }
+                    VM.OnPropertyChanged("DiffusionAdditionResultState");
+                }
             };
         }
 
@@ -136,6 +170,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 for (int i = 0; i < 16; ++i)
                 {
                     VM.LittleEndianState[i].Value = le[i];
+                }
+                if (VM.DiffusionActive)
+                {
+                    uint[] diffusionState = VM.ChaChaVisualization.LittleEndianStateDiffusion[keystreamBlock];
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.DiffusionLittleEndianState[i].Value = diffusionState[i];
+                    }
+                    VM.OnPropertyChanged("DiffusionLittleEndianState");
                 }
             };
         }
