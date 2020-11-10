@@ -2290,6 +2290,7 @@
                             <Path Data="M 1443,132 h 120" />
                             <Path Canvas.Left="729" Canvas.Top="100" Style="{StaticResource BigAddCircle}" />
                             <Label Canvas.Top="99" Canvas.Left="734" Style="{StaticResource BigAddLabel}" Foreground="{ Binding ElementName=QRAddCircle_0, Path=Stroke}" />
+                            <TextBlock Canvas.Left="1444" Canvas.Top="100" TextAlignment="Center" TextWrapping="Wrap" Text="Reverse bytes" Width="112" FontSize="22" />
                         </Canvas>
                     </Viewbox>
                 </Grid>
