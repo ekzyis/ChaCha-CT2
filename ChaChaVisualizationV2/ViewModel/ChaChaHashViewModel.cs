@@ -1178,35 +1178,31 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region INavigation
 
-        private void AssertEmpty<T>(ObservableCollection<T> list, string name)
+        private void AssertEmptyAndInitialize<T>(ObservableCollection<T> list, string name, int count = 0) where T : new()
         {
             Debug.Assert(list.Count == 0, $"{name} should be empty during ChaCha hash setup.");
+            for (int i = 0; i < count; ++i)
+            {
+                list.Add(new T());
+            }
         }
 
         public override void Setup()
         {
-            AssertEmpty(StateValues, "StateValues");
-            AssertEmpty(DiffusionStateValues, "DiffusionStateValues");
-            AssertEmpty(OriginalState, "OriginalState");
-            AssertEmpty(DiffusionOriginalState, "DiffusionOriginalState");
-            AssertEmpty(AdditionResultState, "AdditionResultState");
-            AssertEmpty(DiffusionAdditionResultState, "DiffusionAdditionResultState");
-            AssertEmpty(LittleEndianState, "LittleEndianState");
-            AssertEmpty(DiffusionLittleEndianState, "DiffusionLittleEndianState");
-            AssertEmpty(QRStep, "QRStep");
-            AssertEmpty(DiffusionQRStep, "DiffusionQRStep");
+            AssertEmptyAndInitialize(StateValues, "StateValues");
+            AssertEmptyAndInitialize(DiffusionStateValues, "DiffusionStateValues", 16);
+            AssertEmptyAndInitialize(OriginalState, "OriginalState", 16);
+            AssertEmptyAndInitialize(DiffusionOriginalState, "DiffusionOriginalState", 16);
+            AssertEmptyAndInitialize(AdditionResultState, "AdditionResultState", 16);
+            AssertEmptyAndInitialize(DiffusionAdditionResultState, "DiffusionAdditionResultState", 16);
+            AssertEmptyAndInitialize(LittleEndianState, "LittleEndianState", 16);
+            AssertEmptyAndInitialize(DiffusionLittleEndianState, "DiffusionLittleEndianState", 16);
+            AssertEmptyAndInitialize(QRStep, "QRStep", 4);
+            AssertEmptyAndInitialize(DiffusionQRStep, "DiffusionQRStep", 4);
             uint[] state = ChaChaVisualization.OriginalState[0];
             for (int i = 0; i < 16; ++i)
             {
                 StateValues.Add(new StateValue(state[i]));
-                OriginalState.Add(new StateValue());
-                AdditionResultState.Add(new StateValue());
-                LittleEndianState.Add(new StateValue());
-            }
-            // There are four steps inside a quarterround. The array indices will be reused between different (quarter)rounds.
-            for (int i = 0; i < 4; ++i)
-            {
-                QRStep.Add(new VisualQRStep());
             }
             // First setup page, then call base setup because action buffer handler may depend on things being setup already.
             base.Setup();
