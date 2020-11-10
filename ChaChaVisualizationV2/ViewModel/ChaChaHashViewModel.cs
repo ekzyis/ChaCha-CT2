@@ -574,6 +574,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private ObservableCollection<StateValue> _diffusionStateValues; public ObservableCollection<StateValue> DiffusionStateValues
+        {
+            get
+            {
+                if (_diffusionStateValues == null) _diffusionStateValues = new ObservableCollection<StateValue>();
+                return _diffusionStateValues;
+            }
+            private set
+            {
+                if (_diffusionStateValues != value)
+                {
+                    _diffusionStateValues = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<VisualQRStep> _qrStep; public ObservableCollection<VisualQRStep> QRStep
         {
             get
@@ -586,6 +603,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_qrStep != value)
                 {
                     _qrStep = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<VisualQRStep> _diffusionQrStep; public ObservableCollection<VisualQRStep> DiffusionQRStep
+        {
+            get
+            {
+                if (_diffusionQrStep == null) _diffusionQrStep = new ObservableCollection<VisualQRStep>();
+                return _diffusionQrStep;
+            }
+            private set
+            {
+                if (_diffusionQrStep != value)
+                {
+                    _diffusionQrStep = value;
                     OnPropertyChanged();
                 }
             }
@@ -608,6 +642,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private ObservableCollection<StateValue> _diffusionOriginalState; public ObservableCollection<StateValue> DiffusionOriginalState
+        {
+            get
+            {
+                if (_diffusionOriginalState == null) _diffusionOriginalState = new ObservableCollection<StateValue>();
+                return _diffusionOriginalState;
+            }
+            private set
+            {
+                if (_diffusionOriginalState != value)
+                {
+                    _diffusionOriginalState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<StateValue> _additionResultState; public ObservableCollection<StateValue> AdditionResultState
         {
             get
@@ -625,6 +676,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private ObservableCollection<StateValue> _diffusionAdditionResultState; public ObservableCollection<StateValue> DiffusionAdditionResultState
+        {
+            get
+            {
+                if (_diffusionAdditionResultState == null) _diffusionAdditionResultState = new ObservableCollection<StateValue>();
+                return _diffusionAdditionResultState;
+            }
+            private set
+            {
+                if (_diffusionAdditionResultState != value)
+                {
+                    _diffusionAdditionResultState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<StateValue> _littleEndianState; public ObservableCollection<StateValue> LittleEndianState
         {
             get
@@ -637,6 +705,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_littleEndianState != value)
                 {
                     _littleEndianState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<StateValue> _diffusionLittleEndianState; public ObservableCollection<StateValue> DiffusionLittleEndianState
+        {
+            get
+            {
+                if (_diffusionLittleEndianState == null) _diffusionLittleEndianState = new ObservableCollection<StateValue>();
+                return _diffusionLittleEndianState;
+            }
+            private set
+            {
+                if (_diffusionLittleEndianState != value)
+                {
+                    _diffusionLittleEndianState = value;
                     OnPropertyChanged();
                 }
             }
