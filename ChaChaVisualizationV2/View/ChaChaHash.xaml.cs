@@ -33,9 +33,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         public void InitUserInputFields()
         {
-            InitKeystreamBlockInput();
-            InitRoundInput();
-            InitQRInput();
+            this.Dispatcher.Invoke(() =>
+            {
+                InitKeystreamBlockInput();
+                InitRoundInput();
+                InitQRInput();
+            });
         }
 
         private void InitKeystreamBlockInput()
