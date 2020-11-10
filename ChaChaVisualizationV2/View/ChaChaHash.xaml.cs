@@ -62,9 +62,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             {
                 HandleDiffusionQROutChange();
             }
-            else if (e.PropertyName == "DiffusionQRStep")
+            else if (e.PropertyName.StartsWith("DiffusionQRStep"))
             {
-                HandleDiffusionQRStepChange();
+                HandleDiffusionQRStepChange(e.PropertyName);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         {
         }
 
-        private void HandleDiffusionQRStepChange()
+        private void HandleDiffusionQRStepChange(string propertyName)
         {
         }
 

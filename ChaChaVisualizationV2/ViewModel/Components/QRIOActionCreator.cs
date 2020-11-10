@@ -59,10 +59,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                         {
                             v.Reset();
                         }
+                        VM.OnPropertyChanged("DiffusionQRIn");
+                        VM.OnPropertyChanged("DiffusionQROut");
                         foreach (VisualQRStep qrStep in VM.DiffusionQRStep)
                         {
                             qrStep.Reset();
                         }
+                        VM.OnPropertyChanged("DiffusionQRStep");
                     }
                 };
             }

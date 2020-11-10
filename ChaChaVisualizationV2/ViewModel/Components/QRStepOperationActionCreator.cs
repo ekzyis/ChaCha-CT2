@@ -83,16 +83,31 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 return () =>
                 {
                     VM.QRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;
+                    if (VM.DiffusionActive)
+                    {
+                        VM.DiffusionQRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStepDiffusion[arrayIndex].Add;
+                        VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].Add");
+                    }
                 };
             else if (Operation == QRStepOperation.XOR)
                 return () =>
                 {
                     VM.QRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStep[arrayIndex].XOR;
+                    if (VM.DiffusionActive)
+                    {
+                        VM.DiffusionQRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStepDiffusion[arrayIndex].XOR;
+                        VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].XOR");
+                    }
                 };
             else if (Operation == QRStepOperation.SHIFT)
                 return () =>
                 {
                     VM.QRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Shift;
+                    if (VM.DiffusionActive)
+                    {
+                        VM.DiffusionQRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStepDiffusion[arrayIndex].Shift;
+                        VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].Shift");
+                    }
                 };
             throw new InvalidOperationException("Could not find a matching QRStepOperation.");
         }
