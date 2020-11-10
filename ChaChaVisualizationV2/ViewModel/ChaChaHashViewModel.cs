@@ -594,8 +594,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             {
                 if (_currentKeystreamBlockIndex != value)
                 {
-                    _currentRoundIndex = value;
-                    CurrentKeystreamBlockIndex = value;
+                    _currentKeystreamBlockIndex = value;
+                    CurrentUserKeystreamBlockIndex = value;
                     OnPropertyChanged();
                 }
             }
