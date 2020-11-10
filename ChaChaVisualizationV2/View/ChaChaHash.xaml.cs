@@ -68,6 +68,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             }
         }
 
+        private void InitOrClearDiffusionValue(RichTextBox rtb, uint? diffusionStateValue, uint? stateValue)
+        {
+            if (diffusionStateValue != null)
+            {
+                Plugins.ChaChaVisualizationV2.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
+            }
+            else
+            {
+                rtb.Document.Blocks.Clear();
+            }
+        }
+
         private void HandleDiffusionStateValuesChange()
         {
             for (int i = 0; i < 16; ++i)
@@ -75,35 +87,87 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
                 RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
                 uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
                 uint? stateValue = ViewModel.StateValues[i].Value;
-                if (diffusionStateValue != null)
-                {
-                    Plugins.ChaChaVisualizationV2.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
-                }
-                else
-                {
-                    rtb.Document.Blocks.Clear();
-                }
+                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
             }
         }
 
         private void HandleDiffusionOriginalStateChange()
         {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)FindName($"DiffusionOriginalState{i}");
+                uint? diffusionStateValue = ViewModel.DiffusionOriginalState[i].Value;
+                uint? stateValue = ViewModel.OriginalState[i].Value;
+                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+            }
         }
 
         private void HandleDiffusionAdditionResultStateChange()
         {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)FindName($"DiffusionAdditionResultState{i}");
+                uint? diffusionStateValue = ViewModel.DiffusionAdditionResultState[i].Value;
+                uint? stateValue = ViewModel.AdditionResultState[i].Value;
+                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+            }
         }
 
         private void HandleDiffusionLittleEndianStateChange()
         {
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)FindName($"DiffusionLittleEndianState{i}");
+                uint? diffusionStateValue = ViewModel.DiffusionLittleEndianState[i].Value;
+                uint? stateValue = ViewModel.LittleEndianState[i].Value;
+                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+            }
         }
 
         private void HandleDiffusionQRInChange()
         {
+            RichTextBox rtbA = (RichTextBox)FindName($"QRInADiffusion");
+            uint? diffusionStateValueA = ViewModel.DiffusionQRInA.Value;
+            uint? stateValueA = ViewModel.QRInA.Value;
+            InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
+
+            RichTextBox rtbB = (RichTextBox)FindName($"QRInADiffusion");
+            uint? diffusionStateValueB = ViewModel.DiffusionQRInB.Value;
+            uint? stateValueB = ViewModel.QRInB.Value;
+            InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
+
+            RichTextBox rtbC = (RichTextBox)FindName($"QRInADiffusion");
+            uint? diffusionStateValueC = ViewModel.DiffusionQRInC.Value;
+            uint? stateValueC = ViewModel.QRInC.Value;
+            InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
+
+            RichTextBox rtbD = (RichTextBox)FindName($"QRInADiffusion");
+            uint? diffusionStateValueD = ViewModel.DiffusionQRInD.Value;
+            uint? stateValueD = ViewModel.QRInD.Value;
+            InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
         }
 
         private void HandleDiffusionQROutChange()
         {
+            RichTextBox rtbA = (RichTextBox)FindName($"QROutADiffusion");
+            uint? diffusionStateValueA = ViewModel.DiffusionQROutA.Value;
+            uint? stateValueA = ViewModel.QROutA.Value;
+            InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
+
+            RichTextBox rtbB = (RichTextBox)FindName($"QROutADiffusion");
+            uint? diffusionStateValueB = ViewModel.DiffusionQROutB.Value;
+            uint? stateValueB = ViewModel.QROutB.Value;
+            InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
+
+            RichTextBox rtbC = (RichTextBox)FindName($"QROutADiffusion");
+            uint? diffusionStateValueC = ViewModel.DiffusionQROutC.Value;
+            uint? stateValueC = ViewModel.QROutC.Value;
+            InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
+
+            RichTextBox rtbD = (RichTextBox)FindName($"QROutADiffusion");
+            uint? diffusionStateValueD = ViewModel.DiffusionQROutD.Value;
+            uint? stateValueD = ViewModel.QROutD.Value;
+            InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
         }
 
         private void HandleDiffusionQRStepChange(string propertyName)
