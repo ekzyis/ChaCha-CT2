@@ -29,6 +29,16 @@
 
             <!-- #region Top Row -->
             <Grid Grid.Row="0">
+                <Grid.Visibility>
+                    <Binding Path="RoundsStep">
+                        <Binding.Converter>
+                            <conv:SequentialValueConverter>
+                                <conv:Invert />
+                                <BooleanToVisibilityConverter />
+                            </conv:SequentialValueConverter>
+                        </Binding.Converter>
+                    </Binding>
+                </Grid.Visibility>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
