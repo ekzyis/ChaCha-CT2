@@ -45,6 +45,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
 
         #region ChaCha Override
 
+        public override void Execute()
+        {
+            ClearIntermediateResults();
+            base.Execute();
+        }
+
         protected override void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
         {
             // calculate total keystream blocks needed
@@ -109,6 +115,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         #endregion ChaCha Override
 
         #region Intermediate values from cipher execution
+
+        private void ClearIntermediateResults()
+        {
+            OriginalState.Clear();
+            QRInput.Clear();
+            QRStep.Clear();
+            QROutput.Clear();
+        }
 
         private List<uint[]> _state; public List<uint[]> OriginalState
         {

@@ -435,7 +435,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
-        public void Execute()
+        public virtual void Execute()
         {
             ProgressChanged(0, 1);
 
