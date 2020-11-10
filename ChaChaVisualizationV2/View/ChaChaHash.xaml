@@ -1283,6 +1283,7 @@
                                                                     <MultiBinding Converter="{StaticResource BooleanOr}">
                                                                         <Binding Path="QRStep[3].Add.Mark" />
                                                                         <Binding Path="QROutC.MarkInput" />
+                                                                        <Binding Path="QRStep[3].XOR.MarkInput" />
                                                                     </MultiBinding>
                                                                 </DataTrigger.Binding>
                                                                 <Setter Property="Background" Value="AliceBlue" />
