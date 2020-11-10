@@ -70,6 +70,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             base.ChaChaHash(ref state, rounds);
         }
 
+        protected override void AdditionStep(ref uint[] state, uint[] originalState)
+        {
+            base.AdditionStep(ref state, originalState);
+            AdditionResultState.Add(state);
+        }
+
+        protected override void LittleEndianStep(ref uint[] state)
+        {
+            base.LittleEndianStep(ref state);
+            LittleEndianState.Add(state);
+        }
+
         protected override (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
             QRInput.Add((a, b, c, d));
@@ -130,6 +142,24 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             {
                 if (_state == null) _state = new List<uint[]>();
                 return _state;
+            }
+        }
+
+        private List<uint[]> _additionResultState; public List<uint[]> AdditionResultState
+        {
+            get
+            {
+                if (_additionResultState == null) _additionResultState = new List<uint[]>();
+                return _additionResultState;
+            }
+        }
+
+        private List<uint[]> _littleEndianState; public List<uint[]> LittleEndianState
+        {
+            get
+            {
+                if (_littleEndianState == null) _littleEndianState = new List<uint[]>();
+                return _littleEndianState;
             }
         }
 

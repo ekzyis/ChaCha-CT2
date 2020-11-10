@@ -6,7 +6,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
     /// A helper class which creates the input and output actions for the quarterround visualization
     /// for the given round.
     /// </summary>
-    internal class QRIOActionCreator : QRActionCreator
+    internal class QRIOActionCreator : ChaChaHashActionCreator
     {
         /// <summary>
         /// Creates an instance to help with quarterround input action creation for the given round.

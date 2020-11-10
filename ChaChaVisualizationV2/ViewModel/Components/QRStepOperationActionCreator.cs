@@ -18,7 +18,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
     /// Quarterround:    QR 1                        QR 2
     /// Round:           Round 1
     /// </summary>
-    internal class QRStepOperationActionCreator : QRActionCreator
+    internal class QRStepOperationActionCreator : ChaChaHashActionCreator
     {
         protected enum QRStepOperation
         {

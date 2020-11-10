@@ -47,11 +47,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             QRAdditionActionCreator qrAdd = new QRAdditionActionCreator(this);
             QRXORActionCreator qrXOR = new QRXORActionCreator(this);
             QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
+            StateActionCreator stateActions = new StateActionCreator(this);
             // ChaCha Hash sequence
             ActionCreator.StartSequence();
 
             ExtendLastAction(() => { CurrentKeystreamBlockIndex = null; });
-
+            ExtendLastAction(() => { RoundsStep = true; });
             for (int keystreamBlock = 0; keystreamBlock < ChaChaVisualization.TotalKeystreamBlocks; ++keystreamBlock)
             {
                 // Keystream Block sequence
@@ -67,6 +68,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 {
                     InsertOriginalState(localKeystreamBlock);
                     CurrentKeystreamBlockIndex = localKeystreamBlock;
+                    RoundsStep = true;
                 });
                 // Add empty action if this is not the very first action because ActionViewModelBase
                 // has already added an empty action at the very beginning.
@@ -186,6 +188,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         qrIO.UpdateState(keystreamBlock, round, 3)
                         .Extend(qrIO.UpdateState(keystreamBlock, round, 2), qrIO.UpdateState(keystreamBlock, round, 1), qrIO.UpdateState(keystreamBlock, round, 0)));
                 }
+
+                // Addition + little-endian step
+                ActionCreator.StartSequence();
+
+                Seq(() => { RoundsStep = false; });
+                Seq(() => stateActions.ShowOriginalState(localKeystreamBlock));
+                Seq(() => stateActions.ShowAdditionResultState(localKeystreamBlock));
+                Seq(() => stateActions.ShowLittleEndianState(localKeystreamBlock));
+
+                ActionCreator.EndSequence();
 
                 // End keystraem block sequence
                 ActionCreator.EndSequence();
@@ -609,6 +621,57 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 if (_qrStep != value)
                 {
                     _qrStep = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<StateValue> _originalState; public ObservableCollection<StateValue> OriginalState
+        {
+            get
+            {
+                if (_originalState == null) _originalState = new ObservableCollection<StateValue>();
+                return _originalState;
+            }
+            private set
+            {
+                if (_originalState != value)
+                {
+                    _originalState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<StateValue> _additionResultState; public ObservableCollection<StateValue> AdditionResultState
+        {
+            get
+            {
+                if (_additionResultState == null) _additionResultState = new ObservableCollection<StateValue>();
+                return _additionResultState;
+            }
+            private set
+            {
+                if (_additionResultState != value)
+                {
+                    _additionResultState = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<StateValue> _littleEndianState; public ObservableCollection<StateValue> LittleEndianState
+        {
+            get
+            {
+                if (_littleEndianState == null) _littleEndianState = new ObservableCollection<StateValue>();
+                return _littleEndianState;
+            }
+            private set
+            {
+                if (_littleEndianState != value)
+                {
+                    _littleEndianState = value;
                     OnPropertyChanged();
                 }
             }
@@ -1068,10 +1131,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public override void Setup()
         {
             Debug.Assert(StateValues.Count == 0, "StateValues should be empty during ChaCha hash setup.");
+            Debug.Assert(OriginalState.Count == 0, "OriginalState should be empty during ChaCha hash setup.");
+            Debug.Assert(AdditionResultState.Count == 0, "AdditionState should be empty during ChaCha hash setup.");
+            Debug.Assert(LittleEndianState.Count == 0, "LittleEndianState should be empty during ChaCha hash setup.");
             uint[] state = ChaChaVisualization.OriginalState[0];
-            for (int i = 0; i < state.Length; ++i)
+            for (int i = 0; i < 16; ++i)
             {
                 StateValues.Add(new StateValue(state[i]));
+                OriginalState.Add(new StateValue());
+                AdditionResultState.Add(new StateValue());
+                LittleEndianState.Add(new StateValue());
             }
             Debug.Assert(QRStep.Count == 0, "QRStep should be empty during ChaCha hash setup.");
             // There are four steps inside a quarterround. The array indices will be reused between different (quarter)rounds.
@@ -1089,6 +1158,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Clear lists to undo Setup.
             StateValues.Clear();
             QRStep.Clear();
+            OriginalState.Clear();
+            AdditionResultState.Clear();
+            LittleEndianState.Clear();
         }
 
         #endregion INavigation

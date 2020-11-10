@@ -3,12 +3,12 @@
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 {
     /// <summary>
-    /// Base class for all QR action creators.
+    /// Base class for all ChaCha Hash action creators.
     /// Implements the MapIndex method and argument validation.
     /// </summary>
-    internal abstract class QRActionCreator
+    internal abstract class ChaChaHashActionCreator
     {
-        protected QRActionCreator(ChaChaHashViewModel viewModel)
+        protected ChaChaHashActionCreator(ChaChaHashViewModel viewModel)
         {
             VM = viewModel;
         }
@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 
         /// <summary>
         /// The "big brain" method.
-        /// Return the array index to access to correct QRStep instance.
+        /// Return the array index to access the correct QRStep instance.
         /// </summary>
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
@@ -67,7 +67,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 
         /// <summary>
         /// The "big brain" method.
-        /// Return the array index to access the correct QRInput/QROutput.
+        /// Return the array index to access the correct QRInput/QROutput instance.
         /// </summary
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>

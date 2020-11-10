@@ -362,12 +362,27 @@ namespace Cryptool.Plugins.ChaCha
                 Quarterround(ref state, 3, 4, 9, 14);
             }
 
-            // add states and reverse byte order of each UInt32
+            AdditionStep(ref state, originalState);
+
+            LittleEndianStep(ref state);
+        }
+
+        /// <summary>
+        /// Add the two 512-bit states together.
+        /// </summary>
+        protected virtual void AdditionStep(ref uint[] state, uint[] originalState)
+        {
             for (int i = 0; i < 16; ++i)
             {
                 state[i] += originalState[i];
             }
-            // reverse byte order of each UInt32
+        }
+
+        /// <summary>
+        /// Reverse byte order of each UInt32.
+        /// </summary>
+        protected virtual void LittleEndianStep(ref uint[] state)
+        {
             for (int i = 0; i < 16; ++i)
             {
                 state[i] = ByteUtil.ToUInt32LE(state[i]);
