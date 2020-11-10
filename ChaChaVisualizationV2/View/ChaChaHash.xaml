@@ -1491,7 +1491,7 @@
                 <!--#endregion-->
 
                 <Border Style="{StaticResource MatrixVisualizationBorder}" Grid.Row="0" Grid.Column="0">
-                    <Grid Name="AdditionMatrix">
+                    <Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
                             <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
@@ -1793,7 +1793,7 @@
                 </Border>
 
                 <Border Style="{StaticResource MatrixVisualizationBorder}" Grid.Row="0" Grid.Column="1">
-                    <Grid Name="AdditionResultMatrix">
+                    <Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
                             <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
@@ -2095,7 +2095,7 @@
                 </Border>
 
                 <Border Style="{StaticResource MatrixVisualizationBorder}" Grid.Row="0" Grid.Column="2">
-                    <Grid Name="LittleEndianMatrix">
+                    <Grid>
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
                             <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
