@@ -370,6 +370,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             StartActionBufferHandler(50);
             // Setup actions when navigating to page to have the newest inputs.
             // Fix for TotalKeystreamBlocks = 0 when initializing actions in ctor.
+            // TODO check if actions have already been initialized or if they need to be reinitialized.
             InitActions();
         }
 
