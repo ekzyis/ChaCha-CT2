@@ -27,17 +27,19 @@
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="50*" />
+                <RowDefinition Height="8*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <!--#region  State Matrix -->
 
-            <Border Style="{StaticResource StateBorder}" Grid.Row="0" Grid.Column="0">
+            <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="0">
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}">
@@ -269,7 +271,7 @@
 
             <!--#region  Description -->
 
-            <Grid Grid.Row="0" Grid.Column="1" Name="DescriptionRoot">
+            <Grid Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Name="DescriptionRoot">
                 <Viewbox Style="{StaticResource UniformViewbox}">
                     <Viewbox.Resources>
                         <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichText}">
@@ -334,7 +336,7 @@
 
             <!--#region  State parameters -->
 
-            <Viewbox Grid.Row="1" Grid.Column="1">
+            <Viewbox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
                 <Grid>
                     <Grid.Resources>
                         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
@@ -436,7 +438,7 @@
                         <Setter Property="Margin" Value="0" />
                     </Style>
                     <Style TargetType="{x:Type StackPanel}" x:Key="ValuePanel">
-                        <Setter Property="Margin" Value="10"/>
+                        <Setter Property="Margin" Value="10" />
                     </Style>
                 </Grid.Resources>
 
