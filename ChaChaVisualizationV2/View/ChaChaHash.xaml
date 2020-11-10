@@ -431,7 +431,7 @@
                         </Style>
                         <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource UniformViewbox}" />
                     </Viewbox.Resources>
-                    <Canvas Width="1500" Height="260" Grid.Row="1">
+                    <Canvas Width="1500" Height="260">
                         <Canvas Canvas.Top="20">
                             <!-- Input cells -->
                             <Border Canvas.Left="00" Canvas.Top="0" Name="QRInABorder">
