@@ -1005,6 +1005,126 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        #region DiffusionQRInX
+
+        private QRValue _diffusionQrInA; public QRValue DiffusionQRInA
+        {
+            get
+            {
+                if (_diffusionQrInA == null) _diffusionQrInA = new QRValue();
+                return _diffusionQrInA;
+            }
+            set
+            {
+                _diffusionQrInA = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _diffusionQrInB; public QRValue DiffusionQRInB
+        {
+            get
+            {
+                if (_diffusionQrInB == null) _diffusionQrInB = new QRValue();
+                return _diffusionQrInB;
+            }
+            set
+            {
+                _diffusionQrInB = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _diffusionQrInC; public QRValue DiffusionQRInC
+        {
+            get
+            {
+                if (_diffusionQrInC == null) _diffusionQrInC = new QRValue();
+                return _diffusionQrInC;
+            }
+            set
+            {
+                _diffusionQrInC = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _diffusionQrInD; public QRValue DiffusionQRInD
+        {
+            get
+            {
+                if (_diffusionQrInD == null) _diffusionQrInD = new QRValue();
+                return _diffusionQrInD;
+            }
+            set
+            {
+                _diffusionQrInD = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion DiffusionQRInX
+
+        #region DiffusionQROutX
+
+        private QRValue _diffusionQrOutA; public QRValue DiffusionQROutA
+        {
+            get
+            {
+                if (_diffusionQrOutA == null) _diffusionQrOutA = new QRValue();
+                return _diffusionQrOutA;
+            }
+            set
+            {
+                _diffusionQrOutA = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _diffusionqrOutB; public QRValue DiffusionQROutB
+        {
+            get
+            {
+                if (_diffusionqrOutB == null) _diffusionqrOutB = new QRValue();
+                return _diffusionqrOutB;
+            }
+            set
+            {
+                _diffusionqrOutB = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _diffusionQrOutC; public QRValue DiffusionQROutC
+        {
+            get
+            {
+                if (_diffusionQrOutC == null) _diffusionQrOutC = new QRValue();
+                return _diffusionQrOutC;
+            }
+            set
+            {
+                _diffusionQrOutC = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private QRValue _diffusionQrOutD; public QRValue DiffusionQROutD
+        {
+            get
+            {
+                if (_diffusionQrOutD == null) _diffusionQrOutD = new QRValue();
+                return _diffusionQrOutD;
+            }
+            set
+            {
+                _diffusionQrOutD = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion DiffusionQROutX
+
         #endregion Binding Properties (Diffusion)
 
         #region IActionTag
