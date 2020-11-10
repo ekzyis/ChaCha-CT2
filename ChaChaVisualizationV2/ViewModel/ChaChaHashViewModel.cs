@@ -212,7 +212,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                return CurrentRoundIndex == null ? true : CurrentRoundIndex < Settings.Rounds - 1;
+                return CurrentRoundIndex == null || CurrentRoundIndex < Settings.Rounds - 1;
             }
         }
 
@@ -306,7 +306,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             get
             {
-                return CanNextRound || (CurrentQRIndex == null ? true : CurrentQRIndex < 3);
+                return CanNextRound || CurrentQRIndex == null || CurrentQRIndex < 3;
             }
         }
 
