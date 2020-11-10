@@ -2306,9 +2306,14 @@
 
                 <Grid Grid.ColumnSpan="2">
                     <Viewbox Style="{StaticResource UniformViewbox}">
+                        <Viewbox.Resources>
+                            <Style TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
+                                <Setter Property="StrokeThickness" Value="5" />
+                            </Style>
+                        </Viewbox.Resources>
                         <Canvas Width="1500" Height="260">
-                            <Path Style="{StaticResource DefaultPath}" Data="M 690,132 h 120 h -60 v -553 h -60" StrokeThickness="5" />
-                            <Path Style="{StaticResource DefaultPath}" Data="M 1443,132 h 120" StrokeThickness="5" />
+                            <Path Data="M 690,132 h 120 h -60 v -553 h -60" />
+                            <Path Data="M 1443,132 h 120" />
                         </Canvas>
                     </Viewbox>
                 </Grid>
