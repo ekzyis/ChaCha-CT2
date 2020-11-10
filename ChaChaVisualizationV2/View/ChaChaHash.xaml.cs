@@ -1,6 +1,5 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
-using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -37,7 +36,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private void OnViewModelPropertyChange(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine("HUAAH RANGERS");
+            if (e.PropertyName != "DiffusionStateValues") return;
+            for (int i = 0; i < 16; ++i)
+            {
+                RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i}");
+                Plugins.ChaChaVisualizationV2.ViewModel.Components.Diffusion.InitDiffusionValue(
+                    rtb, (uint)ViewModel.DiffusionStateValues[i].Value, (uint)ViewModel.StateValues[i].Value
+                );
+            }
         }
 
         private void InitKeystreamBlockInput()

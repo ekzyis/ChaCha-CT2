@@ -21,6 +21,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         }
 
         /// <summary>
+        /// Set the Document of the RichTextBox with the diffusion value as hex string; using byte array for comparison; marking differences red.
+        /// </summary>
+        public static void InitDiffusionValue(RichTextBox rtb, uint diffusion, uint primary)
+        {
+            string dHex = Formatter.HexString(diffusion);
+            string pHex = Formatter.HexString(primary);
+            InitDiffusionValue(rtb, dHex, pHex);
+        }
+
+        /// <summary>
         /// Set the document of the RichTextBox with the diffusion value as hex string; using strings for comparison; marking differences red.
         /// </summary>
         public static void InitDiffusionValue(RichTextBox rtb, string dHex, string pHex)
