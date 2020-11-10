@@ -480,7 +480,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInA.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInADiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQRInA" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -504,7 +504,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInB.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInBDiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQRInB" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -527,7 +527,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInC.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInCDiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQRInC" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -550,7 +550,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QRInD.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QRInDDiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQRInD" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -568,7 +568,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutA.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutADiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQROutA" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -585,7 +585,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutB.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutBDiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQROutB" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -602,7 +602,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutC.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutCDiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQROutC" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>
@@ -619,7 +619,7 @@
                                     <Viewbox>
                                         <StackPanel>
                                             <TextBox Style="{StaticResource QRValue}" Text="{Binding QROutD.Value, Converter={StaticResource UInt32ToHex}}" />
-                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="QROutDDiffusion" />
+                                            <RichTextBox Style="{StaticResource QRDiffusionValue}" Name="DiffusionQROutD" />
                                         </StackPanel>
                                     </Viewbox>
                                 </Border>

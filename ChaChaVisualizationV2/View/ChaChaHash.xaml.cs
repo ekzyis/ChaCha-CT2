@@ -130,22 +130,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private void HandleDiffusionQRInChange()
         {
-            RichTextBox rtbA = (RichTextBox)FindName($"QRInADiffusion");
+            RichTextBox rtbA = (RichTextBox)FindName($"DiffusionQRInA");
             uint? diffusionStateValueA = ViewModel.DiffusionQRInA.Value;
             uint? stateValueA = ViewModel.QRInA.Value;
             InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
 
-            RichTextBox rtbB = (RichTextBox)FindName($"QRInADiffusion");
+            RichTextBox rtbB = (RichTextBox)FindName($"DiffusionQRInB");
             uint? diffusionStateValueB = ViewModel.DiffusionQRInB.Value;
             uint? stateValueB = ViewModel.QRInB.Value;
             InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
 
-            RichTextBox rtbC = (RichTextBox)FindName($"QRInADiffusion");
+            RichTextBox rtbC = (RichTextBox)FindName($"DiffusionQRInC");
             uint? diffusionStateValueC = ViewModel.DiffusionQRInC.Value;
             uint? stateValueC = ViewModel.QRInC.Value;
             InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
 
-            RichTextBox rtbD = (RichTextBox)FindName($"QRInADiffusion");
+            RichTextBox rtbD = (RichTextBox)FindName($"DiffusionQRInD");
             uint? diffusionStateValueD = ViewModel.DiffusionQRInD.Value;
             uint? stateValueD = ViewModel.QRInD.Value;
             InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
@@ -153,22 +153,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private void HandleDiffusionQROutChange()
         {
-            RichTextBox rtbA = (RichTextBox)FindName($"QROutADiffusion");
+            RichTextBox rtbA = (RichTextBox)FindName($"DiffusionQROutA");
             uint? diffusionStateValueA = ViewModel.DiffusionQROutA.Value;
             uint? stateValueA = ViewModel.QROutA.Value;
             InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
 
-            RichTextBox rtbB = (RichTextBox)FindName($"QROutADiffusion");
+            RichTextBox rtbB = (RichTextBox)FindName($"DiffusionQROutB");
             uint? diffusionStateValueB = ViewModel.DiffusionQROutB.Value;
             uint? stateValueB = ViewModel.QROutB.Value;
             InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
 
-            RichTextBox rtbC = (RichTextBox)FindName($"QROutADiffusion");
+            RichTextBox rtbC = (RichTextBox)FindName($"DiffusionQROutC");
             uint? diffusionStateValueC = ViewModel.DiffusionQROutC.Value;
             uint? stateValueC = ViewModel.QROutC.Value;
             InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
 
-            RichTextBox rtbD = (RichTextBox)FindName($"QROutADiffusion");
+            RichTextBox rtbD = (RichTextBox)FindName($"DiffusionQROutD");
             uint? diffusionStateValueD = ViewModel.DiffusionQROutD.Value;
             uint? stateValueD = ViewModel.QROutD.Value;
             InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
