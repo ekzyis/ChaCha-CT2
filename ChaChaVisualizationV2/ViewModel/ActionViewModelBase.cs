@@ -23,7 +23,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             CurrentActionIndex = 0;
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
-            InitActions();
         }
 
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
@@ -369,6 +368,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public virtual void Setup()
         {
             StartActionBufferHandler(50);
+            // Setup actions when navigating to page to have the newest inputs.
+            // Fix for TotalKeystreamBlocks = 0 when initializing actions in ctor.
+            InitActions();
         }
 
         public virtual void Teardown()
