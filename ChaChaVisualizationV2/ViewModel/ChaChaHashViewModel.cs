@@ -1186,10 +1186,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public override void Setup()
         {
             AssertEmpty(StateValues, "StateValues");
+            AssertEmpty(DiffusionStateValues, "DiffusionStateValues");
             AssertEmpty(OriginalState, "OriginalState");
+            AssertEmpty(DiffusionOriginalState, "DiffusionOriginalState");
             AssertEmpty(AdditionResultState, "AdditionResultState");
+            AssertEmpty(DiffusionAdditionResultState, "DiffusionAdditionResultState");
             AssertEmpty(LittleEndianState, "LittleEndianState");
+            AssertEmpty(DiffusionLittleEndianState, "DiffusionLittleEndianState");
             AssertEmpty(QRStep, "QRStep");
+            AssertEmpty(DiffusionQRStep, "DiffusionQRStep");
             uint[] state = ChaChaVisualization.OriginalState[0];
             for (int i = 0; i < 16; ++i)
             {
