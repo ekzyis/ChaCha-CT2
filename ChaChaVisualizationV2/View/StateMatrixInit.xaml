@@ -431,6 +431,13 @@
                         <Setter Property="HorizontalAlignment" Value="Center" />
                         <Setter Property="Margin" Value="10" />
                     </Style>
+                    <Style TargetType="{x:Type TextBox}" x:Key="PanelValue" BasedOn="{StaticResource Hex}">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Margin" Value="0" />
+                    </Style>
+                    <Style TargetType="{x:Type StackPanel}" x:Key="ValuePanel">
+                        <Setter Property="Margin" Value="10"/>
+                    </Style>
                 </Grid.Resources>
 
                 <!--#region Constants encoding -->
@@ -528,9 +535,9 @@
                         <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
-                        <StackPanel Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
                             <TextBox Name="TextBox_KeyEncodingInput"
-                                     Style="{StaticResource Value}"
+                                     Style="{StaticResource PanelValue}"
                                      Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
                             <RichTextBox
                                 Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
@@ -539,8 +546,8 @@
                                 Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="1" Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1" Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <Binding Path="ChaCha.InputKey" Mode="OneWay">
                                         <Binding.Converter>
@@ -560,8 +567,8 @@
                             </RichTextBox>
                         </StackPanel>
 
-                        <StackPanel Grid.Row="3" Grid.Column="1" Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1" Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <Binding Path="ChaCha.InputKey" Mode="OneWay">
                                         <Binding.Converter>
@@ -606,9 +613,9 @@
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
                         <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
-                        <StackPanel Grid.Row="1" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
                                         <Binding Path="ChaCha.InitialCounter" />
@@ -619,9 +626,9 @@
                             <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingReverse, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <MultiBinding Mode="OneWay">
                                         <Binding Path="ChaCha.InitialCounter" />
@@ -639,9 +646,9 @@
                             <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="3" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <MultiBinding Mode="OneWay">
                                         <Binding Path="ChaCha.InitialCounter" />
@@ -660,9 +667,9 @@
                             <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="4" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="4" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <MultiBinding Mode="OneWay">
                                         <Binding Path="ChaCha.InitialCounter" />
@@ -705,16 +712,16 @@
                         <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
-                        <StackPanel Grid.Row="1" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding IVEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}"
+                            <TextBox Style="{StaticResource PanelValue}"
                                      Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
                             <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="2" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1"
                                     Visibility="{Binding IVEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <Binding Path="ChaCha.InputIV" Mode="OneWay">
                                         <Binding.Converter>
@@ -729,9 +736,9 @@
                             <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
 
-                        <StackPanel Grid.Row="3" Grid.Column="1"
+                        <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1"
                                     Visibility="{Binding IVEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource Value}">
+                            <TextBox Style="{StaticResource PanelValue}">
                                 <TextBox.Text>
                                     <Binding Path="ChaCha.InputIV" Mode="OneWay">
                                         <Binding.Converter>
