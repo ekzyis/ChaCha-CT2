@@ -25,6 +25,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             CurrentPage = Pages[0];
         }
 
+        /// <summary>
+        /// This is called if a property on the plugin has changed.
+        /// </summary>
         private void OnPluginPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged("NavigationEnabled");
