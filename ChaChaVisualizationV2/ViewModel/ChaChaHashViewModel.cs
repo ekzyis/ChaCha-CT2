@@ -195,6 +195,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
                 // Addition + little-endian step
                 ActionCreator.StartSequence();
+                // Base extension.
+                ActionCreator.Sequential(() =>
+                {
+                    stateActions.HideOriginalState();
+                    stateActions.HideAdditionResult();
+                    stateActions.HideLittleEndian();
+                });
 
                 Seq(() => { RoundsStep = false; });
                 Seq(stateActions.ShowOriginalState(localKeystreamBlock));

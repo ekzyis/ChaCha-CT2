@@ -11,6 +11,48 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
         }
 
+        public Action HideOriginalState
+        {
+            get
+            {
+                return () =>
+                {
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.OriginalState[i].Value = null;
+                    }
+                };
+            }
+        }
+
+        public Action HideAdditionResult
+        {
+            get
+            {
+                return () =>
+                {
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.AdditionResultState[i].Value = null;
+                    }
+                };
+            }
+        }
+
+        public Action HideLittleEndian
+        {
+            get
+            {
+                return () =>
+                {
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.LittleEndianState[i].Value = null;
+                    }
+                };
+            }
+        }
+
         public Action ShowOriginalState(int keystreamBlock)
         {
             return () =>
