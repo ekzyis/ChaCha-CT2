@@ -87,11 +87,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <summary>
         /// Action which inserts the QR input values into the QR input boxes.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
-        public Action InsertQRInputs(int round, int qr)
+        public Action InsertQRInputs(int keystreamBlock, int round, int qr)
         {
-            int arrayIndex = MapIndex(round, qr);
+            int arrayIndex = MapIndex(keystreamBlock, round, qr);
             return () => (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[arrayIndex];
         }
 
@@ -132,21 +133,24 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <summary>
         /// Action which inserts the QR output values into the QR output boxes.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
-        public Action InsertQROutputs(int round, int qr)
+        public Action InsertQROutputs(int keystreamBlock, int round, int qr)
         {
-            int arrayIndex = MapIndex(round, qr);
+            int arrayIndex = MapIndex(keystreamBlock, round, qr);
             return () => (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
         }
 
         /// <summary>
         /// Update the state values with the result from the quarterround of the round.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
-        public Action UpdateState(int round, int qr)
+        public Action UpdateState(int keystreamBlock, int round, int qr)
         {
-            int arrayIndex = MapIndex(round, qr);
+            int arrayIndex = MapIndex(keystreamBlock, round, qr);
             return () =>
             {
                 (uint a, uint b, uint c, uint d) = VM.ChaChaVisualization.QROutput[arrayIndex];

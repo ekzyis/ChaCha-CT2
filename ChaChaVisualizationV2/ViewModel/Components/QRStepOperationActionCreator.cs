@@ -72,12 +72,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// <summary>
         /// Action which inserts the result for the step operation.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
         /// <param name="qrStep">Zero-based quarterround step index.</param>
-        public Action Insert(int round, int qr, int qrStep)
+        public Action Insert(int keystreamBlock, int round, int qr, int qrStep)
         {
-            int arrayIndex = MapIndex(round, qr, qrStep);
+            int arrayIndex = MapIndex(keystreamBlock, round, qr, qrStep);
             if (Operation == QRStepOperation.ADD)
                 return () =>
                 {

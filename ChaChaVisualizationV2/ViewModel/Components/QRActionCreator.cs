@@ -6,7 +6,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
     /// Base class for all QR action creators.
     /// Implements the MapIndex method and argument validation.
     /// </summary>
-    abstract class QRActionCreator
+    internal abstract class QRActionCreator
     {
         protected QRActionCreator(ChaChaHashViewModel viewModel)
         {
@@ -14,6 +14,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         }
 
         protected ChaChaHashViewModel VM { get; private set; }
+
+        protected void AssertKeystreamBlockInput(int keystreamBlock)
+        {
+            int maxKeystreamBlock = VM.ChaChaVisualization.TotalKeystreamBlocks - 1;
+            if (keystreamBlock < 0 || keystreamBlock > maxKeystreamBlock)
+            {
+                throw new ArgumentOutOfRangeException("keystreamBlock", $"keystreamBlock must be between 0 and {maxKeystreamBlock}. Received {keystreamBlock}.");
+            }
+        }
 
         protected void AssertRoundInput(int round)
         {
@@ -36,31 +45,43 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         /// The "big brain" method.
         /// Return the array index to access to correct QRStep instance.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
         /// <param name="qrStep">Zero-based quarterround step index.</param>
-        protected int MapIndex(int round, int qr, int qrStep)
+        protected int MapIndex(int keystreamBlock, int round, int qr, int qrStep)
         {
+            AssertKeystreamBlockInput(keystreamBlock);
             AssertRoundInput(qr);
             AssertQRInput(qr);
             AssertQRStepInput(qrStep);
+            // For every round, we need to skip 16 * Settings.Rounds steps
             // For every round, we need to skip 16 steps.
             // For every quarterround, we need to skip 4 steps.
-            return round * 16 + qr * 4 + qrStep;
+            return
+                keystreamBlock * VM.Settings.Rounds * 16
+                + round * 16
+                + qr * 4
+                + qrStep;
         }
 
         /// <summary>
         /// The "big brain" method.
-        /// Return the array index to acess the correct QRInput/QROutput.
-        /// </summary>
+        /// Return the array index to access the correct QRInput/QROutput.
+        /// </summary
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based quarterround index.</param>
-        protected int MapIndex(int round, int qr)
+        protected int MapIndex(int keystreamBlock, int round, int qr)
         {
             AssertRoundInput(qr);
             AssertQRInput(qr);
+            // For every keystream block, we need to skip 4 * Settings.Rounds quarterrounds
             // For every round, we need to skip 4 quarterrounds.
-            return round * 4 + qr;
+            return
+                keystreamBlock * VM.Settings.Rounds * 4
+                + round * 4
+                + qr;
         }
     }
 }

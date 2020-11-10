@@ -26,9 +26,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             {
                 ActionViewBase.AddEventHandlers(ViewModel, Root);
 
+                InitKeystreamBlockInput();
                 InitRoundInput();
                 InitQRInput();
             }
+        }
+
+        private void InitKeystreamBlockInput()
+        {
+            TextBox keystreamBlockInput = (TextBox)this.FindName("KeystreamBlockInput");
+            int maxKeystreamBlock = ViewModel.ChaChaVisualization.TotalKeystreamBlocks;
+            Binding binding = new Binding("CurrentKeystreamBlockIndex")
+            {
+                Mode = BindingMode.TwoWay,
+                Converter = new ZeroBasedIndexToOneBasedIndex(),
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+            };
+            ActionViewBase.InitUserInputField(keystreamBlockInput, binding, 1, maxKeystreamBlock, ViewModel.KeystreamBlockInputHandler);
         }
 
         private void InitRoundInput()

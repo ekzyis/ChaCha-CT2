@@ -47,115 +47,133 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             QRAdditionActionCreator qrAdd = new QRAdditionActionCreator(this);
             QRXORActionCreator qrXOR = new QRXORActionCreator(this);
             QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
-
             // ChaCha Hash sequence
             ActionCreator.StartSequence();
 
-            // Extend the first action which was added by the base class.
-            ExtendAction(0, () => { CurrentRoundIndex = null; });
-            ExtendAction(0, () => { CurrentQRIndex = null; });
+            ExtendLastAction(() => { CurrentKeystreamBlockIndex = null; });
 
-            for (int round = 0; round < Settings.Rounds; ++round)
+            for (int keystreamBlock = 0; keystreamBlock < ChaChaVisualization.TotalKeystreamBlocks; ++keystreamBlock)
             {
-                // round sequence
+                // Keystream Block sequence
                 ActionCreator.StartSequence();
-                // Set a sequence base extension for round sequence.
-                // All further actions will now extend this action.
-                int localRound = round; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
-                ActionCreator.Sequential(() => { CurrentRoundIndex = localRound; });
+                int localKeystreamBlock = keystreamBlock; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
+                ExtendLastAction(() => { CurrentKeystreamBlockIndex = localKeystreamBlock; });
+                // The very first action which is empty was added by ActionViewModelBase.
+                // Thus the first action of every next keystream block, we add a empty action ourselves.
+                if (keystreamBlock != 0) Actions.Add(() => { });
 
-                for (int qr = 0; qr < 4; ++qr)
+                // Extend the first action which was added by the base class.
+                ExtendLastAction(() => { CurrentRoundIndex = null; });
+                ExtendLastAction(() => { CurrentQRIndex = null; });
+
+                for (int round = 0; round < Settings.Rounds; ++round)
                 {
-                    //  Quarterround sequence
+                    // round sequence
                     ActionCreator.StartSequence();
-                    // Set a sequence base extension for quarterround sequence.
+                    // Set a sequence base extension for round sequence.
                     // All further actions will now extend this action.
-                    int localQr = qr; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
-                    ActionCreator.Sequential(() => { CurrentQRIndex = localQr; });
+                    int localRound = round; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
+                    ActionCreator.Sequential(() => { CurrentRoundIndex = localRound; });
 
-                    // Copy from state into qr input
-                    ActionCreator.StartSequence();
-                    Seq(qrIO.MarkState(round, qr));
-                    if (qr == 0) TagRoundStartAction(round);
-                    TagQRStartAction(round, qr);
-
-                    Seq(qrIO.InsertQRInputs(round, qr).Extend(qrIO.MarkQRInputs));
-                    ActionCreator.EndSequence();
-
-                    // Keep inserted qr input for the rest of the qr sequence
-                    Seq(qrIO.InsertQRInputs(round, qr));
-
-                    // Run quarterround steps
-                    for (int qrStep = 0; qrStep < 4; ++qrStep)
+                    for (int qr = 0; qr < 4; ++qr)
                     {
-                        // Execute addition
+                        //  Quarterround sequence
                         ActionCreator.StartSequence();
-                        Seq(qrAdd.MarkInputs(qrStep));
-                        Seq(qrAdd.Insert(round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
+                        // Set a sequence base extension for quarterround sequence.
+                        // All further actions will now extend this action.
+                        int localQr = qr; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
+                        ActionCreator.Sequential(() => { CurrentQRIndex = localQr; });
+
+                        // Copy from state into qr input
+                        ActionCreator.StartSequence();
+                        Seq(qrIO.MarkState(round, qr));
+                        if (qr == 0) TagRoundStartAction(round);
+                        TagQRStartAction(round, qr);
+
+                        Seq(qrIO.InsertQRInputs(keystreamBlock, round, qr).Extend(qrIO.MarkQRInputs));
                         ActionCreator.EndSequence();
 
-                        // Keep addition values
-                        Seq(qrAdd.Insert(round, qr, qrStep));
+                        // Keep inserted qr input for the rest of the qr sequence
+                        Seq(qrIO.InsertQRInputs(keystreamBlock, round, qr));
 
-                        // Execute XOR
+                        // Run quarterround steps
+                        for (int qrStep = 0; qrStep < 4; ++qrStep)
+                        {
+                            // Execute addition
+                            ActionCreator.StartSequence();
+                            Seq(qrAdd.MarkInputs(qrStep));
+                            Seq(qrAdd.Insert(keystreamBlock, round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
+                            ActionCreator.EndSequence();
+
+                            // Keep addition values
+                            Seq(qrAdd.Insert(keystreamBlock, round, qr, qrStep));
+
+                            // Execute XOR
+                            ActionCreator.StartSequence();
+                            Seq(qrXOR.MarkInputs(qrStep));
+                            Seq(qrXOR.Insert(keystreamBlock, round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
+                            ActionCreator.EndSequence();
+
+                            // Keep XOR values
+                            Seq(qrXOR.Insert(keystreamBlock, round, qr, qrStep));
+
+                            // Execute shift
+                            ActionCreator.StartSequence();
+                            Seq(qrShift.MarkInputs(qrStep));
+                            Seq(qrShift.Insert(keystreamBlock, round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
+                            ActionCreator.EndSequence();
+
+                            // Keep shift values
+                            Seq(qrShift.Insert(keystreamBlock, round, qr, qrStep));
+                        }
+
+                        // Fill quarterround output
                         ActionCreator.StartSequence();
-                        Seq(qrXOR.MarkInputs(qrStep));
-                        Seq(qrXOR.Insert(round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
+                        Seq(qrIO.MarkQROutputPaths);
+                        Seq(qrIO.InsertQROutputs(keystreamBlock, round, qr).Extend(qrIO.MarkQROutputs));
                         ActionCreator.EndSequence();
 
-                        // Keep XOR values
-                        Seq(qrXOR.Insert(round, qr, qrStep));
+                        // Keep qr output values
+                        Seq(qrIO.InsertQROutputs(keystreamBlock, round, qr));
 
-                        // Execute shift
+                        // Copy from qr output to state
                         ActionCreator.StartSequence();
-                        Seq(qrShift.MarkInputs(qrStep));
-                        Seq(qrShift.Insert(round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
+                        Seq(qrIO.MarkQROutputs);
+
+                        Seq(qrIO.UpdateState(keystreamBlock, round, qr).Extend(qrIO.MarkState(round, qr)));
+                        if (qr == 3) TagRoundEndStartAction(round);
+                        TagQREndAction(round, qr);
+
                         ActionCreator.EndSequence();
 
-                        // Keep shift values
-                        Seq(qrShift.Insert(round, qr, qrStep));
+                        // End quarterround sequence
+                        ActionCreator.EndSequence();
+
+                        // Keep state update for rest of round sequence
+                        // FIXME There is a bug that the state update order is not as expected.
+                        //   We need to apply previous state updates ( from the previous round ) and then the new state update.
+                        //   But it for some reasons first applies the latest state and then the state updates fro last round in the correct order.
+                        //   So basically like this: 4, 0, 3, 2, 1.
+                        //   This leads to an overwrite of the diagonal.
+                        Seq(qrIO.UpdateState(keystreamBlock, round, qr));
                     }
-
-                    // Fill quarterround output
-                    ActionCreator.StartSequence();
-                    Seq(qrIO.MarkQROutputPaths);
-                    Seq(qrIO.InsertQROutputs(round, qr).Extend(qrIO.MarkQROutputs));
+                    // End round sequence
                     ActionCreator.EndSequence();
 
-                    // Keep qr output values
-                    Seq(qrIO.InsertQROutputs(round, qr));
-
-                    // Copy from qr output to state
-                    ActionCreator.StartSequence();
-                    Seq(qrIO.MarkQROutputs);
-
-                    Seq(qrIO.UpdateState(round, qr).Extend(qrIO.MarkState(round, qr)));
-                    if (qr == 3) TagRoundEndStartAction(round);
-                    TagQREndAction(round, qr);
-
-                    ActionCreator.EndSequence();
-
-                    // End quarterround sequence
-                    ActionCreator.EndSequence();
-
-                    // Keep state update for rest of round sequence
-                    // FIXME There is a bug that the state update order is not as expected.
-                    //   We need to apply previous state updates ( from the previous round ) and then the new state update.
-                    //   But it for some reasons first applies the latest state and then the state updates fro last round in the correct order.
-                    //   So basically like this: 4, 0, 3, 2, 1.
-                    //   This leads to an overwrite of the diagonal.
-                    Seq(qrIO.UpdateState(round, qr));
+                    // Keep state updates from all quarterrounds of the last round for rest of ChaCha hash sequence.
+                    // This replaces for performance (and bug) reasons the last sequential action in the ChaCha hash sequence
+                    // because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
+                    // in a sequence.
+                    ActionCreator.ReplaceLast(
+                        qrIO.UpdateState(keystreamBlock, round, 3)
+                        .Extend(qrIO.UpdateState(keystreamBlock, round, 2), qrIO.UpdateState(keystreamBlock, round, 1), qrIO.UpdateState(keystreamBlock, round, 0)));
                 }
-                // End round sequence
-                ActionCreator.EndSequence();
 
-                // Keep state updates from all quarterrounds of the last round for rest of ChaCha hash sequence.
-                // This replaces for performance (and bug) reasons the last sequential action in the ChaCha hash sequence
-                // because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
-                // in a sequence.
-                ActionCreator.ReplaceLast(qrIO.UpdateState(round, 3).Extend(qrIO.UpdateState(round, 2), qrIO.UpdateState(round, 1), qrIO.UpdateState(round, 0)));
+                // End keystraem block sequence
+                ActionCreator.EndSequence();
             }
 
+            // End ChaCha Hash sequence
             ActionCreator.EndSequence();
         }
 
@@ -170,7 +188,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// </summary>
         private void ResetStateMatrixValues()
         {
-            uint[] state = ChaChaVisualization.OriginalState[0];
+            InitOriginalState(0);
+        }
+
+        /// <summary>
+        /// Reset the state matrix to the state at the start of the keystream block.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void InitOriginalState(int keystreamBlock)
+        {
+            uint[] state = ChaChaVisualization.OriginalState[keystreamBlock];
             for (int i = 0; i < 16; ++i)
             {
                 StateValues[i].Value = state[i];
@@ -196,6 +223,78 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #endregion ActionViewModelBase
 
         #region ChaCha Hash Navigation Bar
+
+        #region Keystream Block input
+
+        private ICommand _nextKeystreamBlockCommand; public ICommand NextKeystreamBlockCommand
+        {
+            get
+            {
+                if (_nextKeystreamBlockCommand == null) _nextKeystreamBlockCommand = new RelayCommand((arg) => NextKeystreamBlock(), (arg) => CanNextKeystreamBlock);
+                return _nextKeystreamBlockCommand;
+            }
+        }
+
+        public bool CanNextKeystreamBlock
+        {
+            get
+            {
+                return CurrentKeystreamBlockIndex == null || CurrentKeystreamBlockIndex < ChaChaVisualization.TotalKeystreamBlocks - 1;
+            }
+        }
+
+        private ICommand _prevKeystreamBlockCommand; public ICommand PrevKeystreamBlockCommand
+        {
+            get
+            {
+                if (_prevKeystreamBlockCommand == null) _prevKeystreamBlockCommand = new RelayCommand((arg) => PrevKeystreamBlock(), (arg) => CanPrevKeystreamBlock);
+                return _prevKeystreamBlockCommand;
+            }
+        }
+
+        public bool CanPrevKeystreamBlock
+        {
+            get
+            {
+                return CurrentKeystreamBlockIndex != null && CurrentKeystreamBlockIndex != 0;
+            }
+        }
+
+        private void NextKeystreamBlock()
+        {
+        }
+
+        private void PrevKeystreamBlock()
+        {
+        }
+
+        private ValidationRule _keystreamBlockInputRule; private ValidationRule KeystreamBlockInputRule
+        {
+            get
+            {
+                if (_keystreamBlockInputRule == null) _keystreamBlockInputRule = new UserInputValidationRule(1, ChaChaVisualization.TotalKeystreamBlocks);
+                return _keystreamBlockInputRule;
+            }
+        }
+
+        private KeyEventHandler _keystreamBlockInputHandler; public KeyEventHandler KeystreamBlockInputHandler
+        {
+            get
+            {
+                if (_keystreamBlockInputHandler == null) _keystreamBlockInputHandler = UserInputHandler(KeystreamBlockInputRule, GoToKeystreamBlock);
+                return _keystreamBlockInputHandler;
+            }
+        }
+
+        /// <summary>
+        /// Go to given keystream block.
+        /// </summary>
+        /// <param name="keystreamBlock">One-based keystreamBlock index.</param>
+        private void GoToKeystreamBlock(int keystreamBlock)
+        {
+        }
+
+        #endregion Keystream Block input
 
         #region Round input
 
@@ -470,6 +569,44 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             }
         }
 
+        private int? _currentKeystreamBlockIndex = 0; public int? CurrentKeystreamBlockIndex
+        {
+            get
+            {
+                return _currentKeystreamBlockIndex;
+            }
+            set
+            {
+                if (_currentKeystreamBlockIndex != value)
+                {
+                    _currentRoundIndex = value;
+                    CurrentKeystreamBlockIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Same purpose as property 'CurrentUserActionIndex'.
+        /// See its documentation for further information.
+        /// </summary>
+        private int? _currentUserKeystreamBlockIndex = null; public int? CurrentUserKeystreamBlockIndex
+
+        {
+            get
+            {
+                return _currentUserKeystreamBlockIndex;
+            }
+            set
+            {
+                if (_currentUserKeystreamBlockIndex != value)
+                {
+                    _currentUserKeystreamBlockIndex = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private int? _currentRoundIndex = null; public int? CurrentRoundIndex
         {
             get
@@ -697,6 +834,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <summary>
         /// Tag the last added action as the start of the given round.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void TagKeystreamBlockStartAction(int keystreamBlock)
+        {
+            TagAction(KeystreamBlockStartTag(keystreamBlock), ActionIndex);
+        }
+
+        /// <summary>
+        /// Tag the last added action as the start of the given round.
+        /// </summary>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="actionIndex">Index of action we want to tag.</param>
         private void TagRoundStartAction(int round)
@@ -744,6 +890,26 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Action action = Actions[actionIndex];
             Action updated = action.Extend(toExtend);
             Actions[actionIndex] = updated;
+        }
+
+        /// <summary>
+        /// Extend the last added action with the given action.
+        /// </summary>
+        private void ExtendLastAction(Action toExtend)
+        {
+            ExtendAction(ActionIndex, toExtend);
+        }
+
+        /// <summary>
+        /// Create the keystream block start tag.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private string KeystreamBlockStartTag(int keystreamBlock)
+        {
+            int maxKeystreamBlock = ChaChaVisualization.TotalKeystreamBlocks - 1;
+            if (keystreamBlock < 0 || keystreamBlock > maxKeystreamBlock)
+                throw new ArgumentOutOfRangeException("keystreamBlock", $"Keystream Block must be between 0 and {maxKeystreamBlock}. Received: {keystreamBlock}");
+            return $"KEYSTREAMBLOCK_START_{keystreamBlock}";
         }
 
         /// <summary>
