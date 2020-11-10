@@ -188,7 +188,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         /// <summary>
-        /// Replace the state with the state before the ChaCha hash function was applied.
+        /// Replace the state with the state before the very first ChaCha hash function was applied.
         /// </summary>
         private void ResetStateMatrixValues()
         {
