@@ -1408,7 +1408,7 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="0">
-                    <Grid Grid.Row="0" Grid.Column="0" Name="AdditionMatrix">
+                    <Grid Name="AdditionMatrix">
                         <Grid.Resources>
                             <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
                             <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
