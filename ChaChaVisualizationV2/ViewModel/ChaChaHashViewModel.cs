@@ -1,7 +1,6 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper;
 using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Validation;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
-using Cryptool.Plugins.ChaChaVisualizationV2.View;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
@@ -24,15 +23,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// Convenience list to write cleaner code which modifies all output values.
         /// </summary>
         private readonly QRValue[] qrOutValues;
-
-        /// <summary>
-        ///
-        /// The view associated with this view model.
-        /// ChaChaHashViewModel needs access to its view to tell it to reinitialize the input fields
-        /// with the new properties.
-        /// Workaround for ValidationRule not supporting bindings.
-        /// </summary>
-        public ChaChaHash View { get; set; }
 
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
@@ -1040,25 +1030,20 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Setup()
         {
+            Debug.Assert(StateValues.Count == 0, "StateValues should be empty during ChaCha hash setup.");
             uint[] state = ChaChaVisualization.OriginalState[0];
-            StateValues.Clear();
             for (int i = 0; i < state.Length; ++i)
             {
                 StateValues.Add(new StateValue(state[i]));
             }
-            QRStep.Clear();
+            Debug.Assert(QRStep.Count == 0, "QRStep should be empty during ChaCha hash setup.");
             // There are four steps inside a quarterround. The array indices will be reused between different (quarter)rounds.
             for (int i = 0; i < 4; ++i)
             {
                 QRStep.Add(new VisualQRStep());
             }
-
             // First setup page, then call base setup because action buffer handler may depend on things being setup already.
             base.Setup();
-
-            // Reinitialize user input fields because TotalActions or other things may have changed since DataContext of view changed.
-            // (DataContext change is the trigger to initialize the user input fields in the View.)
-            View?.InitUserInputFields();
         }
 
         public override void Teardown()

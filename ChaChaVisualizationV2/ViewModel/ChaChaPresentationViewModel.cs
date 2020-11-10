@@ -13,7 +13,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public ChaChaPresentationViewModel(ChaChaVisualizationV2 chachaVisualization)
         {
             ChaChaVisualization = chachaVisualization;
-            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(PluginPropertyChanged);
+            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(NavigationEnabledChanged);
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
@@ -25,10 +25,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             CurrentPage = Pages[0];
         }
 
-        private void PluginPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void NavigationEnabledChanged(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged("NavigationEnabled");
-            CurrentPage.Setup();
         }
 
         #region Commands
