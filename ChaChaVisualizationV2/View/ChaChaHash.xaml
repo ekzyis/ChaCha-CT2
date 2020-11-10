@@ -1406,6 +1406,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="0">
                     <Grid Name="AdditionMatrix">
@@ -2002,6 +2003,305 @@
                         </Border>
                     </Grid>
                 </Border>
+
+                <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="2">
+                    <Grid Name="LittleEndianMatrix">
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
+                            <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}" />
+                            <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}" />
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Row="0" Grid.Column="0">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[0].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[0].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState0" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[1].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[1].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState1" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="2">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[2].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[2].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState2" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="3">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[3].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[3].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState3" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="0">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[4].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[4].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState4" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[5].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[5].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState5" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="2">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[6].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[6].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState6" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="3">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[7].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[7].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState7" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="0">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[8].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[8].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState8" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="1">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[9].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[9].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState9" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="2">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[10].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[10].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState10" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="2" Grid.Column="3">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[11].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[11].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState11" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+
+                        <Border Grid.Row="3" Grid.Column="0">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[12].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[12].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState12" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="1">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[13].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[13].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState13" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="2">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[14].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[14].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState14" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                        <Border Grid.Row="3" Grid.Column="3">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding StateValues[15].Mark}" Value="True">
+                                            <Setter Property="Background" Value="AliceBlue" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Viewbox>
+                                <StackPanel>
+                                    <TextBox Text="{Binding StateValues[15].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionLittleEndianState15" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Border>
+                    </Grid>
+                </Border>
+
                 <Canvas Width="1500" Height="260" Grid.Row="1">
                 </Canvas>
             </Grid>
