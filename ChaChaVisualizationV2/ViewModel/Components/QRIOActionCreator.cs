@@ -160,7 +160,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 if (VM.DiffusionActive)
                 {
                     (VM.DiffusionQRInA.Value, VM.DiffusionQRInB.Value, VM.DiffusionQRInC.Value, VM.DiffusionQRInD.Value) = VM.ChaChaVisualization.QRInputDiffusion[arrayIndex];
-                    VM.OnPropertyChanged("DiffusionQRIn");
+                    VM.OnPropertyChanged("DiffusionQRInA");
+                    VM.OnPropertyChanged("DiffusionQRInB");
+                    VM.OnPropertyChanged("DiffusionQRInC");
+                    VM.OnPropertyChanged("DiffusionQRInD");
                 }
             };
         }
@@ -214,7 +217,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 if (VM.DiffusionActive)
                 {
                     (VM.DiffusionQROutA.Value, VM.DiffusionQROutB.Value, VM.DiffusionQROutC.Value, VM.DiffusionQROutD.Value) = VM.ChaChaVisualization.QROutputDiffusion[arrayIndex];
-                    VM.OnPropertyChanged("DiffusionQROut");
+                    VM.OnPropertyChanged("DiffusionQROutA");
+                    VM.OnPropertyChanged("DiffusionQROutB");
+                    VM.OnPropertyChanged("DiffusionQROutC");
+                    VM.OnPropertyChanged("DiffusionQROutD");
                 }
             };
         }

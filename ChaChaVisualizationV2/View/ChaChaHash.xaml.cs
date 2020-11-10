@@ -58,11 +58,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             {
                 HandleDiffusionLittleEndianStateChange();
             }
-            else if (e.PropertyName == "DiffusionQRIn")
+            else if (e.PropertyName.StartsWith("DiffusionQRIn"))
             {
                 HandleDiffusionQRInChange();
             }
-            else if (e.PropertyName == "DiffusionQROut")
+            else if (e.PropertyName.StartsWith("DiffusionQROut"))
             {
                 HandleDiffusionQROutChange();
             }
