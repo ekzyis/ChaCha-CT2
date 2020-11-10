@@ -126,7 +126,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="settings">Chosen Settings in the Plugin workspace. Includes Rounds and Version property.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        protected virtual void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {

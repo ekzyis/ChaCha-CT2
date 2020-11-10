@@ -1505,7 +1505,7 @@
                         <Button Style="{StaticResource PrevButton}" Command="{Binding PrevKeystreamBlockCommand}" />
                         <TextBox Name="KeystreamBlockInput" Style="{StaticResource Input}" />
                         <TextBox Style="{StaticResource Text}" Text="/" />
-                        <TextBox Style="{StaticResource Text}" Text="{Binding TotalKeystreamBlocks, Mode=OneWay}" />
+                        <TextBox Style="{StaticResource Text}" Text="{Binding ChaChaVisualization.TotalKeystreamBlocks, Mode=OneWay}" />
                         <Button Style="{StaticResource NextButton}" Command="{Binding NextKeystreamBlockCommand}" />
                     </StackPanel>
                     <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource Label}" Text="Round" />

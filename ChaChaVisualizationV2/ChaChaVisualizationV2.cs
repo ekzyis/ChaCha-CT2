@@ -15,9 +15,12 @@
 */
 
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.IO;
+using Cryptool.Plugins.ChaCha;
 using Cryptool.Plugins.ChaCha.Util;
 using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -41,6 +44,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         }
 
         #region ChaCha Override
+
+        protected override void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        {
+            // calculate total keystream blocks needed
+            CStreamReader inputReader = input.CreateReader();
+            long inputSize = inputReader.Length;
+            TotalKeystreamBlocks = (int)Math.Ceiling((double)(inputSize) / 512);
+            inputReader.Dispose();
+            base.Xcrypt(key, iv, initialCounter, settings, input, output);
+        }
 
         protected override uint[] State(byte[] key, byte[] iv, ulong counter, ChaCha.Version version)
         {
@@ -133,7 +146,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
 
         #endregion Intermediate values from cipher execution
 
-        #region Public Variables
+        #region Public Variables / Binding Properties
 
         private bool _isValid; public override bool IsValid
         {
@@ -167,7 +180,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             }
         }
 
-        #endregion Public Variables
+        private int _totalKeystreamBlocks; public int TotalKeystreamBlocks
+        {
+            get
+            {
+                return _totalKeystreamBlocks;
+            }
+            set
+            {
+                if (_totalKeystreamBlocks != value)
+                {
+                    _totalKeystreamBlocks = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        #endregion Public Variables / Binding Properties
 
         #region IPlugin Members
 
