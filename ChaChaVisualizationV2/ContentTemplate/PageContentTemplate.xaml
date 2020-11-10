@@ -32,9 +32,9 @@
                             TickFrequency="1"
                             IsSnapToTickEnabled="True" />
                         <Button Command="{Binding NextActionCommand}" Style="{StaticResource NextButton}" />
-                        <TextBox Name="ActionInputTextBox" Style="{StaticResource Input}" Width="50" />
+                        <TextBox Name="ActionInputTextBox" Style="{StaticResource Input}" Width="{Binding ElementName=TotalActionsText, Path=ActualWidth}" />
                         <TextBox Style="{StaticResource Text}" Text="/" />
-                        <TextBox Style="{StaticResource Text}" Width="45" Text="{Binding TotalActions, Mode=OneWay, Converter={StaticResource SubtractOne}}" />
+                        <TextBox Name="TotalActionsText"  Style="{StaticResource Text}" Text="{Binding TotalActions, Mode=OneWay, Converter={StaticResource SubtractOne}}" />
                     </StackPanel>
                 </Viewbox>
             </Grid>
