@@ -201,6 +201,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         private void InitOriginalState(int keystreamBlock)
         {
+            Debug.Assert(ChaChaVisualization.OriginalState.Count == ChaChaVisualization.TotalKeystreamBlocks,
+                $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {ChaChaVisualization.TotalKeystreamBlocks}. Actual: {ChaChaVisualization.OriginalState.Count}");
             uint[] state = ChaChaVisualization.OriginalState[keystreamBlock];
             for (int i = 0; i < 16; ++i)
             {
