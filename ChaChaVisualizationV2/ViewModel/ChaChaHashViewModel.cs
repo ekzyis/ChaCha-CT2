@@ -193,9 +193,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 ActionCreator.StartSequence();
 
                 Seq(() => { RoundsStep = false; });
-                Seq(() => stateActions.ShowOriginalState(localKeystreamBlock));
-                Seq(() => stateActions.ShowAdditionResultState(localKeystreamBlock));
-                Seq(() => stateActions.ShowLittleEndianState(localKeystreamBlock));
+                Seq(stateActions.ShowOriginalState(localKeystreamBlock));
+                Seq(stateActions.ShowAdditionResultState(localKeystreamBlock));
+                Seq(stateActions.ShowLittleEndianState(localKeystreamBlock));
 
                 ActionCreator.EndSequence();
 
