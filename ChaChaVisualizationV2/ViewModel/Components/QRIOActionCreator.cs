@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Cryptool.Plugins.ChaChaVisualizationV2.Model;
+using System;
+using System.Linq;
 
 namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
 {
@@ -9,11 +11,44 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
     internal class QRIOActionCreator : ChaChaHashActionCreator
     {
         /// <summary>
+        /// Convenience list to write cleaner code which modifies all input values.
+        /// </summary>
+        private readonly QRValue[] qrInValues;
+
+        /// <summary>
+        /// Convenience list to write cleaner code which modifies all output values.
+        /// </summary>
+        private readonly QRValue[] qrOutValues;
+
+        /// <summary>
         /// Creates an instance to help with quarterround input action creation for the given round.
         /// </summary>
         /// <param name="round">Zero-based round index.</param>
         public QRIOActionCreator(ChaChaHashViewModel viewModel) : base(viewModel)
         {
+            qrInValues = new QRValue[] { VM.QRInA, VM.QRInB, VM.QRInC, VM.QRInD };
+            qrOutValues = new QRValue[] { VM.QROutA, VM.QROutB, VM.QROutC, VM.QROutD };
+        }
+
+        /// <summary>
+        /// Clear the values and background of each cell in the quarterround visualzation.
+        /// </summary>
+        public Action ResetQuarterroundValues
+        {
+            get
+            {
+                return () =>
+                {
+                    foreach (QRValue v in qrInValues.Concat(qrOutValues))
+                    {
+                        v.Reset();
+                    }
+                    foreach (VisualQRStep qrStep in VM.QRStep)
+                    {
+                        qrStep.Reset();
+                    }
+                };
+            }
         }
 
         /// <summary>

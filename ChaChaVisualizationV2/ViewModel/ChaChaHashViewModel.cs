@@ -5,7 +5,6 @@ using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,22 +13,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class ChaChaHashViewModel : ActionViewModelBase, INavigation, ITitle, IChaCha
     {
-        /// <summary>
-        /// Convenience list to write cleaner code which modifies all input values.
-        /// </summary>
-        private readonly QRValue[] qrInValues;
-
-        /// <summary>
-        /// Convenience list to write cleaner code which modifies all output values.
-        /// </summary>
-        private readonly QRValue[] qrOutValues;
-
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
             Name = "ChaCha hash";
             Title = "ChaCha hash function";
-            qrInValues = new QRValue[] { QRInA, QRInB, QRInC, QRInD };
-            qrOutValues = new QRValue[] { QROutA, QROutB, QROutC, QROutD };
+
             QRIO = new QRIOActionCreator(this);
             QRAdd = new QRAdditionActionCreator(this);
             QRXOR = new QRXORActionCreator(this);
@@ -78,10 +66,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     RoundsStep = true;
                 });
                 // *** Make state insertion as last sequential action such that this action will get overriden by ReplaceLast call. ***
-                ActionCreator.Sequential(() =>
-                {
-                    InsertOriginalState(localKeystreamBlock);
-                });
+                ActionCreator.Sequential(StateActionCreator.InsertOriginalState(localKeystreamBlock));
                 // Add empty action if this is not the very first action because ActionViewModelBase
                 // has already added an empty action at the very beginning.
                 // This empty action added here will be extended by the base extension we just added.
@@ -228,47 +213,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
-            ResetStateMatrixValues();
-            ResetQuarterroundValues();
-        }
-
-        /// <summary>
-        /// Replace the state with the state before the very first ChaCha hash function was applied.
-        /// </summary>
-        private void ResetStateMatrixValues()
-        {
-            InsertOriginalState(0);
-        }
-
-        /// <summary>
-        /// Reset the state matrix to the state at the start of the keystream block.
-        /// </summary>
-        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
-        private void InsertOriginalState(int keystreamBlock)
-        {
-            Debug.Assert(ChaChaVisualization.OriginalState.Count == ChaChaVisualization.TotalKeystreamBlocks,
-                $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {ChaChaVisualization.TotalKeystreamBlocks}. Actual: {ChaChaVisualization.OriginalState.Count}");
-            uint[] state = ChaChaVisualization.OriginalState[keystreamBlock];
-            for (int i = 0; i < 16; ++i)
-            {
-                StateValues[i].Value = state[i];
-                StateValues[i].Mark = false;
-            }
-        }
-
-        /// <summary>
-        /// Clear the values and background of each cell in the quarterround visualzation.
-        /// </summary>
-        private void ResetQuarterroundValues()
-        {
-            foreach (QRValue v in qrInValues.Concat(qrOutValues))
-            {
-                v.Reset();
-            }
-            foreach (VisualQRStep qrStep in QRStep)
-            {
-                qrStep.Reset();
-            }
+            StateActionCreator.InsertFirstOriginalState();
+            QRIO.ResetQuarterroundValues();
         }
 
         #endregion ActionViewModelBase
