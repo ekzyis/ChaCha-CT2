@@ -31,6 +31,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void OnPluginPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             OnPropertyChanged("NavigationEnabled");
+
+            ChangePage(Pages[0]);
         }
 
         #region Commands
