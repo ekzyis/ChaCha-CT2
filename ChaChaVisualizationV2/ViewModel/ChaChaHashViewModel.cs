@@ -848,6 +848,26 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #endregion QROutX
 
+        /// <summary>
+        /// Indicates if we are currently in the rounds step or in the addition / little-endian step.
+        /// </summary>
+        private bool _roundsStep; public bool RoundsStep
+
+        {
+            get
+            {
+                return _roundsStep;
+            }
+            set
+            {
+                if (_roundsStep != value)
+                {
+                    _roundsStep = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         #endregion Binding Properties
 
         #region Binding Properties (Diffusion)
