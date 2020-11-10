@@ -7,6 +7,6 @@
         <Setter Property="Content" Value="+" />
     </Style>
     <Style x:Key="BigAddLabel" TargetType="{x:Type Label}" BasedOn="{StaticResource AddLabel}">
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontSize" Value="34" />
     </Style>
 </ResourceDictionary>
