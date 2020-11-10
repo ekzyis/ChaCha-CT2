@@ -180,6 +180,7 @@ namespace Cryptool.Plugins.ChaCha
             inputReader.Dispose();
             output.Flush();
             output.Close();
+            output.Dispose();
         }
 
         /// <summary>
