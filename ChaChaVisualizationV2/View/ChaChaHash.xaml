@@ -34,7 +34,7 @@
                     <ColumnDefinition />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <!--#region  State Matrix -->
+                <!--#region State Matrix -->
                 <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="0">
                     <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                         <Grid.Resources>
@@ -370,12 +370,11 @@
                             </RichTextBox>
                         </StackPanel>
                     </Viewbox>
-                    <!--#endregion Description -->
                 </Grid>
 
-                <!--#endregion-->
+                <!--#endregion Description -->
             </Grid>
-            <!-- #endregion -->
+            <!--#endregion-->
 
             <!-- #region Middle row -->
             <Grid Grid.Row="1">
