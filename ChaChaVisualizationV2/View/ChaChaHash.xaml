@@ -1514,7 +1514,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[0].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[0].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1522,8 +1522,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[0].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState0" />
+                                    <TextBox Text="{Binding OriginalState[0].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState0" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1531,7 +1531,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[1].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[1].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1539,8 +1539,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[1].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState1" />
+                                    <TextBox Text="{Binding OriginalState[1].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState1" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1548,7 +1548,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[2].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[2].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1556,8 +1556,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[2].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState2" />
+                                    <TextBox Text="{Binding OriginalState[2].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState2" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1565,7 +1565,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[3].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[3].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1573,8 +1573,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[3].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState3" />
+                                    <TextBox Text="{Binding OriginalState[3].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState3" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1584,7 +1584,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[4].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[4].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1592,8 +1592,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[4].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState4" />
+                                    <TextBox Text="{Binding OriginalState[4].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState4" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1602,7 +1602,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[5].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[5].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1610,8 +1610,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[5].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState5" />
+                                    <TextBox Text="{Binding OriginalState[5].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState5" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1620,7 +1620,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[6].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[6].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1628,8 +1628,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[6].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState6" />
+                                    <TextBox Text="{Binding OriginalState[6].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState6" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1638,7 +1638,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[7].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[7].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1646,8 +1646,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[7].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState7" />
+                                    <TextBox Text="{Binding OriginalState[7].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState7" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1656,7 +1656,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[8].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[8].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1664,8 +1664,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[8].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState8" />
+                                    <TextBox Text="{Binding OriginalState[8].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState8" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1673,7 +1673,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[9].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[9].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1681,8 +1681,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[9].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState9" />
+                                    <TextBox Text="{Binding OriginalState[9].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState9" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1690,7 +1690,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[10].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[10].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1698,8 +1698,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[10].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState10" />
+                                    <TextBox Text="{Binding OriginalState[10].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState10" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1707,7 +1707,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[11].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[11].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1715,8 +1715,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[11].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState11" />
+                                    <TextBox Text="{Binding OriginalState[11].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState11" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1725,7 +1725,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[12].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[12].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1733,8 +1733,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[12].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState12" />
+                                    <TextBox Text="{Binding OriginalState[12].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState12" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1742,7 +1742,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[13].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[13].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1750,8 +1750,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[13].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState13" />
+                                    <TextBox Text="{Binding OriginalState[13].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState13" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1759,7 +1759,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[14].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[14].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1767,8 +1767,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[14].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState14" />
+                                    <TextBox Text="{Binding OriginalState[14].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState14" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1776,7 +1776,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionState[15].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding OriginalState[15].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1784,8 +1784,8 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionState[15].Value, Converter={StaticResource UInt32ToHex}}" />
-                                    <RichTextBox Name="DiffusionAdditionState15" />
+                                    <TextBox Text="{Binding OriginalState[15].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <RichTextBox Name="DiffusionOriginalState15" />
                                 </StackPanel>
                             </Viewbox>
                         </Border>
@@ -1816,7 +1816,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[0].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[0].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1824,7 +1824,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[0].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[0].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState0" />
                                 </StackPanel>
                             </Viewbox>
@@ -1833,7 +1833,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[1].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[1].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1841,7 +1841,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[1].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[1].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState1" />
                                 </StackPanel>
                             </Viewbox>
@@ -1850,7 +1850,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[2].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[2].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1858,7 +1858,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[2].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[2].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState2" />
                                 </StackPanel>
                             </Viewbox>
@@ -1867,7 +1867,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[3].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[3].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1875,7 +1875,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[3].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[3].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState3" />
                                 </StackPanel>
                             </Viewbox>
@@ -1886,7 +1886,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[4].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[4].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1894,7 +1894,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[4].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[4].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState4" />
                                 </StackPanel>
                             </Viewbox>
@@ -1904,7 +1904,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[5].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[5].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1912,7 +1912,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[5].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[5].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState5" />
                                 </StackPanel>
                             </Viewbox>
@@ -1922,7 +1922,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[6].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[6].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1930,7 +1930,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[6].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[6].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState6" />
                                 </StackPanel>
                             </Viewbox>
@@ -1940,7 +1940,7 @@
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Setter Property="Background" Value="White" />
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[7].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[7].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1948,7 +1948,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[7].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[7].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState7" />
                                 </StackPanel>
                             </Viewbox>
@@ -1958,7 +1958,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[8].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[8].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1966,7 +1966,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[8].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[8].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState8" />
                                 </StackPanel>
                             </Viewbox>
@@ -1975,7 +1975,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[9].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[9].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -1983,7 +1983,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[9].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[9].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState9" />
                                 </StackPanel>
                             </Viewbox>
@@ -1992,7 +1992,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[10].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[10].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -2000,7 +2000,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[10].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[10].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState10" />
                                 </StackPanel>
                             </Viewbox>
@@ -2009,7 +2009,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[11].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[11].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -2017,7 +2017,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[11].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[11].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState11" />
                                 </StackPanel>
                             </Viewbox>
@@ -2027,7 +2027,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[12].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[12].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -2035,7 +2035,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[12].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[12].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState12" />
                                 </StackPanel>
                             </Viewbox>
@@ -2044,7 +2044,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[13].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[13].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -2052,7 +2052,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[13].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[13].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState13" />
                                 </StackPanel>
                             </Viewbox>
@@ -2061,7 +2061,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[14].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[14].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -2069,7 +2069,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[14].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[14].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState14" />
                                 </StackPanel>
                             </Viewbox>
@@ -2078,7 +2078,7 @@
                             <Border.Style>
                                 <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding AdditionStateResult[15].Mark}" Value="True">
+                                        <DataTrigger Binding="{Binding AdditionResultState[15].Mark}" Value="True">
                                             <Setter Property="Background" Value="AliceBlue" />
                                         </DataTrigger>
                                     </Style.Triggers>
@@ -2086,7 +2086,7 @@
                             </Border.Style>
                             <Viewbox>
                                 <StackPanel>
-                                    <TextBox Text="{Binding AdditionStateResult[15].Value, Converter={StaticResource UInt32ToHex}}" />
+                                    <TextBox Text="{Binding AdditionResultState[15].Value, Converter={StaticResource UInt32ToHex}}" />
                                     <RichTextBox Name="DiffusionAdditionResultState15" />
                                 </StackPanel>
                             </Viewbox>
