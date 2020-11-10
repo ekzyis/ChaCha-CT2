@@ -57,7 +57,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 // Keystream Block sequence
                 ActionCreator.StartSequence();
                 int localKeystreamBlock = keystreamBlock; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
-                ExtendLastAction(() => { CurrentKeystreamBlockIndex = localKeystreamBlock; });
+                ExtendLastAction(() =>
+                {
+                    InitOriginalState(localKeystreamBlock);
+                    CurrentKeystreamBlockIndex = localKeystreamBlock;
+                });
                 // The very first action which is empty was added by ActionViewModelBase.
                 // Thus the first action of every next keystream block, we add a empty action ourselves.
                 if (keystreamBlock != 0) Actions.Add(() => { });
