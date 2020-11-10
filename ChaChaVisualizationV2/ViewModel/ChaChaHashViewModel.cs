@@ -98,7 +98,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         // Copy from state into qr input
                         ActionCreator.StartSequence();
                         Seq(qrIO.MarkState(round, qr));
-                        if (qr == 0) TagRoundStartAction(keystreamBlock, round);
+                        if (qr == 0)
+                        {
+                            TagRoundStartAction(keystreamBlock, round);
+                            if (round == 0)
+                            {
+                                TagKeystreamBlockStartAction(keystreamBlock);
+                            }
+                        }
                         TagQRStartAction(keystreamBlock, round, qr);
 
                         Seq(qrIO.InsertQRInputs(keystreamBlock, round, qr).Extend(qrIO.MarkQRInputs));
@@ -305,6 +312,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <param name="keystreamBlock">One-based keystreamBlock index.</param>
         private void GoToKeystreamBlock(int keystreamBlock)
         {
+            // Value comes from user. Map to zero-based round index.
+            int keystreamBlockIndex = keystreamBlock - 1;
+            int keystreamBlockActionIndex = GetTaggedActionIndex(KeystreamBlockStartTag(keystreamBlockIndex));
+            MoveToAction(keystreamBlockActionIndex);
         }
 
         #endregion Keystream Block input
