@@ -188,6 +188,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // The previous action should be the the original state insertion. See comment above wrapped with ***.
                     // We do this because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
                     // in a sequence.
+                    // TODO(refactor) This can probably be handled way more elegant.
                     ActionCreator.ReplaceLast(qrIO.UpdateState(keystreamBlock, round, 3)
                         .Extend(qrIO.UpdateState(keystreamBlock, round, 2), qrIO.UpdateState(keystreamBlock, round, 1), qrIO.UpdateState(keystreamBlock, round, 0)));
                 }
