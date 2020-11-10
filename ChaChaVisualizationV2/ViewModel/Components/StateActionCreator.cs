@@ -27,6 +27,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                         VM.StateValues[i].Value = state[i];
                         VM.StateValues[i].Mark = false;
                     }
+                    if (VM.DiffusionActive)
+                    {
+                    }
                 };
             }
         }

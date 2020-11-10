@@ -129,6 +129,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public void Teardown()
         {
+            if (DiffusionActive)
+            {
+                // Execute ChaCha with Diffusion values.
+                ChaChaVisualization.ExecuteDiffusion(DiffusionInputKey, DiffusionInputIV, (ulong)DiffusionInitialCounter);
+            }
         }
 
         #endregion INavigation

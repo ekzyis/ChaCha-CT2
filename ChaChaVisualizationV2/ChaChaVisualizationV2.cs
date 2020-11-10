@@ -138,12 +138,31 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
             QROutput.Clear();
         }
 
+        private List<uint[]> _stateDiffusion; public List<uint[]> OriginalStateDiffusion
+        {
+            get
+            {
+                if (_stateDiffusion == null) _stateDiffusion = new List<uint[]>();
+                return _stateDiffusion;
+            }
+        }
+
         private List<uint[]> _state; public List<uint[]> OriginalState
         {
             get
             {
+                if (DiffusionExecution) return OriginalStateDiffusion;
                 if (_state == null) _state = new List<uint[]>();
                 return _state;
+            }
+        }
+
+        private List<uint[]> _additionResultStateDiffusion; public List<uint[]> AdditionResultStateDiffusion
+        {
+            get
+            {
+                if (_additionResultStateDiffusion == null) _additionResultStateDiffusion = new List<uint[]>();
+                return _additionResultStateDiffusion;
             }
         }
 
@@ -151,8 +170,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             get
             {
+                if (DiffusionExecution) return AdditionResultStateDiffusion;
                 if (_additionResultState == null) _additionResultState = new List<uint[]>();
                 return _additionResultState;
+            }
+        }
+
+        private List<uint[]> _littleEndianStateDiffusion; public List<uint[]> LittleEndianStateDiffusion
+        {
+            get
+            {
+                if (_littleEndianStateDiffusion == null) _littleEndianStateDiffusion = new List<uint[]>();
+                return _littleEndianStateDiffusion;
             }
         }
 
@@ -160,8 +189,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             get
             {
+                if (DiffusionExecution) return LittleEndianStateDiffusion;
                 if (_littleEndianState == null) _littleEndianState = new List<uint[]>();
                 return _littleEndianState;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrInputDiffusion; public List<(uint, uint, uint, uint)> QRInputDiffusion
+        {
+            get
+            {
+                if (_qrInputDiffusion == null) _qrInputDiffusion = new List<(uint, uint, uint, uint)>();
+                return _qrInputDiffusion;
             }
         }
 
@@ -169,8 +208,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             get
             {
+                if (DiffusionExecution) return QRInputDiffusion;
                 if (_qrInput == null) _qrInput = new List<(uint, uint, uint, uint)>();
                 return _qrInput;
+            }
+        }
+
+        private List<QRStep> _qrStepDiffusion; public List<QRStep> QRStepDiffusion
+        {
+            get
+            {
+                if (_qrStepDiffusion == null) _qrStepDiffusion = new List<QRStep>();
+                return _qrStepDiffusion;
             }
         }
 
@@ -178,8 +227,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             get
             {
+                if (DiffusionExecution) return QRStepDiffusion;
                 if (_qrStep == null) _qrStep = new List<QRStep>();
                 return _qrStep;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrOutputDiffusion; public List<(uint, uint, uint, uint)> QROutputDiffusion
+        {
+            get
+            {
+                if (_qrOutputDiffusion == null) _qrOutputDiffusion = new List<(uint, uint, uint, uint)>();
+                return _qrOutputDiffusion;
             }
         }
 
@@ -187,6 +246,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         {
             get
             {
+                if (DiffusionExecution) return QROutputDiffusion;
                 if (_qrOutput == null) _qrOutput = new List<(uint, uint, uint, uint)>();
                 return _qrOutput;
             }
@@ -242,6 +302,22 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
                     OnPropertyChanged();
                 }
             }
+        }
+
+        /// <summary>
+        /// If this variable is set, the getter of the lists will return a different list for the diffusion values.
+        /// This makes the cipher methods agnostic of where they store the intermediate values.
+        /// </summary>
+        public bool DiffusionExecution { get; set; }
+
+        /// <summary>
+        /// Execute ChaCha with diffusion values.
+        /// </summary>
+        public void ExecuteDiffusion(byte[] diffusionKey, byte[] diffusionIv, ulong diffusionInitialCounter)
+        {
+            DiffusionExecution = true;
+            Xcrypt(diffusionKey, diffusionIv, diffusionInitialCounter, (ChaChaSettings)Settings, InputStream, new CStreamWriter());
+            DiffusionExecution = false;
         }
 
         #endregion Public Variables / Binding Properties
