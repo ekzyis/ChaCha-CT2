@@ -73,13 +73,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         protected override void AdditionStep(ref uint[] state, uint[] originalState)
         {
             base.AdditionStep(ref state, originalState);
-            AdditionResultState.Add(state);
+            uint[] additionResultState = (uint[])(state.Clone());
+            AdditionResultState.Add(additionResultState);
         }
 
         protected override void LittleEndianStep(ref uint[] state)
         {
             base.LittleEndianStep(ref state);
-            LittleEndianState.Add(state);
+            uint[] littleEndianState = (uint[])(state.Clone());
+            LittleEndianState.Add(littleEndianState);
         }
 
         protected override (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
