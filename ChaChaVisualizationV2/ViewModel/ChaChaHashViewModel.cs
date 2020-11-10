@@ -914,7 +914,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <summary>
         /// Indicates if we are currently in the rounds step or in the addition / little-endian step.
         /// </summary>
-        private bool _roundsStep; public bool RoundsStep
+        private bool _roundsStep = true; public bool RoundsStep
 
         {
             get
