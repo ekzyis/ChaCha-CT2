@@ -87,8 +87,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         // Copy from state into qr input
                         ActionCreator.StartSequence();
                         Seq(qrIO.MarkState(round, qr));
-                        if (qr == 0) TagRoundStartAction(round);
-                        TagQRStartAction(round, qr);
+                        if (qr == 0) TagRoundStartAction(keystreamBlock, round);
+                        TagQRStartAction(keystreamBlock, round, qr);
 
                         Seq(qrIO.InsertQRInputs(keystreamBlock, round, qr).Extend(qrIO.MarkQRInputs));
                         ActionCreator.EndSequence();
@@ -141,8 +141,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         Seq(qrIO.MarkQROutputs);
 
                         Seq(qrIO.UpdateState(keystreamBlock, round, qr).Extend(qrIO.MarkState(round, qr)));
-                        if (qr == 3) TagRoundEndStartAction(round);
-                        TagQREndAction(round, qr);
+                        if (qr == 3) TagRoundEndStartAction(keystreamBlock, round);
+                        TagQREndAction(keystreamBlock, round, qr);
 
                         ActionCreator.EndSequence();
 
@@ -334,8 +334,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void NextRound()
         {
+            // TODO check for round overflow where we have to increase keystream block index
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
             int nextRoundIndex = CurrentRoundIndex == null ? 0 : (int)CurrentRoundIndex + 1;
-            int nextRoundActionIndex = GetTaggedActionIndex(RoundStartTag(nextRoundIndex));
+            int nextRoundActionIndex = GetTaggedActionIndex(RoundStartTag(keystreamBlockIndex, nextRoundIndex));
             MoveToAction(nextRoundActionIndex);
         }
 
@@ -343,13 +345,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             if (CurrentRoundIndex == null || CurrentRoundIndex == 0)
                 throw new InvalidOperationException("CurrentRoundIndex was null or zero in PrevRound.");
-            int currentRoundStartIndex = GetTaggedActionIndex(RoundStartTag((int)CurrentRoundIndex));
+            // TODO check for round underflow where we have to decrease keystream block index
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
+            int currentRoundStartIndex = GetTaggedActionIndex(RoundStartTag(keystreamBlockIndex, (int)CurrentRoundIndex));
             // only go back to start of previous round if we are on the start of a round
             // else go to start of current round
             if (CurrentActionIndex == currentRoundStartIndex)
             {
                 int prevRoundIndex = (int)CurrentRoundIndex - 1;
-                int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(prevRoundIndex));
+                int prevRoundActionIndex = GetTaggedActionIndex(RoundStartTag(keystreamBlockIndex, prevRoundIndex));
                 MoveToAction(prevRoundActionIndex);
             }
             else
@@ -382,9 +386,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <param name="round">One-based round index.</param>
         private void GoToRound(int round)
         {
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
             // Value comes from user. Map to zero-based round index.
             int roundIndex = round - 1;
-            int roundActionIndex = GetTaggedActionIndex(RoundStartTag(roundIndex));
+            int roundActionIndex = GetTaggedActionIndex(RoundStartTag(keystreamBlockIndex, roundIndex));
             MoveToAction(roundActionIndex);
         }
 
@@ -428,10 +433,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void NextQR()
         {
+            // TODO check for qr overflow which results in round overflow where we have to increase keystream block index
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
             int roundIndex = CurrentRoundIndex ?? 0;
             int nextQRIndex = CurrentQRIndex == null ? 0 : ((int)(CurrentQRIndex + 1) % 4);
             if (CurrentQRIndex != null && (int)CurrentQRIndex == 3) roundIndex += 1;
-            int nextQRActionIndex = GetTaggedActionIndex(QRStartTag(roundIndex, nextQRIndex));
+            int nextQRActionIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, roundIndex, nextQRIndex));
             MoveToAction(nextQRActionIndex);
         }
 
@@ -439,9 +446,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         {
             if (CurrentQRIndex == null)
                 throw new InvalidOperationException("CurrentQRIndex was null in PrevQR.");
+            // TODO check for qr underflow which results in round underflow where we have to increase keystream block index
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
             int currentRoundIndex = (int)CurrentRoundIndex;
             int currentQRIndex = (int)CurrentQRIndex;
-            int currentQRStartIndex = GetTaggedActionIndex(QRStartTag(currentRoundIndex, currentQRIndex));
+            int currentQRStartIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, currentRoundIndex, currentQRIndex));
             // only go back to start of previous qr if we are on the start of a qr
             // else go to start of current qr
             if (CurrentActionIndex == currentQRStartIndex)
@@ -449,7 +458,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 // check if we would "underflow" and thus have to go to the last quarterround of previous round
                 int prevQRIndex = currentQRIndex == 0 ? 3 : currentQRIndex - 1;
                 int roundIndexForPrevQR = currentQRIndex == 0 ? currentRoundIndex - 1 : currentRoundIndex;
-                int prevRoundActionIndex = GetTaggedActionIndex(QRStartTag(roundIndexForPrevQR, prevQRIndex));
+                int prevRoundActionIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, roundIndexForPrevQR, prevQRIndex));
                 MoveToAction(prevRoundActionIndex);
             }
             else
@@ -482,8 +491,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <param name="qr">Zero-based qr index.</param>
         private void GoToQRStart(int qr)
         {
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
+            int currentRoundIndex = (int)CurrentRoundIndex;
             int round = CurrentRoundIndex ?? 0;
-            int qrStartActionIndex = GetTaggedActionIndex(QRStartTag(round, qr));
+            int qrStartActionIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, round, qr));
             MoveToAction(qrStartActionIndex);
         }
 
@@ -493,8 +504,10 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <param name="qr">Zero-based qr index.</param>
         private void GoToQREnd(int qr)
         {
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
+            int currentRoundIndex = (int)CurrentRoundIndex;
             int round = CurrentRoundIndex ?? 0;
-            int qrStartActionIndex = GetTaggedActionIndex(QREndTag(round, qr));
+            int qrStartActionIndex = GetTaggedActionIndex(QREndTag(keystreamBlockIndex, round, qr));
             MoveToAction(qrStartActionIndex);
         }
 
@@ -522,10 +535,12 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <param name="qr">One-based quarterround index.</param>
         private void GoToQR(int qr)
         {
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
+            int currentRoundIndex = (int)CurrentRoundIndex;
             // Value comes from user. Map to zero-based round index.
             int qrIndex = qr - 1;
             int round = CurrentRoundIndex ?? 0;
-            int qrActionIndex = GetTaggedActionIndex(QRStartTag(round, qrIndex));
+            int qrActionIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, round, qrIndex));
             MoveToAction(qrActionIndex);
         }
 
@@ -843,43 +858,43 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// <summary>
         /// Tag the last added action as the start of the given round.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
-        /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagRoundStartAction(int round)
+        private void TagRoundStartAction(int keystreamBlock, int round)
         {
-            TagAction(RoundStartTag(round), ActionIndex);
+            TagAction(RoundStartTag(keystreamBlock, round), ActionIndex);
         }
 
         /// <summary>
         /// Tag the last added action as the end of the given round.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
-        /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagRoundEndStartAction(int round)
+        private void TagRoundEndStartAction(int keystreamBlock, int round)
         {
-            TagAction(RoundEndTag(round), ActionIndex);
+            TagAction(RoundEndTag(keystreamBlock, round), ActionIndex);
         }
 
         /// <summary>
         /// Tag the last added action as the start of the given quarterround of the given round.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based qr index.</param>
-        /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagQRStartAction(int round, int qr)
+        private void TagQRStartAction(int keystreamBlock, int round, int qr)
         {
-            TagAction(QRStartTag(round, qr), ActionIndex);
+            TagAction(QRStartTag(keystreamBlock, round, qr), ActionIndex);
         }
 
         /// <summary>
         /// Tag the last added action as the end of the given quarterround of the given round.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based qr index.</param>
-        /// <param name="actionIndex">Index of action we want to tag.</param>
-        private void TagQREndAction(int round, int qr)
+        private void TagQREndAction(int keystreamBlock, int round, int qr)
         {
-            TagAction(QREndTag(round, qr), ActionIndex);
+            TagAction(QREndTag(keystreamBlock, round, qr), ActionIndex);
         }
 
         /// <summary>
@@ -901,73 +916,99 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         /// <summary>
+        /// Check if keystream block input for tag is in valid range.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void AssertKeystreamBlockTagInput(int keystreamBlock)
+        {
+            int maxKeystreamBlock = ChaChaVisualization.TotalKeystreamBlocks - 1;
+            if (keystreamBlock < 0 || keystreamBlock > maxKeystreamBlock)
+                throw new ArgumentOutOfRangeException("keystreamBlock", $"Keystream Block must be between 0 and {maxKeystreamBlock}. Received: {keystreamBlock}");
+        }
+
+        /// <summary>
+        /// Check if round input for tag is in valid range.
+        /// </summary>
+        /// <param name="round">Zero-based round index.</param>
+        private void AssertRoundTagInput(int round)
+        {
+            int maxRoundIndex = Settings.Rounds - 1;
+            if (round < 0 || round > maxRoundIndex)
+                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
+        }
+
+        /// <summary>
+        /// Check if qr input for tag is in valid range.
+        /// </summary>
+        /// <param name="qr">Zero-based qr index.</param>
+        private void AssertQRTagInput(int qr)
+        {
+            if (qr < 0 || qr > 3)
+            {
+                throw new ArgumentOutOfRangeException("qr", $"Quarterround must be between 0 and 3. Received {qr}");
+            }
+        }
+
+        /// <summary>
         /// Create the keystream block start tag.
         /// </summary>
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         private string KeystreamBlockStartTag(int keystreamBlock)
         {
-            int maxKeystreamBlock = ChaChaVisualization.TotalKeystreamBlocks - 1;
-            if (keystreamBlock < 0 || keystreamBlock > maxKeystreamBlock)
-                throw new ArgumentOutOfRangeException("keystreamBlock", $"Keystream Block must be between 0 and {maxKeystreamBlock}. Received: {keystreamBlock}");
-            return $"KEYSTREAMBLOCK_START_{keystreamBlock}";
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            return $"KEYSTREAM_BLOCK_START_{keystreamBlock}";
         }
 
         /// <summary>
         /// Create the round start tag.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
-        private string RoundStartTag(int round)
+        private string RoundStartTag(int keystreamBlock, int round)
         {
-            int maxRoundIndex = Settings.Rounds - 1;
-            if (round < 0 || round > maxRoundIndex)
-                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
-            return $"ROUND_START_{round}";
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            AssertRoundTagInput(round);
+            return $"KEYSTREAM_BLOCK_{keystreamBlock}_ROUND_START_{round}";
         }
 
         /// <summary>
         /// Create the round end tag.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
-        private string RoundEndTag(int round)
+        private string RoundEndTag(int keystreamBlock, int round)
         {
-            int maxRoundIndex = Settings.Rounds - 1;
-            if (round < 0 || round > maxRoundIndex)
-                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
-            return $"ROUND_END_{round}";
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            AssertRoundTagInput(round);
+            return $"KEYSTREAM_BLOCK_{keystreamBlock}_ROUND_END_{round}";
         }
 
         /// <summary>
         /// Create the quarterround start tag.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based qr index.</param>
-        private string QRStartTag(int round, int qr)
+        private string QRStartTag(int keystreamBlock, int round, int qr)
         {
-            int maxRoundIndex = Settings.Rounds - 1;
-            if (round < 0 || round > maxRoundIndex)
-                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
-            if (qr < 0 || qr > 3)
-            {
-                throw new ArgumentOutOfRangeException("qr", $"Quarterround must be between 0 and 3. Received {qr}");
-            }
-            return $"ROUND_{round}_QR_START_{qr}";
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            AssertRoundTagInput(round);
+            AssertQRTagInput(qr);
+            return $"KEYSTREAM_BLOCK_{keystreamBlock}_ROUND_{round}_QR_START_{qr}";
         }
 
         /// <summary>
         /// Create the quarterround end tag.
         /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         /// <param name="round">Zero-based round index.</param>
         /// <param name="qr">Zero-based qr index.</param>
-        private string QREndTag(int round, int qr)
+        private string QREndTag(int keystreamBlock, int round, int qr)
         {
-            int maxRoundIndex = Settings.Rounds - 1;
-            if (round < 0 || round > maxRoundIndex)
-                throw new ArgumentOutOfRangeException("round", $"Round must be between 0 and {maxRoundIndex}. Received: {round}");
-            if (qr < 0 || qr > 3)
-            {
-                throw new ArgumentOutOfRangeException("qr", $"Quarterround must be between 0 and 3. Received {qr}");
-            }
-            return $"ROUND_{round}_QR_END_{qr}";
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            AssertRoundTagInput(round);
+            AssertQRTagInput(qr);
+            return $"KEYSTREAM_BLOCK_{keystreamBlock}_ROUND_{round}_QR_END_{qr}";
         }
 
         #endregion IActionTag
