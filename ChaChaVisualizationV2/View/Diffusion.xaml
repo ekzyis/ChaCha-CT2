@@ -112,11 +112,11 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey"/>
+                        <TextBox BorderBrush="Red" Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV"/>
+                        <TextBox BorderBrush="Red" Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}">
@@ -127,7 +127,7 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter"/>
+                        <TextBox BorderBrush="Red" Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="3" Grid.Column="1">
@@ -190,13 +190,15 @@
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
-                                                            <RichTextBox>
-                                                                <FlowDocument>
-                                                                    <Paragraph>
-                                                                        F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
-                                                                    </Paragraph>
-                                                                </FlowDocument>
-                                                            </RichTextBox>
+                                                            <Border Style="{StaticResource DiffusionValueBorder}">
+                                                                <RichTextBox>
+                                                                    <FlowDocument>
+                                                                        <Paragraph>
+                                                                            F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
+                                                                        </Paragraph>
+                                                                    </FlowDocument>
+                                                                </RichTextBox>
+                                                            </Border>
                                                         </StackPanel>
                                                     </Border>
                                                 </InlineUIContainer>

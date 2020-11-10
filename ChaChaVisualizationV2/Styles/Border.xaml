@@ -8,4 +8,7 @@
     <Style x:Key="MatrixBorder" TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
         <Setter Property="Margin" Value="20" />
     </Style>
+    <Style x:Key="DiffusionValueBorder" TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+        <Setter Property="BorderBrush" Value="Red" />
+    </Style>
 </ResourceDictionary>
