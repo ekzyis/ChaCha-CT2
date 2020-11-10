@@ -66,9 +66,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 // Set base extension for this keystream block sequence.
                 ActionCreator.Sequential(() =>
                 {
-                    InsertOriginalState(localKeystreamBlock);
                     CurrentKeystreamBlockIndex = localKeystreamBlock;
                     RoundsStep = true;
+                });
+                // *** Make state insertion as last sequential action such that this action will get overriden by ReplaceLast call. ***
+                ActionCreator.Sequential(() =>
+                {
+                    InsertOriginalState(localKeystreamBlock);
                 });
                 // Add empty action if this is not the very first action because ActionViewModelBase
                 // has already added an empty action at the very beginning.
@@ -180,12 +184,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // End round sequence
                     ActionCreator.EndSequence();
 
-                    // Keep state updates from all quarterrounds of the last round for rest of ChaCha hash sequence.
-                    // This replaces for performance (and bug) reasons the last sequential action in the ChaCha hash sequence
-                    // because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
+                    // Replace previous state update with the state updates from all quarterrounds of the last round for rest of ChaCha hash sequence.
+                    // The previous action should be the the original state insertion. See comment above wrapped with ***.
+                    // We do this because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
                     // in a sequence.
-                    ActionCreator.ReplaceLast(
-                        qrIO.UpdateState(keystreamBlock, round, 3)
+                    ActionCreator.ReplaceLast(qrIO.UpdateState(keystreamBlock, round, 3)
                         .Extend(qrIO.UpdateState(keystreamBlock, round, 2), qrIO.UpdateState(keystreamBlock, round, 1), qrIO.UpdateState(keystreamBlock, round, 0)));
                 }
 
