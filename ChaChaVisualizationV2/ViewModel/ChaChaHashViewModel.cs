@@ -59,7 +59,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 int localKeystreamBlock = keystreamBlock; // fix for https://stackoverflow.com/questions/271440/captured-variable-in-a-loop-in-c-sharp
                 ExtendLastAction(() =>
                 {
-                    InitOriginalState(localKeystreamBlock);
+                    InsertOriginalState(localKeystreamBlock);
                     CurrentKeystreamBlockIndex = localKeystreamBlock;
                 });
                 // The very first action which is empty was added by ActionViewModelBase.
@@ -192,14 +192,14 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         /// </summary>
         private void ResetStateMatrixValues()
         {
-            InitOriginalState(0);
+            InsertOriginalState(0);
         }
 
         /// <summary>
         /// Reset the state matrix to the state at the start of the keystream block.
         /// </summary>
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
-        private void InitOriginalState(int keystreamBlock)
+        private void InsertOriginalState(int keystreamBlock)
         {
             Debug.Assert(ChaChaVisualization.OriginalState.Count == ChaChaVisualization.TotalKeystreamBlocks,
                 $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {ChaChaVisualization.TotalKeystreamBlocks}. Actual: {ChaChaVisualization.OriginalState.Count}");
