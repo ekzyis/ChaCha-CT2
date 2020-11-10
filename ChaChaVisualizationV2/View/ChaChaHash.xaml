@@ -409,32 +409,6 @@
                                 <Setter Property="StrokeThickness" Value="1" />
                                 <Setter Property="Stroke" Value="Black" />
                             </Style>
-                            <Style x:Key="AddLabel" TargetType="{x:Type Label}">
-                                <Setter Property="Width" Value="Auto" />
-                                <Setter Property="FontSize" Value="18" />
-                                <Setter Property="Content" Value="+" />
-                            </Style>
-                            <Style x:Key="XORLabel" TargetType="{x:Type TextBox}" BasedOn="{StaticResource DefaultTextBox}">
-                                <Setter Property="Width" Value="20" />
-                                <Setter Property="Height" Value="15" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="FontSize" Value="8" />
-                                <Setter Property="TextAlignment" Value="Center" />
-                                <Setter Property="Text" Value="XOR" />
-                            </Style>
-                            <Style x:Key="ShiftLabel" TargetType="{x:Type TextBlock}">
-                                <Setter Property="Width" Value="20" />
-                                <Setter Property="Height" Value="20" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="FontSize" Value="8" />
-                                <Setter Property="TextAlignment" Value="Center" />
-                                <Setter Property="Text" Value="&lt;&lt;&lt;" />
-                            </Style>
-                            <Style x:Key="ShiftSubscript" TargetType="{x:Type TextBlock}">
-                                <Setter Property="FontSize" Value="8" />
-                            </Style>
                             <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource UniformViewbox}" />
                         </Viewbox.Resources>
                         <Canvas Width="1500" Height="260">
@@ -2314,6 +2288,8 @@
                         <Canvas Width="1500" Height="260">
                             <Path Data="M 690,132 h 120 h -60 v -553 h -60" />
                             <Path Data="M 1443,132 h 120" />
+                            <Path Style="{StaticResource AddCircle}" />
+                            <Label Canvas.Top="11" Canvas.Left="10" Style="{StaticResource AddLabel}" Foreground="{ Binding ElementName=QRAddCircle_0, Path=Stroke}" />
                         </Canvas>
                     </Viewbox>
                 </Grid>
