@@ -167,6 +167,7 @@
     <Compile Include="ViewModel\ActionViewModelBase.cs" />
     <Compile Include="ViewModel\ChaChaHashViewModel.cs" />
     <Compile Include="ViewModel\Components\ActionCreator.cs" />
+    <Compile Include="ViewModel\Components\Diffusion.cs" />
     <Compile Include="ViewModel\Components\IActionTag.cs" />
     <Compile Include="ViewModel\Components\ChaChaHashActionCreator.cs" />
     <Compile Include="ViewModel\Components\QRStepOperationActionCreator.cs" />
