@@ -13,6 +13,14 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="BigAddCircle" TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
+        <Setter Property="Fill" Value="White" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry Center="21,30" RadiusX="20" RadiusY="20" />
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="XORCircle" TargetType="{x:Type Path}" BasedOn="{StaticResource DefaultPath}">
         <Setter Property="Data">
             <Setter.Value>

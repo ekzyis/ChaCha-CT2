@@ -2288,8 +2288,8 @@
                         <Canvas Width="1500" Height="260">
                             <Path Data="M 690,132 h 120 h -60 v -553 h -60" />
                             <Path Data="M 1443,132 h 120" />
-                            <Path Style="{StaticResource AddCircle}" />
-                            <Label Canvas.Top="11" Canvas.Left="10" Style="{StaticResource AddLabel}" Foreground="{ Binding ElementName=QRAddCircle_0, Path=Stroke}" />
+                            <Path Canvas.Left="729" Canvas.Top="100" Style="{StaticResource BigAddCircle}" />
+                            <Label Canvas.Top="99" Canvas.Left="734" Style="{StaticResource BigAddLabel}" Foreground="{ Binding ElementName=QRAddCircle_0, Path=Stroke}" />
                         </Canvas>
                     </Viewbox>
                 </Grid>
