@@ -1178,12 +1178,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         #region INavigation
 
+        private void AssertEmpty<T>(ObservableCollection<T> list, string name)
+        {
+            Debug.Assert(list.Count == 0, $"{name} should be empty during ChaCha hash setup.");
+        }
+
         public override void Setup()
         {
-            Debug.Assert(StateValues.Count == 0, "StateValues should be empty during ChaCha hash setup.");
-            Debug.Assert(OriginalState.Count == 0, "OriginalState should be empty during ChaCha hash setup.");
-            Debug.Assert(AdditionResultState.Count == 0, "AdditionState should be empty during ChaCha hash setup.");
-            Debug.Assert(LittleEndianState.Count == 0, "LittleEndianState should be empty during ChaCha hash setup.");
+            AssertEmpty(StateValues, "StateValues");
+            AssertEmpty(OriginalState, "OriginalState");
+            AssertEmpty(AdditionResultState, "AdditionResultState");
+            AssertEmpty(LittleEndianState, "LittleEndianState");
+            AssertEmpty(QRStep, "QRStep");
             uint[] state = ChaChaVisualization.OriginalState[0];
             for (int i = 0; i < 16; ++i)
             {
@@ -1192,7 +1198,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 AdditionResultState.Add(new StateValue());
                 LittleEndianState.Add(new StateValue());
             }
-            Debug.Assert(QRStep.Count == 0, "QRStep should be empty during ChaCha hash setup.");
             // There are four steps inside a quarterround. The array indices will be reused between different (quarter)rounds.
             for (int i = 0; i < 4; ++i)
             {
