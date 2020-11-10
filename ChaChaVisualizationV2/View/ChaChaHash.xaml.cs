@@ -1,6 +1,10 @@
 ﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter;
+using Cryptool.Plugins.ChaChaVisualizationV2.Model;
 using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -172,6 +176,40 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private void HandleDiffusionQRStepChange(string propertyName)
         {
+            var match = Regex.Match(propertyName, @"DiffusionQRStep\[([0-9])\]\.(Add|XOR|Shift)");
+            if (match.Success)
+            {
+                int index = int.Parse(match.Groups[1].Value);
+                string operation = match.Groups[2].Value;
+                RichTextBox rtb = (RichTextBox)FindName($"QRValue{operation}Diffusion_{index}");
+                VisualQRStep diffusionQrStep = ViewModel.DiffusionQRStep[index];
+                VisualQRStep primaryQrStep = ViewModel.QRStep[index];
+                uint? diffusionValue; uint? primaryValue;
+                if (operation == "Add")
+                {
+                    diffusionValue = diffusionQrStep.Add.Value;
+                    primaryValue = primaryQrStep.Add.Value;
+                }
+                else if (operation == "XOR")
+                {
+                    diffusionValue = diffusionQrStep.XOR.Value;
+                    primaryValue = primaryQrStep.XOR.Value;
+                }
+                else if (operation == "Shift")
+                {
+                    diffusionValue = diffusionQrStep.Shift.Value;
+                    primaryValue = primaryQrStep.Shift.Value;
+                }
+                else
+                {
+                    throw new InvalidOperationException("No matching operation found.");
+                }
+                InitOrClearDiffusionValue(rtb, diffusionValue, primaryValue);
+            }
+            else
+            {
+                Debug.Assert(propertyName == "DiffusionQRStep");
+            }
         }
 
         #endregion Diffusion
