@@ -30,9 +30,23 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             Title = "ChaCha hash function";
             qrInValues = new QRValue[] { QRInA, QRInB, QRInC, QRInD };
             qrOutValues = new QRValue[] { QROutA, QROutB, QROutC, QROutD };
+            QRIO = new QRIOActionCreator(this);
+            QRAdd = new QRAdditionActionCreator(this);
+            QRXOR = new QRXORActionCreator(this);
+            QRShift = new QRShiftActionCreator(this);
+            StateActionCreator = new StateActionCreator(this);
         }
 
         #region ActionViewModelBase
+
+        private QRIOActionCreator QRIO { get; set; }
+
+        private QRAdditionActionCreator QRAdd { get; set; }
+        private QRXORActionCreator QRXOR { get; set; }
+
+        private QRShiftActionCreator QRShift { get; set; }
+
+        private StateActionCreator StateActionCreator { get; set; }
 
         /// <summary>
         /// This variable is used during `InitActions` to tag actions.
@@ -42,12 +56,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         protected override void InitActions()
         {
-            QRIOActionCreator qrIO = new QRIOActionCreator(this);
-
-            QRAdditionActionCreator qrAdd = new QRAdditionActionCreator(this);
-            QRXORActionCreator qrXOR = new QRXORActionCreator(this);
-            QRShiftActionCreator qrShift = new QRShiftActionCreator(this);
-            StateActionCreator stateActions = new StateActionCreator(this);
             // ChaCha Hash sequence
             ActionCreator.StartSequence();
 
@@ -103,7 +111,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
                         // Copy from state into qr input
                         ActionCreator.StartSequence();
-                        Seq(qrIO.MarkState(round, qr));
+                        Seq(QRIO.MarkState(round, qr));
                         if (qr == 0)
                         {
                             TagRoundStartAction(keystreamBlock, round);
@@ -114,57 +122,57 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         }
                         TagQRStartAction(keystreamBlock, round, qr);
 
-                        Seq(qrIO.InsertQRInputs(keystreamBlock, round, qr).Extend(qrIO.MarkQRInputs));
+                        Seq(QRIO.InsertQRInputs(keystreamBlock, round, qr).Extend(QRIO.MarkQRInputs));
                         ActionCreator.EndSequence();
 
                         // Keep inserted qr input for the rest of the qr sequence
-                        Seq(qrIO.InsertQRInputs(keystreamBlock, round, qr));
+                        Seq(QRIO.InsertQRInputs(keystreamBlock, round, qr));
 
                         // Run quarterround steps
                         for (int qrStep = 0; qrStep < 4; ++qrStep)
                         {
                             // Execute addition
                             ActionCreator.StartSequence();
-                            Seq(qrAdd.MarkInputs(qrStep));
-                            Seq(qrAdd.Insert(keystreamBlock, round, qr, qrStep).Extend(qrAdd.Mark(qrStep)));
+                            Seq(QRAdd.MarkInputs(qrStep));
+                            Seq(QRAdd.Insert(keystreamBlock, round, qr, qrStep).Extend(QRAdd.Mark(qrStep)));
                             ActionCreator.EndSequence();
 
                             // Keep addition values
-                            Seq(qrAdd.Insert(keystreamBlock, round, qr, qrStep));
+                            Seq(QRAdd.Insert(keystreamBlock, round, qr, qrStep));
 
                             // Execute XOR
                             ActionCreator.StartSequence();
-                            Seq(qrXOR.MarkInputs(qrStep));
-                            Seq(qrXOR.Insert(keystreamBlock, round, qr, qrStep).Extend(qrXOR.Mark(qrStep)));
+                            Seq(QRXOR.MarkInputs(qrStep));
+                            Seq(QRXOR.Insert(keystreamBlock, round, qr, qrStep).Extend(QRXOR.Mark(qrStep)));
                             ActionCreator.EndSequence();
 
                             // Keep XOR values
-                            Seq(qrXOR.Insert(keystreamBlock, round, qr, qrStep));
+                            Seq(QRXOR.Insert(keystreamBlock, round, qr, qrStep));
 
                             // Execute shift
                             ActionCreator.StartSequence();
-                            Seq(qrShift.MarkInputs(qrStep));
-                            Seq(qrShift.Insert(keystreamBlock, round, qr, qrStep).Extend(qrShift.Mark(qrStep)));
+                            Seq(QRShift.MarkInputs(qrStep));
+                            Seq(QRShift.Insert(keystreamBlock, round, qr, qrStep).Extend(QRShift.Mark(qrStep)));
                             ActionCreator.EndSequence();
 
                             // Keep shift values
-                            Seq(qrShift.Insert(keystreamBlock, round, qr, qrStep));
+                            Seq(QRShift.Insert(keystreamBlock, round, qr, qrStep));
                         }
 
                         // Fill quarterround output
                         ActionCreator.StartSequence();
-                        Seq(qrIO.MarkQROutputPaths);
-                        Seq(qrIO.InsertQROutputs(keystreamBlock, round, qr).Extend(qrIO.MarkQROutputs));
+                        Seq(QRIO.MarkQROutputPaths);
+                        Seq(QRIO.InsertQROutputs(keystreamBlock, round, qr).Extend(QRIO.MarkQROutputs));
                         ActionCreator.EndSequence();
 
                         // Keep qr output values
-                        Seq(qrIO.InsertQROutputs(keystreamBlock, round, qr));
+                        Seq(QRIO.InsertQROutputs(keystreamBlock, round, qr));
 
                         // Copy from qr output to state
                         ActionCreator.StartSequence();
-                        Seq(qrIO.MarkQROutputs);
+                        Seq(QRIO.MarkQROutputs);
 
-                        Seq(qrIO.UpdateState(keystreamBlock, round, qr).Extend(qrIO.MarkState(round, qr)));
+                        Seq(QRIO.UpdateState(keystreamBlock, round, qr).Extend(QRIO.MarkState(round, qr)));
                         if (qr == 3) TagRoundEndStartAction(keystreamBlock, round);
                         TagQREndAction(keystreamBlock, round, qr);
 
@@ -179,7 +187,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                         //   But it for some reasons first applies the latest state and then the state updates fro last round in the correct order.
                         //   So basically like this: 4, 0, 3, 2, 1.
                         //   This leads to an overwrite of the diagonal.
-                        Seq(qrIO.UpdateState(keystreamBlock, round, qr));
+                        Seq(QRIO.UpdateState(keystreamBlock, round, qr));
                     }
                     // End round sequence
                     ActionCreator.EndSequence();
@@ -189,8 +197,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                     // We do this because the complete state will be modified in every round anyway and thus we would just "overdraw" if we apply all state updates from each round
                     // in a sequence.
                     // TODO(refactor) This can probably be handled way more elegant.
-                    ActionCreator.ReplaceLast(qrIO.UpdateState(keystreamBlock, round, 3)
-                        .Extend(qrIO.UpdateState(keystreamBlock, round, 2), qrIO.UpdateState(keystreamBlock, round, 1), qrIO.UpdateState(keystreamBlock, round, 0)));
+                    ActionCreator.ReplaceLast(QRIO.UpdateState(keystreamBlock, round, 3)
+                        .Extend(QRIO.UpdateState(keystreamBlock, round, 2), QRIO.UpdateState(keystreamBlock, round, 1), QRIO.UpdateState(keystreamBlock, round, 0)));
                 }
 
                 // Addition + little-endian step
@@ -198,15 +206,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 // Base extension.
                 ActionCreator.Sequential(() =>
                 {
-                    stateActions.HideOriginalState();
-                    stateActions.HideAdditionResult();
-                    stateActions.HideLittleEndian();
+                    StateActionCreator.HideOriginalState();
+                    StateActionCreator.HideAdditionResult();
+                    StateActionCreator.HideLittleEndian();
                 });
 
                 Seq(() => { RoundsStep = false; });
-                Seq(stateActions.ShowOriginalState(localKeystreamBlock));
-                Seq(stateActions.ShowAdditionResult(localKeystreamBlock));
-                Seq(stateActions.ShowLittleEndian(localKeystreamBlock));
+                Seq(StateActionCreator.ShowOriginalState(localKeystreamBlock));
+                Seq(StateActionCreator.ShowAdditionResult(localKeystreamBlock));
+                Seq(StateActionCreator.ShowLittleEndian(localKeystreamBlock));
 
                 ActionCreator.EndSequence();
 
