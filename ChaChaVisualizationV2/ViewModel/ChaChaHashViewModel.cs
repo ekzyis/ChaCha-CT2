@@ -1040,13 +1040,13 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Setup()
         {
-            Debug.Assert(StateValues.Count == 0, "StateValues should be empty during ChaCha hash setup.");
             uint[] state = ChaChaVisualization.OriginalState[0];
+            StateValues.Clear();
             for (int i = 0; i < state.Length; ++i)
             {
                 StateValues.Add(new StateValue(state[i]));
             }
-            Debug.Assert(QRStep.Count == 0, "QRStep should be empty during ChaCha hash setup.");
+            QRStep.Clear();
             // There are four steps inside a quarterround. The array indices will be reused between different (quarter)rounds.
             for (int i = 0; i < 4; ++i)
             {
