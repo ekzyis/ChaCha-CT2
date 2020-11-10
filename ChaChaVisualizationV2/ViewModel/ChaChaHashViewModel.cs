@@ -282,10 +282,16 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         private void NextKeystreamBlock()
         {
+            int nextKeystreamBlockIndex = CurrentKeystreamBlockIndex == null ? 0 : (int)CurrentKeystreamBlockIndex + 1;
+            int nextKeystreamBlockActionIndex = GetTaggedActionIndex(KeystreamBlockStartTag(nextKeystreamBlockIndex));
+            MoveToAction(nextKeystreamBlockActionIndex);
         }
 
         private void PrevKeystreamBlock()
         {
+            int prevKeystreamBlockIndex = (int)CurrentKeystreamBlockIndex - 1;
+            int prevKeystreamBlockActionIndex = GetTaggedActionIndex(KeystreamBlockStartTag(prevKeystreamBlockIndex));
+            MoveToAction(prevKeystreamBlockActionIndex);
         }
 
         private ValidationRule _keystreamBlockInputRule; private ValidationRule KeystreamBlockInputRule
