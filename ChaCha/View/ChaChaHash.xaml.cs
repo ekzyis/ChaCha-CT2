@@ -1,6 +1,6 @@
-﻿using Cryptool.Plugins.ChaChaVisualizationV2.Helper.Converter;
-using Cryptool.Plugins.ChaChaVisualizationV2.Model;
-using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel;
+﻿using Cryptool.Plugins.ChaCha.Visualization.Helper.Converter;
+using Cryptool.Plugins.ChaCha.Visualization.Model;
+using Cryptool.Plugins.ChaCha.Visualization.ViewModel;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
             // TODO(clarify) Why can the stateValue be null if the diffusionValue is not null? Shouldn't they always be together null or not?
             if (diffusionStateValue != null && stateValue != null)
             {
-                Plugins.ChaChaVisualizationV2.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
+                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
             }
             else
             {
