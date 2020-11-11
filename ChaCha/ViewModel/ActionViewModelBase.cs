@@ -200,14 +200,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                             AsyncMoveCommands.Clear();
                         }
                     }
-                    var watch = System.Diagnostics.Stopwatch.StartNew();
                     MoveToAction(n);
-                    watch.Stop();
-                    var elapsedMs = watch.ElapsedMilliseconds;
-                    if (elapsedMs != 0)
-                    {
-                        // Console.WriteLine($"'MoveToAction({n})' took {elapsedMs} ms");
-                    }
                 }, cancellationToken);
             }
             while (true)
