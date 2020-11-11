@@ -414,6 +414,13 @@
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
+                            <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        After all rounds, we add the original state to the generated state and reverse the byte order of each state entry.
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
                         </StackPanel>
                     </Viewbox>
                 </Grid>
