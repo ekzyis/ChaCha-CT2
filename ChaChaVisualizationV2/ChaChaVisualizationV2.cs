@@ -316,8 +316,18 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
         public void ExecuteDiffusion(byte[] diffusionKey, byte[] diffusionIv, ulong diffusionInitialCounter)
         {
             DiffusionExecution = true;
+            ClearDiffusionResults();
             Xcrypt(diffusionKey, diffusionIv, diffusionInitialCounter, (ChaChaSettings)Settings, InputStream, new CStreamWriter());
             DiffusionExecution = false;
+        }
+
+        private void ClearDiffusionResults()
+        {
+            OriginalStateDiffusion.Clear();
+            AdditionResultStateDiffusion.Clear();
+            LittleEndianStateDiffusion.Clear();
+            QRInputDiffusion.Clear();
+            QROutputDiffusion.Clear();
         }
 
         #endregion Public Variables / Binding Properties
