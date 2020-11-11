@@ -181,7 +181,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
-        public async void StartActionBufferHandler(int millisecondsPeriod)
+        private async void StartActionBufferHandler(int millisecondsPeriod)
         {
             // first stop action thread if one exists
             StopActionBufferHandler();
@@ -218,7 +218,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
-        public void StopActionBufferHandler()
+        private void StopActionBufferHandler()
         {
             ActionNavigationTokenSource?.Cancel();
         }
