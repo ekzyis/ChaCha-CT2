@@ -1345,10 +1345,15 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             base.Teardown();
             // Clear lists to undo Setup.
             StateValues.Clear();
+            DiffusionStateValues.Clear();
             QRStep.Clear();
+            DiffusionQRStep.Clear();
             OriginalState.Clear();
+            DiffusionOriginalState.Clear();
             AdditionResultState.Clear();
+            DiffusionAdditionResultState.Clear();
             LittleEndianState.Clear();
+            DiffusionLittleEndianState.Clear();
         }
 
         #endregion INavigation
