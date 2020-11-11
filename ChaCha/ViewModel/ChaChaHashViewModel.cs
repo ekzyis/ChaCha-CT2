@@ -16,8 +16,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
     {
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
-            Name = "ChaCha hash";
-            Title = "ChaCha hash function";
+            Name = "ChaCha Hash";
+            Title = "ChaCha Hash Function";
 
             QRIO = new QRIOActionCreator(this);
             QRAdd = new QRAdditionActionCreator(this);
