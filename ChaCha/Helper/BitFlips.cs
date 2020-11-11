@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper
+namespace Cryptool.Plugins.ChaCha.Helper
 {
     /// <summary>
     /// Class with functions related to bit flips.

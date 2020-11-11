@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper.Converter
+namespace Cryptool.Plugins.ChaCha.Helper.Converter
 {
     internal class IsEven : IValueConverter
     {

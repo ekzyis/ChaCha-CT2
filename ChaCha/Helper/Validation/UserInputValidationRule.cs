@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper.Validation
+namespace Cryptool.Plugins.ChaCha.Helper.Validation
 {
     internal class UserInputValidationRule : ValidationRule
     {
@@ -24,8 +24,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.Helper.Validation
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            int input = 0;
-
+            int input;
             try
             {
                 input = int.Parse((string)value);

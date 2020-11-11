@@ -83,9 +83,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChaCha.cs" />
     <Compile Include="ChaChaSettings.cs" />
-    <Compile Include="ChaChaVisualization.cs" />
+    <Compile Include="ChaCha.cs" />
     <Compile Include="ContentTemplate\PageContentTemplate.xaml.cs">
       <DependentUpon>PageContentTemplate.xaml</DependentUpon>
     </Compile>

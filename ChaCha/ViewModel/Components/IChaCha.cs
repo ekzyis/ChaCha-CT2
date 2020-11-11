@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+﻿namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Interface for page view models which need an instance of ChaCha, ChaChaVisualization or ChaChaSettings
@@ -6,8 +6,6 @@
     internal interface IChaCha
     {
         ChaChaPresentationViewModel PresentationViewModel { get; }
-
-        ChaChaVisualization ChaChaVisualization { get; }
 
         ChaCha ChaCha { get; }
 

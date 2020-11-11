@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+﻿namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Interface for page view models which have a title.

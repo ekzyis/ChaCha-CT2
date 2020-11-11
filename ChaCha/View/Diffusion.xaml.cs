@@ -1,14 +1,14 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper;
-using Cryptool.Plugins.ChaCha.Visualization.Helper.Converter;
-using Cryptool.Plugins.ChaCha.Visualization.Helper.Validation;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.Helper.Converter;
+using Cryptool.Plugins.ChaCha.Helper.Validation;
+using Cryptool.Plugins.ChaCha.ViewModel;
 using System.Numerics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.View
+namespace Cryptool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for Diffusion.xaml
@@ -28,19 +28,19 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
             {
                 Version v = ViewModel.Settings.Version;
 
-                DiffusionInputKey.Text = Formatter.HexString(ViewModel.ChaChaVisualization.InputKey);
-                int keyLength = ViewModel.ChaChaVisualization.InputKey.Length;
+                DiffusionInputKey.Text = Formatter.HexString(ViewModel.ChaCha.InputKey);
+                int keyLength = ViewModel.ChaCha.InputKey.Length;
                 ValidationRule keyRule = new DiffusionInputValidationRule(keyLength);
                 IValueConverter keyConverter = new DiffusionBytesConverter(keyLength);
                 InitDiffusionInputField(DiffusionInputKey, keyRule, keyConverter, "DiffusionInputKey");
 
-                DiffusionInputIV.Text = Formatter.HexString(ViewModel.ChaChaVisualization.InputIV);
-                int ivLength = ViewModel.ChaChaVisualization.InputIV.Length;
+                DiffusionInputIV.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
+                int ivLength = ViewModel.ChaCha.InputIV.Length;
                 ValidationRule ivRule = new DiffusionInputValidationRule(ivLength);
                 IValueConverter ivConverter = new DiffusionBytesConverter(ivLength);
                 InitDiffusionInputField(DiffusionInputIV, ivRule, ivConverter, "DiffusionInputIV");
 
-                BigInteger initialCounter = ViewModel.ChaChaVisualization.InitialCounter;
+                BigInteger initialCounter = ViewModel.ChaCha.InitialCounter;
                 DiffusionInitialCounter.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
                 int counterLength = (int)v.CounterBits / 8;
                 ValidationRule counterRule = new DiffusionInputValidationRule(counterLength);

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.View
+namespace Cryptool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for Start.xaml

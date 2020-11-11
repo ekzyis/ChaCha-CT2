@@ -1,6 +1,6 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.ViewModel.Components;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     internal class OverviewViewModel : ViewModelBase, INavigation, ITitle
     {

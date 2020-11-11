@@ -1,19 +1,19 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     internal class ChaChaPresentationViewModel : ViewModelBase, IChaCha
     {
-        public ChaChaPresentationViewModel(ChaChaVisualization chachaVisualization)
+        public ChaChaPresentationViewModel(ChaCha chaCha)
         {
-            ChaChaVisualization = chachaVisualization;
-            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(OnPluginPropertyChanged);
+            ChaCha = chaCha;
+            ChaCha.PropertyChanged += new PropertyChangedEventHandler(OnPluginPropertyChanged);
             // Add available pages
             Pages.Add(new StartViewModel());
             Pages.Add(new OverviewViewModel());
@@ -85,7 +85,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
 
         public bool NavigationEnabled
         {
-            get => ChaChaVisualization.ExecutionFinished && ChaChaVisualization.IsValid;
+            get => ChaCha.ExecutionFinished && ChaCha.IsValid;
         }
 
         #endregion Binding Properties
@@ -137,9 +137,8 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
         #region IChaCha
 
         public ChaChaPresentationViewModel PresentationViewModel { get => this; }
-        public ChaChaVisualization ChaChaVisualization { get; private set; }
-        public ChaCha ChaCha { get => ChaChaVisualization; }
-        public ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
+        public ChaCha ChaCha { get; set; }
+        public ChaChaSettings Settings { get => (ChaChaSettings)ChaCha.Settings; }
 
         #endregion IChaCha
     }

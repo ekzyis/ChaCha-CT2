@@ -17,7 +17,9 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.ChaCha.Model;
 using Cryptool.Plugins.ChaCha.Util;
+using Cryptool.Plugins.ChaCha.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,10 +32,21 @@ using System.Text;
 namespace Cryptool.Plugins.ChaCha
 {
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("ChaCha", "A stream cipher based on Salsa used in TLS and developed by Daniel J. Bernstein.", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("ChaCha", "A stream cipher based on Salsa used in TLS and developed by Daniel J. Bernstein.", "ChaChaVisualization/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class ChaCha : ICrypComponent, IValidatableObject
+    public class ChaCha : ICrypComponent, IValidatableObject, INotifyPropertyChanged
     {
+        #region Private Variables
+
+        private readonly ChaChaPresentation presentation;
+
+        #endregion Private Variables
+
+        public ChaCha()
+        {
+            presentation = new ChaChaPresentation(this);
+        }
+
         #region Private Variables
 
         private readonly ChaChaSettings settings = new ChaChaSettings();
@@ -44,12 +57,6 @@ namespace Cryptool.Plugins.ChaCha
         private CStreamWriter outputWriter;
 
         #endregion Private Variables
-
-        #region Public Variables
-
-        public virtual bool ExecutionFinished { get; set; }
-
-        #endregion Public Variables
 
         #region ICrypComponent I/O
 
@@ -126,7 +133,7 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="settings">Chosen Settings in the Plugin workspace. Includes Rounds and Version property.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        protected virtual void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -158,6 +165,11 @@ namespace Cryptool.Plugins.ChaCha
             // Buffer to read 512-bit input block
             byte[] inputBytes = new byte[64];
             CStreamReader inputReader = input.CreateReader();
+
+            // byte size of input
+            long inputSize = inputReader.Length;
+            // one keystream block is 64 bytes (512 bit)
+            TotalKeystreamBlocks = (int)Math.Ceiling((double)(inputSize) / 64);
 
             ulong blockCounter = initialCounter;
             int read = inputReader.Read(inputBytes);
@@ -339,7 +351,7 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         /// <param name="state">The state which will be hashed</param>
         /// <param name="rounds">Rounds of hash function</param>
-        protected virtual void ChaChaHash(ref uint[] state, int rounds)
+        private void ChaChaHash(ref uint[] state, int rounds)
         {
             if (!(rounds == 8 || rounds == 12 || rounds == 20))
             {
@@ -348,6 +360,8 @@ namespace Cryptool.Plugins.ChaCha
 
             // The original state before ChaCha hash function was applied. Needed for state addition afterwards.
             uint[] originalState = (uint[])state.Clone();
+
+            OriginalState.Add(originalState);
             for (int i = 0; i < rounds / 2; ++i)
             {
                 // Column rounds
@@ -370,29 +384,33 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Add the two 512-bit states together.
         /// </summary>
-        protected virtual void AdditionStep(ref uint[] state, uint[] originalState)
+        private void AdditionStep(ref uint[] state, uint[] originalState)
         {
             for (int i = 0; i < 16; ++i)
             {
                 state[i] += originalState[i];
             }
+            uint[] additionResultState = (uint[])(state.Clone());
+            AdditionResultState.Add(additionResultState);
         }
 
         /// <summary>
         /// Reverse byte order of each UInt32.
         /// </summary>
-        protected virtual void LittleEndianStep(ref uint[] state)
+        private void LittleEndianStep(ref uint[] state)
         {
             for (int i = 0; i < 16; ++i)
             {
                 state[i] = ByteUtil.ToUInt32LE(state[i]);
             }
+            uint[] littleEndianState = (uint[])(state.Clone());
+            LittleEndianState.Add(littleEndianState);
         }
 
         /// <summary>
         /// Run a quarterround(a,b,c,d) with the given indices on the state.
         /// </summary>
-        protected void Quarterround(ref uint[] state, int i, int j, int k, int l)
+        private void Quarterround(ref uint[] state, int i, int j, int k, int l)
         {
             (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
         }
@@ -400,12 +418,14 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Calculate the quarterround of the four inputs.
         /// </summary>
-        protected virtual (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
+        private (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
         {
+            QRInput.Add((a, b, c, d));
             (a, b, d) = QuarterroundStep(a, b, d, 16);
             (c, d, b) = QuarterroundStep(c, d, b, 12);
             (a, b, d) = QuarterroundStep(a, b, d, 8);
             (c, d, b) = QuarterroundStep(c, d, b, 7);
+            QROutput.Add((a, b, c, d));
             return (a, b, c, d);
         }
 
@@ -415,8 +435,12 @@ namespace Cryptool.Plugins.ChaCha
         protected virtual (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
         {
             x1 += x2;
+            uint add = x1;
             x3 ^= x1;
+            uint xor = x3;
             x3 = ByteUtil.RotateLeft(x3, shift);
+            uint shift_ = x3;
+            QRStep.Add(new QRStep(add, xor, shift_));
             return (x1, x2, x3);
         }
 
@@ -437,7 +461,7 @@ namespace Cryptool.Plugins.ChaCha
         /// </summary>
         public virtual System.Windows.Controls.UserControl Presentation
         {
-            get { return null; }
+            get { return presentation; }
         }
 
         /// <summary>
@@ -461,6 +485,7 @@ namespace Cryptool.Plugins.ChaCha
             Validate();
             if (IsValid)
             {
+                ClearIntermediateResults();
                 outputWriter = new CStreamWriter();
                 // If InitialCounter is not set by user, it defaults to zero.
                 // Since maximum initial counter by any version is 64-bit, we cast it to UInt64.
@@ -507,7 +532,21 @@ namespace Cryptool.Plugins.ChaCha
 
         #region Validation
 
-        public virtual bool IsValid { get; set; }
+        private bool _isValid; public bool IsValid
+        {
+            get
+            {
+                return _isValid;
+            }
+            set
+            {
+                if (_isValid != value)
+                {
+                    _isValid = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         /// <summary>
         /// Validates user input.
@@ -526,6 +565,11 @@ namespace Cryptool.Plugins.ChaCha
             else
             {
                 GuiLogMessage($"Input invalid: {string.Join(", ", results.Select(r => r.ErrorMessage))}", NotificationLevel.Error);
+                IsValid = false;
+            }
+            if (InputStream.Length == 0)
+            {
+                GuiLogMessage("Input message must not be empty.", NotificationLevel.Error);
                 IsValid = false;
             }
             return results;
@@ -568,5 +612,193 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         #endregion Event Handling
+
+        #region Intermediate values from cipher execution
+
+        private void ClearIntermediateResults()
+        {
+            OriginalState.Clear();
+            QRInput.Clear();
+            QRStep.Clear();
+            QROutput.Clear();
+        }
+
+        private List<uint[]> _stateDiffusion; public List<uint[]> OriginalStateDiffusion
+        {
+            get
+            {
+                if (_stateDiffusion == null) _stateDiffusion = new List<uint[]>();
+                return _stateDiffusion;
+            }
+        }
+
+        private List<uint[]> _state; public List<uint[]> OriginalState
+        {
+            get
+            {
+                if (DiffusionExecution) return OriginalStateDiffusion;
+                if (_state == null) _state = new List<uint[]>();
+                return _state;
+            }
+        }
+
+        private List<uint[]> _additionResultStateDiffusion; public List<uint[]> AdditionResultStateDiffusion
+        {
+            get
+            {
+                if (_additionResultStateDiffusion == null) _additionResultStateDiffusion = new List<uint[]>();
+                return _additionResultStateDiffusion;
+            }
+        }
+
+        private List<uint[]> _additionResultState; public List<uint[]> AdditionResultState
+        {
+            get
+            {
+                if (DiffusionExecution) return AdditionResultStateDiffusion;
+                if (_additionResultState == null) _additionResultState = new List<uint[]>();
+                return _additionResultState;
+            }
+        }
+
+        private List<uint[]> _littleEndianStateDiffusion; public List<uint[]> LittleEndianStateDiffusion
+        {
+            get
+            {
+                if (_littleEndianStateDiffusion == null) _littleEndianStateDiffusion = new List<uint[]>();
+                return _littleEndianStateDiffusion;
+            }
+        }
+
+        private List<uint[]> _littleEndianState; public List<uint[]> LittleEndianState
+        {
+            get
+            {
+                if (DiffusionExecution) return LittleEndianStateDiffusion;
+                if (_littleEndianState == null) _littleEndianState = new List<uint[]>();
+                return _littleEndianState;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrInputDiffusion; public List<(uint, uint, uint, uint)> QRInputDiffusion
+        {
+            get
+            {
+                if (_qrInputDiffusion == null) _qrInputDiffusion = new List<(uint, uint, uint, uint)>();
+                return _qrInputDiffusion;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrInput; public List<(uint, uint, uint, uint)> QRInput
+        {
+            get
+            {
+                if (DiffusionExecution) return QRInputDiffusion;
+                if (_qrInput == null) _qrInput = new List<(uint, uint, uint, uint)>();
+                return _qrInput;
+            }
+        }
+
+        private List<QRStep> _qrStepDiffusion; public List<QRStep> QRStepDiffusion
+        {
+            get
+            {
+                if (_qrStepDiffusion == null) _qrStepDiffusion = new List<QRStep>();
+                return _qrStepDiffusion;
+            }
+        }
+
+        private List<QRStep> _qrStep; public List<QRStep> QRStep
+        {
+            get
+            {
+                if (DiffusionExecution) return QRStepDiffusion;
+                if (_qrStep == null) _qrStep = new List<QRStep>();
+                return _qrStep;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrOutputDiffusion; public List<(uint, uint, uint, uint)> QROutputDiffusion
+        {
+            get
+            {
+                if (_qrOutputDiffusion == null) _qrOutputDiffusion = new List<(uint, uint, uint, uint)>();
+                return _qrOutputDiffusion;
+            }
+        }
+
+        private List<(uint, uint, uint, uint)> _qrOutput; public List<(uint, uint, uint, uint)> QROutput
+        {
+            get
+            {
+                if (DiffusionExecution) return QROutputDiffusion;
+                if (_qrOutput == null) _qrOutput = new List<(uint, uint, uint, uint)>();
+                return _qrOutput;
+            }
+        }
+
+        #endregion Intermediate values from cipher execution
+
+        #region Public Variables / Binding Properties
+
+        private bool _executionFinished; public bool ExecutionFinished
+        {
+            get
+            {
+                return _executionFinished;
+            }
+            set
+            {
+                if (_executionFinished != value)
+                {
+                    _executionFinished = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private int _totalKeystreamBlocks; public int TotalKeystreamBlocks
+        {
+            get
+            {
+                return _totalKeystreamBlocks;
+            }
+            set
+            {
+                if (_totalKeystreamBlocks != value)
+                {
+                    _totalKeystreamBlocks = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// If this variable is set, the getter of the lists will return a different list for the diffusion values.
+        /// This makes the cipher methods agnostic of where they store the intermediate values.
+        /// </summary>
+        public bool DiffusionExecution { get; set; }
+
+        /// <summary>
+        /// Execute ChaCha with diffusion values.
+        /// </summary>
+        public void ExecuteDiffusion(byte[] diffusionKey, byte[] diffusionIv, ulong diffusionInitialCounter)
+        {
+            DiffusionExecution = true;
+            ClearDiffusionResults();
+            Xcrypt(diffusionKey, diffusionIv, diffusionInitialCounter, (ChaChaSettings)Settings, InputStream, new CStreamWriter());
+            DiffusionExecution = false;
+        }
+
+        private void ClearDiffusionResults()
+        {
+            OriginalStateDiffusion.Clear();
+            AdditionResultStateDiffusion.Clear();
+            LittleEndianStateDiffusion.Clear();
+            QRInputDiffusion.Clear();
+            QROutputDiffusion.Clear();
+        }
+
+        #endregion Public Variables / Binding Properties
     }
 }

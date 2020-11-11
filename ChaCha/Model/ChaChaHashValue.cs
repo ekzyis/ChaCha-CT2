@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Model
+namespace Cryptool.Plugins.ChaCha.Model
 {
     /// <summary>
     /// Abstract class for all values which are calculated during the ChaCha hash function.

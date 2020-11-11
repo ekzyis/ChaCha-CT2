@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Controls;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper.Validation
+namespace Cryptool.Plugins.ChaCha.Helper.Validation
 {
     internal class StringLengthValidationRule : ValidationRule
     {

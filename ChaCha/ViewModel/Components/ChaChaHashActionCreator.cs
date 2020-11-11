@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Base class for all ChaCha Hash action creators.
@@ -17,7 +17,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
 
         protected void AssertKeystreamBlockInput(int keystreamBlock)
         {
-            int maxKeystreamBlock = VM.ChaChaVisualization.TotalKeystreamBlocks - 1;
+            int maxKeystreamBlock = VM.ChaCha.TotalKeystreamBlocks - 1;
             if (keystreamBlock < 0 || keystreamBlock > maxKeystreamBlock)
             {
                 throw new ArgumentOutOfRangeException("keystreamBlock", $"keystreamBlock must be between 0 and {maxKeystreamBlock}. Received {keystreamBlock}.");

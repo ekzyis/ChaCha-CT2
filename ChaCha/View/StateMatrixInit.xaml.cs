@@ -1,12 +1,12 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.ViewModel;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.View
+namespace Cryptool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for StateMatrixInitialization.xaml
@@ -50,9 +50,9 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
         private void InitDiffusionStateParameters()
         {
             Version v = ViewModel.Settings.Version;
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
         }
 
         /// <summary>
@@ -70,15 +70,15 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
         /// </summary>
         private void InitDiffusionStateEncodingKey()
         {
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
 
             string dKeyHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputKey), 8);
             string pKeyHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputKey), 8);
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingChunkify, dKeyHexChunks, pKeyHexChunks);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingChunkify, dKeyHexChunks, pKeyHexChunks);
 
             string dKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
             string pKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dKeyHexChunksLE, pKeyHexChunksLE);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dKeyHexChunksLE, pKeyHexChunksLE);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
         {
             Version v = ViewModel.Settings.Version;
 
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingInput, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingInput, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
 
             if (v.CounterBits == 64)
             {
@@ -97,15 +97,15 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
 
                 string dCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(diffusionInitialCounter));
                 string pCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(initialCounter));
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
 
                 string dCounterHexChunks = Formatter.Chunkify(dCounterHexReverse, 8);
                 string pCounterHexChunks = Formatter.Chunkify(pCounterHexReverse, 8);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
 
                 string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
                 string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
             }
             else
             {
@@ -114,15 +114,15 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
 
                 string dCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(diffusionInitialCounter));
                 string pCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(initialCounter));
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
 
                 string dCounterHexChunks = Formatter.Chunkify(dCounterHexReverse, 8);
                 string pCounterHexChunks = Formatter.Chunkify(pCounterHexReverse, 8);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
 
                 string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(Formatter.ReverseBytes(diffusionInitialCounter))), 8);
                 string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(Formatter.ReverseBytes(initialCounter))), 8);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
             }
         }
 
@@ -131,15 +131,15 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
         /// </summary>
         private void InitDiffusionStateEncodingIV()
         {
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingInput, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingInput, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
 
             string dIVHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputIV), 8);
             string pIVHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputIV), 8);
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingChunkify, dIVHexChunks, pIVHexChunks);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingChunkify, dIVHexChunks, pIVHexChunks);
 
             string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputIV)), 8);
             string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputIV)), 8);
-            Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingLittleEndian, dIVHexChunksLE, pIVHexChunksLE);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingLittleEndian, dIVHexChunksLE, pIVHexChunksLE);
         }
 
         /// <summary>
@@ -166,14 +166,14 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
             for (int i = 0; i < encodedDkey.Length; ++i)
             {
                 RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 4}");
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
             }
             if (encodedDkey.Length == 4)
             {
                 for (int i = 0; i < encodedDkey.Length; ++i)
                 {
                     RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 8}");
-                    Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
+                    Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
                 }
             }
         }
@@ -196,8 +196,8 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
                 string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
                 Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "key and diffusion key length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 2, $"Encoded diffusion counter length should be 8 bytes for 64-bit counter. Is {encodedDCounter.Length}");
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDCounter[1], encodedPCounter[1]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDCounter[1], encodedPCounter[1]);
             }
             else
             {
@@ -210,7 +210,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
                 string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
                 Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "counter and diffusion counter length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 1, $"Encoded diffusion counter length should be 4 bytes for 32-bit counter. Is {encodedDCounter.Length}");
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
             }
         }
 
@@ -228,15 +228,15 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
             if (v.CounterBits == 64)
             {
                 Debug.Assert(encodedDIV.Length == 2, $"Encoded diffusion iv length should be 8 bytes for 64-bit counter. Is {encodedDIV.Length}");
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[0], encodedPIV[0]);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[1], encodedPIV[1]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[0], encodedPIV[0]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[1], encodedPIV[1]);
             }
             else
             {
                 Debug.Assert(encodedDIV.Length == 3, $"Encoded diffusion iv length should be 12 bytes for 64-bit counter. Is {encodedDIV.Length}");
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDIV[0], encodedPIV[0]);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[1], encodedPIV[1]);
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[2], encodedPIV[2]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDIV[0], encodedPIV[0]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[1], encodedPIV[1]);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[2], encodedPIV[2]);
             }
         }
     }

@@ -1,9 +1,9 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle
     {
@@ -539,7 +539,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
 
         private void InitStateMatrixValues()
         {
-            uint[] state = ChaChaVisualization.OriginalState[0];
+            uint[] state = ChaCha.OriginalState[0];
             StateMatrixValues.Clear();
             for (int i = 0; i < state.Length; ++i)
             {

@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     /// <summary>
     /// Base class for all view models.

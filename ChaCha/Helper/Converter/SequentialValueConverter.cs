@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper.Converter
+namespace Cryptool.Plugins.ChaCha.Helper.Converter
 {
     /// <summary>
     /// IValueConverter which combines multiple IValueConverters.

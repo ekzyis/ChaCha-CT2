@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     public class ActionCreator : IActionCreator
     {

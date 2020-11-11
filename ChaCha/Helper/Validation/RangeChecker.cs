@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper.Validation
+namespace Cryptool.Plugins.ChaCha.Helper.Validation
 {
     public class RangeChecker : DependencyObject
     {

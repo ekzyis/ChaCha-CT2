@@ -1,6 +1,6 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper.Converter;
-using Cryptool.Plugins.ChaCha.Visualization.Model;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel;
+﻿using Cryptool.Plugins.ChaCha.Helper.Converter;
+using Cryptool.Plugins.ChaCha.Model;
+using Cryptool.Plugins.ChaCha.ViewModel;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.View
+namespace Cryptool.Plugins.ChaCha.View
 {
     /// <summary>
     /// Interaction logic for ChaChaHash.xaml
@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
             // TODO(clarify) Why can the stateValue be null if the diffusionValue is not null? Shouldn't they always be together null or not?
             if (diffusionStateValue != null && stateValue != null)
             {
-                Visualization.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
             }
             else
             {
@@ -239,7 +239,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.View
         private void InitKeystreamBlockInput()
         {
             TextBox keystreamBlockInput = (TextBox)this.FindName("KeystreamBlockInput");
-            int maxKeystreamBlock = ViewModel.ChaChaVisualization.TotalKeystreamBlocks;
+            int maxKeystreamBlock = ViewModel.ChaCha.TotalKeystreamBlocks;
             Binding binding = new Binding("CurrentKeystreamBlockIndex")
             {
                 Mode = BindingMode.TwoWay,

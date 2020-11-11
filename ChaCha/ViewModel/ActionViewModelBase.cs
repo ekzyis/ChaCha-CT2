@@ -1,6 +1,6 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper;
-using Cryptool.Plugins.ChaCha.Visualization.Helper.Validation;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.Helper.Validation;
+using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     /// <summary>
     /// View model base for all view models which implement action navigation
@@ -389,9 +389,8 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
         #region IChaCha
 
         public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
-        public ChaChaVisualization ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
-        public ChaCha ChaCha { get => ChaChaVisualization; }
-        public ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
+        public ChaCha ChaCha { get => PresentationViewModel.ChaCha; }
+        public ChaChaSettings Settings { get => (ChaChaSettings)ChaCha.Settings; }
 
         #endregion IChaCha
     }

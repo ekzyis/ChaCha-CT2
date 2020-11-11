@@ -1,26 +1,26 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha
     {
         public DiffusionViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
             PresentationViewModel = chachaPresentationViewModel;
-            ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(PluginInputChanged);
+            ChaCha.PropertyChanged += new PropertyChangedEventHandler(PluginInputChanged);
             Name = "Diffusion";
             Title = "Diffusion";
         }
 
         private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
         {
-            DiffusionInputKey = ChaChaVisualization.InputKey;
-            DiffusionInputIV = ChaChaVisualization.InputIV;
-            DiffusionInitialCounter = ChaChaVisualization.InitialCounter;
+            DiffusionInputKey = ChaCha.InputKey;
+            DiffusionInputIV = ChaCha.InputIV;
+            DiffusionInitialCounter = ChaCha.InitialCounter;
         }
 
         #region Binding Properties
@@ -84,7 +84,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
 
         public int FlippedBits
         {
-            get => BitFlips.FlippedBits(DiffusionInputKey, ChaChaVisualization.InputKey) + BitFlips.FlippedBits(DiffusionInputIV, ChaChaVisualization.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaChaVisualization.InitialCounter);
+            get => BitFlips.FlippedBits(DiffusionInputKey, ChaCha.InputKey) + BitFlips.FlippedBits(DiffusionInputIV, ChaCha.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaCha.InitialCounter);
         }
 
         public int TotalBits
@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
 
         public bool DiffusionActive
         {
-            get => !(DiffusionInputKey.SequenceEqual(ChaChaVisualization.InputKey) && DiffusionInputIV.SequenceEqual(ChaChaVisualization.InputIV) && DiffusionInitialCounter == ChaChaVisualization.InitialCounter);
+            get => !(DiffusionInputKey.SequenceEqual(ChaCha.InputKey) && DiffusionInputIV.SequenceEqual(ChaCha.InputIV) && DiffusionInitialCounter == ChaCha.InitialCounter);
         }
 
         #endregion Binding Properties
@@ -132,7 +132,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
             if (DiffusionActive)
             {
                 // Execute ChaCha with Diffusion values.
-                ChaChaVisualization.ExecuteDiffusion(DiffusionInputKey, DiffusionInputIV, (ulong)DiffusionInitialCounter);
+                ChaCha.ExecuteDiffusion(DiffusionInputKey, DiffusionInputIV, (ulong)DiffusionInitialCounter);
             }
         }
 
@@ -162,9 +162,8 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
         #region IChaCha
 
         public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
-        public ChaChaVisualization ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
-        public ChaCha ChaCha { get => ChaChaVisualization; }
-        public ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
+        public ChaCha ChaCha { get => PresentationViewModel.ChaCha; }
+        public ChaChaSettings Settings { get => (ChaChaSettings)ChaCha.Settings; }
 
         #endregion IChaCha
     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// Class which implements the actions for state addition and little-endian step in ChaCha Hash.
@@ -46,9 +46,9 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
         {
             return () =>
             {
-                Debug.Assert(VM.ChaChaVisualization.OriginalState.Count == VM.ChaChaVisualization.TotalKeystreamBlocks,
-                $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {VM.ChaChaVisualization.TotalKeystreamBlocks}. Actual: {VM.ChaChaVisualization.OriginalState.Count}");
-                uint[] state = VM.ChaChaVisualization.OriginalState[keystreamBlock];
+                Debug.Assert(VM.ChaCha.OriginalState.Count == VM.ChaCha.TotalKeystreamBlocks,
+                $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {VM.ChaCha.TotalKeystreamBlocks}. Actual: {VM.ChaCha.OriginalState.Count}");
+                uint[] state = VM.ChaCha.OriginalState[keystreamBlock];
                 for (int i = 0; i < 16; ++i)
                 {
                     VM.StateValues[i].Value = state[i];
@@ -56,7 +56,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
                 }
                 if (VM.DiffusionActive)
                 {
-                    uint[] diffusionState = VM.ChaChaVisualization.OriginalStateDiffusion[keystreamBlock];
+                    uint[] diffusionState = VM.ChaCha.OriginalStateDiffusion[keystreamBlock];
                     for (int i = 0; i < 16; ++i)
                     {
                         VM.DiffusionStateValues[i].Value = diffusionState[i];
@@ -139,14 +139,14 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             return () =>
             {
                 AssertKeystreamBlockInput(keystreamBlock);
-                uint[] originalState = VM.ChaChaVisualization.OriginalState[keystreamBlock];
+                uint[] originalState = VM.ChaCha.OriginalState[keystreamBlock];
                 for (int i = 0; i < 16; ++i)
                 {
                     VM.OriginalState[i].Value = originalState[i];
                 }
                 if (VM.DiffusionActive)
                 {
-                    uint[] diffusionState = VM.ChaChaVisualization.OriginalStateDiffusion[keystreamBlock];
+                    uint[] diffusionState = VM.ChaCha.OriginalStateDiffusion[keystreamBlock];
                     for (int i = 0; i < 16; ++i)
                     {
                         VM.DiffusionOriginalState[i].Value = diffusionState[i];
@@ -161,14 +161,14 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             return () =>
             {
                 AssertKeystreamBlockInput(keystreamBlock);
-                uint[] additionResult = VM.ChaChaVisualization.AdditionResultState[keystreamBlock];
+                uint[] additionResult = VM.ChaCha.AdditionResultState[keystreamBlock];
                 for (int i = 0; i < 16; ++i)
                 {
                     VM.AdditionResultState[i].Value = additionResult[i];
                 }
                 if (VM.DiffusionActive)
                 {
-                    uint[] diffusionState = VM.ChaChaVisualization.AdditionResultStateDiffusion[keystreamBlock];
+                    uint[] diffusionState = VM.ChaCha.AdditionResultStateDiffusion[keystreamBlock];
                     for (int i = 0; i < 16; ++i)
                     {
                         VM.DiffusionAdditionResultState[i].Value = diffusionState[i];
@@ -183,14 +183,14 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             return () =>
             {
                 AssertKeystreamBlockInput(keystreamBlock);
-                uint[] le = VM.ChaChaVisualization.LittleEndianState[keystreamBlock];
+                uint[] le = VM.ChaCha.LittleEndianState[keystreamBlock];
                 for (int i = 0; i < 16; ++i)
                 {
                     VM.LittleEndianState[i].Value = le[i];
                 }
                 if (VM.DiffusionActive)
                 {
-                    uint[] diffusionState = VM.ChaChaVisualization.LittleEndianStateDiffusion[keystreamBlock];
+                    uint[] diffusionState = VM.ChaCha.LittleEndianStateDiffusion[keystreamBlock];
                     for (int i = 0; i < 16; ++i)
                     {
                         VM.DiffusionLittleEndianState[i].Value = diffusionState[i];

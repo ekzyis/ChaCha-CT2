@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// A helper class which creates the step operation actions for the quarterround visualization.
@@ -82,30 +82,30 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             if (Operation == QRStepOperation.ADD)
                 return () =>
                 {
-                    VM.QRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Add;
+                    VM.QRStep[qrStep].Add.Value = VM.ChaCha.QRStep[arrayIndex].Add;
                     if (VM.DiffusionActive)
                     {
-                        VM.DiffusionQRStep[qrStep].Add.Value = VM.ChaChaVisualization.QRStepDiffusion[arrayIndex].Add;
+                        VM.DiffusionQRStep[qrStep].Add.Value = VM.ChaCha.QRStepDiffusion[arrayIndex].Add;
                         VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].Add");
                     }
                 };
             else if (Operation == QRStepOperation.XOR)
                 return () =>
                 {
-                    VM.QRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStep[arrayIndex].XOR;
+                    VM.QRStep[qrStep].XOR.Value = VM.ChaCha.QRStep[arrayIndex].XOR;
                     if (VM.DiffusionActive)
                     {
-                        VM.DiffusionQRStep[qrStep].XOR.Value = VM.ChaChaVisualization.QRStepDiffusion[arrayIndex].XOR;
+                        VM.DiffusionQRStep[qrStep].XOR.Value = VM.ChaCha.QRStepDiffusion[arrayIndex].XOR;
                         VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].XOR");
                     }
                 };
             else if (Operation == QRStepOperation.SHIFT)
                 return () =>
                 {
-                    VM.QRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStep[arrayIndex].Shift;
+                    VM.QRStep[qrStep].Shift.Value = VM.ChaCha.QRStep[arrayIndex].Shift;
                     if (VM.DiffusionActive)
                     {
-                        VM.DiffusionQRStep[qrStep].Shift.Value = VM.ChaChaVisualization.QRStepDiffusion[arrayIndex].Shift;
+                        VM.DiffusionQRStep[qrStep].Shift.Value = VM.ChaCha.QRStepDiffusion[arrayIndex].Shift;
                         VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].Shift");
                     }
                 };

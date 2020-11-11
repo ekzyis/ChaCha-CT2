@@ -1,7 +1,7 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Helper;
-using Cryptool.Plugins.ChaCha.Visualization.Helper.Validation;
-using Cryptool.Plugins.ChaCha.Visualization.Model;
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.Helper.Validation;
+using Cryptool.Plugins.ChaCha.Model;
+using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -10,7 +10,7 @@ using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
+namespace Cryptool.Plugins.ChaCha.ViewModel
 {
     internal class ChaChaHashViewModel : ActionViewModelBase, INavigation, ITitle, IChaCha
     {
@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
 
             ExtendLastAction(() => { CurrentKeystreamBlockIndex = null; });
             ExtendLastAction(() => { RoundsStep = true; });
-            for (int keystreamBlock = 0; keystreamBlock < ChaChaVisualization.TotalKeystreamBlocks; ++keystreamBlock)
+            for (int keystreamBlock = 0; keystreamBlock < ChaCha.TotalKeystreamBlocks; ++keystreamBlock)
             {
                 // Keystream Block sequence
                 ActionCreator.StartSequence();
@@ -251,7 +251,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
         {
             get
             {
-                return CurrentKeystreamBlockIndex == null || CurrentKeystreamBlockIndex < ChaChaVisualization.TotalKeystreamBlocks - 1;
+                return CurrentKeystreamBlockIndex == null || CurrentKeystreamBlockIndex < ChaCha.TotalKeystreamBlocks - 1;
             }
         }
 
@@ -290,7 +290,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
         {
             get
             {
-                if (_keystreamBlockInputRule == null) _keystreamBlockInputRule = new UserInputValidationRule(1, ChaChaVisualization.TotalKeystreamBlocks);
+                if (_keystreamBlockInputRule == null) _keystreamBlockInputRule = new UserInputValidationRule(1, ChaCha.TotalKeystreamBlocks);
                 return _keystreamBlockInputRule;
             }
         }
@@ -1294,7 +1294,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         private void AssertKeystreamBlockTagInput(int keystreamBlock)
         {
-            int maxKeystreamBlock = ChaChaVisualization.TotalKeystreamBlocks - 1;
+            int maxKeystreamBlock = ChaCha.TotalKeystreamBlocks - 1;
             if (keystreamBlock < 0 || keystreamBlock > maxKeystreamBlock)
                 throw new ArgumentOutOfRangeException("keystreamBlock", $"Keystream Block must be between 0 and {maxKeystreamBlock}. Received: {keystreamBlock}");
         }
@@ -1429,7 +1429,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel
             AssertEmptyAndInitialize(DiffusionLittleEndianState, "DiffusionLittleEndianState", 16);
             AssertEmptyAndInitialize(QRStep, "QRStep", 4);
             AssertEmptyAndInitialize(DiffusionQRStep, "DiffusionQRStep", 4);
-            uint[] state = ChaChaVisualization.OriginalState[0];
+            uint[] state = ChaCha.OriginalState[0];
             for (int i = 0; i < 16; ++i)
             {
                 StateValues.Add(new StateValue(state[i]));

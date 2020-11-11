@@ -1,12 +1,12 @@
-﻿using Cryptool.Plugins.ChaCha.Util;
-using Cryptool.Plugins.ChaCha.Visualization.Helper;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.Util;
 using System;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     internal static class Diffusion
     {

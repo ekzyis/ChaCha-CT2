@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Input;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.Helper
+namespace Cryptool.Plugins.ChaCha.Helper
 {
     /// <summary>
     /// A command whose sole purpose is to relay its functionality to other

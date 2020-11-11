@@ -1,4 +1,4 @@
-﻿namespace Cryptool.Plugins.ChaCha.Visualization.Model
+﻿namespace Cryptool.Plugins.ChaCha.Model
 {
     /// <summary>
     /// Class for each step during one quarterround.

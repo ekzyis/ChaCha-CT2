@@ -1,8 +1,8 @@
-﻿using Cryptool.Plugins.ChaCha.Visualization.Model;
+﻿using Cryptool.Plugins.ChaCha.Model;
 using System;
 using System.Linq;
 
-namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
+namespace Cryptool.Plugins.ChaCha.ViewModel.Components
 {
     /// <summary>
     /// A helper class which creates the input and output actions for the quarterround visualization
@@ -156,10 +156,10 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             int arrayIndex = MapIndex(keystreamBlock, round, qr);
             return () =>
             {
-                (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaChaVisualization.QRInput[arrayIndex];
+                (VM.QRInA.Value, VM.QRInB.Value, VM.QRInC.Value, VM.QRInD.Value) = VM.ChaCha.QRInput[arrayIndex];
                 if (VM.DiffusionActive)
                 {
-                    (VM.DiffusionQRInA.Value, VM.DiffusionQRInB.Value, VM.DiffusionQRInC.Value, VM.DiffusionQRInD.Value) = VM.ChaChaVisualization.QRInputDiffusion[arrayIndex];
+                    (VM.DiffusionQRInA.Value, VM.DiffusionQRInB.Value, VM.DiffusionQRInC.Value, VM.DiffusionQRInD.Value) = VM.ChaCha.QRInputDiffusion[arrayIndex];
                     VM.OnPropertyChanged("DiffusionQRInA");
                     VM.OnPropertyChanged("DiffusionQRInB");
                     VM.OnPropertyChanged("DiffusionQRInC");
@@ -213,10 +213,10 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             int arrayIndex = MapIndex(keystreamBlock, round, qr);
             return () =>
             {
-                (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaChaVisualization.QROutput[arrayIndex];
+                (VM.QROutA.Value, VM.QROutB.Value, VM.QROutC.Value, VM.QROutD.Value) = VM.ChaCha.QROutput[arrayIndex];
                 if (VM.DiffusionActive)
                 {
-                    (VM.DiffusionQROutA.Value, VM.DiffusionQROutB.Value, VM.DiffusionQROutC.Value, VM.DiffusionQROutD.Value) = VM.ChaChaVisualization.QROutputDiffusion[arrayIndex];
+                    (VM.DiffusionQROutA.Value, VM.DiffusionQROutB.Value, VM.DiffusionQROutC.Value, VM.DiffusionQROutD.Value) = VM.ChaCha.QROutputDiffusion[arrayIndex];
                     VM.OnPropertyChanged("DiffusionQROutA");
                     VM.OnPropertyChanged("DiffusionQROutB");
                     VM.OnPropertyChanged("DiffusionQROutC");
@@ -236,7 +236,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
             int arrayIndex = MapIndex(keystreamBlock, round, qr);
             return () =>
             {
-                (uint a, uint b, uint c, uint d) = VM.ChaChaVisualization.QROutput[arrayIndex];
+                (uint a, uint b, uint c, uint d) = VM.ChaCha.QROutput[arrayIndex];
                 (int i, int j, int k, int l) = GetStateIndices(round, qr);
                 VM.StateValues[i].Value = a;
                 VM.StateValues[j].Value = b;
@@ -244,7 +244,7 @@ namespace Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components
                 VM.StateValues[l].Value = d;
                 if (VM.DiffusionActive)
                 {
-                    (uint dA, uint dB, uint dC, uint dD) = VM.ChaChaVisualization.QROutputDiffusion[arrayIndex];
+                    (uint dA, uint dB, uint dC, uint dD) = VM.ChaCha.QROutputDiffusion[arrayIndex];
                     VM.DiffusionStateValues[i].Value = dA;
                     VM.DiffusionStateValues[j].Value = dB;
                     VM.DiffusionStateValues[k].Value = dC;
