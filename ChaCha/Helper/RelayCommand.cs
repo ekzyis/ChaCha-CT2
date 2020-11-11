@@ -53,7 +53,7 @@ namespace Cryptool.Plugins.ChaCha.Helper
         [DebuggerStepThrough]
         public bool CanExecute(object parameters)
         {
-            return _canExecute == null ? true : _canExecute(parameters);
+            return _canExecute == null || _canExecute(parameters);
         }
 
         public event EventHandler CanExecuteChanged

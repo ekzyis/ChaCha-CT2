@@ -556,7 +556,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         private void GoToQR(int qr)
         {
             int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
-            int currentRoundIndex = (int)CurrentRoundIndex;
             // Value comes from user. Map to zero-based round index.
             int qrIndex = qr - 1;
             int round = CurrentRoundIndex ?? 0;

@@ -43,7 +43,7 @@ namespace Cryptool.Plugins.ChaCha.Helper.Converter
 
         #region IMultiValueConverter Members
 
-        private InvalidOperationException _multiValueConverterUnsetException =
+        private readonly InvalidOperationException _multiValueConverterUnsetException =
             new InvalidOperationException("To use the converter as a MultiValueConverter the MultiValueConverter property needs to be set.");
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
