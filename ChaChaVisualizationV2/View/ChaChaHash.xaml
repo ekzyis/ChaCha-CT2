@@ -90,7 +90,7 @@
                                     <TextBlock Text="{Binding DiffusionFlippedBits}" />
                                     <TextBlock Text="/" />
                                     <TextBlock Text="{Binding TotalBits, Mode=OneTime}" />
-                                    <TextBlock Text="(" />
+                                    <TextBlock Text=" (" />
                                     <TextBlock Text="{Binding DiffusionFlippedBitsPercentage, Converter={StaticResource DoubleToPercentage}}" />
                                     <TextBlock Text=")" />
                                 </StackPanel>
