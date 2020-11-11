@@ -33,7 +33,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
             {
                 return () =>
                 {
-                    InsertOriginalState(0);
+                    InsertOriginalState(0)();
                 };
             }
         }

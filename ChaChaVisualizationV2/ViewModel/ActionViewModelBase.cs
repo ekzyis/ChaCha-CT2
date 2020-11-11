@@ -373,6 +373,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             // Make sure that the action at index 0 is the initial page state.
             Actions.Add(() => Reset());
             InitActions();
+            // Immediately reset page to have a consistent state (we are now at action index 0).
+            Reset();
 
             StartActionBufferHandler(50);
         }
