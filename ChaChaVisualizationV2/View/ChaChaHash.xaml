@@ -398,11 +398,11 @@
                                         <Run Text="{Binding ChaCha.Rounds, FallbackValue=X}" /> rounds.
                                         <LineBreak />
                                         During each round, we run the quarterround function four times (hence the name
-                                        <Italic>quarterround</Italic>) which modifies four state entries. This means that after each round, the whole state has been modified.
+                                        <Italic>quarterround</Italic> ) which modifies four state entries. This means that after each round, the whole state has been modified.
                                         <LineBreak />
                                         In an uneven round (round 1, 3, ...), we go through all columns thus the uneven rounds can also be called
-                                        <Italic>column rounds</Italic>, whereas in an even round (round 2, 4, ...), we go through all diagonals thus the even rounds can be called
-                                        <Italic>diagonal rounds</Italic>.
+                                        <Italic>column rounds</Italic> , whereas in an even round (round 2, 4, ...), we go through all diagonals thus the even rounds can be called
+                                        <Italic>diagonal rounds</Italic> .
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
