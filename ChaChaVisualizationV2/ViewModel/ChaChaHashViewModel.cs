@@ -470,8 +470,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 throw new InvalidOperationException("CurrentQRIndex was null in PrevQR.");
             // TODO check for qr underflow which results in round underflow where we have to increase keystream block index
             int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
-            int currentRoundIndex = (int)CurrentRoundIndex;
-            int currentQRIndex = (int)CurrentQRIndex;
+            int currentRoundIndex = CurrentRoundIndex ?? 0;
+            int currentQRIndex = CurrentQRIndex ?? 0;
             int currentQRStartIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, currentRoundIndex, currentQRIndex));
             // only go back to start of previous qr if we are on the start of a qr
             // else go to start of current qr
@@ -514,7 +514,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void GoToQRStart(int qr)
         {
             int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
-            int currentRoundIndex = (int)CurrentRoundIndex;
             int round = CurrentRoundIndex ?? 0;
             int qrStartActionIndex = GetTaggedActionIndex(QRStartTag(keystreamBlockIndex, round, qr));
             MoveToAction(qrStartActionIndex);
@@ -527,7 +526,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         private void GoToQREnd(int qr)
         {
             int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
-            int currentRoundIndex = (int)CurrentRoundIndex;
             int round = CurrentRoundIndex ?? 0;
             int qrStartActionIndex = GetTaggedActionIndex(QREndTag(keystreamBlockIndex, round, qr));
             MoveToAction(qrStartActionIndex);
