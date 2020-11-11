@@ -64,11 +64,17 @@
                 <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{StaticResource RichText}">
                     <FlowDocument>
                         <Paragraph>
-                            On this page, you can enter another value for the Key, IV and initial counter.
+                            On this page, you can enter another value for the key, IV and initial counter.
                         </Paragraph>
                         <Paragraph>
-                            The ChaCha cipher will also be executed with these input values. This is done to visualize the diffusion property of the cipher.
-                            The values received from the diffusion execution will always be shown below the values received from the primary execution. The hex value which is different will be shown in red.  At the right side, there is an example how this will look like.
+                            The ChaCha cipher will also be executed with these secondary values. This is done to visualize the diffusion property of the cipher.
+                            The values received from the diffusion execution will always be shown below the values received from the primary execution. 
+                            The hex value which is different will be shown in red. At the right side, there is an example how this will look like.
+                        </Paragraph>
+                        <Paragraph>
+                            Since diffusion is all about how the input difference spreads across the keystream, you can explicitly enter the input difference (XOR) in the third row.
+                            You will also be able to toggle between showing the intermediate values and the XOR between them on the next pages. 
+                            You can try this out in the example.
                         </Paragraph>
                         <Paragraph>
                             Additionally, during the ChaCha hash function, statistics about how many bits are flipped will be shown.
@@ -93,16 +99,19 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0">
-                        <TextBox Text="Key (hex)" Style="{StaticResource DiffusionText}" Background="LightCoral"/>
-                        <TextBox Text="Diffusion Key (hex)" Style="{StaticResource DiffusionText}"  Background="LightCoral"/>
+                        <TextBox Text="Input key (hex)" Style="{StaticResource DiffusionText}" Background="LightCoral"/>
+                        <TextBox Text="Second key (hex)" Style="{StaticResource DiffusionText}"  Background="LightCoral"/>
+                        <TextBox Text="XOR of both keys (hex)" Style="{StaticResource DiffusionText}"  Background="LightCoral"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0">
-                        <TextBox Text="Initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
-                        <TextBox Text="Diffusion Initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
+                        <TextBox Text="Input initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
+                        <TextBox Text="Second Initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
+                        <TextBox Text="XOR of both initialization vectors (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="0">
-                        <TextBox Text="Initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
-                        <TextBox Text="Diffusion Initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
+                        <TextBox Text="Input initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
+                        <TextBox Text="Second Initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
+                        <TextBox Text="XOR of both initial counters (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="0">
                         <TextBox Text="Flipped Bits" Style="{StaticResource DiffusionText}"/>
@@ -112,10 +121,12 @@
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputKey"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORInputKey"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInputIV"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORInputIV"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}">
@@ -127,6 +138,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORInitialCounter"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="3" Grid.Column="1">
