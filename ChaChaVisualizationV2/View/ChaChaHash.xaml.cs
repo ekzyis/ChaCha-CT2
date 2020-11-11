@@ -44,6 +44,9 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
         {
             this.Dispatcher.Invoke(delegate
             {
+                // Seems like WPF somehow calls this function but without a ViewModel even though it is attached to one?
+                // Mhhh... we'll ignore it for now and just return, if this happens.
+                if (ViewModel == null) return;
                 if (e.PropertyName == "DiffusionStateValues")
                 {
                     HandleDiffusionStateValuesChange();
