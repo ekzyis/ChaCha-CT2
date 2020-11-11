@@ -46,6 +46,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
             {
                 // Seems like WPF somehow calls this function but without a ViewModel even though it is attached to one?
                 // Mhhh... we'll ignore it for now and just return, if this happens.
+                // Maybe some async issues?
                 if (ViewModel == null) return;
                 if (e.PropertyName == "DiffusionStateValues")
                 {
