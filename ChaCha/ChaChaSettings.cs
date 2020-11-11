@@ -13,17 +13,23 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.Miscellaneous;
 using System.ComponentModel;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    // HOWTO: rename class (click name, press F2)
     public class ChaChaSettings : ISettings
     {
+        #region Private Variables
+
         private int rounds = 20;
-        private int _version = 0;
+        private Version version;
+
+        #endregion Private Variables
+
+        #region TaskPane Settings
 
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
         public int Rounds
@@ -31,16 +37,21 @@ namespace Cryptool.Plugins.ChaCha
             get { return rounds; }
             set
             {
+                // The CT2 environment calls this setter with the index thus we map the indices to the actual round value.
+                // The ChaCha Unittest calls this setter with the actual round value,
+                // that's why there is a fallthrough with the actual round value for each case.
                 switch (value)
                 {
                     case 0:
                     case 8:
                         rounds = 8;
                         break;
+
                     case 1:
                     case 12:
                         rounds = 12;
                         break;
+
                     case 2:
                     case 20:
                         rounds = 20;
@@ -50,28 +61,42 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
-        [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "IETF", "DJB" })]
-        public int Version_
+        [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "DJB", "IETF" })]
+        public int IntVersion
         {
-            get { return _version; }
+            get { return Version.Name == Version.DJB.Name ? 0 : 1; }
             set
             {
-                _version = value;
-                switch (value)
+                Version intVersion = value == 0 ? Version.DJB : Version.IETF;
+                if (Version.Name != intVersion.Name)
                 {
-                    case 0:
-                        Version = ChaCha.Version.IETF;
-                        break;
-                    case 1:
-                        Version = ChaCha.Version.DJB;
-                        break;
-
+                    Version = intVersion;
+                    OnPropertyChanged("IntVersion");
                 }
-                OnPropertyChanged("Version");
             }
         }
 
-        public ChaCha.Version Version { get; private set; } = ChaCha.Version.IETF;
+        public Version Version
+        {
+            get
+            {
+                if (version == null)
+                {
+                    version = Version.DJB;
+                }
+                return version;
+            }
+            private set
+            {
+                if (version.Name != value.Name)
+                {
+                    version = value;
+                    OnPropertyChanged("Version");
+                }
+            }
+        }
+
+        #endregion TaskPane Settings
 
         #region Events
 
@@ -82,11 +107,15 @@ namespace Cryptool.Plugins.ChaCha
             EventsHelper.PropertyChanged(PropertyChanged, this, propertyName);
         }
 
-        #endregion
+        #endregion Events
 
         public void Initialize()
         {
+        }
 
+        public override string ToString()
+        {
+            return $"Rounds: {Rounds}, Version: {Version.Name}";
         }
     }
 }
