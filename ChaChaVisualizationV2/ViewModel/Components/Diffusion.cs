@@ -52,11 +52,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         }
 
         /// <summary>
-        /// Returns a TextBox with the character d in red if d != v else black.
+        /// Returns a Run element with the character d in red if d != v else black.
         /// </summary>
-        private static TextBlock RedIfDifferent(char d, char v)
+        private static Run RedIfDifferent(char d, char v)
         {
-            return new TextBlock() { Text = d.ToString(), Foreground = d != v ? Brushes.Red : Brushes.Black };
+            return new Run() { Text = d.ToString(), Foreground = d != v ? Brushes.Red : Brushes.Black };
         }
 
         /// <summary>
