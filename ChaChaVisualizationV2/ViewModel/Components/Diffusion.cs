@@ -37,18 +37,17 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             if (dHex.Length != pHex.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
             if (dHex.Length % 2 != 0) throw new ArgumentException("Length must be even");
-            Paragraph paragraph = new Paragraph();
             for (int i = 0; i < dHex.Length; i += 2)
             {
                 char dChar1 = dHex[i];
                 char dChar2 = dHex[i + 1];
                 char pChar1 = pHex[i];
                 char pChar2 = pHex[i + 1];
-                paragraph.Inlines.Add(RedIfDifferent(dChar1, pChar1));
-                paragraph.Inlines.Add(RedIfDifferent(dChar2, pChar2));
+                ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Clear();
+                ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Clear();
+                ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar1, pChar1));
+                ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar2, pChar2));
             }
-            rtb.Document.Blocks.Clear();
-            rtb.Document.Blocks.Add(paragraph);
         }
 
         /// <summary>
