@@ -13,138 +13,417 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
 using Cryptool.PluginBase;
+using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.ChaCha.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
-using System.Windows.Controls;
-using System.Windows.Threading;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    // HOWTO: Change author name, email address, organization and URL.
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    // HOWTO: Change plugin caption (title to appear in CT2) and tooltip.
-    // You can (and should) provide a user documentation as XML file and an own icon.
-    [PluginInfo("ChaCha", "Stream cipher based on Salsa20", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
-    // HOWTO: Change category to one that fits to your plugin. Multiple categories are allowed.
+    [PluginInfo("ChaCha", "A stream cipher based on Salsa used in TLS and developed by Daniel J. Bernstein.", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class ChaCha : ICrypComponent
+    public class ChaCha : ICrypComponent, IValidatableObject
     {
-        // one block has 512 bits
-        private static readonly int BLOCKSIZE_BYTES = 64;
-        // ChaCha state consists of 16 32-bit integers
-        private readonly uint[] initialState = new uint[16];
-        // constants
+        #region Private Variables
+
+        private readonly ChaChaSettings settings = new ChaChaSettings();
+
         private static readonly byte[] SIGMA = Encoding.ASCII.GetBytes("expand 32-byte k");
         private static readonly byte[] TAU = Encoding.ASCII.GetBytes("expand 16-byte k");
 
-        // counter size (depends on version)
-        private int BITS_COUNTER;
-        // IV size (depends on version)
-        private int BITS_IV;
-        // initial counter value (for keystream blocks) (depends on version)
-        private ulong INITIAL_COUNTER;
+        private CStreamWriter outputWriter;
 
-        private bool ExecDiffusion { get; set; } = false;
-        private byte[] _diffusionKey;
+        #endregion Private Variables
 
-        private ulong _userKeystreamBlockNr = 0;
-        private bool ExecUserKeystreamBlock { get; set; } = false;
+        #region Public Variables
 
-        private bool NormalExecution => !ExecDiffusion && !ExecUserKeystreamBlock;
+        public virtual bool ExecutionFinished { get; set; }
 
-
-        public class Version
-        {
-            public static readonly Version IETF = new Version("IETF", 32, 96, 1);
-            public static readonly Version DJB = new Version("DJB", 64, 64, 0);
-            public string Name { get; }
-            public int BitsCounter { get; }
-            public int BitsIV { get; }
-            public uint InitialCounter { get; }
-            private Version(string name, int bitsCounter, int bitsIV, uint initialCounter)
-            {
-                Name = name;
-                BitsCounter = bitsCounter;
-                BitsIV = bitsIV;
-                InitialCounter = initialCounter;
-            }
-        }
-
-        public ChaCha()
-        {
-            settings = new ChaChaSettings();
-            _presentation = new ChaChaPresentation(this);
-        }
+        #endregion Public Variables
 
         #region ICrypComponent I/O
-        // plaintext
-        private byte[] _inputData;
-        // ciphertext
-        private byte[] _outputData;
-        // key
-        private byte[] _inputKey;
-        // initialization vector
-        private byte[] _inputIV;
 
         /// <summary>
-        /// HOWTO: Input interface to read the input data. 
-        /// You can add more input properties of other type if needed.
+        /// Input text which should be en- or decrypted by ChaCha.
         /// </summary>
-        [PropertyInfo(Direction.InputData, "InputDataCaption", "InputDataTooltip", true)]
-        public byte[] InputData
+        [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
+        public ICryptoolStream InputStream
         {
-            get { return this._inputData; }
-            set
-            {
-                this._inputData = value;
-                OnPropertyChanged("InputData");
-            }
+            get;
+            set;
         }
 
+        /// <summary>
+        /// Key chosen by the user which will be used for en- or decryption.
+        /// </summary>
+        /// <remarks>
+        /// The [Required] validation attribute does not work because CT2 seems to pass the inputs after `PreExecution`
+        /// and only executes `Execute` if all inputs are given. This means that we have no way of validating if all required
+        /// inputs are given because the component won't even execute without all.
+        /// </remarks>
+        // [Required]
+        [KeyValidator("Key must be 128-bit or 256-bit")]
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
         {
-            get { return this._inputKey; }
-            set
-            {
-                this._inputKey = value;
-                OnPropertyChanged("InputKey");
-            }
+            get;
+            set;
         }
 
+        /// <summary>
+        /// Initialization vector chosen by the user.
+        /// </summary>
+        // [Required]
+        [IVValidator("IV must be 64-bit in DJB version or 96-bit in IETF version")]
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
         {
-            get { return this._inputIV; }
-            set
-            {
-                this._inputIV = value;
-                OnPropertyChanged("InputIV");
-            }
+            get;
+            set;
         }
 
-        [PropertyInfo(Direction.OutputData, "OutputDataCaption", "OutputDataTooltip", true)]
-        public byte[] OutputData
+        /// <summary>
+        /// Counter value for the first keystream block. Will be incremented for each keystream block.
+        /// Is optional. Default is 0.
+        /// </summary>
+        [InitialCounterValidator("Counter must be 64-bit in DJB Version or 32-bit in IETF version")]
+        [PropertyInfo(Direction.InputData, "InputInitialCounterCaption", "InputInitialCounterTooltip", false)]
+        public BigInteger InitialCounter
         {
-            get { return this._outputData; }
-            set
+            get;
+            set;
+        }
+
+        [PropertyInfo(Direction.OutputData, "OutputStreamCaption", "OutputStreamTooltip", true)]
+        public ICryptoolStream OutputStream
+        {
+            get
             {
-                this._outputData = value;
-                OnPropertyChanged("OutputData");
+                return outputWriter;
             }
         }
-        #endregion
 
-        #region IPlugin Members (Settings & Presentation)
-        private readonly ChaChaSettings settings;
-        private readonly ChaChaPresentation _presentation;
+        #endregion ICrypComponent I/O
+
+        #region ChaCha Cipher methods
+
+        /// <summary>
+        /// En- or decrypt input stream with ChaCha.
+        /// </summary>
+        /// <param name="key">The secret 128-bit or 256-bit key. A 128-bit key will be expanded into a 256-bit key by concatenation with itself.</param>
+        /// <param name="iv">Initialization vector (DJB version: 64-bit, IETF version: 96-bit)</param>
+        /// <param name="initialCounter">Initial counter (DJB version: 64-bit, IETF version: 32-bit)</param>
+        /// <param name="settings">Chosen Settings in the Plugin workspace. Includes Rounds and Version property.</param>
+        /// <param name="input">Input stream</param>
+        /// <param name="output">Output stream</param>
+        protected virtual void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        {
+            if (!(key.Length == 32 || key.Length == 16))
+            {
+                throw new ArgumentOutOfRangeException("key", key.Length, "Key must be exactly 128-bit or 256-bit.");
+            }
+            if (iv.Length != settings.Version.IVBits / 8)
+            {
+                throw new ArgumentOutOfRangeException("iv", iv.Length, $"IV must be exactly {settings.Version.IVBits}-bit.");
+            }
+            void AssertCounter(ulong counter, ulong max)
+            {
+                if (!(0 <= counter && counter <= max))
+                {
+                    throw new ArgumentOutOfRangeException("initialCounter", counter, $"Initial counter must be between 0 and {max}.");
+                }
+            }
+            if (settings.Version == Version.DJB)
+            {
+                AssertCounter(initialCounter, ulong.MaxValue);
+            }
+            else if (settings.Version == Version.IETF)
+            {
+                AssertCounter(initialCounter, uint.MaxValue);
+            }
+
+            // The first 512-bit state. Reused for counter insertion.
+            uint[] firstState = State(key, iv, initialCounter, settings.Version);
+
+            // Buffer to read 512-bit input block
+            byte[] inputBytes = new byte[64];
+            CStreamReader inputReader = input.CreateReader();
+
+            ulong blockCounter = initialCounter;
+            int read = inputReader.Read(inputBytes);
+            while (read != 0)
+            {
+                // Will hold the state during each keystream
+                uint[] state = (uint[])firstState.Clone();
+                InsertCounter(ref state, blockCounter, settings.Version);
+                ChaChaHash(ref state, settings.Rounds);
+
+                byte[] stateBytes = ByteUtil.ToByteArray(state);
+                byte[] c = ByteUtil.XOR(stateBytes, inputBytes, read);
+                output.Write(c);
+
+                blockCounter++;
+
+                // Read next input block
+                read = inputReader.Read(inputBytes);
+            }
+            inputReader.Dispose();
+            output.Flush();
+            output.Close();
+            output.Dispose();
+        }
+
+        /// <summary>
+        ///   Construct the 512-bit state with the given key, iv and counter.
+        ///
+        ///   The ChaCha State matrix is built up like this:
+        ///   <para>
+        ///     <code>
+        ///       Constants  Constants_  Constants  Constants <br/>
+        ///       Key______  Key_______  Key______  Key______ <br/>
+        ///       Key______  Key_______  Key______  Key______ <br/>
+        ///       Counter__  Counter|IV  IV_______  IV_______ <br/>
+        ///     </code>
+        ///   </para>
+        ///   <br/>
+        ///   <para>
+        ///   (The counter and IV size depend on the version, thus the '|' in the last row)
+        ///   </para>
+        ///   <br/>
+        ///   <para>
+        ///     The constants depend on the key size.</para>
+        ///   <para>
+        ///     A 128-bit key has the constants "expand 16-byte k" encoded in ASCII
+        ///     while a 256-bit has the constants "expand 32-byte k" encoded in ASCII.
+        ///     A 128-bit key will be expanded into a 256-bit key by concatenation with itself.
+        ///   </para>
+        ///   <para>
+        ///     The byte order of every 4 bytes of the constants, key, iv and counter will be reversed before insertion.
+        ///   </para>
+        ///   <para>
+        ///     Furthermore, the byte order of the original counter value will be reversed before insertion.
+        ///   </para>
+        /// </summary>
+        ///
+        /// <example>
+        ///   Input parameters:
+        ///
+        ///     Version:          IETF
+        ///
+        ///     Key (128-bit):    01:02:03:04  05:06:07:08  09:0a:0b:0c  0d:0e:0f:10
+        ///
+        ///     IV:               aa:bb:cc:dd  01:02:03:04  05:06:07:08
+        ///
+        ///     Initial counter:  00:00:00:01
+        ///
+        ///   Output as state matrix:
+        ///
+        ///                       61:70:78:65  31:20:64:6e  79:62:2d:36  6b:20:65:64
+        ///                       04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                       04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                       00:00:00:01  dd:cc:bb:aa  04:03:02:01  08:07:06:05
+        /// </example>
+        /// <example>
+        ///   Input parameters:
+        ///
+        ///     Version:          DJB
+        ///
+        ///     Key (256-bit):    01:02:03:04  05:06:07:08  09:0a:0b:0c  0d:0e:0f:10
+        ///                       11:12:13:14  15:16:17:18  19:1a:1b:1c  1d:1e:1f:20
+        ///
+        ///     IV:               aa:bb:cc:dd  01:02:03:04
+        ///
+        ///     Initial counter:  00:00:00:00  00:00:00:01
+        ///
+        ///   Output as state matrix:
+        ///
+        ///                       61:70:78:65  33:20:64:6e  79:62:2d:32  6b:20:65:74
+        ///                       04:03:02:01  08:07:06:05  0c:0b:0a:09  10:0f:0e:0d
+        ///                       14:13:12:11  18:17:16:15  1c:1b:1a:19  20:1f:1e:1d
+        ///                       00:00:00:01  00:00:00:00  dd:cc:bb:aa  04:03:02:01
+        /// </example>
+        /// <param name="key">
+        ///   The secret 128-bit or 256-bit key.
+        /// </param>
+        /// <param name="iv">
+        ///   Initialization vector
+        /// </param>
+        /// <param name="counter">
+        ///   Counter for this keystream block.
+        /// </param>
+        /// <returns>
+        ///   Initialized 512-bit ChaCha state as input for ChaCha hash function.
+        /// </returns>
+        private uint[] State(byte[] key, byte[] iv, ulong counter, Version version)
+        {
+            uint[] state = new uint[16];
+            byte[] constants = key.Length == 16 ? TAU : SIGMA;
+
+            InsertUInt32LE(ref state, constants, 0);
+
+            ExpandKey(ref key);
+            InsertUInt32LE(ref state, key, 4);
+
+            InsertCounter(ref state, counter, version);
+
+            InsertUInt32LE(ref state, iv, version == Version.DJB ? 14 : 13);
+
+            return state;
+        }
+
+        /// <summary>
+        /// Insert the counter into the 512-bit state matrix.
+        /// Insertion depends on the version since counter size differs between versions.
+        /// </summary>
+        private void InsertCounter(ref uint[] state, ulong counter, Version version)
+        {
+            // NOTE The original value of the counter is in reversed byte order!
+            // The counter 0x1 will be inserted into the state as follows
+            // (example for 64-bit counter from DJB version):
+            //   Original value:                0x 00 00 00 00  00 00 00 01
+            //   Reverse byte order:            0x 01 00 00 00  00 00 00 00
+            //   Reverse order of each 4-byte:  0x 00 00 00 01  00 00 00 00
+            //   Final value:                   0x 00 00 00 01  00 00 00 00
+            // (For the IETF version, this does not matter because the counter is only 32-bit).
+            byte[] counterBytes = ByteUtil.GetBytesLE(version == Version.DJB ?
+                counter :
+                // There should be no overflow error when casting from ulong to uint here
+                // because the counter boundaries should already have been checked
+                (uint)counter);
+            InsertUInt32LE(ref state, counterBytes, 12);
+        }
+
+        /// <summary>
+        /// Insert the input elements with reversed byte order starting at specified offset.
+        /// </summary>
+        /// <param name="state">512-bit ChaCha state</param>
+        /// <param name="input">Elements to be inserted</param>
+        /// <param name="offset">State offset</param>
+        private static void InsertUInt32LE(ref uint[] state, byte[] input, int offset)
+        {
+            for (int i = 0; i < input.Length / 4; ++i)
+            {
+                state[i + offset] = ByteUtil.ToUInt32LE(input, i * 4);
+            }
+        }
+
+        /// <summary>
+        /// Expands the key to a 256-bit key.
+        /// </summary>
+        /// <param name="key">128-bit or 256-bit key</param>
+        private static void ExpandKey(ref byte[] key)
+        {
+            if (key.Length == 32)
+            {
+                // Key already 256-bit. Nothing to do.
+                return;
+            }
+            byte[] expand = new byte[32];
+            key.CopyTo(expand, 0);
+            key.CopyTo(expand, 16);
+            key = expand;
+        }
+
+        /// <summary>
+        /// Calculate the ChaCha Hash of the given 512-bit state.
+        /// </summary>
+        /// <param name="state">The state which will be hashed</param>
+        /// <param name="rounds">Rounds of hash function</param>
+        protected virtual void ChaChaHash(ref uint[] state, int rounds)
+        {
+            if (!(rounds == 8 || rounds == 12 || rounds == 20))
+            {
+                throw new ArgumentException("Rounds must be 8, 12 or 20.");
+            }
+
+            // The original state before ChaCha hash function was applied. Needed for state addition afterwards.
+            uint[] originalState = (uint[])state.Clone();
+            for (int i = 0; i < rounds / 2; ++i)
+            {
+                // Column rounds
+                Quarterround(ref state, 0, 4, 8, 12);
+                Quarterround(ref state, 1, 5, 9, 13);
+                Quarterround(ref state, 2, 6, 10, 14);
+                Quarterround(ref state, 3, 7, 11, 15);
+                // Diagonal rounds
+                Quarterround(ref state, 0, 5, 10, 15);
+                Quarterround(ref state, 1, 6, 11, 12);
+                Quarterround(ref state, 2, 7, 8, 13);
+                Quarterround(ref state, 3, 4, 9, 14);
+            }
+
+            AdditionStep(ref state, originalState);
+
+            LittleEndianStep(ref state);
+        }
+
+        /// <summary>
+        /// Add the two 512-bit states together.
+        /// </summary>
+        protected virtual void AdditionStep(ref uint[] state, uint[] originalState)
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                state[i] += originalState[i];
+            }
+        }
+
+        /// <summary>
+        /// Reverse byte order of each UInt32.
+        /// </summary>
+        protected virtual void LittleEndianStep(ref uint[] state)
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                state[i] = ByteUtil.ToUInt32LE(state[i]);
+            }
+        }
+
+        /// <summary>
+        /// Run a quarterround(a,b,c,d) with the given indices on the state.
+        /// </summary>
+        protected void Quarterround(ref uint[] state, int i, int j, int k, int l)
+        {
+            (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
+        }
+
+        /// <summary>
+        /// Calculate the quarterround of the four inputs.
+        /// </summary>
+        protected virtual (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
+        {
+            (a, b, d) = QuarterroundStep(a, b, d, 16);
+            (c, d, b) = QuarterroundStep(c, d, b, 12);
+            (a, b, d) = QuarterroundStep(a, b, d, 8);
+            (c, d, b) = QuarterroundStep(c, d, b, 7);
+            return (a, b, c, d);
+        }
+
+        /// <summary>
+        /// Calculate one step in the quarterround function.
+        /// </summary>
+        protected virtual (uint, uint, uint) QuarterroundStep(uint x1, uint x2, uint x3, int shift)
+        {
+            x1 += x2;
+            x3 ^= x1;
+            x3 = ByteUtil.RotateLeft(x3, shift);
+            return (x1, x2, x3);
+        }
+
+        #endregion ChaCha Cipher methods
+
+        #region IPlugin Members
+
         /// <summary>
         /// Provide plugin-related parameters (per instance) or return null.
         /// </summary>
@@ -152,16 +431,15 @@ namespace Cryptool.Plugins.ChaCha
         {
             get { return settings; }
         }
+
         /// <summary>
         /// Provide custom presentation to visualize the execution or return null.
         /// </summary>
-        public UserControl Presentation
+        public virtual System.Windows.Controls.UserControl Presentation
         {
-            get { return _presentation; }
+            get { return null; }
         }
-        #endregion
 
-        #region ICrypComponent Lifecycle Methods
         /// <summary>
         /// Called once when workflow execution starts.
         /// </summary>
@@ -172,17 +450,34 @@ namespace Cryptool.Plugins.ChaCha
         /// <summary>
         /// Called every time this plugin is run in the workflow execution.
         /// </summary>
-        public void Execute()
+        public virtual void Execute()
         {
             ProgressChanged(0, 1);
-            ExecuteChaCha();
+
+            GuiLogMessage($"Executing ChaCha.", NotificationLevel.Info);
+            GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
+            GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit, Initial counter: {InitialCounter}", NotificationLevel.Info);
+
+            Validate();
+            if (IsValid)
+            {
+                outputWriter = new CStreamWriter();
+                // If InitialCounter is not set by user, it defaults to zero.
+                // Since maximum initial counter by any version is 64-bit, we cast it to UInt64.
+                ulong initialCounter = (ulong)InitialCounter;
+                Xcrypt(InputKey, InputIV, initialCounter, settings, InputStream, outputWriter);
+                OnPropertyChanged("OutputStream");
+            }
+
+            ExecutionFinished = true;
+
             ProgressChanged(1, 1);
         }
 
         /// <summary>
         /// Called once after workflow execution has stopped.
         /// </summary>
-        public void PostExecution()
+        public virtual void PostExecution()
         {
         }
 
@@ -208,579 +503,47 @@ namespace Cryptool.Plugins.ChaCha
         {
         }
 
-        #endregion
+        #endregion IPlugin Members
 
-        #region ChaCha Cipher Methods
+        #region Validation
 
-        /**
-         * Starts ChaCha execution after validating input.
-         */
-        private void ExecuteChaCha()
+        public virtual bool IsValid { get; set; }
+
+        /// <summary>
+        /// Validates user input.
+        /// </summary>
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            // clear all previous results (important if user started workflow, stopped and then restarted)
-            if (NormalExecution)
+            var results = new List<ValidationResult>();
+            Validator.TryValidateProperty(InputKey, new ValidationContext(this) { MemberName = "InputKey" }, results);
+            Validator.TryValidateProperty(InputIV, new ValidationContext(this) { MemberName = "InputIV" }, results);
+            Validator.TryValidateProperty(InitialCounter, new ValidationContext(this) { MemberName = "InitialCounter" }, results);
+            if (results.Count == 0)
             {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.ClearAllResults();
-                    _presentation.Version = settings.Version;
-                    _presentation.Rounds = settings.Rounds;
-                });
-            }
-            else if(ExecDiffusion)
-            {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.ClearDiffusionResults();
-                });
-            }
-            else if(ExecUserKeystreamBlock)
-            {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.ClearUserKeystreamBlockResults();
-                });
-            }
-
-            BITS_COUNTER = settings.Version.BitsCounter;
-            BITS_IV = settings.Version.BitsIV;
-            INITIAL_COUNTER = ExecUserKeystreamBlock ? _userKeystreamBlockNr - 1 : settings.Version.InitialCounter;
-
-            GuiLogMessage(ExecDiffusion ? "Executing ChaCha (Diffusion)" : "Executing ChaCha", NotificationLevel.Info);
-            GuiLogMessage(string.Format("Version: {0} - Expected IV: {1}-byte, Internal Counter: {2}-byte", settings.Version.Name, BITS_IV / 8, BITS_COUNTER / 8), NotificationLevel.Info);
-            GuiLogMessage(string.Format("Input - Key: {0}-byte, IV: {1}-byte, Rounds: {2}", InputKey.Length, InputIV.Length, settings.Rounds), NotificationLevel.Info);
-
-            bool inputValid = ValidateInput();
-            if (inputValid)
-            {
-                InitStateMatrix();
-                OutputData = Xcrypt(InputData);
-            }
-
-            // set values needed to enable navigation since now all values needed for visualization are set.
-            if(NormalExecution) DispatchToPresentation(delegate { _presentation.InputValid = inputValid; _presentation.ExecutionFinished = true; });
-        }
-
-        public void ExecuteChaChaWithDiffusionKey(byte[] diffusionKey)
-        {
-            ExecDiffusion = true;
-            _diffusionKey = diffusionKey;
-            Debug.Assert(diffusionKey.Length == InputKey.Length, $"Diffusion key length ({diffusionKey.Length}) does not match input key length ({InputKey.Length})");
-            ExecuteChaCha();
-            _dispatchAddedStateFlippedBitsResult = 0;
-            _dispatchLittleEndianStateFlippedBitsResult = 0;
-            _diffusionKey = null;
-            ExecDiffusion = false;
-        }
-
-        public void ExecuteChaChaWithUserKeystreamBlock(ulong keystreamBlockNr)
-        {
-            //Works by executing the whole ChaCha cipher with a different initial counter and stopping after the first block.
-            ExecUserKeystreamBlock = true;
-            _userKeystreamBlockNr = keystreamBlockNr;
-            ExecuteChaCha();
-            _userKeystreamBlockNr = 0;
-            ExecUserKeystreamBlock = false;
-        }
-
-        public void ExecuteChaChaWithDiffusionKeyAndUserKeystreamBlock(byte[] diffusionKey, ulong keystreamBlockNr)
-        {
-            ExecUserKeystreamBlock = true;
-            _userKeystreamBlockNr = keystreamBlockNr;
-            ExecuteChaChaWithDiffusionKey(diffusionKey);
-            _userKeystreamBlockNr = 0;
-            ExecUserKeystreamBlock = false;
-        }
-
-        /**
-         * Initialize the state of ChaCha which can be represented as a matrix.
-         * 
-         * The state matrix consists of 16 4-byte entries which makes the state 64 byte large in total.
-         * The state is constructed as following:
-         *  
-         *      CONSTANT  CONSTANT  CONSTANT  CONSTANT
-         *      KEY       KEY       KEY       KEY
-         *      KEY       KEY       KEY       KEY
-         *      INPUT     INPUT     INPUT     INPUT
-         *      
-         * The input is not the text but the IV and counter which comes first.
-         * Every entry is in little-endian.
-         */
-        public void InitStateMatrix()
-        {
-            byte[] constants;
-            if (_inputKey.Length == 32) // 32 byte key
-            {
-                constants = SIGMA;
-            }
-            else // 16-byte key
-            {
-                constants = TAU;
-            }
-
-            int stateOffset = 0;
-            // Convenience method to abstract away state offset.
-            void addToState(uint value)
-            {
-                initialState[stateOffset] = value;
-                stateOffset++;
-            }
-            void add4ByteChunksToStateAsLittleEndian(byte[] toAdd)
-            {
-                for (int i = 0; 4 * i < toAdd.Length; ++i)
-                {
-                    addToState(To4ByteLE(toAdd, 0 + 4 * i));
-                }
-            }
-
-            add4ByteChunksToStateAsLittleEndian(constants);
-            add4ByteChunksToStateAsLittleEndian(ExecDiffusion ? _diffusionKey : _inputKey);
-            if (_inputKey.Length == 16) add4ByteChunksToStateAsLittleEndian(ExecDiffusion ? _diffusionKey : _inputKey);
-            byte[] counter = Enumerable.Repeat<byte>(0, BITS_COUNTER / 8).ToArray();
-            add4ByteChunksToStateAsLittleEndian(counter);
-            add4ByteChunksToStateAsLittleEndian(InputIV);
-
-            if(NormalExecution)
-            {
-                DispatchToPresentation(delegate
-                {
-                    // set state params
-                    _presentation.Constants = constants;
-                    _presentation.InputKey = _inputKey;
-                    _presentation.InputIV = _inputIV;
-                    _presentation.InputData = _inputData;
-                    _presentation.InitialCounter = counter;
-                });
-            }
-        }
-
-        /**
-         * XOR the input with the keystream which results in en- or decryption.
-         * 
-         * Called Xcrypt because the same algorithm en- and decrypts since XOR is the inverse function of XOR.
-         */
-        public byte[] Xcrypt(byte[] src)
-        {
-            byte[] dst = new byte[src.Length];
-            ulong keystreamBlocksNeeded = (ulong)Math.Ceiling((double)(src.Length) / BLOCKSIZE_BYTES);
-            if (NormalExecution)
-            {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.KeystreamBlocksNeeded = keystreamBlocksNeeded;
-                });
-            }
-            byte[] keystream = new byte[keystreamBlocksNeeded * (ulong)BLOCKSIZE_BYTES];
-            int keystreamBlocksOffset = 0;
-            // Convenience method to abstract away keystream offset.
-            void addToKeystream(byte[] block)
-            {
-                for (int i = 0; i < block.Length; ++i)
-                {
-                    keystream[keystreamBlocksOffset] = block[i];
-                    keystreamBlocksOffset++;
-                }
-            }
-            for (ulong i = INITIAL_COUNTER; i < keystreamBlocksNeeded + INITIAL_COUNTER; i++)
-            {
-                byte[] keyblock = GenerateKeystreamBlock(i);
-                if (ExecUserKeystreamBlock) break;
-                // add each byte of keyblock to keystream
-                addToKeystream(keyblock);
-            }
-            if(NormalExecution)
-            {
-                // XOR the input with the keystream
-                for (int i = 0; i < src.Length; ++i)
-                {
-                    dst[i] = (byte)(src[i] ^ keystream[i]);
-                }
-                return dst;
+                GuiLogMessage("Input valid", NotificationLevel.Info);
+                IsValid = true;
             }
             else
             {
-                return null;
+                GuiLogMessage($"Input invalid: {string.Join(", ", results.Select(r => r.ErrorMessage))}", NotificationLevel.Error);
+                IsValid = false;
             }
+            return results;
         }
 
-        /**
-         * Generate the n-th keystream block.
-         * 
-         * Uses the initial state matrix to insert the counter n and then calculate the keystream block.
-         */
-        public byte[] GenerateKeystreamBlock(ulong n)
+        /// <summary>
+        /// Convenience method to call Validate without a validation context
+        /// since ChaCha itself needs no validation context.
+        /// </summary>
+        public virtual IEnumerable<ValidationResult> Validate()
         {
-            uint[] state = (uint[])(initialState.Clone());
-            SetCounterToState(state, n);
-            // hash state block
-            uint[] hash = ChaChaHash(state, n);
-            // convert the hashed uint state array into an array of bytes
-            byte[] keystreamBlock = new byte[BLOCKSIZE_BYTES];
-            for (int i = 0; i < hash.Length; ++i)
-            {
-                byte[] stateEntryBytes = GetBytes(hash[i]);
-                keystreamBlock[4 * i] = stateEntryBytes[0];
-                keystreamBlock[4 * i + 1] = stateEntryBytes[1];
-                keystreamBlock[4 * i + 2] = stateEntryBytes[2];
-                keystreamBlock[4 * i + 3] = stateEntryBytes[3];
-            }
-            return keystreamBlock;
+            return Validate(null);
         }
 
-        /**
-         * ChaCha Hash function.
-         * 
-         * Generates the ChaCha Hash out of the input state block 
-         * by running the state a set times through the quarterround function.
-         */
-        public uint[] ChaChaHash(uint[] state, ulong n)
-        {
-            uint[] originalState = (uint[])(state.Clone());
-            DispatchResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (uint[])state.Clone());
-            if (ExecDiffusion) DispatchOriginalStateFlippedBitsResult(state, n - INITIAL_COUNTER);
-            for (int i = 0; i < settings.Rounds / 2; ++i)
-            {
-                // column round
-                state = QuarterroundState(state, 0, 4, 8, 12);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                // state is the diffusion state because we are in diffusion mode and thus currently calculating the diffusion state
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8);
-                state = QuarterroundState(state, 1, 5, 9, 13);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 1);
-                state = QuarterroundState(state, 2, 6, 10, 14);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 2);
-                state = QuarterroundState(state, 3, 7, 11, 15);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 3);
-                // diagonal round
-                state = QuarterroundState(state, 0, 5, 10, 15);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 4);
-                state = QuarterroundState(state, 1, 6, 11, 12);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 5);
-                state = QuarterroundState(state, 2, 7, 8, 13);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 6);
-                state = QuarterroundState(state, 3, 4, 9, 14);
-                DispatchResult(ResultType.CHACHA_HASH_QUARTERROUND, (uint[])state.Clone());
-                if (ExecDiffusion) DispatchQRFlippedBitsResult(state, i*8 + 7);
-            }
-            // add the original state
-            for (int i = 0; i < state.Length; ++i)
-            {
-                state[i] += originalState[i];
-            }
-            DispatchResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (uint[])state.Clone());
-            if (ExecDiffusion) DispatchAddedStateFlippedBitsResult(state);
-            // each 4 byte chunk as little-endian
-            for (int i = 0; i < state.Length; ++i)
-            {
-                byte[] b = GetBytes(state[i]);
-                Array.Reverse(b);
-                state[i] = ToUInt32(b, 0);
-            }
-            DispatchResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (uint[])state.Clone());
-            if (ExecDiffusion) DispatchLittleEndianStateFlippedBitsResult(state);
-            return state;
-        }
+        #endregion Validation
 
-        /**
-         * Calculate the quarterround value of the state using the given indices.
-         */
-        public uint[] QuarterroundState(uint[] state, int i, int j, int k, int l)
-        {
-            (state[i], state[j], state[k], state[l]) = Quarterround(state[i], state[j], state[k], state[l]);
-            return state;
-        }
+        #region Event Handling
 
-        /**
-         * Calculate the quarterround value of the inputs.
-         */
-        public (uint, uint, uint, uint) Quarterround(uint a, uint b, uint c, uint d)
-        {
-            DispatchResult(ResultType.QR_INPUT_A, a);
-            DispatchResult(ResultType.QR_INPUT_B, b);
-            DispatchResult(ResultType.QR_INPUT_C, c);
-            DispatchResult(ResultType.QR_INPUT_D, d);
-            (uint, uint, uint) quarterroundStep(uint x1, uint x2, uint x3, int shift)
-            {
-                DispatchResult(ResultType.QR_INPUT_X1, x1);
-                DispatchResult(ResultType.QR_INPUT_X2, x2);
-                DispatchResult(ResultType.QR_INPUT_X3, x3);
-                x1 += x2; // x1 = x1 + x2
-                DispatchResult(ResultType.QR_ADD, x1);
-                x3 ^= x1; // x3 = x3 ^ x1 = x3 ^ ( x1 + x2 )
-                DispatchResult(ResultType.QR_XOR, x3);
-                x3 = RotateLeft(x3, shift); // x3 = x3 <<< shift = ( x3 ^ x1 ) <<< shift = (x3 ^ (x1 + x2)) <<< shift
-                DispatchResult(ResultType.QR_SHIFT, x3);
-                DispatchResult(ResultType.QR_OUTPUT_X1, x1);
-                DispatchResult(ResultType.QR_OUTPUT_X2, x2);
-                DispatchResult(ResultType.QR_OUTPUT_X3, x3);
-                return (x1, x2, x3);
-            }
-            (a, b, d) = quarterroundStep(a, b, d, 16);
-            (c, d, b) = quarterroundStep(c, d, b, 12);
-            (a, b, d) = quarterroundStep(a, b, d, 8);
-            (c, d, b) = quarterroundStep(c, d, b, 7);
-            DispatchResult(ResultType.QR_OUTPUT_A, a);
-            DispatchResult(ResultType.QR_OUTPUT_B, b);
-            DispatchResult(ResultType.QR_OUTPUT_C, c);
-            DispatchResult(ResultType.QR_OUTPUT_D, d);
-            return (a, b, c, d);
-        }
-
-        #endregion
-
-        #region Cipher Helper Methods
-        /**
-         * Validates the given inputs by looking which version was set and if input data matches that setting..
-         */
-        public bool ValidateInput()
-        {
-            string message = null;
-            if (_inputKey.Length != 32 && _inputKey.Length != 16)
-            {
-                message = "Key must be 32 or 16-byte.";
-            }
-            else if (_inputIV.Length != BITS_IV / 8)
-            {
-                message = string.Format("IV must be {0}-byte", BITS_IV / 8);
-            }
-            if (message != null)
-            {
-                GuiLogMessage(message, NotificationLevel.Error);
-                return false;
-            }
-            return true;
-        }
-
-        private void DispatchToPresentation(SendOrPostCallback callback)
-        {
-            Presentation.Dispatcher.Invoke(DispatcherPriority.Normal, callback, null);
-        }
-        private void DispatchResult(ResultType<uint> type, uint result)
-        {
-            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
-            ResultType<uint> localType = type;
-            if (ExecDiffusion)
-            {
-                DispatchDiffusionResult(localType, result);
-            }
-            else if (ExecUserKeystreamBlock)
-            {
-                DispatchUserResult(localType, result);
-            }
-            else
-            {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(localType, result);
-                });
-            }
-        }
-        private void DispatchResult(ResultType<uint[]> type, params uint[] result)
-        {
-            // http://www.shujaat.net/2010/12/wpf-dispatcherbegininvoke-and-closures.html
-            ResultType<uint[]> localType = type;
-            if (ExecDiffusion)
-            {
-                DispatchDiffusionResult(localType, result);
-            }
-            else if (ExecUserKeystreamBlock)
-            {
-                DispatchUserResult(localType, result);
-            }
-            else
-            {
-                DispatchToPresentation(delegate
-                {
-                    _presentation.AddResult(localType, result);
-                });
-            }
-        }
-
-        private void DispatchUserResult(ResultType<uint[]> type,  uint[] result)
-        {
-            ResultType<uint[]> userType = ResultType.GetUserType(type);
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(userType, result);
-            });
-        }
-        private void DispatchUserResult(ResultType<uint> type, uint result)
-        {
-            ResultType<uint> userType = ResultType.GetUserType(type);
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(userType, result);
-            });
-        }
-
-        private delegate T _GetTResult<out T>();
-        private uint[] GetResult(ResultType<uint[]> type, int index)
-        {
-            ResultType<uint[]> localType = type;
-            if(ExecUserKeystreamBlock)
-            {
-                localType = ResultType.GetUserType(localType);
-            }
-            _GetTResult<uint[]> getResult = () => _presentation.GetResult(localType, index);
-            return (uint[])Presentation.Dispatcher.Invoke(getResult, null);
-        }
-
-        private void DispatchQRFlippedBitsResult(uint[] diffusionState, int index)
-        {
-            uint[] normalState = GetResult(ResultType.CHACHA_HASH_QUARTERROUND, index);
-            uint flippedBitsCount = Diffusion.CalculateFlippedBits(normalState, diffusionState);
-            DispatchResult(ResultType.FLIPPED_BITS_QR, flippedBitsCount);
-        }
-
-        private void DispatchOriginalStateFlippedBitsResult(uint[] originalDiffusionState, ulong keystreamBlock)
-        {
-            // TODO ChaCha supports a 64-bit counter but IntermediateResultsManager uses only a 32-bit integer for indexing.
-            //   => This will most likely break for long messages!
-            uint[] normalOriginalState = GetResult(ResultType.CHACHA_HASH_ORIGINAL_STATE, (int)keystreamBlock);
-            uint flippedBitsCount = Diffusion.CalculateFlippedBits(normalOriginalState, originalDiffusionState);
-            DispatchResult(ResultType.FLIPPED_BITS_ORIGINAL_STATE, flippedBitsCount);
-        }
-
-        private void DispatchAddedStateFlippedBitsResult(uint[] addedDiffusionState, ulong keystreamBlock)
-        {
-            uint[] addedNormalState = GetResult(ResultType.CHACHA_HASH_ADD_ORIGINAL_STATE, (int)keystreamBlock);
-            uint flippedBitsCount = Diffusion.CalculateFlippedBits(addedNormalState, addedDiffusionState);
-            DispatchResult(ResultType.FLIPPED_BITS_ADD_ORIGINAL_STATE, flippedBitsCount);
-        }
-        private ulong _dispatchAddedStateFlippedBitsResult = 0;
-        private void DispatchAddedStateFlippedBitsResult(uint[] originalDiffusionState)
-        {
-            DispatchAddedStateFlippedBitsResult(originalDiffusionState, _dispatchAddedStateFlippedBitsResult);
-            _dispatchAddedStateFlippedBitsResult++;
-        }
-
-        private void DispatchLittleEndianStateFlippedBitsResult(uint[] littleEndianDiffusionState, ulong keystreamBlock)
-        {
-            uint[] littleEndianNormalState = GetResult(ResultType.CHACHA_HASH_LITTLEENDIAN_STATE, (int)keystreamBlock);
-            uint flippedBitsCount = Diffusion.CalculateFlippedBits(littleEndianNormalState, littleEndianDiffusionState);
-            DispatchResult(ResultType.FLIPPED_BITS_LITTLEENDIAN_STATE, flippedBitsCount);
-        }
-        private ulong _dispatchLittleEndianStateFlippedBitsResult = 0;
-        private void DispatchLittleEndianStateFlippedBitsResult(uint[] originalDiffusionState)
-        {
-            DispatchLittleEndianStateFlippedBitsResult(originalDiffusionState, _dispatchLittleEndianStateFlippedBitsResult);
-            _dispatchLittleEndianStateFlippedBitsResult++;
-        }
-
-        private void DispatchDiffusionResult(ResultType<uint> type, uint result)
-        {
-            ResultType<uint> diffusionResultType = ResultType.GetDiffusionResultType(type);
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(diffusionResultType, result);
-            });
-        }
-        private void DispatchDiffusionResult(ResultType<uint[]> type, uint[] result)
-        {
-            ResultType<uint[]> diffusionResultType = ResultType.GetDiffusionResultType(type);
-            DispatchToPresentation(delegate
-            {
-                _presentation.AddResult(diffusionResultType, result);
-            });
-        }
-
-        /* Return an uint32 in little-endian from the given byte-array, starting at offset.*/
-        public static uint To4ByteLE(byte[] x, int offset)
-        {
-            byte b1 = x[offset];
-            byte b2 = x[offset + 1];
-            byte b3 = x[offset + 2];
-            byte b4 = x[offset + 3];
-
-            return (uint)(b4 << 24 | b3 << 16 | b2 << 8 | b1);
-        }
-        public static uint To4ByteLE(uint x)
-        {
-            uint b1 = x >> 24;
-            uint b2 = (x >> 16) & 0xFF;
-            uint b3 = (x >> 8) & 0xFF;
-            uint b4 = x & 0xFF;
-            return b4 << 24 | b3 << 16 | b2 << 8 | b1;
-        }
-
-        public void SetCounterToState(uint[] state, ulong c)
-        {
-            byte[] counter = GetBytes(c);
-            // counter as little-endian
-            Array.Reverse(counter);
-            // set counter value to state
-            state[12] = To4ByteLE(counter, 0);
-            if (BITS_COUNTER > 32)
-                state[13] = To4ByteLE(counter, 4);
-        }
-
-        /**
-         * Return a bytes array of the given number with the highest significant byte always coming first (big-endian), independent of system architecture.
-         * For example: getBytes(0x01020304) -> byte[4] { 1, 2, 3, 4 }
-         */
-        public static byte[] GetBytes(uint n)
-        {
-            byte[] b = BitConverter.GetBytes(n);
-            // if system architecture is little-endian,
-            // BitConverter.GetBytes returned bytes in little-endian order thus we reverse the order
-            // to always get the highest significant byte first (big-endian)
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(b);
-            }
-            return b;
-        }
-        public static byte[] GetBytes(ulong n)
-        {
-            byte[] b = BitConverter.GetBytes(n);
-            // if system architecture is little-endian,
-            // BitConverter.GetBytes returned bytes in little-endian order thus we reverse the order
-            // to always get the highest significant byte first (big-endian)
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(b);
-            }
-            return b;
-        }
-
-        /**
-         * Return a uint of the given bytes array interpreted as big-endian, independent of system architecture.
-         * For example: ToUInt32(new byte[] { 0x01, 0x02, 0x03, 0x04 }) -> 0x01020304
-         */
-        public static uint ToUInt32(byte[] b, int startIndex)
-        {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(b);
-            }
-            return BitConverter.ToUInt32(b, startIndex);
-        }
-
-        public static ulong ToUInt64(byte[] b, int startIndex)
-        {
-            if (BitConverter.IsLittleEndian)
-            {
-                Array.Reverse(b);
-            }
-            return BitConverter.ToUInt64(b, startIndex);
-        }
-
-        /**
-        * Circular bit shift to the left. 
-        */
-        public uint RotateLeft(uint x, int shift)
-        {
-            return (x << shift) | (x >> -shift);
-        }
-        #endregion
-
-        #region Event Handling and Logging
         public event StatusChangedEventHandler OnPluginStatusChanged;
 
         public event GuiLogNotificationEventHandler OnGuiLogNotificationOccured;
@@ -789,12 +552,12 @@ namespace Cryptool.Plugins.ChaCha
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void GuiLogMessage(string message, NotificationLevel logLevel)
+        protected void GuiLogMessage(string message, NotificationLevel logLevel)
         {
             EventsHelper.GuiLogMessage(OnGuiLogNotificationOccured, this, new GuiLogEventArgs(message, this, logLevel));
         }
 
-        private void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             EventsHelper.PropertyChanged(PropertyChanged, this, new PropertyChangedEventArgs(name));
         }
@@ -804,6 +567,6 @@ namespace Cryptool.Plugins.ChaCha
             EventsHelper.ProgressChanged(OnPluginProgressChanged, this, new PluginProgressEventArgs(value, max));
         }
 
-        #endregion
+        #endregion Event Handling
     }
 }
