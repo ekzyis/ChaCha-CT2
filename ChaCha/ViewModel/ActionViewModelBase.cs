@@ -51,51 +51,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
-        private ValidationRule _actionInputRule; private ValidationRule ActionInputRule
-        {
-            get
-            {
-                if (_actionInputRule == null) _actionInputRule = new UserInputValidationRule(TotalActions - 1);
-                return _actionInputRule;
-            }
-        }
-
-        private KeyEventHandler _actionInputHandler; private KeyEventHandler ActionInputHandler
-        {
-            get
-            {
-                if (_actionInputHandler == null) _actionInputHandler = UserInputHandler(ActionInputRule, MoveToAction);
-                return _actionInputHandler;
-            }
-        }
-
-        /// <summary>
-        /// Handles the event 'user enters value into action textbox next to slider'.
-        /// </summary>
-        public void HandleUserActionInput(object sender, KeyEventArgs e)
-        {
-            ActionInputHandler(sender, e);
-        }
-
-        /// <summary>
-        /// Factory function to create user input handlers.
-        /// </summary>
-        protected KeyEventHandler UserInputHandler(ValidationRule validationRule, Action<int> HandleEvent)
-        {
-            return (object sender, KeyEventArgs e) =>
-            {
-                if (e.Key == Key.Return)
-                {
-                    string value = ((TextBox)sender).Text;
-                    ValidationResult result = validationRule.Validate(value, null);
-                    if (result == ValidationResult.ValidResult)
-                    {
-                        HandleEvent((int.Parse(value)));
-                    }
-                }
-            };
-        }
-
         /// <summary>
         /// Initialize the page actions.
         /// </summary>
@@ -304,6 +259,55 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         #endregion IActionTag
+
+        #region User Input
+
+        private ValidationRule _actionInputRule; private ValidationRule ActionInputRule
+        {
+            get
+            {
+                if (_actionInputRule == null) _actionInputRule = new UserInputValidationRule(TotalActions - 1);
+                return _actionInputRule;
+            }
+        }
+
+        private KeyEventHandler _actionInputHandler; private KeyEventHandler ActionInputHandler
+        {
+            get
+            {
+                if (_actionInputHandler == null) _actionInputHandler = UserInputHandler(ActionInputRule, MoveToAction);
+                return _actionInputHandler;
+            }
+        }
+
+        /// <summary>
+        /// Handles the event 'user enters value into action textbox next to slider'.
+        /// </summary>
+        public void HandleUserActionInput(object sender, KeyEventArgs e)
+        {
+            ActionInputHandler(sender, e);
+        }
+
+        /// <summary>
+        /// Factory function to create user input handlers.
+        /// </summary>
+        protected KeyEventHandler UserInputHandler(ValidationRule validationRule, Action<int> HandleEvent)
+        {
+            return (object sender, KeyEventArgs e) =>
+            {
+                if (e.Key == Key.Return)
+                {
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = validationRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        HandleEvent((int.Parse(value)));
+                    }
+                }
+            };
+        }
+
+        #endregion User Input
 
         #region ICommand
 
