@@ -30,7 +30,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         [Conditional("DEBUG")]
         [DebuggerStepThrough]
-        public void VerifyPropertyName(string propertyName)
+        public virtual void VerifyPropertyName(string propertyName)
         {
             // Verify that the property name matches a real,
             // public, instance property on this object.
