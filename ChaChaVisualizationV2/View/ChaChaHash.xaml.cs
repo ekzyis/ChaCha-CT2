@@ -42,34 +42,37 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
 
         private void OnViewModelPropertyChange(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "DiffusionStateValues")
+            this.Dispatcher.Invoke(delegate
             {
-                HandleDiffusionStateValuesChange();
-            }
-            else if (e.PropertyName == "DiffusionOriginalState")
-            {
-                HandleDiffusionOriginalStateChange();
-            }
-            else if (e.PropertyName == "DiffusionAdditionResultState")
-            {
-                HandleDiffusionAdditionResultStateChange();
-            }
-            else if (e.PropertyName == "DiffusionLittleEndianState")
-            {
-                HandleDiffusionLittleEndianStateChange();
-            }
-            else if (e.PropertyName.StartsWith("DiffusionQRIn"))
-            {
-                HandleDiffusionQRInChange();
-            }
-            else if (e.PropertyName.StartsWith("DiffusionQROut"))
-            {
-                HandleDiffusionQROutChange();
-            }
-            else if (e.PropertyName.StartsWith("DiffusionQRStep"))
-            {
-                HandleDiffusionQRStepChange(e.PropertyName);
-            }
+                if (e.PropertyName == "DiffusionStateValues")
+                {
+                    HandleDiffusionStateValuesChange();
+                }
+                else if (e.PropertyName == "DiffusionOriginalState")
+                {
+                    HandleDiffusionOriginalStateChange();
+                }
+                else if (e.PropertyName == "DiffusionAdditionResultState")
+                {
+                    HandleDiffusionAdditionResultStateChange();
+                }
+                else if (e.PropertyName == "DiffusionLittleEndianState")
+                {
+                    HandleDiffusionLittleEndianStateChange();
+                }
+                else if (e.PropertyName.StartsWith("DiffusionQRIn"))
+                {
+                    HandleDiffusionQRInChange();
+                }
+                else if (e.PropertyName.StartsWith("DiffusionQROut"))
+                {
+                    HandleDiffusionQROutChange();
+                }
+                else if (e.PropertyName.StartsWith("DiffusionQRStep"))
+                {
+                    HandleDiffusionQRStepChange(e.PropertyName);
+                }
+            });
         }
 
         private void InitOrClearDiffusionValue(RichTextBox rtb, uint? diffusionStateValue, uint? stateValue)
