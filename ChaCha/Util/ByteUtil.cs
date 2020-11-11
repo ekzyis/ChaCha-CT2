@@ -174,5 +174,15 @@ namespace Cryptool.Plugins.ChaCha.Util
             }
             return c;
         }
+
+        /// <summary>
+        /// Bytewise XOR of both arrays. They must be of same size.
+        /// </summary>
+        public static byte[] XOR(byte[] a, byte[] b)
+        {
+            if (a.Length != b.Length)
+                throw new ArgumentException("Input arrays are not of same length");
+            return XOR(a, b, a.Length);
+        }
     }
 }
