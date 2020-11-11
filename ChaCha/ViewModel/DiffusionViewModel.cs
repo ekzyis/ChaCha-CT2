@@ -18,14 +18,14 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
         {
-            DiffusionInputKey = ChaCha.InputKey;
-            DiffusionInputIV = ChaCha.InputIV;
+            DiffusionKey = ChaCha.InputKey;
+            DiffusionIV = ChaCha.InputIV;
             DiffusionInitialCounter = ChaCha.InitialCounter;
         }
 
         #region Binding Properties
 
-        private byte[] _diffusionKey; public byte[] DiffusionInputKey
+        private byte[] _diffusionKey; public byte[] DiffusionKey
         {
             get
             {
@@ -44,17 +44,17 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
-        private byte[] _diffusionInputIV; public byte[] DiffusionInputIV
+        private byte[] _diffusionIV; public byte[] DiffusionIV
         {
             get
             {
-                return _diffusionInputIV;
+                return _diffusionIV;
             }
             set
             {
-                if (_diffusionInputIV != value)
+                if (_diffusionIV != value)
                 {
-                    _diffusionInputIV = value;
+                    _diffusionIV = value;
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
                     OnPropertyChanged("FlippedBits");
@@ -84,12 +84,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public int FlippedBits
         {
-            get => BitFlips.FlippedBits(DiffusionInputKey, ChaCha.InputKey) + BitFlips.FlippedBits(DiffusionInputIV, ChaCha.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaCha.InitialCounter);
+            get => BitFlips.FlippedBits(DiffusionKey, ChaCha.InputKey) + BitFlips.FlippedBits(DiffusionIV, ChaCha.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaCha.InitialCounter);
         }
 
         public int TotalBits
         {
-            get => DiffusionInputKey.Length * 8 + DiffusionInputIV.Length * 8 + (int)Settings.Version.CounterBits;
+            get => DiffusionKey.Length * 8 + DiffusionIV.Length * 8 + (int)Settings.Version.CounterBits;
         }
 
         public double FlippedBitsPercentage
@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public bool DiffusionActive
         {
-            get => !(DiffusionInputKey.SequenceEqual(ChaCha.InputKey) && DiffusionInputIV.SequenceEqual(ChaCha.InputIV) && DiffusionInitialCounter == ChaCha.InitialCounter);
+            get => !(DiffusionKey.SequenceEqual(ChaCha.InputKey) && DiffusionIV.SequenceEqual(ChaCha.InputIV) && DiffusionInitialCounter == ChaCha.InitialCounter);
         }
 
         #endregion Binding Properties
@@ -132,7 +132,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             if (DiffusionActive)
             {
                 // Execute ChaCha with Diffusion values.
-                ChaCha.ExecuteDiffusion(DiffusionInputKey, DiffusionInputIV, (ulong)DiffusionInitialCounter);
+                ChaCha.ExecuteDiffusion(DiffusionKey, DiffusionIV, (ulong)DiffusionInitialCounter);
             }
         }
 

@@ -99,12 +99,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public byte[] DiffusionInputKey
         {
-            get => DiffusionViewModel.DiffusionInputKey;
+            get => DiffusionViewModel.DiffusionKey;
         }
 
         public byte[] DiffusionInputIV
         {
-            get => DiffusionViewModel.DiffusionInputIV;
+            get => DiffusionViewModel.DiffusionIV;
         }
 
         public BigInteger DiffusionInitialCounter
