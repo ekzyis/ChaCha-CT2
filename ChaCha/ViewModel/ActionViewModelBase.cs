@@ -164,7 +164,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         #region Asynchronous action navigation
 
-        private readonly Stack<int> AsyncMoveCommandsStack = new Stack<int>();
+        private readonly Stack<int> AsyncMoveCommands = new Stack<int>();
 
         private CancellationTokenSource ActionNavigationTokenSource;
 
@@ -175,9 +175,9 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public void QueueMoveToAction(int n)
         {
-            lock (AsyncMoveCommandsStack)
+            lock (AsyncMoveCommands)
             {
-                AsyncMoveCommandsStack.Push(n);
+                AsyncMoveCommands.Push(n);
             }
         }
 
@@ -192,12 +192,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 return Task.Run(() =>
                 {
                     int n = CurrentActionIndex;
-                    lock (AsyncMoveCommandsStack)
+                    lock (AsyncMoveCommands)
                     {
-                        if (AsyncMoveCommandsStack.Count != 0)
+                        if (AsyncMoveCommands.Count != 0)
                         {
-                            n = AsyncMoveCommandsStack.Pop();
-                            AsyncMoveCommandsStack.Clear();
+                            n = AsyncMoveCommands.Pop();
+                            AsyncMoveCommands.Clear();
                         }
                     }
                     var watch = System.Diagnostics.Stopwatch.StartNew();
