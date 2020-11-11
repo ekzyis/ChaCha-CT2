@@ -35,6 +35,7 @@
 	<replacement key="$encode$" value="String-Encodierer" />
 	<replacement key="$chacha_enc$" value="ChaCha (Verschlüsselung)" />
 	<replacement key="$chacha_dec$" value="ChaCha (Entschlüsselung)" />
+	<replacement key="$counter$" value="Initialer Blockzähler" />
   </replacements>
   
   <replacements lang="en">
@@ -48,5 +49,6 @@
 	<replacement key="$encode$" value="String encoder" />
 	<replacement key="$chacha_enc$" value="ChaCha (Encryption)" />
 	<replacement key="$chacha_dec$" value="ChaCha (Decryption)" />
+	<replacement key="$counter$" value="Initial block counter (optional)" />
   </replacements>
 </sample>
