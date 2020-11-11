@@ -10,7 +10,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 {
     internal class ChaChaPresentationViewModel : ViewModelBase, IChaCha
     {
-        public ChaChaPresentationViewModel(ChaChaVisualizationV2 chachaVisualization)
+        public ChaChaPresentationViewModel(ChaChaVisualization chachaVisualization)
         {
             ChaChaVisualization = chachaVisualization;
             ChaChaVisualization.PropertyChanged += new PropertyChangedEventHandler(OnPluginPropertyChanged);
@@ -137,7 +137,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #region IChaCha
 
         public ChaChaPresentationViewModel PresentationViewModel { get => this; }
-        public ChaChaVisualizationV2 ChaChaVisualization { get; private set; }
+        public ChaChaVisualization ChaChaVisualization { get; private set; }
         public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
         public ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
 

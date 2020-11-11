@@ -390,7 +390,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         #region IChaCha
 
         public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
-        public ChaChaVisualizationV2 ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
+        public ChaChaVisualization ChaChaVisualization { get => PresentationViewModel.ChaChaVisualization; }
         public ChaCha.ChaCha ChaCha { get => ChaChaVisualization; }
         public ChaCha.ChaChaSettings Settings { get => (ChaChaSettings)ChaChaVisualization.Settings; }
 

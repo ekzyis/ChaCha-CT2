@@ -78,7 +78,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChaChaVisualizationV2.cs" />
+    <Compile Include="ChaChaVisualization.cs" />
     <Compile Include="ChaChaVisualizationV2Settings.cs" />
     <Compile Include="ContentTemplate\PageNavigationTemplate.xaml.cs">
       <DependentUpon>PageNavigationTemplate.xaml</DependentUpon>

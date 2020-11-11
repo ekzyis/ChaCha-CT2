@@ -28,9 +28,9 @@ using System.ComponentModel.DataAnnotations;
 namespace Cryptool.Plugins.ChaChaVisualizationV2
 {
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("ChaChaVisualizationV2", "Subtract one number from another", "ChaChaVisualizationV2/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("ChaChaVisualization", "Subtract one number from another", "ChaChaVisualization/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
-    public class ChaChaVisualizationV2 : ChaCha.ChaCha, INotifyPropertyChanged
+    public class ChaChaVisualization : ChaCha.ChaCha, INotifyPropertyChanged
     {
         #region Private Variables
 
@@ -38,7 +38,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2
 
         #endregion Private Variables
 
-        public ChaChaVisualizationV2()
+        public ChaChaVisualization()
         {
             presentation = new ChaChaPresentation(this);
         }

@@ -9,7 +9,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
     {
         ChaChaPresentationViewModel PresentationViewModel { get; }
 
-        ChaChaVisualizationV2 ChaChaVisualization { get; }
+        ChaChaVisualization ChaChaVisualization { get; }
 
         ChaCha.ChaCha ChaCha { get; }
 

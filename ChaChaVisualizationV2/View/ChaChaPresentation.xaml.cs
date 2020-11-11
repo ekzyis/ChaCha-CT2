@@ -8,7 +8,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.View
     /// </summary>
     public partial class ChaChaPresentation : UserControl
     {
-        public ChaChaPresentation(ChaChaVisualizationV2 chachaVisualization)
+        public ChaChaPresentation(ChaChaVisualization chachaVisualization)
         {
             InitializeComponent();
             this.DataContext = new ChaChaPresentationViewModel(chachaVisualization);
