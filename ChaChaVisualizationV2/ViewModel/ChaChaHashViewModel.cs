@@ -224,6 +224,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
 
         public override void Reset()
         {
+            StateActionCreator.ClearStateMatrix();
             StateActionCreator.InsertFirstOriginalState();
             QRIO.ResetQuarterroundValues();
         }

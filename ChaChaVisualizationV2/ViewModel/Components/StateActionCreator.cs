@@ -12,6 +12,21 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
         }
 
+        public Action ClearStateMatrix
+        {
+            get
+            {
+                return () =>
+                {
+                    for (int i = 0; i < 16; ++i)
+                    {
+                        VM.StateValues[i].Value = null;
+                        VM.StateValues[i].Mark = false;
+                    }
+                };
+            }
+        }
+
         public Action InsertFirstOriginalState
         {
             get
