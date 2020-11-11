@@ -2461,6 +2461,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.Resources>
                         <Style TargetType="{x:Type StackPanel}">
@@ -2490,6 +2491,18 @@
                                     </Binding>
                                 </Setter.Value>
                             </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type Button}" x:Key="StartButton">
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Content" Value="Start" />
+                        </Style>
+                        <Style TargetType="{x:Type Button}" x:Key="EndButton">
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Content" Value="End" />
                         </Style>
                         <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton">
                             <Setter Property="Width" Value="45" />
@@ -2617,6 +2630,12 @@
                     </StackPanel>
 
                     <!--#endregion-->
+
+                    <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="Addition / Reverse Bytes" Margin="3,0,3,0" />
+                    <StackPanel Grid.Column="7" Grid.Row="1">
+                        <Button Style="{StaticResource StartButton}" Command="{Binding MatrixStartCommand}" />
+                        <Button Style="{StaticResource EndButton}" Content="End" Command="{Binding MatrixEndCommand}" />
+                    </StackPanel>
                 </Grid>
             </Viewbox>
 

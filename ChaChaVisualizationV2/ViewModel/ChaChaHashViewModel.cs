@@ -209,9 +209,11 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
                 });
 
                 Seq(() => { RoundsStep = false; });
+                TagMatrixStartAction(keystreamBlock);
                 Seq(StateActionCreator.ShowOriginalState(localKeystreamBlock));
                 Seq(StateActionCreator.ShowAdditionResult(localKeystreamBlock));
                 Seq(StateActionCreator.ShowLittleEndian(localKeystreamBlock));
+                TagMatrixEndAction(keystreamBlock);
 
                 ActionCreator.EndSequence();
 
@@ -565,6 +567,50 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         #endregion Quarterround input
+
+        #region Matrix
+
+        private ICommand _matrixStartCommand; public ICommand MatrixStartCommand
+        {
+            get
+            {
+                if (_matrixStartCommand == null) _matrixStartCommand = new RelayCommand((arg) => GoToMatrixStart());
+                return _matrixStartCommand;
+            }
+        }
+
+        private ICommand _matrixEndCommand; public ICommand MatrixEndCommand
+        {
+            get
+            {
+                if (_matrixEndCommand == null) _matrixEndCommand = new RelayCommand((arg) => GoToMatrixEnd());
+                return _matrixEndCommand;
+            }
+        }
+
+        /// <summary>
+        /// Go to the start of the addition step of the given keystream block.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void GoToMatrixStart()
+        {
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
+            int matrixStartActionIndex = GetTaggedActionIndex(MatrixStartTag(keystreamBlockIndex));
+            MoveToAction(matrixStartActionIndex);
+        }
+
+        /// <summary>
+        /// Go to the end of the addition step of the given keystream block.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void GoToMatrixEnd()
+        {
+            int keystreamBlockIndex = CurrentKeystreamBlockIndex ?? 0;
+            int matrixEndActionIndex = GetTaggedActionIndex(MatrixEndTag(keystreamBlockIndex));
+            MoveToAction(matrixEndActionIndex);
+        }
+
+        #endregion Matrix
 
         #endregion ChaCha Hash Navigation Bar
 
@@ -1209,6 +1255,24 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         }
 
         /// <summary>
+        /// Tag the last added action as the start of the addition step of the given keystream block.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void TagMatrixStartAction(int keystreamBlock)
+        {
+            TagAction(MatrixStartTag(keystreamBlock), ActionIndex);
+        }
+
+        /// <summary>
+        /// Tag the last added action as the end of the keystream block sequence.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private void TagMatrixEndAction(int keystreamBlock)
+        {
+            TagAction(MatrixEndTag(keystreamBlock), ActionIndex);
+        }
+
+        /// <summary>
         /// Extend the action at the given action index with the given action.
         /// </summary>
         private void ExtendAction(int actionIndex, Action toExtend)
@@ -1320,6 +1384,26 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
             AssertRoundTagInput(round);
             AssertQRTagInput(qr);
             return $"KEYSTREAM_BLOCK_{keystreamBlock}_ROUND_{round}_QR_END_{qr}";
+        }
+
+        /// <summary>
+        /// Create the addition start tag.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private string MatrixStartTag(int keystreamBlock)
+        {
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            return $"KEYSTREAM_BLOCK_{keystreamBlock}_MATRIX_START";
+        }
+
+        /// <summary>
+        /// Create the keystream end tag.
+        /// </summary>
+        /// <param name="keystreamBlock">Zero-based keystream block index.</param>
+        private string MatrixEndTag(int keystreamBlock)
+        {
+            AssertKeystreamBlockTagInput(keystreamBlock);
+            return $"KEYSTREAM_BLOCK_{keystreamBlock}_MATRIX_END";
         }
 
         #endregion IActionTag
