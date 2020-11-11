@@ -5,6 +5,7 @@ using Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -930,6 +931,21 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel
         public bool DiffusionActive
         {
             get => PresentationViewModel.DiffusionActive;
+        }
+
+        public int DiffusionFlippedBits
+        {
+            get => BitFlips.FlippedBits(DiffusionStateValues.Select(sv => sv.Value).ToArray(), StateValues.Select(sv => sv.Value).ToArray());
+        }
+
+        public int TotalBits
+        {
+            get => 512;
+        }
+
+        public double DiffusionFlippedBitsPercentage
+        {
+            get => (double)DiffusionFlippedBits / TotalBits;
         }
 
         private ObservableCollection<StateValue> _diffusionStateValues; public ObservableCollection<StateValue> DiffusionStateValues

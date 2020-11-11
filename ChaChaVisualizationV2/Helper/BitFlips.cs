@@ -22,7 +22,7 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
         }
 
         /// <summary>
-        /// Calculate amount of flipped bits between two BigInteger.
+        /// Calculate amount of flipped bits between two UInt64.
         /// </summary>
         public static int FlippedBits(ulong a, ulong b)
         {
@@ -39,6 +39,21 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.Helper
             {
                 count += (int)(x & 1);
                 x >>= 1;
+            }
+            return count;
+        }
+
+        /// <summary>
+        /// Calculate the amount of bit flips between the two given 512-bit states.
+        /// </summary>
+        public static int FlippedBits(uint?[] diffusionState, uint?[] primaryState)
+        {
+            int count = 0;
+            for (int i = 0; i < 16; ++i)
+            {
+                uint? dv = diffusionState[i];
+                uint? pv = primaryState[i];
+                if (dv != null && pv != null) count += FlippedBits((ulong)dv, (ulong)pv);
             }
             return count;
         }

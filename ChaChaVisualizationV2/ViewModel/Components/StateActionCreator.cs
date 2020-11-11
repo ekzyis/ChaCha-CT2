@@ -62,6 +62,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                         VM.DiffusionStateValues[i].Value = diffusionState[i];
                     }
                     VM.OnPropertyChanged("DiffusionStateValues");
+                    VM.OnPropertyChanged("DiffusionFlippedBits");
+                    VM.OnPropertyChanged("DiffusionFlippedBitsPercentage");
                 }
             };
         }

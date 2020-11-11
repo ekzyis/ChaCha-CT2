@@ -17,6 +17,7 @@
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <conv:BooleanOr x:Key="BooleanOr" />
+            <conv:DoubleToPercentage x:Key="DoubleToPercentage" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -66,12 +67,36 @@
                 </Grid.ColumnDefinitions>
 
                 <!--#region WORKAROUND FOR SCALING ISSUE: Top path as border -->
-                <Grid Grid.Row="0" Grid.Column="0" Style="{StaticResource MatrixVisualizationGrid}">
+                <Grid Grid.Row="0" Grid.Column="0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border Style="{StaticResource MatrixBorder}" Grid.Row="1" BorderBrush="Black" BorderThickness="0,2,2,0" Margin="20,0,0,0" />
+                    <Border Grid.Row="1" Style="{StaticResource MatrixVisualizationBorder}" BorderThickness="0" Margin="0">
+                        <Border Style="{StaticResource MatrixBorder}"  BorderBrush="Black" BorderThickness="0,2,2,0" Margin="20,0,0,0" />
+                    </Border>
+                    <Grid Grid.Row="1" Margin="20,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="4">
+                            <Viewbox Margin="1" HorizontalAlignment="Left" Style="{StaticResource UniformViewbox}" Visibility="{Binding DiffusionActive, Converter={StaticResource FalseToCollapsed}}">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Flipped Bits: " />
+                                    <TextBlock Text="{Binding DiffusionFlippedBits}" />
+                                    <TextBlock Text="/" />
+                                    <TextBlock Text="{Binding TotalBits, Mode=OneTime}" />
+                                    <TextBlock Text="(" />
+                                    <TextBlock Text="{Binding DiffusionFlippedBitsPercentage, Converter={StaticResource DoubleToPercentage}}" />
+                                    <TextBlock Text=")" />
+                                </StackPanel>
+                            </Viewbox>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <!--#endregion-->
 
