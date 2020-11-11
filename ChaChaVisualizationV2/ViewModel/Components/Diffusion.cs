@@ -37,7 +37,6 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
         {
             if (dHex.Length != pHex.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
             if (dHex.Length % 2 != 0) throw new ArgumentException("Length must be even");
-            FlowDocument flowDocument = new FlowDocument();
             Paragraph paragraph = new Paragraph();
             for (int i = 0; i < dHex.Length; i += 2)
             {
@@ -48,8 +47,8 @@ namespace Cryptool.Plugins.ChaChaVisualizationV2.ViewModel.Components
                 paragraph.Inlines.Add(RedIfDifferent(dChar1, pChar1));
                 paragraph.Inlines.Add(RedIfDifferent(dChar2, pChar2));
             }
-            flowDocument.Blocks.Add(paragraph);
-            rtb.Document = flowDocument;
+            rtb.Document.Blocks.Clear();
+            rtb.Document.Blocks.Add(paragraph);
         }
 
         /// <summary>
