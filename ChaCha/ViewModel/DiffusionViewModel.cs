@@ -25,7 +25,51 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         #region Binding Properties
 
+        /// <summary>
+        /// The value which is shown in the diffusion key input box.
+        /// </summary>
+        public byte[] _diffusionInputKey; public byte[] DiffusionInputKey
+
+        {
+            get
+            {
+                return _diffusionInputKey;
+            }
+            set
+            {
+                if (_diffusionInputKey != value)
+                {
+                    _diffusionInputKey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value which is shown in the diffusion XOR key input box.
+        /// </summary>
+        public byte[] _diffusionXORKey; public byte[] DiffusionXORKey
+
+        {
+            get
+            {
+                return _diffusionXORKey;
+            }
+            set
+            {
+                if (_diffusionXORKey != value)
+                {
+                    _diffusionXORKey = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The actual diffusion key which will be used for cipher execution.
+        /// </summary>
         private byte[] _diffusionKey; public byte[] DiffusionKey
+
         {
             get
             {
@@ -36,6 +80,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 if (_diffusionKey != value)
                 {
                     _diffusionKey = value;
+                    DiffusionInputKey = value;
+                    DiffusionXORKey = ByteUtil.XOR(_diffusionKey, ChaCha.InputKey);
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
                     OnPropertyChanged("FlippedBits");
