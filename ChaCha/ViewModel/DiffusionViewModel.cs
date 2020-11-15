@@ -20,6 +20,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
         {
             DiffusionKey = ChaCha.InputKey;
+            DiffusionInputKey = ChaCha.InputKey;
+            DiffusionXORKey = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
             DiffusionIV = ChaCha.InputIV;
             DiffusionInitialCounter = ChaCha.InitialCounter;
         }
