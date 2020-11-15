@@ -81,11 +81,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             Seq(() => { IVEncodingLittleEndian = true; });
             Seq(() => { IVMatrix = true; });
 
-            ActionCreator.EndSequence();
-
             #endregion IV
 
-            Seq(() => { IVMatrix = true; Description[4] = true; });
+            Seq(() => { Description[4] = true; });
+
+            ActionCreator.EndSequence();
 
             ActionCreator.EndSequence();
         }
