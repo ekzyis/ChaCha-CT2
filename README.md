@@ -1,4 +1,7 @@
 # ChaCha-CT2
+
+![](chacha.png)
+
 ChaCha Cipher Visualization as a plugin for CrypTool 2. Bachelor thesis. (Thesis paper can be found [here](https://github.com/ekzyis/ChaCha-Thesis))
 
 ### How to build and run 
