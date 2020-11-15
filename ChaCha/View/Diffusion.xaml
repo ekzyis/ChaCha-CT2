@@ -121,12 +121,12 @@
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionKey"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORInputKey"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORKey"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionIV"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORInputIV"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORIV"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}">
