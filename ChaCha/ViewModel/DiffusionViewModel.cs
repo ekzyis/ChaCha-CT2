@@ -3,6 +3,8 @@ using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
@@ -46,6 +48,23 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         /// <summary>
+        /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
+        /// </summary>
+        public KeyEventHandler DiffusionInputKeyKeyHandler(ValidationRule validationRule)
+        {
+            return (object sender, KeyEventArgs e) =>
+            {
+                string value = ((TextBox)sender).Text;
+                ValidationResult result = validationRule.Validate(value, null);
+                if (result == ValidationResult.ValidResult)
+                {
+                    // update actual diffusion key property. This in turn will update the diffusion xor key.
+                    DiffusionKey = Formatter.Bytes(value);
+                }
+            };
+        }
+
+        /// <summary>
         /// The value which is shown in the diffusion XOR key input box.
         /// </summary>
         public byte[] _diffusionXORKey; public byte[] DiffusionXORKey
@@ -63,6 +82,23 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                     OnPropertyChanged();
                 }
             }
+        }
+
+        /// <summary>
+        /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
+        /// </summary>
+        public KeyEventHandler DiffusionXORKeyKeyHandler(ValidationRule validationRule)
+        {
+            return (object sender, KeyEventArgs e) =>
+            {
+                string value = ((TextBox)sender).Text;
+                ValidationResult result = validationRule.Validate(value, null);
+                if (result == ValidationResult.ValidResult)
+                {
+                    byte[] input = Formatter.Bytes(value);
+                    DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
+                }
+            };
         }
 
         /// <summary>

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha.View
 {
@@ -32,7 +33,8 @@ namespace Cryptool.Plugins.ChaCha.View
                 int keyLength = ViewModel.ChaCha.InputKey.Length;
                 ValidationRule keyRule = new DiffusionInputValidationRule(keyLength);
                 IValueConverter keyConverter = new DiffusionBytesConverter(keyLength);
-                InitDiffusionInputField(InputDiffusionKey, keyRule, keyConverter, "DiffusionKey");
+                InitDiffusionInputField(InputDiffusionKey, keyRule, keyConverter, "DiffusionInputKey", ViewModel.DiffusionInputKeyKeyHandler(keyRule));
+                InitDiffusionInputField(InputDiffusionXORKey, keyRule, keyConverter, "DiffusionXORKey", ViewModel.DiffusionXORKeyKeyHandler(keyRule));
 
                 InputDiffusionIV.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
                 int ivLength = ViewModel.ChaCha.InputIV.Length;
@@ -55,6 +57,12 @@ namespace Cryptool.Plugins.ChaCha.View
             binding.ValidationRules.Add(validationRule);
             inputField.SetBinding(TextBox.TextProperty, binding);
             EditingCommands.ToggleInsert.Execute(null, inputField);
+        }
+
+        private void InitDiffusionInputField(TextBox inputField, ValidationRule validationRule, IValueConverter converter, string bindingPath, KeyEventHandler handleUserInput)
+        {
+            InitDiffusionInputField(inputField, validationRule, converter, bindingPath);
+            inputField.KeyDown += handleUserInput;
         }
     }
 }
