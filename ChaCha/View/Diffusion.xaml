@@ -120,13 +120,13 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionKey"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORKey"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionKey"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionXORKey"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionIV"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORIV"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionIV"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionXORIV"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}">
@@ -137,8 +137,8 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionInitialCounter"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="DiffusionXORInitialCounter"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionInitialCounter"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionXORInitialCounter"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="3" Grid.Column="1">

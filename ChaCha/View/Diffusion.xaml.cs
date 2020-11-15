@@ -28,24 +28,24 @@ namespace Cryptool.Plugins.ChaCha.View
             {
                 Version v = ViewModel.Settings.Version;
 
-                DiffusionKey.Text = Formatter.HexString(ViewModel.ChaCha.InputKey);
+                InputDiffusionKey.Text = Formatter.HexString(ViewModel.ChaCha.InputKey);
                 int keyLength = ViewModel.ChaCha.InputKey.Length;
                 ValidationRule keyRule = new DiffusionInputValidationRule(keyLength);
                 IValueConverter keyConverter = new DiffusionBytesConverter(keyLength);
-                InitDiffusionInputField(DiffusionKey, keyRule, keyConverter, "DiffusionKey");
+                InitDiffusionInputField(InputDiffusionKey, keyRule, keyConverter, "DiffusionKey");
 
-                DiffusionIV.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
+                InputDiffusionIV.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
                 int ivLength = ViewModel.ChaCha.InputIV.Length;
                 ValidationRule ivRule = new DiffusionInputValidationRule(ivLength);
                 IValueConverter ivConverter = new DiffusionBytesConverter(ivLength);
-                InitDiffusionInputField(DiffusionIV, ivRule, ivConverter, "DiffusionIV");
+                InitDiffusionInputField(InputDiffusionIV, ivRule, ivConverter, "DiffusionIV");
 
                 BigInteger initialCounter = ViewModel.ChaCha.InitialCounter;
-                DiffusionInitialCounter.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
+                InputDiffusionInitialCounter.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
                 int counterLength = (int)v.CounterBits / 8;
                 ValidationRule counterRule = new DiffusionInputValidationRule(counterLength);
                 IValueConverter counterConverter = new DiffusionCounterConverter(counterLength);
-                InitDiffusionInputField(DiffusionInitialCounter, counterRule, counterConverter, "DiffusionInitialCounter");
+                InitDiffusionInputField(InputDiffusionInitialCounter, counterRule, counterConverter, "DiffusionInitialCounter");
             }
         }
 
