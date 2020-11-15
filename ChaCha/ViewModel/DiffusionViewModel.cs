@@ -57,8 +57,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 ValidationResult result = validationRule.Validate(value, null);
                 if (result == ValidationResult.ValidResult)
                 {
-                    // update actual diffusion key property. This in turn will update the diffusion xor key.
                     DiffusionKey = Formatter.Bytes(value);
+                    DiffusionXORKey = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
                 }
             };
         }
@@ -96,6 +96,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 {
                     byte[] input = Formatter.Bytes(value);
                     DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
+                    DiffusionInputKey = DiffusionKey;
                 }
             };
         }
@@ -115,8 +116,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 if (_diffusionKey != value)
                 {
                     _diffusionKey = value;
-                    DiffusionInputKey = value;
-                    DiffusionXORKey = ByteUtil.XOR(_diffusionKey, ChaCha.InputKey);
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
                     OnPropertyChanged("FlippedBits");
