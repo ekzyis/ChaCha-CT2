@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
-using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
@@ -50,9 +49,9 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <summary>
         /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
         /// </summary>
-        public KeyEventHandler DiffusionInputKeyKeyHandler(ValidationRule validationRule)
+        public TextChangedEventHandler DiffusionInputKeyKeyHandler(ValidationRule validationRule)
         {
-            return (object sender, KeyEventArgs e) =>
+            return (object sender, TextChangedEventArgs e) =>
             {
                 string value = ((TextBox)sender).Text;
                 ValidationResult result = validationRule.Validate(value, null);
@@ -87,9 +86,9 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <summary>
         /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
         /// </summary>
-        public KeyEventHandler DiffusionXORKeyKeyHandler(ValidationRule validationRule)
+        public TextChangedEventHandler DiffusionXORKeyKeyHandler(ValidationRule validationRule)
         {
-            return (object sender, KeyEventArgs e) =>
+            return (object sender, TextChangedEventArgs e) =>
             {
                 string value = ((TextBox)sender).Text;
                 ValidationResult result = validationRule.Validate(value, null);

@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha.View
 {
@@ -59,10 +58,10 @@ namespace Cryptool.Plugins.ChaCha.View
             EditingCommands.ToggleInsert.Execute(null, inputField);
         }
 
-        private void InitDiffusionInputField(TextBox inputField, ValidationRule validationRule, IValueConverter converter, string bindingPath, KeyEventHandler handleUserInput)
+        private void InitDiffusionInputField(TextBox inputField, ValidationRule validationRule, IValueConverter converter, string bindingPath, TextChangedEventHandler handleUserInput)
         {
             InitDiffusionInputField(inputField, validationRule, converter, bindingPath);
-            inputField.KeyDown += handleUserInput;
+            inputField.TextChanged += handleUserInput;
         }
     }
 }
