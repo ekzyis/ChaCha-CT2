@@ -169,7 +169,7 @@
     <Compile Include="Styles\Viewbox.xaml.cs">
       <DependentUpon>Viewbox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\ByteUtil.cs" />
+    <Compile Include="Helper\ByteUtil.cs" />
     <Compile Include="Validation.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="ViewModel\ActionViewModelBase.cs" />
@@ -325,6 +325,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -17,8 +17,8 @@
 using Cryptool.PluginBase;
 using Cryptool.PluginBase.IO;
 using Cryptool.PluginBase.Miscellaneous;
+using Cryptool.Plugins.ChaCha.Helper;
 using Cryptool.Plugins.ChaCha.Model;
-using Cryptool.Plugins.ChaCha.Util;
 using Cryptool.Plugins.ChaCha.View;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,5 @@
 ﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Util;
+using Cryptool.Plugins.ChaCha.Helper;
 using System;
 using System.Numerics;
 using System.Windows.Controls;

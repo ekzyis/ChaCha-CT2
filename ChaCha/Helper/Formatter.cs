@@ -1,4 +1,4 @@
-﻿using Cryptool.Plugins.ChaCha.Util;
+﻿using Cryptool.Plugins.ChaCha.Helper;
 using System;
 using System.Globalization;
 using System.Linq;
