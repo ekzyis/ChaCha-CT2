@@ -157,16 +157,28 @@ namespace Cryptool.Plugins.ChaCha.View
         /// </summary>
         private void InitDiffusionStateMatrixKey()
         {
-            string dKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
-            string pKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
+            byte[] dKeyLe = Formatter.LittleEndian(ViewModel.DiffusionInputKey);
+            byte[] pKeyLe = Formatter.LittleEndian(ViewModel.ChaCha.InputKey);
+
+            byte[] xor = ByteUtil.XOR(dKeyLe, pKeyLe);
+
+            string dKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(dKeyLe), 8);
+            string pKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(pKeyLe), 8);
+            string xorHex = Formatter.Chunkify(Formatter.HexString(xor), 8);
+
             string[] encodedDkey = Regex.Replace(dKeyHexChunksLE, @" $", "").Split(' ');
             string[] encodedPKey = Regex.Replace(pKeyHexChunksLE, @" $", "").Split(' ');
+            string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
+
             Debug.Assert(encodedDkey.Length == encodedPKey.Length, "key and diffusion key length should be the same.");
+            Debug.Assert(encodedPKey.Length == encodedXor.Length, "key and xor length should be the same");
             Debug.Assert(encodedDkey.Length == 4 || encodedDkey.Length == 8, $"Encoded diffusion key length should be either 16 or 32 bytes. Is {encodedDkey.Length}");
             for (int i = 0; i < encodedDkey.Length; ++i)
             {
                 RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 4}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
+                TextBox tbXOR = (TextBox)this.FindName($"XORState{i + 4}");
+                tbXOR.Text = encodedXor[i];
             }
             if (encodedDkey.Length == 4)
             {
@@ -174,6 +186,8 @@ namespace Cryptool.Plugins.ChaCha.View
                 {
                     RichTextBox rtb = (RichTextBox)this.FindName($"DiffusionState{i + 8}");
                     Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, encodedDkey[i], encodedPKey[i]);
+                    TextBox tbXOR = (TextBox)this.FindName($"XORState{i + 8}");
+                    tbXOR.Text = encodedXor[i];
                 }
             }
         }
