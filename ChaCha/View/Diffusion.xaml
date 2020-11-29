@@ -120,13 +120,13 @@
 
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionKey"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionXORKey"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionKeyExplicit"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionKeyXOR"/>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionIV"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionXORIV"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionIVXOR"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}">
@@ -138,7 +138,7 @@
                             </TextBox.Text>
                         </TextBox>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionInitialCounter"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionXORInitialCounter"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionInitialCounterXOR"/>
                     </StackPanel>
 
                     <StackPanel Grid.Row="3" Grid.Column="1">

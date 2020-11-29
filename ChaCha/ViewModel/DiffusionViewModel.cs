@@ -20,8 +20,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
         {
             DiffusionKey = ChaCha.InputKey;
-            DiffusionInputKey = ChaCha.InputKey;
-            DiffusionXORKey = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
+            DiffusionKeyExplicit = ChaCha.InputKey;
+            DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
             DiffusionIV = ChaCha.InputIV;
             DiffusionInitialCounter = ChaCha.InitialCounter;
         }
@@ -31,18 +31,18 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <summary>
         /// The value which is shown in the diffusion key input box.
         /// </summary>
-        public byte[] _diffusionInputKey; public byte[] DiffusionInputKey
+        public byte[] _diffusionKeyExplicit; public byte[] DiffusionKeyExplicit
 
         {
             get
             {
-                return _diffusionInputKey;
+                return _diffusionKeyExplicit;
             }
             set
             {
-                if (_diffusionInputKey != value)
+                if (_diffusionKeyExplicit != value)
                 {
-                    _diffusionInputKey = value;
+                    _diffusionKeyExplicit = value;
                     OnPropertyChanged();
                 }
             }
@@ -51,7 +51,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <summary>
         /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
         /// </summary>
-        public TextChangedEventHandler DiffusionInputKeyKeyHandler(ValidationRule validationRule)
+        public TextChangedEventHandler DiffusionKeyExplicitKeyHandler(ValidationRule validationRule)
         {
             return (object sender, TextChangedEventArgs e) =>
             {
@@ -60,7 +60,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 if (result == ValidationResult.ValidResult)
                 {
                     DiffusionKey = Formatter.Bytes(value);
-                    DiffusionXORKey = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
+                    DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
                 }
             };
         }
@@ -68,27 +68,27 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <summary>
         /// The value which is shown in the diffusion XOR key input box.
         /// </summary>
-        public byte[] _diffusionXORKey; public byte[] DiffusionXORKey
+        public byte[] _diffusionKeyXOR; public byte[] DiffusionKeyXOR
 
         {
             get
             {
-                return _diffusionXORKey;
+                return _diffusionKeyXOR;
             }
             set
             {
-                if (_diffusionXORKey != value)
+                if (_diffusionKeyXOR != value)
                 {
-                    _diffusionXORKey = value;
+                    _diffusionKeyXOR = value;
                     OnPropertyChanged();
                 }
             }
         }
 
         /// <summary>
-        /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
+        /// Function which returns the handler for the Text Input attached to the DiffusionKeyXOR property.
         /// </summary>
-        public TextChangedEventHandler DiffusionXORKeyKeyHandler(ValidationRule validationRule)
+        public TextChangedEventHandler DiffusionKeyXORKeyHandler(ValidationRule validationRule)
         {
             return (object sender, TextChangedEventArgs e) =>
             {
@@ -98,7 +98,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 {
                     byte[] input = Formatter.Bytes(value);
                     DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
-                    DiffusionInputKey = DiffusionKey;
+                    DiffusionKeyExplicit = DiffusionKey;
                 }
             };
         }
