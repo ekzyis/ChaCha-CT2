@@ -1478,7 +1478,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         #region IDiffusion
 
-        public bool ShowToggleButton { get { return true; } }
+        public bool ShowToggleButton { get { return DiffusionActive; } }
 
         #endregion IDiffusion
     }

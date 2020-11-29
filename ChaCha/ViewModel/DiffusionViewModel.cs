@@ -369,6 +369,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 // Execute ChaCha with Diffusion values.
                 ChaCha.ExecuteDiffusion(DiffusionKey, DiffusionIV, (ulong)DiffusionInitialCounter);
             }
+            else
+            {
+                // If diffusion is inactive, there is no toggle button thus the value of the toggle button should be reset.
+                PresentationViewModel.ShowXOR = false;
+            }
         }
 
         #endregion INavigation
