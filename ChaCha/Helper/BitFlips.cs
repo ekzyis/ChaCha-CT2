@@ -10,9 +10,9 @@
         /// </summary>
         public static int FlippedBits(byte[] a, byte[] b)
         {
-            // Left pad byte arrays wiht zeroes such that they have equal length
-            LeftPad(a, b.Length);
-            LeftPad(b, a.Length);
+            // Left pad byte arrays with zeroes such that they have equal length
+            a = LeftPad(a, b.Length);
+            b = LeftPad(b, a.Length);
             int flippedBits = 0;
             for (int i = 0; i < a.Length; ++i)
             {
