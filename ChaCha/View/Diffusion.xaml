@@ -137,7 +137,7 @@
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionInitialCounter"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionInitialCounterExplicit"/>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionInitialCounterXOR"/>
                     </StackPanel>
 

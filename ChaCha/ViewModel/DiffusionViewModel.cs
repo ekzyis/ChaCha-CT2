@@ -77,6 +77,35 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 DiffusionIV = ByteUtil.XOR(input, ChaCha.InputIV);
                 DiffusionIVExplicit = DiffusionIV;
             });
+
+            DiffusionInitialCounterExplicitInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                BigInteger input = Formatter.BigInteger(value);
+                DiffusionInitialCounter = input;
+                BigInteger xor;
+                if (Settings.Version.CounterBits == 64)
+                {
+                    xor = (ulong)input ^ (ulong)ChaCha.InitialCounter;
+                }
+                else
+                {
+                    xor = (uint)input ^ (uint)ChaCha.InitialCounter;
+                }
+                DiffusionInitialCounterXOR = xor;
+            });
+            DiffusionInitialCounterXORInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                BigInteger input = Formatter.BigInteger(value);
+                if (Settings.Version.CounterBits == 64)
+                {
+                    DiffusionInitialCounter = (ulong)input ^ (ulong)ChaCha.InitialCounter;
+                }
+                else
+                {
+                    DiffusionInitialCounter = (uint)input ^ (uint)ChaCha.InitialCounter;
+                }
+                DiffusionInitialCounterExplicit = DiffusionInitialCounter;
+            });
         }
 
         public ValidatedTextChangedEventHandler DiffusionKeyExplicitInputHandler;
@@ -86,6 +115,10 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         public ValidatedTextChangedEventHandler DiffusionIVExplicitInputHandler;
 
         public ValidatedTextChangedEventHandler DiffusionIVXORInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionInitialCounterExplicitInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionInitialCounterXORInputHandler;
 
         #endregion Input Handlers
 
@@ -220,6 +253,46 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         #endregion Binding Properties (IV)
 
         #region Binding Properties (Initial Counter)
+
+        /// <summary>
+        /// The value which is shown in the diffusion Initial Counter input box.
+        /// </summary>
+        public BigInteger _diffusionInitialCounterExplicit; public BigInteger DiffusionInitialCounterExplicit
+
+        {
+            get
+            {
+                return _diffusionInitialCounterExplicit;
+            }
+            set
+            {
+                if (_diffusionInitialCounterExplicit != value)
+                {
+                    _diffusionInitialCounterExplicit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value which is shown in the diffusion XOR Initial Counter input box.
+        /// </summary>
+        public BigInteger _diffusionInitialCounterXOR; public BigInteger DiffusionInitialCounterXOR
+
+        {
+            get
+            {
+                return _diffusionInitialCounterXOR;
+            }
+            set
+            {
+                if (_diffusionInitialCounterXOR != value)
+                {
+                    _diffusionInitialCounterXOR = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private BigInteger _diffusionInitialCounter; public BigInteger DiffusionInitialCounter
         {

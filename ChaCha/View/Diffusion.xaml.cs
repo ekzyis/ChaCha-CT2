@@ -43,11 +43,12 @@ namespace Cryptool.Plugins.ChaCha.View
                 InitDiffusionInputField(InputDiffusionIVXOR, ivRule, ivConverter, "DiffusionIVXOR", ViewModel.DiffusionIVXORInputHandler(ivRule));
 
                 BigInteger initialCounter = ViewModel.ChaCha.InitialCounter;
-                InputDiffusionInitialCounter.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
+                InputDiffusionInitialCounterExplicit.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
                 int counterLength = (int)v.CounterBits / 8;
                 ValidationRule counterRule = new DiffusionInputValidationRule(counterLength);
                 IValueConverter counterConverter = new DiffusionCounterConverter(counterLength);
-                InitDiffusionInputField(InputDiffusionInitialCounter, counterRule, counterConverter, "DiffusionInitialCounter");
+                InitDiffusionInputField(InputDiffusionInitialCounterExplicit, counterRule, counterConverter, "DiffusionInitialCounterExplicit", ViewModel.DiffusionInitialCounterExplicitInputHandler(counterRule));
+                InitDiffusionInputField(InputDiffusionInitialCounterXOR, counterRule, counterConverter, "DiffusionInitialCounterXOR", ViewModel.DiffusionInitialCounterXORInputHandler(counterRule));
             }
         }
 
