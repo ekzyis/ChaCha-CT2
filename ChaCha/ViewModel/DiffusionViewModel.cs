@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha.Helper;
 using Cryptool.Plugins.ChaCha.ViewModel.Components;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
@@ -15,6 +16,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             ChaCha.PropertyChanged += new PropertyChangedEventHandler(PluginInputChanged);
             Name = "Diffusion";
             Title = "Diffusion";
+            InitHandlers();
         }
 
         private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
@@ -25,6 +27,47 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             DiffusionIV = ChaCha.InputIV;
             DiffusionInitialCounter = ChaCha.InitialCounter;
         }
+
+        #region Input Handlers
+
+        public delegate TextChangedEventHandler ValidatedTextChangedEventHandler(ValidationRule validationRule);
+
+        public static ValidatedTextChangedEventHandler ValidateInputBeforeHandle(Action<string> handle)
+        {
+            return (ValidationRule validationRule) =>
+            {
+                return (object sender, TextChangedEventArgs e) =>
+                {
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = validationRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        handle(value);
+                    }
+                };
+            };
+        }
+
+        private void InitHandlers()
+        {
+            DiffusionKeyExplicitInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                DiffusionKey = Formatter.Bytes(value);
+                DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
+            });
+            DiffusionKeyXORInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                byte[] input = Formatter.Bytes(value);
+                DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
+                DiffusionKeyExplicit = DiffusionKey;
+            });
+        }
+
+        public ValidatedTextChangedEventHandler DiffusionKeyExplicitInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionKeyXORInputHandler;
+
+        #endregion Input Handlers
 
         #region Binding Properties
 
@@ -49,23 +92,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         /// <summary>
-        /// Function which returns the handler for the Text Input attached to the DiffusionInputKey property.
-        /// </summary>
-        public TextChangedEventHandler DiffusionKeyExplicitKeyHandler(ValidationRule validationRule)
-        {
-            return (object sender, TextChangedEventArgs e) =>
-            {
-                string value = ((TextBox)sender).Text;
-                ValidationResult result = validationRule.Validate(value, null);
-                if (result == ValidationResult.ValidResult)
-                {
-                    DiffusionKey = Formatter.Bytes(value);
-                    DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
-                }
-            };
-        }
-
-        /// <summary>
         /// The value which is shown in the diffusion XOR key input box.
         /// </summary>
         public byte[] _diffusionKeyXOR; public byte[] DiffusionKeyXOR
@@ -83,24 +109,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                     OnPropertyChanged();
                 }
             }
-        }
-
-        /// <summary>
-        /// Function which returns the handler for the Text Input attached to the DiffusionKeyXOR property.
-        /// </summary>
-        public TextChangedEventHandler DiffusionKeyXORKeyHandler(ValidationRule validationRule)
-        {
-            return (object sender, TextChangedEventArgs e) =>
-            {
-                string value = ((TextBox)sender).Text;
-                ValidationResult result = validationRule.Validate(value, null);
-                if (result == ValidationResult.ValidResult)
-                {
-                    byte[] input = Formatter.Bytes(value);
-                    DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
-                    DiffusionKeyExplicit = DiffusionKey;
-                }
-            };
         }
 
         /// <summary>
