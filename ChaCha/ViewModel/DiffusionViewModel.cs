@@ -24,7 +24,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             DiffusionKey = ChaCha.InputKey;
             DiffusionKeyExplicit = ChaCha.InputKey;
             DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
+
             DiffusionIV = ChaCha.InputIV;
+            DiffusionIVExplicit = ChaCha.InputIV;
+            DiffusionIVXOR = ByteUtil.XOR(DiffusionIV, ChaCha.InputIV);
+
             DiffusionInitialCounter = ChaCha.InitialCounter;
         }
 
@@ -61,11 +65,27 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
                 DiffusionKeyExplicit = DiffusionKey;
             });
+
+            DiffusionIVExplicitInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                DiffusionIV = Formatter.Bytes(value);
+                DiffusionIVXOR = ByteUtil.XOR(DiffusionIV, ChaCha.InputIV);
+            });
+            DiffusionIVXORInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                byte[] input = Formatter.Bytes(value);
+                DiffusionIV = ByteUtil.XOR(input, ChaCha.InputIV);
+                DiffusionIVExplicit = DiffusionIV;
+            });
         }
 
         public ValidatedTextChangedEventHandler DiffusionKeyExplicitInputHandler;
 
         public ValidatedTextChangedEventHandler DiffusionKeyXORInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionIVExplicitInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionIVXORInputHandler;
 
         #endregion Input Handlers
 
@@ -137,6 +157,46 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         #endregion Binding Properties (Key)
 
         #region Binding Properties (IV)
+
+        /// <summary>
+        /// The value which is shown in the diffusion key input box.
+        /// </summary>
+        public byte[] _diffusionIVExplicit; public byte[] DiffusionIVExplicit
+
+        {
+            get
+            {
+                return _diffusionIVExplicit;
+            }
+            set
+            {
+                if (_diffusionIVExplicit != value)
+                {
+                    _diffusionIVExplicit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value which is shown in the diffusion XOR key input box.
+        /// </summary>
+        public byte[] _diffusionIVXOR; public byte[] DiffusionIVXOR
+
+        {
+            get
+            {
+                return _diffusionIVXOR;
+            }
+            set
+            {
+                if (_diffusionIVXOR != value)
+                {
+                    _diffusionIVXOR = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private byte[] _diffusionIV; public byte[] DiffusionIV
         {

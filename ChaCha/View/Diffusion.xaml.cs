@@ -35,11 +35,12 @@ namespace Cryptool.Plugins.ChaCha.View
                 InitDiffusionInputField(InputDiffusionKeyExplicit, keyRule, keyConverter, "DiffusionKeyExplicit", ViewModel.DiffusionKeyExplicitInputHandler(keyRule));
                 InitDiffusionInputField(InputDiffusionKeyXOR, keyRule, keyConverter, "DiffusionKeyXOR", ViewModel.DiffusionKeyXORInputHandler(keyRule));
 
-                InputDiffusionIV.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
+                InputDiffusionIVExplicit.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
                 int ivLength = ViewModel.ChaCha.InputIV.Length;
                 ValidationRule ivRule = new DiffusionInputValidationRule(ivLength);
                 IValueConverter ivConverter = new DiffusionBytesConverter(ivLength);
-                InitDiffusionInputField(InputDiffusionIV, ivRule, ivConverter, "DiffusionIV");
+                InitDiffusionInputField(InputDiffusionIVExplicit, ivRule, ivConverter, "DiffusionIVExplicit", ViewModel.DiffusionIVExplicitInputHandler(ivRule));
+                InitDiffusionInputField(InputDiffusionIVXOR, ivRule, ivConverter, "DiffusionIVXOR", ViewModel.DiffusionIVXORInputHandler(ivRule));
 
                 BigInteger initialCounter = ViewModel.ChaCha.InitialCounter;
                 InputDiffusionInitialCounter.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);

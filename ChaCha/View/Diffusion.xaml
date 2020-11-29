@@ -125,7 +125,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <TextBox Style="{StaticResource DiffusionHex}" Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}"/>
-                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionIV"/>
+                        <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionIVExplicit"/>
                         <TextBox Style="{StaticResource DiffusionInput}" Name="InputDiffusionIVXOR"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
