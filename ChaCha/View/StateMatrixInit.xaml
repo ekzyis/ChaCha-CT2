@@ -94,6 +94,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState4" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -113,6 +114,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState5" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -131,7 +133,9 @@
                                         </RichTextBox.Visibility>
                                     </RichTextBox>
                                 </StackPanel>
-                                <StackPanel Style="{StaticResource DiffusionXOR}"></StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState6" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -150,6 +154,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState7" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -170,6 +175,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState8" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -189,6 +195,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState9" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -208,6 +215,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState10" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -227,6 +235,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState11" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -247,6 +256,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState12" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -266,6 +276,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState13" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -285,6 +296,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Name="XORState14" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
@@ -304,6 +316,7 @@
                                     </RichTextBox>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <TextBox Name="XORState15" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
                         </Viewbox>
