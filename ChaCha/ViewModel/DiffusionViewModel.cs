@@ -69,7 +69,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         #endregion Input Handlers
 
-        #region Binding Properties
+        #region Binding Properties (Key)
 
         /// <summary>
         /// The value which is shown in the diffusion key input box.
@@ -134,6 +134,10 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
+        #endregion Binding Properties (Key)
+
+        #region Binding Properties (IV)
+
         private byte[] _diffusionIV; public byte[] DiffusionIV
         {
             get
@@ -153,6 +157,10 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
+        #endregion Binding Properties (IV)
+
+        #region Binding Properties (Initial Counter)
+
         private BigInteger _diffusionInitialCounter; public BigInteger DiffusionInitialCounter
         {
             get
@@ -171,6 +179,10 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 }
             }
         }
+
+        #endregion Binding Properties (Initial Counter)
+
+        #region Binding Properties (Status)
 
         public int FlippedBits
         {
@@ -192,7 +204,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             get => !(DiffusionKey.SequenceEqual(ChaCha.InputKey) && DiffusionIV.SequenceEqual(ChaCha.InputIV) && DiffusionInitialCounter == ChaCha.InitialCounter);
         }
 
-        #endregion Binding Properties
+        #endregion Binding Properties (Status)
 
         #region INavigation
 
