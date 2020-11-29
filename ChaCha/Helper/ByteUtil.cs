@@ -184,5 +184,27 @@ namespace Cryptool.Plugins.ChaCha.Helper
                 throw new ArgumentException("Input arrays are not of same length");
             return XOR(a, b, a.Length);
         }
+
+        /// <summary>
+        /// Left pad the input bytes array with zeroes. If the input array is already bigger, nothing happens.
+        /// </summary>
+        /// <param name="bytes">The byte array to left-pad with zeroes.</param>
+        /// <param name="size">How long the byte array should be at least in the end.</param>
+        /// <returns></returns>
+        public static byte[] LeftPad(byte[] b, int size)
+        {
+            if (b.Length >= size)
+            {
+                return b;
+            }
+            byte[] padded = new byte[size];
+            int leftPadAmount = size - b.Length;
+            for (int i = 0; i < leftPadAmount; ++i)
+            {
+                padded[i] = 0x00;
+            }
+            b.CopyTo(padded, leftPadAmount);
+            return padded;
+        }
     }
 }
