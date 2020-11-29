@@ -45,8 +45,7 @@
                         </Style>
                         <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
                         <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}" />
-                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}">
-                        </Style>
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}" />
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition />
