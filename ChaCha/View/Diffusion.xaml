@@ -194,41 +194,21 @@
                                                 <InlineUIContainer>
                                                     <Border Style="{StaticResource StateBorder}">
                                                         <StackPanel Orientation="Vertical">
-                                                            <RichTextBox>
-                                                                <RichTextBox.Visibility>
-                                                                    <Binding Path="PresentationViewModel.ShowXOR">
-                                                                        <Binding.Converter>
-                                                                            <conv:SequentialValueConverter>
-                                                                                <conv:Invert/>
-                                                                                <BooleanToVisibilityConverter/>
-                                                                            </conv:SequentialValueConverter>
-                                                                        </Binding.Converter>
-                                                                    </Binding>
-                                                                </RichTextBox.Visibility>
+                                                            <RichTextBox Style="{StaticResource DiffusionNonXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         F1AB5481
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
-                                                            <RichTextBox>
-                                                                <RichTextBox.Visibility>
-                                                                    <Binding Path="PresentationViewModel.ShowXOR">
-                                                                        <Binding.Converter>
-                                                                            <conv:SequentialValueConverter>
-                                                                                <conv:Invert/>
-                                                                                <BooleanToVisibilityConverter/>
-                                                                            </conv:SequentialValueConverter>
-                                                                        </Binding.Converter>
-                                                                    </Binding>
-                                                                </RichTextBox.Visibility>
+                                                            <RichTextBox Style="{StaticResource DiffusionNonXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
-                                                            <RichTextBox Visibility="{Binding PresentationViewModel.ShowXOR, Converter={StaticResource FalseToCollapsed}}">
+                                                            <RichTextBox Style="{StaticResource DiffusionXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         0207400C
