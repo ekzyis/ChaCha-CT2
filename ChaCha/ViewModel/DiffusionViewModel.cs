@@ -159,7 +159,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         #region Binding Properties (IV)
 
         /// <summary>
-        /// The value which is shown in the diffusion key input box.
+        /// The value which is shown in the diffusion IV input box.
         /// </summary>
         public byte[] _diffusionIVExplicit; public byte[] DiffusionIVExplicit
 
@@ -179,7 +179,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         /// <summary>
-        /// The value which is shown in the diffusion XOR key input box.
+        /// The value which is shown in the diffusion XOR IV input box.
         /// </summary>
         public byte[] _diffusionIVXOR; public byte[] DiffusionIVXOR
 
