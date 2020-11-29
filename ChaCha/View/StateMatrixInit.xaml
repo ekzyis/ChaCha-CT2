@@ -82,7 +82,7 @@
 
                     <Border Grid.Row="1" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState4">
                                     <RichTextBox.Visibility>
@@ -97,7 +97,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState5">
                                     <RichTextBox.Visibility>
@@ -112,7 +112,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState6">
                                     <RichTextBox.Visibility>
@@ -127,7 +127,7 @@
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState7">
                                     <RichTextBox.Visibility>
@@ -143,7 +143,7 @@
 
                     <Border Grid.Row="2" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState8">
                                     <RichTextBox.Visibility>
@@ -158,7 +158,7 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState9">
                                     <RichTextBox.Visibility>
@@ -173,7 +173,7 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState10">
                                     <RichTextBox.Visibility>
@@ -188,7 +188,7 @@
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState11">
                                     <RichTextBox.Visibility>
@@ -204,7 +204,7 @@
 
                     <Border Grid.Row="3" Grid.Column="0" Background="SkyBlue">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState12">
                                     <RichTextBox.Visibility>
@@ -219,7 +219,7 @@
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" Name="State13">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState13">
                                     <RichTextBox.Visibility>
@@ -234,7 +234,7 @@
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" Background="PaleGreen">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState14">
                                     <RichTextBox.Visibility>
@@ -249,7 +249,7 @@
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" Background="PaleGreen">
                         <Viewbox>
-                            <StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
                                 <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 <RichTextBox Name="DiffusionState15">
                                     <RichTextBox.Visibility>

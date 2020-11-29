@@ -139,6 +139,9 @@
     <Compile Include="Styles\Button.xaml.cs">
       <DependentUpon>Button.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\FrameworkElement.xaml.cs">
+      <DependentUpon>FrameworkElement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Styles\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
@@ -260,6 +263,10 @@
     <Page Include="Styles\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FrameworkElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Index.xaml">
       <Generator>MSBuild:Compile</Generator>

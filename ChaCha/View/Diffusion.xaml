@@ -194,21 +194,21 @@
                                                 <InlineUIContainer>
                                                     <Border Style="{StaticResource StateBorder}">
                                                         <StackPanel Orientation="Vertical">
-                                                            <RichTextBox Style="{StaticResource DiffusionNonXOR}">
+                                                            <RichTextBox Style="{StaticResource RTB_DiffusionNonXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         F1AB5481
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
-                                                            <RichTextBox Style="{StaticResource DiffusionNonXOR}">
+                                                            <RichTextBox Style="{StaticResource RTB_DiffusionNonXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
-                                                            <RichTextBox Style="{StaticResource DiffusionXOR}">
+                                                            <RichTextBox Style="{StaticResource RTB_DiffusionXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         0207400C
