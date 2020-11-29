@@ -180,8 +180,8 @@ namespace Cryptool.Plugins.ChaCha.Helper
         /// </summary>
         public static byte[] XOR(byte[] a, byte[] b)
         {
-            if (a.Length != b.Length)
-                throw new ArgumentException("Input arrays are not of same length");
+            a = LeftPad(a, b.Length);
+            b = LeftPad(b, a.Length);
             return XOR(a, b, a.Length);
         }
 
