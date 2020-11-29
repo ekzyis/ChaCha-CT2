@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cryptool.Plugins.ChaCha.Helper
+﻿namespace Cryptool.Plugins.ChaCha.Helper
 {
     /// <summary>
     /// Class with functions related to bit flips.
@@ -12,13 +10,37 @@ namespace Cryptool.Plugins.ChaCha.Helper
         /// </summary>
         public static int FlippedBits(byte[] a, byte[] b)
         {
-            if (a.Length != b.Length) throw new ArgumentException("Arrays must be of equal size");
+            // Left pad byte arrays wiht zeroes such that they have equal length
+            LeftPad(a, b.Length);
+            LeftPad(b, a.Length);
             int flippedBits = 0;
             for (int i = 0; i < a.Length; ++i)
             {
                 flippedBits += CountBits((ulong)(a[i] ^ b[i]));
             }
             return flippedBits;
+        }
+
+        /// <summary>
+        /// Left pad the input bytes array with zeroes. If the input array is already bigger, nothing happens.
+        /// </summary>
+        /// <param name="bytes">The byte array to left-pad with zeroes.</param>
+        /// <param name="size">How long the byte array should be at least in the end.</param>
+        /// <returns></returns>
+        public static byte[] LeftPad(byte[] b, int size)
+        {
+            if (b.Length >= size)
+            {
+                return b;
+            }
+            byte[] padded = new byte[size];
+            int leftPadAmount = size - b.Length;
+            for (int i = 0; i < leftPadAmount; ++i)
+            {
+                padded[i] = 0x00;
+            }
+            b.CopyTo(padded, leftPadAmount);
+            return padded;
         }
 
         /// <summary>
