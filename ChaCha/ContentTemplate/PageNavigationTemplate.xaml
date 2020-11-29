@@ -68,12 +68,14 @@
                 </Viewbox>
                 <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
                     <Viewbox Style="{StaticResource UniformViewbox}" HorizontalAlignment="Right" VerticalAlignment="Top">
-                        <ToggleButton>
-                            <Label Content="Toggle XOR"/>
+                        <ToggleButton
+                            Visibility="{Binding CurrentPage.ShowToggleButton, Converter={StaticResource FalseToCollapsed}, FallbackValue=Collapsed}"
+                            IsChecked="{Binding ShowXOR, Mode=TwoWay}">
+                            <Label Content="Toggle XOR" />
                         </ToggleButton>
                     </Viewbox>
                 </Grid>

@@ -182,6 +182,7 @@
     <Compile Include="ViewModel\Components\IActionNavigation.cs" />
     <Compile Include="ViewModel\Components\IActionTag.cs" />
     <Compile Include="ViewModel\Components\IChaCha.cs" />
+    <Compile Include="ViewModel\Components\IDiffusion.cs" />
     <Compile Include="ViewModel\Components\INavigation.cs" />
     <Compile Include="ViewModel\Components\ITitle.cs" />
     <Compile Include="ViewModel\Components\QRIOActionCreator.cs" />

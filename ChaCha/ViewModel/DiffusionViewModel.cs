@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
-    internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha
+    internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha, IDiffusion
     {
         public DiffusionViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
@@ -401,5 +401,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         public ChaChaSettings Settings { get => (ChaChaSettings)ChaCha.Settings; }
 
         #endregion IChaCha
+
+        #region IDiffusion
+
+        public bool ShowToggleButton { get { return true; } }
+
+        #endregion IDiffusion
     }
 }

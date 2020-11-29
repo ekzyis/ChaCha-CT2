@@ -195,6 +195,16 @@
                                                     <Border Style="{StaticResource StateBorder}">
                                                         <StackPanel Orientation="Vertical">
                                                             <RichTextBox>
+                                                                <RichTextBox.Visibility>
+                                                                    <Binding Path="PresentationViewModel.ShowXOR">
+                                                                        <Binding.Converter>
+                                                                            <conv:SequentialValueConverter>
+                                                                                <conv:Invert/>
+                                                                                <BooleanToVisibilityConverter/>
+                                                                            </conv:SequentialValueConverter>
+                                                                        </Binding.Converter>
+                                                                    </Binding>
+                                                                </RichTextBox.Visibility>
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         F1AB5481
@@ -202,9 +212,26 @@
                                                                 </FlowDocument>
                                                             </RichTextBox>
                                                             <RichTextBox>
+                                                                <RichTextBox.Visibility>
+                                                                    <Binding Path="PresentationViewModel.ShowXOR">
+                                                                        <Binding.Converter>
+                                                                            <conv:SequentialValueConverter>
+                                                                                <conv:Invert/>
+                                                                                <BooleanToVisibilityConverter/>
+                                                                            </conv:SequentialValueConverter>
+                                                                        </Binding.Converter>
+                                                                    </Binding>
+                                                                </RichTextBox.Visibility>
                                                                 <FlowDocument>
                                                                     <Paragraph>
                                                                         F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
+                                                                    </Paragraph>
+                                                                </FlowDocument>
+                                                            </RichTextBox>
+                                                            <RichTextBox Visibility="{Binding PresentationViewModel.ShowXOR, Converter={StaticResource FalseToCollapsed}}">
+                                                                <FlowDocument>
+                                                                    <Paragraph>
+                                                                        0207400C
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
@@ -218,7 +245,8 @@
                                 <TableRowGroup>
                                     <TableRow>
                                         <TableCell BorderThickness="0">
-                                            <Paragraph Style="{StaticResource Description}">Example how diffusion values are visualized. In the first row is the primary value, and in the second row is the diffusion value.</Paragraph>
+                                            <Paragraph Style="{StaticResource Description}">Example how diffusion values are visualized.
+                                                <LineBreak/> Use the button in the top-right corner to toggle between showing only the XOR or both values.</Paragraph>
                                         </TableCell>
                                     </TableRow>
                                 </TableRowGroup>

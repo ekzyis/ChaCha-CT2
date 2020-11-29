@@ -117,6 +117,19 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             get => DiffusionViewModel.DiffusionActive;
         }
 
+        private bool _showXOR; public bool ShowXOR
+        {
+            get
+            {
+                return _showXOR;
+            }
+            set
+            {
+                _showXOR = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion Binding Properties (Diffusion)
 
         #region Methods
