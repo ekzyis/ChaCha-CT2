@@ -214,7 +214,7 @@
                                                                 <RichTextBox>
                                                                     <FlowDocument>
                                                                         <Paragraph>
-                                                                            <Run Foreground="Red">2</Run>0<Run Foreground="Red">74</Run>00<Run Foreground="Red">C</Run>
+                                                                            0<Run Foreground="Red">2</Run>0<Run Foreground="Red">74</Run>00<Run Foreground="Red">C</Run>
                                                                         </Paragraph>
                                                                     </FlowDocument>
                                                                 </RichTextBox>
