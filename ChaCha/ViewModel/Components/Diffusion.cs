@@ -1,5 +1,6 @@
 ﻿using Cryptool.Plugins.ChaCha.Helper;
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -61,7 +62,17 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
             byte[] p = Formatter.Bytes(pHex);
             byte[] xor = ByteUtil.XOR(d, p);
             string xorHex = Formatter.HexString(xor);
-            InitDiffusionValue(rtb, xorHex, "00000000");
+            InitDiffusionValue(rtb, xorHex, string.Concat(Enumerable.Repeat("0", xorHex.Length)));
+        }
+
+        /// <summary>
+        /// Set the document of the RichTextBox with the xor value of the byte arrays as hex string; marking every non-zero character red.
+        /// </summary>
+        public static void InitXORValue(RichTextBox rtb, byte[] diffusion, byte[] primary)
+        {
+            string dHex = Formatter.HexString(diffusion);
+            string pHex = Formatter.HexString(primary);
+            InitXORValue(rtb, dHex, pHex);
         }
 
         /// <summary>
@@ -89,6 +100,26 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 byte[] diffusionBytes = ByteUtil.GetBytesBE((uint)diffusion);
                 byte[] primaryBytes = ByteUtil.GetBytesBE((uint)primary);
                 InitDiffusionValue(rtb, diffusionBytes, primaryBytes);
+            }
+        }
+
+        /// <summary>
+        /// Set the Document of the RichTextBox with the xor value; marking non-zero characters red.
+        /// Version is used to determine counter size.
+        /// </summary>
+        public static void InitXORValue(RichTextBox rtb, BigInteger diffusion, BigInteger primary, Version version)
+        {
+            if (version.CounterBits == 64)
+            {
+                byte[] diffusionBytes = ByteUtil.GetBytesBE((ulong)diffusion);
+                byte[] primaryBytes = ByteUtil.GetBytesBE((ulong)primary);
+                InitXORValue(rtb, diffusionBytes, primaryBytes);
+            }
+            else
+            {
+                byte[] diffusionBytes = ByteUtil.GetBytesBE((uint)diffusion);
+                byte[] primaryBytes = ByteUtil.GetBytesBE((uint)primary);
+                InitXORValue(rtb, diffusionBytes, primaryBytes);
             }
         }
     }

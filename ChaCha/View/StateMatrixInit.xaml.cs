@@ -51,8 +51,11 @@ namespace Cryptool.Plugins.ChaCha.View
         {
             Version v = ViewModel.Settings.Version;
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInputKey, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionInputKeyXOR, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInputIV, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionInputIVXOR, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionInitialCounter, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionInitialCounterXOR, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
         }
 
         /// <summary>
