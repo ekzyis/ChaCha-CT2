@@ -194,27 +194,31 @@
                                                 <InlineUIContainer>
                                                     <Border Style="{StaticResource StateBorder}">
                                                         <StackPanel Orientation="Vertical">
-                                                            <RichTextBox Style="{StaticResource RTB_DiffusionNonXOR}">
-                                                                <FlowDocument>
-                                                                    <Paragraph>
-                                                                        F1AB5481
-                                                                    </Paragraph>
-                                                                </FlowDocument>
-                                                            </RichTextBox>
-                                                            <RichTextBox Style="{StaticResource RTB_DiffusionNonXOR}">
-                                                                <FlowDocument>
-                                                                    <Paragraph>
-                                                                        F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
-                                                                    </Paragraph>
-                                                                </FlowDocument>
-                                                            </RichTextBox>
-                                                            <RichTextBox Style="{StaticResource RTB_DiffusionXOR}">
-                                                                <FlowDocument>
-                                                                    <Paragraph>
-                                                                        <Run Foreground="Red">2</Run>0<Run Foreground="Red">74</Run>00<Run Foreground="Red">C</Run>
-                                                                    </Paragraph>
-                                                                </FlowDocument>
-                                                            </RichTextBox>
+                                                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                                                <RichTextBox>
+                                                                    <FlowDocument>
+                                                                        <Paragraph>
+                                                                            F1AB5481
+                                                                        </Paragraph>
+                                                                    </FlowDocument>
+                                                                </RichTextBox>
+                                                                <RichTextBox Style="{StaticResource RTB_DiffusionNonXOR}">
+                                                                    <FlowDocument>
+                                                                        <Paragraph>
+                                                                            F<Run Foreground="Red">3</Run>A<Run Foreground="Red">C1</Run>48<Run Foreground="Red">D</Run>
+                                                                        </Paragraph>
+                                                                    </FlowDocument>
+                                                                </RichTextBox>
+                                                            </StackPanel>
+                                                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                                                <RichTextBox>
+                                                                    <FlowDocument>
+                                                                        <Paragraph>
+                                                                            <Run Foreground="Red">2</Run>0<Run Foreground="Red">74</Run>00<Run Foreground="Red">C</Run>
+                                                                        </Paragraph>
+                                                                    </FlowDocument>
+                                                                </RichTextBox>
+                                                            </StackPanel>
                                                         </StackPanel>
                                                     </Border>
                                                 </InlineUIContainer>
