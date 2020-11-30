@@ -92,14 +92,28 @@ namespace Cryptool.Plugins.ChaCha.View
             }
         }
 
+        private void InitOrClearXorValue(RichTextBox rtb, uint? diffusionValue, uint? value)
+        {
+            if (diffusionValue != null && value != null)
+            {
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(rtb, (uint)diffusionValue, (uint)value);
+            }
+            else
+            {
+                rtb.Document.Blocks.Clear();
+            }
+        }
+
         private void HandleDiffusionStateValuesChange()
         {
             for (int i = 0; i < 16; ++i)
             {
                 RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
+                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionStateXOR{i}");
                 uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
                 uint? stateValue = ViewModel.StateValues[i].Value;
                 InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
             }
         }
 

@@ -92,6 +92,16 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
         }
 
         /// <summary>
+        /// Set the Document of the RichTextBox with the xor value as hex string.
+        /// </summary>
+        public static void InitXORValue(RichTextBox rtb, uint diffusion, uint primary)
+        {
+            string dHex = Formatter.HexString(diffusion);
+            string pHex = Formatter.HexString(primary);
+            InitXORValue(rtb, dHex, pHex);
+        }
+
+        /// <summary>
         /// Returns a Run element with the character d in red if d != v else black.
         /// </summary>
         private static Run RedIfDifferent(char d, char v)
