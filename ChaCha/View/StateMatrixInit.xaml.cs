@@ -171,7 +171,7 @@ namespace Cryptool.Plugins.ChaCha.View
             string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
 
             Debug.Assert(encodedDkey.Length == encodedPKey.Length, "key and diffusion key length should be the same.");
-            Debug.Assert(encodedPKey.Length == encodedXor.Length, "key and xor length should be the same");
+            Debug.Assert(encodedPKey.Length == encodedXor.Length, "key and xor length should be the same.");
             Debug.Assert(encodedDkey.Length == 4 || encodedDkey.Length == 8, $"Encoded diffusion key length should be either 16 or 32 bytes. Is {encodedDkey.Length}");
             for (int i = 0; i < encodedDkey.Length; ++i)
             {
