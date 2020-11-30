@@ -216,8 +216,8 @@ namespace Cryptool.Plugins.ChaCha.View
                 string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
                 string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
 
-                Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "key and diffusion key length should be the same.");
-                Debug.Assert(encodedPCounter.Length == encodedXor.Length, "key and xor length should be the same.");
+                Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "counter and diffusion counter length should be the same.");
+                Debug.Assert(encodedPCounter.Length == encodedXor.Length, "counter and xor length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 2, $"Encoded diffusion counter length should be 8 bytes for 64-bit counter. Is {encodedDCounter.Length}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDCounter[1], encodedPCounter[1]);
@@ -242,7 +242,7 @@ namespace Cryptool.Plugins.ChaCha.View
                 string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
 
                 Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "counter and diffusion counter length should be the same.");
-                Debug.Assert(encodedPCounter.Length == encodedXor.Length, "key and xor length should be the same.");
+                Debug.Assert(encodedPCounter.Length == encodedXor.Length, "counter and xor length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 1, $"Encoded diffusion counter length should be 4 bytes for 32-bit counter. Is {encodedDCounter.Length}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
                 XORState12.Text = encodedXor[0];
@@ -268,7 +268,7 @@ namespace Cryptool.Plugins.ChaCha.View
             }
             else
             {
-                Debug.Assert(encodedDIV.Length == 3, $"Encoded diffusion iv length should be 12 bytes for 64-bit counter. Is {encodedDIV.Length}");
+                Debug.Assert(encodedDIV.Length == 3, $"Encoded diffusion iv length should be 12 bytes for 32-bit counter. Is {encodedDIV.Length}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDIV[0], encodedPIV[0]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[1], encodedPIV[1]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[2], encodedPIV[2]);
