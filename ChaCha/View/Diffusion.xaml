@@ -211,7 +211,7 @@
                                                             <RichTextBox Style="{StaticResource RTB_DiffusionXOR}">
                                                                 <FlowDocument>
                                                                     <Paragraph>
-                                                                        0207400C
+                                                                        <Run Foreground="Red">2</Run>0<Run Foreground="Red">74</Run>00<Run Foreground="Red">C</Run>
                                                                     </Paragraph>
                                                                 </FlowDocument>
                                                             </RichTextBox>
