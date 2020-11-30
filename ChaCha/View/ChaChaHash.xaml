@@ -1664,7 +1664,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
 
-                        <ColumnDefinition Width="1.41*" />
+                        <ColumnDefinition Width="0.33*" />
 
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -1672,7 +1672,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Border Grid.Column="4" Grid.Row="1" BorderBrush="Black" BorderThickness="0" Margin="0,5,5,5">
+                    <Border Grid.Column="4" Grid.Row="1" BorderBrush="Black" BorderThickness="0" Margin="5,0">
                         <Viewbox Grid.Column="4" Grid.Row="1" Style="{StaticResource UniformViewbox}">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Reverse" />
