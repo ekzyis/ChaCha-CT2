@@ -1,5 +1,4 @@
 ﻿using Cryptool.Plugins.ChaCha.Helper;
-using Cryptool.Plugins.ChaCha.Helper;
 using System;
 using System.Numerics;
 using System.Windows.Controls;
@@ -51,6 +50,14 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar1, pChar1));
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar2, pChar2));
             }
+        }
+
+        /// <summary>
+        /// Set the document of the RichTextBox with the xor value as hex string; marking every non-zero character red.
+        /// </summary>
+        public static void InitXORValue(RichTextBox rtb, string xor)
+        {
+            InitDiffusionValue(rtb, xor, "00000000");
         }
 
         /// <summary>
