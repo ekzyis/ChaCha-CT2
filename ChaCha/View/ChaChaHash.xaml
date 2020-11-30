@@ -2008,7 +2008,6 @@
                                         <RichTextBox Name="DiffusionOriginalState12" />
                                     </StackPanel>
                                     <StackPanel Style="{StaticResource DiffusionXOR}">
-                                        <TextBox Text="{Binding OriginalState[12].Value, Converter={StaticResource UInt32ToHex}}" />
                                         <RichTextBox Name="DiffusionOriginalStateXOR12" />
                                     </StackPanel>
                                 </StackPanel>
