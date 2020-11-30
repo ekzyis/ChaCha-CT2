@@ -66,6 +66,22 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
         }
 
         /// <summary>
+        /// Set the document of the RichTextBox with the xor value as hex string; marking every non-zero character red.
+        /// This function preserves whitespaces in the input strings.
+        /// </summary>
+        public static void InitXORChunkValue(RichTextBox rtb, string chunkDHex, string chunkPHex)
+        {
+            int chunkSize = chunkDHex.IndexOf(' ');
+            byte[] d = Formatter.Bytes(chunkDHex.Replace(" ", ""));
+            byte[] p = Formatter.Bytes(chunkPHex.Replace(" ", ""));
+            byte[] xor = ByteUtil.XOR(d, p);
+            string xorHex = Formatter.HexString(xor);
+            string xorHexCunks = Formatter.Chunkify(xorHex, chunkSize);
+            string zeroes = Formatter.Chunkify(string.Concat(Enumerable.Repeat("0", xorHex.Length)), chunkSize);
+            InitDiffusionValue(rtb, xorHexCunks, zeroes);
+        }
+
+        /// <summary>
         /// Set the document of the RichTextBox with the xor value of the byte arrays as hex string; marking every non-zero character red.
         /// </summary>
         public static void InitXORValue(RichTextBox rtb, byte[] diffusion, byte[] primary)

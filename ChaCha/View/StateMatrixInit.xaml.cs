@@ -74,14 +74,17 @@ namespace Cryptool.Plugins.ChaCha.View
         private void InitDiffusionStateEncodingKey()
         {
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingInput, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionKeyEncodingInputXOR, ViewModel.DiffusionInputKey, ViewModel.ChaCha.InputKey);
 
             string dKeyHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputKey), 8);
             string pKeyHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputKey), 8);
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingChunkify, dKeyHexChunks, pKeyHexChunks);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionKeyEncodingChunkifyXOR, dKeyHexChunks, pKeyHexChunks);
 
             string dKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputKey)), 8);
             string pKeyHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputKey)), 8);
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionKeyEncodingLittleEndian, dKeyHexChunksLE, pKeyHexChunksLE);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionKeyEncodingLittleEndianXOR, dKeyHexChunksLE, pKeyHexChunksLE);
         }
 
         /// <summary>

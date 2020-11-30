@@ -610,56 +610,78 @@
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Name="TextBox_KeyEncodingInput"
-                                     Style="{StaticResource PanelValue}"
-                                     Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
-                            <RichTextBox
-                                Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
-                                Style="{StaticResource RichHex}"
-                                Name="DiffusionKeyEncodingInput"
-                                Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}"
+                                         Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingInput"
+                                    Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingInputXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1" Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputKey" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox
-                                Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
-                                Style="{StaticResource RichHex}"
-                                Name="DiffusionKeyEncodingChunkify"
-                                Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}">
-                            </RichTextBox>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputKey" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingChunkify"
+                                    Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingChunkifyXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1" Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputKey" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:LittleEndian />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox
-                                Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
-                                Style="{StaticResource RichHex}"
-                                Name="DiffusionKeyEncodingLittleEndian"
-                                Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputKey" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:LittleEndian />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingLittleEndian"
+                                    Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingLittleEndianXOR" />
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Viewbox>
