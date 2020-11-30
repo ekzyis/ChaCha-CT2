@@ -122,9 +122,11 @@ namespace Cryptool.Plugins.ChaCha.View
             for (int i = 0; i < 16; ++i)
             {
                 RichTextBox rtb = (RichTextBox)FindName($"DiffusionOriginalState{i}");
+                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionOriginalStateXOR{i}");
                 uint? diffusionStateValue = ViewModel.DiffusionOriginalState[i].Value;
                 uint? stateValue = ViewModel.OriginalState[i].Value;
                 InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
             }
         }
 
@@ -133,9 +135,11 @@ namespace Cryptool.Plugins.ChaCha.View
             for (int i = 0; i < 16; ++i)
             {
                 RichTextBox rtb = (RichTextBox)FindName($"DiffusionAdditionResultState{i}");
+                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionAdditionResultStateXOR{i}");
                 uint? diffusionStateValue = ViewModel.DiffusionAdditionResultState[i].Value;
                 uint? stateValue = ViewModel.AdditionResultState[i].Value;
                 InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
             }
         }
 
@@ -144,9 +148,11 @@ namespace Cryptool.Plugins.ChaCha.View
             for (int i = 0; i < 16; ++i)
             {
                 RichTextBox rtb = (RichTextBox)FindName($"DiffusionLittleEndianState{i}");
+                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionLittleEndianStateXOR{i}");
                 uint? diffusionStateValue = ViewModel.DiffusionLittleEndianState[i].Value;
                 uint? stateValue = ViewModel.LittleEndianState[i].Value;
                 InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
             }
         }
 
