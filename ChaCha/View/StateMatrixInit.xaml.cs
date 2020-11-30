@@ -145,14 +145,17 @@ namespace Cryptool.Plugins.ChaCha.View
         private void InitDiffusionStateEncodingIV()
         {
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingInput, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionIVEncodingInputXOR, ViewModel.DiffusionInputIV, ViewModel.ChaCha.InputIV);
 
             string dIVHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.DiffusionInputIV), 8);
             string pIVHexChunks = Formatter.Chunkify(Formatter.HexString(ViewModel.ChaCha.InputIV), 8);
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingChunkify, dIVHexChunks, pIVHexChunks);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionIVEncodingChunkifyXOR, dIVHexChunks, pIVHexChunks);
 
             string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputIV)), 8);
             string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputIV)), 8);
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionIVEncodingLittleEndian, dIVHexChunksLE, pIVHexChunksLE);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionIVEncodingLittleEndianXOR, dIVHexChunksLE, pIVHexChunksLE);
         }
 
         /// <summary>

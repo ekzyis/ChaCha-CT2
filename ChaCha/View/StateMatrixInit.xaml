@@ -830,44 +830,59 @@
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding IVEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}"
-                                     Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}"
+                                         Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInputXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1"
                                     Visibility="{Binding IVEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputIV" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputIV" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkifyXOR"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1"
                                     Visibility="{Binding IVEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputIV" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:LittleEndian />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputIV" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:LittleEndian />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndianXOR" />
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Viewbox>
