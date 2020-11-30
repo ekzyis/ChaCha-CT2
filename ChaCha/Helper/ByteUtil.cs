@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Cryptool.Plugins.ChaCha.Util
+namespace Cryptool.Plugins.ChaCha.Helper
 {
     /// <summary>
     /// This class handles all byte operations.
@@ -173,6 +173,38 @@ namespace Cryptool.Plugins.ChaCha.Util
                 c[i] = (byte)(a[i] ^ b[i]);
             }
             return c;
+        }
+
+        /// <summary>
+        /// Bytewise XOR of both arrays. They must be of same size.
+        /// </summary>
+        public static byte[] XOR(byte[] a, byte[] b)
+        {
+            a = LeftPad(a, b.Length);
+            b = LeftPad(b, a.Length);
+            return XOR(a, b, a.Length);
+        }
+
+        /// <summary>
+        /// Left pad the input bytes array with zeroes. If the input array is already bigger, nothing happens.
+        /// </summary>
+        /// <param name="bytes">The byte array to left-pad with zeroes.</param>
+        /// <param name="size">How long the byte array should be at least in the end.</param>
+        /// <returns></returns>
+        public static byte[] LeftPad(byte[] b, int size)
+        {
+            if (b.Length >= size)
+            {
+                return b;
+            }
+            byte[] padded = new byte[size];
+            int leftPadAmount = size - b.Length;
+            for (int i = 0; i < leftPadAmount; ++i)
+            {
+                padded[i] = 0x00;
+            }
+            b.CopyTo(padded, leftPadAmount);
+            return padded;
         }
     }
 }

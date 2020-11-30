@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
-    internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle
+    internal class StateMatrixInitViewModel : ActionViewModelBase, INavigation, ITitle, IDiffusion
     {
         public StateMatrixInitViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
@@ -569,5 +569,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         #endregion ITitle
+
+        #region IDiffusion
+
+        public bool ShowToggleButton { get { return DiffusionActive; } }
+
+        #endregion IDiffusion
     }
 }

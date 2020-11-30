@@ -28,24 +28,27 @@ namespace Cryptool.Plugins.ChaCha.View
             {
                 Version v = ViewModel.Settings.Version;
 
-                DiffusionInputKey.Text = Formatter.HexString(ViewModel.ChaCha.InputKey);
+                InputDiffusionKeyExplicit.Text = Formatter.HexString(ViewModel.ChaCha.InputKey);
                 int keyLength = ViewModel.ChaCha.InputKey.Length;
                 ValidationRule keyRule = new DiffusionInputValidationRule(keyLength);
                 IValueConverter keyConverter = new DiffusionBytesConverter(keyLength);
-                InitDiffusionInputField(DiffusionInputKey, keyRule, keyConverter, "DiffusionInputKey");
+                InitDiffusionInputField(InputDiffusionKeyExplicit, keyRule, keyConverter, "DiffusionKeyExplicit", ViewModel.DiffusionKeyExplicitInputHandler(keyRule));
+                InitDiffusionInputField(InputDiffusionKeyXOR, keyRule, keyConverter, "DiffusionKeyXOR", ViewModel.DiffusionKeyXORInputHandler(keyRule));
 
-                DiffusionInputIV.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
+                InputDiffusionIVExplicit.Text = Formatter.HexString(ViewModel.ChaCha.InputIV);
                 int ivLength = ViewModel.ChaCha.InputIV.Length;
                 ValidationRule ivRule = new DiffusionInputValidationRule(ivLength);
                 IValueConverter ivConverter = new DiffusionBytesConverter(ivLength);
-                InitDiffusionInputField(DiffusionInputIV, ivRule, ivConverter, "DiffusionInputIV");
+                InitDiffusionInputField(InputDiffusionIVExplicit, ivRule, ivConverter, "DiffusionIVExplicit", ViewModel.DiffusionIVExplicitInputHandler(ivRule));
+                InitDiffusionInputField(InputDiffusionIVXOR, ivRule, ivConverter, "DiffusionIVXOR", ViewModel.DiffusionIVXORInputHandler(ivRule));
 
                 BigInteger initialCounter = ViewModel.ChaCha.InitialCounter;
-                DiffusionInitialCounter.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
+                InputDiffusionInitialCounterExplicit.Text = Formatter.HexString(v == Version.DJB ? (ulong)initialCounter : (uint)initialCounter);
                 int counterLength = (int)v.CounterBits / 8;
                 ValidationRule counterRule = new DiffusionInputValidationRule(counterLength);
                 IValueConverter counterConverter = new DiffusionCounterConverter(counterLength);
-                InitDiffusionInputField(DiffusionInitialCounter, counterRule, counterConverter, "DiffusionInitialCounter");
+                InitDiffusionInputField(InputDiffusionInitialCounterExplicit, counterRule, counterConverter, "DiffusionInitialCounterExplicit", ViewModel.DiffusionInitialCounterExplicitInputHandler(counterRule));
+                InitDiffusionInputField(InputDiffusionInitialCounterXOR, counterRule, counterConverter, "DiffusionInitialCounterXOR", ViewModel.DiffusionInitialCounterXORInputHandler(counterRule));
             }
         }
 
@@ -55,6 +58,12 @@ namespace Cryptool.Plugins.ChaCha.View
             binding.ValidationRules.Add(validationRule);
             inputField.SetBinding(TextBox.TextProperty, binding);
             EditingCommands.ToggleInsert.Execute(null, inputField);
+        }
+
+        private void InitDiffusionInputField(TextBox inputField, ValidationRule validationRule, IValueConverter converter, string bindingPath, TextChangedEventHandler handleUserInput)
+        {
+            InitDiffusionInputField(inputField, validationRule, converter, bindingPath);
+            inputField.TextChanged += handleUserInput;
         }
     }
 }

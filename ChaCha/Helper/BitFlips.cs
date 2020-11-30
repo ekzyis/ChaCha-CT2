@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Cryptool.Plugins.ChaCha.Helper
+﻿namespace Cryptool.Plugins.ChaCha.Helper
 {
     /// <summary>
     /// Class with functions related to bit flips.
@@ -12,7 +10,9 @@ namespace Cryptool.Plugins.ChaCha.Helper
         /// </summary>
         public static int FlippedBits(byte[] a, byte[] b)
         {
-            if (a.Length != b.Length) throw new ArgumentException("Arrays must be of equal size");
+            // Left pad byte arrays with zeroes such that they have equal length
+            a = ByteUtil.LeftPad(a, b.Length);
+            b = ByteUtil.LeftPad(b, a.Length);
             int flippedBits = 0;
             for (int i = 0; i < a.Length; ++i)
             {

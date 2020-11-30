@@ -1,5 +1,4 @@
-﻿using Cryptool.Plugins.ChaCha.Util;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -51,6 +50,11 @@ namespace Cryptool.Plugins.ChaCha.Helper
         /// </summary>
         public static byte[] Bytes(string hex)
         {
+            // Left-pad hex string with zero such that is has an even amount of characters.
+            if (hex.Length % 2 == 1)
+            {
+                hex = $"0{hex}";
+            }
             int NumberChars = hex.Length;
             byte[] bytes = new byte[NumberChars / 2];
             for (int i = 0; i < NumberChars; i += 2)
@@ -96,6 +100,14 @@ namespace Cryptool.Plugins.ChaCha.Helper
         /// Reverse order of every 4 bytes in UInt64.
         /// </summary>
         public static byte[] LittleEndian(ulong u)
+        {
+            return LittleEndian(ByteUtil.GetBytesBE(u));
+        }
+
+        /// <summary>
+        /// Reverse order of every 4 bytes in UInt32.
+        /// </summary>
+        public static byte[] LittleEndian(uint u)
         {
             return LittleEndian(ByteUtil.GetBytesBE(u));
         }

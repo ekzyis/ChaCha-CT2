@@ -1,12 +1,14 @@
 ﻿using Cryptool.Plugins.ChaCha.Helper;
 using Cryptool.Plugins.ChaCha.ViewModel.Components;
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
-    internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha
+    internal class DiffusionViewModel : ViewModelBase, INavigation, ITitle, IChaCha, IDiffusion
     {
         public DiffusionViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
@@ -14,18 +16,159 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             ChaCha.PropertyChanged += new PropertyChangedEventHandler(PluginInputChanged);
             Name = "Diffusion";
             Title = "Diffusion";
+            InitHandlers();
         }
 
         private void PluginInputChanged(object sender, PropertyChangedEventArgs e)
         {
-            DiffusionInputKey = ChaCha.InputKey;
-            DiffusionInputIV = ChaCha.InputIV;
+            DiffusionKey = ChaCha.InputKey;
+            DiffusionKeyExplicit = ChaCha.InputKey;
+            DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
+
+            DiffusionIV = ChaCha.InputIV;
+            DiffusionIVExplicit = ChaCha.InputIV;
+            DiffusionIVXOR = ByteUtil.XOR(DiffusionIV, ChaCha.InputIV);
+
             DiffusionInitialCounter = ChaCha.InitialCounter;
         }
 
-        #region Binding Properties
+        #region Input Handlers
 
-        private byte[] _diffusionKey; public byte[] DiffusionInputKey
+        public delegate TextChangedEventHandler ValidatedTextChangedEventHandler(ValidationRule validationRule);
+
+        public static ValidatedTextChangedEventHandler ValidateInputBeforeHandle(Action<string> handle)
+        {
+            return (ValidationRule validationRule) =>
+            {
+                return (object sender, TextChangedEventArgs e) =>
+                {
+                    string value = ((TextBox)sender).Text;
+                    ValidationResult result = validationRule.Validate(value, null);
+                    if (result == ValidationResult.ValidResult)
+                    {
+                        handle(value);
+                    }
+                };
+            };
+        }
+
+        private void InitHandlers()
+        {
+            DiffusionKeyExplicitInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                DiffusionKey = Formatter.Bytes(value);
+                DiffusionKeyXOR = ByteUtil.XOR(DiffusionKey, ChaCha.InputKey);
+            });
+            DiffusionKeyXORInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                byte[] input = Formatter.Bytes(value);
+                DiffusionKey = ByteUtil.XOR(input, ChaCha.InputKey);
+                DiffusionKeyExplicit = DiffusionKey;
+            });
+
+            DiffusionIVExplicitInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                DiffusionIV = Formatter.Bytes(value);
+                DiffusionIVXOR = ByteUtil.XOR(DiffusionIV, ChaCha.InputIV);
+            });
+            DiffusionIVXORInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                byte[] input = Formatter.Bytes(value);
+                DiffusionIV = ByteUtil.XOR(input, ChaCha.InputIV);
+                DiffusionIVExplicit = DiffusionIV;
+            });
+
+            DiffusionInitialCounterExplicitInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                BigInteger input = Formatter.BigInteger(value);
+                DiffusionInitialCounter = input;
+                BigInteger xor;
+                if (Settings.Version.CounterBits == 64)
+                {
+                    xor = (ulong)input ^ (ulong)ChaCha.InitialCounter;
+                }
+                else
+                {
+                    xor = (uint)input ^ (uint)ChaCha.InitialCounter;
+                }
+                DiffusionInitialCounterXOR = xor;
+            });
+            DiffusionInitialCounterXORInputHandler = ValidateInputBeforeHandle((string value) =>
+            {
+                BigInteger input = Formatter.BigInteger(value);
+                if (Settings.Version.CounterBits == 64)
+                {
+                    DiffusionInitialCounter = (ulong)input ^ (ulong)ChaCha.InitialCounter;
+                }
+                else
+                {
+                    DiffusionInitialCounter = (uint)input ^ (uint)ChaCha.InitialCounter;
+                }
+                DiffusionInitialCounterExplicit = DiffusionInitialCounter;
+            });
+        }
+
+        public ValidatedTextChangedEventHandler DiffusionKeyExplicitInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionKeyXORInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionIVExplicitInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionIVXORInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionInitialCounterExplicitInputHandler;
+
+        public ValidatedTextChangedEventHandler DiffusionInitialCounterXORInputHandler;
+
+        #endregion Input Handlers
+
+        #region Binding Properties (Key)
+
+        /// <summary>
+        /// The value which is shown in the diffusion key input box.
+        /// </summary>
+        public byte[] _diffusionKeyExplicit; public byte[] DiffusionKeyExplicit
+
+        {
+            get
+            {
+                return _diffusionKeyExplicit;
+            }
+            set
+            {
+                if (_diffusionKeyExplicit != value)
+                {
+                    _diffusionKeyExplicit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value which is shown in the diffusion XOR key input box.
+        /// </summary>
+        public byte[] _diffusionKeyXOR; public byte[] DiffusionKeyXOR
+
+        {
+            get
+            {
+                return _diffusionKeyXOR;
+            }
+            set
+            {
+                if (_diffusionKeyXOR != value)
+                {
+                    _diffusionKeyXOR = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The actual diffusion key which will be used for cipher execution.
+        /// </summary>
+        private byte[] _diffusionKey; public byte[] DiffusionKey
+
         {
             get
             {
@@ -44,21 +187,109 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
-        private byte[] _diffusionInputIV; public byte[] DiffusionInputIV
+        #endregion Binding Properties (Key)
+
+        #region Binding Properties (IV)
+
+        /// <summary>
+        /// The value which is shown in the diffusion IV input box.
+        /// </summary>
+        public byte[] _diffusionIVExplicit; public byte[] DiffusionIVExplicit
+
         {
             get
             {
-                return _diffusionInputIV;
+                return _diffusionIVExplicit;
             }
             set
             {
-                if (_diffusionInputIV != value)
+                if (_diffusionIVExplicit != value)
                 {
-                    _diffusionInputIV = value;
+                    _diffusionIVExplicit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value which is shown in the diffusion XOR IV input box.
+        /// </summary>
+        public byte[] _diffusionIVXOR; public byte[] DiffusionIVXOR
+
+        {
+            get
+            {
+                return _diffusionIVXOR;
+            }
+            set
+            {
+                if (_diffusionIVXOR != value)
+                {
+                    _diffusionIVXOR = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private byte[] _diffusionIV; public byte[] DiffusionIV
+        {
+            get
+            {
+                return _diffusionIV;
+            }
+            set
+            {
+                if (_diffusionIV != value)
+                {
+                    _diffusionIV = value;
                     OnPropertyChanged();
                     OnPropertyChanged("DiffusionActive");
                     OnPropertyChanged("FlippedBits");
                     OnPropertyChanged("FlippedBitsPercentage");
+                }
+            }
+        }
+
+        #endregion Binding Properties (IV)
+
+        #region Binding Properties (Initial Counter)
+
+        /// <summary>
+        /// The value which is shown in the diffusion Initial Counter input box.
+        /// </summary>
+        public BigInteger _diffusionInitialCounterExplicit; public BigInteger DiffusionInitialCounterExplicit
+
+        {
+            get
+            {
+                return _diffusionInitialCounterExplicit;
+            }
+            set
+            {
+                if (_diffusionInitialCounterExplicit != value)
+                {
+                    _diffusionInitialCounterExplicit = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The value which is shown in the diffusion XOR Initial Counter input box.
+        /// </summary>
+        public BigInteger _diffusionInitialCounterXOR; public BigInteger DiffusionInitialCounterXOR
+
+        {
+            get
+            {
+                return _diffusionInitialCounterXOR;
+            }
+            set
+            {
+                if (_diffusionInitialCounterXOR != value)
+                {
+                    _diffusionInitialCounterXOR = value;
+                    OnPropertyChanged();
                 }
             }
         }
@@ -82,14 +313,18 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             }
         }
 
+        #endregion Binding Properties (Initial Counter)
+
+        #region Binding Properties (Status)
+
         public int FlippedBits
         {
-            get => BitFlips.FlippedBits(DiffusionInputKey, ChaCha.InputKey) + BitFlips.FlippedBits(DiffusionInputIV, ChaCha.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaCha.InitialCounter);
+            get => BitFlips.FlippedBits(DiffusionKey, ChaCha.InputKey) + BitFlips.FlippedBits(DiffusionIV, ChaCha.InputIV) + BitFlips.FlippedBits((ulong)DiffusionInitialCounter, (ulong)ChaCha.InitialCounter);
         }
 
         public int TotalBits
         {
-            get => DiffusionInputKey.Length * 8 + DiffusionInputIV.Length * 8 + (int)Settings.Version.CounterBits;
+            get => DiffusionKey.Length * 8 + DiffusionIV.Length * 8 + (int)Settings.Version.CounterBits;
         }
 
         public double FlippedBitsPercentage
@@ -99,10 +334,10 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public bool DiffusionActive
         {
-            get => !(DiffusionInputKey.SequenceEqual(ChaCha.InputKey) && DiffusionInputIV.SequenceEqual(ChaCha.InputIV) && DiffusionInitialCounter == ChaCha.InitialCounter);
+            get => !(DiffusionKey.SequenceEqual(ChaCha.InputKey) && DiffusionIV.SequenceEqual(ChaCha.InputIV) && DiffusionInitialCounter == ChaCha.InitialCounter);
         }
 
-        #endregion Binding Properties
+        #endregion Binding Properties (Status)
 
         #region INavigation
 
@@ -132,7 +367,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             if (DiffusionActive)
             {
                 // Execute ChaCha with Diffusion values.
-                ChaCha.ExecuteDiffusion(DiffusionInputKey, DiffusionInputIV, (ulong)DiffusionInitialCounter);
+                ChaCha.ExecuteDiffusion(DiffusionKey, DiffusionIV, (ulong)DiffusionInitialCounter);
+            }
+            else
+            {
+                // If diffusion is inactive, there is no toggle button thus the value of the toggle button should be reset.
+                PresentationViewModel.ShowXOR = false;
             }
         }
 
@@ -166,5 +406,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         public ChaChaSettings Settings { get => (ChaChaSettings)ChaCha.Settings; }
 
         #endregion IChaCha
+
+        #region IDiffusion
+
+        public bool ShowToggleButton { get { return true; } }
+
+        #endregion IDiffusion
     }
 }

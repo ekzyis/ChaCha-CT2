@@ -4,6 +4,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source=".\Border.xaml" />
         <ResourceDictionary Source=".\Button.xaml" />
+        <ResourceDictionary Source=".\FrameworkElement.xaml" />
         <ResourceDictionary Source=".\Label.xaml" />
         <ResourceDictionary Source=".\ItemsControl.xaml" />
         <ResourceDictionary Source=".\Paragraph.xaml" />

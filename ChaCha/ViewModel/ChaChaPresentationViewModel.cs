@@ -99,12 +99,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public byte[] DiffusionInputKey
         {
-            get => DiffusionViewModel.DiffusionInputKey;
+            get => DiffusionViewModel.DiffusionKey;
         }
 
         public byte[] DiffusionInputIV
         {
-            get => DiffusionViewModel.DiffusionInputIV;
+            get => DiffusionViewModel.DiffusionIV;
         }
 
         public BigInteger DiffusionInitialCounter
@@ -115,6 +115,19 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         public bool DiffusionActive
         {
             get => DiffusionViewModel.DiffusionActive;
+        }
+
+        private bool _showXOR; public bool ShowXOR
+        {
+            get
+            {
+                return _showXOR;
+            }
+            set
+            {
+                _showXOR = value;
+                OnPropertyChanged();
+            }
         }
 
         #endregion Binding Properties (Diffusion)

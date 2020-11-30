@@ -66,6 +66,19 @@
                 <Viewbox Grid.Column="1" Style="{StaticResource UniformViewbox}">
                     <TextBox Style="{StaticResource Title}" Grid.Row="0" Text="{Binding CurrentPage.Title, Mode=OneWay}" />
                 </Viewbox>
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Viewbox Style="{StaticResource UniformViewbox}" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <ToggleButton
+                            Visibility="{Binding CurrentPage.ShowToggleButton, Converter={StaticResource FalseToCollapsed}, FallbackValue=Collapsed}"
+                            IsChecked="{Binding ShowXOR, Mode=TwoWay}">
+                            <Label Content="Toggle XOR" />
+                        </ToggleButton>
+                    </Viewbox>
+                </Grid>
             </Grid>
             <ContentPresenter Grid.Row="1" />
         </Grid>

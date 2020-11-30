@@ -139,6 +139,9 @@
     <Compile Include="Styles\Button.xaml.cs">
       <DependentUpon>Button.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\FrameworkElement.xaml.cs">
+      <DependentUpon>FrameworkElement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Styles\Index.xaml.cs">
       <DependentUpon>Index.xaml</DependentUpon>
     </Compile>
@@ -169,7 +172,7 @@
     <Compile Include="Styles\Viewbox.xaml.cs">
       <DependentUpon>Viewbox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\ByteUtil.cs" />
+    <Compile Include="Helper\ByteUtil.cs" />
     <Compile Include="Validation.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="ViewModel\ActionViewModelBase.cs" />
@@ -182,6 +185,7 @@
     <Compile Include="ViewModel\Components\IActionNavigation.cs" />
     <Compile Include="ViewModel\Components\IActionTag.cs" />
     <Compile Include="ViewModel\Components\IChaCha.cs" />
+    <Compile Include="ViewModel\Components\IDiffusion.cs" />
     <Compile Include="ViewModel\Components\INavigation.cs" />
     <Compile Include="ViewModel\Components\ITitle.cs" />
     <Compile Include="ViewModel\Components\QRIOActionCreator.cs" />
@@ -260,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\FrameworkElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Index.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -325,6 +333,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

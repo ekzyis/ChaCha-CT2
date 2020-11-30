@@ -41,12 +41,10 @@
             <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" Grid.Column="0">
                 <Grid Grid.Row="0" Grid.Column="0" Name="StateMatrix">
                     <Grid.Resources>
-                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}">
-                        </Style>
+                        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
                         <Style TargetType="{x:Type Viewbox}" BasedOn="{StaticResource StateViewbox}" />
                         <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}" />
-                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}">
-                        </Style>
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}" />
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -84,60 +82,80 @@
                     <Border Grid.Row="1" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState4">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[4], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState4">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState4" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState5">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[5], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState5">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState5" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState6">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[6], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState6">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState6" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="1" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState7">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[7], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState7">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState7" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -145,60 +163,80 @@
                     <Border Grid.Row="2" Grid.Column="0" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState8">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[8], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState8">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState8" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="1" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState9">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[9], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState9">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState9" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="2" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState10">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[10], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState10">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState10" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="2" Grid.Column="3" Background="LightCoral">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState11">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="KeyMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[11], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState11">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="KeyMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState11" Visibility="{Binding KeyMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -206,60 +244,80 @@
                     <Border Grid.Row="3" Grid.Column="0" Background="SkyBlue">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState12">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="CounterMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[12], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState12">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="CounterMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState12" Visibility="{Binding CounterMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="1" Name="State13">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState13">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="State13Matrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[13], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState13">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="State13Matrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState13" Visibility="{Binding State13Matrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="2" Background="PaleGreen">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState14">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="IVMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[14], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState14">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="IVMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState14" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
                     <Border Grid.Row="3" Grid.Column="3" Background="PaleGreen">
                         <Viewbox>
                             <StackPanel>
-                                <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
-                                <RichTextBox Name="DiffusionState15">
-                                    <RichTextBox.Visibility>
-                                        <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
-                                            <Binding Path="IVMatrix" />
-                                            <Binding Path="DiffusionActive" />
-                                        </MultiBinding>
-                                    </RichTextBox.Visibility>
-                                </RichTextBox>
+                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                    <TextBox Text="{Binding StateMatrixValues[15], Converter={StaticResource UInt32ToHex}}" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                    <RichTextBox Name="DiffusionState15">
+                                        <RichTextBox.Visibility>
+                                            <MultiBinding Converter="{StaticResource BooleanAndVisibility}" Mode="OneWay">
+                                                <Binding Path="IVMatrix" />
+                                                <Binding Path="DiffusionActive" />
+                                            </MultiBinding>
+                                        </RichTextBox.Visibility>
+                                    </RichTextBox>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
+                                    <RichTextBox Name="XORState15" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
+                                </StackPanel>
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -374,41 +432,56 @@
                         </RichTextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
-                        <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <TextBlock Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}" Name="DiffusionInputKey" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <TextBlock Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}" Name="DiffusionInputKey" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource DiffusionXOR}">
+                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}" Name="DiffusionInputKeyXOR" />
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="1">
-                        <RichTextBox Width="395" Style="{StaticResource RichHex}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <TextBlock Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIV" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <TextBlock Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIV" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource DiffusionXOR}">
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIVXOR" />
+                        </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="4" Grid.Column="1">
-                        <RichTextBox Width="395" Style="{StaticResource RichHex}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
-                                                <Binding Path="ChaCha.InitialCounter" />
-                                                <Binding Path="ChaCha.Settings" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInitialCounter"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                                    <Binding Path="ChaCha.InitialCounter" />
+                                                    <Binding Path="ChaCha.Settings" />
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInitialCounter"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource DiffusionXOR}">
+                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInitialCounterXOR" />
+                        </StackPanel>
                     </StackPanel>
                 </Grid>
             </Viewbox>
@@ -537,56 +610,78 @@
                         <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Name="TextBox_KeyEncodingInput"
-                                     Style="{StaticResource PanelValue}"
-                                     Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
-                            <RichTextBox
-                                Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
-                                Style="{StaticResource RichHex}"
-                                Name="DiffusionKeyEncodingInput"
-                                Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}"
+                                         Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay }" />
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingInput"
+                                    Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingInputXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1" Visibility="{Binding KeyEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputKey" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox
-                                Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
-                                Style="{StaticResource RichHex}"
-                                Name="DiffusionKeyEncodingChunkify"
-                                Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}">
-                            </RichTextBox>
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputKey" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingChunkify"
+                                    Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingChunkifyXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1" Visibility="{Binding KeyEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputKey" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:LittleEndian />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox
-                                Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
-                                Style="{StaticResource RichHex}"
-                                Name="DiffusionKeyEncodingLittleEndian"
-                                Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputKey" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:LittleEndian />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingLittleEndian"
+                                    Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox
+                                    Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
+                                    Style="{StaticResource RichHex}"
+                                    Name="DiffusionKeyEncodingLittleEndianXOR" />
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Viewbox>
@@ -616,78 +711,98 @@
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInputXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingReverse, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                        <MultiBinding.Converter>
-                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
-                                                <conv:HexToBytes />
-                                                <conv:ReverseBytes />
-                                                <conv:BytesToHex />
-                                            </conv:MultiSequentialValueConverter>
-                                        </MultiBinding.Converter>
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                            <MultiBinding.Converter>
+                                                <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                    <conv:HexToBytes />
+                                                    <conv:ReverseBytes />
+                                                    <conv:BytesToHex />
+                                                </conv:MultiSequentialValueConverter>
+                                            </MultiBinding.Converter>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverseXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                        <MultiBinding.Converter>
-                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
-                                                <conv:HexToBytes />
-                                                <conv:ReverseBytes />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:MultiSequentialValueConverter>
-                                        </MultiBinding.Converter>
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                            <MultiBinding.Converter>
+                                                <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                    <conv:HexToBytes />
+                                                    <conv:ReverseBytes />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:MultiSequentialValueConverter>
+                                            </MultiBinding.Converter>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkifyXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="4" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                        <MultiBinding.Converter>
-                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
-                                                <conv:HexToBytes />
-                                                <conv:ReverseBytes />
-                                                <conv:LittleEndian />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:MultiSequentialValueConverter>
-                                        </MultiBinding.Converter>
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                            <MultiBinding.Converter>
+                                                <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                    <conv:HexToBytes />
+                                                    <conv:ReverseBytes />
+                                                    <conv:LittleEndian />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:MultiSequentialValueConverter>
+                                            </MultiBinding.Converter>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndianXOR" />
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Viewbox>
@@ -715,50 +830,67 @@
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding IVEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}"
-                                     Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
-                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}"
+                                         Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingInputXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1"
                                     Visibility="{Binding IVEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputIV" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputIV" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingChunkifyXOR"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1"
                                     Visibility="{Binding IVEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <Binding Path="ChaCha.InputIV" Mode="OneWay">
-                                        <Binding.Converter>
-                                            <conv:SequentialValueConverter>
-                                                <conv:LittleEndian />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:SequentialValueConverter>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <Binding Path="ChaCha.InputIV" Mode="OneWay">
+                                            <Binding.Converter>
+                                                <conv:SequentialValueConverter>
+                                                    <conv:LittleEndian />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:SequentialValueConverter>
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionIVEncodingLittleEndianXOR" />
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Viewbox>
 
                 <!--#endregion-->
             </Grid>
+
+            <!--#endregion-->
         </Grid>
     </ContentControl>
 </UserControl>
