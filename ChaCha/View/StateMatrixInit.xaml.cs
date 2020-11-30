@@ -255,16 +255,28 @@ namespace Cryptool.Plugins.ChaCha.View
         private void InitDiffusionStateMatrixIV()
         {
             Version v = ViewModel.Settings.Version;
-            string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.DiffusionInputIV)), 8);
-            string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(ViewModel.ChaCha.InputIV)), 8);
+
+            byte[] diffusionIVLe = Formatter.LittleEndian(ViewModel.DiffusionInputIV);
+            byte[] ivLe = Formatter.LittleEndian(ViewModel.ChaCha.InputIV);
+            byte[] xor = ByteUtil.XOR(diffusionIVLe, ivLe);
+
+            string dIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(diffusionIVLe), 8);
+            string pIVHexChunksLE = Formatter.Chunkify(Formatter.HexString(ivLe), 8);
+            string xorHex = Formatter.Chunkify(Formatter.HexString(xor), 8);
+
             string[] encodedDIV = Regex.Replace(dIVHexChunksLE, @" $", "").Split(' ');
             string[] encodedPIV = Regex.Replace(pIVHexChunksLE, @" $", "").Split(' ');
+            string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
+
             Debug.Assert(encodedDIV.Length == encodedPIV.Length, "iv and diffusion iv length should be the same.");
+            Debug.Assert(encodedPIV.Length == encodedXor.Length, "iv and xor length should be the same.");
             if (v.CounterBits == 64)
             {
                 Debug.Assert(encodedDIV.Length == 2, $"Encoded diffusion iv length should be 8 bytes for 64-bit counter. Is {encodedDIV.Length}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[0], encodedPIV[0]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[1], encodedPIV[1]);
+                XORState14.Text = encodedXor[0];
+                XORState15.Text = encodedXor[1];
             }
             else
             {
@@ -272,6 +284,9 @@ namespace Cryptool.Plugins.ChaCha.View
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDIV[0], encodedPIV[0]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState14, encodedDIV[1], encodedPIV[1]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState15, encodedDIV[2], encodedPIV[2]);
+                XORState13.Text = encodedXor[0];
+                XORState14.Text = encodedXor[1];
+                XORState15.Text = encodedXor[2];
             }
         }
     }
