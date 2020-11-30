@@ -204,8 +204,8 @@ namespace Cryptool.Plugins.ChaCha.View
                 ulong diffusionInitialCounter = (ulong)ViewModel.DiffusionInitialCounter;
                 ulong initialCounter = (ulong)ViewModel.ChaCha.InitialCounter;
 
-                byte[] diffusionInitialCounterLe = Formatter.LittleEndian(diffusionInitialCounter);
-                byte[] initialCounterLe = Formatter.LittleEndian(initialCounter);
+                byte[] diffusionInitialCounterLe = Formatter.LittleEndian(Formatter.ReverseBytes(diffusionInitialCounter));
+                byte[] initialCounterLe = Formatter.LittleEndian(Formatter.ReverseBytes(initialCounter));
                 byte[] xor = ByteUtil.XOR(diffusionInitialCounterLe, initialCounterLe);
 
                 string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(diffusionInitialCounterLe), 8);
@@ -229,8 +229,8 @@ namespace Cryptool.Plugins.ChaCha.View
                 uint diffusionInitialCounter = (uint)ViewModel.DiffusionInitialCounter;
                 uint initialCounter = (uint)ViewModel.ChaCha.InitialCounter;
 
-                byte[] diffusionInitialCounterLe = Formatter.LittleEndian(diffusionInitialCounter);
-                byte[] initialCounterLe = Formatter.LittleEndian(initialCounter);
+                byte[] diffusionInitialCounterLe = Formatter.LittleEndian(Formatter.ReverseBytes(diffusionInitialCounter));
+                byte[] initialCounterLe = Formatter.LittleEndian(Formatter.ReverseBytes(initialCounter));
                 byte[] xor = ByteUtil.XOR(diffusionInitialCounterLe, initialCounterLe);
 
                 string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(diffusionInitialCounterLe), 8);
