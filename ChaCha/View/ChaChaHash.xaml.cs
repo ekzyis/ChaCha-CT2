@@ -153,47 +153,63 @@ namespace Cryptool.Plugins.ChaCha.View
         private void HandleDiffusionQRInChange()
         {
             RichTextBox rtbA = (RichTextBox)FindName($"DiffusionQRInA");
+            RichTextBox rtbAXor = (RichTextBox)FindName($"DiffusionQRInAXOR");
             uint? diffusionStateValueA = ViewModel.DiffusionQRInA.Value;
             uint? stateValueA = ViewModel.QRInA.Value;
             InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
+            InitOrClearXorValue(rtbAXor, diffusionStateValueA, stateValueA);
 
             RichTextBox rtbB = (RichTextBox)FindName($"DiffusionQRInB");
+            RichTextBox rtbBXor = (RichTextBox)FindName($"DiffusionQRInBXOR");
             uint? diffusionStateValueB = ViewModel.DiffusionQRInB.Value;
             uint? stateValueB = ViewModel.QRInB.Value;
             InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
+            InitOrClearXorValue(rtbBXor, diffusionStateValueB, stateValueB);
 
             RichTextBox rtbC = (RichTextBox)FindName($"DiffusionQRInC");
+            RichTextBox rtbCXor = (RichTextBox)FindName($"DiffusionQRInCXOR");
             uint? diffusionStateValueC = ViewModel.DiffusionQRInC.Value;
             uint? stateValueC = ViewModel.QRInC.Value;
             InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
+            InitOrClearXorValue(rtbCXor, diffusionStateValueC, stateValueC);
 
             RichTextBox rtbD = (RichTextBox)FindName($"DiffusionQRInD");
+            RichTextBox rtbDXor = (RichTextBox)FindName($"DiffusionQRInDXOR");
             uint? diffusionStateValueD = ViewModel.DiffusionQRInD.Value;
             uint? stateValueD = ViewModel.QRInD.Value;
             InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
+            InitOrClearXorValue(rtbDXor, diffusionStateValueD, stateValueD);
         }
 
         private void HandleDiffusionQROutChange()
         {
             RichTextBox rtbA = (RichTextBox)FindName($"DiffusionQROutA");
+            RichTextBox rtbAXor = (RichTextBox)FindName($"DiffusionQROutAXOR");
             uint? diffusionStateValueA = ViewModel.DiffusionQROutA.Value;
             uint? stateValueA = ViewModel.QROutA.Value;
             InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
+            InitOrClearXorValue(rtbAXor, diffusionStateValueA, stateValueA);
 
             RichTextBox rtbB = (RichTextBox)FindName($"DiffusionQROutB");
+            RichTextBox rtbBXor = (RichTextBox)FindName($"DiffusionQROutBXOR");
             uint? diffusionStateValueB = ViewModel.DiffusionQROutB.Value;
             uint? stateValueB = ViewModel.QROutB.Value;
             InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
+            InitOrClearXorValue(rtbBXor, diffusionStateValueB, stateValueB);
 
             RichTextBox rtbC = (RichTextBox)FindName($"DiffusionQROutC");
+            RichTextBox rtbCXor = (RichTextBox)FindName($"DiffusionQROutCXOR");
             uint? diffusionStateValueC = ViewModel.DiffusionQROutC.Value;
             uint? stateValueC = ViewModel.QROutC.Value;
             InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
+            InitOrClearXorValue(rtbCXor, diffusionStateValueC, stateValueC);
 
             RichTextBox rtbD = (RichTextBox)FindName($"DiffusionQROutD");
+            RichTextBox rtbDXor = (RichTextBox)FindName($"DiffusionQROutDXOR");
             uint? diffusionStateValueD = ViewModel.DiffusionQROutD.Value;
             uint? stateValueD = ViewModel.QROutD.Value;
             InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
+            InitOrClearXorValue(rtbDXor, diffusionStateValueD, stateValueD);
         }
 
         private void HandleDiffusionQRStepChange(string propertyName)
@@ -221,6 +237,7 @@ namespace Cryptool.Plugins.ChaCha.View
         private void HandleDiffusionQRStepChange(int index, string operation)
         {
             RichTextBox rtb = (RichTextBox)FindName($"QRValue{operation}Diffusion_{index}");
+            RichTextBox rtbXor = (RichTextBox)FindName($"QRValue{operation}DiffusionXOR_{index}");
             VisualQRStep diffusionQrStep = ViewModel.DiffusionQRStep[index];
             VisualQRStep primaryQrStep = ViewModel.QRStep[index];
             uint? diffusionValue; uint? primaryValue;
@@ -244,6 +261,7 @@ namespace Cryptool.Plugins.ChaCha.View
                 throw new InvalidOperationException("No matching operation found.");
             }
             InitOrClearDiffusionValue(rtb, diffusionValue, primaryValue);
+            InitOrClearXorValue(rtbXor, diffusionValue, primaryValue);
         }
 
         #endregion Diffusion
