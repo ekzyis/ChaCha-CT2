@@ -295,7 +295,7 @@
                                         </RichTextBox.Visibility>
                                     </RichTextBox>
                                 </StackPanel>
-                                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <StackPanel Style="{StaticResource DiffusionXOR}">
                                     <TextBox Name="XORState14" Visibility="{Binding IVMatrix, Converter={StaticResource BooleanToVisibility}}" />
                                 </StackPanel>
                             </StackPanel>
