@@ -55,9 +55,13 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
         /// <summary>
         /// Set the document of the RichTextBox with the xor value as hex string; marking every non-zero character red.
         /// </summary>
-        public static void InitXORValue(RichTextBox rtb, string xor)
+        public static void InitXORValue(RichTextBox rtb, string dHex, string pHex)
         {
-            InitDiffusionValue(rtb, xor, "00000000");
+            byte[] d = Formatter.Bytes(dHex);
+            byte[] p = Formatter.Bytes(pHex);
+            byte[] xor = ByteUtil.XOR(d, p);
+            string xorHex = Formatter.HexString(xor);
+            InitDiffusionValue(rtb, xorHex, "00000000");
         }
 
         /// <summary>
