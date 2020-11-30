@@ -138,7 +138,9 @@
                                         <TextBox Text="{Binding StateValues[0].Value, Converter={StaticResource UInt32ToHex}}" />
                                         <RichTextBox Name="DiffusionState0" />
                                     </StackPanel>
-                                    <RichTextBox Name="DiffusionStateXOR0" />
+                                    <StackPanel Style="{StaticResource DiffusionXOR}">
+                                        <RichTextBox Name="DiffusionStateXOR0" />
+                                    </StackPanel>
                                 </StackPanel>
                             </Viewbox>
                         </Border>
