@@ -105,6 +105,14 @@ namespace Cryptool.Plugins.ChaCha.Helper
         }
 
         /// <summary>
+        /// Reverse order of every 4 bytes in UInt32.
+        /// </summary>
+        public static byte[] LittleEndian(uint u)
+        {
+            return LittleEndian(ByteUtil.GetBytesBE(u));
+        }
+
+        /// <summary>
         /// Reverse byte order of array
         /// </summary>
         public static byte[] ReverseBytes(byte[] b)

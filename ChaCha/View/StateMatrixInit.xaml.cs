@@ -204,27 +204,48 @@ namespace Cryptool.Plugins.ChaCha.View
                 ulong diffusionInitialCounter = (ulong)ViewModel.DiffusionInitialCounter;
                 ulong initialCounter = (ulong)ViewModel.ChaCha.InitialCounter;
 
-                string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
-                string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
+                byte[] diffusionInitialCounterLe = Formatter.LittleEndian(diffusionInitialCounter);
+                byte[] initialCounterLe = Formatter.LittleEndian(initialCounter);
+                byte[] xor = ByteUtil.XOR(diffusionInitialCounterLe, initialCounterLe);
+
+                string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(diffusionInitialCounterLe), 8);
+                string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(initialCounterLe), 8);
+                string xorHex = Formatter.Chunkify(Formatter.HexString(xor), 8);
+
                 string[] encodedDCounter = Regex.Replace(dCounterHexChunksLE, @" $", "").Split(' ');
                 string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
+                string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
+
                 Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "key and diffusion key length should be the same.");
+                Debug.Assert(encodedPCounter.Length == encodedXor.Length, "key and xor length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 2, $"Encoded diffusion counter length should be 8 bytes for 64-bit counter. Is {encodedDCounter.Length}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState13, encodedDCounter[1], encodedPCounter[1]);
+                XORState12.Text = encodedXor[0];
+                XORState13.Text = encodedXor[1];
             }
             else
             {
                 uint diffusionInitialCounter = (uint)ViewModel.DiffusionInitialCounter;
                 uint initialCounter = (uint)ViewModel.ChaCha.InitialCounter;
 
-                string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
-                string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
+                byte[] diffusionInitialCounterLe = Formatter.LittleEndian(diffusionInitialCounter);
+                byte[] initialCounterLe = Formatter.LittleEndian(initialCounter);
+                byte[] xor = ByteUtil.XOR(diffusionInitialCounterLe, initialCounterLe);
+
+                string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(diffusionInitialCounterLe), 8);
+                string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(initialCounterLe), 8);
+                string xorHex = Formatter.Chunkify(Formatter.HexString(xor), 8);
+
                 string[] encodedDCounter = Regex.Replace(dCounterHexChunksLE, @" $", "").Split(' ');
                 string[] encodedPCounter = Regex.Replace(pCounterHexChunksLE, @" $", "").Split(' ');
+                string[] encodedXor = Regex.Replace(xorHex, @" $", "").Split(' ');
+
                 Debug.Assert(encodedDCounter.Length == encodedPCounter.Length, "counter and diffusion counter length should be the same.");
+                Debug.Assert(encodedPCounter.Length == encodedXor.Length, "key and xor length should be the same.");
                 Debug.Assert(encodedDCounter.Length == 1, $"Encoded diffusion counter length should be 4 bytes for 32-bit counter. Is {encodedDCounter.Length}");
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionState12, encodedDCounter[0], encodedPCounter[0]);
+                XORState12.Text = encodedXor[0];
             }
         }
 
