@@ -711,78 +711,98 @@
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingInput, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Converter="{StaticResource ToHexWithVersion}" Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInput"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingInputXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="2" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingReverse, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                        <MultiBinding.Converter>
-                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
-                                                <conv:HexToBytes />
-                                                <conv:ReverseBytes />
-                                                <conv:BytesToHex />
-                                            </conv:MultiSequentialValueConverter>
-                                        </MultiBinding.Converter>
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                            <MultiBinding.Converter>
+                                                <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                    <conv:HexToBytes />
+                                                    <conv:ReverseBytes />
+                                                    <conv:BytesToHex />
+                                                </conv:MultiSequentialValueConverter>
+                                            </MultiBinding.Converter>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverse"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="203" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingReverseXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="3" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingChunkify, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                        <MultiBinding.Converter>
-                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
-                                                <conv:HexToBytes />
-                                                <conv:ReverseBytes />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:MultiSequentialValueConverter>
-                                        </MultiBinding.Converter>
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                            <MultiBinding.Converter>
+                                                <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                    <conv:HexToBytes />
+                                                    <conv:ReverseBytes />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:MultiSequentialValueConverter>
+                                            </MultiBinding.Converter>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkify"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingChunkifyXOR" />
+                            </StackPanel>
                         </StackPanel>
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="4" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingLittleEndian, Converter={StaticResource BooleanToVisibility}}">
-                            <TextBox Style="{StaticResource PanelValue}">
-                                <TextBox.Text>
-                                    <MultiBinding Mode="OneWay">
-                                        <Binding Path="ChaCha.InitialCounter" />
-                                        <Binding Path="ChaCha.Settings" />
-                                        <MultiBinding.Converter>
-                                            <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
-                                                <conv:HexToBytes />
-                                                <conv:ReverseBytes />
-                                                <conv:LittleEndian />
-                                                <conv:BytesToHex />
-                                                <conv:Chunkify />
-                                            </conv:MultiSequentialValueConverter>
-                                        </MultiBinding.Converter>
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                                <TextBox Style="{StaticResource PanelValue}">
+                                    <TextBox.Text>
+                                        <MultiBinding Mode="OneWay">
+                                            <Binding Path="ChaCha.InitialCounter" />
+                                            <Binding Path="ChaCha.Settings" />
+                                            <MultiBinding.Converter>
+                                                <conv:MultiSequentialValueConverter MultiValueConverter="{StaticResource ToHexWithVersion}">
+                                                    <conv:HexToBytes />
+                                                    <conv:ReverseBytes />
+                                                    <conv:LittleEndian />
+                                                    <conv:BytesToHex />
+                                                    <conv:Chunkify />
+                                                </conv:MultiSequentialValueConverter>
+                                            </MultiBinding.Converter>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndian"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource DiffusionXOR}">
+                                <RichTextBox Width="227" Style="{StaticResource RichHex}" Name="DiffusionCounterEncodingLittleEndianXOR" />
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Viewbox>

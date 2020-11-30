@@ -95,6 +95,7 @@ namespace Cryptool.Plugins.ChaCha.View
             Version v = ViewModel.Settings.Version;
 
             Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingInput, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
+            Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionCounterEncodingInputXOR, ViewModel.DiffusionInitialCounter, ViewModel.ChaCha.InitialCounter, v);
 
             if (v.CounterBits == 64)
             {
@@ -104,14 +105,17 @@ namespace Cryptool.Plugins.ChaCha.View
                 string dCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(diffusionInitialCounter));
                 string pCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(initialCounter));
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionCounterEncodingReverseXOR, dCounterHexReverse, pCounterHexReverse);
 
                 string dCounterHexChunks = Formatter.Chunkify(dCounterHexReverse, 8);
                 string pCounterHexChunks = Formatter.Chunkify(pCounterHexReverse, 8);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionCounterEncodingChunkifyXOR, dCounterHexChunks, pCounterHexChunks);
 
                 string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(diffusionInitialCounter)), 8);
                 string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(initialCounter)), 8);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionCounterEncodingLittleEndianXOR, dCounterHexChunksLE, pCounterHexChunksLE);
             }
             else
             {
@@ -121,14 +125,17 @@ namespace Cryptool.Plugins.ChaCha.View
                 string dCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(diffusionInitialCounter));
                 string pCounterHexReverse = Formatter.HexString(Formatter.ReverseBytes(initialCounter));
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingReverse, dCounterHexReverse, pCounterHexReverse);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(DiffusionCounterEncodingReverseXOR, dCounterHexReverse, pCounterHexReverse);
 
                 string dCounterHexChunks = Formatter.Chunkify(dCounterHexReverse, 8);
                 string pCounterHexChunks = Formatter.Chunkify(pCounterHexReverse, 8);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingChunkify, dCounterHexChunks, pCounterHexChunks);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionCounterEncodingChunkifyXOR, dCounterHexChunks, pCounterHexChunks);
 
                 string dCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(Formatter.ReverseBytes(diffusionInitialCounter))), 8);
                 string pCounterHexChunksLE = Formatter.Chunkify(Formatter.HexString(Formatter.LittleEndian(Formatter.ReverseBytes(initialCounter))), 8);
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(DiffusionCounterEncodingLittleEndian, dCounterHexChunksLE, pCounterHexChunksLE);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORChunkValue(DiffusionCounterEncodingLittleEndianXOR, dCounterHexChunksLE, pCounterHexChunksLE);
             }
         }
 
