@@ -2895,6 +2895,18 @@
                         <Style TargetType="{x:Type TextBox}" x:Key="Input" BasedOn="{StaticResource Input}">
                             <Setter Property="Width" Value="40" />
                         </Style>
+                        <Style TargetType="{x:Type Button}" x:Key="StartButton">
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Content" Value="Start" />
+                        </Style>
+                        <Style TargetType="{x:Type Button}" x:Key="EndButton">
+                            <Setter Property="Width" Value="45" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Content" Value="End" />
+                        </Style>
                         <Style TargetType="{x:Type TextBox}" x:Key="ColumnLabel" BasedOn="{StaticResource Label}">
                             <Setter Property="HorizontalAlignment" Value="Center" />
                             <Setter Property="VerticalAlignment" Value="Center" />
@@ -2910,18 +2922,6 @@
                                     </Binding>
                                 </Setter.Value>
                             </Setter>
-                        </Style>
-                        <Style TargetType="{x:Type Button}" x:Key="StartButton">
-                            <Setter Property="Width" Value="45" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="Margin" Value="3" />
-                            <Setter Property="Content" Value="Start" />
-                        </Style>
-                        <Style TargetType="{x:Type Button}" x:Key="EndButton">
-                            <Setter Property="Width" Value="45" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="Margin" Value="3" />
-                            <Setter Property="Content" Value="End" />
                         </Style>
                         <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton">
                             <Setter Property="Width" Value="45" />
