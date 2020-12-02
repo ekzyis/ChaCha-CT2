@@ -891,6 +891,84 @@
             </Grid>
 
             <!--#endregion-->
+
+            <!--#region Button navigation -->
+
+            <Viewbox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type StackPanel}">
+                            <Setter Property="Orientation" Value="Horizontal" />
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="5,0" />
+                        </Style>
+                        <Style TargetType="{x:Type TextBox}" x:Key="Label" BasedOn="{StaticResource Text}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                        </Style>
+                    </Grid.Resources>
+
+                    <Grid Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="40,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Constants" />
+                        <StackPanel Grid.Column="4" Grid.Row="1">
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToConstantsEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToConstantsEncodingEndCommand}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="3,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Key" />
+                        <StackPanel Grid.Column="4" Grid.Row="1">
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToKeyEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToKeyEncodingEndCommand}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" Margin="3,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Counter" />
+                        <StackPanel Grid.Column="4" Grid.Row="1">
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToCounterEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToCounterEncodingEndCommand}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="3" Grid.Row="0" Grid.RowSpan="2" Margin="3,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Initialization vector" />
+                        <StackPanel Grid.Column="4" Grid.Row="1">
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToIVEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToIVEncodingEndCommand}" />
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </Viewbox>
+
+            <!--#endregion-->
         </Grid>
     </ContentControl>
 </UserControl>
