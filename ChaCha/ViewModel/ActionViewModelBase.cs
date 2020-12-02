@@ -22,6 +22,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             CurrentActionIndex = 0;
         }
 
+        /// <summary>
+        /// This variable is used during `InitActions` to tag actions.
+        /// It always points to the last index.
+        /// </summary>
+        protected int ActionIndex => Actions.Count - 1;
+
         public ActionCreator ActionCreator { get; private set; } = new ActionCreator();
 
         private List<Action> _actions; public List<Action> Actions
@@ -249,6 +255,14 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         public int GetTaggedActionIndex(string tag)
         {
             return ActionTags[tag];
+        }
+
+        /// <summary>
+        /// Tag the last added action.
+        /// </summary>
+        public void TagLastAction(string tag)
+        {
+            TagAction(tag, ActionIndex);
         }
 
         #endregion IActionTag

@@ -48,12 +48,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         private StateActionCreator StateActionCreator { get; set; }
 
-        /// <summary>
-        /// This variable is used during `InitActions` to tag actions.
-        /// It always points to the last index.
-        /// </summary>
-        private int ActionIndex => Actions.Count - 1;
-
         protected override void InitActions()
         {
             // ChaCha Hash sequence
@@ -1206,7 +1200,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         private void TagKeystreamBlockStartAction(int keystreamBlock)
         {
-            TagAction(KeystreamBlockStartTag(keystreamBlock), ActionIndex);
+            TagLastAction(KeystreamBlockStartTag(keystreamBlock));
         }
 
         /// <summary>
@@ -1216,7 +1210,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="round">Zero-based round index.</param>
         private void TagRoundStartAction(int keystreamBlock, int round)
         {
-            TagAction(RoundStartTag(keystreamBlock, round), ActionIndex);
+            TagLastAction(RoundStartTag(keystreamBlock, round));
         }
 
         /// <summary>
@@ -1226,7 +1220,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="round">Zero-based round index.</param>
         private void TagRoundEndStartAction(int keystreamBlock, int round)
         {
-            TagAction(RoundEndTag(keystreamBlock, round), ActionIndex);
+            TagLastAction(RoundEndTag(keystreamBlock, round));
         }
 
         /// <summary>
@@ -1237,7 +1231,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="qr">Zero-based qr index.</param>
         private void TagQRStartAction(int keystreamBlock, int round, int qr)
         {
-            TagAction(QRStartTag(keystreamBlock, round, qr), ActionIndex);
+            TagLastAction(QRStartTag(keystreamBlock, round, qr));
         }
 
         /// <summary>
@@ -1248,7 +1242,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="qr">Zero-based qr index.</param>
         private void TagQREndAction(int keystreamBlock, int round, int qr)
         {
-            TagAction(QREndTag(keystreamBlock, round, qr), ActionIndex);
+            TagLastAction(QREndTag(keystreamBlock, round, qr));
         }
 
         /// <summary>
@@ -1257,7 +1251,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         private void TagMatrixStartAction(int keystreamBlock)
         {
-            TagAction(MatrixStartTag(keystreamBlock), ActionIndex);
+            TagLastAction(MatrixStartTag(keystreamBlock));
         }
 
         /// <summary>
@@ -1266,7 +1260,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         /// <param name="keystreamBlock">Zero-based keystream block index.</param>
         private void TagMatrixEndAction(int keystreamBlock)
         {
-            TagAction(MatrixEndTag(keystreamBlock), ActionIndex);
+            TagLastAction(MatrixEndTag(keystreamBlock));
         }
 
         /// <summary>
