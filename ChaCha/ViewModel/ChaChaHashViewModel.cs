@@ -122,8 +122,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                         Seq(QRIO.InsertQRInputs(keystreamBlock, round, qr).Extend(QRIO.MarkQRInputs));
                         ActionCreator.EndSequence();
 
-                        // Keep inserted qr input for the rest of the qr sequence
-                        Seq(QRIO.InsertQRInputs(keystreamBlock, round, qr));
+                        // Keep inserted qr input and marked state entries for the rest of the qr sequence
+                        Seq(QRIO.InsertQRInputs(keystreamBlock, round, qr).Extend(QRIO.MarkState(round, qr)));
 
                         // Run quarterround steps
                         for (int qrStep = 0; qrStep < 4; ++qrStep)
