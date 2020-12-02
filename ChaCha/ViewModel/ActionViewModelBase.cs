@@ -168,6 +168,14 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             MoveActions(-1);
         }
 
+        /// <summary>
+        /// Move to the action which is tagged with the given tag.
+        /// </summary>
+        protected void MoveToTaggedAction(string tag)
+        {
+            MoveToAction(GetTaggedActionIndex(tag));
+        }
+
         #region Asynchronous action navigation
 
         private readonly Stack<int> AsyncMoveCommands = new Stack<int>();

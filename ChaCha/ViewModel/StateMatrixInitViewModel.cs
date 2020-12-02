@@ -1,7 +1,9 @@
-﻿using Cryptool.Plugins.ChaCha.ViewModel.Components;
+﻿using Cryptool.Plugins.ChaCha.Helper;
+using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
+using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
@@ -15,6 +17,18 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         #region ActionViewModelBase
 
+        private string CONSTANTS_ENCODING_START = "CONSTANTS_ENCODING_START";
+        private string CONSTANTS_ENCODING_END = "CONSTANTS_ENCODING_END";
+
+        private string KEY_ENCODING_START = "KEY_ENCODING_START";
+        private string KEY_ENCODING_END = "KEY_ENCODING_END";
+
+        private string COUNTER_ENCODING_START = "COUNTER_ENCODING_START";
+        private string COUNTER_ENCODING_END = "COUNTER_ENCODING_END";
+
+        private string IV_ENCODING_START = "IV_ENCODING_START";
+        private string IV_ENCODING_END = "IV_ENCODING_END";
+
         protected override void InitActions()
         {
             ActionCreator.StartSequence();
@@ -26,11 +40,13 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             ActionCreator.StartSequence();
 
             Seq(() => { ConstantsEncoding = true; });
+            TagLastAction(CONSTANTS_ENCODING_START);
             Seq(() => { ConstantsEncodingInput = true; });
             Seq(() => { ConstantsEncodingASCII = true; });
             Seq(() => { ConstantsEncodingChunkify = true; });
             Seq(() => { ConstantsEncodingLittleEndian = true; });
             Seq(() => { ConstantsMatrix = true; });
+            TagLastAction(CONSTANTS_ENCODING_END);
 
             ActionCreator.EndSequence();
 
@@ -43,10 +59,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             ActionCreator.StartSequence();
 
             Seq(() => { KeyEncoding = true; });
+            TagLastAction(KEY_ENCODING_START);
             Seq(() => { KeyEncodingInput = true; });
             Seq(() => { KeyEncodingChunkify = true; });
             Seq(() => { KeyEncodingLittleEndian = true; });
             Seq(() => { KeyMatrix = true; });
+            TagLastAction(KEY_ENCODING_END);
 
             ActionCreator.EndSequence();
 
@@ -59,11 +77,13 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             ActionCreator.StartSequence();
 
             Seq(() => { CounterEncoding = true; });
+            TagLastAction(COUNTER_ENCODING_START);
             Seq(() => { CounterEncodingInput = true; });
             Seq(() => { CounterEncodingReverse = true; });
             Seq(() => { CounterEncodingChunkify = true; });
             Seq(() => { CounterEncodingLittleEndian = true; });
             Seq(() => { CounterMatrix = true; if (Settings.Version.CounterBits == 64) State13Matrix = true; });
+            TagLastAction(COUNTER_ENCODING_END);
 
             ActionCreator.EndSequence();
 
@@ -75,7 +95,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
             ActionCreator.StartSequence();
 
-            Seq(() => { Description[3] = true; IVEncoding = true; });
+            Seq(() => { IVEncoding = true; });
+            TagLastAction(IV_ENCODING_START);
             Seq(() => { IVEncodingInput = true; });
             Seq(() => { IVEncodingChunkify = true; });
             Seq(() => { IVEncodingLittleEndian = true; });
@@ -84,6 +105,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             #endregion IV
 
             Seq(() => { Description[4] = true; });
+            TagLastAction(IV_ENCODING_END);
 
             ActionCreator.EndSequence();
 
@@ -141,6 +163,98 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         #endregion ActionViewModelBase
+
+        #region Navigation Bar
+
+        #region Constants
+
+        private ICommand _goToConstantsEncodingStart; public ICommand GoToConstantsEncodingStartCommand
+        {
+            get
+            {
+                if (_goToConstantsEncodingStart == null) _goToConstantsEncodingStart = new RelayCommand((arg) => MoveToTaggedAction(CONSTANTS_ENCODING_START));
+                return _goToConstantsEncodingStart;
+            }
+        }
+
+        private ICommand _goToConstantsEncodingEnd; public ICommand GoToConstantsEncodingEndCommand
+        {
+            get
+            {
+                if (_goToConstantsEncodingEnd == null) _goToConstantsEncodingEnd = new RelayCommand((arg) => MoveToTaggedAction(CONSTANTS_ENCODING_END));
+                return _goToConstantsEncodingEnd;
+            }
+        }
+
+        #endregion Constants
+
+        #region Key
+
+        private ICommand _goToKeyEncodingStart; public ICommand GoToKeyEncodingStartCommand
+        {
+            get
+            {
+                if (_goToKeyEncodingStart == null) _goToKeyEncodingStart = new RelayCommand((arg) => MoveToTaggedAction(KEY_ENCODING_START));
+                return _goToKeyEncodingStart;
+            }
+        }
+
+        private ICommand _goToKeyEncodingEnd; public ICommand GoToKeyEncodingEndCommand
+        {
+            get
+            {
+                if (_goToKeyEncodingEnd == null) _goToKeyEncodingEnd = new RelayCommand((arg) => MoveToTaggedAction(KEY_ENCODING_END));
+                return _goToKeyEncodingEnd;
+            }
+        }
+
+        #endregion Key
+
+        #region Counter
+
+        private ICommand _goToCounterEncodingStart; public ICommand GoToCounterEncodingStartCommand
+        {
+            get
+            {
+                if (_goToCounterEncodingStart == null) _goToCounterEncodingStart = new RelayCommand((arg) => MoveToTaggedAction(COUNTER_ENCODING_START));
+                return _goToCounterEncodingStart;
+            }
+        }
+
+        private ICommand _goToCounterEncodingEnd; public ICommand GoToCounterEncodingEndCommand
+        {
+            get
+            {
+                if (_goToCounterEncodingEnd == null) _goToCounterEncodingEnd = new RelayCommand((arg) => MoveToTaggedAction(COUNTER_ENCODING_END));
+                return _goToCounterEncodingEnd;
+            }
+        }
+
+        #endregion Counter
+
+        #region IV
+
+        private ICommand _goToIVEncodingStart; public ICommand GoToIVEncodingStartCommand
+        {
+            get
+            {
+                if (_goToIVEncodingStart == null) _goToIVEncodingStart = new RelayCommand((arg) => MoveToTaggedAction(IV_ENCODING_START));
+                return _goToIVEncodingStart;
+            }
+        }
+
+        private ICommand _goToIVEncodingEnd; public ICommand GoToIVEncodingEndCommand
+        {
+            get
+            {
+                if (_goToIVEncodingEnd == null) _goToIVEncodingEnd = new RelayCommand((arg) => MoveToTaggedAction(IV_ENCODING_END));
+                return _goToIVEncodingEnd;
+            }
+        }
+
+        #endregion IV
+
+        #endregion Navigation Bar
 
         #region Binding Properties
 

@@ -925,8 +925,8 @@
                         </Grid.RowDefinitions>
                         <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Constants" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToConstantsEncodingStart}" />
-                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToConstantsEncodingEnd}" />
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToConstantsEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToConstantsEncodingEndCommand}" />
                         </StackPanel>
                     </Grid>
 
@@ -937,8 +937,8 @@
                         </Grid.RowDefinitions>
                         <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Key" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToKeyEncodingStart}" />
-                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToKeyEncodingEnd}" />
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToKeyEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToKeyEncodingEndCommand}" />
                         </StackPanel>
                     </Grid>
 
@@ -949,8 +949,8 @@
                         </Grid.RowDefinitions>
                         <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Counter" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToCounterEncodingStart}" />
-                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToCounterEncodingEnd}" />
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToCounterEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToCounterEncodingEndCommand}" />
                         </StackPanel>
                     </Grid>
 
@@ -961,8 +961,8 @@
                         </Grid.RowDefinitions>
                         <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Initialization vector" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToIVEncodingStart}" />
-                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToIVrEncodingEnd}" />
+                            <Button Style="{StaticResource StartButton}" Command="{Binding GoToIVEncodingStartCommand}" />
+                            <Button Style="{StaticResource EndButton}" Command="{Binding GoToIVEncodingEndCommand}" />
                         </StackPanel>
                     </Grid>
                 </Grid>
