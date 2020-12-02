@@ -105,12 +105,12 @@
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="0">
                         <TextBox Text="Input initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
-                        <TextBox Text="Second Initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
+                        <TextBox Text="Second initialization vector (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
                         <TextBox Text="XOR of both initialization vectors (hex)" Style="{StaticResource DiffusionText}" Background="PaleGreen"/>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="0">
                         <TextBox Text="Input initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
-                        <TextBox Text="Second Initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
+                        <TextBox Text="Second initial counter (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
                         <TextBox Text="XOR of both initial counters (hex)" Style="{StaticResource DiffusionText}" Background="SkyBlue"/>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="0">
