@@ -30,6 +30,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             DiffusionIVXOR = ByteUtil.XOR(DiffusionIV, ChaCha.InputIV);
 
             DiffusionInitialCounter = ChaCha.InitialCounter;
+            DiffusionInitialCounterExplicit = DiffusionInitialCounter;
+            DiffusionInitialCounterXOR = DiffusionInitialCounter ^ ChaCha.InitialCounter;
         }
 
         #region Input Handlers
