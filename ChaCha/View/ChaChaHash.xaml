@@ -542,7 +542,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- #region  Quarterround visualization -->
-                <Grid Grid.ColumnSpan="3" Margin="0,5,0,5" Visibility="{Binding RoundsStep, Converter={StaticResource BooleanToVisibility}}">
+                <Grid Grid.ColumnSpan="3" Margin="0,5" Visibility="{Binding RoundsStep, Converter={StaticResource BooleanToVisibility}}">
                     <Viewbox Style="{StaticResource UniformViewbox}">
                         <Viewbox.Resources>
                             <Style x:Key="QRValue" TargetType="{x:Type TextBox}" BasedOn="{StaticResource StateText}" />
@@ -1687,7 +1687,7 @@
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,2" Margin="0,0,0,0" />
+                    <Border Style="{StaticResource MatrixBorder}" Grid.Row="0" BorderBrush="Black" BorderThickness="0,0,0,2" Margin="0" />
                 </Grid>
 
                 <Grid Grid.Column="2" Style="{StaticResource MatrixVisualizationGrid}">
@@ -2886,7 +2886,7 @@
                         <Style TargetType="{x:Type StackPanel}">
                             <Setter Property="Orientation" Value="Horizontal" />
                             <Setter Property="HorizontalAlignment" Value="Center" />
-                            <Setter Property="Margin" Value="5,0,5,0" />
+                            <Setter Property="Margin" Value="5,0" />
                         </Style>
                         <Style TargetType="{x:Type TextBox}" x:Key="Label" BasedOn="{StaticResource Text}">
                             <Setter Property="HorizontalAlignment" Value="Center" />
@@ -2975,7 +2975,7 @@
                         </Style>
                     </Grid.Resources>
 
-                    <TextBox Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" Text="Keystream Block" Margin="3,0,3,0" />
+                    <TextBox Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" Text="Keystream Block" Margin="3,0" />
                     <StackPanel Grid.Column="0" Grid.Row="1">
                         <Button Style="{StaticResource PrevButton}" Command="{Binding PrevKeystreamBlockCommand}" />
                         <TextBox Name="KeystreamBlockInput" Style="{StaticResource Input}" />
@@ -3050,7 +3050,7 @@
 
                     <!--#endregion-->
 
-                    <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="Addition / Reverse Bytes" Margin="3,0,3,0" />
+                    <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="Addition / Reverse Bytes" Margin="3,0" />
                     <StackPanel Grid.Column="7" Grid.Row="1">
                         <Button Style="{StaticResource StartButton}" Command="{Binding MatrixStartCommand}" />
                         <Button Style="{StaticResource EndButton}" Content="End" Command="{Binding MatrixEndCommand}" />
