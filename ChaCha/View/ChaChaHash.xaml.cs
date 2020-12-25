@@ -48,9 +48,15 @@ namespace Cryptool.Plugins.ChaCha.View
                 // Mhhh... we'll ignore it for now and just return, if this happens.
                 // Maybe some async issues?
                 if (ViewModel == null) return;
-                if (e.PropertyName == "DiffusionStateValues")
+                if (e.PropertyName.StartsWith("DiffusionStateValues"))
                 {
-                    HandleDiffusionStateValuesChange();
+                    var match = Regex.Match(e.PropertyName, @"^DiffusionStateValues\[([0-9]+)\]$");
+                    if (match.Groups[1].Success)
+                    {
+                        int index = int.Parse(match.Groups[1].Value);
+                        HandleDiffusionStateValuesChange(index);
+                    }
+                    else HandleDiffusionStateValuesChange();
                 }
                 else if (e.PropertyName == "DiffusionOriginalState")
                 {
@@ -110,15 +116,24 @@ namespace Cryptool.Plugins.ChaCha.View
             watch.Start();
             for (int i = 0; i < 16; ++i)
             {
-                RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
-                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionStateXOR{i}");
-                uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
-                uint? stateValue = ViewModel.StateValues[i].Value;
-                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
-                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
+                HandleDiffusionStateValuesChange(i);
             }
             TimeSpan ts = watch.Elapsed;
             Console.WriteLine($"HandleDiffusionStateValuesChange RunTime: {ts.TotalMilliseconds} ms");
+        }
+
+        private void HandleDiffusionStateValuesChange(int i)
+        {
+            var watch = new Stopwatch();
+            watch.Start();
+            RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
+            RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionStateXOR{i}");
+            uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
+            uint? stateValue = ViewModel.StateValues[i].Value;
+            InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
+            InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
+            TimeSpan ts = watch.Elapsed;
+            Console.WriteLine($"HandleDiffusionStateValuesChange({i}) RunTime: {ts.TotalMilliseconds} ms");
         }
 
         private void HandleDiffusionOriginalStateChange()

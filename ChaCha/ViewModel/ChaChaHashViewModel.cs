@@ -34,6 +34,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             // (property with this exact name does not exist here)
             // but tells the view that the Add field in the first QR step has changed.
             if (propertyName.StartsWith("DiffusionQRStep")) return;
+            if (propertyName.StartsWith("DiffusionStateValues")) return;
             base.VerifyPropertyName(propertyName);
         }
 
