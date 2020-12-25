@@ -106,6 +106,8 @@ namespace Cryptool.Plugins.ChaCha.View
 
         private void HandleDiffusionStateValuesChange()
         {
+            var watch = new Stopwatch();
+            watch.Start();
             for (int i = 0; i < 16; ++i)
             {
                 RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
@@ -115,6 +117,8 @@ namespace Cryptool.Plugins.ChaCha.View
                 InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
                 InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
             }
+            TimeSpan ts = watch.Elapsed;
+            Console.WriteLine($"HandleDiffusionStateValuesChange RunTime: {ts.TotalMilliseconds} ms");
         }
 
         private void HandleDiffusionOriginalStateChange()

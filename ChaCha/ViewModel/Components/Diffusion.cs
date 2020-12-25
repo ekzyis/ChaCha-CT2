@@ -42,6 +42,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 rtb.Document.Blocks.Add(new Paragraph());
             }
             else ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Clear();
+            var watch = new System.Diagnostics.Stopwatch();
+            watch.Start();
             for (int i = 0; i < dHex.Length; i += 2)
             {
                 char dChar1 = dHex[i];
@@ -51,6 +53,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar1, pChar1));
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar2, pChar2));
             }
+            TimeSpan ts = watch.Elapsed;
+            Console.WriteLine($"InitDiffusionValue RunTime: {ts.TotalMilliseconds} ms");
         }
 
         /// <summary>
