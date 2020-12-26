@@ -59,5 +59,113 @@ namespace Cryptool.Plugins.ChaCha.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChaCha.
+        /// </summary>
+        internal static string ChaChaCaption {
+            get {
+                return ResourceManager.GetString("ChaChaCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein..
+        /// </summary>
+        internal static string ChaChaTooltip {
+            get {
+                return ResourceManager.GetString("ChaChaTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial counter.
+        /// </summary>
+        internal static string InputInitialCounterCaption {
+            get {
+                return ResourceManager.GetString("InputInitialCounterCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial keystream block counter. Will be incremented for each keystream block. 64-bit for DJB version. 32-bit for IETF version..
+        /// </summary>
+        internal static string InputInitialCounterTooltip {
+            get {
+                return ResourceManager.GetString("InputInitialCounterTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialization vector.
+        /// </summary>
+        internal static string InputIVCaption {
+            get {
+                return ResourceManager.GetString("InputIVCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialization vector. 64-bit for DJB version. 96-bit for IETF version..
+        /// </summary>
+        internal static string InputIVTooltip {
+            get {
+                return ResourceManager.GetString("InputIVTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        internal static string InputKeyCaption {
+            get {
+                return ResourceManager.GetString("InputKeyCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key. Can be 128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key via concatenation with itself..
+        /// </summary>
+        internal static string InputKeyTooltip {
+            get {
+                return ResourceManager.GetString("InputKeyTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plain text.
+        /// </summary>
+        internal static string InputStreamCaption {
+            get {
+                return ResourceManager.GetString("InputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input text which should be encrypted or decrypted with ChaCha..
+        /// </summary>
+        internal static string InputStreamTooltip {
+            get {
+                return ResourceManager.GetString("InputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cipher text.
+        /// </summary>
+        internal static string OutputStreamCaption {
+            get {
+                return ResourceManager.GetString("OutputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output text encrypted or decrypted with ChaCha..
+        /// </summary>
+        internal static string OutputStreamTooltip {
+            get {
+                return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
+            }
+        }
     }
 }

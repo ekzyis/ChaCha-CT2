@@ -32,7 +32,7 @@ using System.Text;
 namespace Cryptool.Plugins.ChaCha
 {
     [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
-    [PluginInfo("ChaCha", "A stream cipher based on Salsa used in TLS and developed by Daniel J. Bernstein.", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
+    [PluginInfo("Cryptool.Plugins.ChaCha.Properties.Resources", "ChaChaCaption", "ChaChaTooltip", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class ChaCha : ICrypComponent, IValidatableObject, INotifyPropertyChanged
     {
@@ -61,7 +61,7 @@ namespace Cryptool.Plugins.ChaCha
         #region ICrypComponent I/O
 
         /// <summary>
-        /// Input text which should be en- or decrypted by ChaCha.
+        /// Input text which should be en- or decrypted with ChaCha.
         /// </summary>
         [PropertyInfo(Direction.InputData, "InputStreamCaption", "InputStreamTooltip", true)]
         public ICryptoolStream InputStream
