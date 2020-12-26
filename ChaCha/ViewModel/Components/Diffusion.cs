@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
         public static void InitDiffusionValue(RichTextBox rtb, string dHex, string pHex)
         {
             if (dHex.Length != pHex.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
-            if (dHex.Length % 2 != 0) throw new ArgumentException("Length must be even");
+            if (dHex.Replace(" ", "").Length % 2 != 0) throw new ArgumentException("Length must be even");
             if ((Paragraph)rtb.Document.Blocks.LastBlock == null)
             {
                 rtb.Document.Blocks.Add(new Paragraph());
@@ -44,14 +44,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
             else ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Clear();
             var watch = new System.Diagnostics.Stopwatch();
             watch.Start();
-            for (int i = 0; i < dHex.Length; i += 2)
+            for (int i = 0; i < dHex.Length; ++i)
             {
                 char dChar1 = dHex[i];
-                char dChar2 = dHex[i + 1];
                 char pChar1 = pHex[i];
-                char pChar2 = pHex[i + 1];
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar1, pChar1));
-                ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar2, pChar2));
             }
             TimeSpan ts = watch.Elapsed;
             Console.WriteLine($"InitDiffusionValue RunTime: {ts.TotalMilliseconds} ms");

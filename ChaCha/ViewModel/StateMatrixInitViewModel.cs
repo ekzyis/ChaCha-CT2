@@ -100,7 +100,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             Seq(() => { IVEncodingInput = true; });
             Seq(() => { IVEncodingChunkify = true; });
             Seq(() => { IVEncodingLittleEndian = true; });
-            Seq(() => { IVMatrix = true; });
+            Seq(() => { IVMatrix = true; if (Settings.Version.CounterBits == 32) State13Matrix = true; });
 
             #endregion IV
 

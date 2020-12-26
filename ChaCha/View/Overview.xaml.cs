@@ -1,5 +1,4 @@
-﻿using Cryptool.Plugins.ChaCha.ViewModel;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Cryptool.Plugins.ChaCha.View
 {
@@ -11,7 +10,6 @@ namespace Cryptool.Plugins.ChaCha.View
         public Overview()
         {
             InitializeComponent();
-            this.DataContext = new OverviewViewModel();
         }
     }
 }

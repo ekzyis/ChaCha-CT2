@@ -16,7 +16,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             ChaCha.PropertyChanged += new PropertyChangedEventHandler(OnPluginPropertyChanged);
             // Add available pages
             Pages.Add(new StartViewModel());
-            Pages.Add(new OverviewViewModel());
+            Pages.Add(new OverviewViewModel(this));
             Pages.Add(new DiffusionViewModel(this));
             Pages.Add(new StateMatrixInitViewModel(this));
             Pages.Add(new ChaChaHashViewModel(this));
