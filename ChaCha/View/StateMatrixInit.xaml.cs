@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Cryptool.Plugins.ChaCha.View
 {
@@ -29,9 +28,6 @@ namespace Cryptool.Plugins.ChaCha.View
                 ActionViewBase.AddEventHandlers(ViewModel, Root);
 
                 this.ViewModel = ViewModel;
-                // Colorize state background depending on Version
-                Version v = ViewModel.Settings.Version;
-                State13.Background = v.CounterBits == 64 ? Brushes.SkyBlue : Brushes.PaleGreen;
 
                 // State parameter diffusion values
                 InitDiffusionStateParameters();

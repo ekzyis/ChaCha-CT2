@@ -261,7 +261,17 @@
                             </StackPanel>
                         </Viewbox>
                     </Border>
-                    <Border Grid.Row="3" Grid.Column="1" Name="State13">
+                    <Border Grid.Row="3" Grid.Column="1">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource StateBorder}">
+                                <Setter Property="Background" Value="SkyBlue" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
+                                        <Setter Property="Background" Value="PaleGreen" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <Viewbox>
                             <StackPanel>
                                 <StackPanel Style="{StaticResource DiffusionNonXOR}">
