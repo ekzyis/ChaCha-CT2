@@ -414,6 +414,7 @@
                             <Setter Property="Margin" Value="0,5,0,5" />
                             <Setter Property="VerticalAlignment" Value="Center" />
                         </Style>
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" />
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -443,37 +444,37 @@
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.Column="1">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}">
+                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}">
                                 <FlowDocument>
                                     <Paragraph>
                                         <TextBlock Text="{Binding ChaCha.InputKey, Converter={StaticResource ToHex}, Mode=OneWay}" />
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}" Name="DiffusionInputKey" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Name="DiffusionInputKey" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Style="{StaticResource RichHex}" Name="DiffusionInputKeyXOR" />
+                            <RichTextBox Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}" Name="DiffusionInputKeyXOR" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="3" Grid.Column="1">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                            <RichTextBox Width="395">
                                 <FlowDocument>
                                     <Paragraph>
                                         <TextBlock Text="{Binding ChaCha.InputIV, Converter={StaticResource ToHex}, Mode=OneWay}" />
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIV" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="395" Name="DiffusionInputIV" Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInputIVXOR" />
+                            <RichTextBox Width="395" Name="DiffusionInputIVXOR" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="4" Grid.Column="1">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                            <RichTextBox Width="395">
                                 <FlowDocument>
                                     <Paragraph>
                                         <TextBlock>
@@ -487,10 +488,10 @@
                                     </Paragraph>
                                 </FlowDocument>
                             </RichTextBox>
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInitialCounter"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
+                            <RichTextBox Width="395" Name="DiffusionInitialCounter"  Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Width="395" Style="{StaticResource RichHex}" Name="DiffusionInitialCounterXOR" />
+                            <RichTextBox Width="395" Name="DiffusionInitialCounterXOR" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
