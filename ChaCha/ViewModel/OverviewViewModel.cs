@@ -2,10 +2,11 @@
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
-    internal class OverviewViewModel : ViewModelBase, INavigation, ITitle
+    internal class OverviewViewModel : ViewModelBase, INavigation, ITitle, IChaCha
     {
-        public OverviewViewModel()
+        public OverviewViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
+            PresentationViewModel = chachaPresentationViewModel;
             Name = "Overview";
             Title = "Overview";
         }
@@ -59,5 +60,13 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         }
 
         #endregion ITitle
+
+        #region IChaCha
+
+        public ChaChaPresentationViewModel PresentationViewModel { get; private set; }
+        public ChaCha ChaCha { get => PresentationViewModel.ChaCha; }
+        public ChaChaSettings Settings { get => (ChaChaSettings)ChaCha.Settings; }
+
+        #endregion IChaCha
     }
 }
