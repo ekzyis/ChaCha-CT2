@@ -124,8 +124,31 @@
                                                 <TableCell Background="SkyBlue">
                                                     <Paragraph>COUNTER</Paragraph>
                                                 </TableCell>
-                                                <TableCell Background="SkyBlue">
-                                                    <Paragraph>COUNTER</Paragraph>
+                                                <TableCell>
+                                                    <TableCell.Style>
+                                                        <Style TargetType="{x:Type TableCell}" BasedOn="{StaticResource DefaultTableCell}">
+                                                            <Setter Property="Background" Value="SkyBlue"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
+                                                                    <Setter Property="Background" Value="PaleGreen"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TableCell.Style>
+                                                    <Paragraph>
+                                                        <TextBlock>
+                                                            <TextBlock.Style>
+                                                                <Style TargetType="{x:Type TextBlock}">
+                                                                    <Setter Property="Text" Value="COUNTER"/>
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
+                                                                            <Setter Property="Text" Value="IV"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </TextBlock.Style>
+                                                        </TextBlock>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="PaleGreen">
                                                     <Paragraph>IV</Paragraph>
