@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
         public static void InitDiffusionValue(RichTextBox rtb, string dHex, string pHex)
         {
             if (dHex.Length != pHex.Length) throw new ArgumentException("Diffusion value must be of same length as primary value.");
-            if (dHex.Length % 2 != 0) throw new ArgumentException("Length must be even");
+            if (dHex.Replace(" ", "").Length % 2 != 0) throw new ArgumentException("Length must be even");
             if ((Paragraph)rtb.Document.Blocks.LastBlock == null)
             {
                 rtb.Document.Blocks.Add(new Paragraph());
