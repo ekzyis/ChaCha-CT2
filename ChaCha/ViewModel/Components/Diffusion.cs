@@ -42,14 +42,11 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 rtb.Document.Blocks.Add(new Paragraph());
             }
             else ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Clear();
-            for (int i = 0; i < dHex.Length; i += 2)
+            for (int i = 0; i < dHex.Length; ++i)
             {
                 char dChar1 = dHex[i];
-                char dChar2 = dHex[i + 1];
                 char pChar1 = pHex[i];
-                char pChar2 = pHex[i + 1];
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar1, pChar1));
-                ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar2, pChar2));
             }
         }
 
