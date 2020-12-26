@@ -55,7 +55,7 @@
                                             <Paragraph>Constants (nothing-up-my-sleeves numbers) (128-bit)</Paragraph>
                                         </ListItem>
                                         <ListItem Background="LightCoral">
-                                            <Paragraph>Key (128-bit or 256-bit. At 128-bit key will be expanded into a 256-bit key.)</Paragraph>
+                                            <Paragraph>Key (128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key.)</Paragraph>
                                         </ListItem>
                                         <ListItem Background="SkyBlue">
                                             <Paragraph>Keystream block counter (<Run Text="{Binding Settings.Version.CounterBits, Mode=OneWay}" />-bit)</Paragraph>
