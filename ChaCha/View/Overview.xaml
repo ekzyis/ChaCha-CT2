@@ -58,7 +58,7 @@
                                             <Paragraph>Key (128-bit or 256-bit. At 128-bit key will be expanded into a 256-bit key.)</Paragraph>
                                         </ListItem>
                                         <ListItem Background="SkyBlue">
-                                            <Paragraph>Keystream block counter (64-bit)</Paragraph>
+                                            <Paragraph>Keystream block counter (<Run Text="{Binding Settings.Version.CounterBits, Mode=OneWay}" />-bit)</Paragraph>
                                         </ListItem>
                                         <ListItem Background="PaleGreen">
                                             <Paragraph>Initialization vector (<Run Text="{Binding Settings.Version.IVBits, Mode=OneWay}" />-bit)
