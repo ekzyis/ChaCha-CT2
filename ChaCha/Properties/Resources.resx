@@ -123,6 +123,60 @@
   <data name="ChaChaTooltip" xml:space="preserve">
     <value>A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein.</value>
   </data>
+  <data name="DiffusionCounterLabel1" xml:space="preserve">
+    <value>Input initial counter (hex):</value>
+  </data>
+  <data name="DiffusionCounterLabel2" xml:space="preserve">
+    <value>Second initial counter (hex):</value>
+  </data>
+  <data name="DiffusionCounterLabel3" xml:space="preserve">
+    <value>XOR of both initial counters (hex):</value>
+  </data>
+  <data name="DiffusionDescription1" xml:space="preserve">
+    <value>On this page, you can enter another value for the key, IV and initial counter.</value>
+  </data>
+  <data name="DiffusionDescription2" xml:space="preserve">
+    <value>The ChaCha cipher will also be executed with these secondary values. This is done to visualize the diffusion property of the cipher.
+The values received from the diffusion execution will be shown below the values received from the primary execution.
+The hex value which is different will be shown in red. At the right side, there is an example how this will look like.</value>
+  </data>
+  <data name="DiffusionDescription3" xml:space="preserve">
+    <value>Since diffusion is all about how the input difference spreads across the keystream, you can also explicitly enter the input difference (XOR) in the third row.
+Using the button in the top-right corner, you will also be able to toggle between showing the intermediate values and the XOR between them on the next pages.
+You can try this with the example. Press the button and you will see the XOR between the two example values.</value>
+  </data>
+  <data name="DiffusionDescription4" xml:space="preserve">
+    <value>Additionally, during the ChaCha hash function, statistics about how many bits are flipped will be shown.
+A well designed cipher should have 50% of all ciphertext bits flipped if any bit in the plaintext is flipped and vice versa.</value>
+  </data>
+  <data name="DiffusionExampleCaption" xml:space="preserve">
+    <value>Example how diffusion values are visualized.
+Use the button in the top-right corner to toggle between showing only the XOR or both values.</value>
+  </data>
+  <data name="DiffusionFlippedBits" xml:space="preserve">
+    <value>Flipped Bits:</value>
+  </data>
+  <data name="DiffusionIVLabel1" xml:space="preserve">
+    <value>Input initialization vector (hex):</value>
+  </data>
+  <data name="DiffusionIVLabel2" xml:space="preserve">
+    <value>Second initialization vector (hex):</value>
+  </data>
+  <data name="DiffusionIVLabel3" xml:space="preserve">
+    <value>XOR of both initialization vectors (hex):</value>
+  </data>
+  <data name="DiffusionKeyLabel1" xml:space="preserve">
+    <value>Input key (hex):</value>
+  </data>
+  <data name="DiffusionKeyLabel2" xml:space="preserve">
+    <value>Second key (hex):</value>
+  </data>
+  <data name="DiffusionKeyLabel3" xml:space="preserve">
+    <value>XOR of both keys (hex):</value>
+  </data>
+  <data name="DiffusionState" xml:space="preserve">
+    <value>Diffusion state:</value>
+  </data>
   <data name="InputInitialCounterCaption" xml:space="preserve">
     <value>Initial counter</value>
   </data>

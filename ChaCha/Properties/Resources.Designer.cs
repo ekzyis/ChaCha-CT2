@@ -79,6 +79,156 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input initial counter (hex):.
+        /// </summary>
+        public static string DiffusionCounterLabel1 {
+            get {
+                return ResourceManager.GetString("DiffusionCounterLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second initial counter (hex):.
+        /// </summary>
+        public static string DiffusionCounterLabel2 {
+            get {
+                return ResourceManager.GetString("DiffusionCounterLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XOR of both initial counters (hex):.
+        /// </summary>
+        public static string DiffusionCounterLabel3 {
+            get {
+                return ResourceManager.GetString("DiffusionCounterLabel3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On this page, you can enter another value for the key, IV and initial counter..
+        /// </summary>
+        public static string DiffusionDescription1 {
+            get {
+                return ResourceManager.GetString("DiffusionDescription1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The ChaCha cipher will also be executed with these secondary values. This is done to visualize the diffusion property of the cipher.
+        ///The values received from the diffusion execution will be shown below the values received from the primary execution.
+        ///The hex value which is different will be shown in red. At the right side, there is an example how this will look like..
+        /// </summary>
+        public static string DiffusionDescription2 {
+            get {
+                return ResourceManager.GetString("DiffusionDescription2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Since diffusion is all about how the input difference spreads across the keystream, you can also explicitly enter the input difference (XOR) in the third row.
+        ///Using the button in the top-right corner, you will also be able to toggle between showing the intermediate values and the XOR between them on the next pages.
+        ///You can try this with the example. Press the button and you will see the XOR between the two example values..
+        /// </summary>
+        public static string DiffusionDescription3 {
+            get {
+                return ResourceManager.GetString("DiffusionDescription3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Additionally, during the ChaCha hash function, statistics about how many bits are flipped will be shown.
+        ///A well designed cipher should have 50% of all ciphertext bits flipped if any bit in the plaintext is flipped and vice versa..
+        /// </summary>
+        public static string DiffusionDescription4 {
+            get {
+                return ResourceManager.GetString("DiffusionDescription4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Example how diffusion values are visualized.
+        ///Use the button in the top-right corner to toggle between showing only the XOR or both values..
+        /// </summary>
+        public static string DiffusionExampleCaption {
+            get {
+                return ResourceManager.GetString("DiffusionExampleCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flipped Bits:.
+        /// </summary>
+        public static string DiffusionFlippedBits {
+            get {
+                return ResourceManager.GetString("DiffusionFlippedBits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input initialization vector (hex):.
+        /// </summary>
+        public static string DiffusionIVLabel1 {
+            get {
+                return ResourceManager.GetString("DiffusionIVLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second initialization vector (hex):.
+        /// </summary>
+        public static string DiffusionIVLabel2 {
+            get {
+                return ResourceManager.GetString("DiffusionIVLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XOR of both initialization vectors (hex):.
+        /// </summary>
+        public static string DiffusionIVLabel3 {
+            get {
+                return ResourceManager.GetString("DiffusionIVLabel3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input key (hex):.
+        /// </summary>
+        public static string DiffusionKeyLabel1 {
+            get {
+                return ResourceManager.GetString("DiffusionKeyLabel1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Second key (hex):.
+        /// </summary>
+        public static string DiffusionKeyLabel2 {
+            get {
+                return ResourceManager.GetString("DiffusionKeyLabel2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XOR of both keys (hex):.
+        /// </summary>
+        public static string DiffusionKeyLabel3 {
+            get {
+                return ResourceManager.GetString("DiffusionKeyLabel3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Diffusion state:.
+        /// </summary>
+        public static string DiffusionState {
+            get {
+                return ResourceManager.GetString("DiffusionState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initial counter.
         /// </summary>
         public static string InputInitialCounterCaption {
