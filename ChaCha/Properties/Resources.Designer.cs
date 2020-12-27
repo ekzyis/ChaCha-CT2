@@ -22,7 +22,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cryptool.Plugins.ChaCha.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to ChaCha.
         /// </summary>
-        internal static string ChaChaCaption {
+        public static string ChaChaCaption {
             get {
                 return ResourceManager.GetString("ChaChaCaption", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein..
         /// </summary>
-        internal static string ChaChaTooltip {
+        public static string ChaChaTooltip {
             get {
                 return ResourceManager.GetString("ChaChaTooltip", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Initial counter.
         /// </summary>
-        internal static string InputInitialCounterCaption {
+        public static string InputInitialCounterCaption {
             get {
                 return ResourceManager.GetString("InputInitialCounterCaption", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Initial keystream block counter. Will be incremented for each keystream block. 64-bit for DJB version. 32-bit for IETF version..
         /// </summary>
-        internal static string InputInitialCounterTooltip {
+        public static string InputInitialCounterTooltip {
             get {
                 return ResourceManager.GetString("InputInitialCounterTooltip", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Initialization vector.
         /// </summary>
-        internal static string InputIVCaption {
+        public static string InputIVCaption {
             get {
                 return ResourceManager.GetString("InputIVCaption", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Initialization vector. 64-bit for DJB version. 96-bit for IETF version..
         /// </summary>
-        internal static string InputIVTooltip {
+        public static string InputIVTooltip {
             get {
                 return ResourceManager.GetString("InputIVTooltip", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Key.
         /// </summary>
-        internal static string InputKeyCaption {
+        public static string InputKeyCaption {
             get {
                 return ResourceManager.GetString("InputKeyCaption", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Key. Can be 128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key via concatenation with itself..
         /// </summary>
-        internal static string InputKeyTooltip {
+        public static string InputKeyTooltip {
             get {
                 return ResourceManager.GetString("InputKeyTooltip", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Plain text.
         /// </summary>
-        internal static string InputStreamCaption {
+        public static string InputStreamCaption {
             get {
                 return ResourceManager.GetString("InputStreamCaption", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Input text which should be encrypted or decrypted with ChaCha..
         /// </summary>
-        internal static string InputStreamTooltip {
+        public static string InputStreamTooltip {
             get {
                 return ResourceManager.GetString("InputStreamTooltip", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Cipher text.
         /// </summary>
-        internal static string OutputStreamCaption {
+        public static string OutputStreamCaption {
             get {
                 return ResourceManager.GetString("OutputStreamCaption", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Output text encrypted or decrypted with ChaCha..
         /// </summary>
-        internal static string OutputStreamTooltip {
+        public static string OutputStreamTooltip {
             get {
                 return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
             }
