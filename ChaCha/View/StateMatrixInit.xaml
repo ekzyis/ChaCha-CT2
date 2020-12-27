@@ -350,48 +350,56 @@
                         <RichTextBox>
                             <FlowDocument>
                                 <Paragraph>
-                                    The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix.
+                                    <Run Text="{Loc StateMatrixDescription1}" />
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The first 16 bytes consist of the
-                                    <Run Background="Bisque">constants</Run> .
+                                    <Run Text="{Loc StateMatrixDescription2_1}" />
+                                    <Run Background="Bisque" Text="{Loc StateMatrixDescription2_2}" />
+                                    .
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The next 32 bytes consist of the
-                                    <Run Background="LightCoral">key</Run> . If the key consists of only 16 bytes, it is concatenated with itself.
+                                    <Run Text="{Loc StateMatrixDescription3_1}" />
+                                    <Run Background="LightCoral" Text="{Loc StateMatrixDescription3_2}" />
+                                    .
+                                    <Run Text="{Loc StateMatrixDescription3_3}" />
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The next
-                                    <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the
-                                    <Run Background="SkyBlue">counter</Run> . The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.
+                                    <Run Text="{Loc StateMatrixDescription4_1}" />
+                                    <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" />
+                                    <Run Text="{Loc StateMatrixDescription4_2}" />
+                                    <Run Background="SkyBlue" Text="{Loc StateMatrixDescription4_3}" />
+                                    .
+                                    <Run Text="{Loc StateMatrixDescription4_4}" />
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    The next
-                                    <Run Text="{Binding Settings.Version.IVBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" /> bytes consist of the
-                                    <Run Background="PaleGreen">IV</Run> .
+                                    <Run Text="{Loc StateMatrixDescription5_1}" />
+                                    <Run Text="{Binding Settings.Version.IVBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" />
+                                    <Run Text="{Loc StateMatrixDescription5_2}" />
+                                    <Run Background="PaleGreen" Text="{Loc StateMatrixDescription5_3}" />
+                                    .
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>
-                                    On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block.
+                                    <Run Text="{Loc StateMatrixDescription6}" />
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
@@ -427,11 +435,11 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBox Grid.Row="0" Grid.Column="0" Text="State parameters" Margin="25" />
-                    <TextBox Grid.Row="1" Grid.Column="0" Text="Constants" Background="Bisque" />
-                    <TextBox Grid.Row="2" Grid.Column="0" Text="Key" Background="LightCoral" />
-                    <TextBox Grid.Row="3" Grid.Column="0" Text="Initialization vector" Background="PaleGreen" />
-                    <TextBox Grid.Row="4" Grid.Column="0" Text="Initial counter" Background="SkyBlue" />
+                    <TextBox Grid.Row="0" Grid.Column="0" Text="{Loc StateMatrixParameterHeader}" Margin="25" />
+                    <TextBox Grid.Row="1" Grid.Column="0" Text="{Loc StateMatrixParameterConstants}" Background="Bisque" />
+                    <TextBox Grid.Row="2" Grid.Column="0" Text="{Loc StateMatrixParameterKey}" Background="LightCoral" />
+                    <TextBox Grid.Row="3" Grid.Column="0" Text="{Loc StateMatrixParameterIV}" Background="PaleGreen" />
+                    <TextBox Grid.Row="4" Grid.Column="0" Text="{Loc StateMatrixParameterCounter}" Background="SkyBlue" />
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
                         <RichTextBox Width="395" Style="{StaticResource RichHex}">
@@ -541,12 +549,11 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Constants encoding" />
-                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value (ASCII):" />
-                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="As bytes:" />
-                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
-                        <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
-
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="{Loc StateMatrixEncodingConstantsHeader}" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingConstants1}" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingConstants2}" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingConstants3}" />
+                        <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingConstants4}" />
                         <TextBox Grid.Row="1" Grid.Column="1"
                                  Style="{StaticResource Value}"
                                  Text="{Binding ASCIIConstants, Mode=OneWay }"
@@ -615,10 +622,10 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
 
-                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Key encoding" />
-                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value:" />
-                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
-                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="{Loc StateMatrixEncodingKeyHeader}" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingKey1}" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingKey2}" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingKey3}" />
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1" Visibility="{Binding KeyEncodingInput, Converter={StaticResource BooleanToVisibility}}">
                             <StackPanel Style="{StaticResource DiffusionNonXOR}">
@@ -732,11 +739,11 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="Counter encoding" />
-                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value:" />
-                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse all bytes:" />
-                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
-                        <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="{Loc StateMatrixEncodingCounterHeader}" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingCounter1}" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingCounter2}" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingCounter3}" />
+                        <TextBox Grid.Row="4" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingCounter4}" />
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding CounterEncodingInput, Converter={StaticResource BooleanToVisibility}}">
@@ -870,10 +877,10 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="IV encoding" />
-                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="Original value:" />
-                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="Split into 4 byte chunks:" />
-                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="Reverse byte order of each chunk:" />
+                        <TextBox Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource Title}" Text="{Loc StateMatrixEncodingIVHeader}" />
+                        <TextBox Grid.Row="1" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingIV1}" />
+                        <TextBox Grid.Row="2" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingIV2}" />
+                        <TextBox Grid.Row="3" Grid.Column="0" Style="{StaticResource Description}" Text="{Loc StateMatrixEncodingIV3}" />
 
                         <StackPanel Style="{StaticResource ValuePanel}" Grid.Row="1" Grid.Column="1"
                                     Visibility="{Binding IVEncodingInput, Converter={StaticResource BooleanToVisibility}}">
@@ -970,7 +977,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Constants" />
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="{Loc StateMatrixButtonConstants}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
                             <Button Style="{StaticResource StartButton}" Command="{Binding GoToConstantsEncodingStartCommand}" />
                             <Button Style="{StaticResource EndButton}" Command="{Binding GoToConstantsEncodingEndCommand}" />
@@ -982,7 +989,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Key" />
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="{Loc StateMatrixButtonKey}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
                             <Button Style="{StaticResource StartButton}" Command="{Binding GoToKeyEncodingStartCommand}" />
                             <Button Style="{StaticResource EndButton}" Command="{Binding GoToKeyEncodingEndCommand}" />
@@ -994,7 +1001,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Counter" />
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="{Loc StateMatrixButtonCounter}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
                             <Button Style="{StaticResource StartButton}" Command="{Binding GoToCounterEncodingStartCommand}" />
                             <Button Style="{StaticResource EndButton}" Command="{Binding GoToCounterEncodingEndCommand}" />
@@ -1006,7 +1013,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="Initialization vector" />
+                        <TextBox Style="{StaticResource Label}" Grid.Column="4" Grid.Row="0" Text="{Loc StateMatrixButtonIV}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
                             <Button Style="{StaticResource StartButton}" Command="{Binding GoToIVEncodingStartCommand}" />
                             <Button Style="{StaticResource EndButton}" Command="{Binding GoToIVEncodingEndCommand}" />

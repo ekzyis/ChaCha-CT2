@@ -11,8 +11,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
     {
         public StateMatrixInitViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
-            Name = "State Matrix";
-            Title = "State Matrix Initialization";
+            Name = this["StateMatrixName"];
+            Title = this["StateMatrixTitle"];
         }
 
         #region ActionViewModelBase

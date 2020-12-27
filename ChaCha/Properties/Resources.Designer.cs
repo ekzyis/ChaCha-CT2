@@ -360,6 +360,393 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Constants.
+        /// </summary>
+        public static string StateMatrixButtonConstants {
+            get {
+                return ResourceManager.GetString("StateMatrixButtonConstants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Counter.
+        /// </summary>
+        public static string StateMatrixButtonCounter {
+            get {
+                return ResourceManager.GetString("StateMatrixButtonCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialization vector.
+        /// </summary>
+        public static string StateMatrixButtonIV {
+            get {
+                return ResourceManager.GetString("StateMatrixButtonIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        public static string StateMatrixButtonKey {
+            get {
+                return ResourceManager.GetString("StateMatrixButtonKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix..
+        /// </summary>
+        public static string StateMatrixDescription1 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The first 16 bytes consist of the .
+        /// </summary>
+        public static string StateMatrixDescription2_1 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription2_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to constants.
+        /// </summary>
+        public static string StateMatrixDescription2_2 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription2_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The next 32 bytes consist of the.
+        /// </summary>
+        public static string StateMatrixDescription3_1 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription3_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to key.
+        /// </summary>
+        public static string StateMatrixDescription3_2 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription3_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If the key consists of only 16 bytes, it is concatenated with itself..
+        /// </summary>
+        public static string StateMatrixDescription3_3 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription3_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The next.
+        /// </summary>
+        public static string StateMatrixDescription4_1 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription4_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bytes consist of the.
+        /// </summary>
+        public static string StateMatrixDescription4_2 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription4_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to counter.
+        /// </summary>
+        public static string StateMatrixDescription4_3 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription4_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed..
+        /// </summary>
+        public static string StateMatrixDescription4_4 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription4_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The next.
+        /// </summary>
+        public static string StateMatrixDescription5_1 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription5_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to bytes consist of the.
+        /// </summary>
+        public static string StateMatrixDescription5_2 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription5_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IV.
+        /// </summary>
+        public static string StateMatrixDescription5_3 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription5_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block..
+        /// </summary>
+        public static string StateMatrixDescription6 {
+            get {
+                return ResourceManager.GetString("StateMatrixDescription6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original value (ASCII):.
+        /// </summary>
+        public static string StateMatrixEncodingConstants1 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingConstants1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As bytes:.
+        /// </summary>
+        public static string StateMatrixEncodingConstants2 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingConstants2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split into 4 byte chunks:.
+        /// </summary>
+        public static string StateMatrixEncodingConstants3 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingConstants3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse byte order of each chunk:.
+        /// </summary>
+        public static string StateMatrixEncodingConstants4 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingConstants4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Constants encoding.
+        /// </summary>
+        public static string StateMatrixEncodingConstantsHeader {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingConstantsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original value:.
+        /// </summary>
+        public static string StateMatrixEncodingCounter1 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingCounter1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse all bytes:.
+        /// </summary>
+        public static string StateMatrixEncodingCounter2 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingCounter2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split into 4 byte chunks:.
+        /// </summary>
+        public static string StateMatrixEncodingCounter3 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingCounter3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse byte order of each chunk:.
+        /// </summary>
+        public static string StateMatrixEncodingCounter4 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingCounter4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Counter encoding.
+        /// </summary>
+        public static string StateMatrixEncodingCounterHeader {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingCounterHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original value:.
+        /// </summary>
+        public static string StateMatrixEncodingIV1 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingIV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split into 4 byte chunks:.
+        /// </summary>
+        public static string StateMatrixEncodingIV2 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingIV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse byte order of each chunk:.
+        /// </summary>
+        public static string StateMatrixEncodingIV3 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingIV3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IV encoding.
+        /// </summary>
+        public static string StateMatrixEncodingIVHeader {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingIVHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original value:.
+        /// </summary>
+        public static string StateMatrixEncodingKey1 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingKey1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Split into 4 byte chunks:.
+        /// </summary>
+        public static string StateMatrixEncodingKey2 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingKey2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse byte order of each chunk:.
+        /// </summary>
+        public static string StateMatrixEncodingKey3 {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingKey3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key encoding.
+        /// </summary>
+        public static string StateMatrixEncodingKeyHeader {
+            get {
+                return ResourceManager.GetString("StateMatrixEncodingKeyHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State Matrix.
+        /// </summary>
+        public static string StateMatrixName {
+            get {
+                return ResourceManager.GetString("StateMatrixName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Constants.
+        /// </summary>
+        public static string StateMatrixParameterConstants {
+            get {
+                return ResourceManager.GetString("StateMatrixParameterConstants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initial counter.
+        /// </summary>
+        public static string StateMatrixParameterCounter {
+            get {
+                return ResourceManager.GetString("StateMatrixParameterCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State parameters.
+        /// </summary>
+        public static string StateMatrixParameterHeader {
+            get {
+                return ResourceManager.GetString("StateMatrixParameterHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialization vector.
+        /// </summary>
+        public static string StateMatrixParameterIV {
+            get {
+                return ResourceManager.GetString("StateMatrixParameterIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key.
+        /// </summary>
+        public static string StateMatrixParameterKey {
+            get {
+                return ResourceManager.GetString("StateMatrixParameterKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State Matrix Initialization.
+        /// </summary>
+        public static string StateMatrixTitle {
+            get {
+                return ResourceManager.GetString("StateMatrixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Version.
         /// </summary>
         public static string VersionCaption {
