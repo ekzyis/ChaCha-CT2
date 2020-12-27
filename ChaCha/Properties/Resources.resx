@@ -188,6 +188,9 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
   <data name="OverviewMatrixKey" xml:space="preserve">
     <value>KEY</value>
   </data>
+  <data name="OverviewName" xml:space="preserve">
+    <value>Overview</value>
+  </data>
   <data name="OverviewOutro1" xml:space="preserve">
     <value>Applying the ChaCha hash function to the 512 bit state would then return a keystream block.</value>
   </data>
@@ -205,5 +208,8 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
   </data>
   <data name="OverviewRemark" xml:space="preserve">
     <value>Remark: Due to XOR being the inverse function to itself, decryption works exactly the same.</value>
+  </data>
+  <data name="OverviewTitle" xml:space="preserve">
+    <value>Overview</value>
   </data>
 </root>

@@ -270,6 +270,15 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        public static string OverviewName {
+            get {
+                return ResourceManager.GetString("OverviewName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Applying the ChaCha hash function to the 512 bit state would then return a keystream block..
         /// </summary>
         public static string OverviewOutro1 {
@@ -320,6 +329,15 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         public static string OverviewRemark {
             get {
                 return ResourceManager.GetString("OverviewRemark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overview.
+        /// </summary>
+        public static string OverviewTitle {
+            get {
+                return ResourceManager.GetString("OverviewTitle", resourceCulture);
             }
         }
     }
