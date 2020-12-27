@@ -167,5 +167,160 @@ namespace Cryptool.Plugins.ChaCha.Properties {
                 return ResourceManager.GetString("OutputStreamTooltip", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Constants (nothing-up-my-sleeves numbers) (128-bit).
+        /// </summary>
+        public static string OverviewConstants {
+            get {
+                return ResourceManager.GetString("OverviewConstants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keystream block counter.
+        /// </summary>
+        public static string OverviewCounter {
+            get {
+                return ResourceManager.GetString("OverviewCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChaCha is a stream cipher.
+        ///It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream..
+        /// </summary>
+        public static string OverviewIntro1 {
+            get {
+                return ResourceManager.GetString("OverviewIntro1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The keystream is created by first generating keystream blocks of 512 bits and concatenating them until the keystream size is equal or larger than the input.
+        ///To generate the keystream, ChaCha uses for each keystream block a 512 bit state which consists of following four values:.
+        /// </summary>
+        public static string OverviewIntro2 {
+            get {
+                return ResourceManager.GetString("OverviewIntro2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialization vector.
+        /// </summary>
+        public static string OverviewIV {
+            get {
+                return ResourceManager.GetString("OverviewIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key (128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key.).
+        /// </summary>
+        public static string OverviewKey {
+            get {
+                return ResourceManager.GetString("OverviewKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to State as a 4x4 matrix where each cell is 4 bytes.
+        /// </summary>
+        public static string OverviewMatrixCaption {
+            get {
+                return ResourceManager.GetString("OverviewMatrixCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONSTANT.
+        /// </summary>
+        public static string OverviewMatrixConstants {
+            get {
+                return ResourceManager.GetString("OverviewMatrixConstants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to COUNTER.
+        /// </summary>
+        public static string OverviewMatrixCounter {
+            get {
+                return ResourceManager.GetString("OverviewMatrixCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IV.
+        /// </summary>
+        public static string OverviewMatrixIV {
+            get {
+                return ResourceManager.GetString("OverviewMatrixIV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to KEY.
+        /// </summary>
+        public static string OverviewMatrixKey {
+            get {
+                return ResourceManager.GetString("OverviewMatrixKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applying the ChaCha hash function to the 512 bit state would then return a keystream block..
+        /// </summary>
+        public static string OverviewOutro1 {
+            get {
+                return ResourceManager.GetString("OverviewOutro1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This leads us to following steps to encrypt a message M using the ChaCha cipher:.
+        /// </summary>
+        public static string OverviewOutro2 {
+            get {
+                return ResourceManager.GetString("OverviewOutro2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialize state matrix.
+        /// </summary>
+        public static string OverviewOutroStep1 {
+            get {
+                return ResourceManager.GetString("OverviewOutroStep1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate keystream.
+        /// </summary>
+        public static string OverviewOutroStep2 {
+            get {
+                return ResourceManager.GetString("OverviewOutroStep2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to M XOR Keystream.
+        /// </summary>
+        public static string OverviewOutroStep3 {
+            get {
+                return ResourceManager.GetString("OverviewOutroStep3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remark: Due to XOR being the inverse function to itself, decryption works exactly the same..
+        /// </summary>
+        public static string OverviewRemark {
+            get {
+                return ResourceManager.GetString("OverviewRemark", resourceCulture);
+            }
+        }
     }
 }

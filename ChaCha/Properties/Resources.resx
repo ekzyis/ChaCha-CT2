@@ -153,4 +153,57 @@
   <data name="OutputStreamTooltip" xml:space="preserve">
     <value>Output text encrypted or decrypted with ChaCha.</value>
   </data>
+  <data name="OverviewConstants" xml:space="preserve">
+    <value>Constants (nothing-up-my-sleeves numbers) (128-bit)</value>
+  </data>
+  <data name="OverviewCounter" xml:space="preserve">
+    <value>Keystream block counter</value>
+  </data>
+  <data name="OverviewIntro1" xml:space="preserve">
+    <value>ChaCha is a stream cipher.
+It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream.</value>
+  </data>
+  <data name="OverviewIntro2" xml:space="preserve">
+    <value>The keystream is created by first generating keystream blocks of 512 bits and concatenating them until the keystream size is equal or larger than the input.
+To generate the keystream, ChaCha uses for each keystream block a 512 bit state which consists of following four values:</value>
+  </data>
+  <data name="OverviewIV" xml:space="preserve">
+    <value>Initialization vector</value>
+  </data>
+  <data name="OverviewKey" xml:space="preserve">
+    <value>Key (128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key.)</value>
+  </data>
+  <data name="OverviewMatrixCaption" xml:space="preserve">
+    <value>State as a 4x4 matrix where each cell is 4 bytes</value>
+  </data>
+  <data name="OverviewMatrixConstants" xml:space="preserve">
+    <value>CONSTANT</value>
+  </data>
+  <data name="OverviewMatrixCounter" xml:space="preserve">
+    <value>COUNTER</value>
+  </data>
+  <data name="OverviewMatrixIV" xml:space="preserve">
+    <value>IV</value>
+  </data>
+  <data name="OverviewMatrixKey" xml:space="preserve">
+    <value>KEY</value>
+  </data>
+  <data name="OverviewOutro1" xml:space="preserve">
+    <value>Applying the ChaCha hash function to the 512 bit state would then return a keystream block.</value>
+  </data>
+  <data name="OverviewOutro2" xml:space="preserve">
+    <value>This leads us to following steps to encrypt a message M using the ChaCha cipher:</value>
+  </data>
+  <data name="OverviewOutroStep1" xml:space="preserve">
+    <value>Initialize state matrix</value>
+  </data>
+  <data name="OverviewOutroStep2" xml:space="preserve">
+    <value>Generate keystream</value>
+  </data>
+  <data name="OverviewOutroStep3" xml:space="preserve">
+    <value>M XOR Keystream</value>
+  </data>
+  <data name="OverviewRemark" xml:space="preserve">
+    <value>Remark: Due to XOR being the inverse function to itself, decryption works exactly the same.</value>
+  </data>
 </root>
