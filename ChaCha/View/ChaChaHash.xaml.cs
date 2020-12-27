@@ -14,6 +14,7 @@ namespace Cryptool.Plugins.ChaCha.View
     /// <summary>
     /// Interaction logic for ChaChaHash.xaml
     /// </summary>
+    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class ChaChaHash : UserControl
     {
         public ChaChaHash()
