@@ -212,4 +212,16 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
   <data name="OverviewTitle" xml:space="preserve">
     <value>Overview</value>
   </data>
+  <data name="RoundCaption" xml:space="preserve">
+    <value>Rounds</value>
+  </data>
+  <data name="RoundTooltip" xml:space="preserve">
+    <value>Select how many rounds you want to use.</value>
+  </data>
+  <data name="VersionCaption" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="VersionTooltip" xml:space="preserve">
+    <value>Select which version you want to use. They only differ in their counter and IV size. DJB version uses a 64-bit counter and a 64-bit IV. IETF version uses a 32-bit counter and a 96-bit IV.</value>
+  </data>
 </root>

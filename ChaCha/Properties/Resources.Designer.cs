@@ -340,5 +340,41 @@ namespace Cryptool.Plugins.ChaCha.Properties {
                 return ResourceManager.GetString("OverviewTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rounds.
+        /// </summary>
+        public static string RoundCaption {
+            get {
+                return ResourceManager.GetString("RoundCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select how many rounds you want to use..
+        /// </summary>
+        public static string RoundTooltip {
+            get {
+                return ResourceManager.GetString("RoundTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        public static string VersionCaption {
+            get {
+                return ResourceManager.GetString("VersionCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select which version you want to use. They only differ in their counter and IV size. DJB version uses a 64-bit counter and a 64-bit IV. IETF version uses a 32-bit counter and a 96-bit IV..
+        /// </summary>
+        public static string VersionTooltip {
+            get {
+                return ResourceManager.GetString("VersionTooltip", resourceCulture);
+            }
+        }
     }
 }
