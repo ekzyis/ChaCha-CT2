@@ -11,6 +11,7 @@ namespace Cryptool.Plugins.ChaCha.View
         public Overview()
         {
             InitializeComponent();
+            ActionViewBase.LoadLocaleResources(this);
         }
     }
 }

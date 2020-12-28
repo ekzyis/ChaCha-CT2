@@ -16,6 +16,7 @@ namespace Cryptool.Plugins.ChaCha.View
         public StateMatrixInit()
         {
             InitializeComponent();
+            ActionViewBase.LoadLocaleResources(this);
             this.DataContextChanged += OnDataContextChanged;
         }
 

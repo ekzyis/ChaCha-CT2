@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Localization\en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
             <conv:BitsToBytes x:Key="BitsToBytes" />
@@ -354,48 +355,10 @@
                                 </Paragraph>
                             </FlowDocument>
                         </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="{Loc StateMatrixDescription2_1}" />
-                                    <Run Background="Bisque" Text="{Loc StateMatrixDescription2_2}" />
-                                    .
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="{Loc StateMatrixDescription3_1}" />
-                                    <Run Background="LightCoral" Text="{Loc StateMatrixDescription3_2}" />
-                                    .
-                                    <Run Text="{Loc StateMatrixDescription3_3}" />
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="{Loc StateMatrixDescription4_1}" />
-                                    <Run Text="{Binding Settings.Version.CounterBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" />
-                                    <Run Text="{Loc StateMatrixDescription4_2}" />
-                                    <Run Background="SkyBlue" Text="{Loc StateMatrixDescription4_3}" />
-                                    .
-                                    <Run Text="{Loc StateMatrixDescription4_4}" />
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
-                        <RichTextBox Visibility="{Binding Description[3], Converter={StaticResource FalseToCollapsed}}">
-                            <FlowDocument>
-                                <Paragraph>
-                                    <Run Text="{Loc StateMatrixDescription5_1}" />
-                                    <Run Text="{Binding Settings.Version.IVBits, Converter={StaticResource BitsToBytes}, Mode=OneWay}" />
-                                    <Run Text="{Loc StateMatrixDescription5_2}" />
-                                    <Run Background="PaleGreen" Text="{Loc StateMatrixDescription5_3}" />
-                                    .
-                                </Paragraph>
-                            </FlowDocument>
-                        </RichTextBox>
+                        <ContentControl Style="{DynamicResource StateMatrixDescription2}" />
+                        <ContentControl Style="{DynamicResource StateMatrixDescription3}" />
+                        <ContentControl Style="{DynamicResource StateMatrixDescription4}" />
+                        <ContentControl Style="{DynamicResource StateMatrixDescription5}" />
                         <RichTextBox Visibility="{Binding Description[4], Converter={StaticResource FalseToCollapsed}}">
                             <FlowDocument>
                                 <Paragraph>

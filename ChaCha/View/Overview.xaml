@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Localization\en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
@@ -57,10 +58,13 @@
                                             </Paragraph>
                                         </ListItem>
                                         <ListItem Background="SkyBlue">
-                                            <Paragraph><Run Text="{Loc OverviewCounter}"/> (<Run Text="{Binding Settings.Version.CounterBits, Mode=OneWay}" />-bit)</Paragraph>
+                                            <Paragraph>
+                                                <ContentControl Style="{DynamicResource OverviewCounter}"/>
+                                            </Paragraph>
                                         </ListItem>
                                         <ListItem Background="PaleGreen">
-                                            <Paragraph><Run Text="{Loc OverviewIV}"/> (<Run Text="{Binding Settings.Version.IVBits, Mode=OneWay}" />-bit)
+                                            <Paragraph>
+                                                <ContentControl Style="{DynamicResource OverviewIV}"/>
                                             </Paragraph>
                                         </ListItem>
                                     </List>
@@ -159,18 +163,7 @@
                                                         </Style>
                                                     </TableCell.Style>
                                                     <Paragraph>
-                                                        <TextBlock>
-                                                            <TextBlock.Style>
-                                                                <Style TargetType="{x:Type TextBlock}">
-                                                                    <Setter Property="Text" Value="COUNTER"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
-                                                                            <Setter Property="Text" Value="IV"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBlock.Style>
-                                                        </TextBlock>
+                                                        <ContentControl Style="{DynamicResource OverviewState13}"/>
                                                     </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="PaleGreen">

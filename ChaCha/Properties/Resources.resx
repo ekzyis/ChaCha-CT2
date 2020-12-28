@@ -210,9 +210,6 @@ Use the button in the top-right corner to toggle between showing only the XOR or
   <data name="OverviewConstants" xml:space="preserve">
     <value>Constants (nothing-up-my-sleeves numbers) (128-bit)</value>
   </data>
-  <data name="OverviewCounter" xml:space="preserve">
-    <value>Keystream block counter</value>
-  </data>
   <data name="OverviewIntro1" xml:space="preserve">
     <value>ChaCha is a stream cipher.
 It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream.</value>
@@ -220,9 +217,6 @@ It generates a pseudorandom stream of bits (keystream) and then encrypts the inp
   <data name="OverviewIntro2" xml:space="preserve">
     <value>The keystream is created by first generating keystream blocks of 512 bits and concatenating them until the keystream size is equal or larger than the input.
 To generate the keystream, ChaCha uses for each keystream block a 512 bit state which consists of following four values:</value>
-  </data>
-  <data name="OverviewIV" xml:space="preserve">
-    <value>Initialization vector</value>
   </data>
   <data name="OverviewKey" xml:space="preserve">
     <value>Key (128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key.)</value>
@@ -286,42 +280,6 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
   </data>
   <data name="StateMatrixDescription1" xml:space="preserve">
     <value>The 512-bit (128-byte) ChaCha state can be interpreted as a 4x4 matrix, where each entry consists of 4 bytes. The state entries consist of the parameters you can see below. They will be encoded before insertion into the state matrix.</value>
-  </data>
-  <data name="StateMatrixDescription2_1" xml:space="preserve">
-    <value>The first 16 bytes consist of the </value>
-  </data>
-  <data name="StateMatrixDescription2_2" xml:space="preserve">
-    <value>constants</value>
-  </data>
-  <data name="StateMatrixDescription3_1" xml:space="preserve">
-    <value>The next 32 bytes consist of the</value>
-  </data>
-  <data name="StateMatrixDescription3_2" xml:space="preserve">
-    <value>key</value>
-  </data>
-  <data name="StateMatrixDescription3_3" xml:space="preserve">
-    <value>If the key consists of only 16 bytes, it is concatenated with itself.</value>
-  </data>
-  <data name="StateMatrixDescription4_1" xml:space="preserve">
-    <value>The next</value>
-  </data>
-  <data name="StateMatrixDescription4_2" xml:space="preserve">
-    <value>bytes consist of the</value>
-  </data>
-  <data name="StateMatrixDescription4_3" xml:space="preserve">
-    <value>counter</value>
-  </data>
-  <data name="StateMatrixDescription4_4" xml:space="preserve">
-    <value>The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed.</value>
-  </data>
-  <data name="StateMatrixDescription5_1" xml:space="preserve">
-    <value>The next</value>
-  </data>
-  <data name="StateMatrixDescription5_2" xml:space="preserve">
-    <value>bytes consist of the</value>
-  </data>
-  <data name="StateMatrixDescription5_3" xml:space="preserve">
-    <value>IV</value>
   </data>
   <data name="StateMatrixDescription6" xml:space="preserve">
     <value>On the next page we will pass this initialized state matrix to the ChaCha hash function to generate our first keystream block.</value>

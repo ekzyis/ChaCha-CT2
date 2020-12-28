@@ -328,15 +328,6 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Keystream block counter.
-        /// </summary>
-        public static string OverviewCounter {
-            get {
-                return ResourceManager.GetString("OverviewCounter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to ChaCha is a stream cipher.
         ///It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream..
         /// </summary>
@@ -353,15 +344,6 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         public static string OverviewIntro2 {
             get {
                 return ResourceManager.GetString("OverviewIntro2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Initialization vector.
-        /// </summary>
-        public static string OverviewIV {
-            get {
-                return ResourceManager.GetString("OverviewIV", resourceCulture);
             }
         }
         
@@ -551,114 +533,6 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         public static string StateMatrixDescription1 {
             get {
                 return ResourceManager.GetString("StateMatrixDescription1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The first 16 bytes consist of the .
-        /// </summary>
-        public static string StateMatrixDescription2_1 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription2_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to constants.
-        /// </summary>
-        public static string StateMatrixDescription2_2 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription2_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The next 32 bytes consist of the.
-        /// </summary>
-        public static string StateMatrixDescription3_1 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription3_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to key.
-        /// </summary>
-        public static string StateMatrixDescription3_2 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription3_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to If the key consists of only 16 bytes, it is concatenated with itself..
-        /// </summary>
-        public static string StateMatrixDescription3_3 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription3_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The next.
-        /// </summary>
-        public static string StateMatrixDescription4_1 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription4_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to bytes consist of the.
-        /// </summary>
-        public static string StateMatrixDescription4_2 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription4_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to counter.
-        /// </summary>
-        public static string StateMatrixDescription4_3 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription4_3", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The counter is special since we first reverse all bytes. This is so because all other parameters are assumed to be already in little-endian thus no reversing needed..
-        /// </summary>
-        public static string StateMatrixDescription4_4 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription4_4", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The next.
-        /// </summary>
-        public static string StateMatrixDescription5_1 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription5_1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to bytes consist of the.
-        /// </summary>
-        public static string StateMatrixDescription5_2 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription5_2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to IV.
-        /// </summary>
-        public static string StateMatrixDescription5_3 {
-            get {
-                return ResourceManager.GetString("StateMatrixDescription5_3", resourceCulture);
             }
         }
         
