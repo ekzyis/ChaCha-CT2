@@ -17,7 +17,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <conv:BooleanOr x:Key="BooleanOr" />
             <conv:DoubleToPercentage x:Key="DoubleToPercentage" />
-            <conv:ZeroBasedIndexToOneBasedIndex x:Key="ZeroBasedIndexToOneBasedIndex"/>
+            <conv:ZeroBasedIndexToOneBasedIndex x:Key="ZeroBasedIndexToOneBasedIndex" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -1654,39 +1654,39 @@
 
                 <Grid Grid.Column="0" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.15*"/>
+                        <RowDefinition Height="0.15*" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Margin="20,0" RenderTransformOrigin="0.5, 0.5">
                         <Border.RenderTransform>
                             <TransformGroup>
-                                <TranslateTransform Y="-3"/>
-                                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                <TranslateTransform Y="-3" />
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                             </TransformGroup>
                         </Border.RenderTransform>
                         <Viewbox Margin="3">
-                            <TextBox Style="{StaticResource Text}" Text="Original State"/>
+                            <TextBox Style="{StaticResource Text}" Text="Original State" />
                         </Viewbox>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Column="2" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.15*"/>
+                        <RowDefinition Height="0.15*" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Margin="20,0" RenderTransformOrigin="0.5, 0.5">
                         <Border.RenderTransform>
                             <TransformGroup>
-                                <TranslateTransform Y="-3"/>
-                                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                <TranslateTransform Y="-3" />
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                             </TransformGroup>
                         </Border.RenderTransform>
                         <Viewbox Margin="3">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Style="{StaticResource Text}" Text="{Binding CurrentKeystreamBlockIndex, Converter={StaticResource ZeroBasedIndexToOneBasedIndex}, StringFormat='Output: Keystream Block {0}'}"/>
+                                <TextBox Style="{StaticResource Text}" Text="{Binding CurrentKeystreamBlockIndex, Converter={StaticResource ZeroBasedIndexToOneBasedIndex}, StringFormat='Output: Keystream Block {0}'}" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
