@@ -27,6 +27,7 @@ namespace Cryptool.Plugins.ChaCha.View
 
         private void OnDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            ActionViewBase.LoadLocaleResources(this);
             ViewModel = (ChaChaHashViewModel)e.NewValue;
             if (ViewModel != null)
             {

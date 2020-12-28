@@ -85,6 +85,12 @@
   <ItemGroup>
     <Compile Include="ChaChaSettings.cs" />
     <Compile Include="ChaCha.cs" />
+    <Compile Include="Localization\de_DE.xaml.cs">
+      <DependentUpon>de_DE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Localization\en_US.xaml.cs">
+      <DependentUpon>en_US.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ContentTemplate\PageContentTemplate.xaml.cs">
       <DependentUpon>PageContentTemplate.xaml</DependentUpon>
     </Compile>
@@ -249,6 +255,14 @@
     <Resource Include="userdoc.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Localization\de_DE.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Localization\en_US.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ContentTemplate\PageContentTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -344,6 +358,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

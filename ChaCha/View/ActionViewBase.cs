@@ -72,5 +72,21 @@ namespace Cryptool.Plugins.ChaCha.View
             tb.SetBinding(TextBox.TextProperty, binding);
             tb.MaxLength = Digits.GetAmountOfDigits(max);
         }
+
+        /// <summary>
+        /// Load the resource dictionaries for the current locale setting into the resources of the UserControl.
+        /// </summary>
+        public static void LoadLocaleResources(UserControl uc)
+        {
+            var culture = System.Globalization.CultureInfo.CurrentCulture;
+            if (culture.Name == "en-US")
+            {
+                uc.Resources.MergedDictionaries.Add(new ContentTemplate.Localization.en_US());
+            }
+            else if (culture.Name == "de-DE")
+            {
+                uc.Resources.MergedDictionaries.Add(new ContentTemplate.Localization.de_DE());
+            }
+        }
     }
 }
