@@ -190,16 +190,16 @@
     <value>Die ChaCha-Chiffre wird dann auch mit diesen Werten ausgeführt um die Diffusionscharakteristik der Chiffre zu visualiseren. Die Werte vom zweiten Chiffrendurchlauf (mit den zweiten Werten) werden unter den Werten des ersten Durchlaufs angezeigt. Unterschiedliche Hexwerte werden rot markiert. Auf der rechten Seite ist hierfür ein Beispiel zu sehen.</value>
   </data>
   <data name="DiffusionDescription3" xml:space="preserve">
-    <value>Da für das Studium der Diffusioncharakteristik die Unterschiede der Werte von zwei Durchläufen interessanter ist als die tatsächlichen Werte, ist es auch möglich explizit die Differenz (XOR) einzugeben.
+    <value>Da für das Studium der Diffusionscharakteristik die Unterschiede der Werte von zwei Durchläufen interessanter ist als die tatsächlichen Werte, ist es auch möglich explizit die Differenz (XOR) einzugeben.
 Mit dem Knopf in der oberen rechten Ecke ist es möglich, zwischen der XOR Anzeige und der Anzeige beider Werte umzuschalten.
 Das kann im Beispiel ausprobiert werden. Drücke den Knopf und die Anzeige im Beispiel schaltet sich um.</value>
   </data>
   <data name="DiffusionDescription4" xml:space="preserve">
-    <value>In der Seite über die ChaCha Hashfunktion wird auch die Anzahl der geflippten Bits angezeigt. Eine sichere Chiffre sollte 50% aller Bits im Geheimtext flippen, wenn ein Bit im Klartext geflippt wurde und vice versa.</value>
+    <value>In der Seite über die ChaCha-Hashfunktion wird auch die Anzahl der geflippten Bits angezeigt. Eine sichere Chiffre sollte 50% aller Bits im Geheimtext flippen, wenn ein Bit im Klartext geflippt wurde und vice versa.</value>
   </data>
   <data name="DiffusionExampleCaption" xml:space="preserve">
     <value>Beispiel wie die Diffusion visualisiert wird.
-Benutze den Kopf oben rechts um zwischen XOR-Anzeige und Anzeige beider Werte umzuschalten.</value>
+Benutze den Knopf oben rechts um zwischen XOR-Anzeige und Anzeige beider Werte umzuschalten.</value>
   </data>
   <data name="DiffusionFlippedBits" xml:space="preserve">
     <value>Geflippte Bits:</value>
@@ -259,10 +259,10 @@ Benutze den Kopf oben rechts um zwischen XOR-Anzeige und Anzeige beider Werte um
     <value>Konstanten (128-bit)</value>
   </data>
   <data name="OverviewIntro1" xml:space="preserve">
-    <value>ChaCha ist eine Stromchiffre. Sie generiert einen pseudozuälligen Strom an Bits (Schlüsselstrom) und verschlüsselt den Klartext mithilfe einer bitweisen XOR Operation mit dem Schlüsselstrom.</value>
+    <value>ChaCha ist eine Stromchiffre. Sie generiert einen pseudozufälligen Strom an Bits (Schlüsselstrom) und verschlüsselt den Klartext mithilfe einer bitweisen XOR Operation mit dem Schlüsselstrom.</value>
   </data>
   <data name="OverviewIntro2" xml:space="preserve">
-    <value>Der Schlüsselstorm wird in Blöcken generiert. Jeder Block ist 512-bit groß. Es werden solange Blöcke generiert, bis der Schlüsselstorm größer oder gleich der Länge des Klartextes ist.
+    <value>Der Schlüsselstrom wird in Blöcken generiert. Jeder Block ist 512-bit groß. Es werden solange Blöcke generiert, bis der Schlüsselstrom größer oder gleich der Länge des Klartextes ist.
 ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus folgenden vier Parametern besteht:</value>
   </data>
   <data name="OverviewKey" xml:space="preserve">
@@ -296,10 +296,10 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Zustandsmatrix initialisieren</value>
   </data>
   <data name="OverviewOutroStep2" xml:space="preserve">
-    <value>Schlüsselstorm generieren</value>
+    <value>Schlüsselstrom generieren</value>
   </data>
   <data name="OverviewOutroStep3" xml:space="preserve">
-    <value>M XOR Schlüsselstorm</value>
+    <value>M XOR Schlüsselstrom</value>
   </data>
   <data name="OverviewRemark" xml:space="preserve">
     <value>Bemerkung: Weil XOR die inverse Operation zu sich selbst ist, verläuft das Entschlüsseln von Nachrichten gleich ab.</value>
