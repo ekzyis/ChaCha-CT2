@@ -406,4 +406,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
   <data name="VersionTooltip" xml:space="preserve">
     <value>Wähle die Version aus. Die Versionen unterscheiden sich lediglich in der Größe des Zählers und Initialisierungsvektors. Die DJB Version benutzt einen 64-bit Zähler und einen 64-bit IV. Die IETF Version benutzt einen 32-bit Zähler und einen 96-bit IV.</value>
   </data>
+  <data name="XorToggle" xml:space="preserve">
+    <value>XOR Anzeige</value>
+  </data>
 </root>

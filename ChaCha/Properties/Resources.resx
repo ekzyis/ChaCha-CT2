@@ -410,4 +410,7 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
   <data name="VersionTooltip" xml:space="preserve">
     <value>Select which version you want to use. They only differ in their counter and IV size. DJB version uses a 64-bit counter and a 64-bit IV. IETF version uses a 32-bit counter and a 96-bit IV.</value>
   </data>
+  <data name="XorToggle" xml:space="preserve">
+    <value>Toggle XOR</value>
+  </data>
 </root>

@@ -922,5 +922,14 @@ namespace Cryptool.Plugins.ChaCha.Properties {
                 return ResourceManager.GetString("VersionTooltip", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle XOR.
+        /// </summary>
+        public static string XorToggle {
+            get {
+                return ResourceManager.GetString("XorToggle", resourceCulture);
+            }
+        }
     }
 }
