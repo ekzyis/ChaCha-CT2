@@ -138,12 +138,15 @@
 
                     <StackPanel Grid.Row="3" Grid.Column="1">
                         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-                            <TextBox Style="{StaticResource DiffusionText}" Text="{Binding FlippedBits, Mode=OneWay}"/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text="/"/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text="{Binding TotalBits, Mode=OneWay}"/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text=" ( "/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text="{Binding FlippedBitsPercentage, Converter={StaticResource DoubleToPercentage}, Mode=OneWay}"/>
-                            <TextBox Style="{StaticResource DiffusionText}" Text=" )"/>
+                            <TextBox Style="{StaticResource DiffusionText}">
+                                <TextBox.Text>
+                                    <MultiBinding StringFormat=" {0}/{1} ({2})">
+                                        <Binding Path="FlippedBits" Mode="OneWay" />
+                                        <Binding Path="TotalBits" Mode="OneTime" />
+                                        <Binding Path="FlippedBitsPercentage" Mode="OneWay" Converter="{StaticResource DoubleToPercentage}" />
+                                    </MultiBinding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                         <ContentControl Style="{DynamicResource DiffusionStateLabel}"/>
                     </StackPanel>
