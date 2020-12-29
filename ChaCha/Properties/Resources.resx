@@ -120,6 +120,12 @@
   <data name="ChaChaCaption" xml:space="preserve">
     <value>ChaCha</value>
   </data>
+  <data name="ChaChaHashName" xml:space="preserve">
+    <value>ChaCha Hash</value>
+  </data>
+  <data name="ChaChaHashTitle" xml:space="preserve">
+    <value>ChaCha Hash Function</value>
+  </data>
   <data name="ChaChaTooltip" xml:space="preserve">
     <value>A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein.</value>
   </data>

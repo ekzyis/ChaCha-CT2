@@ -70,6 +70,24 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ChaCha Hash.
+        /// </summary>
+        public static string ChaChaHashName {
+            get {
+                return ResourceManager.GetString("ChaChaHashName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ChaCha Hash Function.
+        /// </summary>
+        public static string ChaChaHashTitle {
+            get {
+                return ResourceManager.GetString("ChaChaHashTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein..
         /// </summary>
         public static string ChaChaTooltip {
