@@ -79,6 +79,123 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Addition / Reverse Bytes.
+        /// </summary>
+        public static string ChaChaHashNavigationAdditionReverseBytesLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationAdditionReverseBytesLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keystream Block.
+        /// </summary>
+        public static string ChaChaHashNavigationKeystreamBlockLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationKeystreamBlockLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround.
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(0,4,8,12).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelColumn1 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelColumn1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(1,5,9,13).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelColumn2 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelColumn2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(2,6,10,14).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelColumn3 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelColumn3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(3,7,11,15).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelColumn4 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelColumn4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(0,5,10,15).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelDiagonal1 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelDiagonal1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(1,6,11,12).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelDiagonal2 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelDiagonal2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(2,7,8,13).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelDiagonal3 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelDiagonal3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quarterround(3,4,9,14).
+        /// </summary>
+        public static string ChaChaHashNavigationQrLabelDiagonal4 {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationQrLabelDiagonal4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round.
+        /// </summary>
+        public static string ChaChaHashNavigationRoundLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashNavigationRoundLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Original State.
+        /// </summary>
+        public static string ChaChaHashOriginalStateLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashOriginalStateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ChaCha Hash Function.
         /// </summary>
         public static string ChaChaHashTitle {
