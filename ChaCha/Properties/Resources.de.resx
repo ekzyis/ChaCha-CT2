@@ -127,7 +127,7 @@
     <value>ChaCha</value>
   </data>
   <data name="ChaChaHashName" xml:space="preserve">
-    <value>ChaCha Hash</value>
+    <value>ChaCha-Hash</value>
   </data>
   <data name="ChaChaHashNavigationAdditionReverseBytesLabel" xml:space="preserve">
     <value>Addition / Bytes umdrehen</value>
@@ -287,7 +287,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Übersicht</value>
   </data>
   <data name="OverviewOutro1" xml:space="preserve">
-    <value>Durch Anwendung der ChaCha Hashfunktion entsteht aus einem 512-bit Zustand ein Schlüsselstromblock.</value>
+    <value>Durch Anwendung der ChaCha-Hashfunktion entsteht aus einem 512-bit Zustand ein Schlüsselstromblock.</value>
   </data>
   <data name="OverviewOutro2" xml:space="preserve">
     <value>Das führt uns zu folgenden Schritten um eine Nachricht M mit ChaCha zu verschlüsseln:</value>
@@ -326,10 +326,10 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Schlüssel</value>
   </data>
   <data name="StateMatrixDescription1" xml:space="preserve">
-    <value>Der 512-bit (128-byte) ChaCha Zustand kann als 4x4 Matrix interpretiert werden, in der jeder Eintrag aus vier Bytes besteht. Die Einträge werden aus den Parametern, die unten zu sehen sind, aufgebaut. Diese Einträge werden kodiert bevor sie in die Matrix eingefügt werden.</value>
+    <value>Der 512-bit (128-byte) ChaCha-Zustand kann als 4x4 Matrix interpretiert werden, in der jeder Eintrag aus vier Bytes besteht. Die Einträge werden aus den Parametern, die unten zu sehen sind, aufgebaut. Diese Einträge werden kodiert bevor sie in die Matrix eingefügt werden.</value>
   </data>
   <data name="StateMatrixDescription6" xml:space="preserve">
-    <value>Auf der nächsten Seite wird dieser initialisierte Zustand der ChaCha Hashfunktion übergeben um den ersten Schlüsselstromblock zu generieren.</value>
+    <value>Auf der nächsten Seite wird dieser initialisierte Zustand der ChaCha-Hashfunktion übergeben um den ersten Schlüsselstromblock zu generieren.</value>
   </data>
   <data name="StateMatrixEncodingConstants1" xml:space="preserve">
     <value>Originaler Wert (ASCII):</value>
