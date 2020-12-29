@@ -61,6 +61,24 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        public static string ButtonLabelEnd {
+            get {
+                return ResourceManager.GetString("ButtonLabelEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        public static string ButtonLabelStart {
+            get {
+                return ResourceManager.GetString("ButtonLabelStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ChaCha.
         /// </summary>
         public static string ChaChaCaption {

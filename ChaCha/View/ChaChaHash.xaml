@@ -2917,10 +2917,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                        <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton">
-                            <Setter Property="Width" Value="45" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="Margin" Value="3" />
+                        <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton" BasedOn="{StaticResource StartButton}">
                             <Setter Property="Visibility">
                                 <Setter.Value>
                                     <Binding Path="CurrentRoundIndex">
@@ -2950,10 +2947,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                        <Style TargetType="{x:Type Button}" x:Key="DiagonalQRButton">
-                            <Setter Property="Width" Value="45" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="Margin" Value="3" />
+                        <Style TargetType="{x:Type Button}" x:Key="DiagonalQRButton" BasedOn="{StaticResource StartButton}">
                             <Setter Property="Visibility">
                                 <Setter.Value>
                                     <Binding Path="CurrentRoundIndex">
@@ -3023,23 +3017,23 @@
                         <!--#region column rounds -->
                         <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn1}" />
                         <StackPanel Grid.Column="1" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
                         </StackPanel>
                         <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn2}" />
                         <StackPanel Grid.Column="2" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
                         </StackPanel>
                         <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn3}" />
                         <StackPanel Grid.Column="3" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
                         </StackPanel>
                         <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn4}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource ColumnQRButton}" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
                         </StackPanel>
 
                         <!--#endregion-->
@@ -3048,23 +3042,23 @@
 
                         <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal1}" />
                         <StackPanel Grid.Column="1" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
                         </StackPanel>
                         <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal2}" />
                         <StackPanel Grid.Column="2" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
                         </StackPanel>
                         <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal3}" />
                         <StackPanel Grid.Column="3" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
                         </StackPanel>
                         <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal4}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
                         </StackPanel>
 
                         <!--#endregion-->
@@ -3073,7 +3067,7 @@
                     <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="{Loc ChaChaHashNavigationAdditionReverseBytesLabel}" Margin="3,0" />
                     <StackPanel Grid.Column="7" Grid.Row="1">
                         <Button Style="{StaticResource StartButton}" Command="{Binding MatrixStartCommand}" />
-                        <Button Style="{StaticResource EndButton}" Content="End" Command="{Binding MatrixEndCommand}" />
+                        <Button Style="{StaticResource EndButton}" Command="{Binding MatrixEndCommand}" />
                     </StackPanel>
                 </Grid>
             </Viewbox>
