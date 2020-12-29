@@ -145,21 +145,7 @@
                             <TextBox Style="{StaticResource DiffusionText}" Text="{Binding FlippedBitsPercentage, Converter={StaticResource DoubleToPercentage}, Mode=OneWay}"/>
                             <TextBox Style="{StaticResource DiffusionText}" Text=" )"/>
                         </StackPanel>
-                        <TextBox>
-                            <TextBox.Style>
-                                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiffusionText}">
-                                    <Setter Property="Text" Value="Inactive"/>
-                                    <Setter Property="Foreground" Value="Red"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DiffusionActive}" Value="True">
-                                            <Setter Property="Text" Value="Active"/>
-                                            <Setter Property="Foreground" Value="Green"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-
-                            </TextBox.Style>
-                        </TextBox>
+                        <ContentControl Style="{DynamicResource DiffusionStateLabel}"/>
                     </StackPanel>
 
                 </Grid>

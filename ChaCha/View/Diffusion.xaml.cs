@@ -19,6 +19,7 @@ namespace Cryptool.Plugins.ChaCha.View
         public Diffusion()
         {
             InitializeComponent();
+            ActionViewBase.LoadLocaleResources(this);
             this.DataContextChanged += OnDataContextChanged;
         }
 

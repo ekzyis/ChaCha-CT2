@@ -9,6 +9,10 @@
     <conv:ZeroBasedIndexToOneBasedIndex x:Key="ZeroBasedIndexToOneBasedIndex" />
     <conv:DoubleToPercentage x:Key="DoubleToPercentage" />
     <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
+    <Style TargetType="{x:Type TextBox}" x:Key="DiffusionText" BasedOn="{StaticResource Text}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
     <Style TargetType="{x:Type ContentControl}" x:Key="OverviewCounter">
         <Setter Property="Template">
             <Setter.Value>
@@ -23,6 +27,28 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
                     <TextBlock Text="{Binding Settings.Version.IVBits, StringFormat=Initialization vector ({0}-bit)}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ContentControl}" x:Key="DiffusionStateLabel">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <TextBox>
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiffusionText}">
+                                <Setter Property="Text" Value="Inactive" />
+                                <Setter Property="Foreground" Value="Red" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding DiffusionActive}" Value="True">
+                                        <Setter Property="Text" Value="Active" />
+                                        <Setter Property="Foreground" Value="Green" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -193,6 +219,18 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ContentControl}" x:Key="ReverseBytesStepLabel">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Reverse" />
+                        <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Bytes" />
+                    </StackPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

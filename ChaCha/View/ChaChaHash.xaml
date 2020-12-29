@@ -1683,10 +1683,7 @@
 
                     <Border Grid.Column="4" Grid.Row="1" BorderBrush="Black" BorderThickness="0" Margin="5,0">
                         <Viewbox Grid.Column="4" Grid.Row="1" Style="{StaticResource UniformViewbox}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Reverse" />
-                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Bytes" />
-                            </StackPanel>
+                            <ContentControl Style="{DynamicResource ReverseBytesStepLabel}" />
                         </Viewbox>
                     </Border>
                 </Grid>
