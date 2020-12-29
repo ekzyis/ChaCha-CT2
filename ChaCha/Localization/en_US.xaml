@@ -7,6 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
     <conv:BitsToBytes x:Key="BitsToBytes" />
     <conv:ZeroBasedIndexToOneBasedIndex x:Key="ZeroBasedIndexToOneBasedIndex" />
+    <conv:DoubleToPercentage x:Key="DoubleToPercentage" />
     <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
     <Style TargetType="{x:Type ContentControl}" x:Key="OverviewCounter">
         <Setter Property="Template">
@@ -175,6 +176,23 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContentControl}">
                     <TextBox Style="{StaticResource Text}" Text="{Binding CurrentKeystreamBlockIndex, Converter={StaticResource ZeroBasedIndexToOneBasedIndex}, StringFormat='Output: Keystream Block {0}'}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type ContentControl}" x:Key="ChaChaHashFlippedBitsLabel">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContentControl}">
+                    <TextBlock>
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Flipped Bits: {0}/{1} ({2})">
+                                <Binding Path="DiffusionFlippedBits" />
+                                <Binding Path="TotalBits" Mode="OneTime" />
+                                <Binding Path="DiffusionFlippedBitsPercentage" Converter="{StaticResource DoubleToPercentage}" />
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

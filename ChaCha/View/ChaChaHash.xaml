@@ -87,15 +87,7 @@
                         <Grid Margin="0,10,0,0" Grid.Row="4">
                             <Viewbox HorizontalAlignment="Left" Style="{StaticResource UniformViewbox}" Visibility="{Binding DiffusionActive, Converter={StaticResource FalseToCollapsed}}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="Flipped Bits: {0}/{1} ({2})">
-                                                <Binding Path="DiffusionFlippedBits" />
-                                                <Binding Path="TotalBits" Mode="OneTime" />
-                                                <Binding Path="DiffusionFlippedBitsPercentage" Converter="{StaticResource DoubleToPercentage}" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
+                                    <ContentControl Style="{DynamicResource ChaChaHashFlippedBitsLabel}" />
                                 </StackPanel>
                             </Viewbox>
                         </Grid>
