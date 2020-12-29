@@ -13,11 +13,13 @@ namespace Cryptool.Plugins.ChaCha.View
     /// <summary>
     /// Interaction logic for Diffusion.xaml
     /// </summary>
+    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class Diffusion : UserControl
     {
         public Diffusion()
         {
             InitializeComponent();
+            ActionViewBase.LoadLocaleResources(this);
             this.DataContextChanged += OnDataContextChanged;
         }
 

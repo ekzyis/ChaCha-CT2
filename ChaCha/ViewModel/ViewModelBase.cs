@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.Resources;
 using System.Runtime.CompilerServices;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
@@ -43,5 +45,34 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                     Debug.Fail(msg);
             }
         }
+
+        #region Localization
+
+        protected readonly ResourceManager resManager = Properties.Resources.ResourceManager;
+        protected CultureInfo currentCulture;
+
+        public string this[string key]
+        {
+            get { return this.resManager.GetString(key, this.CurrentCulture); }
+        }
+
+        public CultureInfo CurrentCulture
+        {
+            get { return this.currentCulture; }
+            set
+            {
+                if (this.currentCulture != value)
+                {
+                    this.currentCulture = value;
+                    var @event = this.PropertyChanged;
+                    if (@event != null)
+                    {
+                        @event.Invoke(this, new PropertyChangedEventArgs(string.Empty));
+                    }
+                }
+            }
+        }
+
+        #endregion Localization
     }
 }

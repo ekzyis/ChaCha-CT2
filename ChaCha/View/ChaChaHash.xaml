@@ -12,12 +12,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Localization\en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <conv:UInt32ToHex x:Key="UInt32ToHex" />
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
             <conv:BooleanOr x:Key="BooleanOr" />
             <conv:DoubleToPercentage x:Key="DoubleToPercentage" />
-            <conv:ZeroBasedIndexToOneBasedIndex x:Key="ZeroBasedIndexToOneBasedIndex"/>
+            <conv:ZeroBasedIndexToOneBasedIndex x:Key="ZeroBasedIndexToOneBasedIndex" />
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
@@ -86,13 +87,7 @@
                         <Grid Margin="0,10,0,0" Grid.Row="4">
                             <Viewbox HorizontalAlignment="Left" Style="{StaticResource UniformViewbox}" Visibility="{Binding DiffusionActive, Converter={StaticResource FalseToCollapsed}}">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Flipped Bits: " />
-                                    <TextBlock Text="{Binding DiffusionFlippedBits}" />
-                                    <TextBlock Text="/" />
-                                    <TextBlock Text="{Binding TotalBits, Mode=OneTime}" />
-                                    <TextBlock Text=" (" />
-                                    <TextBlock Text="{Binding DiffusionFlippedBitsPercentage, Converter={StaticResource DoubleToPercentage}}" />
-                                    <TextBlock Text=")" />
+                                    <ContentControl Style="{DynamicResource ChaChaHashFlippedBitsLabel}" />
                                 </StackPanel>
                             </Viewbox>
                         </Grid>
@@ -496,36 +491,9 @@
                             </Style>
                         </Viewbox.Resources>
                         <StackPanel Orientation="Vertical">
-                            <RichTextBox Visibility="{Binding Description[0], Converter={StaticResource FalseToCollapsed}}">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        To generate a keystream block, we apply the ChaCha hash function to the state. The ChaCha hash function consists of
-                                        <Run Text="{Binding ChaCha.Rounds, FallbackValue=X}" /> rounds.
-                                        <LineBreak />
-                                        During each round, we run the quarterround function four times (hence the name
-                                        <Italic>quarterround</Italic> ) which modifies four state entries. This means that after each round, the whole state has been modified.
-                                        <LineBreak />
-                                        In an uneven round (round 1, 3, ...), we go through all columns thus the uneven rounds can also be called
-                                        <Italic>column rounds</Italic> , whereas in an even round (round 2, 4, ...), we go through all diagonals thus the even rounds can be called
-                                        <Italic>diagonal rounds</Italic> .
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <RichTextBox Visibility="{Binding Description[1], Converter={StaticResource FalseToCollapsed}}">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        At the left, you can see the current state. At the bottom, you see the visualization of the quarterround function. It consists of four steps where each step modifies three values using addition modulo 2
-                                        <Run Typography.Variants="Superscript">32</Run> , XOR and a circular left shift.
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
-                            <RichTextBox Visibility="{Binding Description[2], Converter={StaticResource FalseToCollapsed}}">
-                                <FlowDocument>
-                                    <Paragraph>
-                                        After all rounds, we add the original state to the generated state and reverse the byte order of each state entry.
-                                    </Paragraph>
-                                </FlowDocument>
-                            </RichTextBox>
+                            <ContentControl Style="{DynamicResource ChaChaHashDescription1}" />
+                            <ContentControl Style="{DynamicResource ChaChaHashDescription2}" />
+                            <ContentControl Style="{DynamicResource ChaChaHashDescription3}" />
                         </StackPanel>
                     </Viewbox>
                 </Grid>
@@ -1654,39 +1622,39 @@
 
                 <Grid Grid.Column="0" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.15*"/>
+                        <RowDefinition Height="0.15*" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Margin="20,0" RenderTransformOrigin="0.5, 0.5">
                         <Border.RenderTransform>
                             <TransformGroup>
-                                <TranslateTransform Y="-3"/>
-                                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                <TranslateTransform Y="-3" />
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                             </TransformGroup>
                         </Border.RenderTransform>
                         <Viewbox Margin="3">
-                            <TextBox Style="{StaticResource Text}" Text="Original State"/>
+                            <TextBox Style="{StaticResource Text}" Text="{Loc ChaChaHashOriginalStateLabel}" />
                         </Viewbox>
                     </Border>
                 </Grid>
 
                 <Grid Grid.Column="2" Style="{StaticResource MatrixVisualizationGrid}">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="0.15*"/>
+                        <RowDefinition Height="0.15*" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Border Grid.Row="0" Margin="20,0" RenderTransformOrigin="0.5, 0.5">
                         <Border.RenderTransform>
                             <TransformGroup>
-                                <TranslateTransform Y="-3"/>
-                                <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                                <TranslateTransform Y="-3" />
+                                <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
                             </TransformGroup>
                         </Border.RenderTransform>
                         <Viewbox Margin="3">
                             <StackPanel Orientation="Horizontal">
-                                <TextBox Style="{StaticResource Text}" Text="{Binding CurrentKeystreamBlockIndex, Converter={StaticResource ZeroBasedIndexToOneBasedIndex}, StringFormat='Output: Keystream Block {0}'}"/>
+                                <ContentControl Style="{DynamicResource ChaChaHashKeystreamBlockLabel}" />
                             </StackPanel>
                         </Viewbox>
                     </Border>
@@ -1715,10 +1683,7 @@
 
                     <Border Grid.Column="4" Grid.Row="1" BorderBrush="Black" BorderThickness="0" Margin="5,0">
                         <Viewbox Grid.Column="4" Grid.Row="1" Style="{StaticResource UniformViewbox}">
-                            <StackPanel Orientation="Vertical">
-                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Reverse" />
-                                <TextBlock HorizontalAlignment="Center" TextAlignment="Center" Text="Bytes" />
-                            </StackPanel>
+                            <ContentControl Style="{DynamicResource ReverseBytesStepLabel}" />
                         </Viewbox>
                     </Border>
                 </Grid>
@@ -2952,10 +2917,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                        <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton">
-                            <Setter Property="Width" Value="45" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="Margin" Value="3" />
+                        <Style TargetType="{x:Type Button}" x:Key="ColumnQRButton" BasedOn="{StaticResource StartButton}">
                             <Setter Property="Visibility">
                                 <Setter.Value>
                                     <Binding Path="CurrentRoundIndex">
@@ -2985,10 +2947,7 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                        <Style TargetType="{x:Type Button}" x:Key="DiagonalQRButton">
-                            <Setter Property="Width" Value="45" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="Margin" Value="3" />
+                        <Style TargetType="{x:Type Button}" x:Key="DiagonalQRButton" BasedOn="{StaticResource StartButton}">
                             <Setter Property="Visibility">
                                 <Setter.Value>
                                     <Binding Path="CurrentRoundIndex">
@@ -3009,7 +2968,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Style="{StaticResource Label}" Text="Keystream Block" />
+                        <TextBox Grid.Row="0" Style="{StaticResource Label}" Text="{Loc ChaChaHashNavigationKeystreamBlockLabel}" />
                         <StackPanel Grid.Row="1">
                             <Button Style="{StaticResource PrevButton}" Command="{Binding PrevKeystreamBlockCommand}" />
                             <TextBox Name="KeystreamBlockInput" Style="{StaticResource Input}" />
@@ -3024,7 +2983,7 @@
                             <RowDefinition />
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <TextBox Grid.Row="0" Style="{StaticResource Label}" Text="Round" />
+                        <TextBox Grid.Row="0" Style="{StaticResource Label}" Text="{Loc ChaChaHashNavigationRoundLabel}" />
                         <StackPanel Grid.Row="1">
                             <Button Style="{StaticResource PrevButton}" Command="{Binding PrevRoundCommand}" />
                             <TextBox Name="RoundInput" Style="{StaticResource Input}" />
@@ -3046,7 +3005,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <TextBox Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" Text="Quarterround" />
+                        <TextBox Grid.Column="0" Grid.Row="0" Style="{StaticResource Label}" Text="{Loc ChaChaHashNavigationQrLabel}" />
                         <StackPanel Grid.Column="0" Grid.Row="1">
                             <Button Style="{StaticResource PrevButton}" Command="{Binding PrevQRCommand}" />
                             <TextBox Name="QRInput" Style="{StaticResource Input}" />
@@ -3056,59 +3015,59 @@
                         </StackPanel>
 
                         <!--#region column rounds -->
-                        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="Quarterround(0,4,8,12)" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn1}" />
                         <StackPanel Grid.Column="1" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
                         </StackPanel>
-                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="Quarterround(1,5,9,13)" />
+                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn2}" />
                         <StackPanel Grid.Column="2" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
                         </StackPanel>
-                        <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="Quarterround(2,6,10,14)" />
+                        <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn3}" />
                         <StackPanel Grid.Column="3" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
                         </StackPanel>
-                        <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="Quarterround(3,7,11,15)" />
+                        <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource ColumnLabel}" Text="{Loc ChaChaHashNavigationQrLabelColumn4}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource ColumnQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
-                            <Button Style="{StaticResource ColumnQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource ColumnQRButton}" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource ColumnQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
                         </StackPanel>
 
                         <!--#endregion-->
 
                         <!--#region  diagonal rounds -->
 
-                        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Quarterround(1,5,10,15)" />
+                        <TextBox Grid.Column="1" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal1}" />
                         <StackPanel Grid.Column="1" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="0" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="0" />
                         </StackPanel>
-                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Quarterround(1,6,11,12)" />
+                        <TextBox Grid.Column="2" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal2}" />
                         <StackPanel Grid.Column="2" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="1" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="1" />
                         </StackPanel>
-                        <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Quarterround(2,7,8,13)" />
+                        <TextBox Grid.Column="3" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal3}" />
                         <StackPanel Grid.Column="3" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="2" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="2" />
                         </StackPanel>
-                        <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="Quarterround(3,4,9,14)" />
+                        <TextBox Grid.Column="4" Grid.Row="0" Style="{StaticResource DiagonalLabel}" Text="{Loc ChaChaHashNavigationQrLabelDiagonal4}" />
                         <StackPanel Grid.Column="4" Grid.Row="1">
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="Start" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
-                            <Button Style="{StaticResource DiagonalQRButton}" Content="End" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelStart}" Command="{Binding QuarterroundStartCommand}" CommandParameter="3" />
+                            <Button Style="{StaticResource DiagonalQRButton}" Content="{Loc ButtonLabelEnd}" Command="{Binding QuarterroundEndCommand}" CommandParameter="3" />
                         </StackPanel>
 
                         <!--#endregion-->
                     </Grid>
 
-                    <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="Addition / Reverse Bytes" Margin="3,0" />
+                    <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="{Loc ChaChaHashNavigationAdditionReverseBytesLabel}" Margin="3,0" />
                     <StackPanel Grid.Column="7" Grid.Row="1">
                         <Button Style="{StaticResource StartButton}" Command="{Binding MatrixStartCommand}" />
-                        <Button Style="{StaticResource EndButton}" Content="End" Command="{Binding MatrixEndCommand}" />
+                        <Button Style="{StaticResource EndButton}" Command="{Binding MatrixEndCommand}" />
                     </StackPanel>
                 </Grid>
             </Viewbox>

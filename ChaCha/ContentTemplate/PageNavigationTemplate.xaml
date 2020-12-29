@@ -75,7 +75,7 @@
                         <ToggleButton
                             Visibility="{Binding CurrentPage.ShowToggleButton, Converter={StaticResource FalseToCollapsed}, FallbackValue=Collapsed}"
                             IsChecked="{Binding ShowXOR, Mode=TwoWay}">
-                            <Label Content="Toggle XOR" />
+                            <Label Content="{Loc XorToggle}" />
                         </ToggleButton>
                     </Viewbox>
                 </Grid>
