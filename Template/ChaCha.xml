@@ -67,6 +67,6 @@
 	<replacement key="$generaldesc2$" value="A default plaintext, a 256-bit secret key and 64-bit initialization vector are already provided." />
 	<replacement key="$generaldesc3$" value="Pressing on Play starts the cipher execution and you can see the ciphertext at the top-right text output." />
 	<replacement key="$generaldesc4$" value="In the settings, you can chose the version which affects the IV size and if the ChaCha hash function should be run 8, 12 or 20 times per keystream block."/>
-	<replacement key="$generaldesc5$" value="Since ChaCha uses a keystream and bitwise XOR operation to create the ciphertext, decryption works exactly the same as encryption. This is why there is no setting for en- or decryption. If the ciphertext with the same key and IV are provided, the output will be the decrypted ciphertext." />
+	<replacement key="$generaldesc5$" value="Since ChaCha uses a keystream and bitwise XOR operation to create the ciphertext, decryption works exactly the same as encryption. This is why there is no setting for en- or decryption. If the ciphertext with the same key and IV are provided, the output will be the decrypted ciphertext. This can be observed in the bottom component and the text output on the right. " />
   </replacements>
 </sample>
