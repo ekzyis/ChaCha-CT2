@@ -5,10 +5,18 @@
   <language culture="en"/>
   <language culture="de-DE"/>
 
-  <introduction lang="en">    
+  <introduction lang="en">
+      ChaCha is a 256-bit stream cipher family developed by Daniel J. Bernstein in 2008. It is based on Salsa20 cipher family by the same author and was "designed to improve diffusion per round while preserving -- and often improving -- time per round" <ref id="ChaChaSpecification" />. <newline/>
+      Internally, it uses a 512-bit state to generate keystream blocks which are concatenated to create a keystream. A XOR operation with this keystream then encrypts or decrypts the input. <newline/>
+      ChaCha is used in the Transport Layer security protocol (TLS) since 2014 and so very relevant for applied modern cryptography <ref id="GoogleSecurityBlog" />. <newline/>
+      There exist two versions. The original version by Bernstein supports 64-bit counters and 64-bit initialization vectors. The Internet Engineering Task Force (IETF) slightly changed this design by using 32-bit counters and 96-bit initialization vectors <ref id="RFC8439" />.
   </introduction>
 
-  <introduction lang="de-DE">    
+  <introduction lang="de-DE">
+      ChaCha ist eine Familie von 256-bit Stromchiffren die 2008 von Daniel J. Bernstein entwickelt wurde. Sie basiert auf der Salsa20-Familie. Der Fokus bei der Entwicklung lag auf eine erhöhte Diffusion per Runde ohne die Zeit pro Runde zu verringern <ref id="ChaChaSpecification" />. <newline/>
+      Intern wird ein 512-bit Zustand benutzt um Schlüsselstromblöcke zu generieren. Diese bilden den Schlüsselstrom. Eine XOR Operation mit diesem ver- bzw. entschlüsselt dann eine Nachricht. <newline/>
+      ChaCha wird im Transport Layer Security Protokoll (TLS) seit 2014 eingesetzt und ist somit sehr relevant für die moderne angewandte Kryptographie <ref id="GoogleSecurityBlog" />. <newline/>
+      Es existieren zwei Versionen. Die originale Version von Bernstein unterstützt 64-bit Blockzähler und 64-bit Initialisierungsvektoren. Die Internet Engineering Task Force (IEF) hat dieses Design leicht abgewandelt. Ihre Version benutzt 32-bit Blockzähler und 96-bit Initialisierungsvektoren <ref id="RFC8439" />.
   </introduction>
 
   <usage lang="en">
@@ -24,5 +32,23 @@
   </presentation>
   
   <references>
+      <linkReference id="ChaChaSpecification">
+          <link url="https://cr.yp.to/chacha/chacha-20080120.pdf" lang="en" />
+          <caption lang="en">ChaCha, a variant of Salsa20</caption>
+          <link url="https://cr.yp.to/chacha/chacha-20080120.pdf" lang="de-DE" />
+          <caption lang="de-DE">ChaCha, a variant of Salsa20</caption>
+      </linkReference>
+      <linkReference id="GoogleSecurityBlog">
+          <link url="https://security.googleblog.com/2014/04/speeding-up-and-strengthening-https.html" lang="en" />
+          <caption lang="en">Speeding up and strengthening HTTPS connections for Chrome on Android</caption>
+          <link url="https://security.googleblog.com/2014/04/speeding-up-and-strengthening-https.html" lang="de-DE" />
+          <caption lang="de-DE">Speeding up and strengthening HTTPS connections for Chrome on Android</caption>
+      </linkReference>
+      <linkReference id="RFC8439">
+          <link url="https://tools.ietf.org/html/rfc8439" lang="en" />
+          <caption lang="en">ChaCha20 and Poly1305 for IETF Protocols</caption>
+          <link url="https://tools.ietf.org/html/rfc8439" lang="de-DE" />
+          <caption lang="de-DE">ChaCha20 and Poly1305 for IETF Protocols</caption>
+      </linkReference>
   </references>
 </documentation>
