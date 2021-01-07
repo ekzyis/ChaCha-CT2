@@ -20,9 +20,46 @@
   </introduction>
 
   <usage lang="en">
+      <section headline="Settings">
+          In the plugin settings on can chose the rounds per keystream block and the version.
+          The version determines the size of the counter and the initialization vector.
+      </section>
+      <section headline="Inputs and Output">
+          The ChaCha plugin has four inputs and one output. The message, key and initialization vector input are mandatory while the input for the initial counter is optional.<newline/><newline/>
+          The message size is in theory limited by the counter size because we need to make sure that the keystream does not repeat (else one could use a two-time pad attack).<newline/>
+          In practice, this limit is high enough that in general, one does not have to think about it. For example, for the DJB version with a 64-bit counter, one can encrypt
+          messages up to 2^70 bytes (2^64 blocks with 64 byte each) which is equal to 1024 exabyte.<newline/>
+          This very high number is also the reason why the IETF chose a smaller counter size to make use of a larger initialization vector. With a 32-bit counter, one can still
+          encrypt messages up to 256 GB which should be enough for most use cases. With a larger initialization vector, one could reuse the same key more safely by partitioning
+          the 96-bit initialization vector into a counter section and a unique section. <newline/><newline/>
+          The key can be 128-bit or 256-bit key. A 128-bit key will be concatenated with itself to form a 256-bit key. <newline/><newline/>
+          The initialization vector must be 64-bit or 96-bit, depending on the chosen version. As with all stream ciphers, a key-IV pair should never be reused for encryption.<newline/><newline/>
+          The initial counter determines the counter value for the first keystream block. In following keystream blocks, it is used exactly as in block ciphers in counter mode: It is incremented to generate a unique input for the hash function which generates the keystream blocks.<newline/>
+          The initial counter is optional and defaults to zero. The counter must be 64-bit or 32-bit, depending on the chosen version.<newline/><newline/>
+          The single output of the plugin is the encrypted or decrypted text. There is no option to chose encryption or decryption. The cipher will output the plaintext if the ciphertext
+          with the same key-IV pair are set as inputs and vice versa because XOR is the inverse operation to itself.
+      </section>
   </usage>
 
   <usage lang="de-DE">
+      <section headline="Einstellungen">
+          In the Plug-in Einstellungen kann die Rundenanzahl ausgewählt werden sowie die Version der Chiffre.
+          Die Version beeinflusst die Größe des Blockzählers und des Initialisierungsvektors.
+      </section>
+      <section headline="Ein- und Ausgaben">
+          Das ChaCha Plug-in hat vier Eingaben und eine Ausgabe. Die Nachricht, der Schlüssel und der Initialisierungsvektor müssen vorgegeben werden, während der initiale Blockzähler optional ist.<newline/><newline/>
+          Die Nachrichtengröße ist in der Theorie limitiert von der Größe des Zählers um sicherzustellen, dass der Schlüsselstrom sich nicht wiederholt (ansonsten kann ein Two-time pad Angriff durchgeführt werden).<newline/>
+          Im Praktischen ist dieses Limit groß genug, sodass im Normalfall man sich darüber keine Gedanken machen muss. So ist die maximale Nachrichtengröße für die DJB-Version mit einem 64-bit Zähler 2^70 Bytes (2^64 Blöcke mit jeweils 64 Bytes).
+          Dies entspricht einer Nachrichtengröße von 1024 Exabyte.<newline/>
+          Das ist auch der Grund, wieso die IETF sich für einen 32-bit Zähler entschieden hat: Mit einem 32-bit Zähler können immer noch 256 Gigabyte auf einmal verschlüsselt werden was für die meisten Anwendungen mehr als genug sein sollte.<newline/>
+          Mit dem größeren Initialisierungsvektor kann somit besser sichergestellt werden, dass das gleiche Schlüssel-IV Paar nicht erneut benutzt wird; beispielsweise indem man den IV in eine Zählersektion und eine feste Sektion trennt.<newline/><newline/>
+          Der Schlüssel kann 128-bit oder 256-bit groß sein. Ein 256-bit Schlüssel wird mit sich selbst konkateniert um einen 256-bit Schlüssel zu bilden.<newline/><newline/>
+          Der Initialisierungsvektor muss entsprechend der ausgewählten Version 64-bit oder 96-bit sein.<newline/><newline/>
+          Der initiale Zähler legt den Zählwert für den ersten Schlüsselstromblock fest. In den folgenden Schlüsselstromblöcken funktioniert der Zähler genau wie in Blockchiffren im Counter-Modus: Er wird inkrementiert um jedes mal eine neue, einzigartige Eingabe für die Hashfunktion zu haben, die die Schlüsselstromblöcke generiert.<newline/>
+          Der initiale Zähler ist optional und wird standardmäßig auf 0 gesetzt. Er muss entsprechend der ausgewählten Version 64-bit oder 32-bit groß sein.<newline/><newline/>
+          Die einzige Ausgabe des Plug-ins ist der Geheim- bzw. Klartext. Es gibt keine Einstellung um zwischen Ver- oder Entschlüsselung umzuschalten. Die Chiffre gibt den Geheimtext aus, wenn der Klartext mit dem
+          selben Schlüssel-IV Paair eingegeben wird und vice versa weil XOR die inverse Operation zu sich selbst ist.
+      </section>
   </usage>
   
   <presentation lang="en">
