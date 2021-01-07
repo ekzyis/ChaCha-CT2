@@ -39,7 +39,7 @@
 	<replacement key="$keydesc$" value="ChaCha unterstützt 128-bit und 256-bit Schlüssel. Ein 128-bit Schlüssel wird durch Verkettung mit sich selbst zu einem 256-bit Schlüssel erweitert." />
 	<replacement key="$ivdesc$" value="Die originale Version von DJB benutzt einen 64-bit IV, während die IETF-Version einen 96-bit IV benutzt. In den Einstellungen der ChaCha-Komponente kann die Version ausgewählt werden." />
 	<replacement key="$counterdesc1$" value="Hier kann optional der initiale Blockzähler gesetzt werden. Der Standardwert ist 0." />
-	<replacement key="$counterdesc2$" value="In der DJB-Version kann der Counter bis zu 64-bit groß sein. In der IETF-Version ist der Counter limitert auf 32-bit." />
+	<replacement key="$counterdesc2$" value="In der DJB-Version kann der Counter bis zu 64-bit groß sein. In der IETF-Version ist der Counter limitiert auf 32-bit." />
 	<replacement key="$generaldesc1$" value="Dieses Template zeigt die Anwendung der ChaCha-Chiffre zum Ver- und Entschlüsseln von Nachrichten." />
 	<replacement key="$generaldesc2$" value="Ein Klartext, ein 256-bit Schlüssel und ein 64-bit Initialisierungsvektor sind bereits voreingestellt." />
 	<replacement key="$generaldesc3$" value="Die Ver- und Entschlüsselung startet, wenn oben auf Start gedrückt wird. Der Geheimtext kann dann oben rechts in der Textausgabe abgelesen werden." />
