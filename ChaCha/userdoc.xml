@@ -66,17 +66,17 @@
       The user interface of the visualization is split into three sections.<newline/>
       <enum>
           <item>
-              The first section consists of the page navigation with the title and a toggle buton. It is located in the top row of each page. As the name indicates, the page navigation can be used to switch between pages. 
+              The first section consists of the page navigation with the page title and a toggle buton. It is located in the top row of each page. As the name indicates, the page navigation can be used to switch between pages.
               There are five pages in total:
               <enum>
                   <item>Start page: Entry-point of the visualization. Every time the workspace is restarted, the visualization resets to this page.</item>
                   <item>Overview page: Gives a brief overview over the cipher and the visualization.</item>
-                  <item>Diffusion page: Here the user can optionally enter secondary values for the key, IV and counter. These values will be used to show the diffusion property of the cipher.</item>
+                  <item>Diffusion page: Here the user can optionally enter secondary values for the key, IV and counter. These values will be used to show the diffusion property of the cipher on the next pages.</item>
                   <item>State Matrix page: Visualizes the initialization of the 512-bit state.</item>
                   <item>ChaCha Hash Function page: Visualizes the execution of the hash function which generates keystream blocks out of the 512-bit state.</item>
               </enum>
               The toggle button in the top-right corner is only shown if diffusion is active. With it, the user can toggle between two diffusion visualization views. If not toggled,
-              both values of the cipher runs are shown. If toggled, only the XOR of both values are shown. Figure 1 shows the ChaCha hash function mid-execution with the button not toggled.
+              both values of the cipher runs are shown (non-XOR view). If toggled, only the XOR of both values are shown (XOR view). Figure 1 shows the ChaCha hash function mid-execution with the button not toggled.
               The values in the top row of each cell are the intermediate values of the cipher execution with the input values.
               The values in the bottom row of each cell are the intermediate values of the cipher execution with the values the user entered on the Diffusion page.
               Hexadecimal characters which are different in the two cipher execution runs are marked red for easier visual recognition.
@@ -86,14 +86,14 @@
           <item>
               The second section contains the content of the page. This is the main section and is located in the middle of a page. <newline/> 
               For the first two pages, the content is static and thus does not change. <newline/> 
-              On the Diffusion page, there are input fields with which the user can interact. <newline/>
+              On the Diffusion page, there are input fields with which the user can optionally enter the secondary values. <newline/>
               On the last two pages, the content is dynamic. This means that the current content of the page depends on the current action index. This action index can be chosen in the third section.
           </item>
           <item>
               The third section contains the action navigation. It only exists in pages with dynamic content. It is used to move through the visualization step-by-step. It consists
-              of a slider, a previous and next button, and a input field together with a label indicating the max action index. The previous and next button can be used to move backwards or forward one step at a time.
-              The slider can be used to move fast multiple steps backwards or forwards. The input field can be used to immediately to go a specific action index by entering a number and pressing ENTER. <newline/>
-              Additionally, page-specific buttons are shown above the slider to go to visualization milestones of the current page.<newline/>
+              of a slider, a previous and next button, and a input field together with a label indicating how many actions the current page has. The previous and next button can be used to move backwards or forward one step at a time.
+              The slider can be used to skip a lot of actions at once. The input field can be used to immediately to go a specific action index by entering a number and pressing ENTER. <newline/>
+              Additionally, page-specific buttons are shown above the slider to go to milestones of the current page.<newline/>
               For example, on the State Matrix page, one can use them go to the start or the end of the encoding of a specific state parameter.<newline/>
           </item>
       </enum>
@@ -103,7 +103,40 @@
   
   <presentation lang="de-DE">
       <section headline="Benutzeroberfläche">
-          Die Benutzeroberfläche der Visualisierung ist in drei Sektionen aufgeteilt.
+          Die Benutzeroberfläche der Visualisierung ist in drei Sektionen aufgeteilt.<newline/>
+          <enum>
+              <item>
+                  Die erste Sektion besteht aus der Seitennavigation mit dem Seitentitel und einem Umschaltknopf. Sie ist in der obersten Reihe jeder Seite zu finden. Wie der Name andeutet, kann mit der Seitennavigation zwischen den Seiten der Visualisierung gewechselt werden.
+                  Es existieren insgesamt fünf Seiten:
+                  <enum>
+                      <item>Startseite: Anfang der Visualisierung. Jedes Mal wenn die Arbeitsfläche neugestartet wird, wird die Visualisierung auf diese Seite zurückgesetzt.</item>
+                      <item>Übersichtsseite: Gibt einen kurzen Überblick über die Chiffre und die Visualisierung.</item>
+                      <item>Diffusionsseite: Ermöglicht dem Benutzer optional zweite Werte für Schlüssel, IV und Zähler einzugeben. Diese werdeb nuetzt um die Diffusionseigenschaft der Chiffre zu visualisieren auf den nächsten Seiten.</item>
+                      <item>Zustandsmatrix-Seite: Visualisiert die Initialisierung des 512-bit Zustands.</item>
+                      <item>ChaCha-Hashfunktion-Seite: Visualisiert die Ausführung der Hashfunktion, die die Schlüsselstromblöcke generiert aus dem 512-bit Zustand.</item>
+                  </enum>
+                  Der Umschaltknopf in der oberen, rechten Ecke ist nur sichtbar wenn Diffusion eingeschaltet ist. Mit ihm kann der Benutzer zwischen zwei Ansichten wechseln.
+                  Wenn er nicht gedrückt wurde, dann werden beide Werte der Chiffre-Ausführungen angezeigt (Nicht-XOR-Ansicht).
+                  Wenn er gedrückt wurde, wird nur die Differenz (XOR) der beiden Werte angezeigt (XOR-Ansicht). Figur 1 zeigt die ChaCha-Hashfunktion während der Ausführung in der Nicht-XOR-Ansicht.
+                  Die Werte in der oberen Reihe einer jeden Zelle sind die Zwischenwerte aus den Plugin-Inputs. Die Werte in der unteren Reihe einer jeden Zelle sind die Zwischenwerte aus den Werten der Diffusionsseite.
+                  Hexadezimale Charakter, die sich unterscheiden, sind mit Rot markiert um diese leichter zu erkennen.
+                  Figur 2 zeigt die ChaCha-Hashfunktion in der XOR-Ansicht. Dort ist demententsprechend nur ein Wert in jeder Zelle zu sehen. Es ist der XOR-Wert der beiden Werte.
+              </item>
+              <item>
+                  Die zweite Sektion besteht aus dem Inhalt der Seite. Es ist die Hauptsektion und befindet sich in der Mitte einer jeder Seite. <newline/>
+                  Auf den ersten beiden Seiten ist der Inhalt statisch. Er verändert sich also nicht. <newline/>
+                  Auf der Diffusionseite sind Eingabefelder zu finden, mit denen der Nutzer interagieren kann um optional die zweiten Werte einzugeben. <newline/>
+                  Auf den letzten beiden Seiten ist der Inhalt dynamisch. Das bedeutet, dass der aktuelle Inhalt der Seite davon abhängt, auf welchem Aktionsindex man sich beinfdet. Dieser Aktionsindex kann in der dritten und letzten Sektion ausgewählt werden.
+              </item>
+              <item>
+                  Die dritte Sektion beinhaltet die Aktionsnavigation. Sie existiert nur auf Seiten mit dynamischen Inhalt. Sie wird benutzt um innerhalb einer Seite die Visualisierung Schritt-für-Schritt durchzugehen.
+                  Sie besteht aus einem Slider, einem Zurück- und Vor-Knopf, und einem Inputfeld zusammen mit einem Label das die Anzahl der Aktionen der aktuellen Seite anzeigt.
+                  Die Zurück- und Vor-Knöpfe können benutzt werden um einen Schritt zurück bzw. vor zu gehen. Der Slider kann benutzt werden um schnell viele Schritte zu überspringen.
+                  Das Inputfeld kann benutzt werden um sofort zu einer bestimmten Aktion zu springen, indem man eine Zahl eingibt und ENTER drückt. <newline/>
+                  Zusätzlich befinden sich weitere, seitenabhängige Knöpfe für wichtige Meilensteine oberhalb des Sliders.<newline/>
+                  Als Beispiel, auf der Zustandsmatrix-Seite gibt es Knöpfe die zum Start und Ende der Enkodierung eines Zustandparameters führen.
+              </item>
+          </enum>
           <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_800x433.PNG" caption="Figur 1: ChaCha Hashfunktion mit Diffusion" />
           <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figur 2: ChaCha Hashfunktion mit Diffusion (XOR)" />
       </section>
