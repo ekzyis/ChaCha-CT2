@@ -31,7 +31,7 @@
           messages up to 2^70 bytes (2^64 blocks with 64 byte each) which is equal to 1024 exabyte.<newline/>
           This very high number is also the reason why the IETF chose a smaller counter size to make use of a larger initialization vector. With a 32-bit counter, one can still
           encrypt messages up to 256 GB which should be enough for most use cases. With a larger initialization vector, one could reuse the same key more safely by partitioning
-          the 96-bit initialization vector into a counter section and a unique section. <newline/><newline/>
+          the 96-bit initialization vector into a counter section and a unique section <ref id="RFC8439" />. <newline/><newline/>
           The key can be 128-bit or 256-bit key. A 128-bit key will be concatenated with itself to form a 256-bit key. <newline/><newline/>
           The initialization vector must be 64-bit or 96-bit, depending on the chosen version. As with all stream ciphers, a key-IV pair should never be reused for encryption.<newline/><newline/>
           The initial counter determines the counter value for the first keystream block. In following keystream blocks, it is used exactly as in block ciphers in counter mode: It is incremented to generate a unique input for the hash function which generates the keystream blocks.<newline/>
@@ -52,7 +52,7 @@
           Im Praktischen ist dieses Limit groß genug, sodass im Normalfall man sich darüber keine Gedanken machen muss. So ist die maximale Nachrichtengröße für die DJB-Version mit einem 64-bit Zähler 2^70 Bytes (2^64 Blöcke mit jeweils 64 Bytes).
           Dies entspricht einer Nachrichtengröße von 1024 Exabyte.<newline/>
           Das ist auch der Grund, wieso die IETF sich für einen 32-bit Zähler entschieden hat: Mit einem 32-bit Zähler können immer noch 256 Gigabyte auf einmal verschlüsselt werden was für die meisten Anwendungen mehr als genug sein sollte.<newline/>
-          Mit dem größeren Initialisierungsvektor kann somit besser sichergestellt werden, dass das gleiche Schlüssel-IV Paar nicht erneut benutzt wird; beispielsweise indem man den IV in eine Zählersektion und eine feste Sektion trennt.<newline/><newline/>
+          Mit dem größeren Initialisierungsvektor kann somit besser sichergestellt werden, dass das gleiche Schlüssel-IV Paar nicht erneut benutzt wird; beispielsweise indem man den IV in eine Zählersektion und eine feste Sektion trennt <ref id="RFC8439" />.<newline/><newline/>
           Der Schlüssel kann 128-bit oder 256-bit groß sein. Ein 256-bit Schlüssel wird mit sich selbst konkateniert um einen 256-bit Schlüssel zu bilden.<newline/><newline/>
           Der Initialisierungsvektor muss entsprechend der ausgewählten Version 64-bit oder 96-bit sein.<newline/><newline/>
           Der initiale Zähler legt den Zählwert für den ersten Schlüsselstromblock fest. In den folgenden Schlüsselstromblöcken funktioniert der Zähler genau wie in Blockchiffren im Counter-Modus: Er wird inkrementiert um jedes mal eine neue, einzigartige Eingabe für die Hashfunktion zu haben, die die Schlüsselstromblöcke generiert.<newline/>
