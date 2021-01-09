@@ -63,7 +63,7 @@
     </usage>
 
     <presentation lang="en">
-        The user interface of the visualization is split into three sections.<newline />
+        The user interface of the visualization is split into the following three sections (see Figure 1):<newline />
         <enum>
             <item>
                 The first section consists of the page navigation with the page title and a toggle buton. It is located in the top row of each page. As the name indicates, the page navigation can be used to switch between pages.
@@ -76,11 +76,11 @@
                     <item>ChaCha Hash Function page: Visualizes the execution of the hash function which generates keystream blocks out of the 512-bit state.</item>
                 </enum>
                 The toggle button in the top-right corner is only shown if diffusion is active. With it, the user can toggle between two diffusion visualization views. If not toggled,
-                both values of the cipher runs are shown (non-XOR view). If toggled, only the XOR of both values are shown (XOR view). Figure 1 shows the ChaCha hash function mid-execution with the button not toggled.
+                both values of the cipher runs are shown (non-XOR view). If toggled, only the XOR of both values are shown (XOR view). Figure 2 shows the ChaCha hash function mid-execution with the button not toggled.
                 The values in the top row of each cell are the intermediate values of the cipher execution with the input values.
                 The values in the bottom row of each cell are the intermediate values of the cipher execution with the values the user entered on the Diffusion page.
                 Hexadecimal characters which are different in the two cipher execution runs are marked red for easier visual recognition.
-                Figure 2 shows the ChaCha hash function mid-execution with the button toggled.
+                Figure 3 shows the ChaCha hash function mid-execution with the button toggled.
                 Now there is only one value per cell. It is the XOR of the two values seen before.
             </item>
             <item>
@@ -97,13 +97,14 @@
                 For example, on the State Matrix page, one can use them go to the start or the end of the encoding of a specific state parameter.<newline />
             </item>
         </enum>
-        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_800x433.PNG" caption="Figure 1: ChaCha hash function with diffusion" />
-        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figure 2: ChaCha hash function with diffusion (XOR)" />
+        <img src="ChaCha/Images/en_user_interface_hash_800x433_sections.PNG" caption="Figure 1: Page sections (ChaCha hash function page as example)" />
+        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_800x433.PNG" caption="Figure 2: ChaCha hash function with diffusion" />
+        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figure 3: ChaCha hash function with diffusion (XOR)" />
     </presentation>
 
     <presentation lang="de-DE">
         <section headline="Benutzeroberfläche">
-            Die Benutzeroberfläche der Visualisierung ist in drei Sektionen aufgeteilt.<newline />
+            Die Benutzeroberfläche der Visualisierung ist in die folgenden drei Sektionen aufgeteilt (siehe Figur 1):<newline />
             <enum>
                 <item>
                     Die erste Sektion besteht aus der Seitennavigation mit dem Seitentitel und einem Umschaltknopf. Sie ist in der obersten Reihe jeder Seite zu finden. Wie der Name andeutet, kann mit der Seitennavigation zwischen den Seiten der Visualisierung gewechselt werden.
@@ -137,8 +138,9 @@
                     Als Beispiel, auf der Zustandsmatrix-Seite gibt es Knöpfe die zum Start und Ende der Enkodierung eines Zustandparameters führen.
                 </item>
             </enum>
-            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_800x433.PNG" caption="Figur 1: ChaCha Hashfunktion mit Diffusion" />
-            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figur 2: ChaCha Hashfunktion mit Diffusion (XOR)" />
+            <img src="ChaCha/Images/de_user_interface_hash_800x433_sections.PNG" caption="Figur 1: Sektionen (ChaCha-Hashfunktion-Seite als Beispiel)" />
+            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_800x433.PNG" caption="Figur 2: ChaCha Hashfunktion mit Diffusion" />
+            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figur 3: ChaCha Hashfunktion mit Diffusion (XOR)" />
         </section>
     </presentation>
 
