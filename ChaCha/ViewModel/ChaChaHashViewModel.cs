@@ -1412,6 +1412,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public override void Setup()
         {
+            Debug.Assert(ChaCha.OriginalState.Count == ChaCha.TotalKeystreamBlocks,
+                $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {ChaCha.TotalKeystreamBlocks}. Actual: {ChaCha.OriginalState.Count}");
             AssertEmptyAndInitialize(StateValues, "StateValues");
             AssertEmptyAndInitialize(DiffusionStateValues, "DiffusionStateValues", 16);
             AssertEmptyAndInitialize(OriginalState, "OriginalState", 16);
