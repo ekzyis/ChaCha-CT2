@@ -31,7 +31,7 @@ using System.Text;
 
 namespace Cryptool.Plugins.ChaCha
 {
-    [Author("Ramdip Gill", "rgill@cryptool.org", "CrypTool 2 Team", "https://www.cryptool.org")]
+    [Author("Ramdip Gill", "r.gill@stud.uni-heidelberg.de", "Universität Heidelberg", "https://www.uni-heidelberg.de/de")]
     [PluginInfo("Cryptool.Plugins.ChaCha.Properties.Resources", "ChaChaCaption", "ChaChaTooltip", "ChaCha/userdoc.xml", new[] { "CrypWin/images/default.png" })]
     [ComponentCategory(ComponentCategory.CiphersModernSymmetric)]
     public class ChaCha : ICrypComponent, IValidatableObject, INotifyPropertyChanged
