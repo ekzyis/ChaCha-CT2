@@ -389,6 +389,9 @@
     <Resource Include="Images\en_user_interface_hash_800x433.PNG" />
     <Resource Include="Images\en_user_interface_hash_800x433_sections.PNG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ChaCha.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
