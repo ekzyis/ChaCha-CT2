@@ -2,13 +2,14 @@
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
+    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     internal class OverviewViewModel : ViewModelBase, INavigation, ITitle, IChaCha
     {
         public OverviewViewModel(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
             PresentationViewModel = chachaPresentationViewModel;
-            Name = "Overview";
-            Title = "Overview";
+            Name = this["OverviewName"];
+            Title = this["OverviewTitle"];
         }
 
         #region INavigation

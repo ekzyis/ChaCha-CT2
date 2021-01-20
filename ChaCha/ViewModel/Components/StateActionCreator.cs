@@ -46,8 +46,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
         {
             return () =>
             {
-                Debug.Assert(VM.ChaCha.OriginalState.Count == VM.ChaCha.TotalKeystreamBlocks,
-                $"Count of OriginalState was not equal to TotalKeystreamBlocks. Expected: {VM.ChaCha.TotalKeystreamBlocks}. Actual: {VM.ChaCha.OriginalState.Count}");
                 uint[] state = VM.ChaCha.OriginalState[keystreamBlock];
                 for (int i = 0; i < 16; ++i)
                 {

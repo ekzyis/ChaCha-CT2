@@ -15,6 +15,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="..\Styles\Index.xaml" />
                 <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+                <ResourceDictionary Source="..\Localization\en_US.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
         </ResourceDictionary>
@@ -32,9 +33,7 @@
                             <TableRow>
                                 <TableCell ColumnSpan="2">
                                     <Paragraph>
-                                        ChaCha is a stream cipher.
-                                        <LineBreak /> It generates a pseudorandom stream of bits (keystream) and then encrypts the input message by performing a XOR bitwise operation on it with this keystream.
-                                        <!-- Picture of plaintext XOR keystream -->
+                                        <Run Text="{Loc OverviewIntro1}"/>
                                     </Paragraph>
                                 </TableCell>
                             </TableRow>
@@ -43,8 +42,7 @@
                             <TableRow>
                                 <TableCell ColumnSpan="2">
                                     <Paragraph>
-                                        The keystream is created by first generating keystream blocks of 512 bits and concatenating them until the keystream size is equal or larger than the input.
-                                        <LineBreak /> To generate the keystream, ChaCha uses for each keystream block a 512 bit state which consists of following four values:
+                                        <Run Text="{Loc OverviewIntro2}"/>
                                     </Paragraph>
                                 </TableCell>
                             </TableRow>
@@ -52,16 +50,21 @@
                                 <TableCell>
                                     <List MarkerStyle="Decimal" TextAlignment="Left">
                                         <ListItem Background="Bisque">
-                                            <Paragraph>Constants (nothing-up-my-sleeves numbers) (128-bit)</Paragraph>
+                                            <Paragraph><Run Text="{Loc OverviewConstants}"/></Paragraph>
                                         </ListItem>
                                         <ListItem Background="LightCoral">
-                                            <Paragraph>Key (128-bit or 256-bit. A 128-bit key will be expanded into a 256-bit key.)</Paragraph>
+                                            <Paragraph>
+                                                <Run Text="{Loc OverviewKey}"/>
+                                            </Paragraph>
                                         </ListItem>
                                         <ListItem Background="SkyBlue">
-                                            <Paragraph>Keystream block counter (<Run Text="{Binding Settings.Version.CounterBits, Mode=OneWay}" />-bit)</Paragraph>
+                                            <Paragraph>
+                                                <ContentControl Style="{DynamicResource OverviewCounter}"/>
+                                            </Paragraph>
                                         </ListItem>
                                         <ListItem Background="PaleGreen">
-                                            <Paragraph>Initialization vector (<Run Text="{Binding Settings.Version.IVBits, Mode=OneWay}" />-bit)
+                                            <Paragraph>
+                                                <ContentControl Style="{DynamicResource OverviewIV}"/>
                                             </Paragraph>
                                         </ListItem>
                                     </List>
@@ -80,49 +83,73 @@
                                         <TableRowGroup>
                                             <TableRow>
                                                 <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
+                                                    <Paragraph><Run Text="{Loc OverviewMatrixConstants}"/></Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixConstants}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixConstants}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="Bisque">
-                                                    <Paragraph>CONSTANT</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixConstants}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="LightCoral">
-                                                    <Paragraph>KEY</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    <Paragraph Background="LightCoral">
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    <Paragraph Background="LightCoral">
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    <Paragraph Background="LightCoral">
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Paragraph Background="LightCoral">KEY</Paragraph>
+                                                    <Paragraph Background="LightCoral">
+                                                        <Run Text="{Loc OverviewMatrixKey}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                             </TableRow>
                                             <TableRow>
                                                 <TableCell Background="SkyBlue">
-                                                    <Paragraph>COUNTER</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixCounter}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell>
                                                     <TableCell.Style>
@@ -136,32 +163,27 @@
                                                         </Style>
                                                     </TableCell.Style>
                                                     <Paragraph>
-                                                        <TextBlock>
-                                                            <TextBlock.Style>
-                                                                <Style TargetType="{x:Type TextBlock}">
-                                                                    <Setter Property="Text" Value="COUNTER"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
-                                                                            <Setter Property="Text" Value="IV"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </TextBlock.Style>
-                                                        </TextBlock>
+                                                        <ContentControl Style="{DynamicResource OverviewState13}"/>
                                                     </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="PaleGreen">
-                                                    <Paragraph>IV</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixIV}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                                 <TableCell Background="PaleGreen">
-                                                    <Paragraph>IV</Paragraph>
+                                                    <Paragraph>
+                                                        <Run Text="{Loc OverviewMatrixIV}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                             </TableRow>
                                         </TableRowGroup>
                                         <TableRowGroup>
                                             <TableRow>
                                                 <TableCell ColumnSpan="4" BorderThickness="0">
-                                                    <Paragraph Style="{StaticResource Description}">State as a 4x4 matrix where each cell is 4 bytes</Paragraph>
+                                                    <Paragraph Style="{StaticResource Description}">
+                                                        <Run Text="{Loc OverviewMatrixCaption}"/>
+                                                    </Paragraph>
                                                 </TableCell>
                                             </TableRow>
                                         </TableRowGroup>
@@ -173,30 +195,32 @@
                             <TableRow>
                                 <TableCell ColumnSpan="2">
                                     <Paragraph>
-                                        Applying the ChaCha hash function to the 512 bit state would then return a keystream block.
+                                        <Run Text="{Loc OverviewOutro1}"/>
                                     </Paragraph>
                                     <Paragraph>
-                                        This leads us to following steps to encrypt a message M using the ChaCha cipher:
+                                        <Run Text="{Loc OverviewOutro2}"/>
                                     </Paragraph>
                                     <List MarkerStyle="Decimal">
                                         <ListItem>
                                             <Paragraph>
-                                                Initialize state matrix
+                                                <Run Text="{Loc OverviewOutroStep1}"/>
                                             </Paragraph>
                                         </ListItem>
                                         <ListItem>
                                             <Paragraph>
-                                                Generate keystream
+                                                <Run Text="{Loc OverviewOutroStep2}"/>
                                             </Paragraph>
                                         </ListItem>
                                         <ListItem>
                                             <Paragraph>
-                                                M XOR Keystream
+                                                <Run Text="{Loc OverviewOutroStep3}"/>
                                             </Paragraph>
                                         </ListItem>
                                     </List>
                                     <Paragraph>
-                                        <Italic>Remark: Due to XOR being the inverse function to itself, decryption works exactly the same.</Italic>
+                                        <Italic>
+                                            <Run Text="{Loc OverviewRemark}"/>
+                                        </Italic>
                                     </Paragraph>
                                 </TableCell>
                             </TableRow>

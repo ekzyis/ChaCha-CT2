@@ -35,7 +35,7 @@
                 </Grid.Resources>
                 <StackPanel>
                     <TextBox Style="{StaticResource Title}" Text="ChaCha Visualization" />
-                    <TextBox Style="{StaticResource SecondTitle}" Text="A stream cipher developed by Daniel J. Bernstein in 2008" />
+                    <TextBox Style="{StaticResource SecondTitle}" Text="{Loc ChaChaTooltip}" />
                 </StackPanel>
             </Grid>
         </Viewbox>

@@ -10,11 +10,13 @@ namespace Cryptool.Plugins.ChaCha.View
     /// <summary>
     /// Interaction logic for StateMatrixInitialization.xaml
     /// </summary>
+    [PluginBase.Attributes.Localization("Cryptool.Plugins.ChaCha.Properties.Resources")]
     public partial class StateMatrixInit : UserControl
     {
         public StateMatrixInit()
         {
             InitializeComponent();
+            ActionViewBase.LoadLocaleResources(this);
             this.DataContextChanged += OnDataContextChanged;
         }
 
