@@ -42,16 +42,12 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 rtb.Document.Blocks.Add(new Paragraph());
             }
             else ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Clear();
-            var watch = new System.Diagnostics.Stopwatch();
-            watch.Start();
             for (int i = 0; i < dHex.Length; ++i)
             {
                 char dChar1 = dHex[i];
                 char pChar1 = pHex[i];
                 ((Paragraph)rtb.Document.Blocks.LastBlock).Inlines.Add(RedIfDifferent(dChar1, pChar1));
             }
-            TimeSpan ts = watch.Elapsed;
-            Console.WriteLine($"InitDiffusionValue RunTime: {ts.TotalMilliseconds} ms");
         }
 
         /// <summary>
