@@ -114,28 +114,20 @@ namespace Cryptool.Plugins.ChaCha.View
 
         private void HandleDiffusionStateValuesChange()
         {
-            var watch = new Stopwatch();
-            watch.Start();
             for (int i = 0; i < 16; ++i)
             {
                 HandleDiffusionStateValuesChange(i);
             }
-            TimeSpan ts = watch.Elapsed;
-            Console.WriteLine($"HandleDiffusionStateValuesChange RunTime: {ts.TotalMilliseconds} ms");
         }
 
         private void HandleDiffusionStateValuesChange(int i)
         {
-            var watch = new Stopwatch();
-            watch.Start();
             RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
             RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionStateXOR{i}");
             uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
             uint? stateValue = ViewModel.StateValues[i].Value;
             InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
             InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
-            TimeSpan ts = watch.Elapsed;
-            Console.WriteLine($"HandleDiffusionStateValuesChange({i}) RunTime: {ts.TotalMilliseconds} ms");
         }
 
         private void HandleDiffusionOriginalStateChange()
