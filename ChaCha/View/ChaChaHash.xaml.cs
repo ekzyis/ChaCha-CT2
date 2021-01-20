@@ -137,10 +137,9 @@ namespace Cryptool.Plugins.ChaCha.View
             Debug.Assert(real.Length == virtual_.Length, "real and virtual_ length must be equal");
             for (int i = 0; i < real.Length; ++i)
             {
-                uint? r = real[i];
                 uint? v = virtual_[i];
                 uint? p = primary[i];
-                DomSync(ref r, v, p, domDiffusionName(i), domDiffusionXorName(i));
+                DomSync(ref real[i], v, p, domDiffusionName(i), domDiffusionXorName(i));
             }
         }
 
