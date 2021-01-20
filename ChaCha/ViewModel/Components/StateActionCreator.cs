@@ -59,9 +59,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     {
                         VM.DiffusionStateValues[i].Value = diffusionState[i];
                     }
-                    VM.OnPropertyChanged("DiffusionStateValues");
-                    VM.OnPropertyChanged("DiffusionFlippedBits");
-                    VM.OnPropertyChanged("DiffusionFlippedBitsPercentage");
                 }
             };
         }
@@ -82,7 +79,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                         {
                             VM.DiffusionOriginalState[i].Value = null;
                         }
-                        VM.OnPropertyChanged("DiffusionOriginalState");
                     }
                 };
             }
@@ -104,7 +100,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                         {
                             VM.DiffusionAdditionResultState[i].Value = null;
                         }
-                        VM.OnPropertyChanged("DiffusionAdditionResultState");
                     }
                 };
             }
@@ -126,7 +121,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                         {
                             VM.DiffusionLittleEndianState[i].Value = null;
                         }
-                        VM.OnPropertyChanged("DiffusionLittleEndianState");
                     }
                 };
             }
@@ -149,7 +143,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     {
                         VM.DiffusionOriginalState[i].Value = diffusionState[i];
                     }
-                    VM.OnPropertyChanged("DiffusionOriginalState");
                 }
             };
         }
@@ -171,7 +164,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     {
                         VM.DiffusionAdditionResultState[i].Value = diffusionState[i];
                     }
-                    VM.OnPropertyChanged("DiffusionAdditionResultState");
                 }
             };
         }
@@ -193,7 +185,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     {
                         VM.DiffusionLittleEndianState[i].Value = diffusionState[i];
                     }
-                    VM.OnPropertyChanged("DiffusionLittleEndianState");
                 }
             };
         }
