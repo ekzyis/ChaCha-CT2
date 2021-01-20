@@ -123,12 +123,9 @@ namespace Cryptool.Plugins.ChaCha.View
                 // QR Step
                 for (int i = 0; i < 4; ++i)
                 {
-                    uint? realAdd = DiffusionQRStep[i, 0];
-                    uint? realXOR = DiffusionQRStep[i, 1];
-                    uint? realShift = DiffusionQRStep[i, 2];
-                    DomSync(ref realAdd, ViewModel.DiffusionQRStep[i].Add, ViewModel.QRStep[i].Add, $"QRValueAddDiffusion_{i}", $"QRValueAddDiffusionXOR_{i}");
-                    DomSync(ref realXOR, ViewModel.DiffusionQRStep[i].XOR, ViewModel.QRStep[i].XOR, $"QRValueXORDiffusion_{i}", $"QRValueXORDiffusionXOR_{i}");
-                    DomSync(ref realShift, ViewModel.DiffusionQRStep[i].Shift, ViewModel.QRStep[i].Shift, $"QRValueShiftDiffusion_{i}", $"QRValueShiftDiffusionXOR_{i}");
+                    DomSync(ref DiffusionQRStep[i, 0], ViewModel.DiffusionQRStep[i].Add, ViewModel.QRStep[i].Add, $"QRValueAddDiffusion_{i}", $"QRValueAddDiffusionXOR_{i}");
+                    DomSync(ref DiffusionQRStep[i, 1], ViewModel.DiffusionQRStep[i].XOR, ViewModel.QRStep[i].XOR, $"QRValueXORDiffusion_{i}", $"QRValueXORDiffusionXOR_{i}");
+                    DomSync(ref DiffusionQRStep[i, 2], ViewModel.DiffusionQRStep[i].Shift, ViewModel.QRStep[i].Shift, $"QRValueShiftDiffusion_{i}", $"QRValueShiftDiffusionXOR_{i}");
                 }
             });
         }
