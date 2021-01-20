@@ -17,6 +17,9 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
     /// </summary>
     internal abstract class ActionViewModelBase : ViewModelBase, IActionNavigation, IChaCha, INavigation, IActionTag
     {
+        // Used to tell the view that we have finished moving to a new action.
+        // The view can use this information to start updating the user interface.
+        public static string MOVE_ACTION_FINISHED = "MOVE_ACTION_FINISHED";
         public ActionViewModelBase(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
             PresentationViewModel = chachaPresentationViewModel;
@@ -148,6 +151,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 watch.Start();
                 Reset();
                 Actions[n].Invoke();
+                this.OnPropertyChanged(MOVE_ACTION_FINISHED);
                 CurrentActionIndex = n;
                 TimeSpan ts = watch.Elapsed;
                 Console.WriteLine($"Navigation RunTime (from {previous} to {n}): {ts.TotalMilliseconds} ms");

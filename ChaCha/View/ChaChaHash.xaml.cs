@@ -2,8 +2,10 @@
 using Cryptool.Plugins.ChaCha.Model;
 using Cryptool.Plugins.ChaCha.ViewModel;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,6 +44,46 @@ namespace Cryptool.Plugins.ChaCha.View
 
         #region Diffusion
 
+        #region Virtual DOM
+
+        /**
+         * These variables implement the "Real DOM" part of the "Virtual DOM"
+         * system. This should improve peformance during diffusion.
+         *
+         * This design is inspired by the virtual DOM used in ReactJS.
+         * See https://www.codecademy.com/articles/react-virtual-dom.
+         *
+         * The variables here represent the current state of the real DOM
+         * whereas the variables in the ViewModel represent the virtual DOM.
+         *
+         * During the execution of an action, the virtual DOM changes.
+         * At the end of an action execution, MOVE_ACTION_FINISHED is dispatched.
+         *
+         * This tells the view that it should now compare the real DOM with the virtual DOM.
+         *
+         * Only if something is different, the appropriate dispatch is done and thus
+         * resulting in an actual change in the real DOM the user can see.
+         *
+         * Therefore, after every MOVE_ACTION_FINISHED, the real DOM and virtual DOM
+         * are in sync.
+         */
+
+        private uint?[] DiffusionState = new uint?[16];
+
+        private uint?[] DiffusionOriginalState = new uint?[16];
+
+        private uint?[] DiffusionAdditionResultState = new uint?[16];
+
+        private uint?[] DiffusionLittleEndianState = new uint?[16];
+
+        private uint? DiffusionQRInA_, DiffusionQRInB_, DiffusionQRInC_, DiffusionQRInD_;
+
+        private uint? DiffusionQROutA_, DiffusionQROutB_, DiffusionQROutC_, DiffusionQROutD_;
+
+        private uint?[,] DiffusionQRStep = new uint?[4, 3];
+
+        #endregion Virtual DOM
+
         private void OnViewModelPropertyChange(object sender, PropertyChangedEventArgs e)
         {
             this.Dispatcher.Invoke(delegate
@@ -50,41 +92,77 @@ namespace Cryptool.Plugins.ChaCha.View
                 // Mhhh... we'll ignore it for now and just return, if this happens.
                 // Maybe some async issues?
                 if (ViewModel == null) return;
-                if (e.PropertyName.StartsWith("DiffusionStateValues"))
+
+                if (!e.PropertyName.Equals(ActionViewModelBase.MOVE_ACTION_FINISHED))
                 {
-                    var match = Regex.Match(e.PropertyName, @"^DiffusionStateValues\[([0-9]+)\]$");
-                    if (match.Groups[1].Success)
-                    {
-                        int index = int.Parse(match.Groups[1].Value);
-                        HandleDiffusionStateValuesChange(index);
-                    }
-                    else HandleDiffusionStateValuesChange();
+                    return;
                 }
-                else if (e.PropertyName == "DiffusionOriginalState")
+
+                // State matrices
+                DomSync(DiffusionState, ViewModel.DiffusionStateValues, ViewModel.StateValues,
+                    (i) => $"DiffusionState{i}", (i) => $"DiffusionStateXOR{i}");
+                DomSync(DiffusionOriginalState, ViewModel.DiffusionOriginalState, ViewModel.OriginalState,
+                    (i) => $"DiffusionOriginalState{i}", (i) => $"DiffusionOriginalStateXOR{i}");
+                DomSync(DiffusionAdditionResultState, ViewModel.DiffusionAdditionResultState, ViewModel.AdditionResultState,
+                    (i) => $"DiffusionAdditionResultState{i}", (i) => $"DiffusionAdditionResultStateXOR{i}");
+                DomSync(DiffusionLittleEndianState, ViewModel.DiffusionLittleEndianState, ViewModel.LittleEndianState,
+                    (i) => $"DiffusionLittleEndianState{i}", (i) => $"DiffusionLittleEndianStateXOR{i}");
+
+                // QR Input
+                DomSync(ref DiffusionQRInA_, ViewModel.DiffusionQRInA, ViewModel.QRInA, "DiffusionQRInA", "DiffusionQRInAXOR");
+                DomSync(ref DiffusionQRInB_, ViewModel.DiffusionQRInB, ViewModel.QRInB, "DiffusionQRInB", "DiffusionQRInBXOR");
+                DomSync(ref DiffusionQRInC_, ViewModel.DiffusionQRInC, ViewModel.QRInC, "DiffusionQRInC", "DiffusionQRInCXOR");
+                DomSync(ref DiffusionQRInD_, ViewModel.DiffusionQRInD, ViewModel.QRInD, "DiffusionQRInD", "DiffusionQRInDXOR");
+
+                // QR Output
+                DomSync(ref DiffusionQROutA_, ViewModel.DiffusionQROutA, ViewModel.QROutA, "DiffusionQROutA", "DiffusionQROutAXOR");
+                DomSync(ref DiffusionQROutB_, ViewModel.DiffusionQROutB, ViewModel.QROutB, "DiffusionQROutB", "DiffusionQROutBXOR");
+                DomSync(ref DiffusionQROutC_, ViewModel.DiffusionQROutC, ViewModel.QROutC, "DiffusionQROutC", "DiffusionQROutCXOR");
+                DomSync(ref DiffusionQROutD_, ViewModel.DiffusionQROutD, ViewModel.QROutD, "DiffusionQROutD", "DiffusionQROutDXOR");
+
+                // QR Step
+                for (int i = 0; i < 4; ++i)
                 {
-                    HandleDiffusionOriginalStateChange();
-                }
-                else if (e.PropertyName == "DiffusionAdditionResultState")
-                {
-                    HandleDiffusionAdditionResultStateChange();
-                }
-                else if (e.PropertyName == "DiffusionLittleEndianState")
-                {
-                    HandleDiffusionLittleEndianStateChange();
-                }
-                else if (e.PropertyName.StartsWith("DiffusionQRIn"))
-                {
-                    HandleDiffusionQRInChange();
-                }
-                else if (e.PropertyName.StartsWith("DiffusionQROut"))
-                {
-                    HandleDiffusionQROutChange();
-                }
-                else if (e.PropertyName.StartsWith("DiffusionQRStep"))
-                {
-                    HandleDiffusionQRStepChange(e.PropertyName);
+                    DomSync(ref DiffusionQRStep[i, 0], ViewModel.DiffusionQRStep[i].Add, ViewModel.QRStep[i].Add, $"QRValueAddDiffusion_{i}", $"QRValueAddDiffusionXOR_{i}");
+                    DomSync(ref DiffusionQRStep[i, 1], ViewModel.DiffusionQRStep[i].XOR, ViewModel.QRStep[i].XOR, $"QRValueXORDiffusion_{i}", $"QRValueXORDiffusionXOR_{i}");
+                    DomSync(ref DiffusionQRStep[i, 2], ViewModel.DiffusionQRStep[i].Shift, ViewModel.QRStep[i].Shift, $"QRValueShiftDiffusion_{i}", $"QRValueShiftDiffusionXOR_{i}");
                 }
             });
+        }
+
+        private delegate string IndexToNameMapper(int i);
+        private void DomSync(uint?[] real, uint?[] virtual_, uint?[] primary, IndexToNameMapper domDiffusionName, IndexToNameMapper domDiffusionXorName)
+        {
+            Debug.Assert(real.Length == virtual_.Length, "real and virtual_ length must be equal");
+            for (int i = 0; i < real.Length; ++i)
+            {
+                uint? v = virtual_[i];
+                uint? p = primary[i];
+                DomSync(ref real[i], v, p, domDiffusionName(i), domDiffusionXorName(i));
+            }
+        }
+
+        private void DomSync(uint?[] real, ObservableCollection<StateValue> virtual_, ObservableCollection<StateValue> primary, IndexToNameMapper domDiffusionName, IndexToNameMapper domDiffusionXorName)
+        {
+            DomSync(real, virtual_.Select(sv => sv.Value).ToArray(), primary.Select(sv => sv.Value).ToArray(), domDiffusionName, domDiffusionXorName);
+        }
+
+        private void DomSync(ref uint? r, uint? v, uint? p, string domDiffusionName, string domDiffusionXorName)
+        {
+            if (r.HasValue ^ v.HasValue || (r.HasValue && v.HasValue && r.Value != v.Value))
+            {
+                // Update real DOM
+                RichTextBox rtb = (RichTextBox) FindName(domDiffusionName);
+                RichTextBox rtbXor = (RichTextBox) FindName(domDiffusionXorName);
+                InitOrClearDiffusionValue(rtb, v, p);
+                InitOrClearXorValue(rtbXor, v, p);
+                r = v;
+            }
+        }
+
+        private void DomSync(ref uint? r, QRValue v, QRValue p, string domDiffusionName, string domDiffusionXorName)
+        {
+            DomSync(ref r, v.Value, p.Value, domDiffusionName, domDiffusionXorName);
         }
 
         private void InitOrClearDiffusionValue(RichTextBox rtb, uint? diffusionStateValue, uint? stateValue)
@@ -92,7 +170,8 @@ namespace Cryptool.Plugins.ChaCha.View
             // TODO(clarify) Why can the stateValue be null if the diffusionValue is not null? Shouldn't they always be together null or not?
             if (diffusionStateValue != null && stateValue != null)
             {
-                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue, (uint)stateValue);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint) diffusionStateValue,
+                    (uint) stateValue);
             }
             else
             {
@@ -100,187 +179,17 @@ namespace Cryptool.Plugins.ChaCha.View
             }
         }
 
-        private void InitOrClearXorValue(RichTextBox rtb, uint? diffusionValue, uint? value)
+        private void InitOrClearXorValue(RichTextBox rtb, uint? diffusionValue, uint? stateValue)
         {
-            if (diffusionValue != null && value != null)
+            if (diffusionValue != null && stateValue != null)
             {
-                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(rtb, (uint)diffusionValue, (uint)value);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(rtb, (uint) diffusionValue,
+                    (uint) stateValue);
             }
             else
             {
                 rtb.Document.Blocks.Clear();
             }
-        }
-
-        private void HandleDiffusionStateValuesChange()
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                HandleDiffusionStateValuesChange(i);
-            }
-        }
-
-        private void HandleDiffusionStateValuesChange(int i)
-        {
-            RichTextBox rtb = (RichTextBox)FindName($"DiffusionState{i}");
-            RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionStateXOR{i}");
-            uint? diffusionStateValue = ViewModel.DiffusionStateValues[i].Value;
-            uint? stateValue = ViewModel.StateValues[i].Value;
-            InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
-            InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
-        }
-
-        private void HandleDiffusionOriginalStateChange()
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                RichTextBox rtb = (RichTextBox)FindName($"DiffusionOriginalState{i}");
-                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionOriginalStateXOR{i}");
-                uint? diffusionStateValue = ViewModel.DiffusionOriginalState[i].Value;
-                uint? stateValue = ViewModel.OriginalState[i].Value;
-                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
-                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
-            }
-        }
-
-        private void HandleDiffusionAdditionResultStateChange()
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                RichTextBox rtb = (RichTextBox)FindName($"DiffusionAdditionResultState{i}");
-                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionAdditionResultStateXOR{i}");
-                uint? diffusionStateValue = ViewModel.DiffusionAdditionResultState[i].Value;
-                uint? stateValue = ViewModel.AdditionResultState[i].Value;
-                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
-                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
-            }
-        }
-
-        private void HandleDiffusionLittleEndianStateChange()
-        {
-            for (int i = 0; i < 16; ++i)
-            {
-                RichTextBox rtb = (RichTextBox)FindName($"DiffusionLittleEndianState{i}");
-                RichTextBox rtbXor = (RichTextBox)FindName($"DiffusionLittleEndianStateXOR{i}");
-                uint? diffusionStateValue = ViewModel.DiffusionLittleEndianState[i].Value;
-                uint? stateValue = ViewModel.LittleEndianState[i].Value;
-                InitOrClearDiffusionValue(rtb, diffusionStateValue, stateValue);
-                InitOrClearXorValue(rtbXor, diffusionStateValue, stateValue);
-            }
-        }
-
-        private void HandleDiffusionQRInChange()
-        {
-            RichTextBox rtbA = (RichTextBox)FindName($"DiffusionQRInA");
-            RichTextBox rtbAXor = (RichTextBox)FindName($"DiffusionQRInAXOR");
-            uint? diffusionStateValueA = ViewModel.DiffusionQRInA.Value;
-            uint? stateValueA = ViewModel.QRInA.Value;
-            InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
-            InitOrClearXorValue(rtbAXor, diffusionStateValueA, stateValueA);
-
-            RichTextBox rtbB = (RichTextBox)FindName($"DiffusionQRInB");
-            RichTextBox rtbBXor = (RichTextBox)FindName($"DiffusionQRInBXOR");
-            uint? diffusionStateValueB = ViewModel.DiffusionQRInB.Value;
-            uint? stateValueB = ViewModel.QRInB.Value;
-            InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
-            InitOrClearXorValue(rtbBXor, diffusionStateValueB, stateValueB);
-
-            RichTextBox rtbC = (RichTextBox)FindName($"DiffusionQRInC");
-            RichTextBox rtbCXor = (RichTextBox)FindName($"DiffusionQRInCXOR");
-            uint? diffusionStateValueC = ViewModel.DiffusionQRInC.Value;
-            uint? stateValueC = ViewModel.QRInC.Value;
-            InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
-            InitOrClearXorValue(rtbCXor, diffusionStateValueC, stateValueC);
-
-            RichTextBox rtbD = (RichTextBox)FindName($"DiffusionQRInD");
-            RichTextBox rtbDXor = (RichTextBox)FindName($"DiffusionQRInDXOR");
-            uint? diffusionStateValueD = ViewModel.DiffusionQRInD.Value;
-            uint? stateValueD = ViewModel.QRInD.Value;
-            InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
-            InitOrClearXorValue(rtbDXor, diffusionStateValueD, stateValueD);
-        }
-
-        private void HandleDiffusionQROutChange()
-        {
-            RichTextBox rtbA = (RichTextBox)FindName($"DiffusionQROutA");
-            RichTextBox rtbAXor = (RichTextBox)FindName($"DiffusionQROutAXOR");
-            uint? diffusionStateValueA = ViewModel.DiffusionQROutA.Value;
-            uint? stateValueA = ViewModel.QROutA.Value;
-            InitOrClearDiffusionValue(rtbA, diffusionStateValueA, stateValueA);
-            InitOrClearXorValue(rtbAXor, diffusionStateValueA, stateValueA);
-
-            RichTextBox rtbB = (RichTextBox)FindName($"DiffusionQROutB");
-            RichTextBox rtbBXor = (RichTextBox)FindName($"DiffusionQROutBXOR");
-            uint? diffusionStateValueB = ViewModel.DiffusionQROutB.Value;
-            uint? stateValueB = ViewModel.QROutB.Value;
-            InitOrClearDiffusionValue(rtbB, diffusionStateValueB, stateValueB);
-            InitOrClearXorValue(rtbBXor, diffusionStateValueB, stateValueB);
-
-            RichTextBox rtbC = (RichTextBox)FindName($"DiffusionQROutC");
-            RichTextBox rtbCXor = (RichTextBox)FindName($"DiffusionQROutCXOR");
-            uint? diffusionStateValueC = ViewModel.DiffusionQROutC.Value;
-            uint? stateValueC = ViewModel.QROutC.Value;
-            InitOrClearDiffusionValue(rtbC, diffusionStateValueC, stateValueC);
-            InitOrClearXorValue(rtbCXor, diffusionStateValueC, stateValueC);
-
-            RichTextBox rtbD = (RichTextBox)FindName($"DiffusionQROutD");
-            RichTextBox rtbDXor = (RichTextBox)FindName($"DiffusionQROutDXOR");
-            uint? diffusionStateValueD = ViewModel.DiffusionQROutD.Value;
-            uint? stateValueD = ViewModel.QROutD.Value;
-            InitOrClearDiffusionValue(rtbD, diffusionStateValueD, stateValueD);
-            InitOrClearXorValue(rtbDXor, diffusionStateValueD, stateValueD);
-        }
-
-        private void HandleDiffusionQRStepChange(string propertyName)
-        {
-            var pattern = @"DiffusionQRStep\[([0-9])\]\.(Add|XOR|Shift)";
-            var match = Regex.Match(propertyName, pattern);
-            if (match.Success)
-            {
-                int index = int.Parse(match.Groups[1].Value);
-                string operation = match.Groups[2].Value;
-                HandleDiffusionQRStepChange(index, operation);
-            }
-            else
-            {
-                Debug.Assert(propertyName == "DiffusionQRStep");
-                for (int i = 0; i < 4; ++i)
-                {
-                    HandleDiffusionQRStepChange(i, "Add");
-                    HandleDiffusionQRStepChange(i, "XOR");
-                    HandleDiffusionQRStepChange(i, "Shift");
-                }
-            }
-        }
-
-        private void HandleDiffusionQRStepChange(int index, string operation)
-        {
-            RichTextBox rtb = (RichTextBox)FindName($"QRValue{operation}Diffusion_{index}");
-            RichTextBox rtbXor = (RichTextBox)FindName($"QRValue{operation}DiffusionXOR_{index}");
-            VisualQRStep diffusionQrStep = ViewModel.DiffusionQRStep[index];
-            VisualQRStep primaryQrStep = ViewModel.QRStep[index];
-            uint? diffusionValue; uint? primaryValue;
-            if (operation == "Add")
-            {
-                diffusionValue = diffusionQrStep.Add.Value;
-                primaryValue = primaryQrStep.Add.Value;
-            }
-            else if (operation == "XOR")
-            {
-                diffusionValue = diffusionQrStep.XOR.Value;
-                primaryValue = primaryQrStep.XOR.Value;
-            }
-            else if (operation == "Shift")
-            {
-                diffusionValue = diffusionQrStep.Shift.Value;
-                primaryValue = primaryQrStep.Shift.Value;
-            }
-            else
-            {
-                throw new InvalidOperationException("No matching operation found.");
-            }
-            InitOrClearDiffusionValue(rtb, diffusionValue, primaryValue);
-            InitOrClearXorValue(rtbXor, diffusionValue, primaryValue);
         }
 
         #endregion Diffusion
