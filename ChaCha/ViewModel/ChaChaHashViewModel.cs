@@ -207,7 +207,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
                 ActionCreator.EndSequence();
 
-                // End keystraem block sequence
+                // End keystream block sequence
                 ActionCreator.EndSequence();
             }
 
