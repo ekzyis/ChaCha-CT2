@@ -1,12 +1,10 @@
 ﻿using Cryptool.Plugins.ChaCha.Helper.Converter;
 using Cryptool.Plugins.ChaCha.Model;
 using Cryptool.Plugins.ChaCha.ViewModel;
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -42,9 +40,7 @@ namespace Cryptool.Plugins.ChaCha.View
             }
         }
 
-        #region Diffusion
-
-        #region Virtual DOM
+        #region Diffusion - Virtual DOM
 
         /**
          * These variables implement the "Real DOM" part of the "Virtual DOM"
@@ -81,8 +77,6 @@ namespace Cryptool.Plugins.ChaCha.View
         private uint? DiffusionQROutA_, DiffusionQROutB_, DiffusionQROutC_, DiffusionQROutD_;
 
         private uint?[,] DiffusionQRStep = new uint?[4, 3];
-
-        #endregion Virtual DOM
 
         private void OnViewModelPropertyChange(object sender, PropertyChangedEventArgs e)
         {
@@ -131,6 +125,7 @@ namespace Cryptool.Plugins.ChaCha.View
         }
 
         private delegate string IndexToNameMapper(int i);
+
         private void DomSync(uint?[] real, uint?[] virtual_, uint?[] primary, IndexToNameMapper domDiffusionName, IndexToNameMapper domDiffusionXorName)
         {
             Debug.Assert(real.Length == virtual_.Length, "real and virtual_ length must be equal");
@@ -152,8 +147,8 @@ namespace Cryptool.Plugins.ChaCha.View
             if (r.HasValue ^ v.HasValue || (r.HasValue && v.HasValue && r.Value != v.Value))
             {
                 // Update real DOM
-                RichTextBox rtb = (RichTextBox) FindName(domDiffusionName);
-                RichTextBox rtbXor = (RichTextBox) FindName(domDiffusionXorName);
+                RichTextBox rtb = (RichTextBox)FindName(domDiffusionName);
+                RichTextBox rtbXor = (RichTextBox)FindName(domDiffusionXorName);
                 InitOrClearDiffusionValue(rtb, v, p);
                 InitOrClearXorValue(rtbXor, v, p);
                 r = v;
@@ -170,8 +165,8 @@ namespace Cryptool.Plugins.ChaCha.View
             // TODO(clarify) Why can the stateValue be null if the diffusionValue is not null? Shouldn't they always be together null or not?
             if (diffusionStateValue != null && stateValue != null)
             {
-                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint) diffusionStateValue,
-                    (uint) stateValue);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue,
+                    (uint)stateValue);
             }
             else
             {
@@ -183,8 +178,8 @@ namespace Cryptool.Plugins.ChaCha.View
         {
             if (diffusionValue != null && stateValue != null)
             {
-                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(rtb, (uint) diffusionValue,
-                    (uint) stateValue);
+                Plugins.ChaCha.ViewModel.Components.Diffusion.InitXORValue(rtb, (uint)diffusionValue,
+                    (uint)stateValue);
             }
             else
             {
@@ -192,7 +187,7 @@ namespace Cryptool.Plugins.ChaCha.View
             }
         }
 
-        #endregion Diffusion
+        #endregion Diffusion - Virtual DOM
 
         #region User Input
 
