@@ -115,7 +115,7 @@ namespace Cryptool.Plugins.ChaCha
 
         public override string ToString()
         {
-            return $"Rounds: {Rounds}, Version: {Version.Name}";
+            return string.Format(Properties.Resources.SettingsToString, Rounds, Version.Name);
         }
     }
 }

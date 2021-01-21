@@ -232,6 +232,15 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Counter must be 64-bit in DJB Version or 32-bit in IETF version.
+        /// </summary>
+        public static string CounterValidationErrorMessage {
+            get {
+                return ResourceManager.GetString("CounterValidationErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input initial counter (hex):.
         /// </summary>
         public static string DiffusionCounterLabel1 {
@@ -454,6 +463,78 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input must not be empty..
+        /// </summary>
+        public static string InputValidationErrorMessage {
+            get {
+                return ResourceManager.GetString("InputValidationErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IV must be 64-bit in DJB version or 96-bit in IETF version.
+        /// </summary>
+        public static string IVValidationErrorMessage {
+            get {
+                return ResourceManager.GetString("IVValidationErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key must be 128-bit or 256-bit.
+        /// </summary>
+        public static string KeyValidationErrorMessage {
+            get {
+                return ResourceManager.GetString("KeyValidationErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Execution started..
+        /// </summary>
+        public static string LogExecutionStarted {
+            get {
+                return ResourceManager.GetString("LogExecutionStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Key: {0}-bit, IV: {1}-bit, Counter: {2}.
+        /// </summary>
+        public static string LogInput {
+            get {
+                return ResourceManager.GetString("LogInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input invalid: {0}.
+        /// </summary>
+        public static string LogInputInvalid {
+            get {
+                return ResourceManager.GetString("LogInputInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Input valid..
+        /// </summary>
+        public static string LogInputValid {
+            get {
+                return ResourceManager.GetString("LogInputValid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings: {0}.
+        /// </summary>
+        public static string LogSettings {
+            get {
+                return ResourceManager.GetString("LogSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cipher text.
         /// </summary>
         public static string OutputStreamCaption {
@@ -641,6 +722,15 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         public static string RoundTooltip {
             get {
                 return ResourceManager.GetString("RoundTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rounds: {0}, Version: {1}.
+        /// </summary>
+        public static string SettingsToString {
+            get {
+                return ResourceManager.GetString("SettingsToString", resourceCulture);
             }
         }
         

@@ -70,6 +70,8 @@ namespace Cryptool.Plugins.ChaCha
             set;
         }
 
+        private const string KEY_VALIDATION_ERROR_MESSAGE = "Key must be 128-bit or 256-bit";
+
         /// <summary>
         /// Key chosen by the user which will be used for en- or decryption.
         /// </summary>
@@ -79,7 +81,7 @@ namespace Cryptool.Plugins.ChaCha
         /// inputs are given because the component won't even execute without all.
         /// </remarks>
         // [Required]
-        [KeyValidator("Key must be 128-bit or 256-bit")]
+        [KeyValidator(KEY_VALIDATION_ERROR_MESSAGE)]
         [PropertyInfo(Direction.InputData, "InputKeyCaption", "InputKeyTooltip", true)]
         public byte[] InputKey
         {
@@ -87,11 +89,13 @@ namespace Cryptool.Plugins.ChaCha
             set;
         }
 
+        private const string IV_VALIDATION_ERROR_MESSAGE = "IV must be 64-bit in DJB version or 96-bit in IETF version";
+
         /// <summary>
         /// Initialization vector chosen by the user.
         /// </summary>
         // [Required]
-        [IVValidator("IV must be 64-bit in DJB version or 96-bit in IETF version")]
+        [IVValidator(IV_VALIDATION_ERROR_MESSAGE)]
         [PropertyInfo(Direction.InputData, "InputIVCaption", "InputIVTooltip", true)]
         public byte[] InputIV
         {
@@ -99,11 +103,13 @@ namespace Cryptool.Plugins.ChaCha
             set;
         }
 
+        private const string COUNTER_VALIDATION_ERROR_MESSAGE = "Counter must be 64-bit in DJB Version or 32-bit in IETF version";
+
         /// <summary>
         /// Counter value for the first keystream block. Will be incremented for each keystream block.
         /// Is optional. Default is 0.
         /// </summary>
-        [InitialCounterValidator("Counter must be 64-bit in DJB Version or 32-bit in IETF version")]
+        [InitialCounterValidator(COUNTER_VALIDATION_ERROR_MESSAGE)]
         [PropertyInfo(Direction.InputData, "InputInitialCounterCaption", "InputInitialCounterTooltip", false)]
         public BigInteger InitialCounter
         {
@@ -478,9 +484,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
-            GuiLogMessage($"Executing ChaCha.", NotificationLevel.Info);
-            GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
-            GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit, Initial counter: {InitialCounter}", NotificationLevel.Info);
+            GuiLogMessage(Properties.Resources.LogExecutionStarted, NotificationLevel.Info);
+            GuiLogMessage(string.Format(Properties.Resources.LogSettings, settings), NotificationLevel.Info);
+            GuiLogMessage(string.Format(Properties.Resources.LogInput, InputKey.Length * 8, InputIV.Length * 8, InitialCounter), NotificationLevel.Info);
 
             Validate();
             if (IsValid)
@@ -559,19 +565,32 @@ namespace Cryptool.Plugins.ChaCha
             Validator.TryValidateProperty(InitialCounter, new ValidationContext(this) { MemberName = "InitialCounter" }, results);
             if (results.Count == 0)
             {
-                GuiLogMessage("Input valid", NotificationLevel.Info);
                 IsValid = true;
             }
             else
             {
-                GuiLogMessage($"Input invalid: {string.Join(", ", results.Select(r => r.ErrorMessage))}", NotificationLevel.Error);
+                string Localize(string errorMessage)
+                {
+                    // Localize validation error messages.
+                    // We do this manually here because of
+                    //   CS0182: An attribute argument must be a constant expression, typeof expression or array creation expression of an attribute parameter type.
+                    switch (errorMessage)
+                    {
+                        case KEY_VALIDATION_ERROR_MESSAGE: return Properties.Resources.KeyValidationErrorMessage;
+                        case IV_VALIDATION_ERROR_MESSAGE: return Properties.Resources.IVValidationErrorMessage;
+                        case COUNTER_VALIDATION_ERROR_MESSAGE: return Properties.Resources.CounterValidationErrorMessage;
+                        default: return "";
+                    }
+                }
+                GuiLogMessage(string.Format(Properties.Resources.LogInputInvalid, string.Join(", ", results.Select(r => Localize(r.ErrorMessage)))), NotificationLevel.Error);
                 IsValid = false;
             }
             if (InputStream.Length == 0)
             {
-                GuiLogMessage("Input message must not be empty.", NotificationLevel.Error);
+                GuiLogMessage(Properties.Resources.InputValidationErrorMessage, NotificationLevel.Error);
                 IsValid = false;
             }
+            if (IsValid) GuiLogMessage(Properties.Resources.LogInputValid, NotificationLevel.Info);
             return results;
         }
 
