@@ -559,7 +559,6 @@ namespace Cryptool.Plugins.ChaCha
             Validator.TryValidateProperty(InitialCounter, new ValidationContext(this) { MemberName = "InitialCounter" }, results);
             if (results.Count == 0)
             {
-                GuiLogMessage(Properties.Resources.LogInputValid, NotificationLevel.Info);
                 IsValid = true;
             }
             else
@@ -572,6 +571,7 @@ namespace Cryptool.Plugins.ChaCha
                 GuiLogMessage(Properties.Resources.InputValidationErrorMessage, NotificationLevel.Error);
                 IsValid = false;
             }
+            if (IsValid) GuiLogMessage(Properties.Resources.LogInputValid, NotificationLevel.Info);
             return results;
         }
 
