@@ -31,6 +31,9 @@ namespace Cryptool.Plugins.ChaCha.View
             ViewModel = (ChaChaHashViewModel)e.NewValue;
             if (ViewModel != null)
             {
+                // On page enter, the real DOM and virtual DOM should be in sync.
+                DomSync();
+
                 ViewModel.PropertyChanged += new PropertyChangedEventHandler(OnViewModelPropertyChange);
                 ActionViewBase.AddEventHandlers(ViewModel, Root);
 
@@ -92,36 +95,41 @@ namespace Cryptool.Plugins.ChaCha.View
                     return;
                 }
 
-                // State matrices
-                DomSync(DiffusionState, ViewModel.DiffusionStateValues, ViewModel.StateValues,
-                    (i) => $"DiffusionState{i}", (i) => $"DiffusionStateXOR{i}");
-                DomSync(DiffusionOriginalState, ViewModel.DiffusionOriginalState, ViewModel.OriginalState,
-                    (i) => $"DiffusionOriginalState{i}", (i) => $"DiffusionOriginalStateXOR{i}");
-                DomSync(DiffusionAdditionResultState, ViewModel.DiffusionAdditionResultState, ViewModel.AdditionResultState,
-                    (i) => $"DiffusionAdditionResultState{i}", (i) => $"DiffusionAdditionResultStateXOR{i}");
-                DomSync(DiffusionLittleEndianState, ViewModel.DiffusionLittleEndianState, ViewModel.LittleEndianState,
-                    (i) => $"DiffusionLittleEndianState{i}", (i) => $"DiffusionLittleEndianStateXOR{i}");
-
-                // QR Input
-                DomSync(ref DiffusionQRInA_, ViewModel.DiffusionQRInA, ViewModel.QRInA, "DiffusionQRInA", "DiffusionQRInAXOR");
-                DomSync(ref DiffusionQRInB_, ViewModel.DiffusionQRInB, ViewModel.QRInB, "DiffusionQRInB", "DiffusionQRInBXOR");
-                DomSync(ref DiffusionQRInC_, ViewModel.DiffusionQRInC, ViewModel.QRInC, "DiffusionQRInC", "DiffusionQRInCXOR");
-                DomSync(ref DiffusionQRInD_, ViewModel.DiffusionQRInD, ViewModel.QRInD, "DiffusionQRInD", "DiffusionQRInDXOR");
-
-                // QR Output
-                DomSync(ref DiffusionQROutA_, ViewModel.DiffusionQROutA, ViewModel.QROutA, "DiffusionQROutA", "DiffusionQROutAXOR");
-                DomSync(ref DiffusionQROutB_, ViewModel.DiffusionQROutB, ViewModel.QROutB, "DiffusionQROutB", "DiffusionQROutBXOR");
-                DomSync(ref DiffusionQROutC_, ViewModel.DiffusionQROutC, ViewModel.QROutC, "DiffusionQROutC", "DiffusionQROutCXOR");
-                DomSync(ref DiffusionQROutD_, ViewModel.DiffusionQROutD, ViewModel.QROutD, "DiffusionQROutD", "DiffusionQROutDXOR");
-
-                // QR Step
-                for (int i = 0; i < 4; ++i)
-                {
-                    DomSync(ref DiffusionQRStep[i, 0], ViewModel.DiffusionQRStep[i].Add, ViewModel.QRStep[i].Add, $"QRValueAddDiffusion_{i}", $"QRValueAddDiffusionXOR_{i}");
-                    DomSync(ref DiffusionQRStep[i, 1], ViewModel.DiffusionQRStep[i].XOR, ViewModel.QRStep[i].XOR, $"QRValueXORDiffusion_{i}", $"QRValueXORDiffusionXOR_{i}");
-                    DomSync(ref DiffusionQRStep[i, 2], ViewModel.DiffusionQRStep[i].Shift, ViewModel.QRStep[i].Shift, $"QRValueShiftDiffusion_{i}", $"QRValueShiftDiffusionXOR_{i}");
-                }
+                DomSync();
             });
+        }
+
+        private void DomSync()
+        {
+            // State matrices
+            DomSync(DiffusionState, ViewModel.DiffusionStateValues, ViewModel.StateValues,
+                (i) => $"DiffusionState{i}", (i) => $"DiffusionStateXOR{i}");
+            DomSync(DiffusionOriginalState, ViewModel.DiffusionOriginalState, ViewModel.OriginalState,
+                (i) => $"DiffusionOriginalState{i}", (i) => $"DiffusionOriginalStateXOR{i}");
+            DomSync(DiffusionAdditionResultState, ViewModel.DiffusionAdditionResultState, ViewModel.AdditionResultState,
+                (i) => $"DiffusionAdditionResultState{i}", (i) => $"DiffusionAdditionResultStateXOR{i}");
+            DomSync(DiffusionLittleEndianState, ViewModel.DiffusionLittleEndianState, ViewModel.LittleEndianState,
+                (i) => $"DiffusionLittleEndianState{i}", (i) => $"DiffusionLittleEndianStateXOR{i}");
+
+            // QR Input
+            DomSync(ref DiffusionQRInA_, ViewModel.DiffusionQRInA, ViewModel.QRInA, "DiffusionQRInA", "DiffusionQRInAXOR");
+            DomSync(ref DiffusionQRInB_, ViewModel.DiffusionQRInB, ViewModel.QRInB, "DiffusionQRInB", "DiffusionQRInBXOR");
+            DomSync(ref DiffusionQRInC_, ViewModel.DiffusionQRInC, ViewModel.QRInC, "DiffusionQRInC", "DiffusionQRInCXOR");
+            DomSync(ref DiffusionQRInD_, ViewModel.DiffusionQRInD, ViewModel.QRInD, "DiffusionQRInD", "DiffusionQRInDXOR");
+
+            // QR Output
+            DomSync(ref DiffusionQROutA_, ViewModel.DiffusionQROutA, ViewModel.QROutA, "DiffusionQROutA", "DiffusionQROutAXOR");
+            DomSync(ref DiffusionQROutB_, ViewModel.DiffusionQROutB, ViewModel.QROutB, "DiffusionQROutB", "DiffusionQROutBXOR");
+            DomSync(ref DiffusionQROutC_, ViewModel.DiffusionQROutC, ViewModel.QROutC, "DiffusionQROutC", "DiffusionQROutCXOR");
+            DomSync(ref DiffusionQROutD_, ViewModel.DiffusionQROutD, ViewModel.QROutD, "DiffusionQROutD", "DiffusionQROutDXOR");
+
+            // QR Step
+            for (int i = 0; i < 4; ++i)
+            {
+                DomSync(ref DiffusionQRStep[i, 0], ViewModel.DiffusionQRStep[i].Add, ViewModel.QRStep[i].Add, $"QRValueAddDiffusion_{i}", $"QRValueAddDiffusionXOR_{i}");
+                DomSync(ref DiffusionQRStep[i, 1], ViewModel.DiffusionQRStep[i].XOR, ViewModel.QRStep[i].XOR, $"QRValueXORDiffusion_{i}", $"QRValueXORDiffusionXOR_{i}");
+                DomSync(ref DiffusionQRStep[i, 2], ViewModel.DiffusionQRStep[i].Shift, ViewModel.QRStep[i].Shift, $"QRValueShiftDiffusion_{i}", $"QRValueShiftDiffusionXOR_{i}");
+            }
         }
 
         private delegate string IndexToNameMapper(int i);
