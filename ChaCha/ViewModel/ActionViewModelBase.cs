@@ -27,6 +27,13 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             CurrentActionIndex = 0;
         }
 
+        public override void VerifyPropertyName(string propertyName)
+        {
+            // Exclude MOVE_ACTION_FINISHED from validation
+            if (propertyName.Equals(MOVE_ACTION_FINISHED)) return;
+            base.VerifyPropertyName(propertyName);
+        }
+
         /// <summary>
         /// This variable is used during `InitActions` to tag actions.
         /// It always points to the last index.

@@ -26,13 +26,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
             StateActionCreator = new StateActionCreator(this);
         }
 
-        public override void VerifyPropertyName(string propertyName)
-        {
-            // Exclude MOVE_ACTION_FINISHED from validation
-            if (propertyName.Equals(MOVE_ACTION_FINISHED)) return;
-            base.VerifyPropertyName(propertyName);
-        }
-
         #region ActionViewModelBase
 
         private QRIOActionCreator QRIO { get; set; }
