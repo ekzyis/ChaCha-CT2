@@ -174,6 +174,9 @@
   <data name="ChaChaTooltip" xml:space="preserve">
     <value>A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein.</value>
   </data>
+  <data name="CounterValidationErrorMessage" xml:space="preserve">
+    <value>Counter must be 64-bit in DJB Version or 32-bit in IETF version</value>
+  </data>
   <data name="DiffusionCounterLabel1" xml:space="preserve">
     <value>Input initial counter (hex):</value>
   </data>
@@ -252,6 +255,30 @@ Use the button in the top-right corner to toggle between showing only the XOR or
   <data name="InputStreamTooltip" xml:space="preserve">
     <value>Input text which should be encrypted or decrypted with ChaCha.</value>
   </data>
+  <data name="InputValidationErrorMessage" xml:space="preserve">
+    <value>Input must not be empty.</value>
+  </data>
+  <data name="IVValidationErrorMessage" xml:space="preserve">
+    <value>IV must be 64-bit in DJB version or 96-bit in IETF version</value>
+  </data>
+  <data name="KeyValidationErrorMessage" xml:space="preserve">
+    <value>Key must be 128-bit or 256-bit</value>
+  </data>
+  <data name="LogExecutionStarted" xml:space="preserve">
+    <value>Execution started.</value>
+  </data>
+  <data name="LogInput" xml:space="preserve">
+    <value>Key: {0}-bit, IV: {1}-bit, Counter: {2}</value>
+  </data>
+  <data name="LogInputInvalid" xml:space="preserve">
+    <value>Input invalid: {0}</value>
+  </data>
+  <data name="LogInputValid" xml:space="preserve">
+    <value>Input valid.</value>
+  </data>
+  <data name="LogSettings" xml:space="preserve">
+    <value>Settings: {0}</value>
+  </data>
   <data name="OutputStreamCaption" xml:space="preserve">
     <value>Cipher text</value>
   </data>
@@ -316,6 +343,9 @@ To generate the keystream, ChaCha uses for each keystream block a 512 bit state 
   </data>
   <data name="RoundTooltip" xml:space="preserve">
     <value>Select how many rounds you want to use.</value>
+  </data>
+  <data name="SettingsToString" xml:space="preserve">
+    <value>Rounds: {0}, Version: {1}</value>
   </data>
   <data name="StateMatrixButtonConstants" xml:space="preserve">
     <value>Constants</value>

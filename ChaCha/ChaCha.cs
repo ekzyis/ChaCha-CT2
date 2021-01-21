@@ -478,9 +478,9 @@ namespace Cryptool.Plugins.ChaCha
         {
             ProgressChanged(0, 1);
 
-            GuiLogMessage($"Executing ChaCha.", NotificationLevel.Info);
-            GuiLogMessage($"Settings: {settings}", NotificationLevel.Info);
-            GuiLogMessage($"Key: {InputKey.Length * 8}-bit, IV: {InputIV.Length * 8}-bit, Initial counter: {InitialCounter}", NotificationLevel.Info);
+            GuiLogMessage(Properties.Resources.LogExecutionStarted, NotificationLevel.Info);
+            GuiLogMessage(string.Format(Properties.Resources.LogSettings, settings), NotificationLevel.Info);
+            GuiLogMessage(string.Format(Properties.Resources.LogInput, InputKey.Length * 8, InputIV.Length * 8, InitialCounter), NotificationLevel.Info);
 
             Validate();
             if (IsValid)
@@ -559,17 +559,17 @@ namespace Cryptool.Plugins.ChaCha
             Validator.TryValidateProperty(InitialCounter, new ValidationContext(this) { MemberName = "InitialCounter" }, results);
             if (results.Count == 0)
             {
-                GuiLogMessage("Input valid", NotificationLevel.Info);
+                GuiLogMessage(Properties.Resources.LogInputValid, NotificationLevel.Info);
                 IsValid = true;
             }
             else
             {
-                GuiLogMessage($"Input invalid: {string.Join(", ", results.Select(r => r.ErrorMessage))}", NotificationLevel.Error);
+                GuiLogMessage(string.Format(Properties.Resources.LogInputInvalid, string.Join(", ", results.Select(r => r.ErrorMessage))), NotificationLevel.Error);
                 IsValid = false;
             }
             if (InputStream.Length == 0)
             {
-                GuiLogMessage("Input message must not be empty.", NotificationLevel.Error);
+                GuiLogMessage(Properties.Resources.InputValidationErrorMessage, NotificationLevel.Error);
                 IsValid = false;
             }
             return results;

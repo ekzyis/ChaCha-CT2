@@ -174,6 +174,9 @@
   <data name="ChaChaTooltip" xml:space="preserve">
     <value>Eine Stromchiffre, die in TLS eingesetzt wird und auf Salsa20 basiert. Entwickelt von Daniel J. Bernstein.</value>
   </data>
+  <data name="CounterValidationErrorMessage" xml:space="preserve">
+    <value>Zähler muss 64-bit in der DJB-Version oder 32-bit in der IETF-Version sein</value>
+  </data>
   <data name="DiffusionCounterLabel1" xml:space="preserve">
     <value>Eingabe initialer Zähler (hex):</value>
   </data>
@@ -249,6 +252,30 @@ Benutze den Knopf oben rechts um zwischen XOR-Anzeige und Anzeige beider Werte u
   <data name="InputStreamTooltip" xml:space="preserve">
     <value>Text der ver- bzw. entschlüsselt werden soll mit ChaCha.</value>
   </data>
+  <data name="InputValidationErrorMessage" xml:space="preserve">
+    <value>Eingabetext darf nicht leer sein.</value>
+  </data>
+  <data name="IVValidationErrorMessage" xml:space="preserve">
+    <value>IV muss 64-bit in der DJB-Version oder 96-bit in der IETF-Version sein</value>
+  </data>
+  <data name="KeyValidationErrorMessage" xml:space="preserve">
+    <value>Schlüssel muss 128-bit oder 256-bit sein</value>
+  </data>
+  <data name="LogExecutionStarted" xml:space="preserve">
+    <value>Ausführung gestartet.</value>
+  </data>
+  <data name="LogInput" xml:space="preserve">
+    <value>Key: {0}-bit, IV: {1}-bit, Counter: {2}</value>
+  </data>
+  <data name="LogInputInvalid" xml:space="preserve">
+    <value>Eingabe ungültig: {0}</value>
+  </data>
+  <data name="LogInputValid" xml:space="preserve">
+    <value>Eingabe gültig.</value>
+  </data>
+  <data name="LogSettings" xml:space="preserve">
+    <value>Einstellungen: {0}</value>
+  </data>
   <data name="OutputStreamCaption" xml:space="preserve">
     <value>Geheimtext</value>
   </data>
@@ -312,6 +339,9 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
   </data>
   <data name="RoundTooltip" xml:space="preserve">
     <value>Wähle aus wieviele Runden benutzt werden sollen.</value>
+  </data>
+  <data name="SettingsToString" xml:space="preserve">
+    <value>Runden: {0}, Version: {1}</value>
   </data>
   <data name="StateMatrixButtonConstants" xml:space="preserve">
     <value>Konstanten</value>
