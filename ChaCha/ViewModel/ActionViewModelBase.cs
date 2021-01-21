@@ -20,6 +20,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         // Used to tell the view that we have finished moving to a new action.
         // The view can use this information to start updating the user interface.
         public static string MOVE_ACTION_FINISHED = "MOVE_ACTION_FINISHED";
+
         public ActionViewModelBase(ChaChaPresentationViewModel chachaPresentationViewModel)
         {
             PresentationViewModel = chachaPresentationViewModel;
