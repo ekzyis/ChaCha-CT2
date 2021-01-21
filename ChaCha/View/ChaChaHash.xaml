@@ -3148,7 +3148,17 @@
                         <!--#endregion-->
                     </Grid>
 
-                    <TextBox Grid.Column="7" Grid.Row="0" Style="{StaticResource Label}" Text="{Loc ChaChaHashNavigationAdditionReverseBytesLabel}" Margin="3,0" />
+                    <TextBox Grid.Column="7" Grid.Row="0" Text="{Loc ChaChaHashNavigationAdditionReverseBytesLabel}" Margin="3,0">
+                        <TextBox.Style>
+                            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Label}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RoundsStep}" Value="False">
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                     <StackPanel Grid.Column="7" Grid.Row="1">
                         <Button Style="{StaticResource StartButton}" Command="{Binding MatrixStartCommand}" />
                         <Button Style="{StaticResource EndButton}" Command="{Binding MatrixEndCommand}" />
