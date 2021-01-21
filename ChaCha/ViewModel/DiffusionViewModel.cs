@@ -2,6 +2,7 @@
 using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Windows.Controls;
@@ -45,7 +46,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
                 return (object sender, TextChangedEventArgs e) =>
                 {
                     string value = ((TextBox)sender).Text;
-                    ValidationResult result = validationRule.Validate(value, null);
+                    ValidationResult result = validationRule.Validate(value, CultureInfo.CurrentCulture);
                     if (result == ValidationResult.ValidResult)
                     {
                         handle(value);
