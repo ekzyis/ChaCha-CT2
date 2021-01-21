@@ -86,7 +86,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     if (VM.DiffusionActive)
                     {
                         VM.DiffusionQRStep[qrStep].Add.Value = VM.ChaCha.QRStepDiffusion[arrayIndex].Add;
-                        VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].Add");
                     }
                 };
             else if (Operation == QRStepOperation.XOR)
@@ -96,7 +95,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     if (VM.DiffusionActive)
                     {
                         VM.DiffusionQRStep[qrStep].XOR.Value = VM.ChaCha.QRStepDiffusion[arrayIndex].XOR;
-                        VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].XOR");
                     }
                 };
             else if (Operation == QRStepOperation.SHIFT)
@@ -106,7 +104,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     if (VM.DiffusionActive)
                     {
                         VM.DiffusionQRStep[qrStep].Shift.Value = VM.ChaCha.QRStepDiffusion[arrayIndex].Shift;
-                        VM.OnPropertyChanged($"DiffusionQRStep[{qrStep}].Shift");
                     }
                 };
             throw new InvalidOperationException("Could not find a matching QRStepOperation.");

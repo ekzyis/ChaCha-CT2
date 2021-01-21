@@ -28,12 +28,8 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
 
         public override void VerifyPropertyName(string propertyName)
         {
-            // Action creators use custom property names to notificate view
-            // about diffusion changes.
-            // DiffusionQRStep[0].Add for example is a invalid property name
-            // (property with this exact name does not exist here)
-            // but tells the view that the Add field in the first QR step has changed.
-            if (propertyName.StartsWith("DiffusionQRStep")) return;
+            // Exclude MOVE_ACTION_FINISHED from validation
+            if (propertyName.Equals(MOVE_ACTION_FINISHED)) return;
             base.VerifyPropertyName(propertyName);
         }
 

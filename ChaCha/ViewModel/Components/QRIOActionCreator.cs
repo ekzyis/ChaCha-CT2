@@ -59,19 +59,10 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                         {
                             v.Reset();
                         }
-                        VM.OnPropertyChanged("DiffusionQRInA");
-                        VM.OnPropertyChanged("DiffusionQRInB");
-                        VM.OnPropertyChanged("DiffusionQRInC");
-                        VM.OnPropertyChanged("DiffusionQRInD");
-                        VM.OnPropertyChanged("DiffusionQROutA");
-                        VM.OnPropertyChanged("DiffusionQROutB");
-                        VM.OnPropertyChanged("DiffusionQROutC");
-                        VM.OnPropertyChanged("DiffusionQROutD");
                         foreach (VisualQRStep qrStep in VM.DiffusionQRStep)
                         {
                             qrStep.Reset();
                         }
-                        VM.OnPropertyChanged("DiffusionQRStep");
                     }
                 };
             }
@@ -160,10 +151,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 if (VM.DiffusionActive)
                 {
                     (VM.DiffusionQRInA.Value, VM.DiffusionQRInB.Value, VM.DiffusionQRInC.Value, VM.DiffusionQRInD.Value) = VM.ChaCha.QRInputDiffusion[arrayIndex];
-                    VM.OnPropertyChanged("DiffusionQRInA");
-                    VM.OnPropertyChanged("DiffusionQRInB");
-                    VM.OnPropertyChanged("DiffusionQRInC");
-                    VM.OnPropertyChanged("DiffusionQRInD");
                 }
             };
         }
@@ -217,10 +204,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                 if (VM.DiffusionActive)
                 {
                     (VM.DiffusionQROutA.Value, VM.DiffusionQROutB.Value, VM.DiffusionQROutC.Value, VM.DiffusionQROutD.Value) = VM.ChaCha.QROutputDiffusion[arrayIndex];
-                    VM.OnPropertyChanged("DiffusionQROutA");
-                    VM.OnPropertyChanged("DiffusionQROutB");
-                    VM.OnPropertyChanged("DiffusionQROutC");
-                    VM.OnPropertyChanged("DiffusionQROutD");
                 }
             };
         }
@@ -249,7 +232,6 @@ namespace Cryptool.Plugins.ChaCha.ViewModel.Components
                     VM.DiffusionStateValues[j].Value = dB;
                     VM.DiffusionStateValues[k].Value = dC;
                     VM.DiffusionStateValues[l].Value = dD;
-                    VM.OnPropertyChanged("DiffusionStateValues");
                     VM.OnPropertyChanged("DiffusionFlippedBits");
                     VM.OnPropertyChanged("DiffusionFlippedBitsPercentage");
                 }
