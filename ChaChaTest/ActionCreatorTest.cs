@@ -1,4 +1,4 @@
-using Cryptool.Plugins.ChaCha.Visualization.ViewModel.Components;
+using Cryptool.Plugins.ChaCha.ViewModel.Components;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
