@@ -3129,9 +3129,13 @@
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource DiagonalLabel}">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CurrentQRIndex}" Value="3">
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding CurrentQRIndex}" Value="3" />
+                                                <Condition Binding="{Binding RoundsStep}" Value="True" />
+                                            </MultiDataTrigger.Conditions>
                                             <Setter Property="FontWeight" Value="Bold" />
-                                        </DataTrigger>
+                                        </MultiDataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBox.Style>
