@@ -193,8 +193,8 @@
     <value>Die ChaCha-Chiffre wird dann auch mit diesen Werten ausgeführt um die Diffusionscharakteristik der Chiffre zu visualisieren. Die Werte vom zweiten Chiffrendurchlauf (mit den zweiten Werten) werden unter den Werten des ersten Durchlaufs angezeigt. Unterschiedliche Hexwerte werden rot markiert. Auf der rechten Seite ist hierfür ein Beispiel zu sehen.</value>
   </data>
   <data name="DiffusionDescription3" xml:space="preserve">
-    <value>Da für das Studium der Diffusionscharakteristik die Unterschiede der Werte von zwei Durchläufen interessanter ist als die tatsächlichen Werte, ist es auch möglich explizit die Differenz (XOR) einzugeben.
-Mit dem Knopf in der oberen rechten Ecke ist es möglich, zwischen der XOR Anzeige und der Anzeige beider Werte umzuschalten.
+    <value>Da für das Studium der Diffusionscharakteristik die Unterschiede der Werte von zwei Durchläufen interessanter sind als die tatsächlichen Werte, ist es auch möglich explizit die Differenz (XOR) einzugeben.
+Mit dem Knopf in der oberen rechten Ecke ist es möglich, zwischen der XOR-Anzeige und der Anzeige beider Werte umzuschalten.
 Das kann im Beispiel ausprobiert werden. Drücke den Knopf und die Anzeige im Beispiel schaltet sich um.</value>
   </data>
   <data name="DiffusionDescription4" xml:space="preserve">
@@ -356,7 +356,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Schlüssel</value>
   </data>
   <data name="StateMatrixDescription1" xml:space="preserve">
-    <value>Der 512-bit (128-byte) ChaCha-Zustand kann als 4x4 Matrix interpretiert werden, in der jeder Eintrag aus vier Bytes besteht. Die Einträge werden aus den Parametern, die unten zu sehen sind, aufgebaut. Diese Einträge werden kodiert bevor sie in die Matrix eingefügt werden.</value>
+    <value>Der 512-bit (128-Byte) ChaCha-Zustand kann als 4x4 Matrix interpretiert werden, in der jeder Eintrag aus vier Bytes besteht. Die Einträge werden aus den Parametern, die unten zu sehen sind, aufgebaut. Diese Einträge werden kodiert bevor sie in die Matrix eingefügt werden.</value>
   </data>
   <data name="StateMatrixDescription6" xml:space="preserve">
     <value>Auf der nächsten Seite wird dieser initialisierte Zustand der ChaCha-Hashfunktion übergeben um den ersten Schlüsselstromblock zu generieren.</value>
