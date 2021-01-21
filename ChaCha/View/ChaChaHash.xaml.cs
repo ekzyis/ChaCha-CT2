@@ -162,7 +162,6 @@ namespace Cryptool.Plugins.ChaCha.View
 
         private void InitOrClearDiffusionValue(RichTextBox rtb, uint? diffusionStateValue, uint? stateValue)
         {
-            // TODO(clarify) Why can the stateValue be null if the diffusionValue is not null? Shouldn't they always be together null or not?
             if (diffusionStateValue != null && stateValue != null)
             {
                 Plugins.ChaCha.ViewModel.Components.Diffusion.InitDiffusionValue(rtb, (uint)diffusionStateValue,
