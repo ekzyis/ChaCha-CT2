@@ -33,6 +33,7 @@ namespace Cryptool.Plugins.ChaCha.ViewModel
         {
             if (e.PropertyName == RESET_VISUALIZATION)
             {
+                ShowXOR = false;
                 ChangePage(Pages[0]);
             }
             OnPropertyChanged("NavigationEnabled");
