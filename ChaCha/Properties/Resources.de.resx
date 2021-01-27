@@ -368,7 +368,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Als Bytes:</value>
   </data>
   <data name="StateMatrixEncodingConstants3" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingConstants4" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
@@ -380,10 +380,10 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Originaler Wert:</value>
   </data>
   <data name="StateMatrixEncodingCounter2" xml:space="preserve">
-    <value>Bytereihenfolgeumkehren:</value>
+    <value>Bytereihenfolge umkehren:</value>
   </data>
   <data name="StateMatrixEncodingCounter3" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingCounter4" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
@@ -395,7 +395,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Originaler Wert:</value>
   </data>
   <data name="StateMatrixEncodingIV2" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingIV3" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
@@ -407,7 +407,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Originaler Wert:</value>
   </data>
   <data name="StateMatrixEncodingKey2" xml:space="preserve">
-    <value>In 4 Byte Stücke aufteilen:</value>
+    <value>In 4-Byte Stücke aufteilen:</value>
   </data>
   <data name="StateMatrixEncodingKey3" xml:space="preserve">
     <value>Bytereihenfolge von jedem Stück umkehren:</value>
