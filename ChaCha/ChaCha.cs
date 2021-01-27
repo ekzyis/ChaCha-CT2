@@ -636,10 +636,20 @@ namespace Cryptool.Plugins.ChaCha
 
         private void ClearIntermediateResults()
         {
+            // matrices
             OriginalState.Clear();
+            OriginalStateDiffusion.Clear();
+            AdditionResultState.Clear();
+            AdditionResultStateDiffusion.Clear();
+            LittleEndianState.Clear();
+            LittleEndianStateDiffusion.Clear();
+            // qr
             QRInput.Clear();
+            QRInputDiffusion.Clear();
             QRStep.Clear();
+            QRStepDiffusion.Clear();
             QROutput.Clear();
+            QROutputDiffusion.Clear();
         }
 
         private List<uint[]> _stateDiffusion; public List<uint[]> OriginalStateDiffusion
