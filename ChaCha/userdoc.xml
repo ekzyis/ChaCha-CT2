@@ -21,7 +21,7 @@
 
     <usage lang="en">
         <section headline="Settings">
-            In the plugin settings on can chose the rounds per keystream block and the version.
+            In the plugin settings one can chose the rounds per keystream block and the version.
             The version determines the size of the counter and the initialization vector.
         </section>
         <section headline="Inputs and Output">
