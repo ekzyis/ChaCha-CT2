@@ -80,7 +80,7 @@ namespace Cryptool.Plugins.ChaCha
         }
 
         [TaskPane("VersionCaption", "VersionTooltip", null, 0, false, ControlType.ComboBox, new string[] { "DJB", "IETF" })]
-        public int IntVersion
+        public int VersionIndex
         {
             get { return Version.Name == Version.DJB.Name ? 0 : 1; }
             set
