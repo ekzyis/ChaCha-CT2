@@ -48,22 +48,17 @@ namespace Cryptool.Plugins.ChaCha
             set
             {
                 // The CT2 environment calls this setter with the index thus we map the indices to the actual round value.
-                // The ChaCha Unittest calls this setter with the actual round value,
-                // that's why there is a fallthrough with the actual round value for each case.
                 switch (value)
                 {
                     case 0:
-                    case 8:
                         Rounds = 8;
                         break;
 
                     case 1:
-                    case 12:
                         Rounds = 12;
                         break;
 
                     case 2:
-                    case 20:
                         Rounds = 20;
                         break;
                 }
