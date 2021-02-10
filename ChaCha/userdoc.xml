@@ -102,8 +102,8 @@
                 For example, on the State Matrix page, one can use them go to the start or the end of the encoding of a specific state parameter.<newline />
             </item>
         </enum>
-        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_800x433.PNG" caption="Figure 2: ChaCha hash function with diffusion" />
-        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figure 3: ChaCha hash function with diffusion (XOR)" />
+        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_800x433.PNG" caption="Figure 2: ChaCha hash function with diffusion (without XOR view)" />
+        <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figure 3: ChaCha hash function with diffusion (with XOR view)" />
     </presentation>
 
     <presentation lang="de-DE">
@@ -145,8 +145,8 @@
                     Als Beispiel, auf der Zustandsmatrix-Seite gibt es Knöpfe die zum Start und Ende der Enkodierung eines Zustandparameters führen.
                 </item>
             </enum>
-            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_800x433.PNG" caption="Figur 2: ChaCha Hashfunktion mit Diffusion" />
-            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figur 3: ChaCha Hashfunktion mit Diffusion (XOR)" />
+            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_800x433.PNG" caption="Figur 2: ChaCha Hashfunktion mit Diffusion (ohne XOR-Anzeige)" />
+            <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figur 3: ChaCha Hashfunktion mit Diffusion (mit XOR-Anzeige)" />
         </section>
     </presentation>
 
