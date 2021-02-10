@@ -61,7 +61,7 @@
 	<replacement key="$counter$" value="Initial block counter (optional)" />
 	<replacement key="$keydesc$" value="You can use 256-bit and 128-bit keys with ChaCha. A 128-bit key will be expanded into a 256-bit key by concatenating the key with itself." />
 	<replacement key="$ivdesc$" value="The original version by DJB uses a 64-bit IV and the IETF version uses a 96-bit IV. In the settings tab of the ChaCha component, you can select which version you want to use." />
-	<replacement key="$counterdesc1$" value="You can optionally set your own start counter here. The first keystream block will then be initialized with this counter. The default is 0." />
+	<replacement key="$counterdesc1$" value="You can optionally set your own start counter (initial block counter) here. The first keystream block will then be initialized with this counter. The default is 0." />
 	<replacement key="$counterdesc2$" value="In the DJB version, you can use a counter up to 64-bit. In the IETF version, the counter is limited to 32-bit." />
 	<replacement key="$generaldesc1$" value="This template shows how you can use the ChaCha component to en- and decrypt messages. ChaCha is a refinement of the Salsa20 cipher." />
 	<replacement key="$generaldesc2$" value="Initially, a default plaintext, a 256-bit secret key and 64-bit initialization vector are provided." />
