@@ -67,10 +67,10 @@ namespace Cryptool.Plugins.ChaCha
             get { return Version.Name == Version.DJB.Name ? 0 : 1; }
             set
             {
-                Version intVersion = value == 0 ? Version.DJB : Version.IETF;
-                if (Version.Name != intVersion.Name)
+                Version selectedVersion = value == 0 ? Version.DJB : Version.IETF;
+                if (Version.Name != selectedVersion.Name)
                 {
-                    Version = intVersion;
+                    Version = selectedVersion;
                     OnPropertyChanged("IntVersion");
                 }
             }
