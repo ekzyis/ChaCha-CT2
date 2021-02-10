@@ -78,7 +78,7 @@
         Each page is split into the following three sections (see Figure 1):<newline />
         <enum>
             <item>
-                The first section consists of the page navigation with the page title and a toggle button. It is located in the top row of each page. As the name indicates, the page navigation can be used to switch between pages.
+                The first section consists of the page navigation with the page title and a toggle button. The navigation section is located in the top row of each page. It can be used to switch between pages.
                 The toggle button in the top-right corner is only shown if diffusion is active. With it, the user can toggle between two diffusion visualization views. If not toggled,
                 both values of the cipher runs are shown (non-XOR view). If toggled, only the XOR of both values are shown (XOR view). Figure 2 shows the ChaCha hash function mid-execution with the button not toggled.
                 The values in the top row of each cell are the intermediate values of the cipher execution with the input values.
