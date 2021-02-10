@@ -24,7 +24,7 @@ namespace Cryptool.Plugins.ChaCha
     {
         #region Private Variables
 
-        private int rounds = 20;
+        private int _rounds = 20;
         private Version _version;
 
         #endregion Private Variables
@@ -32,9 +32,19 @@ namespace Cryptool.Plugins.ChaCha
         #region TaskPane Settings
 
         [TaskPane("RoundCaption", "RoundTooltip", null, 0, false, ControlType.ComboBox, new string[] { "8", "12", "20" })]
-        public int Rounds
+        public int RoundsIndex
         {
-            get { return rounds; }
+            get
+            {
+                // We need to return the index of the entry we want to display.
+                switch (Rounds)
+                {
+                    case 8: return 0;
+                    case 12: return 1;
+                    case 20: return 2;
+                    default: return 2;
+                }
+            }
             set
             {
                 // The CT2 environment calls this setter with the index thus we map the indices to the actual round value.
@@ -44,19 +54,32 @@ namespace Cryptool.Plugins.ChaCha
                 {
                     case 0:
                     case 8:
-                        rounds = 8;
+                        Rounds = 8;
                         break;
 
                     case 1:
                     case 12:
-                        rounds = 12;
+                        Rounds = 12;
                         break;
 
                     case 2:
                     case 20:
-                        rounds = 20;
+                        Rounds = 20;
                         break;
                 }
+                OnPropertyChanged("Rounds");
+            }
+        }
+
+        public int Rounds
+        {
+            get
+            {
+                return _rounds;
+            }
+            set
+            {
+                _rounds = value;
                 OnPropertyChanged("Rounds");
             }
         }
