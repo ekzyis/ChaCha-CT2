@@ -6,7 +6,7 @@
     <language culture="de-DE" />
 
     <introduction lang="en">
-        ChaCha is a 256-bit stream cipher family developed by Daniel J. Bernstein in 2008. It is based on the Salsa20 cipher family by the same author and was "designed to improve diffusion per round while preserving &ndash; and often improving &ndash; time per round" <ref id="ChaChaSpecification" />. <newline />
+        ChaCha is a 256-bit stream cipher family developed by Daniel J. Bernstein in 2008. It is based on the Salsa20 cipher family by the same author and was "designed to improve diffusion per round while preserving &#8211; and often improving &#8211; time per round" <ref id="ChaChaSpecification" />. <newline />
         Internally, it uses a 512-bit state to generate keystream blocks which are concatenated to create a keystream. A XOR operation with this keystream then encrypts or decrypts the input. <newline />
         ChaCha is used in the Transport Layer security protocol (TLS) since 2014 and so very relevant for applied modern cryptography <ref id="GoogleSecurityBlog" />. <newline />
         There exist two versions. The original version by Bernstein supports 64-bit counters and 64-bit initialization vectors. The Internet Engineering Task Force (IETF) slightly changed this design by using 32-bit counters and 96-bit initialization vectors <ref id="RFC8439" />.
