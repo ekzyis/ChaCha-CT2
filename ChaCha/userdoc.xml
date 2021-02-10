@@ -27,8 +27,8 @@
         </section>
         <newline />
         <section headline="Inputs and Output">
-            The ChaCha plugin has four inputs and one output. The message, key and initialization vector input are mandatory while the input for the initial counter is optional.<newline /><newline />
-            The message size is in theory limited by the counter size because we need to make sure that the keystream does not repeat (else one could use a two-time pad attack).<newline />
+            The ChaCha plugin has four inputs and one output. The inputs message, key and initialization vector are mandatory while the input for the initial counter is optional.<newline /><newline />
+            The message size is in theory limited by the counter size because we need to make sure that the keystream does not repeat (else one could use a two-time pad attack <ref id="TwoTimePadAttack" />).<newline />
             In practice, this limit is high enough that in general, one does not have to think about it. For example, for the DJB version with a 64-bit counter, one can encrypt
             messages up to 2^70 bytes (2^64 blocks with 64 byte each) which is equal to 1024 exabyte.<newline />
             This very high number is also the reason why the IETF chose a smaller counter size to make use of a larger initialization vector. With a 32-bit counter, one can still
@@ -52,7 +52,7 @@
         <newline />
         <section headline="Ein- und Ausgaben">
             Das ChaCha Plug-in hat vier Eingaben und eine Ausgabe. Die Nachricht, der Schlüssel und der Initialisierungsvektor müssen vorgegeben werden, während der initiale Blockzähler optional ist.<newline /><newline />
-            Die Nachrichtengröße ist in der Theorie limitiert von der Größe des Zählers um sicherzustellen, dass der Schlüsselstrom sich nicht wiederholt (ansonsten kann ein Two-time pad Angriff durchgeführt werden).<newline />
+            Die Nachrichtengröße ist in der Theorie limitiert von der Größe des Zählers um sicherzustellen, dass der Schlüsselstrom sich nicht wiederholt (ansonsten kann ein Two-time pad Angriff durchgeführt werden <ref id="TwoTimePadAttack" />).<newline />
             Im Praktischen ist dieses Limit groß genug, sodass im Normalfall man sich darüber keine Gedanken machen muss. So ist die maximale Nachrichtengröße für die DJB-Version mit einem 64-bit Zähler 2^70 Bytes (2^64 Blöcke mit jeweils 64 Bytes).
             Dies entspricht einer Nachrichtengröße von 1024 Exabyte.<newline />
             Das ist auch der Grund, wieso die IETF sich für einen 32-bit Zähler entschieden hat: Mit einem 32-bit Zähler können immer noch 256 Gigabyte auf einmal verschlüsselt werden was für die meisten Anwendungen mehr als genug sein sollte.<newline />
@@ -166,6 +166,12 @@
             <caption lang="en">ChaCha20 and Poly1305 for IETF Protocols</caption>
             <link url="https://tools.ietf.org/html/rfc8439" lang="de-DE" />
             <caption lang="de-DE">ChaCha20 and Poly1305 for IETF Protocols</caption>
+        </linkReference>
+        <linkReference id="TwoTimePadAttack">
+            <link url="http://www.crypto-it.net/eng/attacks/two-time-pad.html" lang="en" />
+            <caption lang="en">Attack on Two-Time Pad</caption>
+            <link url="http://www.crypto-it.net/eng/attacks/two-time-pad.html" lang="de" />
+            <caption lang="de">Attack on Two-Time Pad</caption>
         </linkReference>
     </references>
 </documentation>
