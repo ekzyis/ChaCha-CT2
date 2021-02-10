@@ -87,7 +87,6 @@
                 Figure 3 shows the ChaCha hash function mid-execution with the button toggled.
                 Now there is only one value per cell. It is the XOR of the two values seen before.
             </item>
-            <img src="ChaCha/Images/en_user_interface_hash_800x433_sections.PNG" caption="Figure 1: Page sections (ChaCha hash function page as example)" />
             <item>
                 The second section contains the content of the page. This is the main section and is located in the middle of a page. <newline />
                 For the first two pages, the content is static and thus does not change. <newline />
@@ -102,6 +101,7 @@
                 For example, on the State Matrix page, one can use them go to the start or the end of the encoding of a specific state parameter.<newline />
             </item>
         </enum>
+        <img src="ChaCha/Images/en_user_interface_hash_800x433_sections.PNG" caption="Figure 1: Page sections (ChaCha hash function page as example)" />
         <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_800x433.PNG" caption="Figure 2: ChaCha hash function with diffusion (without XOR view)" />
         <img src="ChaCha/Images/en_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figure 3: ChaCha hash function with diffusion (with XOR view)" />
     </presentation>
@@ -129,7 +129,6 @@
                     Hexadezimale Charakter, die sich unterscheiden, sind mit Rot markiert um diese leichter zu erkennen.
                     Figur 2 zeigt die ChaCha-Hashfunktion in der XOR-Ansicht. Dort ist demententsprechend nur ein Wert in jeder Zelle zu sehen. Es ist der XOR-Wert der beiden Werte.
                 </item>
-                <img src="ChaCha/Images/de_user_interface_hash_800x433_sections.PNG" caption="Figur 1: Sektionen (ChaCha-Hashfunktion-Seite als Beispiel)" />
                 <item>
                     Die zweite Sektion besteht aus dem Inhalt der Seite. Es ist die Hauptsektion und befindet sich in der Mitte einer jeder Seite. <newline />
                     Auf den ersten beiden Seiten ist der Inhalt statisch. Er verändert sich also nicht. <newline />
@@ -145,6 +144,7 @@
                     Als Beispiel, auf der Zustandsmatrix-Seite gibt es Knöpfe die zum Start und Ende der Enkodierung eines Zustandparameters führen.
                 </item>
             </enum>
+            <img src="ChaCha/Images/de_user_interface_hash_800x433_sections.PNG" caption="Figur 1: Sektionen (ChaCha-Hashfunktion-Seite als Beispiel)" />
             <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_800x433.PNG" caption="Figur 2: ChaCha Hashfunktion mit Diffusion (ohne XOR-Anzeige)" />
             <img src="ChaCha/Images/de_user_interface_hash_diffusion_active_xor_800x433.PNG" caption="Figur 3: ChaCha Hashfunktion mit Diffusion (mit XOR-Anzeige)" />
         </section>
