@@ -97,7 +97,7 @@
             <item>
                 The third section in the lower part is called the action navigation section. It only exists in the State Matrix page and the ChaCha Hash Function page. It is used to move through the visualization step-by-step. It consists
                 of a slider, a previous and a next button, and an input field together with a label indicating how many actions the current page has. The previous and next button can be used to move backwards or forward one step at a time.
-                The slider can be used to skip a lot of actions at once. The input field can be used to immediately to go a specific action index by entering a number and pressing ENTER. <newline />
+                The slider can be used to skip a lot of actions at once. The slider and the actions start from 0 on each of the last two dynamic pages. The input field can be used to immediately to go a specific action index by entering a number and pressing ENTER. <newline />
                 Additionally, page-specific buttons are shown above the slider to go to milestones of the current page.<newline />
                 For example, on the State Matrix page, one can use them go to the start or the end of the encoding of a specific state parameter.<newline />
             </item>
@@ -139,7 +139,7 @@
                 <item>
                     Die dritte Sektion am unteren Rand einer Seite beinhaltet die Aktionsnavigation. Sie existiert nur auf der Zustandsmatrix- und ChaCha-Hashfunktion-Seite. Sie wird benutzt um innerhalb einer Seite die Visualisierung Schritt-für-Schritt durchzugehen.
                     Sie besteht aus einem Slider, einem Zurück- und Vor-Knopf, und einem Inputfeld zusammen mit einem Label das die Anzahl der Aktionen der aktuellen Seite anzeigt.
-                    Die Zurück- und Vor-Knöpfe können benutzt werden um einen Schritt zurück bzw. vor zu gehen. Der Slider kann benutzt werden um schnell viele Schritte zu überspringen.
+                    Die Zurück- und Vor-Knöpfe können benutzt werden um einen Schritt zurück bzw. vor zu gehen. Der Slider kann benutzt werden um schnell viele Schritte zu überspringen. Der Slider und die Aktionen starten bei Null auf den letzten beiden dynamischen Seiten.
                     Das Inputfeld kann benutzt werden um sofort zu einer bestimmten Aktion zu springen, indem man eine Zahl eingibt und ENTER drückt. <newline />
                     Zusätzlich befinden sich weitere, seitenabhängige Knöpfe für wichtige Meilensteine oberhalb des Sliders.<newline />
                     Als Beispiel, auf der Zustandsmatrix-Seite gibt es Knöpfe die zum Start und Ende der Enkodierung eines Zustandparameters führen.
