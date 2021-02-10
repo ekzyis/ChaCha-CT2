@@ -70,7 +70,7 @@
         The user interface of the visualization is split into the following three sections (see Figure 1):<newline />
         <enum>
             <item>
-                The first section consists of the page navigation with the page title and a toggle buton. It is located in the top row of each page. As the name indicates, the page navigation can be used to switch between pages.
+                The first section consists of the page navigation with the page title and a toggle button. It is located in the top row of each page. As the name indicates, the page navigation can be used to switch between pages.
                 There are five pages in total:
                 <enum>
                     <item>Start page: Entry-point of the visualization. Every time the workspace is restarted, the visualization resets to this page.</item>
