@@ -25,7 +25,7 @@ namespace Cryptool.Plugins.ChaCha
         #region Private Variables
 
         private int rounds = 20;
-        private Version version;
+        private Version _version;
 
         #endregion Private Variables
 
@@ -80,17 +80,17 @@ namespace Cryptool.Plugins.ChaCha
         {
             get
             {
-                if (version == null)
+                if (_version == null)
                 {
-                    version = Version.DJB;
+                    _version = Version.DJB;
                 }
-                return version;
+                return _version;
             }
             private set
             {
-                if (version.Name != value.Name)
+                if (_version.Name != value.Name)
                 {
-                    version = value;
+                    _version = value;
                     OnPropertyChanged("Version");
                 }
             }
