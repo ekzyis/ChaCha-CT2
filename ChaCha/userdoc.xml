@@ -20,10 +20,12 @@
     </introduction>
 
     <usage lang="en">
+        <newline />
         <section headline="Settings">
             In the plugin settings one can chose the rounds per keystream block and the version.
             The version determines the size of the counter and the initialization vector.
         </section>
+        <newline />
         <section headline="Inputs and Output">
             The ChaCha plugin has four inputs and one output. The message, key and initialization vector input are mandatory while the input for the initial counter is optional.<newline /><newline />
             The message size is in theory limited by the counter size because we need to make sure that the keystream does not repeat (else one could use a two-time pad attack).<newline />
@@ -42,10 +44,12 @@
     </usage>
 
     <usage lang="de-DE">
+        <newline />
         <section headline="Einstellungen">
             In the Plug-in Einstellungen kann die Rundenanzahl ausgewählt werden sowie die Version der Chiffre.
             Die Version beeinflusst die Größe des Blockzählers und des Initialisierungsvektors.
         </section>
+        <newline />
         <section headline="Ein- und Ausgaben">
             Das ChaCha Plug-in hat vier Eingaben und eine Ausgabe. Die Nachricht, der Schlüssel und der Initialisierungsvektor müssen vorgegeben werden, während der initiale Blockzähler optional ist.<newline /><newline />
             Die Nachrichtengröße ist in der Theorie limitiert von der Größe des Zählers um sicherzustellen, dass der Schlüsselstrom sich nicht wiederholt (ansonsten kann ein Two-time pad Angriff durchgeführt werden).<newline />
