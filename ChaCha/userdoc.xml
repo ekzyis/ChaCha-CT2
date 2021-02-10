@@ -96,7 +96,7 @@
             </item>
             <item>
                 The third section in the lower part is called the action navigation section. It only exists in the State Matrix page and the ChaCha Hash Function page. It is used to move through the visualization step-by-step. It consists
-                of a slider, a previous and next button, and a input field together with a label indicating how many actions the current page has. The previous and next button can be used to move backwards or forward one step at a time.
+                of a slider, a previous and a next button, and an input field together with a label indicating how many actions the current page has. The previous and next button can be used to move backwards or forward one step at a time.
                 The slider can be used to skip a lot of actions at once. The input field can be used to immediately to go a specific action index by entering a number and pressing ENTER. <newline />
                 Additionally, page-specific buttons are shown above the slider to go to milestones of the current page.<newline />
                 For example, on the State Matrix page, one can use them go to the start or the end of the encoding of a specific state parameter.<newline />
