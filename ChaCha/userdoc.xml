@@ -137,7 +137,7 @@
                     Auf den letzten beiden Seiten ist der Inhalt dynamisch. Das bedeutet, dass der aktuelle Inhalt der Seite davon abhängt, auf welchem Aktionsindex man sich beinfdet. Dieser Aktionsindex kann in der dritten und letzten Sektion ausgewählt werden.
                 </item>
                 <item>
-                    Die dritte Sektion beinhaltet die Aktionsnavigation. Sie existiert nur auf der Zustandsmatrix- und ChaCha-Hashfunktion-Seite. Sie wird benutzt um innerhalb einer Seite die Visualisierung Schritt-für-Schritt durchzugehen.
+                    Die dritte Sektion am unteren Rand einer Seite beinhaltet die Aktionsnavigation. Sie existiert nur auf der Zustandsmatrix- und ChaCha-Hashfunktion-Seite. Sie wird benutzt um innerhalb einer Seite die Visualisierung Schritt-für-Schritt durchzugehen.
                     Sie besteht aus einem Slider, einem Zurück- und Vor-Knopf, und einem Inputfeld zusammen mit einem Label das die Anzahl der Aktionen der aktuellen Seite anzeigt.
                     Die Zurück- und Vor-Knöpfe können benutzt werden um einen Schritt zurück bzw. vor zu gehen. Der Slider kann benutzt werden um schnell viele Schritte zu überspringen.
                     Das Inputfeld kann benutzt werden um sofort zu einer bestimmten Aktion zu springen, indem man eine Zahl eingibt und ENTER drückt. <newline />
