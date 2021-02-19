@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Cryptool.Plugins.ChaCha.ViewModel
 {
-    internal class ChaChaHashViewModel : ActionViewModelBase, INavigation, ITitle
+    internal class ChaChaHashViewModel : ActionViewModelBase, INavigation, ITitle, IDiffusion
     {
         public ChaChaHashViewModel(ChaChaPresentationViewModel chachaPresentationViewModel) : base(chachaPresentationViewModel)
         {
