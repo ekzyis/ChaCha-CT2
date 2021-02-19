@@ -320,7 +320,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Durch Anwendung der ChaCha-Hashfunktion entsteht aus einem 512-bit Zustand ein Schlüsselstromblock.</value>
   </data>
   <data name="OverviewOutro2" xml:space="preserve">
-    <value>Das führt uns zu folgenden Schritten, um eine Nachricht M mit ChaCha zu verschlüsseln:</value>
+    <value>Das führt uns zu folgenden Schritten, um eine Nachricht mit ChaCha zu verschlüsseln:</value>
   </data>
   <data name="OverviewOutroStep1" xml:space="preserve">
     <value>Zustandsmatrix initialisieren</value>
@@ -329,7 +329,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Schlüsselstrom generieren</value>
   </data>
   <data name="OverviewOutroStep3" xml:space="preserve">
-    <value>M XOR Schlüsselstrom</value>
+    <value>Nachricht XOR Schlüsselstrom</value>
   </data>
   <data name="OverviewRemark" xml:space="preserve">
     <value>Bemerkung: Weil XOR die inverse Operation zu sich selbst ist, verläuft das Entschlüsseln von Nachrichten gleich ab.</value>
