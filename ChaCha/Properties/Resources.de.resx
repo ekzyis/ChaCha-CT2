@@ -289,7 +289,7 @@ Benutze den Knopf oben rechts um zwischen XOR-Anzeige und Anzeige beider Werte u
     <value>Konstanten (128-bit)</value>
   </data>
   <data name="OverviewIntro1" xml:space="preserve">
-    <value>ChaCha ist eine Stromchiffre. Sie generiert einen pseudozufälligen Strom an Bits (Schlüsselstrom) und verschlüsselt den Klartext mithilfe einer bitweisen XOR Operation mit dem Schlüsselstrom.</value>
+    <value>ChaCha ist eine Stromchiffre. Sie generiert einen pseudozufälligen Strom an Bits (Schlüsselstrom) und verschlüsselt den Klartext mithilfe einer bitweisen XOR-Operation mit dem Schlüsselstrom.</value>
   </data>
   <data name="OverviewIntro2" xml:space="preserve">
     <value>Der Schlüsselstrom wird in Blöcken generiert. Jeder Block ist 512-bit groß. Es werden solange Blöcke generiert, bis der Schlüsselstrom größer oder gleich der Länge des Klartextes ist.
