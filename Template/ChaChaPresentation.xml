@@ -9,7 +9,7 @@
   </description>
   <keywords>encryption, decryption, stream cipher</keywords>
   
-  <title lang="de">ChaCha-Chiffre</title>
+  <title lang="de">ChaCha-Chiffre (Präsentation)</title>
   <summary lang="de">Anwendung der ChaCha-Chiffre</summary>
   <description lang="de">
   ChaCha ist eine 256-bit Stromchiffre, die 2008 von Daniel J. Bernstein (DJB) entwickelt wurde. Sie basiert auf der Salsa-Chiffre des selben Autors.
