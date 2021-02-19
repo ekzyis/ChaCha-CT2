@@ -61,7 +61,7 @@
             </Grid.ColumnDefinitions>
 
             <Viewbox Style="{StaticResource UniformViewbox}" Grid.Row="0" Grid.ColumnSpan="2">
-                <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{StaticResource RichText}">
+                <RichTextBox Width="{Binding ElementName=Root, Path=ActualWidth}" Style="{StaticResource RichText}" FontSize="10">
                     <FlowDocument>
                         <Paragraph>
                             <Run Text="{Loc DiffusionDescription1}"/>
