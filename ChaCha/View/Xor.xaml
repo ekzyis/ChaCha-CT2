@@ -17,67 +17,74 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
-        <Viewbox Style="{StaticResource UniformViewbox}">
-            <Grid>
-                <Grid.Resources>
-                    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
-                        <Setter Property="Margin" Value="0,5,0,5" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                    <Style TargetType="{x:Type StackPanel}">
-                        <Setter Property="Margin" Value="0,5,0,5" />
-                        <Setter Property="VerticalAlignment" Value="Center" />
-                    </Style>
-                    <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}">
-                        <Setter Property="Visibility">
-                            <Setter.Value>
-                                <Binding Path="DiffusionActive">
-                                    <Binding.Converter>
-                                        <BooleanToVisibilityConverter />
-                                    </Binding.Converter>
-                                </Binding>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </Grid.Resources>
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
+                    <Setter Property="Margin" Value="0,5,0,5" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Margin" Value="0,5,0,5" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}">
+                    <Setter Property="Visibility">
+                        <Setter.Value>
+                            <Binding Path="DiffusionActive">
+                                <Binding.Converter>
+                                    <BooleanToVisibilityConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="4*" />
-                </Grid.ColumnDefinitions>
-                <TextBox Grid.Row="0" Grid.Column="0" Text="{Loc XorInputLabel}" />
-                <TextBox Grid.Row="1" Grid.Column="0" Text="{Loc XorKeystreamLabel}" />
-                <TextBox Grid.Row="2" Grid.Column="0" Text="{Loc XorOutputLabel}" />
-
-                <StackPanel Grid.Row="0" Grid.Column="1">
-                    <TextBox Grid.Row="0" Grid.Column="1"
-                         Text="{Binding ChaCha.InputMessage, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                </StackPanel>
-
-                <StackPanel Grid.Row="1" Grid.Column="1">
-                    <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                        <TextBox Name="Keystream" Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                        <RichTextBox Name="DiffusionKeystream" />
-                    </StackPanel>
-                    <StackPanel Style="{StaticResource DiffusionXOR}">
-                        <RichTextBox Name="DiffusionKeystreamXOR" />
-                    </StackPanel>
-                </StackPanel>
-
-                <StackPanel Grid.Row="2" Grid.Column="1">
-                    <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                        <TextBox Text="{Binding ChaCha.Output, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                        <RichTextBox Name="DiffusionOutput" />
-                    </StackPanel>
-                    <StackPanel Style="{StaticResource DiffusionXOR}">
-                        <RichTextBox Name="DiffusionOutputXOR" />
-                    </StackPanel>
-                </StackPanel>
+                <TextBox Grid.Row="0" Text="{Loc XorInputLabel}" />
+                <TextBox Grid.Row="1" Text="{Loc XorKeystreamLabel}" />
+                <TextBox Grid.Row="2" Text="{Loc XorOutputLabel}" />
             </Grid>
-        </Viewbox>
+            <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <TextBox Grid.Row="0" Text="{Binding ChaCha.InputMessage, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1">
+                        <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                            <TextBox Name="Keystream" Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
+                            <RichTextBox Name="DiffusionKeystream" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource DiffusionXOR}">
+                            <RichTextBox Name="DiffusionKeystreamXOR" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="2">
+                        <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                            <TextBox Text="{Binding ChaCha.Output, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
+                            <RichTextBox Name="DiffusionOutput" />
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource DiffusionXOR}">
+                            <RichTextBox Name="DiffusionOutputXOR" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
     </ContentControl>
 </UserControl>
