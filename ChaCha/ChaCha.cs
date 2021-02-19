@@ -187,9 +187,13 @@ namespace Cryptool.Plugins.ChaCha
                 InsertCounter(ref state, blockCounter, settings.Version);
                 ChaChaHash(ref state, settings.Rounds);
 
-                byte[] stateBytes = ByteUtil.ToByteArray(state);
-                byte[] c = ByteUtil.XOR(stateBytes, inputBytes, read);
+                byte[] keystream = ByteUtil.ToByteArray(state);
+                byte[] c = ByteUtil.XOR(keystream, inputBytes, read);
                 output.Write(c);
+
+                InputMessage.AddRange(inputBytes);
+                Keystream.AddRange(keystream);
+                Output.AddRange(c);
 
                 blockCounter++;
 
@@ -765,6 +769,53 @@ namespace Cryptool.Plugins.ChaCha
                 if (DiffusionExecution) return QROutputDiffusion;
                 if (_qrOutput == null) _qrOutput = new List<(uint, uint, uint, uint)>();
                 return _qrOutput;
+            }
+        }
+
+        private List<byte> _inputMessage; public List<byte> InputMessage
+        {
+            get
+            {
+                if (_inputMessage == null) _inputMessage = new List<byte>();
+                return _inputMessage;
+            }
+        }
+
+        private List<byte> _keystreamDiffusion; public List<byte> KeystreamDiffusion
+        {
+            get
+            {
+                if (_keystreamDiffusion == null) _keystreamDiffusion = new List<byte>();
+                return _keystreamDiffusion;
+            }
+        }
+
+        private List<byte> _keystream; public List<byte> Keystream
+        {
+            get
+            {
+                if (DiffusionExecution) return KeystreamDiffusion;
+                if (_keystream == null) _keystream = new List<byte>();
+                return _keystream;
+            }
+        }
+
+        private List<byte> _outputDiffusion; public List<byte> OutputDiffusion
+        {
+            get
+            {
+                if (_outputDiffusion == null) _outputDiffusion = new List<byte>();
+                return _outputDiffusion;
+            }
+        }
+
+        private List<byte> _output; public List<byte> Output
+        {
+            get
+            {
+                if (DiffusionExecution) return OutputDiffusion;
+                if (_output == null) _output = new List<byte>();
+                return _output;
             }
         }
 
