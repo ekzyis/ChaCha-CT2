@@ -193,8 +193,8 @@ namespace Cryptool.Plugins.ChaCha
 
                 // Don't add to InputMessage during diffusion run because it won't
                 // return a different list during the diffusion run.
-                if (!DiffusionExecution) InputMessage.AddRange(inputBytes);
-                Keystream.AddRange(keystream);
+                if (!DiffusionExecution) InputMessage.AddRange(inputBytes.Take(read));
+                Keystream.AddRange(keystream.Take(read));
                 Output.AddRange(c);
 
                 blockCounter++;
