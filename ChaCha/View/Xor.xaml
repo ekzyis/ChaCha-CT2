@@ -27,7 +27,17 @@
                     <Setter Property="Margin" Value="0,5,0,5" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
-                <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}"/>
+                <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}">
+                    <Setter Property="Visibility">
+                        <Setter.Value>
+                            <Binding Path="DiffusionActive">
+                                <Binding.Converter>
+                                    <BooleanToVisibilityConverter />
+                                </Binding.Converter>
+                            </Binding>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
             </Grid.Resources>
             <Grid.RowDefinitions>
                 <RowDefinition />
