@@ -191,7 +191,9 @@ namespace Cryptool.Plugins.ChaCha
                 byte[] c = ByteUtil.XOR(keystream, inputBytes, read);
                 output.Write(c);
 
-                InputMessage.AddRange(inputBytes);
+                // Don't add to InputMessage during diffusion run because it won't
+                // return a different list during the diffusion run.
+                if (!DiffusionExecution) InputMessage.AddRange(inputBytes);
                 Keystream.AddRange(keystream);
                 Output.AddRange(c);
 
