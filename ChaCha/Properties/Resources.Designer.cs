@@ -232,6 +232,15 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State Matrix.
+        /// </summary>
+        public static string ChaChaHashStateLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashStateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ChaCha Hash Function.
         /// </summary>
         public static string ChaChaHashTitle {
