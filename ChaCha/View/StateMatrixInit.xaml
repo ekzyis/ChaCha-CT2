@@ -385,7 +385,9 @@
                             <Setter Property="Margin" Value="0,5,0,5" />
                             <Setter Property="VerticalAlignment" Value="Center" />
                         </Style>
-                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" />
+                        <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}">
+                            <Setter Property="FontSize" Value="20"/>
+                        </Style>
                     </Grid.Resources>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -405,7 +407,7 @@
                     <TextBox Grid.Row="4" Grid.Column="0" Text="{Loc StateMatrixParameterCounter}" Background="SkyBlue" />
 
                     <StackPanel Grid.Row="1" Grid.Column="1">
-                        <RichTextBox Width="395" Style="{StaticResource RichHex}">
+                        <RichTextBox Width="395">
                             <FlowDocument>
                                 <Paragraph>
                                     <TextBlock Text="{Binding ASCIIConstants, Mode=OneWay}" />
