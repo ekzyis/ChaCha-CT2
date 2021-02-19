@@ -4,7 +4,7 @@
                     xmlns:conv="clr-namespace:Cryptool.Plugins.ChaCha.Helper.Converter">
     <BooleanToVisibilityConverter x:Key="FalseToCollapsed" />
     <Style x:Key="RichText" TargetType="{x:Type RichTextBox}">
-        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="IsReadOnly" Value="True" />
         <Setter Property="BorderThickness" Value="0" />
     </Style>
