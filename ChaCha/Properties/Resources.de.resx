@@ -201,7 +201,7 @@ Mit dem Knopf in der oberen rechten Ecke ist es möglich, zwischen der XOR-Anzei
 Das kann im Beispiel ausprobiert werden. Drücke den Knopf und die Anzeige im Beispiel schaltet sich um.</value>
   </data>
   <data name="DiffusionDescription4" xml:space="preserve">
-    <value>In der Seite über die ChaCha-Hashfunktion wird auch die Anzahl der geflippten Bits angezeigt. Eine sichere Chiffre sollte 50% aller Bits im Geheimtext flippen, wenn ein Bit im Klartext geflippt wurde und vice versa.</value>
+    <value>In der Seite über die ChaCha-Hashfunktion wird auch die Anzahl der geflippten Bits angezeigt. Eine sichere Chiffre sollte im Durchschnitt rund 50 % aller Bits im Geheimtext flippen, wenn ein Bit im Klartext geflippt wurde und vice versa.</value>
   </data>
   <data name="DiffusionExampleCaption" xml:space="preserve">
     <value>Beispiel wie die Diffusion visualisiert wird.
