@@ -126,6 +126,9 @@
   <data name="ChaChaCaption" xml:space="preserve">
     <value>ChaCha</value>
   </data>
+  <data name="ChaChaHashAdditionStateLabel" xml:space="preserve">
+    <value>State After All Rounds + Original State</value>
+  </data>
   <data name="ChaChaHashName" xml:space="preserve">
     <value>ChaCha Hash</value>
   </data>
