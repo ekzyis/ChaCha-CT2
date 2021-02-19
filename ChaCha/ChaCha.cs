@@ -656,6 +656,12 @@ namespace Cryptool.Plugins.ChaCha
             QRStepDiffusion.Clear();
             QROutput.Clear();
             QROutputDiffusion.Clear();
+
+            InputMessage.Clear();
+            Keystream.Clear();
+            KeystreamDiffusion.Clear();
+            Output.Clear();
+            OutputDiffusion.Clear();
         }
 
         private List<uint[]> _stateDiffusion; public List<uint[]> OriginalStateDiffusion
@@ -879,6 +885,8 @@ namespace Cryptool.Plugins.ChaCha
             LittleEndianStateDiffusion.Clear();
             QRInputDiffusion.Clear();
             QROutputDiffusion.Clear();
+            KeystreamDiffusion.Clear();
+            OutputDiffusion.Clear();
         }
 
         #endregion Public Variables / Binding Properties
