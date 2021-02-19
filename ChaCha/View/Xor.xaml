@@ -16,7 +16,7 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
+    <ContentControl Template="{StaticResource PageContentTemplate}">
         <Grid>
             <Grid.Resources>
                 <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
@@ -54,7 +54,7 @@
                 <TextBox Grid.Row="2" Text="{Loc XorOutputLabel}" />
             </Grid>
             <ScrollViewer Grid.Column="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden">
-                <Grid>
+                <Grid Name="Root">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -67,20 +67,20 @@
                     <StackPanel Grid.Row="1">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
                             <TextBox Name="Keystream" Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                            <RichTextBox Name="DiffusionKeystream" />
+                            <RichTextBox Name="DiffusionKeystream" Width="{Binding ElementName=Root, Path=ActualWidth}"/>
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Name="DiffusionKeystreamXOR" />
+                            <RichTextBox Name="DiffusionKeystreamXOR" Width="{Binding ElementName=Root, Path=ActualWidth}"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
                             <TextBox Text="{Binding ChaCha.Output, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                            <RichTextBox Name="DiffusionOutput" />
+                            <RichTextBox Name="DiffusionOutput" Width="{Binding ElementName=Root, Path=ActualWidth}"/>
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Name="DiffusionOutputXOR" />
+                            <RichTextBox Name="DiffusionOutputXOR" Width="{Binding ElementName=Root, Path=ActualWidth}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
