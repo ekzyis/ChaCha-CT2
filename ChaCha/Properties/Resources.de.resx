@@ -171,6 +171,9 @@
   <data name="ChaChaHashTitle" xml:space="preserve">
     <value>ChaCha-Hashfunktion</value>
   </data>
+  <data name="ChaChaStartInstructions" xml:space="preserve">
+    <value>Um zu beginnen, muss die Arbeitsfläche gestartet werden. Drücke "Start" in der Leiste oben, um dies zu tun. Dann kann durch die Visualisierung navigiert werden mit den Knöpfen oben links.</value>
+  </data>
   <data name="ChaChaTooltip" xml:space="preserve">
     <value>Eine Stromchiffre, die in TLS eingesetzt wird und auf Salsa20 basiert. Entwickelt von Daniel J. Bernstein.</value>
   </data>

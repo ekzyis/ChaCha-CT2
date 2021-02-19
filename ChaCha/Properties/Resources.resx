@@ -171,6 +171,9 @@
   <data name="ChaChaHashTitle" xml:space="preserve">
     <value>ChaCha Hash Function</value>
   </data>
+  <data name="ChaChaStartInstructions" xml:space="preserve">
+    <value>To enter the visualization, the workspace needs to be started. Press "Play" above to do this. You can then navigate through the visualization with the buttons in the top-left corner.</value>
+  </data>
   <data name="ChaChaTooltip" xml:space="preserve">
     <value>A stream cipher based on Salsa20 and used in TLS. Developed by Daniel J. Bernstein.</value>
   </data>
