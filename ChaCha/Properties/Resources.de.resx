@@ -168,6 +168,9 @@
   <data name="ChaChaHashOriginalStateLabel" xml:space="preserve">
     <value>Anfangszustand</value>
   </data>
+  <data name="ChaChaHashRoundsFinalStateLabel" xml:space="preserve">
+    <value>Zustand nach allen Runden</value>
+  </data>
   <data name="ChaChaHashTitle" xml:space="preserve">
     <value>ChaCha-Hashfunktion</value>
   </data>

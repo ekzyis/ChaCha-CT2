@@ -214,6 +214,15 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to State After All Rounds.
+        /// </summary>
+        public static string ChaChaHashRoundsFinalStateLabel {
+            get {
+                return ResourceManager.GetString("ChaChaHashRoundsFinalStateLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ChaCha Hash Function.
         /// </summary>
         public static string ChaChaHashTitle {
