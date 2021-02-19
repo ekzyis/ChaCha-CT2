@@ -599,6 +599,7 @@
                                 <RichTextBox
                                     Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
                                     Style="{StaticResource RichHex}"
+                                    FontSize="20"
                                     Name="DiffusionKeyEncodingInput"
                                     Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                             </StackPanel>
@@ -606,6 +607,7 @@
                                 <RichTextBox
                                     Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToWidth}}"
                                     Style="{StaticResource RichHex}"
+                                    FontSize="20"
                                     Name="DiffusionKeyEncodingInputXOR" />
                             </StackPanel>
                         </StackPanel>
@@ -627,6 +629,7 @@
                                 <RichTextBox
                                     Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
                                     Style="{StaticResource RichHex}"
+                                    FontSize="20"
                                     Name="DiffusionKeyEncodingChunkify"
                                     Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                             </StackPanel>
@@ -634,6 +637,7 @@
                                 <RichTextBox
                                     Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
                                     Style="{StaticResource RichHex}"
+                                    FontSize="20"
                                     Name="DiffusionKeyEncodingChunkifyXOR" />
                             </StackPanel>
                         </StackPanel>
@@ -656,6 +660,7 @@
                                 <RichTextBox
                                     Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
                                     Style="{StaticResource RichHex}"
+                                    FontSize="20"
                                     Name="DiffusionKeyEncodingLittleEndian"
                                     Visibility="{Binding DiffusionActive, Converter={StaticResource BooleanToVisibility}}" />
                             </StackPanel>
@@ -663,6 +668,7 @@
                                 <RichTextBox
                                     Width="{Binding ChaCha.InputKey.Length, Converter={StaticResource KeyLengthToChunkedWidth}}"
                                     Style="{StaticResource RichHex}"
+                                    FontSize="20"
                                     Name="DiffusionKeyEncodingLittleEndianXOR" />
                             </StackPanel>
                         </StackPanel>
@@ -678,6 +684,7 @@
                         <Grid.Resources>
                             <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" x:Key="DiffusionCounterNonChunk">
                                 <Setter Property="Width" Value="107" />
+                                <Setter Property="FontSize" Value="20" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Settings.Version.CounterBits}" Value="64">
                                         <Setter Property="Width" Value="203" />
@@ -686,6 +693,7 @@
                             </Style>
                             <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" x:Key="DiffusionCounterChunk">
                                 <Setter Property="Width" Value="118" />
+                                <Setter Property="FontSize" Value="20" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Settings.Version.CounterBits}" Value="64">
                                         <Setter Property="Width" Value="227" />
@@ -816,6 +824,7 @@
                     <Grid Visibility="{Binding IVEncoding, Converter={StaticResource BooleanToVisibility}}">
                         <Grid.Resources>
                             <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" x:Key="DiffusionIVNonChunk">
+                                <Setter Property="FontSize" Value="20" />
                                 <Setter Property="Width" Value="204" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
@@ -824,6 +833,7 @@
                                 </Style.Triggers>
                             </Style>
                             <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}" x:Key="DiffusionIVChunk">
+                                <Setter Property="FontSize" Value="20" />
                                 <Setter Property="Width" Value="226" />
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding Settings.Version.IVBits}" Value="96">
