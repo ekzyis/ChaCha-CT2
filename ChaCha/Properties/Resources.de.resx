@@ -359,7 +359,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Schlüssel</value>
   </data>
   <data name="StateMatrixDescription1" xml:space="preserve">
-    <value>Der 512-bit (64-byte) ChaCha-Zustand kann als 4x4 Matrix interpretiert werden, in der jeder Eintrag aus vier Bytes besteht. Die Einträge werden aus den Parametern, die unten zu sehen sind, aufgebaut. Diese Einträge werden kodiert bevor sie in die Matrix eingefügt werden.</value>
+    <value>Der 512-bit (64-byte) ChaCha-Zustand kann als 4x4 Matrix interpretiert werden, in der jeder Eintrag aus vier Bytes besteht. Die Einträge werden aus den Parametern, die unten zu sehen sind, aufgebaut. Diese Einträge werden kodiert, bevor sie in die Matrix eingefügt werden.</value>
   </data>
   <data name="StateMatrixDescription6" xml:space="preserve">
     <value>Auf der nächsten Seite wird dieser initialisierte Zustand der ChaCha-Hashfunktion übergeben um den ersten Schlüsselstromblock zu generieren.</value>
