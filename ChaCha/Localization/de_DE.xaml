@@ -154,7 +154,7 @@
                     <RichTextBox>
                         <FlowDocument>
                             <Paragraph>
-                                Um einen Schlüsselstromblock zu generieren verwenden wir die-ChaCha Hashfunktion. Die ChaCha-Hashfunktion besteht aus
+                                Um einen Schlüsselstromblock zu generieren, verwenden wir die-ChaCha Hashfunktion. Die ChaCha-Hashfunktion besteht aus
                                 <Run Text="{Binding Settings.Rounds, FallbackValue=R}" /> Runden.
                                 <LineBreak />
                                 Während jeder Runde benutzen wir die Viertelrunde-Funktion viermal (deshalb der Name
