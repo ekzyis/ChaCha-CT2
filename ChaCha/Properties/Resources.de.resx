@@ -196,7 +196,7 @@
     <value>Die ChaCha-Chiffre wird dann auch mit diesen Werten ausgeführt, um die Diffusionscharakteristik der Chiffre zu visualisieren. Die Werte vom zweiten Chiffrendurchlauf (mit den zweiten Werten) werden unter den Werten des ersten Durchlaufs angezeigt. Unterschiedliche Hexwerte werden rot markiert. Auf der rechten Seite ist hierfür ein Beispiel zu sehen.</value>
   </data>
   <data name="DiffusionDescription3" xml:space="preserve">
-    <value>Da für das Studium der Diffusionscharakteristik die Unterschiede der Werte von zwei Durchläufen interessanter sind als die tatsächlichen Werte, ist es auch möglich explizit die Differenz (XOR) einzugeben.
+    <value>Da für das Studium der Diffusions-Charakteristik die Unterschiede der Werte von zwei Durchläufen interessanter sind als die tatsächlichen Werte, ist es auch möglich explizit die Differenz (XOR) einzugeben.
 Mit dem Knopf in der oberen rechten Ecke ist es möglich, zwischen der XOR-Anzeige und der Anzeige beider Werte umzuschalten.
 Das kann im Beispiel ausprobiert werden. Drücke den Knopf und die Anzeige im Beispiel schaltet sich um.</value>
   </data>
