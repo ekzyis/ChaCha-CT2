@@ -66,7 +66,7 @@
 
                     <StackPanel Grid.Row="1">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                            <TextBox Name="Keystream" Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
+                            <TextBox Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
                             <RichTextBox Name="DiffusionKeystream" Width="{Binding ElementName=Root, Path=ActualWidth}"/>
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
