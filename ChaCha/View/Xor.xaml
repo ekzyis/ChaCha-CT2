@@ -3,8 +3,69 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="clr-namespace:Cryptool.Plugins.ChaCha.Helper.Converter"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-    </Grid>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Styles\Index.xaml" />
+                <ResourceDictionary Source="..\ContentTemplate\PageContentTemplate.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BytesToHex x:Key="ToHex" />
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibility" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <ContentControl Template="{StaticResource PageContentTemplate}" Name="Root">
+        <Grid>
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource Text}">
+                    <Setter Property="Margin" Value="0,5,0,5" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="{x:Type StackPanel}">
+                    <Setter Property="Margin" Value="0,5,0,5" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                </Style>
+                <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource DiffusionState}" />
+            </Grid.Resources>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Row="0" Grid.Column="0" Text="{Loc XorInputLabel}" />
+            <TextBox Grid.Row="1" Grid.Column="0" Text="{Loc XorKeystreamLabel}" />
+            <TextBox Grid.Row="2" Grid.Column="0" Text="{Loc XorOutputLabel}" />
+
+            <StackPanel Grid.Row="0" Grid.Column="1">
+                <TextBox Grid.Row="0" Grid.Column="1" 
+                         Text="{Binding ChaCha.InputMessage, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Grid.Column="1">
+                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                    <TextBox Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}"/>
+                    <RichTextBox Name="DiffusionKeystream" />
+                </StackPanel>
+                <StackPanel Style="{StaticResource DiffusionXOR}">
+                    <RichTextBox Name="DiffusionKeystreamXOR" />
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Grid.Column="1">
+                <StackPanel Style="{StaticResource DiffusionNonXOR}">
+                    <TextBox Text="{Binding ChaCha.Output, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}"/>
+                    <RichTextBox Name="DiffusionOutput" />
+                </StackPanel>
+                <StackPanel Style="{StaticResource DiffusionXOR}">
+                    <RichTextBox Name="DiffusionOutputXOR" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </ContentControl>
 </UserControl>
