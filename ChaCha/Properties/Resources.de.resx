@@ -320,7 +320,7 @@ ChaCha benutzt eine Hashfunktion zusammen mit einem 512-bit Zustand, der aus fol
     <value>Durch Anwendung der ChaCha-Hashfunktion entsteht aus einem 512-bit Zustand ein Schlüsselstromblock.</value>
   </data>
   <data name="OverviewOutro2" xml:space="preserve">
-    <value>Das führt uns zu folgenden Schritten um eine Nachricht M mit ChaCha zu verschlüsseln:</value>
+    <value>Das führt uns zu folgenden Schritten, um eine Nachricht M mit ChaCha zu verschlüsseln:</value>
   </data>
   <data name="OverviewOutroStep1" xml:space="preserve">
     <value>Zustandsmatrix initialisieren</value>
