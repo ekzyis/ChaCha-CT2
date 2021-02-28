@@ -270,6 +270,12 @@ Benutze den Knopf oben rechts um zwischen XOR-Anzeige und Anzeige beider Werte u
   <data name="IVValidationErrorMessage" xml:space="preserve">
     <value>IV muss 64-bit in der DJB-Version oder 96-bit in der IETF-Version sein</value>
   </data>
+  <data name="KeystreamOutputStreamCaption" xml:space="preserve">
+    <value>Schlüsselstrom</value>
+  </data>
+  <data name="KeystreamOutputStreamTooltip" xml:space="preserve">
+    <value>Der intern generierte Schlüsselstrom. Der Ausgabetext wird durch Eingabetext XOR Schlüsselstrom generiert.</value>
+  </data>
   <data name="KeyValidationErrorMessage" xml:space="preserve">
     <value>Schlüssel muss 128-bit oder 256-bit sein</value>
   </data>

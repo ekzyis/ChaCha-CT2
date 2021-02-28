@@ -56,6 +56,7 @@ namespace Cryptool.Plugins.ChaCha
         private static readonly byte[] TAU = Encoding.ASCII.GetBytes("expand 16-byte k");
 
         private CStreamWriter outputWriter;
+        private CStreamWriter keystreamOutputWriter;
 
         #endregion Private Variables
 
@@ -127,6 +128,15 @@ namespace Cryptool.Plugins.ChaCha
             }
         }
 
+        [PropertyInfo(Direction.OutputData, "KeystreamOutputStreamCaption", "KeystreamOutputStreamTooltip", false)]
+        public ICryptoolStream KeystreamOutputStream
+        {
+            get
+            {
+                return keystreamOutputWriter;
+            }
+        }
+
         #endregion ICrypComponent I/O
 
         #region ChaCha Cipher methods
@@ -140,7 +150,8 @@ namespace Cryptool.Plugins.ChaCha
         /// <param name="settings">Chosen Settings in the Plugin workspace. Includes Rounds and Version property.</param>
         /// <param name="input">Input stream</param>
         /// <param name="output">Output stream</param>
-        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output)
+        /// <param name="keystreamWriter">Keystream Output stream</param>
+        private void Xcrypt(byte[] key, byte[] iv, ulong initialCounter, ChaChaSettings settings, ICryptoolStream input, CStreamWriter output, CStreamWriter keystreamOutput)
         {
             if (!(key.Length == 32 || key.Length == 16))
             {
@@ -188,6 +199,7 @@ namespace Cryptool.Plugins.ChaCha
                 ChaChaHash(ref state, settings.Rounds);
 
                 byte[] keystream = ByteUtil.ToByteArray(state);
+                keystreamOutput.Write(keystream);
                 byte[] c = ByteUtil.XOR(keystream, inputBytes, read);
                 output.Write(c);
 
@@ -206,6 +218,9 @@ namespace Cryptool.Plugins.ChaCha
             output.Flush();
             output.Close();
             output.Dispose();
+            keystreamOutput.Flush();
+            keystreamOutput.Close();
+            keystreamOutput.Dispose();
         }
 
         /// <summary>
@@ -501,11 +516,13 @@ namespace Cryptool.Plugins.ChaCha
                 OnPropertyChanged(ChaChaPresentationViewModel.RESET_VISUALIZATION);
                 ClearIntermediateResults();
                 outputWriter = new CStreamWriter();
+                keystreamOutputWriter = new CStreamWriter();
                 // If InitialCounter is not set by user, it defaults to zero.
                 // Since maximum initial counter by any version is 64-bit, we cast it to UInt64.
                 ulong initialCounter = (ulong)InitialCounter;
-                Xcrypt(InputKey, InputIV, initialCounter, settings, InputStream, outputWriter);
+                Xcrypt(InputKey, InputIV, initialCounter, settings, InputStream, outputWriter, keystreamOutputWriter);
                 OnPropertyChanged("OutputStream");
+                OnPropertyChanged("KeystreamOutputStream");
             }
 
             ExecutionFinished = true;
@@ -876,7 +893,7 @@ namespace Cryptool.Plugins.ChaCha
         {
             DiffusionExecution = true;
             ClearDiffusionResults();
-            Xcrypt(diffusionKey, diffusionIv, diffusionInitialCounter, (ChaChaSettings)Settings, InputStream, new CStreamWriter());
+            Xcrypt(diffusionKey, diffusionIv, diffusionInitialCounter, (ChaChaSettings)Settings, InputStream, new CStreamWriter(), new CStreamWriter());
             DiffusionExecution = false;
         }
 

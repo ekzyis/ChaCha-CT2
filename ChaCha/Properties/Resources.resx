@@ -273,6 +273,12 @@ Use the button in the top-right corner to toggle between showing only the XOR or
   <data name="IVValidationErrorMessage" xml:space="preserve">
     <value>IV must be 64-bit in DJB version or 96-bit in IETF version</value>
   </data>
+  <data name="KeystreamOutputStreamCaption" xml:space="preserve">
+    <value>Keystream</value>
+  </data>
+  <data name="KeystreamOutputStreamTooltip" xml:space="preserve">
+    <value>The internally generated keystream. The output is generated via input XOR keystream.</value>
+  </data>
   <data name="KeyValidationErrorMessage" xml:space="preserve">
     <value>Key must be 128-bit or 256-bit</value>
   </data>

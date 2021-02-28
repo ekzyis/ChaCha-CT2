@@ -517,6 +517,24 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keystream.
+        /// </summary>
+        public static string KeystreamOutputStreamCaption {
+            get {
+                return ResourceManager.GetString("KeystreamOutputStreamCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The internally generated keystream. The output is generated via input XOR keystream..
+        /// </summary>
+        public static string KeystreamOutputStreamTooltip {
+            get {
+                return ResourceManager.GetString("KeystreamOutputStreamTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Key must be 128-bit or 256-bit.
         /// </summary>
         public static string KeyValidationErrorMessage {
