@@ -1068,6 +1068,33 @@ namespace Cryptool.Plugins.ChaCha.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input message:.
+        /// </summary>
+        public static string XorInputLabel {
+            get {
+                return ResourceManager.GetString("XorInputLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keystream:.
+        /// </summary>
+        public static string XorKeystreamLabel {
+            get {
+                return ResourceManager.GetString("XorKeystreamLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Output:.
+        /// </summary>
+        public static string XorOutputLabel {
+            get {
+                return ResourceManager.GetString("XorOutputLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Toggle XOR.
         /// </summary>
         public static string XorToggle {
