@@ -29,6 +29,19 @@
                 </Style>
                 <Style TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}">
                     <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Width">
+                        <Setter.Value>
+                            <Binding ElementName="Root" Path="Width"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+                <Style x:Key="Diffusion" TargetType="{x:Type RichTextBox}" BasedOn="{StaticResource RichHex}">
+                    <Setter Property="FontSize" Value="20" />
+                    <Setter Property="Width">
+                        <Setter.Value>
+                            <Binding ElementName="Root" Path="Width"/>
+                        </Setter.Value>
+                    </Setter>
                     <Setter Property="Visibility">
                         <Setter.Value>
                             <Binding Path="DiffusionActive">
@@ -62,26 +75,43 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
-                        <TextBox Grid.Row="0" Text="{Binding ChaCha.InputMessage, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
+                        <RichTextBox>
+                            <FlowDocument>
+                                <Paragraph>
+                                    <Run Text="{Binding ChaCha.InputMessage, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                                </Paragraph>
+                            </FlowDocument>
+                        </RichTextBox>
                     </StackPanel>
-
                     <StackPanel Grid.Row="1">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                            <TextBox Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                            <RichTextBox Name="DiffusionKeystream" Width="{Binding ElementName=Root, Path=ActualWidth}" />
+                            <RichTextBox>
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="{Binding ChaCha.Keystream, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Style="{StaticResource Diffusion}" Name="DiffusionKeystream" />
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Name="DiffusionKeystreamXOR" Width="{Binding ElementName=Root, Path=ActualWidth}"/>
+                            <RichTextBox Style="{StaticResource Diffusion}" Name="DiffusionKeystreamXOR"/>
                         </StackPanel>
                     </StackPanel>
 
                     <StackPanel Grid.Row="2">
                         <StackPanel Style="{StaticResource DiffusionNonXOR}">
-                            <TextBox Text="{Binding ChaCha.Output, Converter={StaticResource ToHex}, Mode=OneWay}" Style="{StaticResource Hex}" />
-                            <RichTextBox Name="DiffusionOutput" Width="{Binding ElementName=Root, Path=ActualWidth}" />
+                            <RichTextBox>
+                                <FlowDocument>
+                                    <Paragraph>
+                                        <Run Text="{Binding ChaCha.Output, Converter={StaticResource ToHex}, Mode=OneWay}"/>
+                                    </Paragraph>
+                                </FlowDocument>
+                            </RichTextBox>
+                            <RichTextBox Style="{StaticResource Diffusion}" Name="DiffusionOutput" />
                         </StackPanel>
                         <StackPanel Style="{StaticResource DiffusionXOR}">
-                            <RichTextBox Name="DiffusionOutputXOR" Width="{Binding ElementName=Root, Path=ActualWidth}" />
+                            <RichTextBox Style="{StaticResource Diffusion}" Name="DiffusionOutputXOR" />
                         </StackPanel>
                     </StackPanel>
                 </Grid>

@@ -1,4 +1,5 @@
-﻿using Cryptool.Plugins.ChaCha.ViewModel;
+﻿using System.ComponentModel.Design.Serialization;
+using Cryptool.Plugins.ChaCha.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,6 +27,7 @@ namespace Cryptool.Plugins.ChaCha.View
             {
                 this.ViewModel = ViewModel;
                 if (ViewModel.DiffusionActive) InitDiffusionValues();
+                Root.Width = ViewModel.ChaCha.Keystream.ToArray().Length * 25;
             }
         }
 
